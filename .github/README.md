@@ -59,6 +59,13 @@ npm run deploy          # build + upload (sans git)
 npm run upload          # upload seulement (dist/ déjà buildé)
 ```
 
+Pour rendre le site **privé** (Basic Auth Apache), renseignez `AUTH_*` dans le `.env` puis :
+
+```bash
+npm run auth:install    # génère + envoie .htaccess + .htpasswd
+npm run auth:remove     # rend le site à nouveau public
+```
+
 Documentation complète :
 [Publishing](https://github.com/DamienBecherini/starlight-obsidian-engine#publishing) (README moteur).
 
@@ -87,6 +94,13 @@ cp .env.example .env    # ENGINE_PATH + DEPLOY_*
 npm run publish         # git + build + upload (FTPS/SFTP)
 npm run deploy          # build + upload (no git)
 npm run upload          # upload only (existing dist/)
+```
+
+To make the site **private** (Apache Basic Auth), fill in `AUTH_*` in `.env`, then:
+
+```bash
+npm run auth:install    # generate + upload .htaccess + .htpasswd
+npm run auth:remove     # make the site public again
 ```
 
 Full docs: engine
