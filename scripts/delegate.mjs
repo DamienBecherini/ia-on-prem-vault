@@ -22,7 +22,7 @@ if (fs.existsSync(envPath)) {
 }
 
 const command = process.argv[2];
-const allowed = new Set(['publish', 'deploy', 'upload']);
+const allowed = new Set(['publish', 'deploy', 'upload', 'auth-install', 'auth-remove']);
 if (!command || !allowed.has(command)) {
     console.error(`❌ Usage: node scripts/delegate.mjs <${[...allowed].join('|')}>`);
     process.exit(1);
