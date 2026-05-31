@@ -1,0 +1,10 @@
+{
+  "name": "ia-on-prem-vault",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "publish": "node scripts/delegate.mjs publish",
+    "deploy": "node scripts/delegate.mjs deploy",
+    "upload": "node scripts/delegate.mjs upload"
+  }
+}

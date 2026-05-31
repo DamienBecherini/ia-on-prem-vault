@@ -47,6 +47,21 @@ _templates/             templates Obsidian
 Ouvrir ce dossier comme coffre Obsidian. Pour le prévisualiser en site web, suivre le README du moteur
 (`npm run link:vault` puis `npm run dev`).
 
+### Publier en ligne
+
+Les identifiants de déploiement (FTPS ou SFTP) se configurent dans le **`.env` de ce coffre**
+(voir `.env.example`). Variables `DEPLOY_*` ; le protocole se choisit avec `DEPLOY_PROTOCOL`.
+
+```bash
+cp .env.example .env    # ENGINE_PATH + DEPLOY_*
+npm run publish         # git + build + upload (FTPS/SFTP)
+npm run deploy          # build + upload (sans git)
+npm run upload          # upload seulement (dist/ déjà buildé)
+```
+
+Documentation complète :
+[Publishing](https://github.com/DamienBecherini/starlight-obsidian-engine#publishing) (README moteur).
+
 ---
 
 ## 🇬🇧 English
@@ -61,6 +76,21 @@ to which this vault is attached via a junction. Only the **notes** live here —
 
 Topics covered: AI hardware physics (memory bandwidth, unified memory, VRAM), inference engines
 (llama.cpp, Ollama, vLLM), clustering (Exo, Ray), RAG & agents, and ready-to-use deployment blueprints.
+
+### Publish to the web
+
+Deploy credentials (FTPS or SFTP) belong in **this vault's `.env`** (see `.env.example`).
+Use the `DEPLOY_*` variables; pick the protocol with `DEPLOY_PROTOCOL`.
+
+```bash
+cp .env.example .env    # ENGINE_PATH + DEPLOY_*
+npm run publish         # git + build + upload (FTPS/SFTP)
+npm run deploy          # build + upload (no git)
+npm run upload          # upload only (existing dist/)
+```
+
+Full docs: engine
+[Publishing](https://github.com/DamienBecherini/starlight-obsidian-engine#publishing) section.
 
 ---
 
