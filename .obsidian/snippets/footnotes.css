@@ -1,0 +1,91 @@
+/* Footnotes: visible refs + explicit numbered backrefs */
+
+body.theme-light {
+  --zth-footnote-ref-color: #1e3a8a;
+  --zth-footnote-ref-bg: #dbeafe;
+  --zth-footnote-ref-border: #60a5fa;
+  --zth-footnote-ref-hover-color: #0f172a;
+  --zth-footnote-ref-hover-bg: #bfdbfe;
+  --zth-footnote-ref-hover-border: #2563eb;
+}
+
+body.theme-dark {
+  --zth-footnote-ref-color: #bfdbfe;
+  --zth-footnote-ref-bg: #1e3a8a;
+  --zth-footnote-ref-border: #60a5fa;
+  --zth-footnote-ref-hover-color: #e2e8f0;
+  --zth-footnote-ref-hover-bg: #1d4ed8;
+  --zth-footnote-ref-hover-border: #93c5fd;
+}
+
+/* In-text footnote refs: [1], [2], ... as visible badges */
+.markdown-rendered a.footnote-link,
+.markdown-rendered a[data-footnote-ref],
+.markdown-preview-view a.footnote-link,
+.markdown-preview-view a[data-footnote-ref] {
+  color: var(--zth-footnote-ref-color) !important;
+  background: var(--zth-footnote-ref-bg);
+  border: 1px solid var(--zth-footnote-ref-border);
+  border-radius: 0.35em;
+  padding: 0.02em 0.28em;
+  text-decoration: none !important;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.markdown-rendered a.footnote-link::before,
+.markdown-rendered a[data-footnote-ref]::before,
+.markdown-preview-view a.footnote-link::before,
+.markdown-preview-view a[data-footnote-ref]::before {
+  content: "[";
+}
+
+.markdown-rendered a.footnote-link::after,
+.markdown-rendered a[data-footnote-ref]::after,
+.markdown-preview-view a.footnote-link::after,
+.markdown-preview-view a[data-footnote-ref]::after {
+  content: "]";
+}
+
+/* Remove superscript visual effect for footnote refs only */
+.markdown-rendered sup:has(> a.footnote-link),
+.markdown-preview-view sup:has(> a.footnote-link) {
+  vertical-align: baseline;
+  font-size: inherit;
+  top: 0;
+}
+
+.markdown-rendered a.footnote-link:hover,
+.markdown-rendered a[data-footnote-ref]:hover,
+.markdown-preview-view a.footnote-link:hover,
+.markdown-preview-view a[data-footnote-ref]:hover {
+  color: var(--zth-footnote-ref-hover-color) !important;
+  background: var(--zth-footnote-ref-hover-bg);
+  border-color: var(--zth-footnote-ref-hover-border);
+}
+
+/* Bottom backlinks: always show numbered [1], [2], ... including first */
+.markdown-rendered .footnotes li,
+.markdown-preview-view .footnotes li {
+  counter-reset: zth-footnote-backref;
+}
+
+.markdown-rendered a.footnote-backref,
+.markdown-preview-view a.footnote-backref {
+  font-size: 0;
+  text-decoration: none !important;
+  margin-left: 0.25em;
+}
+
+.markdown-rendered a.footnote-backref::before,
+.markdown-preview-view a.footnote-backref::before {
+  counter-increment: zth-footnote-backref;
+  content: "[" counter(zth-footnote-backref) "]";
+  font-size: 0.78em;
+  color: var(--zth-footnote-ref-color);
+  background: var(--zth-footnote-ref-bg);
+  border: 1px solid var(--zth-footnote-ref-border);
+  border-radius: 0.35em;
+  padding: 0.02em 0.28em;
+  font-weight: 700;
+}

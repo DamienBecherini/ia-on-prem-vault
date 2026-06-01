@@ -3,6 +3,7 @@
 .obsidian/hotkeys.json
 .DS_Store
 .env
+.deploy-manifest.json
 build/
 .cursor/
 
