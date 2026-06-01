@@ -4,8 +4,11 @@
   "type": "module",
   "scripts": {
     "publish": "node scripts/delegate.mjs publish",
+    "publish:full": "node scripts/delegate.mjs publish --full",
     "deploy": "node scripts/delegate.mjs deploy",
+    "deploy:full": "node scripts/delegate.mjs deploy --full",
     "upload": "node scripts/delegate.mjs upload",
+    "upload:full": "node scripts/delegate.mjs upload --full",
     "auth:install": "node scripts/delegate.mjs auth-install",
     "auth:remove": "node scripts/delegate.mjs auth-remove"
   }

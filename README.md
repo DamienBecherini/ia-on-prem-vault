@@ -63,9 +63,12 @@ cp .env.example .env    # ENGINE_PATH + DEPLOY_*
 npm run publish         # git + build + incremental upload (FTPS/SFTP)
 npm run deploy          # build + incremental upload (no git)
 npm run upload          # incremental upload only (existing dist/)
+npm run upload:full     # full remote scan + upload all + mirror
 ```
 
-Incremental deploy uses a local `.deploy-manifest.json` (gitignored) in this vault: only changed `dist/` files are uploaded after each build. Use `npm run deploy -- --full` for a full remote scan and upload.
+Incremental deploy uses a local `.deploy-manifest.json` (gitignored) in this vault: only changed `dist/` files are uploaded after each build.
+
+Full deploy: `npm run upload:full -- --yes` or `npm run upload -- --full --yes`. Do not use `npm run upload --full` — npm consumes `--full` and never passes it to the script.
 
 To make the site **private** (Apache Basic Auth), fill in `AUTH_*` in `.env`, then:
 
