@@ -19,6 +19,11 @@
       ]
     },
     {
+      "label": "00 - Lexique",
+      "translations": { "en": "00 - Glossary" },
+      "items": [{ "autogenerate": { "directory": "00-lexique" } }]
+    },
+    {
       "label": "01 - Les Fondations",
       "translations": { "en": "01 - Foundations" },
       "items": [{ "autogenerate": { "directory": "01-fondations" } }]

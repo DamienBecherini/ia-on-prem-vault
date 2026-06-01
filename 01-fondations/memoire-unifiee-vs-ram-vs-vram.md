@@ -3,7 +3,7 @@ title: ⚔️ Mémoire Unifiée vs RAM vs VRAM
 description: Analyse comparative approfondie des trois architectures physiques de mémoire pour l'inférence de LLM.
 ---
 
-Pour un architecte système IA, comprendre la différence physique entre la RAM classique, la VRAM dédiée et la mémoire unifiée est crucial. Ce choix technique va déterminer non seulement la vitesse de génération du modèle (tokens/s), mais également le coût global de l'infrastructure d'un client.
+Pour un architecte système IA, comprendre la différence physique entre **RAM classique**, **VRAM dédiée** et **mémoire unifiée** est fondamental. Ce choix influence directement le débit en inférence (tokens/s), les coûts matériels et les limites d'évolutivité[^5].
 
 Voici l'analyse physique, les schémas de routage des données et le guide décisionnel pour vos audits d'entreprise.
 
@@ -25,7 +25,7 @@ graph TD
 ```mermaid
 graph TD
     subgraph "Mémoire Unifiée (Apple / AMD)"
-        SOC[Puce SoC unifiée] -->|Bus Direct: 800 Go/s| UMEM[Mémoire Unifiée LPDDR5X]
+        SOC[Puce SoC unifiée] -->|Bus Direct: 273 à 819 Go/s| UMEM[Mémoire Unifiée LPDDR5X]
         SOC_CPU[Cœurs CPU] --> SOC
         SOC_GPU[Cœurs GPU / NPU] --> SOC
     end
@@ -36,23 +36,23 @@ graph TD
 ---
 
 ## 1. La VRAM Dédiée (Le Standard Nvidia)
-La **VRAM (Video RAM)** est soudée directement sur le circuit imprimé de la carte graphique, au plus près du processeur graphique (GPU). En 2026, l'industrie utilise principalement de la mémoire **GDDR7** ou de la mémoire **HBM3** (High Bandwidth Memory) sur les puces professionnelles.
+La **VRAM (Video RAM)** est placée au plus près du GPU. En 2026, on retrouve surtout de la **GDDR7** sur les cartes grand public (ex: RTX 5090) et de la **HBM** sur des accélérateurs datacenter.
 
 *   **Le routage physique :** Le GPU accède à la VRAM par un bus mémoire très large (jusqu'à 512-bit). La distance physique entre la puce de calcul et la puce mémoire se compte en millimètres.
-*   **Pourquoi c'est rapide :** Les bandes passantes dépassent les **1 500 Go/s** (sur une RTX 5090). C'est la seule architecture capable de saturer les cœurs Tensor lors de la phase de *Decoding*.
+*   **Pourquoi c'est rapide :** la RTX 5090 atteint ~**1,79 To/s** (1 792 Go/s), ce qui change radicalement le débit en decoding[^1][^2].
 *   **La limite physique (Le coût de la capacité) :** Les puces de VRAM coûtent extrêmement cher à produire. Les cartes grand public plafonnent à 24 Go ou 32 Go. Pour obtenir 128 Go de VRAM, vous devez acheter 4 cartes graphiques physiques, ce qui pose des problèmes thermiques et électriques massifs.
 
 ---
 
 ## 2. La Mémoire Unifiée (L'approche Apple Silicon & AMD APU)
-Popularisée par Apple avec ses puces "M" (Max/Ultra) et rejointe par AMD avec l'architecture "Ryzen AI Max PRO 400" (Gorgon Halo), la **Mémoire Unifiée** supprime la frontière physique entre la RAM de l'ordinateur et la VRAM de la carte graphique.
+Popularisée par Apple et renforcée côté x86 par AMD Ryzen AI Max PRO 400, la **mémoire unifiée** supprime la séparation classique RAM/VRAM.
 
 *   **Le routage physique :** Le processeur central (CPU), la puce graphique (GPU) et l'accélérateur d'IA (NPU) sont réunis sur la même puce de silicium (SoC). Les barrettes de mémoire (LPDDR5X-8000/8533) sont soudées juste à côté, sur le même composant.
 *   **L'élimination de la copie :** Dans un PC classique, pour que la carte graphique traite une donnée stockée dans la RAM, le CPU doit copier la donnée, la faire passer par le bus PCIe (limité à 64 Go/s), puis la ré-écrire dans la VRAM. **En mémoire unifiée, cette étape de copie est éliminée.** Le GPU lit directement dans la mémoire partagée.
 *   **La nuance de bande passante (AMD vs Apple) :** 
-    *   **Apple Silicon :** Utilise des bus mémoire très larges (512-bit à 1024-bit), atteignant des débits de **546 Go/s (M4 Max)** à **819 Go/s (M3 Ultra)**.
-    *   **AMD Ryzen AI Max PRO 400 :** Utilise un bus de 256-bit connecté à de la LPDDR5X-8533, bridant la bande passante à **273 Go/s**. En revanche, elle offre une compatibilité x86 native (Windows / Linux), idéale pour l'écosystème open-source ROCm.
-*   **La rupture AMD (Mai 2026) :** Avec la gamme Ryzen AI Max PRO 400, l'architecture x86 dispose enfin de configurations montant jusqu'à **192 Go de mémoire unifiée**, permettant d'allouer manuellement jusqu'à **160 Go de VRAM** au GPU. Cela permet de faire tourner des modèles massifs de 300B paramètres en local sur un seul processeur.
+    *   **Apple Silicon :** M4 Max monte à **546 Go/s** (version 16c CPU / 40c GPU) ; M3 Ultra à **819 Go/s**[^3].
+    *   **AMD Ryzen AI Max PRO 400 :** environ **273 Go/s** avec LPDDR5X-8533 et bus 256-bit, avec compatibilité x86 (Windows/Linux)[^4].
+*   **La rupture AMD (2026) :** la plateforme PRO 400 monte à **192 Go** de mémoire partagée, avec jusqu'à **160 Go** allouables au GPU selon la configuration OEM[^4].
 *   **La limite physique :** La mémoire étant soudée sur le SoC pour garantir ce débit, il est strictement **impossible d'ajouter de la RAM** après l'achat. Vous devez dimensionner la machine pour les 5 prochaines années dès le premier jour.
 
 ---
@@ -61,21 +61,20 @@ Popularisée par Apple avec ses puces "M" (Max/Ultra) et rejointe par AMD avec l
 La mémoire de travail standard d'un PC classique, branchée sur des slots de carte mère (DIMM).
 
 *   **Le routage physique :** Les données doivent traverser la carte mère pour aller de la RAM au processeur via un bus mémoire étroit (généralement Dual-Channel sur les PC de bureau).
-*   **Pourquoi c'est lent :** La bande passante est limitée à environ **80 - 100 Go/s**. Même si vous disposez d'un processeur ultra-rapide, il passera 90% de son temps à attendre que les données arrivent de la RAM pour générer le token suivant.
-*   **Le seul avantage (Le coût du Giga-Octet) :** C'est une technologie très bon marché. Acheter 192 Go de RAM DDR5 pour un PC de bureau coûte environ 500 €, contre plus de 5 000 € pour la même capacité en mémoire unifiée ou en VRAM dédiée.
+*   **Pourquoi c'est plus lent en decoding LLM :** la bande passante est souvent de l'ordre de **80 à 100 Go/s** sur des postes dual-channel ; pour de gros modèles, cela limite le débit token/s.
+*   **Le principal avantage :** coût/Go très bas et évolutivité matérielle élevée.
 
 ---
 
 ## ⚖️ Tableau de Synthèse Comparative pour vos Audits
 
-| Critère d'évaluation                    | VRAM Dédiée (Nvidia Blackwell)           | Mémoire Unifiée Apple (M-Max/Ultra)    | Mémoire Unifiée AMD (Ryzen Max PRO) | RAM Classique (DDR5)                        |
-| :-------------------------------------- | :--------------------------------------- | :------------------------------------- | :---------------------------------- | :------------------------------------------ |
-| **Bande Passante Réelle**               | 🚀 **Fulgurante** (1 792 Go/s)           | ⚡ **Très Élevée** (546 à 819 Go/s)     | 📈 **Moyenne** (~273 Go/s)          | 🐌 **Faible** (80 à 100 Go/s)               |
-| **Vitesse d'Inférence (Modèle 70B Q4)** | ~45 tokens/sec                           | ~15 à 25 tokens/sec                    | ~7 à 10 tokens/sec                  | ~2 à 3 tokens/sec                           |
-| **Capacité Maximale**                   | 32 Go (RTX 5090) à 128 Go+ (Multi-GPU)   | Jusqu'à 512 Go (M3 Ultra)              | Jusqu'à 192 Go (Série 400)          | **Quasi-illimitée** (192 Go à 512 Go+)      |
-| **Coût pour 128 Go à 192 Go**           | 💸 **Délirant** (~15 000 € en multi-GPU) | ⚖️ **Élevé** (~5 000 € sur Mac Studio) | 🛒 **Moyen** (~2 750 € en APU AMD)  | 🛒 **Très Bas** (~500 € les barrettes DDR5) |
-| **Consommation / Chaleur**              | 🌋 **Trés élevée** (575W à 1500W+)       | 🍃 **Trés faible** (80W à 120W)        | 🍃 **Trés faible** (45W à 120W)     | 🍃 **Négligeable**                          |
-| **Évolutivité**                         | **Excellente** (on ajoute des cartes)    | **Nulle** (soudé sur la puce)          | **Nulle** (soudé sur la puce)       | **Excellente** (slots DIMM libres)          |
+| Critère d'évaluation | VRAM dédiée (RTX 5090) | Mémoire unifiée Apple | Mémoire unifiée AMD PRO 400 | RAM classique (DDR5) |
+| :-- | :-- | :-- | :-- | :-- |
+| **Bande passante mémoire** | ~1 792 Go/s[^2] | 546 à 819 Go/s[^3] | ~273 Go/s[^4] | ~80 à 100 Go/s (desktop dual-channel) |
+| **Borne théorique 70B Q4 (\~40 Go)** | ~44,8 tok/s | ~13,6 à 20,5 tok/s | ~6,8 tok/s | ~2 à 2,5 tok/s |
+| **Capacité machine typique (2026)** | 32 Go par carte grand public[^1] | 64 Go (M4 Max haut de gamme) / 96 Go (M3 Ultra actuel)[^3] | jusqu'à 192 Go[^4] | 64 à 256 Go fréquents, plus possible selon carte mère |
+| **Évolutivité matérielle** | élevée (ajout de GPU) | nulle (mémoire soudée) | nulle (mémoire soudée) | élevée (ajout DIMM) |
+| **Positionnement** | performance brute / multi-utilisateur | station locale très performante | compromis capacité locale + x86 | entrée de gamme / batch offline |
 
 ---
 
@@ -83,10 +82,20 @@ La mémoire de travail standard d'un PC classique, branchée sur des slots de ca
 
 Pour conseiller votre client PME dans le cadre d'un déploiement local (comme votre projet d'agent *OpenHuman*) :
 
-1.  **Le choix de la VRAM pure (RTX Nvidia Blackwell) :** À réserver si le client a des besoins de vitesse absolue en temps réel, ou si plus de 15 personnes doivent utiliser l'IA en même temps. La facture matérielle et électrique sera lourde.
-2.  **Le choix de la Mémoire Unifiée Apple (Mac Studio) :** L'option idéale pour un bureau créatif ou de conseil qui ne souhaite pas gérer de serveurs Linux complexes. Débit de lecture d'un prompt extrêmement rapide (TTFT bas).
-3.  **Le choix de la Mémoire Unifiée AMD (Mini-PC / Workstation Halo) :** La solution parfaite pour intégrer un serveur IA d'entreprise souverain et robuste sous Linux à coût réduit, tout en profitant de l'évolutivité logicielle de ROCm sans subir les verrous d'Apple.
-4.  **Le choix de la RAM classique (DDR5) :** À proposer uniquement si le budget est la contrainte n°1 et que la lenteur de génération n'est pas un problème (ex : traitement de documents par lots durant la nuit en tâche de fond).
+1.  **VRAM dédiée (GPU discret)** : choix prioritaire pour la vitesse brute et les charges concurrentes.
+2.  **Mémoire unifiée Apple** : excellent débit local, stack simple à opérer, mais faible évolutivité matérielle.
+3.  **Mémoire unifiée AMD PRO 400** : forte capacité mémoire locale en x86, adaptée aux besoins de souveraineté Linux/Windows.
+4.  **RAM DDR5 seule** : pertinent surtout pour des traitements différés ou des modèles plus petits.
 
 > 🔗 **Lien connexe :**
 > Pour comprendre comment dimensionner la capacité de mémoire nécessaire pour votre modèle sans faire d'erreur "Out Of Memory" (OOM), consultez le chapitre sur la [[01-fondations/quantification-4-bit-8-bit\|Quantification des modèles]].
+
+---
+
+## 📚 Sources et Références
+
+[^1]: NVIDIA, *GeForce RTX 5090 product page* (32 GB GDDR7, bus 512-bit, TGP 575 W). [https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/](https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/)
+[^2]: TechPowerUp, *NVIDIA GeForce RTX 5090 Specs* (bandwidth mémoire 1.79 TB/s). [https://www.techpowerup.com/gpu-specs/geforce-rtx-5090.c4216](https://www.techpowerup.com/gpu-specs/geforce-rtx-5090.c4216)
+[^3]: Apple, *Mac Studio - Technical Specifications* (M4 Max 546 GB/s, M3 Ultra 819 GB/s, configurations mémoire actuelles). [https://www.apple.com/mac-studio/specs/](https://www.apple.com/mac-studio/specs/)
+[^4]: ServeTheHome, *AMD Ups Ante With 192GB Ryzen AI Max PRO 400 Chips for AI Systems* (192 GB, 160 GB allouables GPU, ~273 GB/s), 2026. [https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/](https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/)
+[^5]: Amir Gholami et al., *AI and Memory Wall* (arXiv:2403.14123), 2024. [https://arxiv.org/abs/2403.14123](https://arxiv.org/abs/2403.14123)
