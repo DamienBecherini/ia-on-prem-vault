@@ -40,18 +40,21 @@ En tant qu'architecte, vous devez être capable de calculer précisément le dé
 
 $$\text{Vitesse Max (tokens/s)} = \frac{\text{Bande Passante Mémoire (Go/s)}}{\text{Taille du Modèle en Mémoire (Go)}}$$
 
-### Cas Pratique : Llama 4 - 70B (Quantifié en Q4)
+### Cas Pratique : Llama 4 - 70B (Quantifié en Q4 / FP4)
 Un modèle de 70 milliards de paramètres quantifié en 4-bit occupe environ **40 Go** d'espace mémoire.
 
 1.  **Sur un PC classique (RAM DDR5 Dual Channel) :**
-    *   Bande passante théorique : $100 \text{ Go/s}$
-    *   Calcul : $\frac{100 \text{ Go/s}}{40 \text{ Go}} = \mathbf{2,5 \text{ tokens/s}}$ (Vitesse de lecture très lente, pénible à l'usage).
-2.  **Sur un Mac Studio M4 Max (Mémoire Unifiée) :**
-    *   Bande passante théorique : $400 \text{ Go/s}$
-    *   Calcul : $\frac{400 \text{ Go/s}}{40 \text{ Go}} = \mathbf{10 \text{ tokens/s}}$ (Vitesse équivalente à la lecture humaine fluide).
-3.  **Sur une carte Nvidia RTX 5090 (VRAM GDDR7 dédiée) :**
-    *   Bande passante théorique : $1\ 790 \text{ Go/s}$
-    *   Calcul : $\frac{1790 \text{ Go/s}}{40 \text{ Go}} = \mathbf{44,7 \text{ tokens/s}}$ (Génération instantanée et ultra-rapide).
+    *   Bande passante réelle : $\sim 100 \text{ Go/s}$
+    *   Calcul : $\frac{100 \text{ Go/s}}{40 \text{ Go}} = \mathbf{2,5 \text{ tokens/s}}$ (Vitesse très lente, pénible à l'usage).
+2.  **Sur un système AMD Ryzen AI Max PRO 495 (Gorgon Halo) :**
+    *   Bande passante réelle : $\sim 273 \text{ Go/s}$
+    *   Calcul : $\frac{273 \text{ Go/s}}{40 \text{ Go}} = \mathbf{6,8 \text{ tokens/s}}$ (Vitesse acceptable, vitesse de lecture humaine moyenne).
+3.  **Sur un Mac Studio M4 Max (Mémoire Unifiée haut de gamme) :**
+    *   Bande passante réelle : $546 \text{ Go/s}$
+    *   Calcul : $\frac{546 \text{ Go/s}}{40 \text{ Go}} = \mathbf{13,6 \text{ tokens/s}}$ (Vitesse confortable, équivalente à une lecture rapide).
+4.  **Sur une carte Nvidia RTX 5090 (VRAM GDDR7 dédiée - Blackwell) :**
+    *   Bande passante réelle : $1\ 792 \text{ Go/s}$
+    *   Calcul : $\frac{1792 \text{ Go/s}}{40 \text{ Go}} = \mathbf{44,8 \text{ tokens/s}}$ (Génération instantanée, idéale pour du temps réel).
 
 ---
 
@@ -59,16 +62,18 @@ Un modèle de 70 milliards de paramètres quantifié en 4-bit occupe environ **4
 
 Voici la cartographie complète des bandes passantes mémoires, de la RAM de bureau jusqu'aux architectures de supercalculateurs de datacenters :
 
-| Technologie | Vitesse Réelle | Latence Typique | Usage Type | Impact sur l'Inférence |
-| :--- | :--- | :--- | :--- | :--- |
-| **Câble Ethernet (10 GbE)** | $1,25 \text{ Go/s}$ | $\sim 50 \ \mu\text{s}$ (Élevée) | Cluster réseau amateur / local. | **Inexploitable en direct.** Utilisé uniquement pour du traitement asynchrone (offline). |
-| **Câble Thunderbolt 5** | $10 \text{ à } 15 \text{ Go/s}$ | $< 1 \ \mu\text{s}$ (Très faible) | Cluster de Mac/PC via [[03-stack-logicielle/clustering-exo-et-ray\|Exo]]. | **Excellent pour PME.** Permet de lier 4 machines sans effondrer la latence. |
-| **Bus PCIe 5.0 (x16)** | $64 \text{ Go/s}$ | $< 1 \ \mu\text{s}$ | Connexion GPU ➔ CPU. | Goulot d'étranglement lors du déchargement (offload) de la RAM vers le GPU. |
-| **RAM standard (DDR5)** | $80 \text{ à } 100 \text{ Go/s}$ | $\sim 60 \text{ ns}$ | PC de bureau haut de gamme (i9/Ryzen 9). | Capacité énorme et pas chère, mais vitesse limitée à l'écriture humaine lente. |
-| **Mémoire Unifiée (APU)** | $400 \text{ à } 800 \text{ Go/s}$ | $\sim 40 \text{ ns}$ | [[02-materiel/apu-et-memoire-unifiee\|Mac Studio M4 / AMD Strix Halo]]. | **Le compromis parfait.** Vitesse fluide pour un coût matériel divisé par 4. |
-| **Fibre Optique (100 GbE RoCE v2)** | $12,5 \text{ Go/s}$ | $\sim 2 \ \mu\text{s}$ | Cluster de serveurs d'entreprise. | Permet d'étendre la VRAM sur des dizaines de serveurs avec synchronisation directe (RDMA). |
-| **VRAM Interne (GDDR7 / HBM3)** | $1\ 500 \text{ Go/s}+$ | $\sim 10 \text{ ns}$ (Ultra-faible) | GPU Nvidia RTX 5090 / Nvidia H100. | **Performances maximales.** Vitesse industrielle, indispensable pour le multi-utilisateur. |
-| **Interconnexion NVLink 5** | $1\ 800 \text{ Go/s}$ | $< 0,1 \ \mu\text{s}$ (Nulle) | Liaison physique directe entre GPU Nvidia pro. | Fusionne plusieurs GPU en une seule carte virtuelle sans aucune perte de débit. |
+| Technologie                            | Vitesse Réelle                         | Latence Typique                     | Usage Type                                                                | Impact sur l'Inférence                                                                                                                                                              |
+| :------------------------------------- | :------------------------------------- | :---------------------------------- | :------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Câble Ethernet (10 GbE)**            | $1,25 \text{ Go/s}$                    | $\sim 50 \ \mu\text{s}$ (Élevée)    | Cluster réseau amateur / local.                                           | **Inexploitable en direct.** Utilisé uniquement pour du traitement asynchrone (offline).                                                                                            |
+| **Câble Thunderbolt 5**                | $10 \text{ à } 15 \text{ Go/s}$        | $< 1 \ \mu\text{s}$ (Très faible)   | Cluster de Mac/PC via [[03-stack-logicielle/clustering-exo-et-ray\|Exo]]. | **Excellent pour PME.** Permet de lier 4 machines sans effondrer la latence.                                                                                                        |
+| **Bus PCIe 5.0 (x16)**                 | $64 \text{ Go/s}$                      | $< 1 \ \mu\text{s}$                 | Connexion GPU ➔ CPU.                                                      | Goulot d'étranglement lors du déchargement (offload) de la RAM vers le GPU.                                                                                                         |
+| **RAM standard (DDR5)**                | $80 \text{ à } 100 \text{ Go/s}$       | $\sim 60 \text{ ns}$                | PC de bureau haut de gamme (i9/Ryzen 9).                                  | Capacité énorme et pas chère, mais vitesse limitée à l'écriture humaine lente.                                                                                                      |
+| **Mémoire Unifiée AMD (Gorgon/Strix)** | $\sim 256 \text{ à } 273 \text{ Go/s}$ | $\sim 45 \text{ ns}$                | [[02-materiel/apu-et-memoire-unifiee\|Ryzen AI Max PRO (Halo)]].          | **Compromis x86/Linux.** Capacité massive (jusqu'à 192 Go) à coût raisonnable, mais débit modéré.                                                                                   |
+| **Mémoire Unifiée Apple (Max/Ultra)**  | $546 \text{ à } 819 \text{ Go/s}$      | $\sim 40 \text{ ns}$                | [[02-materiel/apu-et-memoire-unifiee\|Mac Studio M4 Max / M3 Ultra]].     | **Excellent équilibre.** Inférence très fluide, mais écosystème fermé (macOS) et RAM non évolutive.                                                                                 |
+| **Fibre Optique (100 GbE RoCE v2)**    | $12,5 \text{ Go/s}$                    | $\sim 2 \ \mu\text{s}$              | Cluster de serveurs d'entreprise.                                         | Permet d'étendre la VRAM sur des dizaines de serveurs avec synchronisation directe (RDMA).                                                                                          |
+| **VRAM Interne (GDDR7 / HBM3)**        | $1\ 500 \text{ Go/s}+$                 | $\sim 10 \text{ ns}$ (Ultra-faible) | GPU Nvidia RTX 5090 / Nvidia H100.                                        | **Performances maximales.** Vitesse industrielle, indispensable pour le multi-utilisateur.                                                                                          |
+| **Interconnexion NVLink 5**            | $1\ 800 \text{ Go/s}$                  | $< 0,1 \ \mu\text{s}$               | Liaison physique directe entre GPU Nvidia Pros (A100/H100/B200).          | Fusionne plusieurs GPU en une seule carte virtuelle sans aucune perte de débit.<br>Note: Indisponible sur RTX 5090. Les clusters de 5090 sont bridés par le bus PCIe 5.0 (64 Go/s). |
+|                                        |                                        |                                     |                                                                           |                                                                                                                                                                                     |
 
 ---
 

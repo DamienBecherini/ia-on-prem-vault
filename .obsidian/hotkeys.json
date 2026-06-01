@@ -2,7 +2,7 @@
   "editor:toggle-source": [
     {
       "modifiers": [
-        "Mod"
+        "Alt"
       ],
       "key": "X"
     }
