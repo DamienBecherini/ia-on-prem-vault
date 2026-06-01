@@ -9,3 +9,6 @@ build/
 # Private notes — never on GitHub or the web (the engine respects this file at build time)
 _private/*
 !_private/README.md
+
+# Obsidian templates — helper files, never published as docs pages
+_templates/*

@@ -40,4 +40,4 @@ Bienvenue dans le "Zero to Hero" de l'IA Locale. Ce Vault est conçu comme un ja
 ---
 ## 📖 Dictionnaire & Concepts
 *Retrouvez ici la définition rapide de tous les termes techniques.*
-👉 [[Glossaire IA]]
+👉 [[00-lexique/glossaire-ia|Glossaire IA]]
