@@ -45,10 +45,14 @@ La **VRAM (Video RAM)** est soudée directement sur le circuit imprimé de la ca
 ---
 
 ## 2. La Mémoire Unifiée (L'approche Apple Silicon & AMD APU)
-Popularisée par Apple avec ses puces "M" (Max/Ultra) et rejointe par AMD avec l'architecture "Ryzen AI Max" (Strix Halo), la **Mémoire Unifiée** supprime la frontière physique entre la RAM de l'ordinateur et la VRAM de la carte graphique.
+Popularisée par Apple avec ses puces "M" (Max/Ultra) et rejointe par AMD avec l'architecture "Ryzen AI Max PRO 400" (Gorgon Halo), la **Mémoire Unifiée** supprime la frontière physique entre la RAM de l'ordinateur et la VRAM de la carte graphique.
 
-*   **Le routage physique :** Le processeur central (CPU), la puce graphique (GPU) et l'accélérateur d'IA (NPU) sont réunis sur la même puce de silicium (SoC). Les barrettes de mémoire (LPDDR5X) sont soudées juste à côté, sur le même composant.
-*   **L'élimination de la copie :** Dans un PC classique, pour que la carte graphique traite une donnée stockée dans la RAM, le CPU doit copier la donnée, la faire passer par le câble/bus PCIe (limité à 64 Go/s), puis la ré-écrire dans la VRAM. **En mémoire unifiée, cette étape de copie est éliminée.** Le GPU lit directement dans la mémoire de l'ordinateur à une vitesse de **400 à 800 Go/s**.
+*   **Le routage physique :** Le processeur central (CPU), la puce graphique (GPU) et l'accélérateur d'IA (NPU) sont réunis sur la même puce de silicium (SoC). Les barrettes de mémoire (LPDDR5X-8000/8533) sont soudées juste à côté, sur le même composant.
+*   **L'élimination de la copie :** Dans un PC classique, pour que la carte graphique traite une donnée stockée dans la RAM, le CPU doit copier la donnée, la faire passer par le bus PCIe (limité à 64 Go/s), puis la ré-écrire dans la VRAM. **En mémoire unifiée, cette étape de copie est éliminée.** Le GPU lit directement dans la mémoire partagée.
+*   **La nuance de bande passante (AMD vs Apple) :** 
+    *   **Apple Silicon :** Utilise des bus mémoire très larges (512-bit à 1024-bit), atteignant des débits de **546 Go/s (M4 Max)** à **819 Go/s (M3 Ultra)**.
+    *   **AMD Ryzen AI Max PRO 400 :** Utilise un bus de 256-bit connecté à de la LPDDR5X-8533, bridant la bande passante à **273 Go/s**. En revanche, elle offre une compatibilité x86 native (Windows / Linux), idéale pour l'écosystème open-source ROCm.
+*   **La rupture AMD (Mai 2026) :** Avec la gamme Ryzen AI Max PRO 400, l'architecture x86 dispose enfin de configurations montant jusqu'à **192 Go de mémoire unifiée**, permettant d'allouer manuellement jusqu'à **160 Go de VRAM** au GPU. Cela permet de faire tourner des modèles massifs de 300B paramètres en local sur un seul processeur.
 *   **La limite physique :** La mémoire étant soudée sur le SoC pour garantir ce débit, il est strictement **impossible d'ajouter de la RAM** après l'achat. Vous devez dimensionner la machine pour les 5 prochaines années dès le premier jour.
 
 ---
@@ -64,13 +68,14 @@ La mémoire de travail standard d'un PC classique, branchée sur des slots de ca
 
 ## ⚖️ Tableau de Synthèse Comparative pour vos Audits
 
-| Critère d'évaluation | VRAM Dédiée (Nvidia) | Mémoire Unifiée (Mac/AMD) | RAM Classique (DDR5) |
-| :--- | :--- | :--- | :--- |
-| **Bande Passante Réelle** | 🚀 **Fulgurante** (1 500 Go/s+) | ⚡ **Élevée** (400 à 800 Go/s) | 🐌 **Faible** (80 à 100 Go/s) |
-| **Vitesse d'Inférence (Modèle 70B)** | 40+ tokens/sec | 15 à 25 tokens/sec | 2 à 3 tokens/sec |
-| **Coût pour 128 Go de capacité** | 💸 **Délirant** (~15 000 € en multi-GPU) | ⚖️ **Moyen** (~4 500 € le Mac complet) | 🛒 **Très bas** (~500 € les barrettes) |
-| **Consommation / Chaleur** | 🌋 **Trés élevée** (600W à 1500W+) | 🍃 **Trés faible** (80W à 120W) | 🍃 **Négligeable** |
-| **Évolutivité** | **Excellente** (on ajoute des cartes) | **Nulle** (soudé sur la puce) | **Excellente** (slots DIMM libres) |
+| Critère d'évaluation                    | VRAM Dédiée (Nvidia Blackwell)           | Mémoire Unifiée Apple (M-Max/Ultra)    | Mémoire Unifiée AMD (Ryzen Max PRO) | RAM Classique (DDR5)                        |
+| :-------------------------------------- | :--------------------------------------- | :------------------------------------- | :---------------------------------- | :------------------------------------------ |
+| **Bande Passante Réelle**               | 🚀 **Fulgurante** (1 792 Go/s)           | ⚡ **Très Élevée** (546 à 819 Go/s)     | 📈 **Moyenne** (~273 Go/s)          | 🐌 **Faible** (80 à 100 Go/s)               |
+| **Vitesse d'Inférence (Modèle 70B Q4)** | ~45 tokens/sec                           | ~15 à 25 tokens/sec                    | ~7 à 10 tokens/sec                  | ~2 à 3 tokens/sec                           |
+| **Capacité Maximale**                   | 32 Go (RTX 5090) à 128 Go+ (Multi-GPU)   | Jusqu'à 512 Go (M3 Ultra)              | Jusqu'à 192 Go (Série 400)          | **Quasi-illimitée** (192 Go à 512 Go+)      |
+| **Coût pour 128 Go à 192 Go**           | 💸 **Délirant** (~15 000 € en multi-GPU) | ⚖️ **Élevé** (~5 000 € sur Mac Studio) | 🛒 **Moyen** (~2 750 € en APU AMD)  | 🛒 **Très Bas** (~500 € les barrettes DDR5) |
+| **Consommation / Chaleur**              | 🌋 **Trés élevée** (575W à 1500W+)       | 🍃 **Trés faible** (80W à 120W)        | 🍃 **Trés faible** (45W à 120W)     | 🍃 **Négligeable**                          |
+| **Évolutivité**                         | **Excellente** (on ajoute des cartes)    | **Nulle** (soudé sur la puce)          | **Nulle** (soudé sur la puce)       | **Excellente** (slots DIMM libres)          |
 
 ---
 
@@ -78,9 +83,10 @@ La mémoire de travail standard d'un PC classique, branchée sur des slots de ca
 
 Pour conseiller votre client PME dans le cadre d'un déploiement local (comme votre projet d'agent *OpenHuman*) :
 
-1.  **Le choix de la VRAM pure (RTX Nvidia) :** À réserver si le client a des besoins de vitesse absolue en temps réel, ou si plus de 15 personnes doivent utiliser l'IA en même temps. La facture matérielle et électrique sera lourde.
-2.  **Le choix de la Mémoire Unifiée (Mac Studio / AMD) :** C'est le choix de la raison technologique en 2026. Vous obtenez un serveur IA très rapide, complètement silencieux, qui consomme autant qu'une ampoule électrique, pour le prix d'un seul GPU Nvidia professionnel.
-3.  **Le choix de la RAM classique (DDR5) :** À proposer uniquement si le budget est la contrainte n°1 et que la lenteur de génération n'est pas un problème (ex : traitement de documents par lots durant la nuit en tâche de fond).
+1.  **Le choix de la VRAM pure (RTX Nvidia Blackwell) :** À réserver si le client a des besoins de vitesse absolue en temps réel, ou si plus de 15 personnes doivent utiliser l'IA en même temps. La facture matérielle et électrique sera lourde.
+2.  **Le choix de la Mémoire Unifiée Apple (Mac Studio) :** L'option idéale pour un bureau créatif ou de conseil qui ne souhaite pas gérer de serveurs Linux complexes. Débit de lecture d'un prompt extrêmement rapide (TTFT bas).
+3.  **Le choix de la Mémoire Unifiée AMD (Mini-PC / Workstation Halo) :** La solution parfaite pour intégrer un serveur IA d'entreprise souverain et robuste sous Linux à coût réduit, tout en profitant de l'évolutivité logicielle de ROCm sans subir les verrous d'Apple.
+4.  **Le choix de la RAM classique (DDR5) :** À proposer uniquement si le budget est la contrainte n°1 et que la lenteur de génération n'est pas un problème (ex : traitement de documents par lots durant la nuit en tâche de fond).
 
 > 🔗 **Lien connexe :**
 > Pour comprendre comment dimensionner la capacité de mémoire nécessaire pour votre modèle sans faire d'erreur "Out Of Memory" (OOM), consultez le chapitre sur la [[01-fondations/quantification-4-bit-8-bit\|Quantification des modèles]].
