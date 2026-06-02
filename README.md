@@ -41,6 +41,8 @@ index.mdx               home page (hero)
 en/                     English notes
 _templates/             Obsidian templates (e.g. _Terme Lexique.md)
 _private/               confidential notes (gitignored, never published)
+docs/plans/             agent implementation plans (excluded from publish; see README there)
+.agents/                agent skills and maintenance (excluded from publish)
 ```
 
 ### Lexicon (this vault)
@@ -79,7 +81,9 @@ Incremental deploy uses `.deploy-manifest.json` (gitignored in this vault) plus 
 `{DEPLOY_REMOTE_PATH}/.deploy-manifest.json`. The engine merges both before comparing `dist/` hashes, so
 CI and multi-machine deploys stay in sync; only changed files are uploaded after each build.
 
-Run `npm run audit:links` in the engine to list unresolved wiki/MD links (lexicon backlog maintenance).
+Run `npm run audit:links` in the engine to list unresolved wiki/MD links (lexicon backlog and [link audit allowlist](.agents/vault-maintenance/link-audit-allowlist.md)).
+
+Agent implementation plans live in [docs/plans/README.md](docs/plans/README.md) (English, not published).
 
 Full deploy: `npm run upload:full -- --yes` or `npm run upload -- --full --yes`. Do not use `npm run upload --full` — npm consumes `--full` and never passes it to the script.
 

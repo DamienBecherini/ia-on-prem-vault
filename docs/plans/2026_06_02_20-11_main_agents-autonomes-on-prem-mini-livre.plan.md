@@ -1,62 +1,62 @@
 ---
 name: agents-autonomes-on-prem-mini-livre
-overview: Créer une nouvelle section du vault sur les agents autonomes on-premise, centrée sur la maintenance souveraine d'un vault Markdown avec boucle human-in-the-loop.
+overview: Create a new vault section on on-prem autonomous agents, focused on sovereign maintenance of a Markdown vault with a human-in-the-loop workflow.
 todos:
   - id: structure-section
-    content: Créer l'arborescence 05-agents-autonomes-on-prem et la page d'entrée
+    content: Create the 05-agents-autonomes-on-prem tree and entry page
     status: pending
   - id: cadrage-editorial
-    content: Rédiger les pages de vision, souveraineté, architectures et workflow human-in-the-loop
+    content: Write vision, sovereignty, architectures, and human-in-the-loop workflow pages
     status: pending
   - id: fiches-solutions
-    content: Créer les fiches solutions pour Cursor CLI, Aider, OpenHands, Ollama, LiteLLM, SearXNG/Tavily et projets LLM Wiki
+    content: Create solution sheets for Cursor CLI, Aider, OpenHands, Ollama, LiteLLM, SearXNG/Tavily, and LLM Wiki projects
     status: pending
   - id: comparatif
-    content: Rédiger le comparatif argumenté et la recommandation d'architecture cible
+    content: Write the reasoned comparison and target architecture recommendation
     status: pending
   - id: lexique
-    content: Identifier puis créer ou mettre à jour les fiches lexique nécessaires
+    content: Identify then create or update required lexicon entries
     status: pending
   - id: validation
-    content: Vérifier sources, maillage, build Starlight et append le rapport d'implémentation
+    content: Verify sources, linking, Starlight build, and append the implementation report
     status: pending
 isProject: false
 ---
 
-# Agents autonomes on-premise - mini-livre
+# On-prem autonomous agents - mini-book
 
-## Objectif
+## Objective
 
-Créer une nouvelle section éditoriale du vault consacrée aux **agents autonomes on-premise** capables d'auditer, maintenir et proposer des mises à jour sur un vault Markdown/Obsidian, avec un circuit de validation humaine.
+Create a new editorial section of the vault devoted to **on-prem autonomous agents** capable of auditing, maintaining, and proposing updates to a Markdown/Obsidian vault, with a human validation circuit.
 
-Cette section doit prolonger le parcours initial du vault :
+This section should extend the vault’s initial journey:
 
-- `01-fondations/` - physique de l'IA
-- `02-materiel/` - architectures matérielles
-- `03-stack-logicielle/` - moteurs et frameworks
-- `04-blueprints/` - scénarios d'architecture
-- `05-agents-autonomes-on-prem/` - agents autonomes, souveraineté et maintenance continue
+- `01-fondations/` - physics of AI
+- `02-materiel/` - hardware architectures
+- `03-stack-logicielle/` - engines and frameworks
+- `04-blueprints/` - architecture scenarios
+- `05-agents-autonomes-on-prem/` - autonomous agents, sovereignty, and continuous maintenance
 
-Le fil conducteur est le **custodian agent** : un agent qui surveille le vault, détecte les connaissances obsolètes, propose des corrections sourcées, travaille en branches/PR et laisse l'humain valider.
+The through-line is the **custodian agent**: an agent that monitors the vault, detects outdated knowledge, proposes sourced corrections, works in branches/PRs, and leaves validation to humans.
 
-## Position éditoriale
+## Editorial positioning
 
-La souveraineté est un critère majeur.
+Sovereignty is a major criterion.
 
-La section présentera Cursor CLI et Cursor Automations comme solutions simples et puissantes, mais expliquera pourquoi elles ne sont pas l'architecture cible souveraine : choix des modèles limité par Cursor, dépendance à Cursor Cloud selon les modes, et incertitudes de confidentialité quand les données transitent par leurs services.
+The section will present Cursor CLI and Cursor Automations as simple, powerful solutions, but explain why they are not the sovereign target architecture: model choice limited by Cursor, dependency on Cursor Cloud depending on modes, and confidentiality uncertainties when data transits their services.
 
-L'architecture cible à étudier privilégie :
+The target architecture to study favors:
 
-- runner VPS ou VM Proxmox
-- agent CLI ou orchestrateur open source
-- modèles locaux via Ollama ou modèles externes via LiteLLM
-- recherche web contrôlée via SearXNG ou Tavily
-- travail Git en branches datées
-- PR ou rapport, jamais push direct sur `main`
-- notifications email/webhook
-- boucle `human-in-the-loop` ou `human-on-the-loop`
+- VPS runner or Proxmox VM
+- open-source CLI agent or orchestrator
+- local models via Ollama or external models via LiteLLM
+- controlled web search via SearXNG or Tavily
+- Git work in dated branches
+- PR or report, never direct push to `main`
+- email/webhook notifications
+- `human-in-the-loop` or `human-on-the-loop` loop
 
-## Arborescence cible
+## Target tree
 
 ```text
 05-agents-autonomes-on-prem/
@@ -85,50 +85,50 @@ L'architecture cible à étudier privilégie :
     ai-assisted-docs.md
 ```
 
-## Structure des fiches solution
+## Solution sheet structure
 
-Chaque fiche dans `05-agents-autonomes-on-prem/solutions/` doit suivre une structure souple mais comparable :
+Each sheet in `05-agents-autonomes-on-prem/solutions/` should follow a flexible but comparable structure:
 
 ```markdown
-## Présentation rapide
+## Quick overview
 
-## Pourquoi cette solution nous intéresse
+## Why this solution matters to us
 
-## Avantages
+## Advantages
 
-## Limites et risques
+## Limits and risks
 
-## Souveraineté et confidentialité
+## Sovereignty and confidentiality
 
-## Intégration possible avec le vault
+## Possible vault integration
 
-## Maturité du projet
+## Project maturity
 
 ## Sources
 
-## Verdict provisoire
+## Provisional verdict
 ```
 
-Les chiffres de popularité, dates, fonctionnalités et claims de maturité doivent être sourcés ou formulés prudemment.
+Popularity figures, dates, features, and maturity claims must be sourced or stated cautiously.
 
 ## Phases
 
-### Phase 1 - Structure et page d'entrée
+### Phase 1 - Structure and entry page
 
 **Files:**
 
 - Create: `05-agents-autonomes-on-prem/index.md`
 - Create: `05-agents-autonomes-on-prem/solutions/index-solutions-agentiques.md`
-- Modify: `site.config.json` si nécessaire pour ajouter la section au sidebar
+- Modify: `site.config.json` if needed to add the section to the sidebar
 
 **Steps:**
 
-- [ ] Créer le dossier `05-agents-autonomes-on-prem/`.
-- [ ] Créer une page `index.md` qui explique le but de la section et propose un plan de navigation.
-- [ ] Créer `solutions/index-solutions-agentiques.md` comme index des projets et outils étudiés.
-- [ ] Ajouter la section au sidebar du vault si elle doit apparaître dans la navigation publiée.
+- [ ] Create the `05-agents-autonomes-on-prem/` folder.
+- [ ] Create an `index.md` page that explains the section purpose and offers a navigation plan.
+- [ ] Create `solutions/index-solutions-agentiques.md` as an index of studied projects and tools.
+- [ ] Add the section to the vault sidebar if it should appear in published navigation.
 
-### Phase 2 - Cadrage transversal
+### Phase 2 - Cross-cutting framing
 
 **Files:**
 
@@ -141,14 +141,14 @@ Les chiffres de popularité, dates, fonctionnalités et claims de maturité doiv
 
 **Steps:**
 
-- [ ] Définir la vision du custodian agent.
-- [ ] Décrire les enjeux de souveraineté, privacy, choix des modèles et transit des données.
-- [ ] Comparer les architectures VPS, Proxmox, Cursor CLI, Aider, OpenHands et custodian maison.
-- [ ] Décrire le workflow rapport → branche → PR → review humaine → merge → publication.
-- [ ] Décrire les stratégies GitHub : compte bot, GitHub App, branches datées, PR, email/webhook.
-- [ ] Décrire les briques de recherche web : Cursor web tools, SearXNG, Tavily, logs de sources et budgets.
+- [ ] Define the custodian agent vision.
+- [ ] Describe sovereignty, privacy, model choice, and data transit issues.
+- [ ] Compare VPS, Proxmox, Cursor CLI, Aider, OpenHands, and home-grown custodian architectures.
+- [ ] Describe the report → branch → PR → human review → merge → publication workflow.
+- [ ] Describe GitHub strategies: bot account, GitHub App, dated branches, PR, email/webhook.
+- [ ] Describe web search building blocks: Cursor web tools, SearXNG, Tavily, source logs, and budgets.
 
-### Phase 3 - Fiches solutions
+### Phase 3 - Solution sheets
 
 **Files:**
 
@@ -166,12 +166,12 @@ Les chiffres de popularité, dates, fonctionnalités et claims de maturité doiv
 
 **Steps:**
 
-- [ ] Pour chaque solution, récupérer les sources primaires : repo officiel, docs, README, release/stars si pertinent.
-- [ ] Rédiger une fiche courte, sourcée et comparable.
-- [ ] Séparer clairement les faits vérifiés des hypothèses ou limites à auditer plus tard.
-- [ ] Relier chaque fiche aux pages transverses et au lexique.
+- [ ] For each solution, gather primary sources: official repo, docs, README, release/stars if relevant.
+- [ ] Write a short, sourced, comparable sheet.
+- [ ] Clearly separate verified facts from hypotheses or limits to audit later.
+- [ ] Link each sheet to cross-cutting pages and the lexicon.
 
-### Phase 4 - Comparatif et recommandation
+### Phase 4 - Comparison and recommendation
 
 **Files:**
 
@@ -180,12 +180,12 @@ Les chiffres de popularité, dates, fonctionnalités et claims de maturité doiv
 
 **Steps:**
 
-- [ ] Comparer Cursor CLI, Aider et OpenHands selon : simplicité, souveraineté, choix des modèles, intégration Git, web search, maturité, coût, risques.
-- [ ] Expliquer pourquoi Cursor CLI est intéressant pour un MVP mais pas idéal comme cible souveraine.
-- [ ] Proposer une trajectoire : MVP simple → runner model-agnostic → custodian maison.
-- [ ] Définir des niveaux d'autonomie : report-only, branche, PR, review humaine, staging, publication.
+- [ ] Compare Cursor CLI, Aider, and OpenHands on: simplicity, sovereignty, model choice, Git integration, web search, maturity, cost, risks.
+- [ ] Explain why Cursor CLI is interesting for an MVP but not ideal as a sovereign target.
+- [ ] Propose a trajectory: simple MVP → model-agnostic runner → home-grown custodian.
+- [ ] Define autonomy levels: report-only, branch, PR, human review, staging, publication.
 
-### Phase 5 - Lexique
+### Phase 5 - Lexicon
 
 **Files:**
 
@@ -210,12 +210,12 @@ Les chiffres de popularité, dates, fonctionnalités et claims de maturité doiv
 
 **Steps:**
 
-- [ ] Identifier les termes déjà couverts par le lexique.
-- [ ] Créer les fiches manquantes avec `_templates/_Terme Lexique.md`.
-- [ ] Ajouter des liens `Voir aussi` entre les fiches lexique et la nouvelle section.
-- [ ] Mettre à jour `00-lexique/glossaire-ia.md` si certains termes doivent rejoindre les parcours recommandés ou l'index des acronymes.
+- [ ] Identify terms already covered by the lexicon.
+- [ ] Create missing entries with `_templates/_Terme Lexique.md`.
+- [ ] Add `Voir aussi` links between lexicon entries and the new section.
+- [ ] Update `00-lexique/glossaire-ia.md` if some terms should join recommended paths or the acronym index.
 
-### Phase 6 - Vérification et publication
+### Phase 6 - Verification and publication
 
 **Files:**
 
@@ -224,19 +224,19 @@ Les chiffres de popularité, dates, fonctionnalités et claims de maturité doiv
 
 **Steps:**
 
-- [ ] Lancer le skill `vault-verify-content` sur les pages principales.
-- [ ] Vérifier les sources externes, surtout les claims sur maturité, modèles supportés, privacy et automatisation.
-- [ ] Vérifier que `docs/plans/**`, `.agents/**` et `.cursor/**` restent exclus de la publication via `publish.exclude`.
-- [ ] Lancer le build Starlight via l'engine.
-- [ ] Ajouter le compte rendu d'implémentation/build à la fin de ce plan.
+- [ ] Run the `vault-verify-content` skill on main pages.
+- [ ] Verify external sources, especially claims on maturity, supported models, privacy, and automation.
+- [ ] Verify that `docs/plans/**`, `.agents/**`, and `.cursor/**` remain excluded from publication via `publish.exclude`.
+- [ ] Run the Starlight build via the engine.
+- [ ] Append the implementation/build report to the end of this plan.
 
-## Critères de réussite
+## Success criteria
 
-- La section `05-agents-autonomes-on-prem/` existe et possède une page d'entrée navigable.
-- Chaque fiche solution distingue faits, limites, intérêt pour le vault et niveau de souveraineté.
-- Les claims de maturité et de fonctionnalités sont sourcés.
-- Le comparatif explique clairement pourquoi Cursor CLI peut servir de MVP mais n'est pas la cible souveraine.
-- La recommandation d'architecture cible propose une trajectoire pragmatique.
-- Les termes importants sont reliés au lexique ou listés pour création.
-- Le build Starlight passe après création de la section.
+- The `05-agents-autonomes-on-prem/` section exists and has a navigable entry page.
+- Each solution sheet distinguishes facts, limits, vault interest, and sovereignty level.
+- Maturity and feature claims are sourced.
+- The comparison clearly explains why Cursor CLI can serve as an MVP but is not the sovereign target.
+- The target architecture recommendation proposes a pragmatic trajectory.
+- Important terms are linked to the lexicon or listed for creation.
+- The Starlight build passes after creating the section.
 
