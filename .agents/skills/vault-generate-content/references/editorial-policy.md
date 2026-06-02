@@ -37,6 +37,12 @@ During chapter generation:
 - List existing linked entries to verify or update when the new article changes definitions, formulas, or recommendations.
 - Consider whether `00-lexique/glossaire-ia.md` needs a hub update for major terms.
 
+## Language
+
+Vault note content may be in any language defined by `site.config.json` locales and the note's folder (for example French at the root, English under `en/`). Match the target path; do not default to English for fiches unless the note lives in an English locale folder.
+
+Repository tooling, skills, and agent plans remain in English.
+
 ## Links And Style
 
 Use Obsidian wikilinks for internal vault references:
