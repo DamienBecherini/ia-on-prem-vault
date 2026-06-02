@@ -75,7 +75,11 @@ npm run upload          # incremental upload only (existing dist/)
 npm run upload:full     # full remote scan + upload all + mirror
 ```
 
-Incremental deploy uses a local `.deploy-manifest.json` (gitignored) in this vault: only changed `dist/` files are uploaded after each build.
+Incremental deploy uses `.deploy-manifest.json` (gitignored in this vault) plus a **remote copy** at
+`{DEPLOY_REMOTE_PATH}/.deploy-manifest.json`. The engine merges both before comparing `dist/` hashes, so
+CI and multi-machine deploys stay in sync; only changed files are uploaded after each build.
+
+Run `npm run audit:links` in the engine to list unresolved wiki/MD links (lexicon backlog maintenance).
 
 Full deploy: `npm run upload:full -- --yes` or `npm run upload -- --full --yes`. Do not use `npm run upload --full` — npm consumes `--full` and never passes it to the script.
 
