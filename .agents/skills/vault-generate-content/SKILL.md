@@ -44,22 +44,22 @@ Respect explicit user overrides. If the user asks not to use this skill or the p
    - state the claim as an uncertain order of magnitude, or
    - omit the number.
 5. Add footnotes inline near the claims they support.
-6. Add a final working section while drafting:
+6. Track lexicon side effects outside the public article:
 
 ```markdown
-## Lexique - actions
+## Lexicon follow-up
 
-### Termes existants a lier
+### Existing entries linked
 - [[00-lexique/example]] - pourquoi le lien est utile
 
-### Nouvelles fiches a creer
+### New entries to create
 - `00-lexique/new-term.md` - definition attendue
 
-### Fiches a verifier ou mettre a jour
+### Existing entries to verify/update
 - [[00-lexique/existing-term]] - point de coherence a verifier
 ```
 
-Remove or keep this section according to the user's publishing preference. If removed from the article, report the checklist in chat.
+Do not leave this working section in a published chapter article. Put it in the implementation plan/report and, for durable follow-up, update `.agents/vault-maintenance/lexicon-backlog.md`.
 
 ## Lexicon Entry Workflow
 
@@ -81,4 +81,13 @@ When finishing generation, report:
 - source status: fetched sources, reused sources, or missing sources
 - lexicon checklist: create, link, verify/update
 - remaining verification needed
+
+## Public Content Boundary
+
+Never mix agent maintenance notes with reader-facing content. In chapter articles:
+
+- Do not publish sections named `Lexique - actions`, `Nouvelles fiches a creer`, or `Fiches a verifier`.
+- Link existing lexicon entries directly in the prose where useful for readers.
+- Move agent-only follow-up to the plan report and `.agents/vault-maintenance/lexicon-backlog.md`.
+- If the backlog does not exist, create it before finishing the task.
 
