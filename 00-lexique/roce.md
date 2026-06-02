@@ -8,7 +8,6 @@ tags:
   - reseau
 ---
 
-# RoCE
 
 ## Définition courte
 Protocole qui apporte les bénéfices RDMA sur des réseaux Ethernet adaptés.
@@ -25,6 +24,6 @@ Il améliore la viabilité des architectures multi-nœuds en limitant la pénali
 - Confondre débit théorique Ethernet et performance réelle applicative.
 
 ## Voir aussi
-- [[00-lexique/rdma]]
-- [[00-lexique/multi-gpu]]
-- [[01-fondations/la-bande-passante-memoire]]
+- [[00-lexique/rdma|RDMA]]
+- [[00-lexique/multi-gpu|Multi-GPU]]
+- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]

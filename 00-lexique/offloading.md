@@ -8,7 +8,6 @@ tags:
   - stack
 ---
 
-# Offloading
 
 ## Définition courte
 Technique qui place une partie du modèle hors de la VRAM principale (souvent en RAM).
@@ -21,6 +20,6 @@ Le gain de capacité se paie généralement en latence et en débit.
 Permet de faire tourner des modèles trop grands pour la VRAM disponible, en acceptant un compromis performance.
 
 ## Voir aussi
-- [[00-lexique/pcie]]
-- [[00-lexique/ram]]
-- [[00-lexique/vram]]
+- [[00-lexique/pcie|PCIe]]
+- [[00-lexique/ram|RAM]]
+- [[00-lexique/vram|VRAM]]

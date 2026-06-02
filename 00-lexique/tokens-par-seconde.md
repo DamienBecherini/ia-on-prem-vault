@@ -9,7 +9,6 @@ tags:
   - fondations
 ---
 
-# Tokens par seconde
 
 ## Définition courte
 Nombre de tokens générés par seconde par le modèle en phase de génération.
@@ -22,6 +21,6 @@ C'est un indicateur pratique de "fluidité" utilisateur, mais il faut l'interpr�
 C'est la métrique la plus parlante pour comparer des configurations matérielles en usage conversationnel.
 
 ## Voir aussi
-- [[00-lexique/ttft]]
-- [[00-lexique/decoding]]
-- [[00-lexique/bande-passante-memoire]]
+- [[00-lexique/ttft|TTFT]]
+- [[00-lexique/decoding|Decoding]]
+- [[00-lexique/bande-passante-memoire|Bande passante mémoire]]

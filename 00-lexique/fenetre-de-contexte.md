@@ -8,7 +8,6 @@ tags:
   - fondations
 ---
 
-# Fenêtre de contexte
 
 ## Définition courte
 Nombre maximal de tokens qu'un modèle peut considérer sur une requête.
@@ -25,6 +24,6 @@ Elle impacte directement la capacité à traiter des documents longs et la stabi
 - Sous-estimer le coût mémoire du contexte long sur les machines locales.
 
 ## Voir aussi
-- [[00-lexique/kv-cache]]
-- [[00-lexique/ttft]]
-- [[00-lexique/rag]]
+- [[00-lexique/kv-cache|KV Cache]]
+- [[00-lexique/ttft|TTFT]]
+- [[00-lexique/rag|RAG]]

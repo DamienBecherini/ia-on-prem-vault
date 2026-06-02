@@ -9,7 +9,6 @@ tags:
   - materiel
 ---
 
-# RAM
 
 ## Définition courte
 Mémoire principale de la machine, utilisée par le CPU et parfois comme extension pour l'inférence.
@@ -26,6 +25,6 @@ Elle conditionne la possibilité de charger de gros modèles à coût réduit, m
 - Ignorer le rôle du bus (PCIe) quand des données doivent circuler entre RAM et GPU.
 
 ## Voir aussi
-- [[00-lexique/vram]]
-- [[00-lexique/offloading]]
-- [[01-fondations/memoire-unifiee-vs-ram-vs-vram]]
+- [[00-lexique/vram|VRAM]]
+- [[00-lexique/offloading|Offloading]]
+- [[01-fondations/memoire-unifiee-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]

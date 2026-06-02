@@ -21,7 +21,19 @@
     {
       "label": "00 - Lexique",
       "translations": { "en": "00 - Glossary" },
-      "items": [{ "autogenerate": { "directory": "00-lexique" } }]
+      "collapsed": true,
+      "items": [
+        {
+          "label": "Glossaire IA",
+          "translations": { "en": "AI Glossary" },
+          "link": "/00-lexique/glossaire-ia/"
+        },
+        {
+          "label": "Index du lexique",
+          "translations": { "en": "Lexicon index" },
+          "link": "/00-lexique/index-lexique/"
+        }
+      ]
     },
     {
       "label": "01 - Les Fondations",

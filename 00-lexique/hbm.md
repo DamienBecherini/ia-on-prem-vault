@@ -8,7 +8,6 @@ tags:
   - materiel
 ---
 
-# HBM
 
 ## Définition courte
 Technologie mémoire à bande passante très élevée, surtout utilisée sur accélérateurs professionnels.
@@ -21,6 +20,6 @@ Elle est orientée charges intensives (HPC/IA datacenter) plus que poste client.
 Permet de comprendre la différence de positionnement entre GPU grand public (GDDR) et solutions datacenter.
 
 ## Voir aussi
-- [[00-lexique/vram]]
-- [[00-lexique/memory-wall]]
-- [[00-lexique/nvlink]]
+- [[00-lexique/vram|VRAM]]
+- [[00-lexique/memory-wall|Memory Wall]]
+- [[00-lexique/nvlink|NVLink]]

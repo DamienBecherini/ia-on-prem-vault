@@ -9,7 +9,6 @@ tags:
   - fondations
 ---
 
-# KV Cache
 
 ## Définition courte
 Mémoire qui conserve les états d'attention déjà calculés pour éviter des recomputations coûteuses.
@@ -22,6 +21,6 @@ Le KV cache accélère cette réutilisation, mais augmente la consommation mémo
 Il influence fortement la capacité de contexte pratique et la stabilité des performances sur longues conversations.
 
 ## Voir aussi
-- [[00-lexique/fenetre-de-contexte]]
-- [[00-lexique/decoding]]
-- [[00-lexique/glossaire-ia|Glossaire IA]]
+- [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]
+- [[00-lexique/decoding|Decoding]]
+- [[00-lexique/glossaire-ia|📖 Glossaire IA]]

@@ -8,7 +8,6 @@ tags:
   - materiel
 ---
 
-# APU
 
 ## Définition courte
 Puce qui intègre CPU et GPU sur un même die/package.
@@ -21,6 +20,6 @@ Ils visent un compromis coût/consommation/simplicité face aux stations multi-G
 Ils permettent des appliances locales compactes et sobres pour des usages PME.
 
 ## Voir aussi
-- [[00-lexique/memoire-unifiee]]
-- [[00-lexique/npu]]
-- [[01-fondations/memoire-unifiee-vs-ram-vs-vram]]
+- [[00-lexique/memoire-unifiee|Mémoire unifiée]]
+- [[00-lexique/npu|NPU]]
+- [[01-fondations/memoire-unifiee-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]

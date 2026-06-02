@@ -8,7 +8,6 @@ tags:
   - fondations
 ---
 
-# Bande passante mémoire
 
 ## Définition courte
 Quantité de données transférées par seconde entre mémoire et processeur/GPU, généralement en Go/s.
@@ -25,6 +24,6 @@ C'est l'indicateur clé pour prévoir la fluidité en génération sur des LLM v
 - Confondre bande passante mémoire locale et bande passante réseau.
 
 ## Voir aussi
-- [[00-lexique/memory-wall]]
-- [[00-lexique/tokens-par-seconde]]
-- [[01-fondations/la-bande-passante-memoire]]
+- [[00-lexique/memory-wall|Memory Wall]]
+- [[00-lexique/tokens-par-seconde|Tokens par seconde]]
+- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]
