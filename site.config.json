@@ -9,6 +9,20 @@
   "social": [
     { "icon": "github", "label": "GitHub", "href": "https://github.com/damienbecherini" }
   ],
+  "lexicon": {
+    "enabled": true,
+    "directory": "00-lexique",
+    "entryTag": "lexique",
+    "hubPage": "glossaire-ia.md",
+    "indexPage": "index-lexique.md",
+    "sortLocale": "fr",
+    "index": {
+      "title": "Index du lexique",
+      "description": "Liste alphabétique de toutes les fiches du lexique IA on-premise.",
+      "intro": "Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-lexique/glossaire-ia|Glossaire IA]].",
+      "hubLink": { "path": "glossaire-ia", "label": "Glossaire IA" }
+    }
+  },
   "sidebar": [
     {
       "label": "Le Projet",

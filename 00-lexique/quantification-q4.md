@@ -10,17 +10,17 @@ tags:
 ---
 
 
-## Définition courte
+## 📝 Définition courte
 Quantification où les poids sont représentés sur 4 bits (au lieu de 16 ou 32).
 
-## Définition détaillée
+## 📖 Définition détaillée
 Q4 réduit fortement la taille mémoire d'un modèle, ce qui facilite le déploiement local.
 La qualité dépend du schéma exact de quantification (grouping, scales, format) et du moteur d'inférence.
 
-## Pourquoi c'est important en IA on-premise
+## 💡 Pourquoi c'est important en IA on-premise
 Permet de rendre exploitables localement des tailles de modèles autrement inaccessibles en VRAM/RAM.
 
-## Voir aussi
+## 🔗 Voir aussi
 - [[00-lexique/quantification|Quantification]]
 - [[00-lexique/tokens-par-seconde|Tokens par seconde]]
 - [[00-lexique/glossaire-ia|📖 Glossaire IA]]
