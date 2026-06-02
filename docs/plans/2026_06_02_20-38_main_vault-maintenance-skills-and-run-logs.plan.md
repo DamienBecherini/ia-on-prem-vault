@@ -1,60 +1,60 @@
 ---
 name: vault-maintenance-skills-and-run-logs
-overview: Créer les skills de maintenance du vault et renforcer les skills existants pour tracer les runs, séparer contenu public et notes agent, et préparer une rétention fiable.
+overview: Create vault maintenance skills and strengthen existing skills to trace runs, separate public content from agent notes, and prepare reliable retention.
 todos:
   - id: run-log-skill
-    content: Créer le skill vault-log-run pour journaliser les exécutions agent
+    content: Create the vault-log-run skill to log agent executions
     status: completed
   - id: maintenance-report-skill
-    content: Créer le skill vault-maintenance-report pour audits récurrents read-only
+    content: Create the vault-maintenance-report skill for recurring read-only audits
     status: completed
   - id: refresh-skill
-    content: Créer le skill vault-refresh-outdated-content pour mises à jour sourcées d'articles existants
+    content: Create the vault-refresh-outdated-content skill for sourced updates of existing articles
     status: completed
   - id: references
-    content: Créer les références communes run-log-policy et maintenance-policy
+    content: Create shared references run-log-policy and maintenance-policy
     status: completed
   - id: improve-existing
-    content: Améliorer vault-generate-content et vault-verify-content pour utiliser run logs, backlog et frontière contenu public
+    content: Improve vault-generate-content and vault-verify-content to use run logs, backlog, and public content boundary
     status: completed
   - id: verify
-    content: Vérifier les skills, lancer diagnostics/build et append le compte rendu
+    content: Verify skills, run diagnostics/build, and append the report
     status: completed
 isProject: false
 ---
 
 # Vault maintenance skills and run logs
 
-## Pourquoi ce chantier
+## Why this workstream
 
-Les derniers travaux ont montré trois problèmes structurels :
+Recent work revealed three structural problems:
 
-1. **Mélange contenu lecteur / notes agent.** La première version de `02-materiel/stations-multi-gpu.md` contenait une section `Lexique - actions` utile pour l'agent mais visible par les lecteurs.
-2. **Traçabilité insuffisante hors Git.** Git garde le diff, mais pas toujours l'intention, les sources consultées, les skills utilisés, les validations, les follow-ups lexique ou les décisions de ne pas créer de commit.
-3. **Risque d'accumulation.** Si chaque agent récurrent écrit des run logs détaillés, `.agents/vault-maintenance/` peut devenir lourd et bruité sans politique de rétention.
+1. **Reader content / agent notes mixed.** The first version of `02-materiel/stations-multi-gpu.md` contained a `Lexique - actions` section useful for the agent but visible to readers.
+2. **Insufficient traceability outside Git.** Git keeps the diff, but not always the intent, sources consulted, skills used, validations, lexicon follow-ups, or decisions not to create a commit.
+3. **Accumulation risk.** If every recurring agent writes detailed run logs, `.agents/vault-maintenance/` can become heavy and noisy without a retention policy.
 
-Le vault a donc besoin d'une couche de maintenance agentique explicite :
+The vault therefore needs an explicit agentic maintenance layer:
 
-- les articles publiés restent propres
-- les plans gardent l'intention et les comptes rendus de chantier
-- les run logs gardent l'historique opérationnel
-- les backlogs agent gardent les tâches de maintenance non publiées
-- la rétention combine synthèse IA et validation déterministe future
+- published articles stay clean
+- plans keep workstream intent and reports
+- run logs keep operational history
+- agent backlogs keep unpublished maintenance tasks
+- retention combines AI summaries and future deterministic validation
 
-## Solution envisagée
+## Proposed solution
 
-Créer trois nouveaux skills projet sous `.agents/skills/` :
+Create three new project skills under `.agents/skills/`:
 
-1. `vault-log-run` : créer des logs horodatés d'exécution agent, avec métadonnées Git, fichiers touchés, sources, validations, follow-ups et politique de rétention.
-2. `vault-maintenance-report` : produire des audits récurrents read-only du vault : freshness, sources, lexique, pages à revoir, risques de publication.
-3. `vault-refresh-outdated-content` : mettre à jour une page existante avec recherche source-first, en mode draft/branche/PR, avec vérification séparée.
+1. `vault-log-run`: create timestamped agent execution logs, with Git metadata, touched files, sources, validations, follow-ups, and retention policy.
+2. `vault-maintenance-report`: produce recurring read-only vault audits: freshness, sources, lexicon, pages to review, publication risks.
+3. `vault-refresh-outdated-content`: update an existing page with source-first research, in draft/branch/PR mode, with separate verification.
 
-Améliorer les deux skills existants :
+Improve the two existing skills:
 
-- `vault-generate-content` : finir toute génération significative par un run log, garder le suivi lexique hors article public, utiliser le backlog.
-- `vault-verify-content` : vérifier aussi la frontière contenu public / notes agent, et produire un run log pour les audits significatifs.
+- `vault-generate-content`: end every significant generation with a run log, keep lexicon follow-up out of public articles, use the backlog.
+- `vault-verify-content`: also verify the public content / agent notes boundary, and produce a run log for significant audits.
 
-Créer des références communes :
+Create shared references:
 
 - `references/run-log-policy.md`
 - `references/maintenance-policy.md`
@@ -83,7 +83,7 @@ Reader-facing pages must not contain agent maintenance notes:
 
 Agent-only material goes to:
 
-- `docs/plans/*.plan.md` for chantier intent and reports
+- `docs/plans/*.plan.md` for workstream intent and reports
 - `.agents/vault-maintenance/lexicon-backlog.md` for lexicon follow-up
 - `.agents/vault-maintenance/runs/` for operational timeline
 

@@ -1,47 +1,47 @@
 ---
 name: stations-multi-gpu
-overview: Générer la prochaine page du chapitre 02 sur les stations multi-GPU NVIDIA, PCIe, VRAM et limites d'interconnexion pour l'inférence IA on-premise.
+overview: Generate the next page of chapter 02 on NVIDIA multi-GPU workstations, PCIe, VRAM, and interconnect limits for on-prem AI inference.
 todos:
   - id: source-scan
-    content: Rassembler des sources fiables sur GPU workstation/datacenter, PCIe, NVLink/NVSwitch et inférence multi-GPU
+    content: Gather reliable sources on workstation/datacenter GPUs, PCIe, NVLink/NVSwitch, and multi-GPU inference
     status: pending
   - id: article
-    content: Créer 02-materiel/stations-multi-gpu.md avec citations, schémas et conseils architecte
+    content: Create 02-materiel/stations-multi-gpu.md with citations, diagrams, and architect advice
     status: pending
   - id: sidebar
-    content: Vérifier et compléter la navigation 02 - Le Matériel dans site.config.json si nécessaire
+    content: Verify and complete 02 - Le Matériel navigation in site.config.json if needed
     status: pending
   - id: lexicon
-    content: Ajouter la checklist lexique pour les termes existants et fiches à vérifier
+    content: Add lexicon checklist for existing terms and entries to verify
     status: pending
   - id: verify
-    content: Vérifier l'article, les sources et le build Starlight, puis append le rapport
+    content: Verify article, sources, and Starlight build, then append the report
     status: pending
   - id: separate-agent-notes
-    content: Retirer les notes de travail agent de l'article public et les déplacer vers un backlog non publié
+    content: Remove agent work notes from the public article and move them to unpublished backlog
     status: pending
   - id: update-generation-skill
-    content: Mettre à jour le skill de génération pour ne plus publier les sections Lexique - actions
+    content: Update the generation skill so it no longer publishes Lexique - actions sections
     status: pending
 isProject: false
 ---
 
-# Stations Multi-GPU - Plan
+# Multi-GPU Workstations - Plan
 
-## Objectif
+## Objective
 
-Créer la prochaine page du chapitre `02-materiel/` :
+Create the next page of chapter `02-materiel/`:
 
 ```text
 02-materiel/stations-multi-gpu.md
 ```
 
-Sujet : **stations multi-GPU NVIDIA, PCIe, VRAM, NVLink/NVSwitch et arbitrages pour l'inférence IA on-premise**.
+Topic: **NVIDIA multi-GPU workstations, PCIe, VRAM, NVLink/NVSwitch, and trade-offs for on-prem AI inference**.
 
-L'article doit compléter `02-materiel/apu-et-memoire-unifiee.md` :
+The article should complement `02-materiel/apu-et-memoire-unifiee.md`:
 
-- APU / mémoire unifiée : grande capacité partagée, bande passante plus faible, simplicité.
-- Multi-GPU discret : très forte bande passante VRAM par carte, capacité cumulée, mais interconnexion et parallélisme plus complexes.
+- APU / unified memory: large shared capacity, lower bandwidth, simplicity.
+- Discrete multi-GPU: very high per-card VRAM bandwidth, cumulative capacity, but more complex interconnect and parallelism.
 
 ## Files
 
@@ -53,7 +53,7 @@ L'article doit compléter `02-materiel/apu-et-memoire-unifiee.md` :
 
 ## Source Targets
 
-Priorité aux sources officielles :
+Priority to official sources:
 
 - NVIDIA product specifications for RTX workstation and datacenter GPUs
 - NVIDIA documentation/blogs on NVLink, NVSwitch, multi-GPU communication, TensorRT-LLM or Dynamo
