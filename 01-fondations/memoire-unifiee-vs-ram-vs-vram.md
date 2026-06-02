@@ -1,6 +1,8 @@
 ---
 title: ⚔️ Mémoire Unifiée vs RAM vs VRAM
 description: Analyse comparative approfondie des trois architectures physiques de mémoire pour l'inférence de LLM.
+sidebar:
+  order: 2
 ---
 
 Pour un architecte système IA, comprendre la différence physique entre **RAM classique**, **VRAM dédiée** et **mémoire unifiée** est fondamental. Ce choix influence directement le débit en inférence (tokens/s), les coûts matériels et les limites d'évolutivité[^5].

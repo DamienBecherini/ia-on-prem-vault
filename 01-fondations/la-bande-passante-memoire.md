@@ -1,6 +1,8 @@
 ---
 title: 🏎️ La Bande Passante Mémoire & Le "Memory Wall"
 description: Analyse mathématique et matérielle du véritable goulot d'étranglement de l'inférence locale.
+sidebar:
+  order: 1
 ---
 
 En architecture système appliquée à l'IA, une réalité revient en permanence : en inférence LLM, la limite est souvent la **mémoire** avant le calcul brut[^1].

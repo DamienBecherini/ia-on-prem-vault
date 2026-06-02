@@ -1,6 +1,8 @@
 ---
 title: 💾 Le KV Cache & La Gestion du Contexte
 description: Analyse mathématique de la consommation mémoire dynamique et techniques d'optimisation (GQA, Quantification, PagedAttention).
+sidebar:
+  order: 3
 ---
 
 Si le poids d'un modèle (les paramètres) détermine la quantité de VRAM minimale pour démarrer une IA, la **longueur du contexte** (le prompt + l'historique) dicte la quantité de mémoire dynamique consommée pendant l'utilisation. 
