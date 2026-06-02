@@ -8,7 +8,6 @@ tags:
   - fondations
 ---
 
-# Memory Wall
 
 ## Définition courte
 Situation où le débit mémoire limite la performance plus que la puissance de calcul brute.
@@ -25,6 +24,6 @@ Le choix machine ne se fait pas uniquement sur les TFLOPS : bande passante mémo
 - Ignorer la différence entre performance prefill et performance decoding.
 
 ## Voir aussi
-- [[00-lexique/bande-passante-memoire]]
-- [[00-lexique/decoding]]
-- [[01-fondations/la-bande-passante-memoire]]
+- [[00-lexique/bande-passante-memoire|Bande passante mémoire]]
+- [[00-lexique/decoding|Decoding]]
+- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]

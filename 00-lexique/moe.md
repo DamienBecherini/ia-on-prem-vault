@@ -8,7 +8,6 @@ tags:
   - fondations
 ---
 
-# MoE
 
 ## Définition courte
 Architecture où seuls certains "experts" du modèle sont activés pour chaque token.
@@ -21,6 +20,6 @@ Cela peut améliorer le rapport qualité/coût d'inférence selon l'implémentat
 Évite les comparaisons naïves "B paramètres = coût fixe" : actif par token et total doivent être distingués.
 
 ## Voir aussi
-- [[00-lexique/llm]]
-- [[00-lexique/quantification]]
-- [[00-lexique/tokens-par-seconde]]
+- [[00-lexique/llm|LLM]]
+- [[00-lexique/quantification|Quantification]]
+- [[00-lexique/tokens-par-seconde|Tokens par seconde]]

@@ -8,7 +8,6 @@ tags:
   - stack
 ---
 
-# RAG
 
 ## Définition courte
 Méthode qui récupère des documents pertinents avant de générer une réponse avec un LLM.
@@ -21,6 +20,6 @@ Le contexte injecté est ciblé, ce qui améliore précision métier et réduit 
 Il permet d'exploiter la connaissance interne d'une organisation sans réentraîner le modèle.
 
 ## Voir aussi
-- [[00-lexique/fenetre-de-contexte]]
-- [[00-lexique/llm]]
-- [[03-stack-logicielle/rag-et-agents-openhuman]]
+- [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]
+- [[00-lexique/llm|LLM]]
+- [[03-stack-logicielle/rag-et-agents-openhuman|Rag Et Agents Openhuman]]

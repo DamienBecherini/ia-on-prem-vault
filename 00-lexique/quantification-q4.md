@@ -9,7 +9,6 @@ tags:
   - fondations
 ---
 
-# Quantification Q4
 
 ## Définition courte
 Quantification où les poids sont représentés sur 4 bits (au lieu de 16 ou 32).
@@ -22,6 +21,6 @@ La qualité dépend du schéma exact de quantification (grouping, scales, format
 Permet de rendre exploitables localement des tailles de modèles autrement inaccessibles en VRAM/RAM.
 
 ## Voir aussi
-- [[00-lexique/quantification]]
-- [[00-lexique/tokens-par-seconde]]
-- [[00-lexique/glossaire-ia|Glossaire IA]]
+- [[00-lexique/quantification|Quantification]]
+- [[00-lexique/tokens-par-seconde|Tokens par seconde]]
+- [[00-lexique/glossaire-ia|📖 Glossaire IA]]

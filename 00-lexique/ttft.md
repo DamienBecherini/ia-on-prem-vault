@@ -8,7 +8,6 @@ tags:
   - fondations
 ---
 
-# TTFT
 
 ## Définition courte
 Temps entre l'envoi d'une requête et l'arrivée du premier token de réponse.
@@ -25,6 +24,6 @@ Pour les usages interactifs, le ressenti dépend fortement du TTFT.
 - Comparer des TTFT sans préciser la longueur du prompt d'entrée.
 
 ## Voir aussi
-- [[00-lexique/prefill]]
-- [[00-lexique/tokens-par-seconde]]
-- [[00-lexique/fenetre-de-contexte]]
+- [[00-lexique/prefill|Prefill]]
+- [[00-lexique/tokens-par-seconde|Tokens par seconde]]
+- [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]

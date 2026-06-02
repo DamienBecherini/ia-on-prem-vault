@@ -8,7 +8,6 @@ tags:
   - materiel
 ---
 
-# NPU
 
 ## Définition courte
 Accélérateur spécialisé pour certaines opérations IA, souvent intégré aux SoC modernes.
@@ -21,6 +20,6 @@ Leur utilité dépend fortement des frameworks et des modèles effectivement sup
 Peut améliorer l'efficacité énergétique de certains workloads, mais ne remplace pas toujours un GPU pour les LLM lourds.
 
 ## Voir aussi
-- [[00-lexique/apu]]
-- [[00-lexique/llm]]
-- [[00-lexique/memoire-unifiee]]
+- [[00-lexique/apu|APU]]
+- [[00-lexique/llm|LLM]]
+- [[00-lexique/memoire-unifiee|Mémoire unifiée]]

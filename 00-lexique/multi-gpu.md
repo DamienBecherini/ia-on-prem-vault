@@ -8,7 +8,6 @@ tags:
   - materiel
 ---
 
-# Multi-GPU
 
 ## Définition courte
 Architecture utilisant plusieurs cartes GPU dans une même machine ou un cluster.
@@ -21,6 +20,6 @@ Les gains dépendent de l'interconnexion, du parallélisme utilisé et du moteur
 Indispensable pour certains usages professionnels à fort débit ou multi-utilisateurs.
 
 ## Voir aussi
-- [[00-lexique/nvlink]]
-- [[00-lexique/pcie]]
-- [[00-lexique/rdma]]
+- [[00-lexique/nvlink|NVLink]]
+- [[00-lexique/pcie|PCIe]]
+- [[00-lexique/rdma|RDMA]]

@@ -8,7 +8,6 @@ tags:
   - fondations
 ---
 
-# Prefill
 
 ## Définition courte
 Phase où le modèle encode le prompt utilisateur avant la génération mot à mot.
@@ -21,6 +20,6 @@ Cette phase bénéficie souvent davantage de la puissance de calcul que le decod
 Le prefill impacte la sensation de réactivité initiale (TTFT), surtout sur prompts longs.
 
 ## Voir aussi
-- [[00-lexique/decoding]]
-- [[00-lexique/ttft]]
-- [[01-fondations/la-bande-passante-memoire]]
+- [[00-lexique/decoding|Decoding]]
+- [[00-lexique/ttft|TTFT]]
+- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]

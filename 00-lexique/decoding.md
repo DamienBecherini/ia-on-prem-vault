@@ -8,7 +8,6 @@ tags:
   - fondations
 ---
 
-# Decoding
 
 ## Définition courte
 Phase où le modèle génère un token, puis recommence itérativement pour le token suivant.
@@ -21,6 +20,6 @@ La bande passante mémoire et le KV cache deviennent déterminants.
 C'est cette phase qui gouverne le débit "tokens/s" observé dans la plupart des usages chat.
 
 ## Voir aussi
-- [[00-lexique/prefill]]
-- [[00-lexique/kv-cache]]
-- [[00-lexique/tokens-par-seconde]]
+- [[00-lexique/prefill|Prefill]]
+- [[00-lexique/kv-cache|KV Cache]]
+- [[00-lexique/tokens-par-seconde|Tokens par seconde]]

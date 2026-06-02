@@ -9,7 +9,6 @@ tags:
   - materiel
 ---
 
-# VRAM
 
 ## Définition courte
 Mémoire à très haut débit attachée au GPU (ex: GDDR7).
@@ -26,6 +25,6 @@ La disponibilité et le débit VRAM déterminent quels modèles peuvent tourner 
 - Confondre VRAM totale de plusieurs GPU avec VRAM directement mutualisable sans contrainte.
 
 ## Voir aussi
-- [[00-lexique/ram]]
-- [[00-lexique/memoire-unifiee]]
-- [[01-fondations/memoire-unifiee-vs-ram-vs-vram]]
+- [[00-lexique/ram|RAM]]
+- [[00-lexique/memoire-unifiee|Mémoire unifiée]]
+- [[01-fondations/memoire-unifiee-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]

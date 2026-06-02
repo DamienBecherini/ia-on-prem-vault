@@ -8,7 +8,6 @@ tags:
   - materiel
 ---
 
-# NVLink
 
 ## Définition courte
 Lien matériel dédié pour accélérer les échanges entre GPU NVIDIA compatibles.
@@ -21,6 +20,6 @@ Cela améliore les scénarios de parallélisme modèle nécessitant des échange
 Aide à distinguer les architectures multi-GPU réellement performantes des assemblages limités par le bus standard.
 
 ## Voir aussi
-- [[00-lexique/multi-gpu]]
-- [[00-lexique/pcie]]
-- [[00-lexique/hbm]]
+- [[00-lexique/multi-gpu|Multi-GPU]]
+- [[00-lexique/pcie|PCIe]]
+- [[00-lexique/hbm|HBM]]

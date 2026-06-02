@@ -9,7 +9,6 @@ tags:
   - materiel
 ---
 
-# PCIe
 
 ## Définition courte
 Bus standard reliant CPU, GPU, SSD et autres périphériques.
@@ -22,6 +21,6 @@ Même en Gen5 x16, ce lien peut devenir le goulot lorsqu'il faut déplacer souve
 Le coût des transferts PCIe influence fortement l'offloading et les performances multi-GPU.
 
 ## Voir aussi
-- [[00-lexique/offloading]]
-- [[00-lexique/multi-gpu]]
-- [[00-lexique/memoire-unifiee]]
+- [[00-lexique/offloading|Offloading]]
+- [[00-lexique/multi-gpu|Multi-GPU]]
+- [[00-lexique/memoire-unifiee|Mémoire unifiée]]
