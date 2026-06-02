@@ -5,7 +5,9 @@
 .env
 .deploy-manifest.json
 build/
-.cursor/
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/*.mdc
 
 # Private notes — never on GitHub or the web (the engine respects this file at build time)
 _private/*

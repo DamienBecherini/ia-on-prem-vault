@@ -1,0 +1,17 @@
+---
+description: Editorial guardrails for IA on-premise vault Markdown content
+globs: "**/*.md, **/*.mdx"
+alwaysApply: false
+---
+
+# Vault Editorial Basics
+
+- This repo is an Obsidian/Starlight content vault for IA on-premise documentation.
+- For generation or major rewrites, prefer the `vault-generate-content` skill.
+- For audits, source checks, or factual review, prefer the `vault-verify-content` skill.
+- Lexicon structure is mandatory only for `00-lexique/` entries; chapter articles keep a flexible topic-driven structure.
+- For chapter generation, track lexicon follow-up: existing terms to link, new entries to create, and linked entries to verify/update.
+- Never invent sources. Performance claims must be cited with relevant context or written as cautious order-of-magnitude statements.
+- Use Obsidian wikilinks for internal references and footnotes for external sources.
+- If the user explicitly asks not to use project skills or workflows, respect that request while keeping factuality and source constraints.
+
