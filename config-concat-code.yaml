@@ -1,5 +1,8 @@
+# AIContextCraft config — exports this repository to a single XML file for LLM context.
+# Tool: https://github.com/DamienBecherini/AIContextCraft (run from this repo root).
+#
 # Default path for the output file.
-output_path: "./build/AIContextCraft-concat-code.xml"
+output_path: "./build/ai-on-prem-vault-concat-code.xml"
 
 # --- FILE SELECTION ---
 
