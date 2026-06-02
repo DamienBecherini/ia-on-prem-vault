@@ -7,6 +7,7 @@ alwaysApply: false
 # Vault Editorial Basics
 
 - This repo is an Obsidian/Starlight content vault for IA on-premise documentation.
+- Vault note language follows vault locale and folder layout (see `language-policy`); code and repo tooling stay in English.
 - For generation or major rewrites, prefer the `vault-generate-content` skill.
 - For audits, source checks, or factual review, prefer the `vault-verify-content` skill.
 - Lexicon structure is mandatory only for `00-lexique/` entries; chapter articles keep a flexible topic-driven structure.
