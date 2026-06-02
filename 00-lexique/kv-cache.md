@@ -10,17 +10,17 @@ tags:
 ---
 
 
-## Définition courte
+## 📝 Définition courte
 Mémoire qui conserve les états d'attention déjà calculés pour éviter des recomputations coûteuses.
 
-## Définition détaillée
+## 📖 Définition détaillée
 Dans un Transformer, chaque nouveau token réutilise les clés/valeurs des tokens précédents.
 Le KV cache accélère cette réutilisation, mais augmente la consommation mémoire avec la longueur de contexte.
 
-## Pourquoi c'est important en IA on-premise
+## 💡 Pourquoi c'est important en IA on-premise
 Il influence fortement la capacité de contexte pratique et la stabilité des performances sur longues conversations.
 
-## Voir aussi
+## 🔗 Voir aussi
 - [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]
 - [[00-lexique/decoding|Decoding]]
 - [[00-lexique/glossaire-ia|📖 Glossaire IA]]

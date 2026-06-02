@@ -9,21 +9,21 @@ tags:
 ---
 
 
-## Définition courte
+## 📝 Définition courte
 Protocole qui apporte les bénéfices RDMA sur des réseaux Ethernet adaptés.
 
-## Définition détaillée
+## 📖 Définition détaillée
 RoCE permet des transferts mémoire-à-mémoire à faible latence sur infrastructure Ethernet.
 Il est souvent utilisé pour l'IA distribuée quand InfiniBand n'est pas retenu.
 
-## Pourquoi c'est important en IA on-premise
+## 💡 Pourquoi c'est important en IA on-premise
 Il améliore la viabilité des architectures multi-nœuds en limitant la pénalité réseau.
 
-## Pièges fréquents
+## ⚠️ Pièges fréquents
 - Penser que RoCE fonctionne optimalement sans configuration réseau adaptée.
 - Confondre débit théorique Ethernet et performance réelle applicative.
 
-## Voir aussi
+## 🔗 Voir aussi
 - [[00-lexique/rdma|RDMA]]
 - [[00-lexique/multi-gpu|Multi-GPU]]
 - [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]

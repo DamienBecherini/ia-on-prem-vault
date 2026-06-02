@@ -33,14 +33,23 @@ Site content is **French and English** (`en/` locale folder). This README is **E
 ## Vault layout
 
 ```
-site.config.json        site manifest for the engine (title, locales, sidebar, social)
+site.config.json        site manifest for the engine (title, locales, sidebar, social, lexicon)
 index.mdx               home page (hero)
 00-index.md             “Zero to Hero” table of contents
+00-lexique/             AI glossary (term pages + hub + generated index)
 01-fondations/          French notes
 en/                     English notes
-_templates/             Obsidian templates
+_templates/             Obsidian templates (e.g. _Terme Lexique.md)
 _private/               confidential notes (gitignored, never published)
 ```
+
+### Lexicon (this vault)
+
+- **Hub** : `00-lexique/glossaire-ia.md` (curated overview).
+- **Generated index** : `00-lexique/index-lexique.md` (alphabetical table; regen at build when `lexicon.enabled` in `site.config.json`).
+- **New term** : use `_templates/_Terme Lexique.md`, tag `lexique` in frontmatter.
+- **Regenerate index manually** (from the engine repo): `npm run lexicon:index` with `VAULT_PATH` pointing here.
+- **Commit policy** : commit `index-lexique.md` with the vault when you add or change lexicon entries.
 
 The engine excludes everything matched by the vault [`.gitignore`](.gitignore) (including `_private/*`) and
 **never builds this root `README.md`** as a site page. See the engine
