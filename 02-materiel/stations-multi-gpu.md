@@ -58,7 +58,7 @@ Pour une carte GPU en **x16**, cela donne un ordre de grandeur théorique d'envi
 
 ```mermaid
 graph TD
-    A[RAM systeme] -->|PCIe x16: dizaines de Go/s| B[GPU 0 - VRAM locale]
+    A[RAM système] -->|PCIe x16: dizaines de Go/s| B[GPU 0 - VRAM locale]
     A -->|PCIe x16: dizaines de Go/s| C[GPU 1 - VRAM locale]
     B -. echanges inter-GPU via PCIe .-> C
     B -->|GDDR/HBM: centaines a milliers de Go/s| D[Calcul GPU 0]
