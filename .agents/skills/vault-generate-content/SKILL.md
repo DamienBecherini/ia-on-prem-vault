@@ -12,6 +12,8 @@ paths:
 
 Before drafting, read `references/editorial-policy.md` and inspect nearby content in the target directory.
 
+For significant generation or rewrite tasks, also use `vault-log-run` before finishing.
+
 Ask a focused clarification if the user has not specified:
 - target content type: chapter article or lexicon entry
 - target path or section
@@ -61,6 +63,8 @@ Respect explicit user overrides. If the user asks not to use this skill or the p
 
 Do not leave this working section in a published chapter article. Put it in the implementation plan/report and, for durable follow-up, update `.agents/vault-maintenance/lexicon-backlog.md`.
 
+When the article introduces an important missing term, either create a minimal lexicon entry if the user asked for lexicon execution, or add a precise backlog item. Do not silently drop the lexicon follow-up.
+
 ## Lexicon Entry Workflow
 
 1. Start from `_templates/_Terme Lexique.md`.
@@ -81,6 +85,7 @@ When finishing generation, report:
 - source status: fetched sources, reused sources, or missing sources
 - lexicon checklist: create, link, verify/update
 - remaining verification needed
+- run log path when a durable run log was created
 
 ## Public Content Boundary
 
@@ -90,4 +95,16 @@ Never mix agent maintenance notes with reader-facing content. In chapter article
 - Link existing lexicon entries directly in the prose where useful for readers.
 - Move agent-only follow-up to the plan report and `.agents/vault-maintenance/lexicon-backlog.md`.
 - If the backlog does not exist, create it before finishing the task.
+
+## Run Log
+
+For significant generation tasks, invoke `vault-log-run` after validation. Include:
+
+- skills used
+- plan path, if any
+- files changed
+- source status
+- lexicon backlog changes
+- validation evidence
+- residual risk
 
