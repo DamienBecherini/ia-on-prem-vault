@@ -33,6 +33,7 @@ common_filters:
   - "*.mdc"
   # - tests/
   # - docs/
+  - "package.json"
 
 
 
@@ -52,10 +53,10 @@ project_only_filters:
   - _githooks
   - "config-concat*"
   # - "AIContextCraft/docs/architecture/assets/"
-  - ".agents/"
+  # - ".agents/"
   - ".vscode/"
   - "build/"
-  - ".cursor/"
+  - ".cursor/*.log"
   - "_private/"
   
 
