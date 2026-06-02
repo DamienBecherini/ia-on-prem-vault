@@ -16,6 +16,8 @@ Use a review stance: findings first, ordered by severity. Prefer concrete fixes 
 
 Respect explicit user overrides. If the user asks not to use this skill or the project workflow, do not apply it; keep only factuality, source, and safety constraints.
 
+For significant audits, also use `vault-log-run` before finishing.
+
 ## Verification Checklist
 
 Check the content for:
@@ -28,6 +30,7 @@ Check the content for:
 - internal wikilinks that point to missing or inconsistent pages
 - lexicon entries that should be created, linked, or updated
 - mismatch between chapter style and lexicon-entry structure
+- agent-only sections accidentally left in public content
 - audience mismatch for a Zero to Hero IA on-premise reader
 
 ## Performance Claims
@@ -53,6 +56,17 @@ For lexicon entries:
 - It should define, not duplicate, a full chapter.
 - It should include useful `Voir aussi` links.
 
+## Public Content Boundary
+
+For reader-facing pages, flag agent-only maintenance content:
+
+- sections named `Lexique - actions`, `Nouvelles fiches a creer`, or `Fiches a verifier`
+- run metadata blocks
+- internal TODOs meant for agents
+- maintenance reports embedded in article prose
+
+Move those items to `docs/plans/`, `.agents/vault-maintenance/lexicon-backlog.md`, or `.agents/vault-maintenance/runs/`.
+
 ## Report Format
 
 Use this format:
@@ -77,8 +91,24 @@ Use this format:
 - Weak or mismatched:
 - Dead or unfetched:
 
+## Public Content Boundary
+
+- Clean:
+- Agent-only content found:
+
 ## Residual Risk
 
 Short note on anything not verified.
 ```
+
+## Run Log
+
+For significant verification tasks, invoke `vault-log-run` and record:
+
+- target files
+- sources checked
+- findings count by severity
+- lexicon follow-up
+- whether edits were made
+- validation performed
 
