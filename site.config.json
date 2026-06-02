@@ -60,6 +60,11 @@
       "label": "01 - Les Fondations",
       "translations": { "en": "01 - Foundations" },
       "items": [{ "autogenerate": { "directory": "01-fondations" } }]
+    },
+    {
+      "label": "02 - Le Matériel",
+      "translations": { "en": "02 - Hardware" },
+      "items": [{ "autogenerate": { "directory": "02-materiel" } }]
     }
   ]
 }
