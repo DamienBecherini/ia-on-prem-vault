@@ -12,7 +12,7 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 
 ## Parcours recommandé
 
-- **Performance d'inférence** : [[00-lexique/memory-wall|Memory Wall]], [[00-lexique/bande-passante-memoire|Bande passante mémoire]], [[00-lexique/prefill|Prefill]], [[00-lexique/decoding|Decoding]], [[00-lexique/tokens-par-seconde|Tokens par seconde]], [[00-lexique/ttft|TTFT]].
+- **Performance d'inférence** : [[00-lexique/inference|Inférence (LLM)]], [[00-lexique/memory-wall|Memory Wall]], [[00-lexique/bande-passante-memoire|Bande passante mémoire]], [[00-lexique/prefill|Prefill]], [[00-lexique/decoding|Decoding]], [[00-lexique/tokens-par-seconde|Tokens par seconde]], [[00-lexique/ttft|TTFT]].
 - **Mémoire & matériel** : [[00-lexique/vram|VRAM]], [[00-lexique/ram|RAM]], [[00-lexique/memoire-unifiee|Mémoire unifiée]], [[00-lexique/pcie|PCIe]], [[00-lexique/multi-gpu|Multi-GPU]], [[00-lexique/nvlink|NVLink]].
 - **Systèmes IA en production** : [[00-lexique/quantification|Quantification]], [[00-lexique/quantification-q4|Quantification Q4]], [[00-lexique/kv-cache|KV Cache]], [[00-lexique/rag|RAG]], [[00-lexique/rdma|RDMA]], [[00-lexique/roce|RoCE]].
 
@@ -70,6 +70,7 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 
 | Terme | Définition rapide |
 | :-- | :-- |
+| [Inférence (LLM)](/00-lexique/inference/) | Utilisation d'un LLM entraîné pour générer du texte à la demande. |
 | [RAG](/00-lexique/rag/) | Architecture qui enrichit le contexte d'un LLM avec une base documentaire. |
 | [Fenêtre de contexte](/00-lexique/fenetre-de-contexte/) | Nombre maximal de tokens que le modèle peut traiter en entrée active. |
 | [Quantification](/00-lexique/quantification/) | Réduction de précision numérique pour diminuer mémoire et coût de calcul. |
