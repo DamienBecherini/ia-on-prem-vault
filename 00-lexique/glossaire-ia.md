@@ -10,6 +10,14 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 
 ---
 
+## 🚶 Débutant — je découvre
+
+*Je ne sais pas par où commencer :*
+
+[[00-lexique/llm|LLM]] → [[00-lexique/inference|Inférence (LLM)]] → [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] → [[00-lexique/prefill|Prefill]] / [[00-lexique/decoding|Decoding]] → [[00-lexique/memory-wall|Memory Wall]] → [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire]]
+
+---
+
 ## Parcours recommandé
 
 - **Performance d'inférence** : [[00-lexique/inference|Inférence (LLM)]], [[00-lexique/memory-wall|Memory Wall]], [[00-lexique/bande-passante-memoire|Bande passante mémoire]], [[00-lexique/prefill|Prefill]], [[00-lexique/decoding|Decoding]], [[00-lexique/tokens-par-seconde|Tokens par seconde]], [[00-lexique/ttft|TTFT]].

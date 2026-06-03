@@ -39,6 +39,19 @@ Bienvenue dans le "Zero to Hero" de l'IA Locale. Ce Vault est conçu comme un ja
 - [[04-blueprints/scenario-d-datacenter|🏢 Scénario D : Datacenter (RoCE & Multi-GPU)]]
 
 ---
+
+## 🚶 Je découvre : par où commencer ?
+
+*Première visite ? Suivez ce chemin avant d'explorer librement :*
+
+1. [[00-lexique/llm|LLM]] *(c'est quoi un grand modèle de langage ?)*
+2. [[00-lexique/inference|Inférence (LLM)]] *(comment on l'utilise au quotidien)*
+3. [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] *(ce qui se passe vraiment quand vous lui parlez)*
+4. [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire]] *(pourquoi votre machine peut ramer)*
+5. [[04-blueprints/scenario-a-labo-dev|🛠️ Scénario A : Le Labo Dev]] *(votre premier blueprint concret)*
+
+---
+
 ## 📖 Dictionnaire & Concepts
 *Retrouvez ici la définition rapide de tous les termes techniques.*
 👉 [[00-lexique/glossaire-ia|Glossaire IA]]

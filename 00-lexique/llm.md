@@ -25,6 +25,12 @@ C'est le composant central du stack : tout le dimensionnement (RAM/VRAM, débit,
 - Penser qu'un "plus gros modèle" est toujours meilleur pour tous les usages.
 - Oublier que les performances dépendent autant de la mémoire machine que du modèle.
 
+## 📚 Pour comprendre en profondeur
+*Vous voulez voir ce qu'un LLM fait concrètement quand vous lui parlez ?*
+1. [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] *(tokenisation, prefill, decoding — le cycle complet, pas à pas)*
+2. [[00-lexique/inference|Inférence (LLM)]] *(l'utilisation quotidienne d'un LLM déjà entraîné)*
+3. [[01-fondations/quantification-4-bit-8-bit|🗜️ Quantification 4-bit & 8-bit]] *(comment réduire la taille d'un modèle pour qu'il tienne en mémoire)*
+
 ## 🔗 Voir aussi
 - [[00-lexique/inference|Inférence (LLM)]]
 - [[00-lexique/quantification|Quantification]]

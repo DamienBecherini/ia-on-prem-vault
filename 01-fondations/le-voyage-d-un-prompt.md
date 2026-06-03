@@ -5,7 +5,9 @@ sidebar:
   order: 0
 ---
 
-Quand vous tapez une question dans un modèle d'IA local, il y a une illusion de magie : la machine semble "comprendre" le texte et "réfléchir" à la réponse. 
+> **Ce chapitre** décompose ce qui se passe à l'intérieur d'un [[00-lexique/llm|LLM]] pendant l'[[00-lexique/inference|inférence]]. Pas de prérequis — juste votre curiosité.
+
+Quand vous tapez une question dans un modèle d'IA local, il y a une illusion de magie : la machine semble "comprendre" le texte et "réfléchir" à la réponse.
 
 En réalité, un processeur ne comprend pas le français. Il ne fait qu'exécuter des milliards de multiplications à une vitesse fulgurante. Pour comprendre pourquoi l'IA demande autant de matériel (et pourquoi votre PC peut ramer), il faut soulever le capot et regarder comment un texte est transformé en calculs mathématiques. 
 
@@ -75,4 +77,4 @@ Quand un utilisateur se plaint que *"l'IA est lente"*, vous devez savoir de quel
 > 👉 **Prochaine étape :** Maintenant que vous avez compris que le Decoding est limité par la vitesse de la mémoire, passez au chapitre sur [[01-fondations/la-bande-passante-memoire|La Bande Passante Mémoire]].
 
 ## 📚 Sources et Références
-[^1]: Meta, *Llama 3 Model Card* (Architecture, Vocabulaire 128K, Tiktoken), 2024. [Lien GitHub](https://github.com/meta-llama/llama-models)
+[^1]: Meta, *Llama 3.1 Model Card* (Architecture, vocabulaire 128 256 tokens, tokenizer Tiktoken), 2024. [GitHub — llama-models](https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md)
