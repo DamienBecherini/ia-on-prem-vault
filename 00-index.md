@@ -13,6 +13,7 @@ Bienvenue dans le "Zero to Hero" de l'IA Locale. Ce Vault est conçu comme un ja
 
 ### 📁 01 - Les Fondations (La Physique de l'IA)
 *Pour comprendre pourquoi un ordinateur à 4000€ peut être trop lent pour l'IA.*
+- [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt (Fonctionnement)]]
 - [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire]] (Memory Bandwidth)
 - [[01-fondations/memoire-unifiee-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]
 - [[01-fondations/kv-cache-et-contexte|💾 KV Cache et Contexte]]
@@ -20,22 +21,22 @@ Bienvenue dans le "Zero to Hero" de l'IA Locale. Ce Vault est conçu comme un ja
 
 ### 📁 02 - Le Matériel (Le Fer)
 *Le catalogue des architectures.*
-- [[02-materiel/APU et Memoire Unifiee]] (AMD Strix Halo & Mac)
-- [[02-materiel/Stations Multi-GPU]] (Nvidia, PCIe)
-- [[02-materiel/Reseau IA RoCE et Thunderbolt]]
+- [[02-materiel/apu-et-memoire-unifiee|🧠 APU & Mémoire Unifiée]] (AMD Strix Halo & Mac)
+- [[02-materiel/stations-multi-gpu|🧩 Stations Multi-GPU]] (Nvidia, PCIe)
+- [[02-materiel/reseau-ia-roce-et-thunderbolt|🌐 Réseau IA : RoCE, InfiniBand et Thunderbolt]]
 
 ### 📁 03 - La Stack Logicielle (Les Moteurs)
 *Comment donner vie aux puces.*
-- [[03-stack-logicielle/Moteurs Inference vLLM Ollama]]
-- [[03-stack-logicielle/Clustering Exo et Ray]]
-- [[03-stack-logicielle/RAG et Agents OpenHuman]]
+- [[03-stack-logicielle/moteurs-inference-vllm-ollama|⚙️ Moteurs d'Inférence : vLLM, Ollama et TensorRT-LLM]]
+- [[03-stack-logicielle/clustering-exo-et-ray|🌐 Clustering IA : Relier les GPU avec Exo et Ray]]
+- [[03-stack-logicielle/rag-et-agents-openhuman|🧩 RAG & Agents : L'architecture de la connaissance]]
 
 ### 📁 04 - Les Blueprints d'Architecture (Scénarios)
 *Des configurations prêtes à être proposées à vos clients.*
-- [[04-blueprints/Scenario A Labo Dev]] (CPU Offloading)
-- [[04-blueprints/Scenario B PME]] (Appliance Unifiée)
-- [[04-blueprints/Scenario C Cluster Bureau]] (Exo + Thunderbolt)
-- [[04-blueprints/Scenario D Datacenter]] (RoCE + Multi-GPU)
+- [[04-blueprints/scenario-a-labo-dev|🛠️ Scénario A : Le Labo Dev (CPU Offloading)]]
+- [[04-blueprints/scenario-b-pme-appliance|🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)]]
+- [[04-blueprints/scenario-c-cluster-bureau|🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)]]
+- [[04-blueprints/scenario-d-datacenter|🏢 Scénario D : Datacenter (RoCE & Multi-GPU)]]
 
 ---
 ## 📖 Dictionnaire & Concepts
