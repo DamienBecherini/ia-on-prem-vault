@@ -126,3 +126,9 @@ When an item is completed, move it to `## Done` with the date and related source
 
 ## Done
 
+### `00-lexique/inference.md`
+
+- **Date:** 2026-06-03
+- **Source article:** `01-fondations/la-bande-passante-memoire.md`, parcours glossaire
+- **Also updated:** `00-lexique/llm.md` (pont léger), liens depuis prefill/decoding/glossaire/chapitre bande passante
+

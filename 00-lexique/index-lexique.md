@@ -12,6 +12,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [Decoding](/00-lexique/decoding/) | Phase de génération auto-régressive token par token. |
 | [Fenêtre de contexte](/00-lexique/fenetre-de-contexte/) | Quantité maximale de tokens pris en compte par le modèle. |
 | [HBM](/00-lexique/hbm/) | Mémoire empilée à très haute bande passante. |
+| [Inférence (LLM)](/00-lexique/inference/) | Utilisation d'un modèle entraîné pour générer du texte à la demande. |
 | [KV Cache](/00-lexique/kv-cache/) | Cache des clés/valeurs d'attention utilisé pendant la génération. |
 | [LLM](/00-lexique/llm/) | Large Language Model. |
 | [Mémoire unifiée](/00-lexique/memoire-unifiee/) | Architecture mémoire partagée entre CPU/GPU/NPU. |

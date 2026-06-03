@@ -20,6 +20,7 @@ La bande passante mémoire et le KV cache deviennent déterminants.
 C'est cette phase qui gouverne le débit "tokens/s" observé dans la plupart des usages chat.
 
 ## 🔗 Voir aussi
+- [[00-lexique/inference|Inférence (LLM)]]
 - [[00-lexique/prefill|Prefill]]
 - [[00-lexique/kv-cache|KV Cache]]
 - [[00-lexique/tokens-par-seconde|Tokens par seconde]]
