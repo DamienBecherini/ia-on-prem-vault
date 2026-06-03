@@ -36,7 +36,7 @@ Bienvenue dans le "Zero to Hero" de l'IA Locale. Ce Vault est conçu comme un ja
 - [[04-blueprints/scenario-a-labo-dev|🛠️ Scénario A : Le Labo Dev (CPU Offloading)]]
 - [[04-blueprints/scenario-b-pme-appliance|🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)]]
 - [[04-blueprints/scenario-c-cluster-bureau|🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)]]
-- [[04-blueprints/scenario-d-datacenter|🏢 Scénario D : Datacenter (RoCE & Multi-GPU)]]
+- [[04-blueprints/scenario-d-datacenter|🏭 Scénario D : Datacenter (RoCE & Multi-GPU)]]
 
 ---
 
