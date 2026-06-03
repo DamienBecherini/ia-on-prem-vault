@@ -33,7 +33,7 @@ Ce miracle matériel est rendu possible par l'orchestrateur local **[[00-lexique
 
 ### Les Performances Attendues
 Le gain est purement capacitaire : **vous ne gagnez pas en vitesse, vous gagnez le droit de faire tourner le modèle**.
-La latence du réseau, même en Thunderbolt, est infiniment plus lente que la vitesse interne de la RAM. Sur un cluster de 8 Mac Mini faisant tourner un modèle de 600B+ quantifié, la vitesse de génération stagne généralement autour de **3 à 5 [[00-lexique/tokens-par-seconde|tokens/s]]**[^1].
+La latence du réseau, même en Thunderbolt, est infiniment plus lente que la vitesse interne de la RAM. Sur un cluster de 8 Mac Mini faisant tourner un modèle de 600B+ quantifié, les benchmarks communautaires disponibles indiquent une vitesse de génération de l'ordre de **3 à 5 [[00-lexique/tokens-par-seconde|tokens/s]]**[^1].
 
 ---
 
@@ -53,7 +53,7 @@ Pendant la phase de lecture du prompt (le Prefill), une immense quantité de don
 
 ### ❌ Quand fuir ce Blueprint ?
 *   **Pour un assistant RAG conversationnel en temps réel.** Attendre 45 secondes pour le premier mot après avoir posé une question sur un PDF va frustrer vos utilisateurs.
-*   **Pour servir de nombreux collaborateurs simultanément.** Le réseau Thunderbolt et le Pipeline Parallelism gèrent très mal les requêtes concurrentes massives. Si vous devez servir 50 utilisateurs en temps réel sur un modèle géant, il faut basculer sur un véritable réseau Datacenter (RoCE/InfiniBand) et des serveurs multi-GPU. (C'est l'objet de notre dernier blueprint).
+*   **Pour servir de nombreux collaborateurs simultanément.** Le réseau Thunderbolt et le Pipeline Parallelism gèrent très mal les requêtes concurrentes massives. Si vous devez servir 50 utilisateurs en temps réel sur un modèle géant, il faut basculer sur un véritable réseau Datacenter (RoCE/InfiniBand) et des serveurs multi-GPU — c'est l'objet du **[[04-blueprints/scenario-d-datacenter|Scénario D : Datacenter]]**.
 
 ---
 

@@ -379,4 +379,106 @@ Phases 2 and 3 can overlap slightly (fix links only after claims in the same par
 
 ## Implementation report
 
-*(To be filled when execution completes.)*
+### Phase 0 — Completed 2026-06-03
+
+- `lexicon-backlog.md` rewritten: 10 Gemini "To Create" entries moved out of `## Done`; `pipeline-parallelism` deduplicated with both source articles; 3 pedagogical entries added (`tokenisation`, `embedding`, `attention`); "Already Linked From" sections added for ch. 03 and 04.
+
+### Phase 1 — Completed 2026-06-03
+
+Files changed:
+
+| File | Change |
+|------|--------|
+| `00-lexique/inference.md` | Added `📚 Pour comprendre en profondeur` (voyage, bande passante, moteurs) |
+| `00-lexique/kv-cache.md` | Added `🔬 Ce n'est pas de la magie` + `📚 Pour comprendre` (voyage étape 4, kv-cache-et-contexte, bande passante) |
+| `00-lexique/llm.md` | Added `📚 Pour comprendre` (voyage, inférence, quantification) |
+| `01-fondations/le-voyage-d-un-prompt.md` | Intro callout with `[[llm]]` + `[[inference]]` links ; footnote [^1] pointed to specific Llama 3.1 model card path |
+| `01-fondations/la-bande-passante-memoire.md` | Prerequisite callout → voyage |
+| `00-index.md` | Section `🚶 Je découvre` (5-step beginner path) added before glossaire link |
+| `00-lexique/glossaire-ia.md` | Section `🚶 Débutant — je découvre` with full learning chain added before `Parcours recommandé` |
+| `00-lexique/index-lexique.md` | Regenerated (27 entries, unchanged count) |
+
+Exit criterion met: beginner path LLM → Inférence → Voyage → Prefill/Decoding → Memory Wall → Bande Passante is walkable in one click per step.
+
+### Phase 2 — Completed 2026-06-03
+
+Source audit across all 8 Gemini chapters. Files with low risk unchanged: `le-voyage-d-un-prompt`, `scenario-d-datacenter`, `rag-et-agents-openhuman`.
+
+Changes made:
+
+| File | Claim | Action |
+|------|-------|--------|
+| `moteurs-inference-vllm-ollama.md` | "52M downloads" (Particula Tech) | Softened to "plus de 50 millions" + labeled as benchmark communautaire |
+| `moteurs-inference-vllm-ollama.md` | "jusqu'à 16× débit vLLM vs Ollama" (Particula Tech + blog) | Softened to "×5 à ×16 selon la configuration" |
+| `moteurs-inference-vllm-ollama.md` | Footnotes [^1] and [^4] | Labeled as community benchmark / article de blog |
+| `clustering-exo-et-ray.md` | "ont *prouvé* qu'environ 5 t/s" (Particula Tech) | Changed to "indiquent … de l'ordre de 3 à 5 t/s dans cette configuration" |
+| `scenario-a-labo-dev.md` | "50-100 t/s" (no citation) | Added "typiquement" + "selon modèle/quantification/moteur" |
+| `scenario-a-labo-dev.md` | "2-5 t/s" for 70B offloading | Added cross-ref to bande passante formula (DDR5 ≈ 100 Go/s → ~2,5 t/s) |
+| `scenario-b-pme-appliance.md` | "10-15 t/s Mac Studio", "5-7 t/s AMD" | Added theoretical basis from bande passante (546/273 Go/s ÷ 40 Go) |
+| `scenario-c-cluster-bureau.md` | "stagne généralement" for cluster | Changed to "benchmarks communautaires disponibles indiquent … de l'ordre de" |
+
+Residual risk:
+- Footnotes [^1] and [^4] in moteurs chapter still point to community/blog sources — no academic substitute found for real-world Ollama vs vLLM concurrency numbers. The softened wording reflects this.
+- Exo cluster throughput (3-5 t/s) remains based on a single community benchmark (Particula Tech). If a more authoritative source emerges, update `clustering-exo-et-ray.md` [^2].
+- "50-100 t/s" range for small models is widely accepted in the community but no specific citation was added — consistent with bande passante upper-bound analysis (RTX 5090 formula gives ≫100 t/s theoretical, overhead explains the range).
+
+### Phase 5 — Completed 2026-06-03
+
+Created 3 pedagogical micro-concept entries:
+
+| File | Content |
+|------|---------|
+| `00-lexique/tokenisation.md` | BPE, vocabulary size, token count variance by language |
+| `00-lexique/embedding.md` | Token vectors, LLM internal vs RAG search embeddings distinction |
+| `00-lexique/attention.md` | Q/K/V mechanism, O(n²) prefill cost, GQA note, KV Cache link |
+
+Updated `01-fondations/le-voyage-d-un-prompt.md`: wikilinks added for "La Tokenisation" (step 1), "L'Embedding" (step 2), "mécanisme d'Attention" (step 3).
+
+Updated `00-lexique/glossaire-ia.md`: new "Fondations LLM" table added before "Mémoire & performance".
+
+### Phase 6 — Completed 2026-06-03
+
+**New hardware entries (P4):**
+
+| File | Content |
+|------|---------|
+| `00-lexique/nvswitch.md` | NVLink fabric puce, distinction NVLink vs NVSwitch, HGX relevance |
+| `00-lexique/nccl.md` | AllReduce/AllGather/Broadcast, topology detection, NCCL_P2P_DISABLE pitfall |
+| `00-lexique/infiniband.md` | HDR/NDR/XDR generations, IB vs RoCE comparison, lossless native |
+| `00-lexique/gpudirect-rdma.md` | Zero-copy GPU↔NIC, nvidia-peermem prereq, NUMA pitfall |
+| `00-lexique/pfc.md` | 802.1Qbb, per-priority pause, PFC storm risk |
+| `00-lexique/ecn.md` | CNP feedback, DCQCN, Kmin/Kmax tuning |
+
+**Updated existing entries (P5):**
+
+| File | Changes |
+|------|---------|
+| `00-lexique/multi-gpu.md` | PCIe/NVLink/HGX bandwidth comparison table, TP vs PP strategy guide, pool pitfall |
+| `00-lexique/nvlink.md` | Generation table (NVLink 3/4/5), NVLink vs NVSwitch distinction |
+| `00-lexique/pcie.md` | Gen4/5/6 bandwidth table, NVLink comparison, x8 mid-range pitfall |
+| `00-lexique/vram.md` | DDR5/GDDR7/HBM3e table, Memory Wall link, multi-GPU pool pitfall |
+| `00-lexique/rdma.md` | GPUDirect RDMA mention, IB vs RoCE distinction |
+| `00-lexique/roce.md` | PFC+ECN/DCQCN requirements, lossless/lossy nuance, IB vs RoCE comparison |
+
+Updated `00-lexique/glossaire-ia.md`: new "Réseau & Clustering" table (RDMA, RoCE, InfiniBand, GPUDirect RDMA, NCCL, PFC, ECN), NVSwitch added to "Infrastructure & architecture", 3 acronyms added to index.
+
+### Phase 7 — Completed 2026-06-03
+
+Blueprint editorial pass across scenarios A–D:
+
+| File | Fix |
+|------|-----|
+| `scenario-a-labo-dev.md` | Wikilinked GGUF |
+| `scenario-b-pme-appliance.md` | Added "➡ Scénario C" forward-link in ❌ section |
+| `scenario-c-cluster-bureau.md` | Linked "C'est l'objet du dernier blueprint" → `scenario-d-datacenter.md` |
+| `scenario-d-datacenter.md` | Wikilinked NVSwitch, TensorRT-LLM, vLLM (via PagedAttention), PFC, ECN |
+
+Narrative chain A→B→C→D is now fully navigable from within each "❌ Quand fuir" verdict section.
+
+### Phase 8 — Completed 2026-06-03
+
+- `00-lexique/index-lexique.md` regenerated: **48 entries** (up from 39 after Phase 4).
+- `lexicon-backlog.md` rewritten: all "To Create" and "To Verify Or Update" sections cleared; full "Done" log with phase breakdown.
+- Plan report appended (this section).
+
+**Final lexicon count: 48 entries** covering the full vault from beginner fundamentals (tokenisation → voyage → memory wall) through software stack (vLLM, TensorRT-LLM, Exo, Ray) to datacenter networking (InfiniBand, RoCE, PFC, ECN, NCCL, GPUDirect RDMA).

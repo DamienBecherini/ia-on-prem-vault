@@ -22,7 +22,7 @@ Exo fonctionne en Peer-to-Peer (P2P). Vous lancez la commande `uv run exo` sur c
 
 ### 🚀 Cas d'usage : Le Mac Cluster
 Exo brille particulièrement sur Apple Silicon. En utilisant des câbles Thunderbolt 4 ou 5 (qui permettent le **RDMA-over-Thunderbolt** entre les puces), on obtient une bande passante réseau suffisante pour compenser la latence inter-machines. 
-Des benchmarks communautaires ont prouvé qu'un cluster de 8 Mac Mini M4 Pro (soit 512 Go de mémoire unifiée agrégée) peut faire tourner le colossal DeepSeek V3 671B avec un débit très respectable d'environ 5 tokens/s[^2].
+Des benchmarks communautaires indiquent qu'un cluster de 8 Mac Mini M4 Pro (soit 512 Go de mémoire unifiée agrégée) peut faire tourner le colossal DeepSeek V3 671B avec un débit de l'ordre de **3 à 5 tokens/s** dans cette configuration[^2].
 
 ### ⚠️ Les limites
 Si la connexion réseau est lente (Wi-Fi ou simple câble Ethernet 1 Gigabit), le transfert des activations entre les machines devient un goulot d'étranglement fatal. La capacité globale augmente, mais les [[00-lexique/tokens-par-seconde|tokens/s]] s'effondrent.

@@ -13,17 +13,29 @@ tags:
 Protocole qui apporte les bénéfices RDMA sur des réseaux Ethernet adaptés.
 
 ## 📖 Définition détaillée
-RoCE permet des transferts mémoire-à-mémoire à faible latence sur infrastructure Ethernet.
-Il est souvent utilisé pour l'IA distribuée quand InfiniBand n'est pas retenu.
+RoCE apporte les bénéfices de [[00-lexique/rdma|RDMA]] (faible latence, faible charge CPU) sur des switches Ethernet standard, sans nécessiter un fabric [[00-lexique/infiniband|InfiniBand]] dédié.
+
+**RoCE v2** (la version courante) utilise UDP/IP, ce qui simplifie le routage mais exige un réseau **lossless** pour ne pas dégrader les performances RDMA :
+- **[[00-lexique/pfc|PFC]]** (Priority Flow Control) : évite les pertes de paquets en pausant le trafic par priorité.
+- **[[00-lexique/ecn|ECN]]** (Explicit Congestion Notification) : gère la congestion avant que les buffers saturent.
+
+Sans cette configuration, une perte de paquet force une retransmission qui peut dégrader le débit par ×10 ou plus.
+
+**RoCE vs InfiniBand :**
+- RoCE : réutilise l'infrastructure Ethernet, coût inférieur, configuration réseau exigeante.
+- InfiniBand : fabric dédié, lossless natif, latence la plus basse, coût élevé.
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Il améliore la viabilité des architectures multi-nœuds en limitant la pénalité réseau.
+Alternative crédible à InfiniBand pour les clusters IA on-premise quand le budget ne permet pas un fabric IB dédié. Backbone des clusters GPU à 25/100/400 GbE.
 
 ## ⚠️ Pièges fréquents
-- Penser que RoCE fonctionne optimalement sans configuration réseau adaptée.
-- Confondre débit théorique Ethernet et performance réelle applicative.
+- RoCE sans PFC/ECN correctement configurés dégénère en performances inférieures à du TCP optimisé.
+- Un seul switch non configuré sur le chemin casse le lossless pour tout le flux.
 
 ## 🔗 Voir aussi
+- [[00-lexique/pfc|PFC]]
+- [[00-lexique/ecn|ECN]]
 - [[00-lexique/rdma|RDMA]]
-- [[00-lexique/multi-gpu|Multi-GPU]]
-- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]
+- [[00-lexique/infiniband|InfiniBand]]
+- [[00-lexique/gpudirect-rdma|GPUDirect RDMA]]
+- [[02-materiel/reseau-ia-roce-et-thunderbolt|🌐 Réseau IA : RoCE et Thunderbolt]]

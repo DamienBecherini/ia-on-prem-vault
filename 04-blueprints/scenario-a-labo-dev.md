@@ -25,9 +25,9 @@ Ce premier blueprint est l'architecture d'entrée de gamme. Il s'appuie sur du m
 ## ⚙️ La Stack Logicielle
 
 *   **Moteur d'inférence :** **Ollama** ou **llama.cpp** compilé avec le support CUDA.
-*   **Format du modèle :** `GGUF` en [[00-lexique/quantification-q4|Quantification Q4_K_M]].
+*   **Format du modèle :** [[00-lexique/gguf|GGUF]] en [[00-lexique/quantification-q4|Quantification Q4_K_M]].
 
-Sur cette machine, un modèle de la classe **8B à 14B** (ex: *Llama 3.1 8B* ou *Qwen 2.5 14B*) tiendra entièrement dans les 24 Go de VRAM de la carte graphique. Vous obtiendrez des performances exceptionnelles (généralement entre 50 et 100 [[00-lexique/tokens-par-seconde|tokens/s]]). 
+Sur cette machine, un modèle de la classe **8B à 14B** (ex: *Llama 3.1 8B* ou *Qwen 2.5 14B*) tiendra entièrement dans les 24 Go de VRAM de la carte graphique. Vous obtiendrez des performances élevées — typiquement **50 à 100 [[00-lexique/tokens-par-seconde|tokens/s]]** selon le modèle, la quantification et le moteur utilisé.
 
 Mais que se passe-t-il si vous voulez tester un modèle intelligent lourd, classe GPT-4, comme **Llama 3.1 70B** ? 
 
@@ -45,7 +45,7 @@ Plutôt que d'abandonner en affichant une erreur *Out Of Memory (OOM)*, le moteu
 Lors de la génération de la réponse ([[00-lexique/decoding|Decoding]]), les données doivent faire des allers-retours constants entre la RAM, le processeur et la carte graphique via le bus PCIe. 
 
 Comme expliqué dans le chapitre sur [[01-fondations/memoire-unifiee-vs-ram-vs-vram|la VRAM vs RAM]], la RAM classique est physiquement bridée à environ 80-100 Go/s. Le résultat est immédiat : la vitesse de génération s'effondre.
-Sur une RTX 4090 couplée à 64 Go de DDR5, un modèle 70B en CPU Offloading génèrera généralement **entre 2 et 5 tokens par seconde**[^1][^2]. C'est lisible (légèrement inférieur à la vitesse de lecture humaine), mais inadapté pour servir une application réactive ou plusieurs utilisateurs simultanés.
+Sur une RTX 4090 couplée à 64 Go de DDR5, un modèle 70B en CPU Offloading génèrera généralement **entre 2 et 5 tokens par seconde**[^1][^2] — ordre de grandeur cohérent avec l'analyse de [[01-fondations/la-bande-passante-memoire|la bande passante mémoire]] : DDR5 ≈ 100 Go/s pour un modèle de ~40 Go donne une borne théorique de ~2,5 t/s. C'est lisible (légèrement inférieur à la vitesse de lecture humaine), mais inadapté pour servir une application réactive ou plusieurs utilisateurs simultanés.
 
 ---
 
