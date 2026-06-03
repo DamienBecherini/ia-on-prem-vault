@@ -14,7 +14,7 @@ Pour transformer ce moteur statistique aveugle en un assistant d'entreprise souv
 ## 1. Le RAG Standard : La recherche vectorielle
 
 L'approche RAG classique (très populaire entre 2023 et 2024) est une chaîne linéaire :
-1.  **Ingestion :** Vos documents (PDF, Word, Code) sont découpés en petits blocs (les *chunks*). Un modèle spécialisé convertit ces blocs en listes de nombres (Embeddings) et les stocke dans une **Base de Données Vectorielle** (comme Qdrant, Milvus ou Chroma).
+1.  **Ingestion :** Vos documents (PDF, Word, Code) sont découpés en petits blocs (les *chunks*). Un modèle spécialisé convertit ces blocs en listes de nombres (Embeddings) et les stocke dans une **[[00-lexique/vectordb|Base de Données Vectorielle]]** (comme Qdrant, Milvus ou Chroma).
 2.  **Recherche :** Quand l'utilisateur pose une question, le système cherche les blocs les plus mathématiquement proches de la question.
 3.  **Génération :** Le système colle ces blocs dans le prompt de l'utilisateur de manière invisible, puis envoie le tout au LLM pour générer la réponse.
 
@@ -29,14 +29,14 @@ Comme nous l'avons vu au chapitre matériel, un contexte géant fait exploser la
 Pour éviter de saturer la mémoire avec des informations inutiles, le marché a basculé vers le **RAG Agentique** (*Agentic RAG*)[^1][^3]. Au lieu d'être un tuyau passif, le LLM devient le pilote.
 
 ### Le framework de l'Agent
-Grâce à des bibliothèques comme [SmolAgents](https://github.com/huggingface/smolagents) (Hugging Face) ou LangGraph, le développeur donne au LLM des **Outils** (*Tool Calling* / *Function Calling*).
+Grâce à des bibliothèques comme [[00-lexique/smolagents|SmolAgents]] (Hugging Face) ou LangGraph, le développeur donne au LLM des **Outils** (*Tool Calling* / *Function Calling*).
 Le déroulé devient dynamique :
 1. L'utilisateur pose une question complexe.
 2. L'Agent réfléchit : *"Ai-je besoin de chercher dans la base RH ou dans le code source ?"*
 3. L'Agent appelle l'outil de recherche, lit un résumé, et décide **lui-même** si l'information est suffisante ou s'il doit faire une nouvelle recherche affine, avant de rédiger sa réponse finale[^4].
 
 ### Le GraphRAG
-Popularisé par les recherches de Microsoft, le **GraphRAG** remplace la base vectorielle "bête" par un **Knowledge Graph** (Graphe de connaissances)[^5]. Le système extrait les entités (Personnes, Lieux, Concepts) et leurs relations. Cela permet au LLM de répondre à des questions globales (ex: *"Quels sont les thèmes principaux abordés par l'équipe produit ce mois-ci ?"*) qui faisaient systématiquement échouer le RAG vectoriel classique.
+Popularisé par les recherches de Microsoft, le **[[00-lexique/graphrag|GraphRAG]]** remplace la base vectorielle "bête" par un **Knowledge Graph** (Graphe de connaissances)[^5]. Le système extrait les entités (Personnes, Lieux, Concepts) et leurs relations. Cela permet au LLM de répondre à des questions globales (ex: *"Quels sont les thèmes principaux abordés par l'équipe produit ce mois-ci ?"*) qui faisaient systématiquement échouer le RAG vectoriel classique.
 
 ---
 
@@ -57,7 +57,7 @@ Pour construire une stack logicielle d'entreprise souveraine en 2026 :
 
 1.  **Dédiez un petit modèle au routage :** N'utilisez pas votre gros modèle 70B pour choisir quel outil appeler. Utilisez un modèle ultra-rapide (ex: Qwen 2.5 7B ou Llama 3 8B) configuré spécifiquement pour le *Function Calling*. Il appellera la base de données.
 2.  **Gardez les gros modèles pour la synthèse :** Une fois les bons blocs de texte récupérés par le petit agent, envoyez le tout au modèle lourd (le "cerveau") pour rédiger la réponse finale.
-3.  **Évitez les dépendances Cloud :** Si vous utilisez LangChain ou LlamaIndex, auditez la télémétrie. En on-premise pur, des frameworks minimalistes comme `SmolAgents` garantissent que vos prompts ne fuiteront pas vers une API externe pendant l'orchestration[^4].
+3.  **Évitez les dépendances Cloud :** Si vous utilisez LangChain ou LlamaIndex, auditez la télémétrie. En on-premise pur, des frameworks minimalistes comme [[00-lexique/smolagents|SmolAgents]] garantissent que vos prompts ne fuiteront pas vers une API externe pendant l'orchestration[^4].
 
 ---
 

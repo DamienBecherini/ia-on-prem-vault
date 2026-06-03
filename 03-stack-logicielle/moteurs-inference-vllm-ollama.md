@@ -13,11 +13,11 @@ En 2026, l'écosystème s'est fortement spécialisé. Le choix du moteur dicte l
 
 ## 1. llama.cpp & Ollama : Les rois du poste de travail
 
-[Ollama](https://ollama.com/) est devenu le standard de fait pour tester des modèles rapidement (plus de 52 millions de téléchargements mensuels au T1 2026[^1]). Sous le capot, Ollama repose principalement sur le moteur **llama.cpp**, écrit en C/C++ pur.
+[Ollama](https://ollama.com/) est devenu le standard de fait pour tester des modèles rapidement — un benchmark communautaire du T1 2026 estimait son audience à plus de 50 millions de téléchargements mensuels[^1]. Sous le capot, Ollama repose principalement sur le moteur **llama.cpp**, écrit en C/C++ pur.
 
 ### 🌟 Les forces
 *   **Polyvalence matérielle :** Optimisé pour exploiter la mémoire unifiée des Mac Studio, gérer l'[[00-lexique/offloading|offloading]] entre RAM et GPU sur les postes modestes, et s'exécuter sur presque n'importe quel CPU.
-*   **Format GGUF :** Utilise des formats de [[00-lexique/quantification|quantification]] agressifs (ex: `Q4_K_M`), permettant de faire tenir des modèles massifs dans une VRAM très limitée sans dépendances complexes[^2].
+*   **Format [[00-lexique/gguf|GGUF]] :** Utilise des formats de [[00-lexique/quantification|quantification]] agressifs (ex: `Q4_K_M`), permettant de faire tenir des modèles massifs dans une VRAM très limitée sans dépendances complexes[^2].
 *   **Simplicité :** Un seul fichier exécutable, une commande `ollama run` et une API compatible OpenAI prête à l'emploi.
 
 ### ⚠️ Les limites (Le mur de la production)
@@ -30,9 +30,9 @@ L'erreur classique est de déployer Ollama pour servir une application PME avec 
 [vLLM](https://github.com/vllm-project/vllm) est le moteur Python/C++ open-source de référence pour l'inférence haut débit. Pensé pour les serveurs équipés de puces NVIDIA (et AMD ROCm), il est conçu pour maximiser l'utilisation du GPU sous forte charge.
 
 ### 🌟 Les forces
-*   **PagedAttention :** vLLM a popularisé cette technique qui gère la mémoire du KV Cache par blocs (comme la mémoire virtuelle d'un OS). Cela réduit la fragmentation mémoire de ~60% à moins de 4% et permet de grouper massivement les requêtes (*Continuous Batching*)[^3].
-*   **Haut débit concurrent :** Sur des architectures multi-utilisateurs, vLLM peut délivrer jusqu'à 16 fois plus de débit global qu'Ollama avant de saturer[^1][^4].
-*   **Support des formats de pointe :** Il gère la quantification de production (FP8, AWQ) via des kernels nativement optimisés pour les architectures NVIDIA Hopper et Blackwell, et gère nativement le *Tensor Parallelism* en [[00-lexique/multi-gpu|multi-GPU]][^5].
+*   **[[00-lexique/pagedattention|PagedAttention]] :** vLLM a popularisé cette technique qui gère la mémoire du KV Cache par blocs (comme la mémoire virtuelle d'un OS). Cela réduit la fragmentation mémoire de ~60% à moins de 4% et permet de grouper massivement les requêtes (*Continuous Batching*)[^3].
+*   **Haut débit concurrent :** Sur des architectures multi-utilisateurs, vLLM peut délivrer un débit global nettement supérieur à Ollama en charge concurrente — les comparatifs communautaires citent des facteurs de ×5 à ×16 selon la configuration et le modèle[^1][^4].
+*   **Support des formats de pointe :** Il gère la quantification de production (FP8, AWQ) via des kernels nativement optimisés pour les architectures NVIDIA Hopper et Blackwell, et gère nativement le [[00-lexique/tensor-parallelism|Tensor Parallelism]] en [[00-lexique/multi-gpu|multi-GPU]][^5].
 
 ### ⚠️ Les limites
 vLLM n'est pas conçu pour faire de l'offloading sur RAM CPU classique, ni pour le silicium Apple. Il requiert un environnement matériel robuste (GPU dédiés) et une configuration plus fine des paramètres serveurs. 
@@ -68,9 +68,9 @@ Pour un projet d'agent on-premise (*OpenHuman*) déployé chez des clients, le c
 
 ## 📚 Sources et Références
 
-[^1]: Particula Tech & Community Benchmarks, *Ollama vs vLLM: Which LLM Server Actually Fits in 2026* (Ollama concurrency limit, 52M downloads), Mars 2026.
+[^1]: Particula Tech, *Ollama vs vLLM: Which LLM Server Actually Fits in 2026* (benchmark communautaire, estimation d'audience et limites de concurrence), Mars 2026.
 [^2]: J. Wang et al., *Which Quantization Should I Use? A Unified Evaluation of llama.cpp Quantization* (arXiv:2601.14277, GGUF formats), Janvier 2026.
 [^3]: Woosuk Kwon et al., *Efficient Memory Management for Large Language Model Serving with PagedAttention* (SOSP 2023).
-[^4]: Ayi NEDJIMI Consultants, *LLM Local 2026 : Ollama vs LM Studio vs vLLM* (Architecture comparison, Continuous Batching), Février 2026.
+[^4]: Ayi NEDJIMI Consultants, *LLM Local 2026 : Ollama vs LM Studio vs vLLM* (article de blog, comparaison d'architectures, Continuous Batching), Février 2026.
 [^5]: vLLM Project Documentation & Spheron Blog, *vLLM Production Deployment 2026: Multi-GPU Tensor Parallel + FP8* (Model Runner V2, Hopper/Blackwell support), Mai 2026.
 [^6]: NVIDIA, *TensorRT-LLM Documentation* (FP4 Support, Blackwell optimization, DeepSeek-R1 performance records), Mai 2026.

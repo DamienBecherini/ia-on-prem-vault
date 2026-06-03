@@ -15,7 +15,7 @@ Le [[04-blueprints/scenario-b-pme-appliance|Scénario B]] (l'Appliance) s'étouf
 
 Ici, l'unité de base n'est plus la carte graphique, mais le **Nœud Serveur** (Node) et le **Réseau Fabric**.
 
-*   **Le Nœud (Scale-Up) :** Un serveur format rack (ex: architecture NVIDIA HGX) contenant **8 GPU** de classe Datacenter (NVIDIA H200 ou B200). Contrairement à un PC classique, ces 8 puces ne communiquent pas via PCIe, mais via un **[[00-lexique/nvlink|NVLink]]** et un NVSwitch. Ce bus permet aux puces de s'échanger des données à **1 800 Go/s** (sur Blackwell)[^1].
+*   **Le Nœud (Scale-Up) :** Un serveur format rack (ex: architecture NVIDIA HGX) contenant **8 GPU** de classe Datacenter (NVIDIA H200 ou B200). Contrairement à un PC classique, ces 8 puces ne communiquent pas via PCIe, mais via un **[[00-lexique/nvlink|NVLink]]** et un **[[00-lexique/nvswitch|NVSwitch]]**. Ce bus permet aux puces de s'échanger des données à **1 800 Go/s** (sur Blackwell)[^1].
 *   **Le Réseau (Scale-Out) :** Pour relier plusieurs nœuds entre eux, on utilise des cartes réseau à très haut débit (400 Gbps ou 800 Gbps) compatibles **[[00-lexique/rdma|RDMA]]**. Le standard est **InfiniBand** ou **[[00-lexique/roce|RoCEv2]]** (RDMA over Converged Ethernet)[^2].
 *   **Le Stockage :** Un stockage flash NVMe distribué accessible en *GPUDirect Storage*, pour charger les To de poids du modèle en quelques secondes au démarrage.
 
@@ -25,7 +25,7 @@ Ici, l'unité de base n'est plus la carte graphique, mais le **Nœud Serveur** (
 
 ## ⚙️ La Stack Logicielle et le Mécanisme
 
-Cette débauche de matériel exige des moteurs d'inférence capables de l'exploiter à la milliseconde près : **vLLM** ou le SDK officiel **TensorRT-LLM** derrière un serveur Triton. L'orchestration multi-nœuds est gérée par **[[00-lexique/ray|Ray]]**.
+Cette débauche de matériel exige des moteurs d'inférence capables de l'exploiter à la milliseconde près : **[[00-lexique/pagedattention|vLLM]]** ou le SDK officiel **[[00-lexique/tensorrt-llm|TensorRT-LLM]]** derrière un serveur Triton. L'orchestration multi-nœuds est gérée par **[[00-lexique/ray|Ray]]**.
 
 ### La Magie du Tensor Parallelism
 Sur le Cluster Mac (Scénario C), nous avions vu le *Pipeline Parallelism* (découpage couche par couche), qui augmente la latence. 
@@ -40,7 +40,7 @@ Si vous déployez des puces NVIDIA Blackwell (B200), le logiciel utilisera nativ
 ## ⚠️ Le Piège de l'Ingénierie Réseau (Le drame RoCE)
 
 Beaucoup d'entreprises achètent les serveurs GPU, puis branchent le tout sur leur réseau Ethernet classique en espérant que le RDMA fonctionne tout seul.
-C'est le plus grand piège de ce blueprint : **RoCE n'est pas plug-and-play**. Il nécessite un réseau dit "Lossless" (sans perte). Si vos switchs réseau ne sont pas rigoureusement configurés avec des protocoles stricts de contrôle de congestion (PFC, ECN), les paquets de données liés à l'IA vont saturer les câbles, provoquant des retransmissions. 
+C'est le plus grand piège de ce blueprint : **RoCE n'est pas plug-and-play**. Il nécessite un réseau dit "Lossless" (sans perte). Si vos switchs réseau ne sont pas rigoureusement configurés avec des protocoles stricts de contrôle de congestion ([[00-lexique/pfc|PFC]], [[00-lexique/ecn|ECN]]), les paquets de données liés à l'IA vont saturer les câbles, provoquant des retransmissions. 
 **Une latence réseau qui passe de 2 microsecondes à 5 millisecondes suffit à diviser par dix la vitesse de votre cluster IA**[^2].
 
 ---

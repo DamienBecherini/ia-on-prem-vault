@@ -15,19 +15,19 @@ Voici le voyage exact de votre prompt, étape par étape.
 
 ---
 
-## Étape 1 : La Tokenisation (Le hachoir à texte)
+## Étape 1 : La [[00-lexique/tokenisation|Tokenisation]] (Le hachoir à texte)
 
-Un ordinateur ne sait calculer que sur des nombres. La toute première étape consiste donc à découper votre phrase en morceaux appelés **tokens**, puis à assigner un numéro à chaque morceau.
+Un ordinateur ne sait calculer que sur des nombres. La toute première étape consiste donc à découper votre phrase en morceaux appelés **[[00-lexique/tokenisation|tokens]]**, puis à assigner un numéro à chaque morceau.
 
 > **Exemple :** Vous tapez *"Où est Paris ?"*
 > Le modèle ne voit pas des lettres, il voit les numéros de son dictionnaire interne. Par exemple : `[4502, 381, 1920, 30]`. 
 
 Chaque modèle a son propre dictionnaire, appris pendant son entraînement. En 2026, un modèle standard comme **Llama 3** possède un vocabulaire d'environ **128 256 tokens** possibles[^1]. Chaque numéro est l'index exact d'un de ces mots ou sous-mots.
 
-## Étape 2 : L'Embedding (La carte au trésor)
+## Étape 2 : L'[[00-lexique/embedding|Embedding]] (La carte au trésor)
 
 Avoir le numéro `4502` pour le mot "Où" n'aide pas le modèle à comprendre son *sens*. 
-L'ordinateur va donc convertir chaque numéro en une longue liste de coordonnées mathématiques (un vecteur). C'est ce qu'on appelle l'**Embedding**.
+L'ordinateur va donc convertir chaque numéro en une longue liste de coordonnées mathématiques (un vecteur). C'est ce qu'on appelle l'**[[00-lexique/embedding|Embedding]]**.
 
 Imaginez une carte en 3D où les concepts similaires sont proches. Le mot "Roi" sera proche de "Reine" et de "Couronne". Dans un grand modèle (LLM), cette "carte" ne fait pas 3 dimensions, mais souvent **4 096 ou 8 192 dimensions**. 
 
@@ -41,7 +41,7 @@ C'est ici que le moteur d'inférence (le logiciel qui fait tourner l'IA) lance s
 
 Cette phase s'appelle le [[00-lexique/prefill|Prefill]]. Le modèle **lit tout votre prompt d'un seul coup**, en parallèle. 
 
-Le cœur de cette étape est le **mécanisme d'Attention** : le modèle croise tous les mots entre eux pour comprendre le contexte. Il calcule mathématiquement que, dans votre phrase, le point d'interrogation est fortement lié au mot "Où". 
+Le cœur de cette étape est le **[[00-lexique/attention|mécanisme d'Attention]]** : le modèle croise tous les mots entre eux pour comprendre le contexte. Il calcule mathématiquement que, dans votre phrase, le point d'interrogation est fortement lié au mot "Où". 
 * **Ce qu'il se passe dans la machine :** Vos puces (CPU ou GPU) tournent à 100% de leur capacité de calcul (TFLOPS) parce qu'elles peuvent exécuter toutes ces multiplications matricielles simultanément.
 
 ## Étape 4 : Le KV Cache (La mémoire à court terme)

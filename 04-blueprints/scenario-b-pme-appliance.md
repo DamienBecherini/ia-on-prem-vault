@@ -33,8 +33,8 @@ Ici, la stack logicielle diffère selon le matériel choisi :
 
 ### Les Performances Attendues
 Puisque le modèle de 40 Go rentre intégralement dans la [[00-lexique/memoire-unifiee|Mémoire unifiée]] (qui agit ici comme une immense [[00-lexique/vram|VRAM]]), les vitesses de génération sont excellentes et stables :
-*   **Mac Studio :** Entre 10 et 15 [[00-lexique/tokens-par-seconde|tokens/s]] en phase de [[00-lexique/decoding|Decoding]][^1].
-*   **AMD PRO 400 :** Autour de 5 à 7 tokens/s (limité par une bande passante légèrement inférieure au silicium Apple)[^2].
+*   **Mac Studio (M4 Max, ~546 Go/s) :** Entre 10 et 15 [[00-lexique/tokens-par-seconde|tokens/s]] en phase de [[00-lexique/decoding|Decoding]][^1] — cohérent avec la borne théorique de ~13,6 t/s calculée dans [[01-fondations/la-bande-passante-memoire|le chapitre bande passante]].
+*   **AMD Ryzen AI Max PRO 400 (~273 Go/s) :** De l'ordre de 5 à 7 tokens/s selon les benchmarks disponibles[^2] — également cohérent avec la formule (borne théorique ~6,8 t/s).
 
 ---
 
@@ -57,6 +57,8 @@ Sur un modèle 70B, le KV Cache pour 5 requêtes longues peut facilement englout
 
 ### ❌ Quand fuir ce Blueprint ?
 *   **Si votre client a un besoin de croissance non prévisible.** La mémoire unifiée est **soudée** à la carte mère. Il est impossible de rajouter de la RAM dans un Mac Studio ou un APU Gorgon Halo après l'achat. Si le modèle métier de l'entreprise passe de 70B à 200B l'année suivante, il faudra jeter la machine et en racheter une.
+
+Pour dépasser cette contrainte de capacité fixe et rester sur du matériel de bureau abordable, le prochain blueprint propose une approche évolutive : **[[04-blueprints/scenario-c-cluster-bureau|Le Cluster Bureau]]** — relier plusieurs machines via Thunderbolt.
 
 ---
 
