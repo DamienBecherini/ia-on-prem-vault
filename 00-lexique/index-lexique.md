@@ -23,7 +23,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [NVLink](/00-lexique/nvlink/) | Interconnexion haut débit entre GPU NVIDIA. |
 | [Offloading](/00-lexique/offloading/) | Déplacement de données/modèle entre différents espaces mémoire. |
 | [PCIe](/00-lexique/pcie/) | Bus d'interconnexion haut débit entre composants. |
-| [Prefill](/00-lexique/prefill/) | Phase d'inférence qui traite le prompt initial. |
+| [Prefill](/00-lexique/prefill/) | Phase d'inférence qui traite le prompt initial en parallèle avant la génération mot à mot. |
 | [Quantification](/00-lexique/quantification/) | Réduction de précision numérique pour optimiser le déploiement. |
 | [Quantification Q4](/00-lexique/quantification-q4/) | Quantification 4-bit pour réduire fortement l'empreinte mémoire. |
 | [RAG](/00-lexique/rag/) | Architecture qui combine recherche documentaire et génération LLM. |

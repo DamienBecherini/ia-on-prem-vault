@@ -25,6 +25,12 @@ Tout le dimensionnement matériel (RAM, VRAM, bande passante, [[00-lexique/token
 - Confondre les TFLOPS annoncés et le débit réel en génération.
 - Oublier que l'inférence et l'entraînement n'ont pas les mêmes contraintes matérielles.
 
+## 📚 Pour comprendre en profondeur
+*Vous voulez voir l'inférence en action, pas à pas ?*
+1. [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] *(le cycle complet : tokenisation → prefill → decoding)*
+2. [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire]] *(pourquoi la mémoire plafonne la vitesse de génération)*
+3. [[03-stack-logicielle/moteurs-inference-vllm-ollama|⚙️ Moteurs d'Inférence]] *(les logiciels qui font tourner l'inférence : Ollama, vLLM, TensorRT-LLM)*
+
 ## 🔗 Voir aussi
 - [[00-lexique/llm|LLM]]
 - [[00-lexique/prefill|Prefill]]

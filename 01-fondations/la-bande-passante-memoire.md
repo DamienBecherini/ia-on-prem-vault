@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+> 💡 **Prérequis conseillé :** Ce chapitre suppose que vous savez comment un token est généré. Si ce n'est pas le cas, commencez par [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]].
+
 En architecture système appliquée à l'IA, une réalité revient en permanence : en [[00-lexique/inference|inférence LLM]], la limite est souvent la **mémoire** avant le calcul brut[^1].
 
 Ce phénomène est classiquement appelé **"Memory Wall"**. Pendant la génération auto-régressive, le GPU/CPU alterne des phases de calcul très rapides et des phases d'attente de données depuis la mémoire. Le débit final est donc fortement corrélé à la **bande passante mémoire** (Go/s), pas seulement aux TFLOPS[^1].
