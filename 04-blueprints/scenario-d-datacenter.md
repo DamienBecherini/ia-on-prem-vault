@@ -1,5 +1,5 @@
 ---
-title: 🏢 Scénario D : Datacenter (RoCE & Multi-GPU)
+title: 🏭 Scénario D : Datacenter (RoCE & Multi-GPU)
 description: Le blueprint de l'Enterprise IA. Nœuds HGX 8-GPU, réseau RoCE/InfiniBand et Tensor Parallelism pour une production à très haute concurrence.
 sidebar:
   order: 4

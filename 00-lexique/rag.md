@@ -22,4 +22,4 @@ Il permet d'exploiter la connaissance interne d'une organisation sans réentraî
 ## 🔗 Voir aussi
 - [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]
 - [[00-lexique/llm|LLM]]
-- [[03-stack-logicielle/rag-et-agents-openhuman|Rag Et Agents Openhuman]]
+- [[03-stack-logicielle/rag-et-agents-openhuman|🧩 RAG & Agents : L'architecture de la connaissance]]

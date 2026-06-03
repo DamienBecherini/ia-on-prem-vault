@@ -53,7 +53,7 @@ Pendant la phase de lecture du prompt (le Prefill), une immense quantité de don
 
 ### ❌ Quand fuir ce Blueprint ?
 *   **Pour un assistant RAG conversationnel en temps réel.** Attendre 45 secondes pour le premier mot après avoir posé une question sur un PDF va frustrer vos utilisateurs.
-*   **Pour servir de nombreux collaborateurs simultanément.** Le réseau Thunderbolt et le Pipeline Parallelism gèrent très mal les requêtes concurrentes massives. Si vous devez servir 50 utilisateurs en temps réel sur un modèle géant, il faut basculer sur un véritable réseau Datacenter (RoCE/InfiniBand) et des serveurs multi-GPU — c'est l'objet du **[[04-blueprints/scenario-d-datacenter|Scénario D : Datacenter]]**.
+*   **Pour servir de nombreux collaborateurs simultanément.** Le réseau Thunderbolt et le Pipeline Parallelism gèrent très mal les requêtes concurrentes massives. Si vous devez servir 50 utilisateurs en temps réel sur un modèle géant, il faut basculer sur un véritable réseau Datacenter (RoCE/InfiniBand) et des serveurs multi-GPU — c'est l'objet du **[[04-blueprints/scenario-d-datacenter|🏭 Scénario D : Datacenter]]**.
 
 ---
 
