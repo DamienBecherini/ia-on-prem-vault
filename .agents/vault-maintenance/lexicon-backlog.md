@@ -132,3 +132,95 @@ When an item is completed, move it to `## Done` with the date and related source
 - **Source article:** `01-fondations/la-bande-passante-memoire.md`, parcours glossaire
 - **Also updated:** `00-lexique/llm.md` (pont léger), liens depuis prefill/decoding/glossaire/chapitre bande passante
 
+
+### `00-lexique/pagedattention.md`
+- **Source article:** `03-stack-logicielle/moteurs-inference-vllm-ollama.md`
+- **Reason:** Concept critique pour comprendre la supériorité de vLLM en production concurrente.
+- **Expected scope:** Mémoire virtuelle appliquée au KV Cache, Continuous Batching, division de la fragmentation.
+
+### `00-lexique/gguf.md`
+- **Source article:** `03-stack-logicielle/moteurs-inference-vllm-ollama.md`
+- **Reason:** Format de fichier omniprésent pour l'inférence locale CPU/Mac avec llama.cpp.
+- **Expected scope:** GPT-Generated Unified Format, K-quants, portabilité, chargement immédiat.
+
+### `00-lexique/tensorrt-llm.md`
+- **Source article:** `03-stack-logicielle/moteurs-inference-vllm-ollama.md`
+- **Reason:** Moteur de référence pour l'écosystème datacenter NVIDIA, format propriétaire.
+- **Expected scope:** Compilation Ahead-of-Time, support natif FP4/FP8, Flash-Decoding.
+
+
+
+### `00-lexique/exo.md`
+- **Source article:** `03-stack-logicielle/clustering-exo-et-ray.md`
+- **Reason:** Outil de clustering P2P populaire pour contourner les limites matérielles locales.
+- **Expected scope:** Définition de l'orchestration P2P, lien avec la mémoire unifiée et Pipeline Parallelism.
+
+### `00-lexique/ray.md`
+- **Source article:** `03-stack-logicielle/clustering-exo-et-ray.md`
+- **Reason:** Framework de référence pour le déploiement multi-nœuds en production.
+- **Expected scope:** Orchestration, distribution vLLM, désagrégation prefill/decode.
+
+### `00-lexique/pipeline-parallelism.md`
+- **Source article:** `03-stack-logicielle/clustering-exo-et-ray.md`
+- **Reason:** Méthode utilisée par Exo et Ray pour découper un modèle entre plusieurs machines.
+- **Expected scope:** Découpage horizontal par couches, impact réseau, différence avec Tensor Parallelism.
+
+### `00-lexique/agent-autonome.md`
+- **Source article:** `03-stack-logicielle/rag-et-agents-openhuman.md`
+- **Reason:** Concept central de l'évolution du RAG et de l'orchestration LLM.
+- **Expected scope:** Différence entre un LLM simple et un agent (Tool calling, réflexion, boucle ReAct).
+
+### `00-lexique/graphrag.md`
+- **Source article:** `03-stack-logicielle/rag-et-agents-openhuman.md`
+- **Reason:** Évolution majeure de la récupération documentaire.
+- **Expected scope:** Graphe de connaissances vs Vecteurs, extraction d'entités, requêtes globales.
+
+### `00-lexique/smolagents.md`
+- **Source article:** `03-stack-logicielle/rag-et-agents-openhuman.md`
+- **Reason:** Framework de référence pour l'orchestration agentique locale citée dans le chapitre.
+- **Expected scope:** Bibliothèque Hugging Face, sécurité on-premise, alternative légère à LangChain.
+
+### `00-lexique/vectordb.md`
+- **Source article:** `03-stack-logicielle/rag-et-agents-openhuman.md`
+- **Reason:** Brique de base du RAG standard.
+- **Expected scope:** Base de données vectorielle, Embeddings, similarité cosinus (Milvus, Qdrant).
+
+
+## Already Linked From `04-blueprints/scenario-a-labo-dev.md`
+- `00-lexique/offloading.md`
+- `00-lexique/ram.md`
+- `00-lexique/vram.md`
+- `00-lexique/quantification-q4.md`
+- `00-lexique/tokens-par-seconde.md`
+- `00-lexique/decoding.md`
+
+
+
+## Already Linked From `04-blueprints/scenario-b-pme-appliance.md`
+- `00-lexique/offloading.md`
+- `00-lexique/memoire-unifiee.md`
+- `00-lexique/vram.md`
+- `00-lexique/tokens-par-seconde.md`
+- `00-lexique/decoding.md`
+- `00-lexique/kv-cache.md`
+
+
+## Already Linked From `04-blueprints/scenario-c-cluster-bureau.md`
+- `00-lexique/moe.md`
+- `00-lexique/thunderbolt.md` (Dans la liste To Create)
+- `00-lexique/exo.md` (Dans la liste To Create)
+- `00-lexique/pipeline-parallelism.md` (Dans la liste To Create)
+- `00-lexique/tokens-par-seconde.md`
+- `00-lexique/ttft.md`
+
+
+## Already Linked From `04-blueprints/scenario-d-datacenter.md`
+- `00-lexique/nvlink.md`
+- `00-lexique/rdma.md`
+- `00-lexique/roce.md`
+- `00-lexique/ray.md` (Dans la liste To Create)
+- `00-lexique/tensor-parallelism.md` (Dans la liste To Create)
+- `00-lexique/tokens-par-seconde.md`
+- `00-lexique/ttft.md`
+
+

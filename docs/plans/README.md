@@ -11,6 +11,7 @@ Agent and maintainer plans for [`ia-on-prem-vault`](../../). Written in English.
 | [2026_06_02_20-14_main_stations-multi-gpu.plan.md](2026_06_02_20-14_main_stations-multi-gpu.plan.md) | Chapter `02-materiel/stations-multi-gpu.md` | Delivered |
 | [2026_06_02_20-38_main_vault-maintenance-skills-and-run-logs.plan.md](2026_06_02_20-38_main_vault-maintenance-skills-and-run-logs.plan.md) | Maintenance skills and run logs | Delivered |
 | [2026_06_02_23-18_main_vault-skills-calibration-tests.plan.md](2026_06_02_23-18_main_vault-skills-calibration-tests.plan.md) | Skill calibration tests | Delivered |
+| [2026_06_03_23-18_main_gemini-content-review-phased.plan.md](2026_06_03_23-18_main_gemini-content-review-phased.plan.md) | Phased review of Gemini batch (ch. 01/03/04, lexicon, sources) | Pending |
 
 ## Related engine plans
 

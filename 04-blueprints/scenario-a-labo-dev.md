@@ -1,0 +1,69 @@
+---
+title: 🛠️ Scénario A : Le Labo Dev (CPU Offloading)
+description: Le blueprint pour s'initier à l'IA locale à moindre coût. PC standard, RTX 3090/4090, Ollama et la magie (limitée) du CPU Offloading.
+sidebar:
+  order: 1
+---
+
+Vous êtes un développeur seul, un passionné (*homelab*) ou une TPE qui souhaite tester des agents autonomes sans investir immédiatement 5 000 à 10 000 € dans une machine IA dédiée. 
+
+Ce premier blueprint est l'architecture d'entrée de gamme. Il s'appuie sur du matériel grand public (PC de bureau type "Gamer") et contourne les limites physiques des cartes graphiques grâce à une astuce logicielle : le **[[00-lexique/offloading|CPU Offloading]]**.
+
+---
+
+## 🏗️ L'Architecture Matérielle
+
+*   **Machine :** Une tour PC standard.
+*   **Processeur (CPU) :** Un processeur moderne (AMD Ryzen 9 ou Intel Core i9).
+*   **Mémoire Système ([[00-lexique/ram|RAM]]) :** 64 Go de RAM DDR5 (très important, la DDR4 étoufferait totalement les performances).
+*   **Carte Graphique (GPU) :** Une seule carte NVIDIA grand public avec 24 Go de [[00-lexique/vram|VRAM]] (ex: une RTX 3090 d'occasion, une RTX 4090 ou la RTX 5090).
+
+**Budget estimé (2026) :** Entre 1 500 € et 3 500 € (selon le choix du GPU).
+
+---
+
+## ⚙️ La Stack Logicielle
+
+*   **Moteur d'inférence :** **Ollama** ou **llama.cpp** compilé avec le support CUDA.
+*   **Format du modèle :** `GGUF` en [[00-lexique/quantification-q4|Quantification Q4_K_M]].
+
+Sur cette machine, un modèle de la classe **8B à 14B** (ex: *Llama 3.1 8B* ou *Qwen 2.5 14B*) tiendra entièrement dans les 24 Go de VRAM de la carte graphique. Vous obtiendrez des performances exceptionnelles (généralement entre 50 et 100 [[00-lexique/tokens-par-seconde|tokens/s]]). 
+
+Mais que se passe-t-il si vous voulez tester un modèle intelligent lourd, classe GPT-4, comme **Llama 3.1 70B** ? 
+
+---
+
+## 🧠 Le Mécanisme : Le CPU Offloading
+
+Un modèle 70B quantifié en Q4 pèse environ **40 Go**. Il est physiquement impossible de le faire rentrer dans une carte de 24 Go. C'est ici qu'intervient le **CPU Offloading** (déchargement vers le processeur).
+
+Plutôt que d'abandonner en affichant une erreur *Out Of Memory (OOM)*, le moteur `llama.cpp` va découper le modèle :
+1.  Il charge autant de couches du réseau de neurones que possible dans la **VRAM** ultra-rapide du GPU (environ 20 à 22 Go pour garder de la marge pour le contexte).
+2.  Il place les couches restantes (environ 18 à 20 Go) dans la **RAM système** de votre carte mère.
+
+### ⚠️ Le Mur de la Performance
+Lors de la génération de la réponse ([[00-lexique/decoding|Decoding]]), les données doivent faire des allers-retours constants entre la RAM, le processeur et la carte graphique via le bus PCIe. 
+
+Comme expliqué dans le chapitre sur [[01-fondations/memoire-unifiee-vs-ram-vs-vram|la VRAM vs RAM]], la RAM classique est physiquement bridée à environ 80-100 Go/s. Le résultat est immédiat : la vitesse de génération s'effondre.
+Sur une RTX 4090 couplée à 64 Go de DDR5, un modèle 70B en CPU Offloading génèrera généralement **entre 2 et 5 tokens par seconde**[^1][^2]. C'est lisible (légèrement inférieur à la vitesse de lecture humaine), mais inadapté pour servir une application réactive ou plusieurs utilisateurs simultanés.
+
+---
+
+## 📋 Le Verdict de l'Architecte
+
+### ✅ Quand utiliser ce Blueprint ?
+*   Pour **apprendre** et prototyper des applications (RAG, Agents) sur de petits modèles (8B/14B) qui tiennent en VRAM à 100%.
+*   Pour exécuter des **tâches de fond** (batch processing, résumé nocturne de longs documents) avec un modèle 70B, où l'utilisateur n'attend pas la réponse en direct devant son écran.
+
+### ❌ Quand fuir ce Blueprint ?
+*   Si vous avez besoin de déployer une API interne pour **plus de 2 collaborateurs simultanés**. Le CPU Offloading supporte très mal la concurrence : au-delà d'une requête à la fois, le temps de réponse s'écroule.
+*   Si le confort d'utilisation de vos employés est une priorité absolue.
+
+Pour un usage PME quotidien avec des modèles 70B sans subir cette lourde pénalité de transfert, il faut changer de paradigme matériel. C'est l'objet du prochain blueprint : **L'Appliance Unifiée** (Mémoire Unifiée APU/Mac).
+
+---
+
+## 📚 Sources et Références
+
+[^1]: Particula Tech & Reddit Community Benchmarks (r/LocalLLaMA), *Hybrid Inference Llama 3 70B on RTX 4090 24GB + 64GB RAM* (Vitesse de décodage estimée à ~2-5 tokens/s selon configuration DDR5), 2024-2026.
+[^2]: Documentation locale Ollama, *Ollama System Requirements 2026: CPU-only and Partial GPU Offloading penalties* (Baisse de performance de 5x à 10x lors de l'offloading RAM), 2026.

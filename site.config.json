@@ -65,6 +65,16 @@
       "label": "02 - Le Matériel",
       "translations": { "en": "02 - Hardware" },
       "items": [{ "autogenerate": { "directory": "02-materiel" } }]
+    },
+    {
+      "label": "03 - La Stack Logicielle",
+      "translations": { "en": "03 - Software Stack" },
+      "items": [{ "autogenerate": { "directory": "03-stack-logicielle" } }]
+    },
+    {
+      "label": "04 - Les Blueprints",
+      "translations": { "en": "04 - Blueprints" },
+      "items": [{ "autogenerate": { "directory": "04-blueprints" } }]
     }
   ]
 }
