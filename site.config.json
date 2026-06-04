@@ -1,6 +1,6 @@
 {
   "title": "ZTH: IA On-Premise",
-  "url": "https://ia.damien.becherini.fr",
+  "url": "https://ia-on-prem.damien.becherini.fr",
   "defaultLocale": "root",
   "locales": {
     "root": { "label": "Français", "lang": "fr" },
