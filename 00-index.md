@@ -15,7 +15,7 @@ Bienvenue dans le "Zero to Hero" de l'IA Locale. Ce Vault est conçu comme un ja
 Vous utilisez peut-être déjà ChatGPT ou Claude au quotidien. Pourquoi alors se donner la peine d'héberger un modèle soi-même ?
 
 **1. Souveraineté des données**
-Chaque prompt envoyé à un service cloud est traité sur des serveurs tiers, souvent hors de l'Union Européenne. Dans un cabinet médical, un service juridique, une administration ou une entreprise industrielle, certaines données ne peuvent légalement pas sortir de vos locaux — RGPD, secret professionnel, classification. L'[[00-lexique/on-premise|IA on-premise]] est la seule réponse technique à cette contrainte.
+Chaque prompt envoyé à un service cloud est traité sur des serveurs tiers, souvent hors de l'Union Européenne. Dans un cabinet médical, un service juridique, une administration ou une entreprise industrielle, certaines données ne peuvent légalement pas sortir de vos locaux — RGPD, secret professionnel, classification. L'[[00-lexique/on-premise|IA on-premise]] est la seule réponse technique à cette contrainte. Pour une grille d'audit en 6 critères et le cadre RGPD/AI Act, voir [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|🔒 Souveraineté & Confidentialité]].
 
 **2. Coût prévisible à l'échelle**
 Une API cloud facture à la requête. À faible volume, c'est négligeable. À 50 employés qui interrogent un assistant toute la journée, la facture mensuelle peut dépasser le coût d'amortissement d'une machine dédiée en quelques mois.
@@ -70,6 +70,7 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 ### 📁 06 - Mise en œuvre pratique
 *Comment tester et décider avant de déployer.*
 - [[06-mise-en-oeuvre/index|🧪 Vue d'ensemble : protocoles pratiques]]
+- [[06-mise-en-oeuvre/demarrer-avec-ollama|🚀 Démarrer avec Ollama]] — installation, premier modèle, API, réglages de base
 - [[06-mise-en-oeuvre/evaluer-un-modele-local|🧪 Évaluer un modèle local]] — qualité, hallucinations, RAG, agents, KPI et performances
 
 ---

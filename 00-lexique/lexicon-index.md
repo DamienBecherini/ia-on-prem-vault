@@ -46,8 +46,8 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [PFC](/00-lexique/pfc/) | Priority Flow Control — mécanisme Ethernet de pause par priorité pour garantir un réseau lossless nécessaire à RoCE. |
 | [Pipeline Parallelism](/00-lexique/pipeline-parallelism/) | Stratégie de distribution d'un LLM en tranches de couches entre plusieurs machines. |
 | [Prefill](/00-lexique/prefill/) | Phase d'inférence qui traite le prompt initial en parallèle avant la génération mot à mot. |
-| [Quantification](/00-lexique/quantification/) | Réduction de précision numérique pour optimiser le déploiement. |
-| [Quantification Q4](/00-lexique/quantification-q4/) | Quantification 4-bit pour réduire fortement l'empreinte mémoire. |
+| [Quantification](/00-lexique/quantification/) | Réduction de précision numérique des poids d'un LLM pour diminuer l'empreinte mémoire et accélérer l'inférence. |
+| [Quantification Q4](/00-lexique/quantification-q4/) | Format de quantification 4-bit le plus utilisé en pratique pour l'inférence locale — en particulier Q4_K_M dans l'écosystème GGUF/Ollama. |
 | [RAG](/00-lexique/rag/) | Architecture qui combine recherche documentaire et génération LLM. |
 | [RAGAS](/00-lexique/ragas/) | Framework d'évaluation automatique pour pipelines RAG. |
 | [RAM](/00-lexique/ram/) | Mémoire vive système, second choix pour l'inférence LLM quand la VRAM est insuffisante. |
