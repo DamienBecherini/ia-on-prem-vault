@@ -27,8 +27,9 @@ NVLink est le protocole et la technologie de câblage qui relie les GPU NVIDIA �
 Le débit NVLink est la condition sine qua non d'un [[00-lexique/tensor-parallelism|Tensor Parallelism]] efficace. Sans NVLink, les échanges inter-GPU via PCIe (~64 Go/s) deviennent le goulot d'étranglement.
 
 ## ⚠️ Pièges fréquents
-- NVLink n'est pas disponible sur les GPU grand public (RTX 40xx, RTX 50xx) — réservé aux gammes SXM et HGX.
+- **NVLink est mort sur workstation depuis Ada Lovelace.** Les cartes RTX workstation (RTX 6000 Ada, RTX PRO 6000 Blackwell) et grand public (RTX 40xx, RTX 50xx) **n'ont plus de connecteur NVLink physique**. NVIDIA a supprimé les ponts NVLink externes de toutes ces gammes. Il est impossible de relier deux RTX PRO 6000 via NVLink : le connecteur n'existe pas. NVLink est aujourd'hui strictement réservé aux GPU SXM (A100, H100, H200, B200) dans des systèmes HGX/DGX.
 - Deux GPU reliés en NVLink point-à-point n'atteignent pas les débits d'un fabric NVSwitch complet.
+- Confondre "supporte CUDA" et "supporte NVLink" — une carte peut être compatible CUDA/vLLM sans avoir la moindre capacité NVLink.
 
 ## 🔗 Voir aussi
 - [[00-lexique/nvswitch|NVSwitch]]
