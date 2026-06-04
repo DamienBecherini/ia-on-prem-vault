@@ -9,9 +9,8 @@ sidebar:
 
 Open WebUI est une plateforme web self-hosted pour exposer des modèles locaux via Ollama, vLLM ou toute API OpenAI-compatible. Le projet se présente comme extensible, riche en fonctionnalités, et capable de fonctionner entièrement offline[^1][^2].
 
-:::tip[Le bon cas d'usage]
-Open WebUI est souvent le meilleur premier choix pour une PME ou un lab qui veut transformer un serveur Ollama en interface partagée : comptes utilisateurs, historique, fichiers, RAG, modèles multiples et administration centralisée.
-:::
+> [!tip] Le bon cas d'usage
+> Open WebUI est souvent le meilleur premier choix pour une PME ou un lab qui veut transformer un serveur Ollama en interface partagée : comptes utilisateurs, historique, fichiers, RAG, modèles multiples et administration centralisée.
 
 ## 💡 Pourquoi ce projet nous intéresse
 

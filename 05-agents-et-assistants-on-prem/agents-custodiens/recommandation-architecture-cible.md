@@ -48,9 +48,8 @@ Stack recommandée :
 2. **Moyen terme** : Aider + Ollama + SearXNG + scripts de maintenance.
 3. **Long terme** : [[00-lexique/litellm|LiteLLM]] comme gateway, vLLM si besoin de débit, OpenHands pour tâches complexes sandboxées.
 
-:::caution[Ne pas confondre]
-Un outil qui tourne sur votre machine n'est pas automatiquement souverain. Le critère décisif est : où partent les prompts, les fichiers, les clés et les résultats intermédiaires ?
-:::
+> [!warning] Ne pas confondre
+> Un outil qui tourne sur votre machine n'est pas automatiquement souverain. Le critère décisif est : où partent les prompts, les fichiers, les clés et les résultats intermédiaires ?
 
 ## Voir aussi
 

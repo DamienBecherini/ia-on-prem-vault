@@ -11,9 +11,8 @@ Jan.ai est une application desktop open-source qui permet de télécharger et ex
 
 Jan expose aussi un serveur API local OpenAI-compatible sur `localhost:1337`, utile pour brancher d'autres outils sur un modèle local sans passer par une API cloud[^3].
 
-:::tip[Verdict souveraineté]
-**✅ Souverain natif** pour l'usage desktop avec modèles locaux. Les connexions à des providers cloud existent, mais elles sont optionnelles.
-:::
+> [!tip] Verdict souveraineté
+> **✅ Souverain natif** pour l'usage desktop avec modèles locaux. Les connexions à des providers cloud existent, mais elles sont optionnelles.
 
 ## 💡 Pourquoi ce projet nous intéresse
 

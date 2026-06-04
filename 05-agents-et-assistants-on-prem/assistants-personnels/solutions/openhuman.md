@@ -11,9 +11,8 @@ OpenHuman est un assistant personnel open-source basé sur **Tauri + Rust**. Son
 
 Ce n'est cependant pas un outil 100% on-premise par défaut. Le README est explicite : l'expérience managée utilise encore des services OpenHuman pour la connexion au compte, le routage des modèles, la recherche web proxyfiée et certains flux OAuth via Composio[^3].
 
-:::caution[Verdict souveraineté]
-**⚠️ Configurable** — très intéressant pour l'architecture mémoire, mais une posture on-premise stricte demande une configuration volontaire : modèle local, recherche auto-hébergée, intégrations directes et désactivation des chemins managés.
-:::
+> [!warning] Verdict souveraineté
+> **⚠️ Configurable** — très intéressant pour l'architecture mémoire, mais une posture on-premise stricte demande une configuration volontaire : modèle local, recherche auto-hébergée, intégrations directes et désactivation des chemins managés.
 
 ## 💡 Pourquoi ce projet nous intéresse
 

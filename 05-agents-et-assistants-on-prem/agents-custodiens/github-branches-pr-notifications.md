@@ -32,9 +32,8 @@ Une PR générée par agent doit contenir :
 - limites et hypothèses ;
 - checklist de revue humaine.
 
-:::tip[Bon signal]
-Une bonne PR d'agent doit permettre de rejeter la proposition sans perdre l'information : même si le diff n'est pas mergé, le rapport doit rester utile.
-:::
+> [!tip] Bon signal
+> Une bonne PR d'agent doit permettre de rejeter la proposition sans perdre l'information : même si le diff n'est pas mergé, le rapport doit rester utile.
 
 ## Notifications
 

@@ -9,9 +9,8 @@ sidebar:
 
 Aider est un agent de programmation en ligne de commande. Il modifie des fichiers locaux, comprend un dépôt via une repo map, utilise Git, et peut se connecter à de nombreux LLMs, y compris des modèles locaux via Ollama[^1][^2].
 
-:::tip[Verdict souveraineté]
-**✅ Très bon candidat souverain** si Aider est configuré avec Ollama/vLLM local et analytics désactivées.
-:::
+> [!tip] Verdict souveraineté
+> **✅ Très bon candidat souverain** si Aider est configuré avec Ollama/vLLM local et analytics désactivées.
 
 ## 💡 Pourquoi ce projet nous intéresse
 
