@@ -1,6 +1,6 @@
 ---
 title: "⚙️ Workflow : Human-in-the-loop de bout en bout"
-description: Cycle d'exécution recommandé pour un agent custodien : déclencheur, branche, diff, rapport, revue humaine, merge et publication.
+description: "Cycle d'exécution recommandé pour un agent custodien : déclencheur, branche, diff, rapport, revue humaine, merge et publication."
 sidebar:
   order: 3
 ---
