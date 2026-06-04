@@ -73,12 +73,30 @@ skills:
 ## Residual Risk
 ```
 
+## Run Index (scalability)
+
+After writing a run log, append a single-line entry to the monthly index:
+
+```
+.agents/vault-maintenance/runs/YYYY/MM/index.jsonl
+```
+
+Each line is a JSON object:
+
+```json
+{"runId":"2026_06_04_21-00_main_security-guide","timestamp":"2026-06-04T21:00:00+02:00","status":"completed","mode":"generation","files_changed":3,"plan":"editorial-improvements"}
+```
+
+This allows a maintenance agent to orient itself by reading the compact index (a few KB) rather than loading all detailed logs (potentially hundreds of KB) to understand recent history.
+Only open the full detailed log when investigating a specific run.
+
 ## Retention
 
 After writing a run log:
 
-1. Check whether older detailed logs appear ready for consolidation.
-2. If consolidation is needed, create or update the monthly summary with the LLM.
-3. Do not delete detailed logs unless a deterministic validation/prune script exists and confirms every run ID is summarized.
-4. Until that script exists, record `Retention Check: summary recommended` or `Retention Check: no action`.
+1. Append a line to the monthly `index.jsonl` (see above).
+2. Check whether older detailed logs appear ready for consolidation.
+3. If consolidation is needed, create or update the monthly summary with the LLM.
+4. Do not delete detailed logs unless a deterministic validation/prune script exists and confirms every run ID is summarized.
+5. Until that script exists, record `Retention Check: summary recommended` or `Retention Check: no action`.
 

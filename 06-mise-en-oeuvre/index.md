@@ -14,14 +14,14 @@ La section 06 transforme les concepts des fondations, du matériel, de la stack 
 
 ## Par où commencer ?
 
-1. [[06-mise-en-oeuvre/demarrer-avec-ollama|Démarrer avec Ollama]] — installation, premier modèle, API, monitoring de base.
+1. [[06-mise-en-oeuvre/demarrer-avec-ollama|Démarrer avec Ollama]] — installation, premier modèle, API, réglages de base.
 2. [[06-mise-en-oeuvre/evaluer-un-modele-local|Évaluer un modèle local]] — comparer qualité, hallucinations, cohérence, RAG, agents et performances.
+3. [[06-mise-en-oeuvre/securite-inference-locale|Sécurité de l'inférence locale]] — authentification API, isolation réseau, OWASP LLM Top 10, agents sécurisés.
 
 Les prochains guides pratiques pourront couvrir :
 
 - configurer vLLM en production multi-GPU ;
-- sécuriser une API locale (auth, isolation réseau, OWASP LLM) ;
-- comparer coût total on-premise vs API cloud (TCO).
+- migrer de Ollama vers vLLM sans changer les clients.
 
 ---
 

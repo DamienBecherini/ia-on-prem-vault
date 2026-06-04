@@ -51,6 +51,49 @@ Ray est très complexe à administrer. Il exige une infrastructure de classe ent
 
 ---
 
+## 3. Comparatif opérationnel Exo vs Ray
+
+| Critère | Exo | Ray + vLLM |
+| :-- | :-- | :-- |
+| **Installation** | `pip install exo` puis `uv run exo` | Ray cluster + vLLM, configuration YAML |
+| **Découverte des nœuds** | Automatique (mDNS / Thunderbolt) | Manuelle (IP/DNS ou config explicite) |
+| **Réseau recommandé** | Thunderbolt 4/5, Wi-Fi 6E possible | RoCE v2 ou InfiniBand (100/200 Gb) |
+| **Matériel cible** | Mac Mini, Mac Studio, PC Linux, AMD GPU | Serveurs rack, NVIDIA H100/H200, A100 |
+| **Parallelisme** | Pipeline Parallelism uniquement | TP + PP + désagrégation Prefill/Decode |
+| **Monitoring** | Logs texte, pas d'observabilité native | Prometheus, Grafana, traces Ray |
+| **Tolérance aux pannes** | Faible (perte d'un nœud = crash) | Forte (Ray redémarre les workers) |
+| **Seuil de budget** | < 15 000 € (cluster de bureau) | > 100 000 € (serveur GPU + réseau) |
+| **Complexité opérationnelle** | ⭐ (très simple) | ⭐⭐⭐⭐⭐ (expertise HPC requise) |
+
+## 4. Démarrage rapide — Exo sur deux Mac
+
+```bash
+# Sur chaque machine du cluster
+pip install exo
+
+# Machine 1 (démarrage du cluster P2P)
+uv run exo
+
+# Machine 2 (join automatique via mDNS)
+uv run exo
+
+# Vérifier que les nœuds se voient
+# Exo affiche dans les logs : "Discovered peer: <hostname>"
+
+# Envoyer une requête au cluster (API compatible OpenAI)
+curl http://localhost:52415/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "llama-3.3-70b",
+    "messages": [{"role": "user", "content": "Combien de nœuds dans ce cluster ?"}]
+  }'
+```
+
+> [!note] Thunderbolt vs Ethernet pour Exo
+> En Wi-Fi ou Ethernet 1 Gb, Exo fonctionne mais les performances chutent drastiquement. Pour des modèles 70B+, privilégiez Thunderbolt 4 (40 Gb/s) ou Thunderbolt 5 (80 Gb/s). Les câbles Thunderbolt créent une interface réseau IP-over-Thunderbolt automatiquement sur macOS.
+
+---
+
 ## 📋 Le Conseil de l'Architecte
 
 Pour déployer des agents autonomes on-premise chez des clients :
