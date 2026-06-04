@@ -1,4 +1,4 @@
----
+﻿---
 title: "🔭 Vision : Qu'est-ce qu'un agent custodien ?"
 description: Définition, périmètre et trajectoire d'architecture d'un agent autonome chargé de maintenir un vault ou un dépôt.
 sidebar:
@@ -51,7 +51,7 @@ C'est l'**Indirect Prompt Injection** : le vecteur d'attaque n'est pas le prompt
 > - Ses outils d'exécution (shell, CLI) doivent être **sandboxés sans accès réseau sortant** sauf vers l'API LLM locale et le dépôt Git cible.
 > - Les données lues (contenu Issues, fichiers Markdown, docs externes) doivent être traitées comme **untrusted input** dans le prompt système.
 
-Le futur chapitre de sécurité (`06-mise-en-oeuvre/securite-inference-locale.md`) détaillera les solutions techniques : Firecracker, Podman rootless, namespaces réseau.
+Le futur chapitre de sécurité (`06-mise-en-oeuvre/local-inference-security.md`) détaillera les solutions techniques : Firecracker, Podman rootless, namespaces réseau.
 
 ## [[00-lexique/human-in-the-loop|Human-in-the-loop]] vs human-on-the-loop
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: "🚀 Démarrer avec Ollama"
 description: Installation, premier modèle, test API et premières bonnes pratiques pour une inférence locale en moins de 15 minutes.
 sidebar:
@@ -18,7 +18,7 @@ sidebar:
 - Espace disque : 5–50 Go selon le modèle téléchargé
 
 > [!note] Quel matériel pour quel modèle ?
-> Voir [[03-stack-logicielle/choisir-son-modele|🗺️ Choisir son modèle]] et [[01-fondations/quantization-4bit-8bit|Quantification]] pour calculer l'empreinte VRAM/RAM avant de télécharger.
+> Voir [[03-stack-logicielle/choose-your-model|🗺️ Choisir son modèle]] et [[01-fondations/quantization-4bit-8bit|Quantification]] pour calculer l'empreinte VRAM/RAM avant de télécharger.
 
 ---
 
@@ -221,7 +221,7 @@ Indicateurs attendus selon le matériel :
 
 ## Prochaines étapes
 
-- **Choisir le bon modèle pour votre tâche** → [[03-stack-logicielle/choisir-son-modele|🗺️ Choisir son modèle local]]
+- **Choisir le bon modèle pour votre tâche** → [[03-stack-logicielle/choose-your-model|🗺️ Choisir son modèle local]]
 - **Passer à la production multi-utilisateurs** → [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ vLLM en production]]
-- **Évaluer la qualité** → [[06-mise-en-oeuvre/evaluer-un-modele-local|🧪 Évaluer un modèle local]]
+- **Évaluer la qualité** → [[06-mise-en-oeuvre/evaluate-local-model|🧪 Évaluer un modèle local]]
 - **Connecter un agent ou un RAG** → [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]]

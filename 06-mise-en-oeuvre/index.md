@@ -1,4 +1,4 @@
----
+﻿---
 title: "🧪 Mise en œuvre pratique"
 description: Protocoles concrets pour choisir, tester, sécuriser et opérer une IA locale au-delà du dimensionnement matériel.
 sidebar:
@@ -14,9 +14,9 @@ La section 06 transforme les concepts des fondations, du matériel, de la stack 
 
 ## Par où commencer ?
 
-1. [[06-mise-en-oeuvre/demarrer-avec-ollama|Démarrer avec Ollama]] — installation, premier modèle, API, réglages de base.
-2. [[06-mise-en-oeuvre/evaluer-un-modele-local|Évaluer un modèle local]] — comparer qualité, hallucinations, cohérence, RAG, agents et performances.
-3. [[06-mise-en-oeuvre/securite-inference-locale|Sécurité de l'inférence locale]] — authentification API, isolation réseau, OWASP LLM Top 10, agents sécurisés.
+1. [[06-mise-en-oeuvre/getting-started-with-ollama|Démarrer avec Ollama]] — installation, premier modèle, API, réglages de base.
+2. [[06-mise-en-oeuvre/evaluate-local-model|Évaluer un modèle local]] — comparer qualité, hallucinations, cohérence, RAG, agents et performances.
+3. [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]] — authentification API, isolation réseau, OWASP LLM Top 10, agents sécurisés.
 
 Les prochains guides pratiques pourront couvrir :
 

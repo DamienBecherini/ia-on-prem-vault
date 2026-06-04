@@ -1,4 +1,4 @@
-# Editorial Improvements Plan
+﻿# Editorial Improvements Plan
 
 **Date:** 2026-06-04  
 **Branch:** main  
@@ -57,11 +57,11 @@ Critiques are grouped into phases by effort/impact ratio.
 
 | # | Critique | Target file(s) | Type |
 |---|----------|---------------|------|
-| 7 | ✅ DONE — No operational/how-to content | `06-mise-en-oeuvre/` — demarrer-avec-ollama, evaluer-un-modele-local, securite-inference-locale | New section, 3 files |
+| 7 | ✅ DONE — No operational/how-to content | `06-mise-en-oeuvre/` — getting-started-with-ollama, evaluate-local-model, local-inference-security | New section, 3 files |
 | 8 | No monitoring/observability content | New chapter or section in blueprints | New content |
 | 9 | No security content | New chapter | New content |
 | 12 | No TCO comparison between scenarios | New table or `04-blueprints/comparaison.md` | New file |
-| 18 | No model selection guide | `03-stack-logicielle/choisir-son-modele.md` | New chapter |
+| 18 | No model selection guide | `03-stack-logicielle/choose-your-model.md` | New chapter |
 
 ---
 
@@ -132,7 +132,7 @@ Affected files:
 
 **C1 — Create `06-mise-en-oeuvre/` section** *(renumbered — `05-` reserved for agents section)* — **PARTIAL DONE**
 - Done: `06-mise-en-oeuvre/index.md` created as the section entry point.
-- Remaining: `06-mise-en-oeuvre/demarrer-avec-ollama.md` (install, first model, API test)
+- Remaining: `06-mise-en-oeuvre/getting-started-with-ollama.md` (install, first model, API test)
 - Optionally: `06-mise-en-oeuvre/configurer-vllm-multi-gpu.md`
 - Keep procedural, with code blocks for terminal commands
 
@@ -141,13 +141,13 @@ Affected files:
 - Links to official documentation rather than duplicating content
 
 **C3 — Add model selection chapter**
-- `03-stack-logicielle/choisir-son-modele.md`
+- `03-stack-logicielle/choose-your-model.md`
 - How to read a leaderboard (MMLU, HumanEval, MATH)
 - Size vs quality tradeoff for on-prem constraints
 - 2026 landscape: Llama 3.x, Qwen 2.5, DeepSeek-R1, Mistral
 
 **C3b — Add model evaluation protocol chapter** — **DONE**
-- Created: `06-mise-en-oeuvre/evaluer-un-modele-local.md`
+- Created: `06-mise-en-oeuvre/evaluate-local-model.md`
 - Explain how to compare local models beyond speed: factuality, hallucinations, coherence,
   instruction following, code-editing reliability, RAG faithfulness, regressions.
 - Cover standard benchmarks and their limits: MMLU/MMLU-Pro, GPQA, GSM8K/MATH, HumanEval,
@@ -158,12 +158,12 @@ Affected files:
 - Added lexicon entries: `benchmark-llm`, `llm-as-a-judge`, `ragas`.
 
 **C4 — Add TCO comparison**
-- `04-blueprints/comparaison-scenarios.md` or a table in `00-index.md`
+- `04-blueprints/tco-comparison.md` or a table in `00-index.md`
 - Hardware cost, 3-year electricity estimate, required skills per scenario
 - Break-even vs cloud API (OpenAI / Azure pricing reference)
 
 **C5 — Create security chapter** *(renumbered — `05-` reserved for agents section)*
-- `06-mise-en-oeuvre/securite-inference-locale.md`
+- `06-mise-en-oeuvre/local-inference-security.md`
 - API authentication, network isolation, data encryption at rest
 - OWASP LLM Top 10 pointer
 - **Agent isolation (critical addition):** mounting `/var/run/docker.sock` in an agent container grants
@@ -207,7 +207,7 @@ After each phase:
 ### Changes
 
 - Created `06-mise-en-oeuvre/index.md` as the practical implementation section entry point.
-- Created `06-mise-en-oeuvre/evaluer-un-modele-local.md` with a practical protocol for evaluating local models: public benchmarks, golden datasets, KPIs, hallucination/factuality checks, RAG evaluation, code-agent testing, local performance and LLM-as-a-judge safeguards.
+- Created `06-mise-en-oeuvre/evaluate-local-model.md` with a practical protocol for evaluating local models: public benchmarks, golden datasets, KPIs, hallucination/factuality checks, RAG evaluation, code-agent testing, local performance and LLM-as-a-judge safeguards.
 - Added lexicon entries: `00-lexique/benchmark-llm.md`, `00-lexique/llm-as-a-judge.md`, `00-lexique/ragas.md`.
 - Updated `00-lexique/ai-glossary.md`, `00-index.md` and `site.config.json` to expose the new section and concepts.
 - Updated `_private/master-status-2026-06-04.md` so future work resumes from remaining Phase C topics.
@@ -221,5 +221,5 @@ After each phase:
 
 ### Remaining work
 
-- C1 is only partially complete: the `06-mise-en-oeuvre/` section exists, but the planned `demarrer-avec-ollama.md` guide remains to be written.
+- C1 is only partially complete: the `06-mise-en-oeuvre/` section exists, but the planned `getting-started-with-ollama.md` guide remains to be written.
 - Other Phase C topics remain open: monitoring, security, TCO comparison and model selection guide.
