@@ -55,6 +55,12 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 - [[04-blueprints/scenario-c-cluster-bureau|🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)]]
 - [[04-blueprints/scenario-d-datacenter|🏭 Scénario D : Datacenter (RoCE & Multi-GPU)]]
 
+### 📁 05 - Agents & Assistants On-Premise *(en construction)*
+*La couche applicative : l'IA qui vous connaît et l'IA qui agit pour vous.*
+- [[05-agents-et-assistants-on-prem/index|🤖 Vue d'ensemble : deux pistes, une question de souveraineté]]
+- [[05-agents-et-assistants-on-prem/assistants-personnels/index|🧑‍💼 Assistants Personnels (l'IA qui apprend de vos données)]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/index|🤖 Agents Custodiens (l'IA qui maintient votre vault)]]
+
 ---
 
 ## 🧭 Quel blueprint choisir ?

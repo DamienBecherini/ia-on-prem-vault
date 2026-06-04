@@ -1,1 +1,6 @@
-{}
+{
+    "userIgnoreFilters": [
+      ".agents/",
+      "docs/plans/"
+    ]
+}
