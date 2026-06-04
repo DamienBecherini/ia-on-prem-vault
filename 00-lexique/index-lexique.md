@@ -34,6 +34,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [NVLink](/00-lexique/nvlink/) | Interconnexion haut débit entre GPU NVIDIA. |
 | [NVSwitch](/00-lexique/nvswitch/) | Commutateur NVIDIA qui connecte plusieurs GPU en un fabric NVLink totalement non bloquant à l'intérieur d'un nœud. |
 | [Offloading](/00-lexique/offloading/) | Déplacement de données/modèle entre différents espaces mémoire. |
+| [On-Premise (IA)](/00-lexique/on-premise/) | Infrastructure IA hébergée et opérée sur les équipements propres de l'organisation, sans délégation à un fournisseur cloud. |
 | [PagedAttention](/00-lexique/pagedattention/) | Technique de gestion du KV Cache par blocs de mémoire virtuelle, popularisée par vLLM. |
 | [PCIe](/00-lexique/pcie/) | Bus d'interconnexion haut débit entre composants. |
 | [PFC](/00-lexique/pfc/) | Priority Flow Control — mécanisme Ethernet de pause par priorité pour garantir un réseau lossless nécessaire à RoCE. |

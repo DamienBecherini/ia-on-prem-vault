@@ -118,6 +118,16 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 
 ---
 
+## Concepts fondateurs
+
+| Terme | Définition rapide |
+| :-- | :-- |
+| [On-Premise](/00-lexique/on-premise/) | Infrastructure IA hébergée sur les équipements propres de l'organisation. |
+| [LLM](/00-lexique/llm/) | Grand modèle de langage entraîné sur de vastes corpus textuels. |
+| [Inférence (LLM)](/00-lexique/inference/) | Utilisation d'un LLM entraîné pour générer du texte à la demande. |
+
+---
+
 ## IA applicative
 
 | Terme | Définition rapide |

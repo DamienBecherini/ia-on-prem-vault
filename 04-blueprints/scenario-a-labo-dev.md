@@ -1,5 +1,5 @@
 ---
-title: 🛠️ Scénario A : Le Labo Dev (CPU Offloading)
+title: "🛠️ Scénario A : Le Labo Dev (CPU Offloading)"
 description: Le blueprint pour s'initier à l'IA locale à moindre coût. PC standard, RTX 3090/4090, Ollama et la magie (limitée) du CPU Offloading.
 sidebar:
   order: 1

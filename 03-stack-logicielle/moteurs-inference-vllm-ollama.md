@@ -1,5 +1,5 @@
 ---
-title: ⚙️ Moteurs d'Inférence : vLLM, Ollama et TensorRT-LLM
+title: "⚙️ Moteurs d'Inférence : vLLM, Ollama et TensorRT-LLM"
 description: Comparatif des moteurs de déploiement locaux en 2026. Quand utiliser GGUF et llama.cpp sur Mac, et quand basculer sur vLLM ou TensorRT-LLM en production.
 sidebar:
   order: 1
