@@ -1,4 +1,4 @@
----
+﻿---
 title: LLM-as-a-judge
 description: Technique d'évaluation où un modèle de langage sert de juge pour noter ou comparer des réponses.
 aliases:
@@ -38,6 +38,6 @@ Pour choisir un modèle local, un LLM juge peut pré-trier beaucoup de réponses
 
 ## 🔗 Voir aussi
 
-- [[06-mise-en-oeuvre/evaluer-un-modele-local|Évaluer un modèle local]]
+- [[06-mise-en-oeuvre/evaluate-local-model|Évaluer un modèle local]]
 - [[00-lexique/benchmark-llm|Benchmark LLM]]
 - [[00-lexique/ragas|RAGAS]]

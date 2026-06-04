@@ -1,4 +1,4 @@
----
+﻿---
 title: "🗺️ Choisir son modèle local"
 description: Guide pratique pour naviguer le paysage des LLM open weights en 2026 — familles, tailles, spécialisations et correspondance avec les scénarios on-premise.
 sidebar:
@@ -6,7 +6,7 @@ sidebar:
 ---
 
 > [!tip] En bref
-> Il n'existe pas de "meilleur modèle". Il existe le modèle qui tient dans votre VRAM, répond assez vite pour vos utilisateurs, et réussit vos tests sur vos données. Ce chapitre vous donne les clés pour réduire la liste à trois candidats — et [[06-mise-en-oeuvre/evaluer-un-modele-local|le chapitre d'évaluation]] vous dit comment choisir parmi eux.
+> Il n'existe pas de "meilleur modèle". Il existe le modèle qui tient dans votre VRAM, répond assez vite pour vos utilisateurs, et réussit vos tests sur vos données. Ce chapitre vous donne les clés pour réduire la liste à trois candidats — et [[06-mise-en-oeuvre/evaluate-local-model|le chapitre d'évaluation]] vous dit comment choisir parmi eux.
 
 ---
 
@@ -138,7 +138,7 @@ En contrepartie :
 Les classements publics (Chatbot Arena, Open LLM Leaderboard, HELM) sont utiles pour **une première orientation**, mais ne remplacent pas vos tests.
 
 > [!warning] Contamination des benchmarks
-> Les grands benchmarks statiques (MMLU, HumanEval, MATH) sont saturés en 2026 — leurs données de test ont partiellement fuité dans les corpus d'entraînement. Un score MMLU élevé ne prédit pas les performances sur vos documents internes. Voir [[06-mise-en-oeuvre/evaluer-un-modele-local|Évaluer un modèle local]] pour le protocole complet.
+> Les grands benchmarks statiques (MMLU, HumanEval, MATH) sont saturés en 2026 — leurs données de test ont partiellement fuité dans les corpus d'entraînement. Un score MMLU élevé ne prédit pas les performances sur vos documents internes. Voir [[06-mise-en-oeuvre/evaluate-local-model|Évaluer un modèle local]] pour le protocole complet.
 
 Ce que les leaderboards disent quand même d'utile :
 
@@ -163,7 +163,7 @@ Avant de télécharger un modèle :
 
 ## Voir aussi
 
-- [[06-mise-en-oeuvre/evaluer-un-modele-local|🧪 Évaluer un modèle local]] — protocole de test, KPI, golden dataset
+- [[06-mise-en-oeuvre/evaluate-local-model|🧪 Évaluer un modèle local]] — protocole de test, KPI, golden dataset
 - [[01-fondations/quantization-4bit-8bit|🗜️ La Quantification]] — calculer l'empreinte VRAM
 - [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'inférence]] — choisir le bon moteur selon l'usage
 - [[00-lexique/moe|MoE]] — comprendre les architectures Mixture of Experts

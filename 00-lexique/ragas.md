@@ -1,4 +1,4 @@
----
+﻿---
 title: RAGAS
 description: Framework d'évaluation automatique pour pipelines RAG.
 aliases:
@@ -37,5 +37,5 @@ Beaucoup d'assistants locaux reposent sur le RAG pour exploiter des documents in
 ## 🔗 Voir aussi
 
 - [[00-lexique/rag|RAG]]
-- [[06-mise-en-oeuvre/evaluer-un-modele-local|Évaluer un modèle local]]
+- [[06-mise-en-oeuvre/evaluate-local-model|Évaluer un modèle local]]
 - [[00-lexique/llm-as-a-judge|LLM-as-a-judge]]

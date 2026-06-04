@@ -1,4 +1,4 @@
----
+﻿---
 title: 🚀 Index Zero to Hero
 description: Le point d'entrée de votre formation sur l'IA On-Premise
 ---
@@ -49,7 +49,7 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 - [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence : vLLM, Ollama et TensorRT-LLM]]
 - [[03-stack-logicielle/clustering-exo-and-ray|🌐 Clustering IA : Relier les GPU avec Exo et Ray]]
 - [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents : L'architecture de la connaissance]]
-- [[03-stack-logicielle/choisir-son-modele|🗺️ Choisir son modèle local]] — familles 2026, tailles, spécialisations, correspondance blueprints
+- [[03-stack-logicielle/choose-your-model|🗺️ Choisir son modèle local]] — familles 2026, tailles, spécialisations, correspondance blueprints
 
 ### 📁 04 - Les Blueprints d'Architecture (Scénarios)
 *Des configurations prêtes à être proposées à vos clients.*
@@ -57,7 +57,7 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 - [[04-blueprints/scenario-b-sme-appliance|🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)]]
 - [[04-blueprints/scenario-c-desktop-cluster|🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)]]
 - [[04-blueprints/scenario-d-datacenter|🏭 Scénario D : Datacenter (RoCE & Multi-GPU)]]
-- [[04-blueprints/comparaison-scenarios|💰 Comparaison TCO : On-Premise vs Cloud API]] — point de rentabilité par scénario
+- [[04-blueprints/tco-comparison|💰 Comparaison TCO : On-Premise vs Cloud API]] — point de rentabilité par scénario
 
 ### 📁 05 - Agents & Assistants On-Premise
 *La couche applicative : l'IA qui vous connaît et l'IA qui agit pour vous.*
@@ -71,9 +71,9 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 ### 📁 06 - Mise en œuvre pratique
 *Comment tester et décider avant de déployer.*
 - [[06-mise-en-oeuvre/index|🧪 Vue d'ensemble : protocoles pratiques]]
-- [[06-mise-en-oeuvre/demarrer-avec-ollama|🚀 Démarrer avec Ollama]] — installation, premier modèle, API, réglages de base
-- [[06-mise-en-oeuvre/evaluer-un-modele-local|🧪 Évaluer un modèle local]] — qualité, hallucinations, RAG, agents, KPI et performances
-- [[06-mise-en-oeuvre/securite-inference-locale|🔒 Sécurité de l'inférence locale]] — auth API, isolation réseau, OWASP LLM Top 10, agents
+- [[06-mise-en-oeuvre/getting-started-with-ollama|🚀 Démarrer avec Ollama]] — installation, premier modèle, API, réglages de base
+- [[06-mise-en-oeuvre/evaluate-local-model|🧪 Évaluer un modèle local]] — qualité, hallucinations, RAG, agents, KPI et performances
+- [[06-mise-en-oeuvre/local-inference-security|🔒 Sécurité de l'inférence locale]] — auth API, isolation réseau, OWASP LLM Top 10, agents
 
 ---
 

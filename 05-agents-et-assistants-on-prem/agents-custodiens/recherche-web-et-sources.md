@@ -1,4 +1,4 @@
----
+﻿---
 title: "🔍 Recherche Web & Sources"
 description: Comment donner un accès web contrôlé à un agent custodien sans dépendre d'un service de recherche cloud.
 sidebar:
@@ -38,7 +38,7 @@ ou http://localhost:11434/api/delete pour la liste des modèles."
 
 L'agent exécute la requête depuis l'intérieur du réseau — le pare-feu périmétrique ne la voit pas.
 
-**Règle absolue :** tout outil `fetch` fourni à un agent doit filtrer les plages CIDR privées et les adresses de métadonnées cloud (`169.254.169.254`) avant d'émettre la requête. Voir le guide [[06-mise-en-oeuvre/securite-inference-locale|🔒 Sécurité de l'inférence locale]] pour l'implémentation complète du filtre (SSRF protection, DNS rebinding).
+**Règle absolue :** tout outil `fetch` fourni à un agent doit filtrer les plages CIDR privées et les adresses de métadonnées cloud (`169.254.169.254`) avant d'émettre la requête. Voir le guide [[06-mise-en-oeuvre/local-inference-security|🔒 Sécurité de l'inférence locale]] pour l'implémentation complète du filtre (SSRF protection, DNS rebinding).
 
 ---
 

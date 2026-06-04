@@ -1,4 +1,4 @@
----
+﻿---
 title: Benchmark LLM
 description: Jeu de tests standardisé pour comparer les capacités, limites et risques de modèles de langage.
 aliases:
@@ -31,6 +31,6 @@ En local, le meilleur modèle n'est pas forcément le mieux classé. Il doit aus
 
 ## 🔗 Voir aussi
 
-- [[06-mise-en-oeuvre/evaluer-un-modele-local|Évaluer un modèle local]]
+- [[06-mise-en-oeuvre/evaluate-local-model|Évaluer un modèle local]]
 - [[00-lexique/llm-as-a-judge|LLM-as-a-judge]]
 - [[00-lexique/ragas|RAGAS]]
