@@ -130,8 +130,9 @@ Affected files:
 
 ### Phase C tasks
 
-**C1 — Create `06-mise-en-oeuvre/` section** *(renumbered — `05-` reserved for agents section)*
-- At minimum: `06-mise-en-oeuvre/demarrer-avec-ollama.md` (install, first model, API test)
+**C1 — Create `06-mise-en-oeuvre/` section** *(renumbered — `05-` reserved for agents section)* — **PARTIAL DONE**
+- Done: `06-mise-en-oeuvre/index.md` created as the section entry point.
+- Remaining: `06-mise-en-oeuvre/demarrer-avec-ollama.md` (install, first model, API test)
 - Optionally: `06-mise-en-oeuvre/configurer-vllm-multi-gpu.md`
 - Keep procedural, with code blocks for terminal commands
 
@@ -145,8 +146,8 @@ Affected files:
 - Size vs quality tradeoff for on-prem constraints
 - 2026 landscape: Llama 3.x, Qwen 2.5, DeepSeek-R1, Mistral
 
-**C3b — Add model evaluation protocol chapter**
-- Recommended path: `06-mise-en-oeuvre/evaluer-un-modele-local.md`
+**C3b — Add model evaluation protocol chapter** — **DONE**
+- Created: `06-mise-en-oeuvre/evaluer-un-modele-local.md`
 - Explain how to compare local models beyond speed: factuality, hallucinations, coherence,
   instruction following, code-editing reliability, RAG faithfulness, regressions.
 - Cover standard benchmarks and their limits: MMLU/MMLU-Pro, GPQA, GSM8K/MATH, HumanEval,
@@ -154,8 +155,7 @@ Affected files:
 - Explain practical evaluation protocol: golden dataset, task-specific KPIs, human blind review,
   LLM-as-a-judge as a helper only, repeated runs with fixed temperature, confidence intervals,
   failure taxonomy, and domain-specific acceptance thresholds.
-- Add lexicon entries if needed: `benchmark-llm`, `llm-as-a-judge`, `ragas`, `perplexite`,
-  `truthfulqa`.
+- Added lexicon entries: `benchmark-llm`, `llm-as-a-judge`, `ragas`.
 
 **C4 — Add TCO comparison**
 - `04-blueprints/comparaison-scenarios.md` or a table in `00-index.md`
@@ -166,6 +166,13 @@ Affected files:
 - `06-mise-en-oeuvre/securite-inference-locale.md`
 - API authentication, network isolation, data encryption at rest
 - OWASP LLM Top 10 pointer
+- **Agent isolation (critical addition):** mounting `/var/run/docker.sock` in an agent container grants
+  effective root on the host. A successful prompt injection via a Markdown file the agent audits could
+  weaponize the Docker socket. The chapter must cover:
+  - Rootless runtimes (Podman, Docker rootless mode)
+  - MicroVM sandboxes (Firecracker, gVisor) for untrusted agent workloads
+  - Strict network namespacing / air-gapping for executing agents
+  - Principle of least privilege: agent can read repo, write only its branch, no host socket access
 
 ---
 
@@ -184,3 +191,27 @@ After each phase:
 - **Phase 9** from previous plan: English translations (`en/` locale)
 - Full security audit of cluster configurations (requires external expertise)
 - Automated link-checking CI (infrastructure work outside vault content)
+
+---
+
+## Implementation report — 2026-06-04 C3b
+
+### Changes
+
+- Created `06-mise-en-oeuvre/index.md` as the practical implementation section entry point.
+- Created `06-mise-en-oeuvre/evaluer-un-modele-local.md` with a practical protocol for evaluating local models: public benchmarks, golden datasets, KPIs, hallucination/factuality checks, RAG evaluation, code-agent testing, local performance and LLM-as-a-judge safeguards.
+- Added lexicon entries: `00-lexique/benchmark-llm.md`, `00-lexique/llm-as-a-judge.md`, `00-lexique/ragas.md`.
+- Updated `00-lexique/ai-glossary.md`, `00-index.md` and `site.config.json` to expose the new section and concepts.
+- Updated `_private/master-status-2026-06-04.md` so future work resumes from remaining Phase C topics.
+
+### Validation
+
+- `npm run lexicon:index` — OK, 56 lexicon entries generated.
+- `npm run audit:links` — OK, no unresolved internal links in published vault content.
+- `npm run build` — OK, 197 pages built.
+- IDE lints on edited files — no linter errors found.
+
+### Remaining work
+
+- C1 is only partially complete: the `06-mise-en-oeuvre/` section exists, but the planned `demarrer-avec-ollama.md` guide remains to be written.
+- Other Phase C topics remain open: monitoring, security, TCO comparison and model selection guide.

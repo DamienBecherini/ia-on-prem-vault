@@ -24,6 +24,7 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 - **Mémoire & matériel** : [[00-lexique/vram|VRAM]], [[00-lexique/ram|RAM]], [[00-lexique/unified-memory|Mémoire unifiée]], [[00-lexique/pcie|PCIe]], [[00-lexique/multi-gpu|Multi-GPU]], [[00-lexique/nvlink|NVLink]], [[00-lexique/nvswitch|NVSwitch]].
 - **Systèmes IA en production** : [[00-lexique/quantification|Quantification]], [[00-lexique/quantification-q4|Quantification Q4]], [[00-lexique/kv-cache|KV Cache]], [[00-lexique/rag|RAG]], [[00-lexique/rdma|RDMA]], [[00-lexique/roce|RoCE]], [[00-lexique/infiniband|InfiniBand]].
 - **Réseau datacenter** : [[00-lexique/pfc|PFC]], [[00-lexique/ecn|ECN]], [[00-lexique/nccl|NCCL]], [[00-lexique/gpudirect-rdma|GPUDirect RDMA]].
+- **Évaluation des modèles** : [[00-lexique/benchmark-llm|Benchmark LLM]], [[00-lexique/llm-as-a-judge|LLM-as-a-judge]], [[00-lexique/ragas|RAGAS]].
 
 ---
 
@@ -145,6 +146,16 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 | [Fenêtre de contexte](/00-lexique/context-window/) | Nombre maximal de tokens que le modèle peut traiter en entrée active. |
 | [Quantification](/00-lexique/quantification/) | Réduction de précision numérique pour diminuer mémoire et coût de calcul. |
 | [MoE](/00-lexique/moe/) | Architecture avec experts spécialisés activés partiellement par token. |
+
+---
+
+## Évaluation des modèles
+
+| Terme | Définition rapide |
+| :-- | :-- |
+| [Benchmark LLM](/00-lexique/benchmark-llm/) | Jeu de tests standardisé pour comparer des modèles de langage. |
+| [LLM-as-a-judge](/00-lexique/llm-as-a-judge/) | Usage d'un LLM comme juge pour noter ou comparer des réponses. |
+| [RAGAS](/00-lexique/ragas/) | Framework d'évaluation des pipelines RAG : retrieval, fidélité et pertinence. |
 
 ---
 

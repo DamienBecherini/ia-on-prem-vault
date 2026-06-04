@@ -66,6 +66,11 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 - [[05-agents-et-assistants-on-prem/agents-custodiens/index|🤖 Agents Custodiens (l'IA qui maintient votre vault)]]
 - [[00-lexique/agent-custodian|Agent custodien]] · [[00-lexique/human-in-the-loop|Human-in-the-loop]] · [[00-lexique/memory-tree|Memory Tree]]
 
+### 📁 06 - Mise en œuvre pratique
+*Comment tester et décider avant de déployer.*
+- [[06-mise-en-oeuvre/index|🧪 Vue d'ensemble : protocoles pratiques]]
+- [[06-mise-en-oeuvre/evaluer-un-modele-local|🧪 Évaluer un modèle local]] — qualité, hallucinations, RAG, agents, KPI et performances
+
 ---
 
 ## 🧭 Quel blueprint choisir ?

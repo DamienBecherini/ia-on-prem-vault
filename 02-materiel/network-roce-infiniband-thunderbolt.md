@@ -5,6 +5,9 @@ sidebar:
   order: 3
 ---
 
+> [!tip] En bref
+> Relier plusieurs machines IA en réseau est possible, mais le réseau (10–400 Gb/s) reste dix à cent fois plus lent que la mémoire interne d'un GPU. RoCE, InfiniBand et Thunderbolt ne répondent pas au même problème : choisir le mauvais peut transformer votre cluster en goulot d'étranglement.
+
 Après la [[02-materiel/stations-multi-gpu|station multi-GPU]], la question suivante est naturelle : peut-on relier plusieurs machines pour obtenir un “super ordinateur” IA on-premise ?
 
 Oui, mais le réseau devient vite plus important que le nombre de GPU. Une carte moderne lit sa [[00-lexique/vram|VRAM]] à des centaines ou milliers de Go/s, alors qu'un lien réseau se compte souvent en dizaines ou centaines de Gb/s. Même [[00-lexique/rdma|RDMA]] ne transforme pas un cluster de bureau en système [[00-lexique/nvlink|NVLink]] externe.

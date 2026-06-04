@@ -5,6 +5,9 @@ sidebar:
   order: 1
 ---
 
+> [!tip] En bref
+> La limite de l'inférence locale n'est pas la puissance de calcul, c'est la vitesse de transfert mémoire. Multiplier les TFLOPS ne sert à rien si les données n'arrivent pas assez vite — c'est le "Memory Wall".
+
 > [!info] Prérequis conseillé
 > Ce chapitre suppose que vous savez comment un token est généré. Si ce n'est pas le cas, commencez par [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]].
 

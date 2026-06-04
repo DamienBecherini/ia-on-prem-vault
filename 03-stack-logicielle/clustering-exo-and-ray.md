@@ -5,6 +5,9 @@ sidebar:
   order: 2
 ---
 
+> [!tip] En bref
+> Quand aucune machine seule ne peut charger le modèle, le clustering distribue les poids entre plusieurs nœuds. Exo est fait pour relier des Mac ou PC de bureau via Thunderbolt. Ray Serve gère la production en datacenter. L'un sert à agrandir votre homelab, l'autre à scaler en production.
+
 Même avec la meilleure [[01-fondations/quantization-4bit-8bit|quantification]], un modèle massif comme DeepSeek V3 (671 milliards de paramètres) demande plus de 400 Go de mémoire vidéo. Aucune carte graphique grand public ne possède cette capacité seule. 
 
 La solution matérielle est d'utiliser un [[02-materiel/stations-multi-gpu|serveur multi-GPU]]. Mais comment le logiciel gère-t-il cette distribution ? Et comment faire si vous n'avez pas un énorme serveur, mais plutôt plusieurs Mac Studio ou PC branchés en réseau ?

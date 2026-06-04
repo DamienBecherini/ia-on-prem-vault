@@ -5,6 +5,9 @@ sidebar:
   order: 3
 ---
 
+> [!tip] En bref
+> Les poids du modèle occupent une VRAM fixe. Mais plus votre conversation est longue, plus le KV Cache grandit et peut consommer autant de VRAM que le modèle lui-même. Ce chapitre explique ce mécanisme et comment le maîtriser.
+
 Si le poids d'un modèle (les paramètres) détermine la quantité de VRAM minimale pour démarrer une IA, la **longueur du contexte** (le prompt + l'historique) dicte la quantité de mémoire dynamique consommée pendant l'utilisation.
 
 À l'usage, un contexte très long (32K, 128K ou plus) peut consommer **plus de VRAM que le modèle lui-même** [^1]. Ce goulot d'étranglement est géré par un mécanisme physique appelé le **KV Cache** (Key-Value Cache) [^1].
