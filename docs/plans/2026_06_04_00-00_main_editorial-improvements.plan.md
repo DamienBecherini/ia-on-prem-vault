@@ -57,7 +57,7 @@ Critiques are grouped into phases by effort/impact ratio.
 
 | # | Critique | Target file(s) | Type |
 |---|----------|---------------|------|
-| 7 | No operational/how-to content | `06-mise-en-oeuvre/` (new section — renumbered, `05-` reserved for agents section) | New section, 2–4 files |
+| 7 | ✅ DONE — No operational/how-to content | `06-mise-en-oeuvre/` — demarrer-avec-ollama, evaluer-un-modele-local, securite-inference-locale | New section, 3 files |
 | 8 | No monitoring/observability content | New chapter or section in blueprints | New content |
 | 9 | No security content | New chapter | New content |
 | 12 | No TCO comparison between scenarios | New table or `04-blueprints/comparaison.md` | New file |

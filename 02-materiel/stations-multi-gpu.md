@@ -76,6 +76,29 @@ graph TD
 
 Conséquence : si un moteur d'inférence doit beaucoup synchroniser deux GPU via PCIe, l'accélération attendue peut disparaître. Le multi-GPU PCIe fonctionne mieux quand les communications sont rares, quand les requêtes sont indépendantes, ou quand le moteur sait choisir un parallélisme adapté.
 
+### Les Switches PCIe (Broadcom PLX) — le P2P sans passer par le CPU
+
+Dans une station standard, les échanges GPU↔GPU transitent via le CPU : GPU 0 écrit en RAM système, le CPU relit, et envoie à GPU 1. C'est lent et charge le processeur inutilement.
+
+Les meilleures stations IA (et certains serveurs de workstation denses) utilisent des **puces Switch PCIe** — principalement les séries **Broadcom PLX PEX** — intégrées à la carte mère ou à une carte d'expansion. Ces puces permettent un transfert **Peer-to-Peer (P2P DMA)** direct :
+
+```
+GPU 0 VRAM ──► Switch PCIe (PLX) ──► GPU 1 VRAM
+                   (P2P DMA)
+                ← sans passer par le CPU ni la RAM système →
+```
+
+**Avantages concrets :**
+- La latence de transfert inter-GPU chute significativement
+- Le CPU est libéré pour d'autres tâches pendant la synchronisation
+- Le débit reste plafonné à ~64 Go/s (PCIe 5.0 x16) — mais avec une latence bien inférieure au trajet CPU
+
+**Identifier une carte mère avec switch PLX :**
+Cherchez dans les specs carte mère les mentions "PCIe switch", "PLX", "PEX switch", ou "NVMe bifurcation with PLX". Les cartes mères HEDT (High-End Desktop) et les plateformes serveur entry-level (AMD EPYC, Intel Xeon) incluent souvent ces puces nativement.
+
+> [!note] Limite du P2P PCIe
+> Même avec un switch PLX, la bande passante reste ~64 Go/s — soit 15 à 25 fois moins qu'un fabric NVLink/NVSwitch. Le P2P PCIe est suffisant pour du *pipeline parallelism* à faible fréquence d'échanges, pas pour du *tensor parallelism* intensif qui requiert des échanges à chaque couche.
+
 ---
 
 ## 🧠 Les modes de parallélisme

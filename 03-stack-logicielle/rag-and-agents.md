@@ -56,6 +56,71 @@ Plutôt que d'utiliser une lourde base vectorielle, une architecture alternative
 
 ---
 
+## 4. Choisir sa base de données vectorielle
+
+Le choix de la base vectorielle dépend du volume de données, du niveau de souveraineté requis et des ressources disponibles.
+
+| Solution | Type | Points forts | Limites | Idéal pour |
+| :-- | :-- | :-- | :-- | :-- |
+| **Chroma** | In-process (Python) | Zéro configuration, embarqué | Pas adapté à > 1 M chunks | Prototypage, labo dev |
+| **Qdrant** | Serveur Docker | Filtrage payload riche, REST/gRPC, scalable | Infra à gérer | PME, production moderée |
+| **Milvus** | Serveur distribué | Milliards de vecteurs, haute disponibilité | Complexe à opérer | Datacenter, gros volumes |
+| **pgvector** | Extension PostgreSQL | Vecteurs dans la base existante | Performances < bases natives | SI existant sous Postgres |
+| **SQLite + vss** | Fichier local | Zéro dépendance, souveraineté max | Pas de scalabilité H | Solo, Memory Tree patterns |
+
+> [!tip] Démarrage rapide avec Qdrant en local
+> ```bash
+> # Lancer Qdrant en Docker (données persistantes dans ./qdrant_storage)
+> docker run -p 6333:6333 -p 6334:6334 \
+>   -v ./qdrant_storage:/qdrant/storage \
+>   qdrant/qdrant
+>
+> # Créer une collection via l'API REST
+> curl -X PUT http://localhost:6333/collections/ma-base \
+>   -H 'Content-Type: application/json' \
+>   -d '{"vectors": {"size": 1024, "distance": "Cosine"}}'
+> ```
+
+## 5. Architecture de référence — Stack RAG souveraine
+
+```
+Documents (PDF, MD, DOCX)
+        │
+        ▼
+  Chunking + Embedding
+  (modèle local : nomic-embed-text, mxbai-embed via Ollama)
+        │
+        ▼
+  Base vectorielle locale (Qdrant)
+        │
+        ▼
+  Agent de routage (modèle 7-8B rapide)
+  ┌─────┴─────┐
+  │           │
+  ▼           ▼
+Base vec.  Outil web / FS
+  │
+  ▼
+Contexte assemblé
+  │
+  ▼
+LLM principal (70B) — génération de la réponse
+```
+
+**Modèles d'embedding locaux recommandés :**
+
+```bash
+# Via Ollama
+ollama pull nomic-embed-text   # 137M paramètres, 768 dim, très rapide
+ollama pull mxbai-embed-large  # 335M paramètres, 1024 dim, meilleure qualité
+
+# Test rapide
+curl http://localhost:11434/api/embeddings \
+  -d '{"model": "nomic-embed-text", "prompt": "La bande passante mémoire limite l'\''inférence."}'
+```
+
+---
+
 ## 📋 Le Conseil de l'Architecte
 
 Pour construire une stack logicielle d'entreprise souveraine en 2026 :

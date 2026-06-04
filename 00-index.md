@@ -57,6 +57,7 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 - [[04-blueprints/scenario-b-sme-appliance|🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)]]
 - [[04-blueprints/scenario-c-desktop-cluster|🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)]]
 - [[04-blueprints/scenario-d-datacenter|🏭 Scénario D : Datacenter (RoCE & Multi-GPU)]]
+- [[04-blueprints/comparaison-scenarios|💰 Comparaison TCO : On-Premise vs Cloud API]] — point de rentabilité par scénario
 
 ### 📁 05 - Agents & Assistants On-Premise
 *La couche applicative : l'IA qui vous connaît et l'IA qui agit pour vous.*
@@ -72,6 +73,7 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 - [[06-mise-en-oeuvre/index|🧪 Vue d'ensemble : protocoles pratiques]]
 - [[06-mise-en-oeuvre/demarrer-avec-ollama|🚀 Démarrer avec Ollama]] — installation, premier modèle, API, réglages de base
 - [[06-mise-en-oeuvre/evaluer-un-modele-local|🧪 Évaluer un modèle local]] — qualité, hallucinations, RAG, agents, KPI et performances
+- [[06-mise-en-oeuvre/securite-inference-locale|🔒 Sécurité de l'inférence locale]] — auth API, isolation réseau, OWASP LLM Top 10, agents
 
 ---
 
