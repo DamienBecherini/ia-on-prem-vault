@@ -102,9 +102,9 @@ Une erreur classique : préférer un **petit modèle non quantifié** à un **gr
 
 ---
 
-## 📋 Le Conseil de l'Architecte pour OpenHuman
+## 📋 Le Conseil de l'Architecte
 
-Pour un déploiement souverain d'agents locaux avec *OpenHuman* :
+Pour un déploiement souverain d'agents locaux on-premise :
 
 1.  **Standard PME (CPU / Mac / hybride) :** **Q4_K_S ou Q4_K_M en GGUF** via llama.cpp — meilleur compromis taille/qualité/vitesse documenté pour Llama 3.1-8B ; monter en **Q5_0** si la marge qualité prime [^4].
 2.  **Inférence GPU partagée (vLLM / TensorRT-LLM) :** **FP8** sur les poids (Hopper/Blackwell/RTX récentes) ou **AWQ INT4** selon le moteur ; le FP8 réduit la VRAM ~×2 avec une dégradation faible si bien calibré, sans être strictement identique au BF16 [^1][^6].

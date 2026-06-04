@@ -88,8 +88,8 @@ Dès qu'on cumule la mémoire de plusieurs machines, l'interconnexion devient le
 1.  **Le câble peut dominer toute la chaîne :** une liaison 10 GbE plafonne autour de 1,25 Go/s, très loin des centaines de Go/s des mémoires locales.
 2.  **RDMA est clé en environnement pro :** RoCE/InfiniBand réduit le coût CPU des transferts et améliore la latence inter-nœuds.
 
-> 💡 **Le Conseil de l'Architecte :** 
-> Pour le projet *OpenHuman*, l'implémentation de la méthode [[03-stack-logicielle/rag-et-agents-openhuman\|RAG]] est essentielle. En ne transmettant au modèle que les informations nécessaires du contexte, on évite de saturer la bande passante avec des millions de données inutiles.
+> 💡 **Le Conseil de l'Architecte :**
+> Dans tout déploiement on-premise, la méthode [[03-stack-logicielle/rag-et-agents-openhuman|RAG]] est une alliée clé de la bande passante. En n'injectant dans le contexte que les passages pertinents (plutôt que des documents entiers), on évite de saturer la mémoire avec des données inutiles et on maintient le TTFT sous contrôle.
 
 ---
 

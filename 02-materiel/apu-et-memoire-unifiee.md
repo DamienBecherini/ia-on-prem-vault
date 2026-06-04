@@ -112,9 +112,9 @@ sudo sysctl iogpu.wired_limit_mb=122880
 
 ---
 
-## 📋 Le Conseil de l'Architecte pour OpenHuman
+## 📋 Le Conseil de l'Architecte
 
-Pour un déploiement souverain *OpenHuman* :
+Pour un déploiement souverain on-premise :
 
 1.  **Souveraineté x86 + Docker (AMD Halo / PRO 400) :** si la stack repose sur **Linux, Docker et Python**, la plateforme AMD est la plus rationnelle : 160 Go VRAM allouables, écosystème ouvert, prix inférieur au Mac Studio équivalent en capacité [^1][^2][^7]. Acceptez un débit **~5 tok/s** sur un 70B dense — privilégiez les **MoE** (Qwen3.5-A3B, etc.) pour l'interactivité [^6].
 2.  **Vitesse et confort (Mac Studio) :** pour le meilleur ressenti sur un **70B dense** (~12–15 tok/s en MLX sur M3 Ultra), le **Mac Studio M3 Ultra 192 Go+** reste le roi de la bande passante unifiée en 2026 ; le **M4 Max 128 Go** est un excellent compromis si 128 Go suffisent [^4][^9][^10]. Budget macOS et conteneurs à anticiper.

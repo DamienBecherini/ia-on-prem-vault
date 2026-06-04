@@ -130,9 +130,9 @@ vLLM recommande de raisonner sur la topologie : tensor parallel dans un nœud qu
 
 ---
 
-## 📋 Le Conseil de l'Architecte pour OpenHuman
+## 📋 Le Conseil de l'Architecte
 
-Pour un déploiement souverain *OpenHuman* :
+Pour un déploiement souverain on-premise :
 
 1. **Commencer par répliquer avant de distribuer.** Deux machines qui servent chacune leur propre modèle sont souvent plus fiables qu'un modèle coupé en deux sur un réseau fragile.
 2. **Ne pas confondre débit marketing et débit utile.** Un lien réseau annoncé en Gb/s ne dit rien de la latence, de la congestion, du CPU bypass ou du comportement NCCL.

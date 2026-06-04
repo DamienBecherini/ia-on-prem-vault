@@ -114,9 +114,9 @@ Le piège classique est d'acheter “2 × 48 Go” en pensant obtenir une carte 
 
 ---
 
-## 📋 Le Conseil de l'Architecte pour OpenHuman
+## 📋 Le Conseil de l'Architecte
 
-Pour un déploiement souverain *OpenHuman* :
+Pour un déploiement souverain on-premise :
 
 1. **Commencer par le besoin de service, pas par le nombre de GPU.** Un seul utilisateur sur un gros modèle dense n'a pas les mêmes contraintes qu'un serveur multi-utilisateur.
 2. **Privilégier le mono-GPU quand le modèle tient.** Une RTX PRO 6000 Blackwell 96 Go peut être plus simple qu'une station 2 × 48 Go pour un modèle qui tient dans 96 Go [^2].

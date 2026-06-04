@@ -19,7 +19,7 @@ SmolAgents suit la boucle **ReAct** (Reason + Act) en donnant des outils au LLM.
 Contraste avec LangChain/LlamaIndex : ces frameworks sont plus complets mais incluent de la télémétrie qui peut faire transiter vos prompts vers des serveurs externes — risque incompatible avec une politique on-premise stricte.
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Permet de construire des [[00-lexique/agent-autonome|agents autonomes]] souverains sans dépendance cloud. Recommandé dans le chapitre RAG & Agents pour les déploiements OpenHuman.
+Permet de construire des [[00-lexique/agent-autonome|agents autonomes]] souverains sans dépendance cloud. Recommandé pour tout déploiement on-premise agentique soucieux de la confidentialité des prompts.
 
 ## ⚠️ Pièges fréquents
 - Plus léger = moins de fonctionnalités prêtes à l'emploi que LangChain. Certaines intégrations doivent être codées à la main.

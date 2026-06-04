@@ -53,7 +53,7 @@ Sur un modèle 70B, le KV Cache pour 5 requêtes longues peut facilement englout
 ### ✅ Quand utiliser ce Blueprint ?
 *   C'est le **cœur de cible** de l'IA on-premise pour les PME.
 *   Parfait pour un déploiement "sous le bureau" ou dans une petite baie de brassage non climatisée.
-*   Excellent pour exécuter un agent souverain (type OpenHuman) servant une dizaine de requêtes concurrentes modérées.
+*   Excellent pour exécuter un assistant ou agent souverain local servant une dizaine de requêtes concurrentes modérées.
 
 ### ❌ Quand fuir ce Blueprint ?
 *   **Si votre client a un besoin de croissance non prévisible.** La mémoire unifiée est **soudée** à la carte mère. Il est impossible de rajouter de la RAM dans un Mac Studio ou un APU Gorgon Halo après l'achat. Si le modèle métier de l'entreprise passe de 70B à 200B l'année suivante, il faudra jeter la machine et en racheter une.
