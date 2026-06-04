@@ -23,6 +23,17 @@ todos:
 isProject: false
 ---
 
+> ⚠️ **SUPERSEDED — 2026-06-04**
+> This plan has been replaced by a broader combined plan:
+> **`2026_06_04_08-14_main_agents-et-assistants-on-prem.plan.md`**
+>
+> That plan merges the custodian agents track (Track B, inherited from this document) with a new
+> personal AI assistants track (Track A), shared sovereignty foundations, and the OpenHuman
+> cleanup pre-migration. The target section is `05-agents-et-assistants-on-prem/`.
+> Do not execute this plan. Refer to the new plan instead.
+
+---
+
 # On-prem autonomous agents - mini-book
 
 ## Objective

@@ -39,9 +39,9 @@ Critiques are grouped into phases by effort/impact ratio.
 | 2 | Abrupt transition to "Bande Passante" in beginner path | `01-fondations/la-bande-passante-memoire.md` | Add intro callout |
 | 4 | Shallow stack chapters vs deep fondations | `03-stack-logicielle/*.md` | Enrich 3 chapters |
 | 5 | Quantification entries redundancy/clarity | `00-lexique/quantification.md`, `quantification-q4.md` | Clarify scope |
-| 6 | "OpenHuman" branding opaque for external readers | `02-materiel/*.md`, `03-stack-logicielle/*.md` | Rephrase or add lexique |
+| 6 | "OpenHuman" branding opaque for external readers | `02-materiel/*.md`, `03-stack-logicielle/*.md` | ~~Rephrase or add lexique~~ **→ Delegated to new plan** `2026_06_04_08-14_main_agents-et-assistants-on-prem` Phase 0 |
 | 14 | No "En bref" executive callout in chapters | All chapter files | Add callout to 11 files |
-| 15 | Sovereignty/RGPD angle underdeveloped | `00-index.md` or new chapter | New section or file |
+| 15 | Sovereignty/RGPD angle underdeveloped | `00-index.md` or new chapter | ~~New section or file~~ **→ Superseded** — partially covered by A1 (done); full chapter delegated to new plan `souverainete-et-confidentialite.md` |
 | 16 | Old lexique entries still minimal | 6–8 specific files (see below) | Enrich existing entries |
 
 **Files targeted by critique #16 (old minimal entries):**
@@ -57,7 +57,7 @@ Critiques are grouped into phases by effort/impact ratio.
 
 | # | Critique | Target file(s) | Type |
 |---|----------|---------------|------|
-| 7 | No operational/how-to content | `05-mise-en-oeuvre/` (new section) | New section, 2–4 files |
+| 7 | No operational/how-to content | `06-mise-en-oeuvre/` (new section — renumbered, `05-` reserved for agents section) | New section, 2–4 files |
 | 8 | No monitoring/observability content | New chapter or section in blueprints | New content |
 | 9 | No security content | New chapter | New content |
 | 12 | No TCO comparison between scenarios | New table or `04-blueprints/comparaison.md` | New file |
@@ -117,19 +117,22 @@ Affected files:
 - `quantification-q4.md`: clearly scope to Q4_K_M practical detail (usage, pitfalls, Ollama)
 - Add a cross-reference note at the top of each: "Pour le détail pratique Q4_K_M → [[quantification-q4]]" and vice versa
 
-**B4 — Clarify "OpenHuman" references**
-- Either create `00-lexique/openhuman.md` explaining what it is (product/service context)
-- Or rename "Conseil OpenHuman" sections to "Conseil architecte" if the vault is meant to be generic
+**B4 — Clarify "OpenHuman" references** → **DELEGATED**
+- Moved to Phase 0 of `2026_06_04_08-14_main_agents-et-assistants-on-prem.plan.md`
+- That plan will clean up all "Conseil de l'Architecte pour OpenHuman" headers and inline mentions,
+  then create the full `05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman.md`
+  fiche that gives proper context. Do not execute B4 here.
 
-**B5 — Add sovereignty/RGPD angle to `00-index.md`**
-- Can be folded into A1 (the "why on-premise?" section)
-- Mention AI Act, RGPD, sectoral regulations (health, legal, defense)
+**B5 — Add sovereignty/RGPD angle** → **SUPERSEDED**
+- Partially done via A1 (three-argument "why on-premise?" block in `00-index.md`).
+- Full sovereignty chapter (`souverainete-et-confidentialite.md`) delegated to new plan above.
+- Remaining action once new plan is executed: add a link from `00-index.md` to that chapter.
 
 ### Phase C tasks
 
-**C1 — Create `05-mise-en-oeuvre/` section**
-- At minimum: `05-mise-en-oeuvre/demarrer-avec-ollama.md` (install, first model, API test)
-- Optionally: `05-mise-en-oeuvre/configurer-vllm-multi-gpu.md`
+**C1 — Create `06-mise-en-oeuvre/` section** *(renumbered — `05-` reserved for agents section)*
+- At minimum: `06-mise-en-oeuvre/demarrer-avec-ollama.md` (install, first model, API test)
+- Optionally: `06-mise-en-oeuvre/configurer-vllm-multi-gpu.md`
 - Keep procedural, with code blocks for terminal commands
 
 **C2 — Add monitoring section to blueprints C and D**
@@ -147,8 +150,8 @@ Affected files:
 - Hardware cost, 3-year electricity estimate, required skills per scenario
 - Break-even vs cloud API (OpenAI / Azure pricing reference)
 
-**C5 — Create security chapter**
-- `05-mise-en-oeuvre/securite-inference-locale.md`
+**C5 — Create security chapter** *(renumbered — `05-` reserved for agents section)*
+- `06-mise-en-oeuvre/securite-inference-locale.md`
 - API authentication, network isolation, data encryption at rest
 - OWASP LLM Top 10 pointer
 
