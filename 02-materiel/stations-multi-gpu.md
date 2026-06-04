@@ -9,7 +9,8 @@ Après la [[02-materiel/apu-and-unified-memory|mémoire unifiée]], l'autre gran
 
 L'idée paraît simple : additionner la [[00-lexique/vram|VRAM]] de plusieurs cartes pour charger des modèles plus gros. En pratique, le **multi-GPU** n'est pas un simple “pool de mémoire”. Il faut choisir un mode de parallélisme, accepter des échanges entre cartes, et comprendre si ces échanges passent par [[00-lexique/pcie|PCIe]], [[00-lexique/nvlink|NVLink]] ou un fabric [[00-lexique/rdma|RDMA]] / [[00-lexique/roce|RoCE]].
 
-> 🔗 **Lien connexe :** pour le dimensionnement modèle + cache, voir [[01-fondations/quantization-4bit-8bit|Quantification]] et [[01-fondations/kv-cache-and-context|KV Cache]].
+> [!note] Lien connexe
+> Pour le dimensionnement modèle + cache, voir [[01-fondations/quantization-4bit-8bit|Quantification]] et [[01-fondations/kv-cache-and-context|KV Cache]].
 
 ---
 
@@ -40,7 +41,7 @@ La RTX 6000 Ada reste une base workstation solide avec 48 Go de GDDR6 ECC et PCI
 
 Ce sont des cartes très intéressantes pour l'on-premise car elles offrent de la **VRAM locale rapide** et un écosystème logiciel mature. Mais dans une station multi-GPU standard, les échanges entre cartes dépendent exclusivement du bus PCIe.
 
-> ⚠️ **Piège fréquent — NVLink sur workstation : c'est physiquement impossible**
+> [!warning] Piège fréquent — NVLink sur workstation
 > Les cartes RTX workstation (RTX 6000 Ada, RTX PRO 6000 Blackwell) et grand public (RTX 40xx, RTX 50xx) **ne disposent plus de connecteur NVLink physique** depuis la génération Ada Lovelace. NVIDIA a supprimé les ponts NVLink externes de toutes ses gammes desktop et workstation.
 > Il est donc **impossible d'acheter deux RTX PRO 6000 et de les relier via NVLink** : le connecteur n'existe tout simplement pas sur ces cartes [^1][^2].
 > NVLink est aujourd'hui **exclusivement réservé aux GPU serveur** en format SXM (A100, H100, H200, B200) et aux systèmes HGX/DGX — une catégorie de machines entièrement différente, qui commence à plus de 100 000 €.

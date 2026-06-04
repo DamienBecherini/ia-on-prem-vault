@@ -9,7 +9,8 @@ sidebar:
 
 Avant de choisir un assistant personnel ou un agent custodien, une question mérite une réponse honnête :
 
-> **Ce logiciel fait-il vraiment tourner le modèle sur ma machine, ou envoie-t-il mes données quelque part sans que je m'en aperçoive ?**
+> [!warning] Question d'audit
+> Ce logiciel fait-il vraiment tourner le modèle sur ma machine, ou envoie-t-il mes données quelque part sans que je m'en aperçoive ?
 
 La réponse n'est pas toujours dans la page marketing. Elle est dans le code, le README et le trafic réseau.
 
@@ -97,11 +98,12 @@ Synthèse des 5 critères précédents :
 
 ---
 
-## 🪤 Le piège "UI locale, cerveau cloud"
+## Le piège "UI locale, cerveau cloud"
 
-C'est le pattern le plus dangereux — et le plus fréquent.
-
-L'interface est installée sur votre machine. Le README dit "privacy-first". Et pourtant, chaque conversation est envoyée à `api.openai.com` (ou `api.anthropic.com`, ou les serveurs du prestataire) car le modèle qui répond n'est pas local.
+> [!warning] UI locale, cerveau cloud
+> C'est le pattern le plus dangereux — et le plus fréquent.
+>
+> L'interface est installée sur votre machine. Le README dit "privacy-first". Et pourtant, chaque conversation est envoyée à `api.openai.com` (ou `api.anthropic.com`, ou les serveurs du prestataire) car le modèle qui répond n'est pas local.
 
 **Exemples typiques :**
 - Une application Electron qui "supporte" Ollama, mais dont le fichier de configuration par défaut pointe vers `gpt-4o`.

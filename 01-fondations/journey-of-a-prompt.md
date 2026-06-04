@@ -5,7 +5,8 @@ sidebar:
   order: 0
 ---
 
-> **Ce chapitre** décompose ce qui se passe à l'intérieur d'un [[00-lexique/llm|LLM]] pendant l'[[00-lexique/inference|inférence]]. Pas de prérequis — juste votre curiosité.
+> [!tip] Ce chapitre
+> Ce chapitre décompose ce qui se passe à l'intérieur d'un [[00-lexique/llm|LLM]] pendant l'[[00-lexique/inference|inférence]]. Pas de prérequis — juste votre curiosité.
 
 Quand vous tapez une question dans un modèle d'IA local, il y a une illusion de magie : la machine semble "comprendre" le texte et "réfléchir" à la réponse.
 
@@ -19,7 +20,8 @@ Voici le voyage exact de votre prompt, étape par étape.
 
 Un ordinateur ne sait calculer que sur des nombres. La toute première étape consiste donc à découper votre phrase en morceaux appelés **[[00-lexique/tokenisation|tokens]]**, puis à assigner un numéro à chaque morceau.
 
-> **Exemple :** Vous tapez *"Où est Paris ?"*
+> [!example] Exemple
+> Vous tapez *"Où est Paris ?"*
 > Le modèle ne voit pas des lettres, il voit les numéros de son dictionnaire interne. Par exemple : `[4502, 381, 1920, 30]`. 
 
 Chaque modèle a son propre dictionnaire, appris pendant son entraînement. En 2026, un modèle standard comme **Llama 3** possède un vocabulaire d'environ **128 256 tokens** possibles[^1]. Chaque numéro est l'index exact d'un de ces mots ou sous-mots.
@@ -74,7 +76,8 @@ Quand un utilisateur se plaint que *"l'IA est lente"*, vous devez savoir de quel
 * **Elle met trop de temps à démarrer ?** C'est le **Prefill**. Le processeur manque de puissance de calcul brute (TFLOPS) pour digérer le prompt initial, ou le contexte envoyé est trop long.
 * **Elle écrit la réponse trop lentement ?** C'est le **Decoding**. La machine souffre du "Memory Wall" : la mémoire de la carte graphique ne peut pas envoyer les données assez vite vers la puce pour calculer le token suivant.
 
-> 👉 **Prochaine étape :** Maintenant que vous avez compris que le Decoding est limité par la vitesse de la mémoire, passez au chapitre sur [[01-fondations/memory-bandwidth|La Bande Passante Mémoire]].
+> [!tip] Prochaine étape
+> Maintenant que vous avez compris que le Decoding est limité par la vitesse de la mémoire, passez au chapitre sur [[01-fondations/memory-bandwidth|La Bande Passante Mémoire]].
 
 ## 📚 Sources et Références
 [^1]: Meta, *Llama 3.1 Model Card* (Architecture, vocabulaire 128 256 tokens, tokenizer Tiktoken), 2024. [GitHub — llama-models](https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md)

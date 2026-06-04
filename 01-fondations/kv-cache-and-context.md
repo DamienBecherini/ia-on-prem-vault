@@ -52,7 +52,8 @@ Où :
 *   **$B$** : Taille du lot (*Batch Size*, nombre de requêtes simultanées) [^3].
 *   **$B_{pe}$** : Taille d'un élément en mémoire (*Bytes Per Element*, ex: $2$ pour FP16/BF16, $1$ pour FP8/INT8 ; NVFP4 vise ~$0{,}5$ octet avec un léger overhead de scaling) [^3][^12].
 
-> **Go vs GiB :** les tableaux ci-dessous expriment les tailles en **gigaoctets décimaux (Go, $10^9$ octets)**, comme la plupart des fiches techniques du projet. Les OS et les outils (`nvidia-smi`, Activity Monitor) affichent souvent des **gibioctets (GiB, $2^{30}$ octets)** sous l'étiquette « Go » ou « GB ». À 128K tokens BF16, $41{,}94 \text{ Go}$ ≈ **$39{,}06 \text{ GiB}$** — écart d'environ 7 % à intégrer dans votre marge de sécurité VRAM.
+> [!note] Go vs GiB
+> Les tableaux ci-dessous expriment les tailles en **gigaoctets décimaux (Go, $10^9$ octets)**, comme la plupart des fiches techniques du projet. Les OS et les outils (`nvidia-smi`, Activity Monitor) affichent souvent des **gibioctets (GiB, $2^{30}$ octets)** sous l'étiquette « Go » ou « GB ». À 128K tokens BF16, $41{,}94 \text{ Go}$ ≈ **$39{,}06 \text{ GiB}$** — écart d'environ 7 % à intégrer dans votre marge de sécurité VRAM.
 
 ### 💡 Focus : L'impact de l'architecture GQA
 Dans l'ancienne architecture MHA (Multi-Head Attention), chaque tête de Query avait sa propre tête Key-Value ($H_{kv} = H_{query}$).
@@ -78,12 +79,16 @@ Calculons la VRAM nécessaire pour **une seule requête ($B=1$)** à différente
 | **128 000 tokens** (128K, max natif) | $\sim 41,94 \text{ Go}$ | $\sim 20,97 \text{ Go}$ | $\sim 10,48 \text{ Go}$ |
 | **300 000 tokens** (extrapolation) | $\sim 98,30 \text{ Go}$ | $\sim 49,15 \text{ Go}$ | $\sim 24,57 \text{ Go}$ |
 
+> [!note] Extrapolation 300K
 > La ligne **300K** est une **extrapolation mathématique** (RoPE scaling ou contexte étendu par le moteur), pas la fenêtre native du modèle. Les chiffres BF16 à 128K recoupent les estimations publiées par Meta et Hugging Face (~39–42 Go) [^6].
 
-### ⚠️ Le Piège de l'OOM (Out Of Memory) en contexte long
-Si vous faites tourner Llama 3.1 70B quantifié en 4-bit (qui pèse $\sim 40 \text{ Go}$ de poids fixes) sur un Mac Studio 64 Go :
-*   À **8K de contexte**, le total (Modèle + Cache) fait $\sim 42,7 \text{ Go}$. Tout fonctionne parfaitement.
-*   À **128K de contexte** en BF16, le KV Cache demande $41,9 \text{ Go}$ supplémentaires. Le total requis monte à **$82 \text{ Go}$**. Votre machine de 64 Go s'effondre en erreur *Out Of Memory* ou bascule sur la RAM système lente, détruisant vos performances [^1].
+### Le Piège de l'OOM (Out Of Memory) en contexte long
+
+> [!warning] Piège de l'OOM
+> Si vous faites tourner Llama 3.1 70B quantifié en 4-bit (qui pèse $\sim 40 \text{ Go}$ de poids fixes) sur un Mac Studio 64 Go :
+>
+> *   À **8K de contexte**, le total (Modèle + Cache) fait $\sim 42,7 \text{ Go}$. Tout fonctionne parfaitement.
+> *   À **128K de contexte** en BF16, le KV Cache demande $41,9 \text{ Go}$ supplémentaires. Le total requis monte à **$82 \text{ Go}$**. Votre machine de 64 Go s'effondre en erreur *Out Of Memory* ou bascule sur la RAM système lente, détruisant vos performances [^1].
 
 ---
 

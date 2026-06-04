@@ -145,6 +145,18 @@ Affected files:
 - Size vs quality tradeoff for on-prem constraints
 - 2026 landscape: Llama 3.x, Qwen 2.5, DeepSeek-R1, Mistral
 
+**C3b — Add model evaluation protocol chapter**
+- Recommended path: `06-mise-en-oeuvre/evaluer-un-modele-local.md`
+- Explain how to compare local models beyond speed: factuality, hallucinations, coherence,
+  instruction following, code-editing reliability, RAG faithfulness, regressions.
+- Cover standard benchmarks and their limits: MMLU/MMLU-Pro, GPQA, GSM8K/MATH, HumanEval,
+  MBPP, SWE-bench, IFEval, TruthfulQA, HaluEval, HELM, Chatbot Arena/MT-Bench.
+- Explain practical evaluation protocol: golden dataset, task-specific KPIs, human blind review,
+  LLM-as-a-judge as a helper only, repeated runs with fixed temperature, confidence intervals,
+  failure taxonomy, and domain-specific acceptance thresholds.
+- Add lexicon entries if needed: `benchmark-llm`, `llm-as-a-judge`, `ragas`, `perplexite`,
+  `truthfulqa`.
+
 **C4 — Add TCO comparison**
 - `04-blueprints/comparaison-scenarios.md` or a table in `00-index.md`
 - Hardware cost, 3-year electricity estimate, required skills per scenario

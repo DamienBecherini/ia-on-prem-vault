@@ -34,7 +34,7 @@ todos:
     status: done
   - id: phase-6-validation
     content: "Phase 6 — Build, link audit, backlog update, report"
-    status: pending
+    status: done
 isProject: true
 ---
 
@@ -381,3 +381,36 @@ anythingllm → jan-ai → khoj.
   deferred pending research.
 - `tavily.md` from old plan — deferred; SearXNG covers the sovereign search use case.
 - English translations (`en/` locale) — deferred globally.
+- Model evaluation protocol chapter — tracked as C3b in
+  `docs/plans/2026_06_04_00-00_main_editorial-improvements.plan.md`.
+
+---
+
+## Implementation report
+
+### Changes
+
+- Created and validated the `05-agents-et-assistants-on-prem/` section with two tracks:
+  personal assistants and custodian agents.
+- Added shared sovereignty foundations, solution sheets, cross-links, and lexicon entries.
+- Renamed legacy French slugs to neutral English slugs and repaired wikilinks.
+- Replaced Starlight-only source callouts with Obsidian-native callouts, while the engine
+  converts them to Starlight asides at build time.
+- Added a technical warning on Aider + Ollama: a sovereign local agent needs a strong coder
+  model, not just any local 7B/8B model.
+- Logged the future model-evaluation chapter in the editorial plan as C3b.
+
+### Validation
+
+- `npm run lexicon:index` from `starlight-obsidian-engine`: 53 lexicon entries generated.
+- `npm run audit:links` from `starlight-obsidian-engine`: no unresolved internal links.
+- OpenHuman cleanup check: no legacy branding phrases remain in sections 00-04; remaining
+  mentions are contextual references to Memory Tree or the canonical OpenHuman solution sheet.
+- Callout check: no raw `:::tip` / `:::caution` directives remain in vault Markdown sources.
+- `npm run build` from `starlight-obsidian-engine`: build passed, 187 pages generated.
+
+### Notes
+
+- The command `node scripts/generate-lexicon-index.mjs` in the vault plan is obsolete; the
+  generator is owned by the engine and should be run through `npm run lexicon:index`.
+- English locale pages are still mostly stubs and remain deferred globally.

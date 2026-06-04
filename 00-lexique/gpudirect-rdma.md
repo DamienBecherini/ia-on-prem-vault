@@ -16,10 +16,10 @@ Technologie NVIDIA qui permet à un GPU d'envoyer ou recevoir des données direc
 ## 📖 Définition détaillée
 Dans un pipeline classique, un transfert GPU → réseau requiert : GPU VRAM → RAM CPU → carte réseau (deux copies). GPUDirect RDMA supprime la copie CPU en permettant à la carte réseau d'accéder directement à la VRAM du GPU via PCIe (DMA-BUF).
 
-Prérequis :
-- GPU NVIDIA et carte réseau Mellanox/ConnectX compatibles.
-- InfiniBand ou RoCE configuré en mode lossless.
-- Pilotes `nvidia-peermem` chargés.
+> [!info] Prérequis
+> - GPU NVIDIA et carte réseau Mellanox/ConnectX compatibles.
+> - InfiniBand ou RoCE configuré en mode lossless.
+> - Pilotes `nvidia-peermem` chargés.
 
 Utilisé par NCCL pour les communications inter-nœuds dans les clusters distribués.
 

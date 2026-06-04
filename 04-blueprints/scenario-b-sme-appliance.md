@@ -38,13 +38,14 @@ Puisque le modèle de 40 Go rentre intégralement dans la [[00-lexique/unified-m
 
 ---
 
-## ⚖️ Le Piège du KV Cache Concurrent
+## Le Piège du KV Cache Concurrent
 
-Si 40 Go de modèle tiennent largement dans 128 Go de mémoire, pourquoi ne pas se contenter d'une machine à 64 Go ? 
-
-La réponse est le **[[01-fondations/kv-cache-and-context|KV Cache]]**. Dans ce scénario, vous servez une **PME entière**.
-Si 5 employés envoient simultanément des documents PDF de 100 pages à l'assistant (RAG), le moteur d'inférence va devoir stocker le contexte de chaque utilisateur *en même temps*. 
-Sur un modèle 70B, le KV Cache pour 5 requêtes longues peut facilement engloutir **30 à 50 Go de mémoire dynamique supplémentaire** en un instant. Si vous dépassez la RAM physique totale (modèle + OS + requêtes), la machine plantera instantanément (Erreur OOM - *Out Of Memory*).
+> [!warning] KV Cache concurrent
+> Si 40 Go de modèle tiennent largement dans 128 Go de mémoire, pourquoi ne pas se contenter d'une machine à 64 Go ? 
+>
+> La réponse est le **[[01-fondations/kv-cache-and-context|KV Cache]]**. Dans ce scénario, vous servez une **PME entière**.
+> Si 5 employés envoient simultanément des documents PDF de 100 pages à l'assistant (RAG), le moteur d'inférence va devoir stocker le contexte de chaque utilisateur *en même temps*. 
+> Sur un modèle 70B, le KV Cache pour 5 requêtes longues peut facilement engloutir **30 à 50 Go de mémoire dynamique supplémentaire** en un instant. Si vous dépassez la RAM physique totale (modèle + OS + requêtes), la machine plantera instantanément (Erreur OOM - *Out Of Memory*).
 
 ---
 
