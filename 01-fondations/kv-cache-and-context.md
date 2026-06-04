@@ -10,7 +10,7 @@ sidebar:
 
 Si le poids d'un modèle (les paramètres) détermine la quantité de VRAM minimale pour démarrer une IA, la **longueur du contexte** (le prompt + l'historique) dicte la quantité de mémoire dynamique consommée pendant l'utilisation.
 
-À l'usage, un contexte très long (32K, 128K ou plus) peut consommer **plus de VRAM que le modèle lui-même** [^1]. Ce goulot d'étranglement est géré par un mécanisme physique appelé le **KV Cache** (Key-Value Cache) [^1].
+À l'usage, un contexte très long (32K, 128K ou plus) peut consommer **plus de [[00-lexique/vram|VRAM]] que le modèle lui-même** [^1]. Ce goulot d'étranglement est géré par un mécanisme physique appelé le **KV Cache** (Key-Value Cache) [^1].
 
 ---
 
@@ -101,7 +101,7 @@ Pour éviter l'explosion de la VRAM sur site, les ingénieurs système déploien
 
 ### 1. PagedAttention (vLLM / SGLang)
 Dans les moteurs d'inférence classiques, le KV Cache est souvent **pré-alloué de manière contiguë** en VRAM [^7]. Cela crée fragmentation et gaspillage : les implémentations naïves n'utilisent typiquement que **20 à 38 %** de la mémoire GPU réservée au KV cache [^7].
-**PagedAttention** s'inspire de la **mémoire paginée** des systèmes d'exploitation [^7]. Le KV Cache est découpé en blocs fixes, alloués à la demande et mappés via une table de pages. L'utilisation mémoire monte à **~96 %**, et le débit augmente typiquement de **2 à 4×** à latence équivalente (jusqu'à plus selon le workload) [^7].
+**[[00-lexique/pagedattention|PagedAttention]]** s'inspire de la **mémoire paginée** des systèmes d'exploitation [^7]. Le KV Cache est découpé en blocs fixes, alloués à la demande et mappés via une table de pages. L'utilisation mémoire monte à **~96 %**, et le débit augmente typiquement de **2 à 4×** à latence équivalente (jusqu'à plus selon le workload) [^7].
 
 ### 2. La Quantification du KV Cache (FP8 / INT8 / Q4)
 De la même manière que l'on compresse les poids d'un modèle, on peut compresser son KV Cache [^1].
@@ -109,7 +109,7 @@ De la même manière que l'on compresse les poids d'un modèle, on peut compress
 *   **Q4 / INT8 sur K et V :** `llama.cpp` expose `--cache-type-k` et `--cache-type-v` (ex. `q8_0` / `q4_0`) [^9]. La compression agressive peut dégrader la perplexité sur des raisonnements longs, surtout si les clés (K) sont trop quantifiées [^9].
 
 ### 3. Flash-Decoding (FlashAttention-2/3)
-Sur de très longs contextes, la phase de décodage devient limitée par la **bande passante mémoire** : avec un batch de 1, FlashAttention classique sous-utilise le GPU [^10].
+Sur de très longs contextes, la phase de décodage devient limitée par la [[00-lexique/memory-bandwidth|bande passante mémoire]] : avec un batch de 1, FlashAttention classique sous-utilise le GPU [^10].
 **Flash-Decoding** (Together AI, 2023) ajoute une dimension de parallélisme sur la **longueur de la séquence Key-Value** : les blocs K/V sont lus et traités en parallèle, puis recombinés [^10]. Cette technique est reprise dans **FlashAttention-3** (split-KV, parallélisation GQA) pour les GPU Hopper et au-delà [^11].
 
 ---

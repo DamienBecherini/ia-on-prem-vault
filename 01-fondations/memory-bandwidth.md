@@ -37,11 +37,11 @@ graph TD
 ### 1. La Phase de "Prefill" (Ingestion du Prompt)
 Le modèle traite le prompt d'entrée en parallèle (matrices de grande taille).
 *   **Comportement matériel :** meilleure utilisation des unités de calcul.
-*   **Facteur dominant :** mix calcul + mémoire, souvent plus favorable au calcul qu'en decoding.
+*   **Facteur dominant :** mix calcul + mémoire, souvent plus favorable au calcul qu'en [[00-lexique/decoding|decoding]].
 
 ### 2. La Phase de "Decoding" (Génération Mot à Mot)
 Le modèle génère un token puis recommence le cycle pour le token suivant. Ce processus est séquentiel.
-*   **Comportement matériel :** lecture répétée des poids + gestion du KV cache ; l'intensité arithmétique est plus faible qu'en prefill.
+*   **Comportement matériel :** lecture répétée des poids + gestion du [[00-lexique/kv-cache|KV Cache]] ; l'intensité arithmétique est plus faible qu'en [[00-lexique/prefill|prefill]].
 *   **Facteur dominant :** la **bande passante mémoire**, surtout à batch faible[^1].
 
 ---
@@ -55,7 +55,7 @@ $$\text{Vitesse Max (tokens/s)} = \frac{\text{Bande Passante Mémoire (Go/s)}}{\
 > [!note] Approximation
 > Cette formule est une **approximation de premier ordre** : elle n'intègre pas tous les effets runtime (kernel, KV cache, scheduler, batch, fragmentation, etc.).
 
-### Cas Pratique : Modèle dense 70B en quantification 4-bit (Q4)
+### Cas Pratique : Modèle dense 70B en [[00-lexique/quantification-q4|quantification 4-bit (Q4)]]
 Un modèle dense de 70B quantifié en 4-bit occupe environ **40 Go** en mémoire de poids (ordre de grandeur).
 
 > [!note] Note importante
@@ -97,10 +97,10 @@ Valeurs ci-dessous : ordres de grandeur utiles pour l'architecture (les performa
 > Dès qu'on cumule la mémoire de plusieurs machines, l'interconnexion devient le point de rupture :
 >
 > 1.  **Le câble peut dominer toute la chaîne :** une liaison 10 GbE plafonne autour de 1,25 Go/s, très loin des centaines de Go/s des mémoires locales.
-> 2.  **RDMA est clé en environnement pro :** RoCE/InfiniBand réduit le coût CPU des transferts et améliore la latence inter-nœuds.
+> 2.  **[[00-lexique/rdma|RDMA]] est clé en environnement pro :** RoCE/InfiniBand réduit le coût CPU des transferts et améliore la latence inter-nœuds.
 
 > [!tip] Conseil de l'Architecte
-> Dans tout déploiement on-premise, la méthode [[03-stack-logicielle/rag-and-agents|RAG]] est une alliée clé de la bande passante. En n'injectant dans le contexte que les passages pertinents (plutôt que des documents entiers), on évite de saturer la mémoire avec des données inutiles et on maintient le TTFT sous contrôle.
+> Dans tout déploiement on-premise, la méthode [[03-stack-logicielle/rag-and-agents|RAG]] est une alliée clé de la bande passante. En n'injectant dans le contexte que les passages pertinents (plutôt que des documents entiers), on évite de saturer la mémoire avec des données inutiles et on maintient le [[00-lexique/ttft|TTFT]] sous contrôle.
 
 ---
 
