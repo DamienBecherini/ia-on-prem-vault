@@ -8,6 +8,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | Terme | Définition |
 | :-- | :-- |
 | [Agent autonome (LLM)](/00-lexique/autonomous-agent/) | Système où un LLM pilote lui-même des outils et des décisions pour accomplir une tâche multi-étapes. |
+| [Agent custodien](/00-lexique/agent-custodian/) | Agent autonome chargé de maintenir un vault, dépôt ou corpus documentaire en proposant des corrections validées par l'humain. |
 | [APU](/00-lexique/apu/) | Processeur combinant CPU et GPU dans un même composant. |
 | [Attention (mécanisme)](/00-lexique/attention/) | Mécanisme central du Transformer qui permet à chaque token de pondérer l'importance des autres tokens du contexte. |
 | [Bande passante mémoire](/00-lexique/memory-bandwidth/) | Débit auquel la mémoire alimente les unités de calcul. |
@@ -21,11 +22,14 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [GPUDirect RDMA](/00-lexique/gpudirect-rdma/) | Mécanisme permettant aux GPU d'échanger des données directement avec des périphériques réseau sans copie CPU. |
 | [GraphRAG](/00-lexique/graphrag/) | Évolution du RAG basée sur un graphe de connaissances plutôt qu'une base vectorielle. |
 | [HBM](/00-lexique/hbm/) | Mémoire empilée à très haute bande passante. |
+| [Human-in-the-loop](/00-lexique/human-in-the-loop/) | Mode de gouvernance où une action automatisée importante attend une validation humaine avant d'être appliquée. |
 | [Inférence (LLM)](/00-lexique/inference/) | Utilisation d'un modèle entraîné pour générer du texte à la demande. |
 | [InfiniBand](/00-lexique/infiniband/) | Fabric réseau dédié hautes performances pour les clusters GPU, standard HPC et datacenter IA. |
 | [KV Cache](/00-lexique/kv-cache/) | Cache des clés/valeurs d'attention utilisé pendant la génération. |
+| [LiteLLM](/00-lexique/litellm/) | Gateway OpenAI-compatible qui route les appels LLM vers des modèles locaux ou cloud depuis une interface unique. |
 | [LLM](/00-lexique/llm/) | Large Language Model. |
 | [Mémoire unifiée](/00-lexique/unified-memory/) | Architecture mémoire partagée entre CPU/GPU/NPU. |
+| [Memory Tree](/00-lexique/memory-tree/) | Architecture mémoire qui organise documents et résumés en arbre hiérarchique pour limiter le contexte injecté au LLM. |
 | [Memory Wall](/00-lexique/memory-wall/) | Limite de performance causée par la mémoire plus que par le calcul. |
 | [MoE](/00-lexique/moe/) | Mixture of Experts. |
 | [Multi-GPU](/00-lexique/multi-gpu/) | Utilisation conjointe de plusieurs GPU. |

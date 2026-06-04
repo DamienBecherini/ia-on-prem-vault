@@ -28,9 +28,11 @@ Permet de construire des [[00-lexique/autonomous-agent|agents autonomes]] souver
 ## 📚 Pour comprendre en profondeur
 1. [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] *(SmolAgents dans le contexte Agentic RAG)*
 2. [[00-lexique/autonomous-agent|Agent autonome]] *(le concept général)*
+3. [[05-agents-et-assistants-on-prem/agents-custodiens/index|Agents Custodiens]] *(où SmolAgents peut servir de framework minimaliste pour des agents on-premise)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/autonomous-agent|Agent autonome]]
+- [[00-lexique/agent-custodian|Agent custodien]]
 - [[00-lexique/rag|RAG]]
 - [[00-lexique/llm|LLM]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]

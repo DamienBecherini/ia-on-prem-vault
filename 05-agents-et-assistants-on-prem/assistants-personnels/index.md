@@ -17,15 +17,17 @@ Le défi : beaucoup de logiciels présentent une interface locale tout en routan
 
 *Identifiez votre priorité principale, puis suivez la ligne correspondante.*
 
-| Priorité | Contrainte | Outil recommandé |
-|----------|-----------|-----------------|
-| Souveraineté native, zéro cloud | Tout doit rester sur machine, mode offline requis | [Jan.ai](solutions/jan-ai) |
-| Mémoire longue sur documents personnels | Vault Markdown / notes, pas seulement des fichiers | [Khoj](solutions/khoj) |
-| Interface web multi-modèles | Plusieurs utilisateurs, plusieurs moteurs | [Open WebUI](solutions/open-webui) |
-| Connaissance d'entreprise + agents | RAG structuré + workflows | [AnythingLLM](solutions/anythingllm) |
-| Mémoire + Memory Tree hybride | Approche doc-first, acceptable si configuré souverain | [OpenHuman](solutions/openhuman) |
+| Priorité | Contrainte | Outil recommandé | Verdict |
+|----------|-----------|-----------------|---------|
+| Souveraineté native, zéro cloud | Tout doit rester sur machine, mode offline requis | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai|Jan.ai]] | ✅ natif |
+| Mémoire longue sur documents personnels | Vault Markdown / notes, pas seulement des fichiers | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj|Khoj]] | ⚠️ configurable |
+| Interface web multi-modèles | Plusieurs utilisateurs, plusieurs moteurs | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|Open WebUI]] | ⚠️ configurable |
+| Connaissance d'entreprise + agents | RAG structuré + workflows | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm|AnythingLLM]] | ⚠️ configurable |
+| Mémoire + [[00-lexique/memory-tree|Memory Tree]] hybride | Approche doc-first, acceptable si configuré souverain | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] | ⚠️ configurable |
 
-> ⚠️ Ce tableau sera mis à jour au fil de la rédaction des fiches solution. Les recommandations ci-dessus sont provisoires — basées sur la réputation connue des projets, pas encore sur l'audit détaillé de Phase 3.
+:::tip[Lecture rapide]
+Si vous voulez démarrer sans risque de cloud involontaire, commencez par Jan.ai. Si vous voulez une interface d'équipe, regardez Open WebUI. Si vous voulez RAG + workflows, comparez AnythingLLM et Khoj. OpenHuman est surtout intéressant pour son architecture [[00-lexique/memory-tree|Memory Tree]], mais doit être configuré explicitement pour une posture souveraine.
+:::
 
 ---
 
@@ -40,19 +42,17 @@ Chaque fiche solution de cette section évalue le projet selon les mêmes 6 crit
 5. **Mode offline** — fonctionne-t-il sans connexion Internet ?
 6. **Verdict souveraineté** — ✅ souverain natif / ⚠️ configurable / ❌ incompatible on-prem strict
 
-La grille complète et le protocole d'audit sont détaillés dans [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté & Confidentialité]] *(à venir — Phase 2)*.
+La grille complète et le protocole d'audit sont détaillés dans [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté & Confidentialité]].
 
 ---
 
 ## 📂 Fiches solution
 
-> ⚠️ Les fiches ci-dessous sont en cours de rédaction (Phase 3 du plan). Les liens marqués *(à venir)* seront activés à l'issue de la phase.
-
-- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] *(à venir)*
-- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai|Jan.ai]] *(à venir)*
-- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|Open WebUI]] *(à venir)*
-- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm|AnythingLLM]] *(à venir)*
-- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj|Khoj]] *(à venir)*
+- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] — Memory Tree local-first, backend managé par défaut
+- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|Open WebUI]] — portail web self-hosted pour Ollama/vLLM et équipes
+- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm|AnythingLLM]] — RAG, workspaces et agents dans une application all-in-one
+- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai|Jan.ai]] — desktop local/offline, serveur API local
+- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj|Khoj]] — second cerveau self-hostable, documents, web et agents
 
 ---
 

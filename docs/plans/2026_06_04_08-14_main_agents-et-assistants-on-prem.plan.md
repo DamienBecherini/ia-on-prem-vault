@@ -25,13 +25,13 @@ todos:
     status: done
   - id: phase-3-track-a
     content: "Phase 3 — Track A: personal assistants index + 5 solution sheets"
-    status: pending
+    status: done
   - id: phase-4-track-b
     content: "Phase 4 — Track B: custodian agents index + workflow + 6 solution sheets"
-    status: pending
+    status: done
   - id: phase-5-crosslinks
     content: "Phase 5 — Cross-link new section into vault navigation and lexicon + Starlight asides retrofit"
-    status: pending
+    status: done
   - id: phase-6-validation
     content: "Phase 6 — Build, link audit, backlog update, report"
     status: pending

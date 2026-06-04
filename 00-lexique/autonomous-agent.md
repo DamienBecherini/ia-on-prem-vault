@@ -24,7 +24,7 @@ Dans un pipeline classique, le LLM répond à une question en un seul coup. Dans
 Frameworks courants en 2026 : [[00-lexique/smolagents|SmolAgents]] (Hugging Face), LangGraph, AutoGen.
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Transforme un LLM figé en assistant actif capable de maintenir des vaults documentaires, d'auditer du code ou de surveiller des systèmes — c'est le cœur des architectures d'assistants personnels locaux et des agents custodiens.
+Transforme un LLM figé en assistant actif capable de maintenir des vaults documentaires, d'auditer du code ou de surveiller des systèmes — c'est le cœur des architectures d'assistants personnels locaux et des [[00-lexique/agent-custodian|agents custodiens]].
 
 ## ⚠️ Pièges fréquents
 - Un agent mal borné peut boucler indéfiniment ou appeler des outils de manière non intentionnelle.
@@ -33,10 +33,13 @@ Transforme un LLM figé en assistant actif capable de maintenir des vaults docum
 
 ## 📚 Pour comprendre en profondeur
 1. [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] *(Agentic RAG, SmolAgents et l'approche Memory Tree)*
+2. [[05-agents-et-assistants-on-prem/agents-custodiens/index|🤖 Agents Custodiens On-Premise]] *(workflow human-in-the-loop, branches, PRs et validation humaine)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/rag|RAG]]
 - [[00-lexique/smolagents|SmolAgents]]
+- [[00-lexique/agent-custodian|Agent custodien]]
+- [[00-lexique/human-in-the-loop|Human-in-the-loop]]
 - [[00-lexique/graphrag|GraphRAG]]
 - [[00-lexique/llm|LLM]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]

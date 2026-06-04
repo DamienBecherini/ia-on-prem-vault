@@ -136,7 +136,11 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 | [RAG](/00-lexique/rag/) | Architecture qui enrichit le contexte d'un LLM avec une base documentaire. |
 | [Base de données vectorielle](/00-lexique/vectordb/) | Stockage et recherche de documents par similarité d'embeddings. |
 | [GraphRAG](/00-lexique/graphrag/) | RAG basé sur un graphe de connaissances pour les requêtes globales. |
+| [Memory Tree](/00-lexique/memory-tree/) | Mémoire hiérarchique qui charge seulement les résumés et nœuds utiles. |
 | [Agent autonome](/00-lexique/autonomous-agent/) | LLM équipé d'outils qui raisonne en boucle pour accomplir des tâches. |
+| [Agent custodien](/00-lexique/agent-custodian/) | Agent de maintenance qui propose des corrections et attend validation humaine. |
+| [Human-in-the-loop](/00-lexique/human-in-the-loop/) | Gouvernance où l'humain valide les actions critiques avant application. |
+| [LiteLLM](/00-lexique/litellm/) | Gateway OpenAI-compatible pour router vers modèles locaux ou cloud. |
 | [SmolAgents](/00-lexique/smolagents/) | Framework léger Hugging Face pour agents souverains sans télémétrie cloud. |
 | [Fenêtre de contexte](/00-lexique/context-window/) | Nombre maximal de tokens que le modèle peut traiter en entrée active. |
 | [Quantification](/00-lexique/quantification/) | Réduction de précision numérique pour diminuer mémoire et coût de calcul. |

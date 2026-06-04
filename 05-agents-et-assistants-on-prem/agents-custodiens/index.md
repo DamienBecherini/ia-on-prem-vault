@@ -7,13 +7,15 @@ sidebar:
   order: 1
 ---
 
-Un agent custodien n'est pas un assistant : on ne lui parle pas pour lui poser des questions. On lui confie des **tâches récurrentes ou événementielles** — maintenir un vault à jour, détecter du code obsolète, proposer des corrections sourcées — et il travaille de manière autonome, en laissant la décision finale à un humain.
+Un [[00-lexique/agent-custodian|agent custodien]] n'est pas un assistant : on ne lui parle pas pour lui poser des questions. On lui confie des **tâches récurrentes ou événementielles** — maintenir un vault à jour, détecter du code obsolète, proposer des corrections sourcées — et il travaille de manière autonome, en laissant la décision finale à un humain.
 
-> Ce vault lui-même est maintenu en partie par un agent custodien. Le dossier [`.agents/`](/.agents/) contient les scripts, prompts et journaux d'exécution qui orchestrent cette maintenance.
+:::tip[Exemple vivant]
+Ce vault lui-même est maintenu en partie par un agent custodien. Le dossier `.agents/` contient les scripts, prompts et journaux d'exécution qui orchestrent cette maintenance.
+:::
 
 ---
 
-## 🧭 Concept clé : Human-in-the-loop
+## 🧭 Concept clé : [[00-lexique/human-in-the-loop|Human-in-the-loop]]
 
 Un agent custodien souverain ne "commit" pas, ne "merge" pas, ne "publie" pas sans validation humaine.
 
@@ -31,18 +33,16 @@ Les niveaux d'autonomie varient : de "rapport seulement" jusqu'à "commit automa
 
 ## 📋 Pages de référence
 
-> ⚠️ Les pages ci-dessous sont en cours de rédaction (Phase 4 du plan). Les liens marqués *(à venir)* seront activés à l'issue de la phase.
-
 ### Comprendre
 
-- [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|🔭 Vision : Qu'est-ce qu'un agent custodien ?]] *(à venir)*
-- [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|⚙️ Workflow : Human-in-the-loop de bout en bout]] *(à venir)*
-- [[05-agents-et-assistants-on-prem/agents-custodiens/recommandation-architecture-cible|🏗️ Stack recommandée : MVP → cible souveraine]] *(à venir)*
+- [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|🔭 Vision : Qu'est-ce qu'un agent custodien ?]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|⚙️ Workflow : Human-in-the-loop de bout en bout]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/recommandation-architecture-cible|🏗️ Stack recommandée : MVP → cible souveraine]]
 
 ### Aller plus loin
 
-- [[05-agents-et-assistants-on-prem/agents-custodiens/github-branches-pr-notifications|🌿 Branches, PRs & Notifications]] *(à venir)*
-- [[05-agents-et-assistants-on-prem/agents-custodiens/recherche-web-et-sources|🔍 Recherche Web & Sources]] *(à venir)*
+- [[05-agents-et-assistants-on-prem/agents-custodiens/github-branches-pr-notifications|🌿 Branches, PRs & Notifications]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/recherche-web-et-sources|🔍 Recherche Web & Sources]]
 
 ---
 
@@ -50,11 +50,11 @@ Les niveaux d'autonomie varient : de "rapport seulement" jusqu'à "commit automa
 
 | Outil | Rôle dans la stack | Souveraineté |
 |-------|-------------------|-------------|
-| [Aider](solutions/aider) *(à venir)* | Agent code, terminal-first, supporte Ollama | ✅ |
-| [OpenHands](solutions/openhands) *(à venir)* | Agent Docker, modèles locaux supportés | ⚠️ |
-| [LiteLLM](solutions/litellm) *(à venir)* | Proxy unificateur (Ollama, vLLM, cloud) | ✅ |
-| [SearXNG](solutions/searxng) *(à venir)* | Méta-search auto-hébergé, sans API key | ✅ |
-| [Cursor CLI](solutions/cursor-cli) *(à venir)* | MVP puissant, mais routage cloud Cursor | ❌ strict |
+| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]] | Agent code, terminal-first, supporte Ollama | ✅ si local |
+| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] | Agent Docker/sandbox, modèles locaux supportés | ⚠️ configurable |
+| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|LiteLLM]] / [[00-lexique/litellm|lexique]] | Proxy unificateur (Ollama, vLLM, cloud) | ✅ si local-only |
+| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng|SearXNG]] | Méta-search auto-hébergé, sans API key | ✅ web privacy |
+| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli|Cursor CLI]] | MVP puissant, mais routage cloud Cursor | ❌ strict |
 
 ---
 
