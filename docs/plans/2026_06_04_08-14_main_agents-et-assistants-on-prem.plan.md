@@ -5,7 +5,7 @@ overview: >
   tracks: (A) personal AI assistants that learn from your data, and (B) autonomous custodian agents
   that maintain the vault. Shared sovereignty foundations serve both tracks. Includes pre-migration
   cleanup of contextless OpenHuman references across existing chapters.
-supersedes: docs/plans/2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md
+supersedes: docs/plans/archive/2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md
 related: docs/plans/2026_06_04_00-00_main_editorial-improvements.plan.md (B4 delegated here, B5 superseded here)
 todos:
   - id: phase-0-openhuman-cleanup
@@ -18,8 +18,8 @@ todos:
     content: "Phase 2 — Write shared sovereignty and architecture foundations"
     status: done
   - id: gemini-fixes-non-blocking
-    content: "Gemini fixes (NVLink, plans archive, delegate.mjs) — parallel to main phases"
-    status: in-progress
+    content: "Gemini fixes (NVLink, Blueprint A Mac option, plans archive, delegate.mjs) — parallel to main phases"
+    status: done
   - id: slug-rename
     content: "PRIORITAIRE — Renommer tous les slugs FR → anglais neutres + réparer wikilinks"
     status: done
@@ -66,9 +66,9 @@ machine, or does it phone home by default?"*
 ## Context and prior work
 
 - `01-fondations/` through `04-blueprints/` established the hardware and engine foundations.
-- `03-stack-logicielle/rag-and-agents.md` introduced RAG and agentic patterns but is
-  named after a specific project (OpenHuman) and lacks proper context for external readers.
-- The old plan `2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md` planned Track B
+- `03-stack-logicielle/rag-and-agents.md` introduced RAG and agentic patterns; Phase 0 removed
+  contextless OpenHuman branding while keeping the Memory Tree concept.
+- The old plan `docs/plans/archive/2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md` planned Track B
   only; it is superseded by this document.
 - The editorial improvements plan `2026_06_04_00-00_main_editorial-improvements.plan.md`
   delegated B4 (OpenHuman cleanup) and B5 (sovereignty) to this plan.
@@ -273,7 +273,7 @@ anythingllm → jan-ai → khoj.
 
 ### Phase 4 — Track B: Custodian agents
 
-*Inherited and adapted from `2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md`.*
+*Inherited and adapted from `docs/plans/archive/2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md`.*
 
 **Files to create:**
 - `05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian.md`

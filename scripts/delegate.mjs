@@ -7,16 +7,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { parseEnv } from 'node:util';
 
 const vaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const envPath = path.join(vaultRoot, '.env');
 
 if (fs.existsSync(envPath)) {
-    for (const line of fs.readFileSync(envPath, 'utf-8').split(/\r?\n/)) {
-        const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)\s*$/);
-        if (!match || line.trimStart().startsWith('#')) continue;
-        const key = match[1];
-        const value = match[2].replace(/^["']|["']$/g, '').trim();
+    const parsed = parseEnv(fs.readFileSync(envPath, 'utf-8'));
+    for (const [key, value] of Object.entries(parsed)) {
         if (process.env[key] === undefined) process.env[key] = value;
     }
 }
