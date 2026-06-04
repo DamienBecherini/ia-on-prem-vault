@@ -173,6 +173,14 @@ Affected files:
   - MicroVM sandboxes (Firecracker, gVisor) for untrusted agent workloads
   - Strict network namespacing / air-gapping for executing agents
   - Principle of least privilege: agent can read repo, write only its branch, no host socket access
+- **Indirect Prompt Injection (critical addition):** if the agent reads external Issues, PRs, or
+  any untrusted content (Markdown files, web pages, third-party docs), an attacker can embed a
+  hidden instruction in that content. The agent executes it during its analysis phase — before any
+  human sees the PR. The chapter must cover:
+  - Only trigger agents on trusted sources (internal tags, cron, authenticated webhooks — never open Issues)
+  - Treat all read data (Issue bodies, external Markdown, web fetches) as untrusted input in the system prompt
+  - Sandboxed execution with no outbound network except the local LLM API and target Git repo
+  - Reference: `vision-agent-custodian.md` already contains the user-facing warning
 
 ---
 

@@ -27,6 +27,19 @@ Check:
 - public content that contains agent-only maintenance notes
 - publish safety for `.agents/**`, `.cursor/**`, `docs/plans/**`, `_private/**`
 
+## Lexicon Backlog Hygiene
+
+The file `.agents/vault-maintenance/lexicon-backlog.md` is a live working document.
+Its `## To Create` and `## To Verify Or Update` sections should remain short (under ~30 items).
+The `## Done` and `## Already Linked From` sections accumulate over time.
+
+When these history sections exceed ~150 lines total, recommend (or perform if asked) the following:
+- Move the content of `## Done` to `.agents/vault-maintenance/archives/lexicon-done-YYYY-MM.md`
+- Move the `## Already Linked From` sections to `.agents/vault-maintenance/archives/lexicon-linked-YYYY-MM.md`
+- Leave the active `## To Create` and `## To Verify Or Update` sections in place
+
+This keeps the backlog file small so agents do not waste tokens re-reading stale history.
+
 ## Plan Archive Hygiene
 
 When scanning implementation plans, treat `docs/plans/archive/**` as historical context only.
