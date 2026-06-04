@@ -33,7 +33,7 @@ Respect explicit user overrides. If the user asks not to use this skill or the p
 **Lexicon entry**: Files under `00-lexique/`.
 - Follow `_templates/_Terme Lexique.md`.
 - Keep the entry concise and definitional.
-- Link back to `[[00-lexique/glossaire-ia|Glossaire IA]]`.
+- Link back to `[[00-lexique/ai-glossary|Glossaire IA]]`.
 - Put deep explanations in chapter articles, not in the lexicon entry.
 
 ## Chapter Workflow

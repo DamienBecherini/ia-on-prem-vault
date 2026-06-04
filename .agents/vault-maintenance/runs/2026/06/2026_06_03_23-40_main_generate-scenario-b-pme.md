@@ -21,7 +21,7 @@ skills:
 Générer le deuxième blueprint (Appliance PME sur mémoire unifiée) en cohérence avec les métriques établies au chapitre 02 et les contraintes logicielles du chapitre 03.
 
 ## Files Changed
-- Création : `04-blueprints/scenario-b-pme-appliance.md`
+- Création : `04-blueprints/scenario-b-sme-appliance.md`
 - Modification : `.agents/vault-maintenance/lexicon-backlog.md` (suivi des liens)
 - Création : ce run log.
 
@@ -31,8 +31,8 @@ Générer le deuxième blueprint (Appliance PME sur mémoire unifiée) en cohér
 - Commit created: false
 
 ## Sources Consulted
-- Les métriques de bande passante et de tokens/s établies dans l'article interne `02-materiel/apu-et-memoire-unifiee.md`.
-- Impact du KV Cache calculé dans `01-fondations/kv-cache-et-contexte.md`.
+- Les métriques de bande passante et de tokens/s établies dans l'article interne `02-materiel/apu-and-unified-memory.md`.
+- Impact du KV Cache calculé dans `01-fondations/kv-cache-and-context.md`.
 
 ## Validation
 - Cohérence globale du Vault : Cet article synthétise brillamment la leçon "Mémoire unifiée" (Hardware) + "Taille du contexte" (Fondations) dans un cas métier (déploiement PME).

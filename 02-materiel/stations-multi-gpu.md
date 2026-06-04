@@ -5,11 +5,11 @@ sidebar:
   order: 2
 ---
 
-Après la [[02-materiel/apu-et-memoire-unifiee|mémoire unifiée]], l'autre grande famille de machines IA on-premise est la **station multi-GPU** : plusieurs cartes NVIDIA dans une même tour, ou plusieurs accélérateurs dans un serveur.
+Après la [[02-materiel/apu-and-unified-memory|mémoire unifiée]], l'autre grande famille de machines IA on-premise est la **station multi-GPU** : plusieurs cartes NVIDIA dans une même tour, ou plusieurs accélérateurs dans un serveur.
 
 L'idée paraît simple : additionner la [[00-lexique/vram|VRAM]] de plusieurs cartes pour charger des modèles plus gros. En pratique, le **multi-GPU** n'est pas un simple “pool de mémoire”. Il faut choisir un mode de parallélisme, accepter des échanges entre cartes, et comprendre si ces échanges passent par [[00-lexique/pcie|PCIe]], [[00-lexique/nvlink|NVLink]] ou un fabric [[00-lexique/rdma|RDMA]] / [[00-lexique/roce|RoCE]].
 
-> 🔗 **Lien connexe :** pour le dimensionnement modèle + cache, voir [[01-fondations/quantification-4-bit-8-bit|Quantification]] et [[01-fondations/kv-cache-et-contexte|KV Cache]].
+> 🔗 **Lien connexe :** pour le dimensionnement modèle + cache, voir [[01-fondations/quantization-4bit-8bit|Quantification]] et [[01-fondations/kv-cache-and-context|KV Cache]].
 
 ---
 

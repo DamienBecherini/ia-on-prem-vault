@@ -29,12 +29,12 @@ La qualité du RAG dépend fortement du modèle d'embedding choisi. Un mauvais m
 - Choisir un modèle d'embedding entraîné uniquement en anglais pour un corpus français dégradent fortement la qualité.
 
 ## 📚 Pour comprendre en profondeur
-1. [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] *(Étape 2 : de token à vecteur)*
-2. [[03-stack-logicielle/rag-et-agents-openhuman|🧩 RAG & Agents]] *(comment les embeddings de recherche alimentent le RAG)*
+1. [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]] *(Étape 2 : de token à vecteur)*
+2. [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] *(comment les embeddings de recherche alimentent le RAG)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/tokenisation|Tokenisation]]
 - [[00-lexique/attention|Attention]]
 - [[00-lexique/rag|RAG]]
 - [[00-lexique/vectordb|Base de données vectorielle]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

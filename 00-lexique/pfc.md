@@ -30,5 +30,5 @@ Sans PFC, les paquets RDMA sont perdus lors de congestion, forçant des retransm
 - [[00-lexique/ecn|ECN]]
 - [[00-lexique/roce|RoCE]]
 - [[00-lexique/rdma|RDMA]]
-- [[02-materiel/reseau-ia-roce-et-thunderbolt|🌐 Réseau IA : RoCE et Thunderbolt]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[02-materiel/network-roce-infiniband-thunderbolt|🌐 Réseau IA : RoCE et Thunderbolt]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

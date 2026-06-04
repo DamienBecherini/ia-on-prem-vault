@@ -30,34 +30,36 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 
 ### 📁 01 - Les Fondations (La Physique de l'IA)
 *Pour comprendre pourquoi un ordinateur à 4000€ peut être trop lent pour l'IA.*
-- [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt (Fonctionnement)]]
-- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire]] (Memory Bandwidth)
-- [[01-fondations/memoire-unifiee-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]
-- [[01-fondations/kv-cache-et-contexte|💾 KV Cache et Contexte]]
-- [[01-fondations/quantification-4-bit-8-bit|🗜️ Quantification 4-bit & 8-bit]]
+- [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt (Fonctionnement)]]
+- [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire]] (Memory Bandwidth)
+- [[01-fondations/unified-memory-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]
+- [[01-fondations/kv-cache-and-context|💾 KV Cache et Contexte]]
+- [[01-fondations/quantization-4bit-8bit|🗜️ Quantification 4-bit & 8-bit]]
 
 ### 📁 02 - Le Matériel (Le Fer)
 *Le catalogue des architectures.*
-- [[02-materiel/apu-et-memoire-unifiee|🧠 APU & Mémoire Unifiée]] (AMD Strix Halo & Mac)
+- [[02-materiel/apu-and-unified-memory|🧠 APU & Mémoire Unifiée]] (AMD Strix Halo & Mac)
 - [[02-materiel/stations-multi-gpu|🧩 Stations Multi-GPU]] (Nvidia, PCIe)
-- [[02-materiel/reseau-ia-roce-et-thunderbolt|🌐 Réseau IA : RoCE, InfiniBand et Thunderbolt]]
+- [[02-materiel/network-roce-infiniband-thunderbolt|🌐 Réseau IA : RoCE, InfiniBand et Thunderbolt]]
 
 ### 📁 03 - La Stack Logicielle (Les Moteurs)
 *Comment donner vie aux puces.*
-- [[03-stack-logicielle/moteurs-inference-vllm-ollama|⚙️ Moteurs d'Inférence : vLLM, Ollama et TensorRT-LLM]]
-- [[03-stack-logicielle/clustering-exo-et-ray|🌐 Clustering IA : Relier les GPU avec Exo et Ray]]
-- [[03-stack-logicielle/rag-et-agents-openhuman|🧩 RAG & Agents : L'architecture de la connaissance]]
+- [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence : vLLM, Ollama et TensorRT-LLM]]
+- [[03-stack-logicielle/clustering-exo-and-ray|🌐 Clustering IA : Relier les GPU avec Exo et Ray]]
+- [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents : L'architecture de la connaissance]]
 
 ### 📁 04 - Les Blueprints d'Architecture (Scénarios)
 *Des configurations prêtes à être proposées à vos clients.*
-- [[04-blueprints/scenario-a-labo-dev|🛠️ Scénario A : Le Labo Dev (CPU Offloading)]]
-- [[04-blueprints/scenario-b-pme-appliance|🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)]]
-- [[04-blueprints/scenario-c-cluster-bureau|🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)]]
+- [[04-blueprints/scenario-a-dev-lab|🛠️ Scénario A : Le Labo Dev (CPU Offloading)]]
+- [[04-blueprints/scenario-b-sme-appliance|🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)]]
+- [[04-blueprints/scenario-c-desktop-cluster|🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)]]
 - [[04-blueprints/scenario-d-datacenter|🏭 Scénario D : Datacenter (RoCE & Multi-GPU)]]
 
-### 📁 05 - Agents & Assistants On-Premise *(en construction)*
+### 📁 05 - Agents & Assistants On-Premise *(fiches solution en cours)*
 *La couche applicative : l'IA qui vous connaît et l'IA qui agit pour vous.*
 - [[05-agents-et-assistants-on-prem/index|🤖 Vue d'ensemble : deux pistes, une question de souveraineté]]
+- [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|🔒 Souveraineté & Confidentialité]] — grille d'audit en 6 critères, RGPD/AI Act
+- [[05-agents-et-assistants-on-prem/fondations-communes/possible-architectures|🏗️ Architectures Possibles]] — assistant, custodien, hybride
 - [[05-agents-et-assistants-on-prem/assistants-personnels/index|🧑‍💼 Assistants Personnels (l'IA qui apprend de vos données)]]
 - [[05-agents-et-assistants-on-prem/agents-custodiens/index|🤖 Agents Custodiens (l'IA qui maintient votre vault)]]
 
@@ -69,14 +71,14 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 
 | Utilisateurs simultanés | Taille de modèle | Budget matériel | → Blueprint |
 | :--: | :--: | :--: | :-- |
-| 1 (dev / test) | 8–14B | < 3 500 € | [[04-blueprints/scenario-a-labo-dev|🛠️ A — Labo Dev]] |
-| 1 (dev / test) | 70B avec offloading | < 3 500 € | [[04-blueprints/scenario-a-labo-dev|🛠️ A — Labo Dev]] *(performances limitées)* |
-| 2–20 (PME, équipe) | 70B | 4 000–8 000 € | [[04-blueprints/scenario-b-pme-appliance|🏢 B — Appliance PME]] |
-| 2–20 (PME, équipe) | 200B+ / MoE | 10 000–15 000 € | [[04-blueprints/scenario-c-cluster-bureau|🖥️ C — Cluster Bureau]] |
+| 1 (dev / test) | 8–14B | < 3 500 € | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Labo Dev]] |
+| 1 (dev / test) | 70B avec offloading | < 3 500 € | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Labo Dev]] *(performances limitées)* |
+| 2–20 (PME, équipe) | 70B | 4 000–8 000 € | [[04-blueprints/scenario-b-sme-appliance|🏢 B — Appliance PME]] |
+| 2–20 (PME, équipe) | 200B+ / MoE | 10 000–15 000 € | [[04-blueprints/scenario-c-desktop-cluster|🖥️ C — Cluster Bureau]] |
 | 50+ (production) | 70B–400B | > 300 000 € | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
 | Contrainte SLA < 500 ms | Tout | — | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
 
-> 💡 **Lecture :** Commencez par la ligne qui correspond à votre nombre d'utilisateurs, puis vérifiez que le budget correspond. En cas de doute, lisez d'abord le [[04-blueprints/scenario-a-labo-dev|Scénario A]] pour comprendre les mécanismes, puis remontez vers le scénario cible.
+> 💡 **Lecture :** Commencez par la ligne qui correspond à votre nombre d'utilisateurs, puis vérifiez que le budget correspond. En cas de doute, lisez d'abord le [[04-blueprints/scenario-a-dev-lab|Scénario A]] pour comprendre les mécanismes, puis remontez vers le scénario cible.
 
 ---
 
@@ -86,12 +88,12 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 
 1. [[00-lexique/llm|LLM]] *(c'est quoi un grand modèle de langage ?)*
 2. [[00-lexique/inference|Inférence (LLM)]] *(comment on l'utilise au quotidien)*
-3. [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] *(ce qui se passe vraiment quand vous lui parlez)*
-4. [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire]] *(pourquoi votre machine peut ramer)*
-5. [[04-blueprints/scenario-a-labo-dev|🛠️ Scénario A : Le Labo Dev]] *(votre premier blueprint concret)*
+3. [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]] *(ce qui se passe vraiment quand vous lui parlez)*
+4. [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire]] *(pourquoi votre machine peut ramer)*
+5. [[04-blueprints/scenario-a-dev-lab|🛠️ Scénario A : Le Labo Dev]] *(votre premier blueprint concret)*
 
 ---
 
 ## 📖 Dictionnaire & Concepts
 *Retrouvez ici la définition rapide de tous les termes techniques.*
-👉 [[00-lexique/glossaire-ia|Glossaire IA]]
+👉 [[00-lexique/ai-glossary|Glossaire IA]]

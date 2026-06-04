@@ -24,7 +24,7 @@ Execute the real generation test from the calibration plan by creating the next 
 
 ## Files Changed
 
-- Created `02-materiel/reseau-ia-roce-et-thunderbolt.md`
+- Created `02-materiel/network-roce-infiniband-thunderbolt.md`
 - Updated `.agents/vault-maintenance/lexicon-backlog.md`
 - Modified `02-materiel/stations-multi-gpu.md` with one micro-correction: `systeme` -> `système`
 - Created this run log
@@ -56,7 +56,7 @@ Execute the real generation test from the calibration plan by creating the next 
   - Lexicon index regenerated: 26 entries
   - Link graph regenerated: 35 targets, 161 backlinks
   - Vault loader excluded 9 unpublished vault files
-  - New route generated: `/02-materiel/reseau-ia-roce-et-thunderbolt/index.html`
+  - New route generated: `/02-materiel/network-roce-infiniband-thunderbolt/index.html`
   - Astro/Starlight generated 76 pages
 
 ## Lexicon Follow-Up
@@ -79,7 +79,7 @@ Existing entries linked from the article:
 - `00-lexique/vram.md`
 - `00-lexique/rdma.md`
 - `00-lexique/nvlink.md`
-- `00-lexique/bande-passante-memoire.md`
+- `00-lexique/memory-bandwidth.md`
 - `00-lexique/roce.md`
 
 ## Retention Check

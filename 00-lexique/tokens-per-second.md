@@ -23,4 +23,4 @@ C'est la métrique la plus parlante pour comparer des configurations matérielle
 ## 🔗 Voir aussi
 - [[00-lexique/ttft|TTFT]]
 - [[00-lexique/decoding|Decoding]]
-- [[00-lexique/bande-passante-memoire|Bande passante mémoire]]
+- [[00-lexique/memory-bandwidth|Bande passante mémoire]]

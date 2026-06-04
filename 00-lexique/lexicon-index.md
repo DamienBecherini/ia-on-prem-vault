@@ -3,20 +3,20 @@ title: Index du lexique
 description: Liste alphabétique de toutes les fiches du lexique IA on-premise.
 ---
 
-Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-lexique/glossaire-ia|Glossaire IA]].
+Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-lexique/ai-glossary|Glossaire IA]].
 
 | Terme | Définition |
 | :-- | :-- |
-| [Agent autonome (LLM)](/00-lexique/agent-autonome/) | Système où un LLM pilote lui-même des outils et des décisions pour accomplir une tâche multi-étapes. |
+| [Agent autonome (LLM)](/00-lexique/autonomous-agent/) | Système où un LLM pilote lui-même des outils et des décisions pour accomplir une tâche multi-étapes. |
 | [APU](/00-lexique/apu/) | Processeur combinant CPU et GPU dans un même composant. |
 | [Attention (mécanisme)](/00-lexique/attention/) | Mécanisme central du Transformer qui permet à chaque token de pondérer l'importance des autres tokens du contexte. |
-| [Bande passante mémoire](/00-lexique/bande-passante-memoire/) | Débit auquel la mémoire alimente les unités de calcul. |
+| [Bande passante mémoire](/00-lexique/memory-bandwidth/) | Débit auquel la mémoire alimente les unités de calcul. |
 | [Base de données vectorielle](/00-lexique/vectordb/) | Base de données spécialisée dans le stockage et la recherche de vecteurs d'embeddings pour le RAG. |
 | [Decoding](/00-lexique/decoding/) | Phase de génération auto-régressive token par token. |
 | [ECN](/00-lexique/ecn/) | Explicit Congestion Notification — mécanisme de signalement de congestion réseau utilisé avec RoCE pour éviter les pertes de paquets. |
 | [Embedding](/00-lexique/embedding/) | Représentation numérique dense d'un token ou d'un document dans un espace vectoriel. |
 | [Exo](/00-lexique/exo/) | Orchestrateur P2P open-source pour fusionner la mémoire de plusieurs machines en un cluster IA local. |
-| [Fenêtre de contexte](/00-lexique/fenetre-de-contexte/) | Quantité maximale de tokens pris en compte par le modèle. |
+| [Fenêtre de contexte](/00-lexique/context-window/) | Quantité maximale de tokens pris en compte par le modèle. |
 | [GGUF](/00-lexique/gguf/) | Format de fichier portable pour l'inférence locale avec llama.cpp, optimisé pour les quantifications K-quant. |
 | [GPUDirect RDMA](/00-lexique/gpudirect-rdma/) | Mécanisme permettant aux GPU d'échanger des données directement avec des périphériques réseau sans copie CPU. |
 | [GraphRAG](/00-lexique/graphrag/) | Évolution du RAG basée sur un graphe de connaissances plutôt qu'une base vectorielle. |
@@ -25,7 +25,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [InfiniBand](/00-lexique/infiniband/) | Fabric réseau dédié hautes performances pour les clusters GPU, standard HPC et datacenter IA. |
 | [KV Cache](/00-lexique/kv-cache/) | Cache des clés/valeurs d'attention utilisé pendant la génération. |
 | [LLM](/00-lexique/llm/) | Large Language Model. |
-| [Mémoire unifiée](/00-lexique/memoire-unifiee/) | Architecture mémoire partagée entre CPU/GPU/NPU. |
+| [Mémoire unifiée](/00-lexique/unified-memory/) | Architecture mémoire partagée entre CPU/GPU/NPU. |
 | [Memory Wall](/00-lexique/memory-wall/) | Limite de performance causée par la mémoire plus que par le calcul. |
 | [MoE](/00-lexique/moe/) | Mixture of Experts. |
 | [Multi-GPU](/00-lexique/multi-gpu/) | Utilisation conjointe de plusieurs GPU. |
@@ -53,6 +53,6 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [TFLOPS](/00-lexique/tflops/) | Mesure de débit de calcul en opérations flottantes. |
 | [Thunderbolt](/00-lexique/thunderbolt/) | Interface câblée haut débit pour postes de travail et clusters de bureau IA. |
 | [Tokenisation](/00-lexique/tokenisation/) | Découpage d'un texte en unités numériques (tokens) avant traitement par un LLM. |
-| [Tokens par seconde](/00-lexique/tokens-par-seconde/) | Mesure du débit de génération d'un modèle. |
+| [Tokens par seconde](/00-lexique/tokens-per-second/) | Mesure du débit de génération d'un modèle. |
 | [TTFT](/00-lexique/ttft/) | Time To First Token. |
 | [VRAM](/00-lexique/vram/) | Mémoire vidéo dédiée au GPU. |

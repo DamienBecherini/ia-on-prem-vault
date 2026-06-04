@@ -7,7 +7,7 @@ sidebar:
 
 Avoir les poids d'un grand [[00-lexique/llm|LLM]] et un serveur puissant ne suffit pas. Pour utiliser l'IA, il faut un **moteur d'inférence** capable de charger les poids en [[00-lexique/vram|VRAM]], de gérer le [[00-lexique/kv-cache|KV Cache]] et d'exécuter les calculs matriciels. 
 
-En 2026, l'écosystème s'est fortement spécialisé. Le choix du moteur dicte les performances en [[00-lexique/tokens-par-seconde|tokens/s]], le temps de réponse initial ([[00-lexique/ttft|TTFT]]) et la capacité à encaisser des requêtes concurrentes.
+En 2026, l'écosystème s'est fortement spécialisé. Le choix du moteur dicte les performances en [[00-lexique/tokens-per-second|tokens/s]], le temps de réponse initial ([[00-lexique/ttft|TTFT]]) et la capacité à encaisser des requêtes concurrentes.
 
 ---
 

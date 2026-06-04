@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-Le [[04-blueprints/scenario-b-pme-appliance|Scénario B]] (l'Appliance) a un défaut majeur : sa mémoire est figée. Si le besoin de votre client évolue et qu'il souhaite déployer un modèle [[00-lexique/moe|MoE]] colossal de plus de 400 milliards de paramètres (nécessitant plus de 300 Go de mémoire), aucune machine de bureau unique au monde ne pourra l'accueillir.
+Le [[04-blueprints/scenario-b-sme-appliance|Scénario B]] (l'Appliance) a un défaut majeur : sa mémoire est figée. Si le besoin de votre client évolue et qu'il souhaite déployer un modèle [[00-lexique/moe|MoE]] colossal de plus de 400 milliards de paramètres (nécessitant plus de 300 Go de mémoire), aucune machine de bureau unique au monde ne pourra l'accueillir.
 
 Avant 2025, la seule solution était de louer un serveur cloud ou d'acheter une baie Datacenter hors de prix. Aujourd'hui, l'architecture logicielle permet de fusionner plusieurs petites machines abordables : c'est le **Cluster de Bureau**.
 
@@ -24,7 +24,7 @@ L'idée est de créer une "ferme" de calcul posée sur une étagère.
 
 ## ⚙️ La Stack Logicielle et le Mécanisme
 
-Ce miracle matériel est rendu possible par l'orchestrateur local **[[00-lexique/exo|Exo]]** (étudié dans le chapitre sur le [[03-stack-logicielle/clustering-exo-et-ray|Clustering IA]]).
+Ce miracle matériel est rendu possible par l'orchestrateur local **[[00-lexique/exo|Exo]]** (étudié dans le chapitre sur le [[03-stack-logicielle/clustering-exo-and-ray|Clustering IA]]).
 
 1.  Le moteur Exo s'installe sur tous les Mac Mini.
 2.  Ils se découvrent automatiquement via le réseau Thunderbolt (qui simule une connexion réseau locale ultra-rapide IP-over-Thunderbolt).
@@ -33,7 +33,7 @@ Ce miracle matériel est rendu possible par l'orchestrateur local **[[00-lexique
 
 ### Les Performances Attendues
 Le gain est purement capacitaire : **vous ne gagnez pas en vitesse, vous gagnez le droit de faire tourner le modèle**.
-La latence du réseau, même en Thunderbolt, est infiniment plus lente que la vitesse interne de la RAM. Sur un cluster de 8 Mac Mini faisant tourner un modèle de 600B+ quantifié, les benchmarks communautaires disponibles indiquent une vitesse de génération de l'ordre de **3 à 5 [[00-lexique/tokens-par-seconde|tokens/s]]**[^1].
+La latence du réseau, même en Thunderbolt, est infiniment plus lente que la vitesse interne de la RAM. Sur un cluster de 8 Mac Mini faisant tourner un modèle de 600B+ quantifié, les benchmarks communautaires disponibles indiquent une vitesse de génération de l'ordre de **3 à 5 [[00-lexique/tokens-per-second|tokens/s]]**[^1].
 
 ---
 

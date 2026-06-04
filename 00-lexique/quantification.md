@@ -22,4 +22,4 @@ C'est un levier majeur pour exécuter localement des modèles plus gros sur du m
 ## 🔗 Voir aussi
 - [[00-lexique/quantification-q4|Quantification Q4]]
 - [[00-lexique/vram|VRAM]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

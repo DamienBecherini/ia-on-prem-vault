@@ -35,4 +35,4 @@ Réduit la latence et la charge CPU lors des synchronisations inter-GPU sur Infi
 - [[00-lexique/nccl|NCCL]]
 - [[00-lexique/infiniband|InfiniBand]]
 - [[00-lexique/pcie|PCIe]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

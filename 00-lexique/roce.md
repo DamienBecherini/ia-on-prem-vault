@@ -38,4 +38,4 @@ Alternative crédible à InfiniBand pour les clusters IA on-premise quand le bud
 - [[00-lexique/rdma|RDMA]]
 - [[00-lexique/infiniband|InfiniBand]]
 - [[00-lexique/gpudirect-rdma|GPUDirect RDMA]]
-- [[02-materiel/reseau-ia-roce-et-thunderbolt|🌐 Réseau IA : RoCE et Thunderbolt]]
+- [[02-materiel/network-roce-infiniband-thunderbolt|🌐 Réseau IA : RoCE et Thunderbolt]]

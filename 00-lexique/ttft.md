@@ -25,5 +25,5 @@ Pour les usages interactifs, le ressenti dépend fortement du TTFT.
 
 ## 🔗 Voir aussi
 - [[00-lexique/prefill|Prefill]]
-- [[00-lexique/tokens-par-seconde|Tokens par seconde]]
-- [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]
+- [[00-lexique/tokens-per-second|Tokens par seconde]]
+- [[00-lexique/context-window|Fenêtre de contexte]]

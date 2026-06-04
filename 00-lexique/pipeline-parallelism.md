@@ -31,12 +31,12 @@ Seule option viable pour les clusters bureau où NVLink n'est pas disponible. Cl
 - Un réseau lent (Wi-Fi, 1 GbE) peut neutraliser tout le gain de capacité.
 
 ## 📚 Pour comprendre en profondeur
-1. [[03-stack-logicielle/clustering-exo-et-ray|🌐 Clustering IA : Exo et Ray]] *(comment Exo utilise cette stratégie)*
-2. [[04-blueprints/scenario-c-cluster-bureau|🖥️ Scénario C : Le Cluster Bureau]] *(impact sur le TTFT en pratique)*
+1. [[03-stack-logicielle/clustering-exo-and-ray|🌐 Clustering IA : Exo et Ray]] *(comment Exo utilise cette stratégie)*
+2. [[04-blueprints/scenario-c-desktop-cluster|🖥️ Scénario C : Le Cluster Bureau]] *(impact sur le TTFT en pratique)*
 3. [[00-lexique/tensor-parallelism|Tensor Parallelism]] *(la stratégie alternative pour les nœuds NVLink)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/tensor-parallelism|Tensor Parallelism]]
 - [[00-lexique/exo|Exo]]
 - [[00-lexique/ttft|TTFT]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

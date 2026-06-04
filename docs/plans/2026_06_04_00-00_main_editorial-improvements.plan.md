@@ -36,7 +36,7 @@ Critiques are grouped into phases by effort/impact ratio.
 
 | # | Critique | Target file(s) | Type |
 |---|----------|---------------|------|
-| 2 | Abrupt transition to "Bande Passante" in beginner path | `01-fondations/la-bande-passante-memoire.md` | Add intro callout |
+| 2 | Abrupt transition to "Bande Passante" in beginner path | `01-fondations/memory-bandwidth.md` | Add intro callout |
 | 4 | Shallow stack chapters vs deep fondations | `03-stack-logicielle/*.md` | Enrich 3 chapters |
 | 5 | Quantification entries redundancy/clarity | `00-lexique/quantification.md`, `quantification-q4.md` | Clarify scope |
 | 6 | "OpenHuman" branding opaque for external readers | `02-materiel/*.md`, `03-stack-logicielle/*.md` | ~~Rephrase or add lexique~~ **→ Delegated to new plan** `2026_06_04_08-14_main_agents-et-assistants-on-prem` Phase 0 |
@@ -51,7 +51,7 @@ Critiques are grouped into phases by effort/impact ratio.
 - `00-lexique/npu.md` — LLM inference limits, SoC context
 - `00-lexique/moe.md` — VRAM and t/s impact vs dense model
 - `00-lexique/offloading.md` — DDR5 formula, Scénario A link, concurrency pitfall
-- `00-lexique/fenetre-de-contexte.md` — KV Cache link, OOM risk
+- `00-lexique/context-window.md` — KV Cache link, OOM risk
 
 ### Phase C — New content (higher effort, targeted impact)
 
@@ -94,17 +94,17 @@ Critiques are grouped into phases by effort/impact ratio.
 
 Affected files:
 ```
-01-fondations/le-voyage-d-un-prompt.md
-01-fondations/la-bande-passante-memoire.md
-01-fondations/memoire-unifiee-vs-ram-vs-vram.md
-01-fondations/kv-cache-et-contexte.md
-01-fondations/quantification-4-bit-8-bit.md
-02-materiel/apu-et-memoire-unifiee.md
+01-fondations/journey-of-a-prompt.md
+01-fondations/memory-bandwidth.md
+01-fondations/unified-memory-vs-ram-vs-vram.md
+01-fondations/kv-cache-and-context.md
+01-fondations/quantization-4bit-8bit.md
+02-materiel/apu-and-unified-memory.md
 02-materiel/stations-multi-gpu.md
-02-materiel/reseau-ia-roce-et-thunderbolt.md
-03-stack-logicielle/moteurs-inference-vllm-ollama.md
-03-stack-logicielle/clustering-exo-et-ray.md
-03-stack-logicielle/rag-et-agents-openhuman.md
+02-materiel/network-roce-infiniband-thunderbolt.md
+03-stack-logicielle/inference-engines-vllm-ollama.md
+03-stack-logicielle/clustering-exo-and-ray.md
+03-stack-logicielle/rag-and-agents.md
 ```
 
 **B2 — Harmonize 7 old minimal lexique entries**
@@ -160,7 +160,7 @@ Affected files:
 ## Validation steps
 
 After each phase:
-1. Run `node scripts/generate-lexicon-index.mjs` to update `index-lexique.md`
+1. Run `node scripts/generate-lexicon-index.mjs` to update `lexicon-index.md`
 2. Verify all new wikilinks resolve to existing files
 3. Check that the beginner path (A1→Inférence→Voyage→Bande passante→Scénario A) is still navigable
 4. Confirm no broken internal links in modified files

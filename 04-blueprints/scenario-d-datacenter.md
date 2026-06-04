@@ -7,7 +7,7 @@ sidebar:
 
 Votre client est un grand compte, un hébergeur cloud souverain ou une institution publique. Le cahier des charges est implacable : il faut héberger un modèle de la classe 70B ou un géant de 400B+, et surtout, pouvoir **servir des dizaines, voire des centaines d'utilisateurs en même temps** avec un temps de réponse instantané.
 
-Le [[04-blueprints/scenario-b-pme-appliance|Scénario B]] (l'Appliance) s'étoufferait sous la charge concurrente, et le [[04-blueprints/scenario-c-cluster-bureau|Scénario C]] (Cluster Exo) a un TTFT beaucoup trop lent. Pour la production massive, il n'y a pas de secret : il faut basculer sur l'architecture standard des Datacenters IA.
+Le [[04-blueprints/scenario-b-sme-appliance|Scénario B]] (l'Appliance) s'étoufferait sous la charge concurrente, et le [[04-blueprints/scenario-c-desktop-cluster|Scénario C]] (Cluster Exo) a un TTFT beaucoup trop lent. Pour la production massive, il n'y a pas de secret : il faut basculer sur l'architecture standard des Datacenters IA.
 
 ---
 
@@ -30,7 +30,7 @@ Cette débauche de matériel exige des moteurs d'inférence capables de l'exploi
 ### La Magie du Tensor Parallelism
 Sur le Cluster Mac (Scénario C), nous avions vu le *Pipeline Parallelism* (découpage couche par couche), qui augmente la latence. 
 Dans un nœud HGX, l'incroyable vitesse du NVLink permet d'utiliser le **[[00-lexique/tensor-parallelism|Tensor Parallelism]]** (TP). Une seule et même opération mathématique (une matrice) est découpée et calculée *en même temps* par les 8 GPU.
-*   **Résultat :** Les 8 cartes agissent comme un seul GPU géant. La latence de génération s'effondre, et les [[00-lexique/tokens-par-seconde|tokens/s]] explosent, même sur un modèle massif.
+*   **Résultat :** Les 8 cartes agissent comme un seul GPU géant. La latence de génération s'effondre, et les [[00-lexique/tokens-per-second|tokens/s]] explosent, même sur un modèle massif.
 
 ### Formats Extrêmes (FP4)
 Si vous déployez des puces NVIDIA Blackwell (B200), le logiciel utilisera nativement la quantification **FP4** ou **FP8**. Cela permet de faire tenir des modèles gigantesques dans un seul nœud de 8 GPU, évitant ainsi de devoir traverser le réseau RoCE pour chaque calcul[^3].

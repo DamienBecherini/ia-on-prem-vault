@@ -20,6 +20,6 @@ Le contexte injecté est ciblé, ce qui améliore précision métier et réduit 
 Il permet d'exploiter la connaissance interne d'une organisation sans réentraîner le modèle.
 
 ## 🔗 Voir aussi
-- [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]
+- [[00-lexique/context-window|Fenêtre de contexte]]
 - [[00-lexique/llm|LLM]]
-- [[03-stack-logicielle/rag-et-agents-openhuman|🧩 RAG & Agents : L'architecture de la connaissance]]
+- [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents : L'architecture de la connaissance]]

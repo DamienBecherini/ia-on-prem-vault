@@ -21,7 +21,7 @@ skills:
 Répondre à un trou pédagogique ("C'est pas sorcier") identifié dans le vault. Avant de passer au chapitre 03, les utilisateurs ont besoin d'un récit clair sur la différence tokenisation/prefill/decoding sans se noyer immédiatement dans le dimensionnement matériel.
 
 ## Files Changed
-- Création : `01-fondations/le-voyage-d-un-prompt.md`
+- Création : `01-fondations/journey-of-a-prompt.md`
 - Modification : `00-index.md` (Ajout de la section "Parcours débutant")
 - Modification : `00-lexique/prefill.md` (Ajout d'une section "Pas de magie" et lien profond)
 - Modification : `00-lexique/decoding.md` (Ajout d'une section "Pas de magie" et lien profond)

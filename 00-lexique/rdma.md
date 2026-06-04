@@ -33,4 +33,4 @@ Dès qu'on distribue des charges IA sur plusieurs nœuds, RDMA est le facteur di
 - [[00-lexique/roce|RoCE]]
 - [[00-lexique/infiniband|InfiniBand]]
 - [[00-lexique/multi-gpu|Multi-GPU]]
-- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]
+- [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]

@@ -24,6 +24,6 @@ Le choix machine ne se fait pas uniquement sur les TFLOPS : bande passante mémo
 - Ignorer la différence entre performance prefill et performance decoding.
 
 ## 🔗 Voir aussi
-- [[00-lexique/bande-passante-memoire|Bande passante mémoire]]
+- [[00-lexique/memory-bandwidth|Bande passante mémoire]]
 - [[00-lexique/decoding|Decoding]]
-- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]
+- [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]

@@ -32,11 +32,11 @@ Transforme un LLM figé en assistant actif capable de maintenir des vaults docum
 - Les frameworks comme LangChain intègrent de la télémétrie qui peut faire fuiter les prompts vers des APIs externes.
 
 ## 📚 Pour comprendre en profondeur
-1. [[03-stack-logicielle/rag-et-agents-openhuman|🧩 RAG & Agents]] *(Agentic RAG, SmolAgents et l'approche Memory Tree)*
+1. [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] *(Agentic RAG, SmolAgents et l'approche Memory Tree)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/rag|RAG]]
 - [[00-lexique/smolagents|SmolAgents]]
 - [[00-lexique/graphrag|GraphRAG]]
 - [[00-lexique/llm|LLM]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

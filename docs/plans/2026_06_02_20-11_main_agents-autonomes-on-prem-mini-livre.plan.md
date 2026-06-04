@@ -224,7 +224,7 @@ Popularity figures, dates, features, and maturity claims must be sourced or stat
 - [ ] Identify terms already covered by the lexicon.
 - [ ] Create missing entries with `_templates/_Terme Lexique.md`.
 - [ ] Add `Voir aussi` links between lexicon entries and the new section.
-- [ ] Update `00-lexique/glossaire-ia.md` if some terms should join recommended paths or the acronym index.
+- [ ] Update `00-lexique/ai-glossary.md` if some terms should join recommended paths or the acronym index.
 
 ### Phase 6 - Verification and publication
 

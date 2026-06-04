@@ -26,11 +26,11 @@ Standard de fait pour les postes de travail, Mac et homelab. La plupart des mod�
 - Plusieurs variantes de quantification (Q2 à Q8) ont des compromis très différents — Q2 peut dégrader fortement la qualité de réponse.
 
 ## 📚 Pour comprendre en profondeur
-1. [[03-stack-logicielle/moteurs-inference-vllm-ollama|⚙️ Moteurs d'Inférence]] *(GGUF + llama.cpp vs vLLM en production)*
-2. [[01-fondations/quantification-4-bit-8-bit|🗜️ Quantification 4-bit & 8-bit]] *(les schémas de précision derrière les K-quants)*
+1. [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence]] *(GGUF + llama.cpp vs vLLM en production)*
+2. [[01-fondations/quantization-4bit-8bit|🗜️ Quantification 4-bit & 8-bit]] *(les schémas de précision derrière les K-quants)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/quantification|Quantification]]
 - [[00-lexique/quantification-q4|Quantification Q4]]
 - [[00-lexique/offloading|Offloading]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

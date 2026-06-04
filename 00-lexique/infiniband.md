@@ -36,4 +36,4 @@ Standard de facto pour les clusters GPU de production (datacenters IA, HPC). Con
 - [[00-lexique/roce|RoCE]]
 - [[00-lexique/gpudirect-rdma|GPUDirect RDMA]]
 - [[04-blueprints/scenario-d-datacenter|🏢 Scénario D : Datacenter]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

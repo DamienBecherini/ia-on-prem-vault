@@ -33,4 +33,4 @@ Couche invisible mais critique : si NCCL n'est pas configuré pour exploiter NVL
 - [[00-lexique/nvlink|NVLink]]
 - [[00-lexique/tensor-parallelism|Tensor Parallelism]]
 - [[00-lexique/rdma|RDMA]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

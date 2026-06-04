@@ -29,11 +29,11 @@ Le nombre de tokens d'un texte détermine directement la taille du [[00-lexique/
 - Le français est souvent plus verbeux que l'anglais en tokens (plus de sous-mots créés).
 
 ## 📚 Pour comprendre en profondeur
-1. [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] *(Étape 1 : la tokenisation en action)*
-2. [[01-fondations/kv-cache-et-contexte|💾 KV Cache & Contexte]] *(pourquoi le nombre de tokens pèse sur la VRAM)*
+1. [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]] *(Étape 1 : la tokenisation en action)*
+2. [[01-fondations/kv-cache-and-context|💾 KV Cache & Contexte]] *(pourquoi le nombre de tokens pèse sur la VRAM)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/embedding|Embedding]]
-- [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]
+- [[00-lexique/context-window|Fenêtre de contexte]]
 - [[00-lexique/prefill|Prefill]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

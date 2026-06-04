@@ -6,7 +6,7 @@ description: Lexique des termes techniques et acronymes utilisés dans le vault.
 Ce glossaire centralise les notions clés de l'IA on-premise.  
 Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 
-**Index complet** : [[00-lexique/index-lexique|toutes les fiches du lexique]] (liste alphabétique, mise à jour au build).
+**Index complet** : [[00-lexique/lexicon-index|toutes les fiches du lexique]] (liste alphabétique, mise à jour au build).
 
 ---
 
@@ -14,14 +14,14 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 
 *Je ne sais pas par où commencer :*
 
-[[00-lexique/llm|LLM]] → [[00-lexique/inference|Inférence (LLM)]] → [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] → [[00-lexique/prefill|Prefill]] / [[00-lexique/decoding|Decoding]] → [[00-lexique/memory-wall|Memory Wall]] → [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire]]
+[[00-lexique/llm|LLM]] → [[00-lexique/inference|Inférence (LLM)]] → [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]] → [[00-lexique/prefill|Prefill]] / [[00-lexique/decoding|Decoding]] → [[00-lexique/memory-wall|Memory Wall]] → [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire]]
 
 ---
 
 ## Parcours recommandé
 
-- **Performance d'inférence** : [[00-lexique/inference|Inférence (LLM)]], [[00-lexique/memory-wall|Memory Wall]], [[00-lexique/bande-passante-memoire|Bande passante mémoire]], [[00-lexique/prefill|Prefill]], [[00-lexique/decoding|Decoding]], [[00-lexique/tokens-par-seconde|Tokens par seconde]], [[00-lexique/ttft|TTFT]].
-- **Mémoire & matériel** : [[00-lexique/vram|VRAM]], [[00-lexique/ram|RAM]], [[00-lexique/memoire-unifiee|Mémoire unifiée]], [[00-lexique/pcie|PCIe]], [[00-lexique/multi-gpu|Multi-GPU]], [[00-lexique/nvlink|NVLink]], [[00-lexique/nvswitch|NVSwitch]].
+- **Performance d'inférence** : [[00-lexique/inference|Inférence (LLM)]], [[00-lexique/memory-wall|Memory Wall]], [[00-lexique/memory-bandwidth|Bande passante mémoire]], [[00-lexique/prefill|Prefill]], [[00-lexique/decoding|Decoding]], [[00-lexique/tokens-per-second|Tokens par seconde]], [[00-lexique/ttft|TTFT]].
+- **Mémoire & matériel** : [[00-lexique/vram|VRAM]], [[00-lexique/ram|RAM]], [[00-lexique/unified-memory|Mémoire unifiée]], [[00-lexique/pcie|PCIe]], [[00-lexique/multi-gpu|Multi-GPU]], [[00-lexique/nvlink|NVLink]], [[00-lexique/nvswitch|NVSwitch]].
 - **Systèmes IA en production** : [[00-lexique/quantification|Quantification]], [[00-lexique/quantification-q4|Quantification Q4]], [[00-lexique/kv-cache|KV Cache]], [[00-lexique/rag|RAG]], [[00-lexique/rdma|RDMA]], [[00-lexique/roce|RoCE]], [[00-lexique/infiniband|InfiniBand]].
 - **Réseau datacenter** : [[00-lexique/pfc|PFC]], [[00-lexique/ecn|ECN]], [[00-lexique/nccl|NCCL]], [[00-lexique/gpudirect-rdma|GPUDirect RDMA]].
 
@@ -68,11 +68,11 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 | Terme | Définition rapide |
 | :-- | :-- |
 | [Memory Wall](/00-lexique/memory-wall/) | Limite de performance due aux transferts mémoire plutôt qu'au calcul. |
-| [Bande passante mémoire](/00-lexique/bande-passante-memoire/) | Débit de transfert de données mémoire, souvent exprimé en Go/s. |
+| [Bande passante mémoire](/00-lexique/memory-bandwidth/) | Débit de transfert de données mémoire, souvent exprimé en Go/s. |
 | [Prefill](/00-lexique/prefill/) | Phase d'ingestion du prompt, plus parallèle. |
 | [Decoding](/00-lexique/decoding/) | Phase auto-régressive token par token, souvent memory-bound. |
 | [KV Cache](/00-lexique/kv-cache/) | Cache des clés/valeurs d'attention pour accélérer la génération. |
-| [Tokens/s](/00-lexique/tokens-par-seconde/) | Débit de génération mesuré en tokens par seconde. |
+| [Tokens/s](/00-lexique/tokens-per-second/) | Débit de génération mesuré en tokens par seconde. |
 
 ---
 
@@ -95,7 +95,7 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 
 | Terme | Définition rapide |
 | :-- | :-- |
-| [Mémoire unifiée](/00-lexique/memoire-unifiee/) | Pool mémoire partagé CPU/GPU/NPU dans un SoC. |
+| [Mémoire unifiée](/00-lexique/unified-memory/) | Pool mémoire partagé CPU/GPU/NPU dans un SoC. |
 | [Offloading](/00-lexique/offloading/) | Déplacement partiel de poids/activations entre mémoires selon la capacité. |
 | [Multi-GPU](/00-lexique/multi-gpu/) | Plusieurs GPU pour plus de capacité et/ou de débit. |
 | [NVLink](/00-lexique/nvlink/) | Interconnexion GPU à haut débit (gammes pro/datacenter). |
@@ -136,9 +136,9 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 | [RAG](/00-lexique/rag/) | Architecture qui enrichit le contexte d'un LLM avec une base documentaire. |
 | [Base de données vectorielle](/00-lexique/vectordb/) | Stockage et recherche de documents par similarité d'embeddings. |
 | [GraphRAG](/00-lexique/graphrag/) | RAG basé sur un graphe de connaissances pour les requêtes globales. |
-| [Agent autonome](/00-lexique/agent-autonome/) | LLM équipé d'outils qui raisonne en boucle pour accomplir des tâches. |
+| [Agent autonome](/00-lexique/autonomous-agent/) | LLM équipé d'outils qui raisonne en boucle pour accomplir des tâches. |
 | [SmolAgents](/00-lexique/smolagents/) | Framework léger Hugging Face pour agents souverains sans télémétrie cloud. |
-| [Fenêtre de contexte](/00-lexique/fenetre-de-contexte/) | Nombre maximal de tokens que le modèle peut traiter en entrée active. |
+| [Fenêtre de contexte](/00-lexique/context-window/) | Nombre maximal de tokens que le modèle peut traiter en entrée active. |
 | [Quantification](/00-lexique/quantification/) | Réduction de précision numérique pour diminuer mémoire et coût de calcul. |
 | [MoE](/00-lexique/moe/) | Architecture avec experts spécialisés activés partiellement par token. |
 
@@ -146,5 +146,5 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 
 ## Chapitres liés
 
-- [[01-fondations/la-bande-passante-memoire]]
-- [[01-fondations/memoire-unifiee-vs-ram-vs-vram]]
+- [[01-fondations/memory-bandwidth]]
+- [[01-fondations/unified-memory-vs-ram-vs-vram]]

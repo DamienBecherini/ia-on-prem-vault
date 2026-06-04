@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-> 💡 **Prérequis conseillé :** Ce chapitre suppose que vous savez comment un token est généré. Si ce n'est pas le cas, commencez par [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]].
+> 💡 **Prérequis conseillé :** Ce chapitre suppose que vous savez comment un token est généré. Si ce n'est pas le cas, commencez par [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]].
 
 En architecture système appliquée à l'IA, une réalité revient en permanence : en [[00-lexique/inference|inférence LLM]], la limite est souvent la **mémoire** avant le calcul brut[^1].
 
@@ -89,7 +89,7 @@ Dès qu'on cumule la mémoire de plusieurs machines, l'interconnexion devient le
 2.  **RDMA est clé en environnement pro :** RoCE/InfiniBand réduit le coût CPU des transferts et améliore la latence inter-nœuds.
 
 > 💡 **Le Conseil de l'Architecte :**
-> Dans tout déploiement on-premise, la méthode [[03-stack-logicielle/rag-et-agents-openhuman|RAG]] est une alliée clé de la bande passante. En n'injectant dans le contexte que les passages pertinents (plutôt que des documents entiers), on évite de saturer la mémoire avec des données inutiles et on maintient le TTFT sous contrôle.
+> Dans tout déploiement on-premise, la méthode [[03-stack-logicielle/rag-and-agents|RAG]] est une alliée clé de la bande passante. En n'injectant dans le contexte que les passages pertinents (plutôt que des documents entiers), on évite de saturer la mémoire avec des données inutiles et on maintient le TTFT sous contrôle.
 
 ---
 

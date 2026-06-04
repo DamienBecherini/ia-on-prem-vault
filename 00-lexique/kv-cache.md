@@ -25,11 +25,11 @@ Il influence fortement la capacité de contexte pratique et la stabilité des pe
 
 ## 📚 Pour comprendre en profondeur
 *Vous voulez comprendre pourquoi ce cache peut saturer votre machine ?*
-1. [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] *(Étape 4 : comment le KV cache est rempli pendant le prefill)*
-2. [[01-fondations/kv-cache-et-contexte|💾 KV Cache & Contexte]] *(le chapitre complet : formule, GQA, PagedAttention)*
-3. [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire]] *(pourquoi la taille du cache ralentit la génération)*
+1. [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]] *(Étape 4 : comment le KV cache est rempli pendant le prefill)*
+2. [[01-fondations/kv-cache-and-context|💾 KV Cache & Contexte]] *(le chapitre complet : formule, GQA, PagedAttention)*
+3. [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire]] *(pourquoi la taille du cache ralentit la génération)*
 
 ## 🔗 Voir aussi
-- [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]
+- [[00-lexique/context-window|Fenêtre de contexte]]
 - [[00-lexique/decoding|Decoding]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

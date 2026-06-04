@@ -31,4 +31,4 @@ NVSwitch est la frontière architecturale entre une station multi-GPU de bureau 
 - [[00-lexique/tensor-parallelism|Tensor Parallelism]]
 - [[00-lexique/multi-gpu|Multi-GPU]]
 - [[04-blueprints/scenario-d-datacenter|🏢 Scénario D : Datacenter]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

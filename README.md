@@ -47,11 +47,11 @@ docs/plans/             agent implementation plans (excluded from publish; see R
 
 ### Lexicon (this vault)
 
-- **Hub** : `00-lexique/glossaire-ia.md` (curated overview).
-- **Generated index** : `00-lexique/index-lexique.md` (alphabetical table; regen at build when `lexicon.enabled` in `site.config.json`).
+- **Hub** : `00-lexique/ai-glossary.md` (curated overview).
+- **Generated index** : `00-lexique/lexicon-index.md` (alphabetical table; regen at build when `lexicon.enabled` in `site.config.json`).
 - **New term** : use `_templates/_Terme Lexique.md`, tag `lexique` in frontmatter.
 - **Regenerate index manually** (from the engine repo): `npm run lexicon:index` with `VAULT_PATH` pointing here.
-- **Commit policy** : commit `index-lexique.md` with the vault when you add or change lexicon entries.
+- **Commit policy** : commit `lexicon-index.md` with the vault when you add or change lexicon entries.
 
 The engine excludes everything matched by the vault [`.gitignore`](.gitignore) (including `_private/*`) and
 **never builds this root `README.md`** as a site page. See the engine

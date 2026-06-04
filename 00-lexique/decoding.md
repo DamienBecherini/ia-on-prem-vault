@@ -19,9 +19,9 @@ C'est cette phase qui gouverne le débit "tokens/s" observé par vos utilisateur
 
 ## 📚 Pour comprendre en profondeur
 *Vous ne saisissez pas bien pourquoi c'est lent ? Suivez ce chemin :*
-1. [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] *(Le chapitre "C'est pas sorcier")*
-2. [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le Memory Wall]] *(L'explication physique)*
-3. [[00-lexique/tokens-par-seconde|Tokens par seconde]] *(La métrique clé)*
+1. [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]] *(Le chapitre "C'est pas sorcier")*
+2. [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire & Le Memory Wall]] *(L'explication physique)*
+3. [[00-lexique/tokens-per-second|Tokens par seconde]] *(La métrique clé)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/inference|Inférence (LLM)]]

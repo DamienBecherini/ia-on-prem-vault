@@ -21,7 +21,7 @@ skills:
 Générer le premier article du chapitre 03 sur la stack logicielle (vLLM vs Ollama vs TensorRT-LLM) en utilisant les skills `vault-generate-content` et des recherches web récentes (Mai 2026).
 
 ## Files Changed
-- Création : `03-stack-logicielle/moteurs-inference-vllm-ollama.md`
+- Création : `03-stack-logicielle/inference-engines-vllm-ollama.md`
 - Modification : `site.config.json` (ajout du dossier 03 au sidebar)
 - Modification : `.agents/vault-maintenance/lexicon-backlog.md` (3 nouvelles fiches à créer)
 - Création : ce run log.

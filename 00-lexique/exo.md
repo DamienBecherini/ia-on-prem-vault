@@ -27,12 +27,12 @@ Permet de dépasser la limite d'une seule machine sans investissement datacenter
 - Mauvais support de la concurrence élevée : pas adapté à 50 utilisateurs simultanés.
 
 ## 📚 Pour comprendre en profondeur
-1. [[03-stack-logicielle/clustering-exo-et-ray|🌐 Clustering IA : Exo et Ray]] *(le chapitre complet avec benchmarks et cas d'usage)*
-2. [[04-blueprints/scenario-c-cluster-bureau|🖥️ Scénario C : Le Cluster Bureau]] *(blueprint Exo + Thunderbolt)*
+1. [[03-stack-logicielle/clustering-exo-and-ray|🌐 Clustering IA : Exo et Ray]] *(le chapitre complet avec benchmarks et cas d'usage)*
+2. [[04-blueprints/scenario-c-desktop-cluster|🖥️ Scénario C : Le Cluster Bureau]] *(blueprint Exo + Thunderbolt)*
 3. [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] *(la stratégie de découpage utilisée)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/ray|Ray]]
 - [[00-lexique/thunderbolt|Thunderbolt]]
 - [[00-lexique/pipeline-parallelism|Pipeline Parallelism]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

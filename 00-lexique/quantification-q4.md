@@ -22,5 +22,5 @@ Permet de rendre exploitables localement des tailles de modèles autrement inacc
 
 ## 🔗 Voir aussi
 - [[00-lexique/quantification|Quantification]]
-- [[00-lexique/tokens-par-seconde|Tokens par seconde]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/tokens-per-second|Tokens par seconde]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

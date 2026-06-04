@@ -39,10 +39,10 @@ Trois motivations principales orientent ce choix :
 ## 📚 Pour aller plus loin
 1. [[00-lexique/llm|LLM]] *(qu'est-ce qu'un modèle de langage ?)*
 2. [[00-lexique/inference|Inférence (LLM)]] *(comment un LLM génère une réponse)*
-3. [[04-blueprints/scenario-a-labo-dev|🛠️ Scénario A]] *(premier déploiement on-premise concret)*
+3. [[04-blueprints/scenario-a-dev-lab|🛠️ Scénario A]] *(premier déploiement on-premise concret)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/llm|LLM]]
 - [[00-lexique/inference|Inférence (LLM)]]
 - [[00-lexique/rag|RAG]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

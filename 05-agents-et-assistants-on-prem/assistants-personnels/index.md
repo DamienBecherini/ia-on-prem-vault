@@ -40,7 +40,7 @@ Chaque fiche solution de cette section évalue le projet selon les mêmes 6 crit
 5. **Mode offline** — fonctionne-t-il sans connexion Internet ?
 6. **Verdict souveraineté** — ✅ souverain natif / ⚠️ configurable / ❌ incompatible on-prem strict
 
-La grille complète et le protocole d'audit sont détaillés dans [[05-agents-et-assistants-on-prem/fondations-communes/souverainete-et-confidentialite|Souveraineté & Confidentialité]] *(à venir — Phase 2)*.
+La grille complète et le protocole d'audit sont détaillés dans [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté & Confidentialité]] *(à venir — Phase 2)*.
 
 ---
 
@@ -60,4 +60,4 @@ La grille complète et le protocole d'audit sont détaillés dans [[05-agents-et
 
 - [[05-agents-et-assistants-on-prem/index|🤖 Vue d'ensemble : Agents & Assistants]]
 - [[05-agents-et-assistants-on-prem/agents-custodiens/index|🤖 Agents Custodiens — l'IA qui agit pour vous]]
-- [[03-stack-logicielle/rag-et-agents-openhuman|🧩 RAG & Agents : L'architecture de la connaissance]]
+- [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents : L'architecture de la connaissance]]

@@ -29,10 +29,10 @@ Pertinent quand la base documentaire est dense en relations (ex : base légale, 
 - Pas toujours supérieur au RAG vectoriel pour les recherches factuelles localisées.
 
 ## 📚 Pour comprendre en profondeur
-1. [[03-stack-logicielle/rag-et-agents-openhuman|🧩 RAG & Agents]] *(GraphRAG dans le contexte de l'évolution agentique)*
+1. [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] *(GraphRAG dans le contexte de l'évolution agentique)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/rag|RAG]]
 - [[00-lexique/vectordb|Base de données vectorielle]]
-- [[00-lexique/agent-autonome|Agent autonome]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/autonomous-agent|Agent autonome]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

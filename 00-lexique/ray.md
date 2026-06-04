@@ -26,7 +26,7 @@ Standard de facto pour les datacenters souverains. La seule architecture qui gar
 - Inutile et surdimensionné pour les scénarios bureau ou PME.
 
 ## 📚 Pour comprendre en profondeur
-1. [[03-stack-logicielle/clustering-exo-et-ray|🌐 Clustering IA : Exo et Ray]] *(le chapitre complet)*
+1. [[03-stack-logicielle/clustering-exo-and-ray|🌐 Clustering IA : Exo et Ray]] *(le chapitre complet)*
 2. [[04-blueprints/scenario-d-datacenter|🏢 Scénario D : Datacenter]] *(blueprint Ray + vLLM + RoCE)*
 3. [[00-lexique/tensor-parallelism|Tensor Parallelism]] *(la stratégie intra-nœud exploitée par Ray)*
 
@@ -35,4 +35,4 @@ Standard de facto pour les datacenters souverains. La seule architecture qui gar
 - [[00-lexique/tensor-parallelism|Tensor Parallelism]]
 - [[00-lexique/rdma|RDMA]]
 - [[00-lexique/roce|RoCE]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]
