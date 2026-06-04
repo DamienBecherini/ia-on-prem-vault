@@ -1,5 +1,5 @@
 ---
-title: 🧩 RAG & Agents : L'architecture de la connaissance
+title: "🧩 RAG & Agents : L'architecture de la connaissance"
 description: Comment donner une mémoire privée et de l'autonomie à un LLM local. Du RAG standard aux workflows agentiques (SmolAgents, LangGraph) et l'approche "Memory Tree" d'OpenHuman.
 sidebar:
   order: 3

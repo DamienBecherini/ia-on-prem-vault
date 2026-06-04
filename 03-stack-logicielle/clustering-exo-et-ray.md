@@ -1,5 +1,5 @@
 ---
-title: 🌐 Clustering IA : Relier les GPU avec Exo et Ray
+title: "🌐 Clustering IA : Relier les GPU avec Exo et Ray"
 description: Comment fusionner la mémoire de plusieurs machines pour l'IA locale. Comparatif entre Exo (Apple Silicon / Homelab) et Ray Serve (Datacenter).
 sidebar:
   order: 2

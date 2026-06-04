@@ -1,5 +1,5 @@
 ---
-title: 🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)
+title: "🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)"
 description: Le blueprint de l'évolutivité. Relier plusieurs Mac Mini ou PC compacts via Thunderbolt pour exécuter des modèles massifs inaccessibles sur une seule machine.
 sidebar:
   order: 3

@@ -1,5 +1,5 @@
 ---
-title: 🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)
+title: "🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)"
 description: Le blueprint idéal pour les PME. Comment servir une équipe de 10 à 50 personnes avec un modèle 70B en utilisant un Mac Studio ou un APU AMD.
 sidebar:
   order: 2
