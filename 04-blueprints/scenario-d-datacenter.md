@@ -114,6 +114,24 @@ ethtool -S <interface> | grep -E "rx_discards|tx_discards"
 > [!warning] Surveiller la congestion RoCE
 > Une augmentation des retransmissions RDMA est le premier signal d'une mauvaise configuration PFC/ECN. À surveiller activement — une dégradation réseau non détectée peut diviser par dix le débit du cluster sans erreur visible applicative.
 
+### Storage Wall — temps de boot SSD→VRAM (impact sur le MTTR)
+
+Le "Memory Wall" couvre les performances en régime permanent. Le "Storage Wall" couvre les **redémarrages** : chaque restart vLLM impose de recharger les poids du modèle depuis le SSD vers la VRAM.
+
+| Modèle | Taille BF16 | SSD PCIe 3.0 (3 Go/s) | SSD NVMe PCIe 5.0 (10 Go/s) | GPUDirect Storage |
+| :-- | :-- | :-- | :-- | :-- |
+| 70B | ~140 Go | **~47 secondes** | ~14 secondes | ~8 secondes |
+| 405B | ~810 Go | **~4,5 minutes** | ~81 secondes | ~45 secondes |
+
+Pour un SLA datacenter avec objectif de MTTR (Mean Time To Recovery) sous 2 minutes, un 405B en BF16 sur SSD PCIe 3.0 est **incompatible avec cet objectif**. Solutions :
+
+- **NVMe PCIe 5.0 en RAID 0** : doublement du débit séquentiel (~20 Go/s réels), MTTR < 45 secondes sur un 405B
+- **GPUDirect Storage** (NVIDIA Magnum IO) : transfert direct SSD→VRAM sans copie CPU, réduit la charge système et améliore le débit[^4]
+- **Modèle quantifié** : un 405B en Q4 (~230 Go) réduit le temps de chargement de ~65% vs BF16
+
+> [!note] Lien avec les SLAs d'entreprise
+> Pour les déploiements critiques (IA en production dans des workflows métier), le temps de rechargement doit être documenté dans les accords de niveau de service. Prévoyez un processus de redémarrage planifié (rolling restart avec double instance) pour les mises à jour sans downtime.
+
 ---
 
 ## 📚 Sources et Références
@@ -121,3 +139,4 @@ ethtool -S <interface> | grep -E "rx_discards|tx_discards"
 [^1]: NVIDIA Technical Blog, *NVIDIA NVLink and NVIDIA NVSwitch Supercharge Large Language Model Inference* (Architecture HGX, Blackwell NVLink 1.8 TB/s), 2024-2026.
 [^2]: NVIDIA, *RDMA over Converged Ethernet - RoCE | Cumulus Linux* (Importance critique du PFC/ECN pour éviter l'effondrement des performances LLM), 2026.
 [^3]: NVIDIA, *Optimizing Inference for Long Context and Large Batch Sizes with NVFP4 KV Cache* (Blackwell, TensorRT-LLM natif), Décembre 2025.
+[^4]: NVIDIA, *GPUDirect Storage Overview* (transfert direct NVMe→VRAM, sans copie CPU, Magnum IO). [https://developer.nvidia.com/gpudirect-storage](https://developer.nvidia.com/gpudirect-storage)

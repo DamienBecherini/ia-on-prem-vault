@@ -38,11 +38,15 @@ Pour ce vault, le niveau raisonnable est **2 ou 3** : branche/PR, validation hum
 
 Avant chaque run :
 
+- **Vérifier que le repo est propre (`git status --porcelain`)** : si le repo est *dirty* (modifications non commitées), l'agent doit **avorter** et notifier l'opérateur. Il ne doit jamais embarquer un brouillon humain en cours dans son commit. Exception explicite uniquement : `git stash` avec un nom horodaté si l'opérateur a activé ce mode dans la configuration de l'agent.
 - vérifier que le plan actif n'est pas dans `docs/plans/archive/` ;
 - ignorer `_private/`, `build/`, `dist/`, `.git/`, logs obsolètes et plans superseded ;
 - refuser les commandes destructrices ;
 - enregistrer le run sous `.agents/vault-maintenance/runs/` ;
 - citer les sources pour tout changement factuel.
+
+> [!warning] Condition de course — repo dirty
+> Un agent qui commence son travail sur un repo dirty risque de mélanger ses modifications algorithmiques avec le travail humain en cours. Si une PR est ensuite ouverte, elle peut embarquer des brouillons inachevés ou des fichiers temporaires que l'humain n'avait pas l'intention de partager. **La règle est simple : dirty = abort.**
 
 ## Rapport attendu
 
