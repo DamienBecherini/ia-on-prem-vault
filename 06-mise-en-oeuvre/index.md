@@ -14,15 +14,14 @@ La section 06 transforme les concepts des fondations, du matériel, de la stack 
 
 ## Par où commencer ?
 
-1. [[06-mise-en-oeuvre/evaluer-un-modele-local|Évaluer un modèle local]] — comparer qualité, hallucinations, cohérence, RAG, agents et performances.
+1. [[06-mise-en-oeuvre/demarrer-avec-ollama|Démarrer avec Ollama]] — installation, premier modèle, API, monitoring de base.
+2. [[06-mise-en-oeuvre/evaluer-un-modele-local|Évaluer un modèle local]] — comparer qualité, hallucinations, cohérence, RAG, agents et performances.
 
 Les prochains guides pratiques pourront couvrir :
 
-- démarrer avec Ollama ;
-- configurer vLLM en production ;
-- surveiller une stack d'inférence ;
-- sécuriser une API locale ;
-- comparer coût total on-premise vs API cloud.
+- configurer vLLM en production multi-GPU ;
+- sécuriser une API locale (auth, isolation réseau, OWASP LLM) ;
+- comparer coût total on-premise vs API cloud (TCO).
 
 ---
 

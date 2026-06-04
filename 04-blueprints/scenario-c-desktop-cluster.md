@@ -58,6 +58,44 @@ La latence du réseau, même en Thunderbolt, est infiniment plus lente que la vi
 
 ---
 
+## 📊 Monitoring recommandé
+
+Sur un cluster Exo, le monitoring est plus manuel qu'en production datacenter, mais quelques commandes couvrent l'essentiel.
+
+**Sur chaque nœud Mac :**
+
+```bash
+# Charge GPU et mémoire unifiée (macOS)
+sudo powermetrics --samplers gpu_power -i 1000 | grep -E "GPU|ANE"
+
+# Activité réseau Thunderbolt
+nettop -m tcp -J bytes_in,bytes_out
+```
+
+**Via Ollama (si utilisé comme frontend) :**
+
+```bash
+# Statut des modèles chargés
+curl http://localhost:11434/api/tags
+
+# Métriques de génération dans les logs
+ollama logs
+```
+
+**Indicateurs clés à surveiller :**
+
+| Métrique | Seuil d'alerte | Outil |
+| :-- | :-- | :-- |
+| TTFT | > 30 s sur prompt court | logs Exo |
+| Tokens/s | < 2 tok/s | logs Exo |
+| Mémoire unifiée par nœud | > 90 % | `vm_stat` / Activity Monitor |
+| Bande passante Thunderbolt | > 70 Gb/s soutenu | `nettop` |
+
+> [!note] Monitoring avancé
+> Pour un monitoring centralisé (Prometheus + Grafana), le projet communautaire [ollama-exporter](https://github.com/marcboeker/go-ollama) expose des métriques compatibles. Non officiel — à valider avant usage en production.
+
+---
+
 ## 📚 Sources et Références
 
 [^1]: Particula Tech, *Running DeepSeek V3 671B on M4 Mac Mini Cluster* (Performances via Thunderbolt 5 et Exo, Pipeline Parallelism constraints), Mars 2026.

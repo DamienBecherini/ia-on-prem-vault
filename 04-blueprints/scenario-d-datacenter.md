@@ -58,6 +58,64 @@ Si vous déployez des puces NVIDIA Blackwell (B200), le logiciel utilisera nativ
 
 ---
 
+## 📊 Monitoring recommandé
+
+Le scénario D est le seul blueprint qui justifie un monitoring outillé en production. Les éléments minimaux :
+
+**GPU et VRAM (par nœud) :**
+
+```bash
+# Surveillance en temps réel de tous les GPU
+watch -n 1 nvidia-smi
+
+# Format CSV pour export Prometheus
+nvidia-smi --query-gpu=timestamp,name,utilization.gpu,utilization.memory,\
+memory.used,memory.free,temperature.gpu,power.draw \
+--format=csv -l 5
+```
+
+**vLLM — métriques Prometheus natives :**
+
+vLLM expose un endpoint `/metrics` compatible Prometheus. Métriques clés :
+
+| Métrique vLLM | Description |
+| :-- | :-- |
+| `vllm:prompt_tokens_total` | Tokens de prompt traités |
+| `vllm:generation_tokens_total` | Tokens générés |
+| `vllm:request_success_total` | Requêtes terminées |
+| `vllm:avg_generation_throughput_toks_per_s` | Débit moyen en génération |
+| `vllm:gpu_cache_usage_perc` | Taux d'occupation du KV Cache |
+| `vllm:num_requests_running` | Requêtes en cours (continuous batching) |
+
+```bash
+# Vérifier l'endpoint métriques
+curl http://localhost:8000/metrics | grep vllm
+```
+
+**Stack recommandée :**
+
+```
+nvidia-smi (GPU) ──► node-exporter ──► Prometheus ──► Grafana
+vLLM /metrics ──────────────────────────────────────► Grafana
+```
+
+Les dashboards Grafana pour vLLM sont disponibles sur [grafana.com/grafana/dashboards](https://grafana.com/grafana/dashboards) (chercher "vLLM").
+
+**Réseau (RoCE/InfiniBand) :**
+
+```bash
+# Compteurs RDMA (erreurs, retransmissions)
+rdma statistic show
+
+# Perte de paquets sur interface RoCE
+ethtool -S <interface> | grep -E "rx_discards|tx_discards"
+```
+
+> [!warning] Surveiller la congestion RoCE
+> Une augmentation des retransmissions RDMA est le premier signal d'une mauvaise configuration PFC/ECN. À surveiller activement — une dégradation réseau non détectée peut diviser par dix le débit du cluster sans erreur visible applicative.
+
+---
+
 ## 📚 Sources et Références
 
 [^1]: NVIDIA Technical Blog, *NVIDIA NVLink and NVIDIA NVSwitch Supercharge Large Language Model Inference* (Architecture HGX, Blackwell NVLink 1.8 TB/s), 2024-2026.
