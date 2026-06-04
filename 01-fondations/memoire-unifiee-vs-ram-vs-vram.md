@@ -82,7 +82,7 @@ La mémoire de travail standard d'un PC classique, branchée sur des slots de ca
 
 ## 📋 Le Guide Décisionnel de l'Architecte
 
-Pour conseiller votre client PME dans le cadre d'un déploiement local (comme votre projet d'agent *OpenHuman*) :
+Pour conseiller votre client PME dans le cadre d'un déploiement local :
 
 1.  **VRAM dédiée (GPU discret)** : choix prioritaire pour la vitesse brute et les charges concurrentes.
 2.  **Mémoire unifiée Apple** : excellent débit local, stack simple à opérer, mais faible évolutivité matérielle.

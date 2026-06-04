@@ -48,9 +48,9 @@ Ray est très complexe à administrer. Il exige une infrastructure de classe ent
 
 ---
 
-## 📋 Le Conseil de l'Architecte pour OpenHuman
+## 📋 Le Conseil de l'Architecte
 
-Pour déployer vos agents autonomes *OpenHuman* chez des clients :
+Pour déployer des agents autonomes on-premise chez des clients :
 
 1.  **En phase de test ou pour un Labo PME :** Si vous devez faire tourner un modèle 70B et que vous possédez deux Mac Studio ou deux PC gamer de 32 Go, **installez Exo**. En 5 minutes, votre cluster est prêt et le modèle tourne sans investissement cloud supplémentaire.
 2.  **En production critique multi-utilisateurs :** Oubliez le P2P. Utilisez **Ray Serve avec vLLM** sur des serveurs Linux équipés de GPU dédiés. C'est la seule architecture logicielle qui vous garantira un monitoring précis, un routage intelligent des requêtes concurrentes et une vraie tolérance aux pannes au niveau du datacenter local.

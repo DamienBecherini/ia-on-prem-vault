@@ -1,6 +1,6 @@
 ---
 title: "🧩 RAG & Agents : L'architecture de la connaissance"
-description: Comment donner une mémoire privée et de l'autonomie à un LLM local. Du RAG standard aux workflows agentiques (SmolAgents, LangGraph) et l'approche "Memory Tree" d'OpenHuman.
+description: Comment donner une mémoire privée et de l'autonomie à un LLM local. Du RAG standard aux workflows agentiques (SmolAgents, LangGraph) et l'approche Memory Tree pour l'économie de VRAM.
 sidebar:
   order: 3
 ---
@@ -40,14 +40,15 @@ Popularisé par les recherches de Microsoft, le **[[00-lexique/graphrag|GraphRAG
 
 ---
 
-## 3. L'Approche OpenHuman : Les "Memory Trees"
+## 3. L'approche Memory Tree
 
-Le projet d'assistant souverain *OpenHuman* utilise une architecture hybride très spécifique pour économiser la VRAM sur des machines locales modestes : le **Memory Tree**[^6].
+Plutôt que d'utiliser une lourde base vectorielle, une architecture alternative s'appuie sur des **dossiers Markdown hiérarchiques** et une base de métadonnées SQLite locale[^6]. L'idée est de donner à l'agent une vue *résumée* de la connaissance disponible, et de ne charger le détail que si nécessaire.
 
-Plutôt que d'utiliser une lourde base vectorielle, OpenHuman s'appuie sur des dossiers Markdown et une base de métadonnées SQLite locale.
 *   **Hiérarchie :** L'agent ne charge jamais un document entier en mémoire. Il utilise le LLM pour lire le "titre" et un "résumé d'une ligne" de l'arbre des fichiers.
-*   **Injection sélective :** S'il juge un fichier pertinent, l'agent appelle une fonction pour "déplier" ce nœud spécifique de l'arbre et lire son contenu exact. 
+*   **Injection sélective :** S'il juge un fichier pertinent, l'agent appelle une fonction pour "déplier" ce nœud spécifique de l'arbre et lire son contenu exact.
 *   **Avantage architectural :** Le contexte reste minuscule (quelques centaines de tokens pour les résumés), ce qui maintient le [[00-lexique/ttft|TTFT]] (Temps avant le premier mot) sous la seconde et préserve les ressources matérielles, même avec un modèle dense lourd.
+
+> 🔍 **Pour aller plus loin :** cette approche est implémentée par plusieurs assistants personnels locaux — avec des degrés de souveraineté variables selon les projets. Une analyse comparative sera disponible dans la section [[05-agents-et-assistants-on-prem/assistants-personnels/index|Assistants Personnels On-Premise]] *(à venir)*.
 
 ---
 
@@ -68,4 +69,4 @@ Pour construire une stack logicielle d'entreprise souveraine en 2026 :
 [^3]: Vinod Rane (Medium), *Next-Generation Agentic RAG with LangGraph (2026 Edition)* (Graph orchestration, self-correcting RAG), Mars 2026.
 [^4]: Hugging Face, *Agentic RAG with SmolAgents* (RAG orchestration via Hugging Face light framework), 2025.
 [^5]: Neo4j Developer Blog, *What is agentic RAG? A developer's guide* (GraphRAG, ReAct, multi-agent RAG patterns), Mai 2026.
-[^6]: OpenHuman, *Memory Trees* (GitBook — pipeline local SQLite + Markdown, injection sélective pour économie VRAM), 2025.
+[^6]: OpenHuman, *Memory Trees* (GitBook — pipeline local SQLite + Markdown, injection sélective pour économie VRAM), 2025. Note : OpenHuman utilise par défaut un backend cloud pour le routage des modèles. Le *pattern* Memory Tree reste applicable dans une implémentation 100% on-premise indépendante du projet.

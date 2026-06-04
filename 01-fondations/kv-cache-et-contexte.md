@@ -106,13 +106,13 @@ Sur de très longs contextes, la phase de décodage devient limitée par la **ba
 
 ---
 
-## 📋 Le Conseil de l'Architecte pour OpenHuman
+## 📋 Le Conseil de l'Architecte
 
-Pour un projet de type assistant personnel comme *OpenHuman*, la gestion du KV cache dicte votre stratégie matérielle :
+Pour tout déploiement d'assistant on-premise, la gestion du KV cache dicte votre stratégie matérielle :
 
-1.  **Injectez le contexte, ne noyez pas le modèle :** Plutôt que de charger des fichiers entiers de 150 000 mots dans la fenêtre du LLM (ce qui saturerait votre VRAM dynamique), récupérez seulement les passages pertinents — via un **Memory Tree** structuré (chunks Markdown + résumés hiérarchiques, comme chez OpenHuman), un RAG vectoriel, ou les deux combinés [^14].
+1.  **Injectez le contexte, ne noyez pas le modèle :** Plutôt que de charger des fichiers entiers de 150 000 mots dans la fenêtre du LLM (ce qui saturerait votre VRAM dynamique), récupérez seulement les passages pertinents — via un **Memory Tree** structuré (chunks Markdown + résumés hiérarchiques)[^14], un RAG vectoriel, ou les deux combinés.
 2.  **Activez le FP8 KV Cache :** Si vous utilisez un moteur basé sur vLLM ou LMDeploy, configurez le KV cache en FP8 pour diviser par deux votre consommation dynamique de VRAM, en calibrant les scales si possible [^8].
-3.  **Surveillez le ratio Batch/Contexte :** Si votre serveur OpenHuman est partagé par plusieurs collaborateurs en simultané, n'oubliez pas que le KV Cache se multiplie par le nombre d'utilisateurs actifs ($B$).
+3.  **Surveillez le ratio Batch/Contexte :** Sur un serveur partagé par plusieurs collaborateurs en simultané, le KV Cache se multiplie par le nombre d'utilisateurs actifs ($B$) — dimensionner la VRAM en conséquence.
 
 ---
 

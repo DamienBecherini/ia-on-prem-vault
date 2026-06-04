@@ -53,9 +53,9 @@ La compilation d'un moteur TensorRT est lourde (*Ahead-of-Time*), très stricte 
 
 ---
 
-## 📋 Le Conseil de l'Architecte pour OpenHuman
+## 📋 Le Conseil de l'Architecte
 
-Pour un projet d'agent on-premise (*OpenHuman*) déployé chez des clients, le choix du moteur dépend purement du scénario d'architecture :
+Pour un projet d'agent on-premise déployé chez des clients, le choix du moteur dépend purement du scénario d'architecture :
 
 1.  **Cas d'usage "Copilote Local" (Un utilisateur, poste de bureau) :** 
     Choisissez **Ollama / llama.cpp**. Le support natif des modèles `GGUF` en [[00-lexique/quantification-q4|Q4]] sur Mac ou petit PC Windows permet une excellente réactivité sans infrastructure serveur.
