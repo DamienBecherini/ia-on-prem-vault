@@ -9,9 +9,8 @@ Un **[[00-lexique/agent-custodian|agent custodien]]** est un [[00-lexique/autono
 
 Son rôle n'est pas de "remplacer l'auteur". Il lit, vérifie, propose, documente ses choix, puis laisse l'humain décider.
 
-:::tip[Définition courte]
-Un agent custodien surveille un corpus, détecte ce qui mérite une mise à jour, produit une branche ou un rapport, et attend une validation humaine avant toute publication.
-:::
+> [!tip] Définition courte
+> Un agent custodien surveille un corpus, détecte ce qui mérite une mise à jour, produit une branche ou un rapport, et attend une validation humaine avant toute publication.
 
 ## Ce qu'il fait
 

@@ -18,9 +18,8 @@ Un agent custodien doit être autonome dans l'analyse, mais conservateur dans l'
 7. **Merge** : seulement après accord explicite.
 8. **Publication** : build + déploiement, séparés du travail d'édition.
 
-:::caution[Règle de sécurité]
-Un agent custodien ne merge jamais sur `main` et ne publie jamais sans validation humaine explicite.
-:::
+> [!warning] Règle de sécurité
+> Un agent custodien ne merge jamais sur `main` et ne publie jamais sans validation humaine explicite.
 
 ## Niveaux d'autonomie
 

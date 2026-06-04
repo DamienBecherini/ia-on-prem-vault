@@ -25,9 +25,8 @@ Le défi : beaucoup de logiciels présentent une interface locale tout en routan
 | Connaissance d'entreprise + agents | RAG structuré + workflows | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm|AnythingLLM]] | ⚠️ configurable |
 | Mémoire + [[00-lexique/memory-tree|Memory Tree]] hybride | Approche doc-first, acceptable si configuré souverain | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] | ⚠️ configurable |
 
-:::tip[Lecture rapide]
-Si vous voulez démarrer sans risque de cloud involontaire, commencez par Jan.ai. Si vous voulez une interface d'équipe, regardez Open WebUI. Si vous voulez RAG + workflows, comparez AnythingLLM et Khoj. OpenHuman est surtout intéressant pour son architecture [[00-lexique/memory-tree|Memory Tree]], mais doit être configuré explicitement pour une posture souveraine.
-:::
+> [!tip] Lecture rapide
+> Si vous voulez démarrer sans risque de cloud involontaire, commencez par Jan.ai. Si vous voulez une interface d'équipe, regardez Open WebUI. Si vous voulez RAG + workflows, comparez AnythingLLM et Khoj. OpenHuman est surtout intéressant pour son architecture [[00-lexique/memory-tree|Memory Tree]], mais doit être configuré explicitement pour une posture souveraine.
 
 ---
 

@@ -30,7 +30,7 @@ todos:
     content: "Phase 4 — Track B: custodian agents index + workflow + 6 solution sheets"
     status: done
   - id: phase-5-crosslinks
-    content: "Phase 5 — Cross-link new section into vault navigation and lexicon + Starlight asides retrofit"
+    content: "Phase 5 — Cross-link new section into vault navigation and lexicon + Obsidian callouts with build-time Starlight rendering"
     status: done
   - id: phase-6-validation
     content: "Phase 6 — Build, link audit, backlog update, report"
@@ -340,6 +340,13 @@ anythingllm → jan-ai → khoj.
 ---
 
 ### Phase 6 — Validation and report
+
+**Callout convention update before validation:**
+- Source Markdown keeps Obsidian-native callouts (`> [!tip] Title`) so the vault remains pleasant
+  to edit in Obsidian.
+- The Starlight engine converts those callouts during build to Starlight-styled asides.
+- Do not reintroduce raw `:::tip[...]` / `:::caution[...]` directives in vault source files unless a
+  page explicitly needs Starlight-only syntax.
 
 **Steps:**
 - [ ] Run `node scripts/generate-lexicon-index.mjs` after Phase 5 lexicon work.

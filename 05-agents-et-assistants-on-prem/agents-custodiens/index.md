@@ -9,9 +9,8 @@ sidebar:
 
 Un [[00-lexique/agent-custodian|agent custodien]] n'est pas un assistant : on ne lui parle pas pour lui poser des questions. On lui confie des **tâches récurrentes ou événementielles** — maintenir un vault à jour, détecter du code obsolète, proposer des corrections sourcées — et il travaille de manière autonome, en laissant la décision finale à un humain.
 
-:::tip[Exemple vivant]
-Ce vault lui-même est maintenu en partie par un agent custodien. Le dossier `.agents/` contient les scripts, prompts et journaux d'exécution qui orchestrent cette maintenance.
-:::
+> [!tip] Exemple vivant
+> Ce vault lui-même est maintenu en partie par un agent custodien. Le dossier `.agents/` contient les scripts, prompts et journaux d'exécution qui orchestrent cette maintenance.
 
 ---
 
