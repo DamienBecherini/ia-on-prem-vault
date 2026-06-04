@@ -21,13 +21,13 @@ This plan does **not** rewrite everything at once. Each phase has a clear exit c
 
 | File | Sidebar order | Role |
 |------|---------------|------|
-| `01-fondations/le-voyage-d-un-prompt.md` | 0 | Pedagogical “C’est pas sorcier” narrative: tokenisation → embedding → prefill → KV cache → decoding |
-| `03-stack-logicielle/moteurs-inference-vllm-ollama.md` | 1 | Ollama/llama.cpp vs vLLM vs TensorRT-LLM |
-| `03-stack-logicielle/clustering-exo-et-ray.md` | 2 | Exo P2P vs Ray + vLLM datacenter clustering |
-| `03-stack-logicielle/rag-et-agents-openhuman.md` | 3 | RAG, Agentic RAG, GraphRAG, OpenHuman Memory Trees |
-| `04-blueprints/scenario-a-labo-dev.md` | 1 | Homelab / CPU offloading blueprint |
-| `04-blueprints/scenario-b-pme-appliance.md` | 2 | Unified-memory PME appliance |
-| `04-blueprints/scenario-c-cluster-bureau.md` | 3 | Exo + Thunderbolt desk cluster |
+| `01-fondations/journey-of-a-prompt.md` | 0 | Pedagogical “C’est pas sorcier” narrative: tokenisation → embedding → prefill → KV cache → decoding |
+| `03-stack-logicielle/inference-engines-vllm-ollama.md` | 1 | Ollama/llama.cpp vs vLLM vs TensorRT-LLM |
+| `03-stack-logicielle/clustering-exo-and-ray.md` | 2 | Exo P2P vs Ray + vLLM datacenter clustering |
+| `03-stack-logicielle/rag-and-agents.md` | 3 | RAG, Agentic RAG, GraphRAG, OpenHuman Memory Trees |
+| `04-blueprints/scenario-a-dev-lab.md` | 1 | Homelab / CPU offloading blueprint |
+| `04-blueprints/scenario-b-sme-appliance.md` | 2 | Unified-memory PME appliance |
+| `04-blueprints/scenario-c-desktop-cluster.md` | 3 | Exo + Thunderbolt desk cluster |
 | `04-blueprints/scenario-d-datacenter.md` | 4 | RoCE / multi-GPU enterprise blueprint |
 
 ### Modified files (uncommitted diff)
@@ -59,8 +59,8 @@ This plan does **not** rewrite everything at once. Each phase has a clear exit c
 
 - English translations under `en/` for all new chapters
 - Explicit **“Parcours débutant”** block in `00-index.md` (run log mentions it; current file only reorders 01-fondations)
-- Updates to `00-lexique/glossaire-ia.md` for beginner path and new stack terms
-- Regenerated `index-lexique.md` after any new lexicon entries
+- Updates to `00-lexique/ai-glossary.md` for beginner path and new stack terms
+- Regenerated `lexicon-index.md` after any new lexicon entries
 
 ---
 
@@ -120,7 +120,7 @@ Flagged patterns across Gemini chapters:
 
 - `site.config.json` sidebar autogenerate for 03/04 — validate order matches narrative (moteurs → clustering → RAG; scenarios A→D).
 - Confirm `publish.exclude` still hides plans and agent files.
-- After lexicon work: run `node scripts/generate-lexicon-index.mjs` from `starlight-obsidian-engine` and commit updated `index-lexique.md`.
+- After lexicon work: run `node scripts/generate-lexicon-index.mjs` from `starlight-obsidian-engine` and commit updated `lexicon-index.md`.
 
 ---
 
@@ -204,7 +204,7 @@ Flagged patterns across Gemini chapters:
 - [ ] Extend `kv-cache.md` and `llm.md` with the same bridge pattern where missing.
 - [ ] Add explicit **“Parcours débutant — je ne sais pas par où commencer”** section to `00-index.md`:
   - LLM → Inférence → Voyage d'un prompt → Bande passante → KV Cache → …
-- [ ] Mirror the beginner path at the top of `glossaire-ia.md` (before “Performance d'inférence”).
+- [ ] Mirror the beginner path at the top of `ai-glossary.md` (before “Performance d'inférence”).
 - [ ] Fix voyage footnote `[^1]`: cite Llama 3 model card or equivalent official source.
 
 **Exit criterion:** Manual walk-through from glossaire → prefill → voyage → bande passante works with no dead conceptual jumps.
@@ -242,7 +242,7 @@ Flagged patterns across Gemini chapters:
 - [ ] Create minimal entries: `exo`, `ray`, `thunderbolt`, `pipeline-parallelism`, `tensor-parallelism`.
 - [ ] Each entry: short definition, on-prem relevance, pitfalls, `📚 Pour comprendre en profondeur` → owning chapter section.
 - [ ] Add wikilinks in chapters where terms are still plain text (e.g. Tensor Parallelism in moteurs chapter).
-- [ ] Regenerate `index-lexique.md`.
+- [ ] Regenerate `lexicon-index.md`.
 - [ ] Move completed items to backlog `Done`.
 
 **Exit criterion:** Link graph has no broken lexicon targets from 03/04 chapters (grep `[[00-lexique/` vs filesystem).
@@ -260,7 +260,7 @@ Flagged patterns across Gemini chapters:
 - [ ] Create P1: `pagedattention`, `gguf`, `tensorrt-llm`.
 - [ ] Create P2: `vectordb`, `graphrag`, `agent-autonome`, `smolagents`.
 - [ ] Wire wikilinks in `moteurs-inference-vllm-ollama.md` and `rag-et-agents-openhuman.md`.
-- [ ] Extend `glossaire-ia.md` with a **“Stack logicielle & agents”** learning path.
+- [ ] Extend `ai-glossary.md` with a **“Stack logicielle & agents”** learning path.
 - [ ] Regenerate lexicon index; update backlog.
 
 **Exit criterion:** Stack chapters use wikilinks for all recurring product/pattern names listed in P1/P2.
@@ -351,7 +351,7 @@ Flagged patterns across Gemini chapters:
 - [ ] Beginner path: glossaire → inference → voyage → prefill/decoding → bande passante (manual)
 - [ ] No broken `[[00-lexique/…]]` targets in 01/03/04 public markdown
 - [ ] Gemini chapters: all footnotes verified or claims softened
-- [ ] `index-lexique.md` regenerated and matches filesystem count
+- [ ] `lexicon-index.md` regenerated and matches filesystem count
 - [ ] `lexicon-backlog.md` reflects Done vs To Create accurately
 - [ ] Starlight build green
 - [ ] Implementation report appended to this plan file
@@ -392,11 +392,11 @@ Files changed:
 | `00-lexique/inference.md` | Added `📚 Pour comprendre en profondeur` (voyage, bande passante, moteurs) |
 | `00-lexique/kv-cache.md` | Added `🔬 Ce n'est pas de la magie` + `📚 Pour comprendre` (voyage étape 4, kv-cache-et-contexte, bande passante) |
 | `00-lexique/llm.md` | Added `📚 Pour comprendre` (voyage, inférence, quantification) |
-| `01-fondations/le-voyage-d-un-prompt.md` | Intro callout with `[[llm]]` + `[[inference]]` links ; footnote [^1] pointed to specific Llama 3.1 model card path |
-| `01-fondations/la-bande-passante-memoire.md` | Prerequisite callout → voyage |
+| `01-fondations/journey-of-a-prompt.md` | Intro callout with `[[llm]]` + `[[inference]]` links ; footnote [^1] pointed to specific Llama 3.1 model card path |
+| `01-fondations/memory-bandwidth.md` | Prerequisite callout → voyage |
 | `00-index.md` | Section `🚶 Je découvre` (5-step beginner path) added before glossaire link |
-| `00-lexique/glossaire-ia.md` | Section `🚶 Débutant — je découvre` with full learning chain added before `Parcours recommandé` |
-| `00-lexique/index-lexique.md` | Regenerated (27 entries, unchanged count) |
+| `00-lexique/ai-glossary.md` | Section `🚶 Débutant — je découvre` with full learning chain added before `Parcours recommandé` |
+| `00-lexique/lexicon-index.md` | Regenerated (27 entries, unchanged count) |
 
 Exit criterion met: beginner path LLM → Inférence → Voyage → Prefill/Decoding → Memory Wall → Bande Passante is walkable in one click per step.
 
@@ -432,9 +432,9 @@ Created 3 pedagogical micro-concept entries:
 | `00-lexique/embedding.md` | Token vectors, LLM internal vs RAG search embeddings distinction |
 | `00-lexique/attention.md` | Q/K/V mechanism, O(n²) prefill cost, GQA note, KV Cache link |
 
-Updated `01-fondations/le-voyage-d-un-prompt.md`: wikilinks added for "La Tokenisation" (step 1), "L'Embedding" (step 2), "mécanisme d'Attention" (step 3).
+Updated `01-fondations/journey-of-a-prompt.md`: wikilinks added for "La Tokenisation" (step 1), "L'Embedding" (step 2), "mécanisme d'Attention" (step 3).
 
-Updated `00-lexique/glossaire-ia.md`: new "Fondations LLM" table added before "Mémoire & performance".
+Updated `00-lexique/ai-glossary.md`: new "Fondations LLM" table added before "Mémoire & performance".
 
 ### Phase 6 — Completed 2026-06-03
 
@@ -460,7 +460,7 @@ Updated `00-lexique/glossaire-ia.md`: new "Fondations LLM" table added before "M
 | `00-lexique/rdma.md` | GPUDirect RDMA mention, IB vs RoCE distinction |
 | `00-lexique/roce.md` | PFC+ECN/DCQCN requirements, lossless/lossy nuance, IB vs RoCE comparison |
 
-Updated `00-lexique/glossaire-ia.md`: new "Réseau & Clustering" table (RDMA, RoCE, InfiniBand, GPUDirect RDMA, NCCL, PFC, ECN), NVSwitch added to "Infrastructure & architecture", 3 acronyms added to index.
+Updated `00-lexique/ai-glossary.md`: new "Réseau & Clustering" table (RDMA, RoCE, InfiniBand, GPUDirect RDMA, NCCL, PFC, ECN), NVSwitch added to "Infrastructure & architecture", 3 acronyms added to index.
 
 ### Phase 7 — Completed 2026-06-03
 
@@ -477,7 +477,7 @@ Narrative chain A→B→C→D is now fully navigable from within each "❌ Quand
 
 ### Phase 8 — Completed 2026-06-03
 
-- `00-lexique/index-lexique.md` regenerated: **48 entries** (up from 39 after Phase 4).
+- `00-lexique/lexicon-index.md` regenerated: **48 entries** (up from 39 after Phase 4).
 - `lexicon-backlog.md` rewritten: all "To Create" and "To Verify Or Update" sections cleared; full "Done" log with phase breakdown.
 - Plan report appended (this section).
 

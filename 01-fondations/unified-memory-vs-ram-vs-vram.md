@@ -90,7 +90,7 @@ Pour conseiller votre client PME dans le cadre d'un déploiement local :
 4.  **RAM DDR5 seule** : pertinent surtout pour des traitements différés ou des modèles plus petits.
 
 > 🔗 **Lien connexe :**
-> Pour comprendre comment dimensionner la capacité de mémoire nécessaire pour votre modèle sans faire d'erreur "Out Of Memory" (OOM), consultez le chapitre sur la [[01-fondations/quantification-4-bit-8-bit\|Quantification des modèles]].
+> Pour comprendre comment dimensionner la capacité de mémoire nécessaire pour votre modèle sans faire d'erreur "Out Of Memory" (OOM), consultez le chapitre sur la [[01-fondations/quantization-4bit-8bit\|Quantification des modèles]].
 
 ---
 

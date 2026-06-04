@@ -35,12 +35,12 @@ Le coût quadratique du Prefill explique pourquoi les prompts très longs (100K+
 - GQA (Grouped-Query Attention, utilisé dans Llama 3+) réduit la taille du KV Cache en partageant les têtes K/V entre plusieurs têtes Q — sans supprimer le mécanisme d'attention.
 
 ## 📚 Pour comprendre en profondeur
-1. [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] *(Étape 3 : le Prefill et l'attention en action)*
-2. [[01-fondations/kv-cache-et-contexte|💾 KV Cache & Contexte]] *(ce que l'attention stocke et pourquoi ça pèse sur la VRAM)*
+1. [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]] *(Étape 3 : le Prefill et l'attention en action)*
+2. [[01-fondations/kv-cache-and-context|💾 KV Cache & Contexte]] *(ce que l'attention stocke et pourquoi ça pèse sur la VRAM)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/kv-cache|KV Cache]]
 - [[00-lexique/prefill|Prefill]]
 - [[00-lexique/embedding|Embedding]]
-- [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/context-window|Fenêtre de contexte]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

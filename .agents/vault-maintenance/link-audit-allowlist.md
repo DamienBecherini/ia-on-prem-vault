@@ -11,4 +11,4 @@ Lists wiki-links that intentionally target pages not yet published. Used by `npm
 
 ## Slugs
 
-- 03-stack-logicielle/rag-et-agents-openhuman
+- 03-stack-logicielle/rag-and-agents

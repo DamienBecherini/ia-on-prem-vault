@@ -27,4 +27,4 @@ Elle conditionne la possibilité de charger de gros modèles à coût réduit, m
 ## 🔗 Voir aussi
 - [[00-lexique/vram|VRAM]]
 - [[00-lexique/offloading|Offloading]]
-- [[01-fondations/memoire-unifiee-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]
+- [[01-fondations/unified-memory-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]

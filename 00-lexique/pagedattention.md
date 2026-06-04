@@ -25,11 +25,11 @@ C'est l'innovation principale qui explique pourquoi vLLM surpasse Ollama en prod
 - Ne résout pas les contraintes de capacité totale : si le modèle + les caches dépassent la VRAM totale, l'OOM survient quand même.
 
 ## 📚 Pour comprendre en profondeur
-1. [[03-stack-logicielle/moteurs-inference-vllm-ollama|⚙️ Moteurs d'Inférence]] *(pourquoi vLLM > Ollama en production)*
-2. [[01-fondations/kv-cache-et-contexte|💾 KV Cache & Contexte]] *(le mécanisme du cache que PagedAttention optimise)*
+1. [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence]] *(pourquoi vLLM > Ollama en production)*
+2. [[01-fondations/kv-cache-and-context|💾 KV Cache & Contexte]] *(le mécanisme du cache que PagedAttention optimise)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/kv-cache|KV Cache]]
 - [[00-lexique/vram|VRAM]]
-- [[00-lexique/tokens-par-seconde|Tokens par seconde]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/tokens-per-second|Tokens par seconde]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

@@ -25,5 +25,5 @@ C'est l'indicateur clé pour prévoir la fluidité en génération sur des LLM v
 
 ## 🔗 Voir aussi
 - [[00-lexique/memory-wall|Memory Wall]]
-- [[00-lexique/tokens-par-seconde|Tokens par seconde]]
-- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]
+- [[00-lexique/tokens-per-second|Tokens par seconde]]
+- [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]

@@ -36,5 +36,5 @@ La disponibilité et le débit VRAM déterminent quels modèles peuvent tourner 
 - [[00-lexique/memory-wall|Memory Wall]]
 - [[00-lexique/hbm|HBM]]
 - [[00-lexique/ram|RAM]]
-- [[00-lexique/memoire-unifiee|Mémoire unifiée]]
-- [[01-fondations/memoire-unifiee-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]
+- [[00-lexique/unified-memory|Mémoire unifiée]]
+- [[01-fondations/unified-memory-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]

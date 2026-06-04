@@ -34,7 +34,7 @@ Test explicit activation of `vault-maintenance-report` with a read-only audit of
 
 ## Sources Consulted
 
-- `02-materiel/apu-et-memoire-unifiee.md`
+- `02-materiel/apu-and-unified-memory.md`
 - `02-materiel/stations-multi-gpu.md`
 - `.agents/skills/vault-maintenance-report/SKILL.md`
 - `.agents/skills/vault-maintenance-report/references/maintenance-policy.md`

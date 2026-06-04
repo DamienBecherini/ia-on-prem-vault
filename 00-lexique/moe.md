@@ -22,4 +22,4 @@ Cela peut améliorer le rapport qualité/coût d'inférence selon l'implémentat
 ## 🔗 Voir aussi
 - [[00-lexique/llm|LLM]]
 - [[00-lexique/quantification|Quantification]]
-- [[00-lexique/tokens-par-seconde|Tokens par seconde]]
+- [[00-lexique/tokens-per-second|Tokens par seconde]]

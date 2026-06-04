@@ -21,7 +21,7 @@ skills:
 Créer le troisième blueprint du chapitre 04, démontrant l'utilisation du framework Exo sur du matériel Mac Mini relié en Thunderbolt pour briser la limite de capacité de la mémoire unifiée.
 
 ## Files Changed
-- Création : `04-blueprints/scenario-c-cluster-bureau.md`
+- Création : `04-blueprints/scenario-c-desktop-cluster.md`
 - Modification : `.agents/vault-maintenance/lexicon-backlog.md`
 - Création : ce run log.
 

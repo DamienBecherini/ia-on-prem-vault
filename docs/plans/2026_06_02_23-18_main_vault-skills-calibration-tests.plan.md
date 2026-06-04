@@ -9,7 +9,7 @@ todos:
     content: Test implicit activation on a freshness audit request
     status: completed
   - id: generation-real-page
-    content: Test generation with a real page to produce, 02-materiel/reseau-ia-roce-et-thunderbolt.md
+    content: Test generation with a real page to produce, 02-materiel/network-roce-infiniband-thunderbolt.md
     status: completed
   - id: calibration-small-task
     content: Test that a small fix does not trigger a heavy procedure
@@ -34,7 +34,7 @@ This plan covers the five defined test points:
 4. Calibration by task size.
 5. Verifiable concrete result.
 
-The generation test must also advance the vault: it will produce the real next page of the hardware chapter, `02-materiel/reseau-ia-roce-et-thunderbolt.md`.
+The generation test must also advance the vault: it will produce the real next page of the hardware chapter, `02-materiel/network-roce-infiniband-thunderbolt.md`.
 
 ## Scope
 
@@ -48,7 +48,7 @@ Skills to test:
 
 Files that may be created or modified during tests:
 
-- `02-materiel/reseau-ia-roce-et-thunderbolt.md`
+- `02-materiel/network-roce-infiniband-thunderbolt.md`
 - `.agents/vault-maintenance/lexicon-backlog.md`
 - `.agents/vault-maintenance/runs/YYYY/MM/*.md`
 - `docs/plans/2026_06_02_23-18_main_vault-skills-calibration-tests.plan.md`
@@ -125,7 +125,7 @@ Test `vault-generate-content`, `vault-log-run`, and the public content / agent n
 Create:
 
 ```text
-02-materiel/reseau-ia-roce-et-thunderbolt.md
+02-materiel/network-roce-infiniband-thunderbolt.md
 ```
 
 This page is the next building block of chapter `02 - Le Matériel`, after `APU et Mémoire Unifiée` and `Stations Multi-GPU`.
@@ -152,7 +152,7 @@ The page should explain how to connect machines or accelerators for on-prem AI:
 ### Test prompt
 
 ```text
-Generate the page 02-materiel/reseau-ia-roce-et-thunderbolt.md using the vault-generate-content workflow.
+Generate the page 02-materiel/network-roce-infiniband-thunderbolt.md using the vault-generate-content workflow.
 This page should advance chapter 02 of the vault.
 Respect the public content / agent notes boundary: no lexicon follow-up or run log section in the public article.
 Put lexicon follow-up in .agents/vault-maintenance/lexicon-backlog.md and create a run log.
@@ -223,7 +223,7 @@ git status --short
 
 ### Manual checks
 
-- `02-materiel/reseau-ia-roce-et-thunderbolt.md` contains no agent section.
+- `02-materiel/network-roce-infiniband-thunderbolt.md` contains no agent section.
 - `.agents/vault-maintenance/lexicon-backlog.md` contains any lexicon follow-up.
 - `.agents/vault-maintenance/runs/` contains run logs for significant tasks.
 - Plans and `.agents/**` files remain excluded from publication.
@@ -259,7 +259,7 @@ All five plan tests were executed.
 
 1. **Explicit activation**: used `vault-maintenance-report` for a read-only audit of `02-materiel/`.
 2. **Implicit activation**: read-only freshness audit of the hardware chapter without requesting modifications.
-3. **Real generation**: created `02-materiel/reseau-ia-roce-et-thunderbolt.md`.
+3. **Real generation**: created `02-materiel/network-roce-infiniband-thunderbolt.md`.
 4. **Micro-task calibration**: single correction of `systeme` to `système` in `02-materiel/stations-multi-gpu.md`, without dedicated plan or run log.
 5. **Final validation**: searched for agent leakage, IDE diagnostics, Starlight build.
 
@@ -269,7 +269,7 @@ Plan prompts were followed in spirit. The generation test was executed as a real
 
 ### Files created
 
-- `02-materiel/reseau-ia-roce-et-thunderbolt.md`
+- `02-materiel/network-roce-infiniband-thunderbolt.md`
 - `.agents/vault-maintenance/runs/2026/06/2026_06_02_23-21_main_explicit-maintenance-audit-02-materiel.md`
 - `.agents/vault-maintenance/runs/2026/06/2026_06_02_23-25_main_generate-reseau-ia-roce-et-thunderbolt.md`
 - `docs/plans/2026_06_02_23-18_main_vault-skills-calibration-tests.plan.md`
@@ -304,7 +304,7 @@ One modified file was already visible in status during validation but was not ed
 **Test 3 - Real generation and anti-drift**
 
 - Result: passed.
-- Article created: `02-materiel/reseau-ia-roce-et-thunderbolt.md`.
+- Article created: `02-materiel/network-roce-infiniband-thunderbolt.md`.
 - The article contains no agent section, run log, or internal lexicon follow-up.
 - Strong technical claims use NVIDIA, Intel/Thunderbolt, and vLLM sources.
 - Lexicon follow-up was placed in `.agents/vault-maintenance/lexicon-backlog.md`.
@@ -343,7 +343,7 @@ Result:
 - Lexicon index regenerated: 26 entries.
 - Link graph regenerated: 35 targets, 161 backlinks.
 - Vault loader: 9 unpublished files excluded.
-- New route generated: `/02-materiel/reseau-ia-roce-et-thunderbolt/index.html`.
+- New route generated: `/02-materiel/network-roce-infiniband-thunderbolt/index.html`.
 - Pages generated: 76.
 - Build completed successfully.
 

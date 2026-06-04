@@ -62,4 +62,4 @@ Les niveaux d'autonomie varient : de "rapport seulement" jusqu'à "commit automa
 
 - [[05-agents-et-assistants-on-prem/index|🤖 Vue d'ensemble : Agents & Assistants]]
 - [[05-agents-et-assistants-on-prem/assistants-personnels/index|🧑‍💼 Assistants Personnels — l'IA qui vous connaît]]
-- [[00-lexique/agent-autonome|Agent autonome]] · [[00-lexique/smolagents|SmolAgents]]
+- [[00-lexique/autonomous-agent|Agent autonome]] · [[00-lexique/smolagents|SmolAgents]]

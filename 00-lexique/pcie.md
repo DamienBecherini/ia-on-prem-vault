@@ -37,4 +37,4 @@ Le coût des transferts PCIe influence fortement l'offloading CPU→GPU et est l
 - [[00-lexique/nvlink|NVLink]]
 - [[00-lexique/offloading|Offloading]]
 - [[00-lexique/multi-gpu|Multi-GPU]]
-- [[00-lexique/memoire-unifiee|Mémoire unifiée]]
+- [[00-lexique/unified-memory|Mémoire unifiée]]

@@ -49,7 +49,7 @@ Avant d'évaluer n'importe quel outil de cette section, une question s'impose :
 
 L'interface peut être locale, la page marketing peut dire "privacy-first", et pourtant le modèle peut tourner sur les serveurs du prestataire. Ce piège est fréquent — et souvent non documenté en première page.
 
-La [[05-agents-et-assistants-on-prem/fondations-communes/souverainete-et-confidentialite|grille d'évaluation souveraineté]] *(à venir — Phase 2)* donne un protocole en 6 critères pour auditer n'importe quel outil en moins de 15 minutes.
+La [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|grille d'évaluation souveraineté]] *(à venir — Phase 2)* donne un protocole en 6 critères pour auditer n'importe quel outil en moins de 15 minutes.
 
 ---
 
@@ -57,6 +57,6 @@ La [[05-agents-et-assistants-on-prem/fondations-communes/souverainete-et-confide
 
 Avant d'explorer cette section, les chapitres suivants vous donnent le contexte matériel et logiciel :
 
-- [[03-stack-logicielle/rag-et-agents-openhuman|🧩 RAG & Agents : L'architecture de la connaissance]] — les patterns Memory Tree, Agentic RAG et GraphRAG
-- [[04-blueprints/scenario-a-labo-dev|🛠️ Blueprint A]] · [[04-blueprints/scenario-b-pme-appliance|🏢 B]] · [[04-blueprints/scenario-c-cluster-bureau|🖥️ C]] · [[04-blueprints/scenario-d-datacenter|🏭 D]] — dimensionner le matériel en fonction de l'usage
-- [[00-lexique/agent-autonome|Agent autonome]] · [[00-lexique/rag|RAG]] · [[00-lexique/smolagents|SmolAgents]] — les concepts du lexique
+- [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents : L'architecture de la connaissance]] — les patterns Memory Tree, Agentic RAG et GraphRAG
+- [[04-blueprints/scenario-a-dev-lab|🛠️ Blueprint A]] · [[04-blueprints/scenario-b-sme-appliance|🏢 B]] · [[04-blueprints/scenario-c-desktop-cluster|🖥️ C]] · [[04-blueprints/scenario-d-datacenter|🏭 D]] — dimensionner le matériel en fonction de l'usage
+- [[00-lexique/autonomous-agent|Agent autonome]] · [[00-lexique/rag|RAG]] · [[00-lexique/smolagents|SmolAgents]] — les concepts du lexique

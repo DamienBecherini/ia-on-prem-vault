@@ -22,5 +22,5 @@ En inférence auto-régressive, la mémoire et les transferts peuvent dominer.
 
 ## 🔗 Voir aussi
 - [[00-lexique/memory-wall|Memory Wall]]
-- [[00-lexique/bande-passante-memoire|Bande passante mémoire]]
-- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]
+- [[00-lexique/memory-bandwidth|Bande passante mémoire]]
+- [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]

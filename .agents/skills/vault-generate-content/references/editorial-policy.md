@@ -35,7 +35,7 @@ During chapter generation:
 - Link important existing terms with Obsidian wikilinks.
 - Create a checklist of new lexicon entries to add.
 - List existing linked entries to verify or update when the new article changes definitions, formulas, or recommendations.
-- Consider whether `00-lexique/glossaire-ia.md` needs a hub update for major terms.
+- Consider whether `00-lexique/ai-glossary.md` needs a hub update for major terms.
 
 ## Language
 
@@ -47,9 +47,9 @@ Repository tooling, skills, and agent plans remain in English.
 
 Use Obsidian wikilinks for internal vault references:
 
-- Chapter: `[[01-fondations/kv-cache-et-contexte]]`
+- Chapter: `[[01-fondations/kv-cache-and-context]]`
 - Lexicon: `[[00-lexique/kv-cache]]`
-- Labelled link: `[[00-lexique/glossaire-ia|Glossaire IA]]`
+- Labelled link: `[[00-lexique/ai-glossary|Glossaire IA]]`
 
 Use footnotes for external sources. Place the footnote marker near the claim it supports and keep the source list at the end of the article.
 

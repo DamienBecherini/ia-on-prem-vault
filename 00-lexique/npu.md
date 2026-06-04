@@ -22,4 +22,4 @@ Peut améliorer l'efficacité énergétique de certains workloads, mais ne rempl
 ## 🔗 Voir aussi
 - [[00-lexique/apu|APU]]
 - [[00-lexique/llm|LLM]]
-- [[00-lexique/memoire-unifiee|Mémoire unifiée]]
+- [[00-lexique/unified-memory|Mémoire unifiée]]

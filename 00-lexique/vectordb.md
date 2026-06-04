@@ -25,14 +25,14 @@ Limite principale dans le RAG classique : la recherche est "aveugle" — elle tr
 Brique centrale du RAG standard. Doit être déployée localement pour préserver la souveraineté des données.
 
 ## ⚠️ Pièges fréquents
-- Renvoyer trop de résultats (ex : top-20) gonfle le prompt et sature la [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]] du modèle.
+- Renvoyer trop de résultats (ex : top-20) gonfle le prompt et sature la [[00-lexique/context-window|Fenêtre de contexte]] du modèle.
 - La qualité des embeddings est critique : un mauvais modèle d'embedding donne de mauvais résultats de recherche indépendamment de la base.
 
 ## 📚 Pour comprendre en profondeur
-1. [[03-stack-logicielle/rag-et-agents-openhuman|🧩 RAG & Agents]] *(le pipeline complet RAG et ses alternatives agentiques)*
+1. [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] *(le pipeline complet RAG et ses alternatives agentiques)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/rag|RAG]]
 - [[00-lexique/graphrag|GraphRAG]]
-- [[00-lexique/fenetre-de-contexte|Fenêtre de contexte]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/context-window|Fenêtre de contexte]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

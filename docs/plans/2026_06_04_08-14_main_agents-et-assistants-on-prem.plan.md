@@ -10,13 +10,19 @@ related: docs/plans/2026_06_04_00-00_main_editorial-improvements.plan.md (B4 del
 todos:
   - id: phase-0-openhuman-cleanup
     content: "Phase 0 — Strip OpenHuman branding from existing chapters"
-    status: pending
+    status: done
   - id: phase-1-structure
     content: "Phase 1 — Create section skeleton and entry pages"
-    status: pending
+    status: done
   - id: phase-2-foundations
     content: "Phase 2 — Write shared sovereignty and architecture foundations"
-    status: pending
+    status: done
+  - id: gemini-fixes-non-blocking
+    content: "Gemini fixes (NVLink, plans archive, delegate.mjs) — parallel to main phases"
+    status: in-progress
+  - id: slug-rename
+    content: "PRIORITAIRE — Renommer tous les slugs FR → anglais neutres + réparer wikilinks"
+    status: done
   - id: phase-3-track-a
     content: "Phase 3 — Track A: personal assistants index + 5 solution sheets"
     status: pending
@@ -24,7 +30,7 @@ todos:
     content: "Phase 4 — Track B: custodian agents index + workflow + 6 solution sheets"
     status: pending
   - id: phase-5-crosslinks
-    content: "Phase 5 — Cross-link new section into vault navigation and lexicon"
+    content: "Phase 5 — Cross-link new section into vault navigation and lexicon + Starlight asides retrofit"
     status: pending
   - id: phase-6-validation
     content: "Phase 6 — Build, link audit, backlog update, report"
@@ -60,7 +66,7 @@ machine, or does it phone home by default?"*
 ## Context and prior work
 
 - `01-fondations/` through `04-blueprints/` established the hardware and engine foundations.
-- `03-stack-logicielle/rag-et-agents-openhuman.md` introduced RAG and agentic patterns but is
+- `03-stack-logicielle/rag-and-agents.md` introduced RAG and agentic patterns but is
   named after a specific project (OpenHuman) and lacks proper context for external readers.
 - The old plan `2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md` planned Track B
   only; it is superseded by this document.
@@ -152,19 +158,19 @@ creates the proper canonical reference. Replace with generic "Conseil de l'Archi
 
 | File | Current issue | Fix |
 |------|--------------|-----|
-| `01-fondations/la-bande-passante-memoire.md` | Inline "projet OpenHuman" | Generic phrasing |
-| `01-fondations/kv-cache-et-contexte.md` | Section header + inline mentions | Strip brand, keep advice |
-| `01-fondations/memoire-unifiee-vs-ram-vs-vram.md` | "votre projet d'agent OpenHuman" | Generic phrasing |
-| `01-fondations/quantification-4-bit-8-bit.md` | Section header | Rename to "Conseil de l'Architecte" |
-| `02-materiel/apu-et-memoire-unifiee.md` | Section header + inline | Rename + strip brand |
+| `01-fondations/memory-bandwidth.md` | Inline "projet OpenHuman" | Generic phrasing |
+| `01-fondations/kv-cache-and-context.md` | Section header + inline mentions | Strip brand, keep advice |
+| `01-fondations/unified-memory-vs-ram-vs-vram.md` | "votre projet d'agent OpenHuman" | Generic phrasing |
+| `01-fondations/quantization-4bit-8bit.md` | Section header | Rename to "Conseil de l'Architecte" |
+| `02-materiel/apu-and-unified-memory.md` | Section header + inline | Rename + strip brand |
 | `02-materiel/stations-multi-gpu.md` | Section header + inline | Rename + strip brand |
-| `02-materiel/reseau-ia-roce-et-thunderbolt.md` | Section header + inline | Rename + strip brand |
-| `03-stack-logicielle/moteurs-inference-vllm-ollama.md` | Section header + inline | Rename + strip brand |
-| `03-stack-logicielle/clustering-exo-et-ray.md` | Section header + inline | Rename + strip brand |
-| `03-stack-logicielle/rag-et-agents-openhuman.md` | Section 3 title + full section | Keep Memory Trees concept, reattribute generically; add forward-link note |
-| `00-lexique/agent-autonome.md` | "Clé du projet OpenHuman" | Remove brand, keep meaning |
+| `02-materiel/network-roce-infiniband-thunderbolt.md` | Section header + inline | Rename + strip brand |
+| `03-stack-logicielle/inference-engines-vllm-ollama.md` | Section header + inline | Rename + strip brand |
+| `03-stack-logicielle/clustering-exo-and-ray.md` | Section header + inline | Rename + strip brand |
+| `03-stack-logicielle/rag-and-agents.md` | Section 3 title + full section | Keep Memory Trees concept, reattribute generically; add forward-link note |
+| `00-lexique/autonomous-agent.md` | "Clé du projet OpenHuman" | Remove brand, keep meaning |
 | `00-lexique/smolagents.md` | "pour les déploiements OpenHuman" | Remove brand, keep meaning |
-| `04-blueprints/scenario-b-pme-appliance.md` | "type OpenHuman" | Replace with "agent souverain local" |
+| `04-blueprints/scenario-b-sme-appliance.md` | "type OpenHuman" | Replace with "agent souverain local" |
 
 **Footnote audit:**
 - `kv-cache-et-contexte.md` [^14] points to OpenHuman GitBook for Memory Trees — keep the link
@@ -208,8 +214,8 @@ creates the proper canonical reference. Replace with generic "Conseil de l'Archi
 ### Phase 2 — Shared sovereignty foundations
 
 **Files to create:**
-- `05-agents-et-assistants-on-prem/fondations-communes/souverainete-et-confidentialite.md`
-- `05-agents-et-assistants-on-prem/fondations-communes/architectures-possibles.md`
+- `05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy.md`
+- `05-agents-et-assistants-on-prem/fondations-communes/possible-architectures.md`
 
 **`souverainete-et-confidentialite.md` content outline:**
 1. The 6-criteria evaluation grid (data location, model routing, memory backend,
@@ -316,9 +322,9 @@ anythingllm → jan-ai → khoj.
 **Files to modify:**
 
 - `00-index.md` — add `05-` section to Sommaire + link to sovereignty chapter (B5 closure)
-- `00-lexique/glossaire-ia.md` — add new section or entries for: human-in-the-loop, agent custodien
-- `03-stack-logicielle/rag-et-agents-openhuman.md` — finalize Phase 0 forward-link with real URL
-- `00-lexique/agent-autonome.md` — add `📚` link to new custodian agents section
+- `00-lexique/ai-glossary.md` — add new section or entries for: human-in-the-loop, agent custodien
+- `03-stack-logicielle/rag-and-agents.md` — finalize Phase 0 forward-link with real URL
+- `00-lexique/autonomous-agent.md` — add `📚` link to new custodian agents section
 - `00-lexique/smolagents.md` — add link to Track A/B context
 - Blueprints A–D — no changes required (they link to stack, not to applications layer)
 

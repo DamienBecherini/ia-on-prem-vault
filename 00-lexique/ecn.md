@@ -29,5 +29,5 @@ Complète PFC en gérant la congestion de manière proactive plutôt que réacti
 - [[00-lexique/pfc|PFC]]
 - [[00-lexique/roce|RoCE]]
 - [[00-lexique/rdma|RDMA]]
-- [[02-materiel/reseau-ia-roce-et-thunderbolt|🌐 Réseau IA : RoCE et Thunderbolt]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[02-materiel/network-roce-infiniband-thunderbolt|🌐 Réseau IA : RoCE et Thunderbolt]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

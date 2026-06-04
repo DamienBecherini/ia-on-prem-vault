@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-Même avec la meilleure [[01-fondations/quantification-4-bit-8-bit|quantification]], un modèle massif comme DeepSeek V3 (671 milliards de paramètres) demande plus de 400 Go de mémoire vidéo. Aucune carte graphique grand public ne possède cette capacité seule. 
+Même avec la meilleure [[01-fondations/quantization-4bit-8bit|quantification]], un modèle massif comme DeepSeek V3 (671 milliards de paramètres) demande plus de 400 Go de mémoire vidéo. Aucune carte graphique grand public ne possède cette capacité seule. 
 
 La solution matérielle est d'utiliser un [[02-materiel/stations-multi-gpu|serveur multi-GPU]]. Mais comment le logiciel gère-t-il cette distribution ? Et comment faire si vous n'avez pas un énorme serveur, mais plutôt plusieurs Mac Studio ou PC branchés en réseau ?
 
@@ -25,7 +25,7 @@ Exo brille particulièrement sur Apple Silicon. En utilisant des câbles Thunder
 Des benchmarks communautaires indiquent qu'un cluster de 8 Mac Mini M4 Pro (soit 512 Go de mémoire unifiée agrégée) peut faire tourner le colossal DeepSeek V3 671B avec un débit de l'ordre de **3 à 5 tokens/s** dans cette configuration[^2].
 
 ### ⚠️ Les limites
-Si la connexion réseau est lente (Wi-Fi ou simple câble Ethernet 1 Gigabit), le transfert des activations entre les machines devient un goulot d'étranglement fatal. La capacité globale augmente, mais les [[00-lexique/tokens-par-seconde|tokens/s]] s'effondrent.
+Si la connexion réseau est lente (Wi-Fi ou simple câble Ethernet 1 Gigabit), le transfert des activations entre les machines devient un goulot d'étranglement fatal. La capacité globale augmente, mais les [[00-lexique/tokens-per-second|tokens/s]] s'effondrent.
 
 ---
 

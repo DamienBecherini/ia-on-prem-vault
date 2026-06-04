@@ -19,7 +19,7 @@ On distingue l'**entraînement** (apprentissage des poids sur de vastes corpus) 
 Une requête se décompose en deux phases : le [[00-lexique/prefill|Prefill]] (traitement du prompt) puis le [[00-lexique/decoding|Decoding]] (génération auto-régressive).
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Tout le dimensionnement matériel (RAM, VRAM, bande passante, [[00-lexique/tokens-par-seconde|tokens/s]], [[00-lexique/ttft|TTFT]]) vise l'inférence, pas l'entraînement. C'est aussi le goulet que décrit le [[00-lexique/memory-wall|Memory Wall]] en decoding.
+Tout le dimensionnement matériel (RAM, VRAM, bande passante, [[00-lexique/tokens-per-second|tokens/s]], [[00-lexique/ttft|TTFT]]) vise l'inférence, pas l'entraînement. C'est aussi le goulet que décrit le [[00-lexique/memory-wall|Memory Wall]] en decoding.
 
 ## ⚠️ Pièges fréquents
 - Confondre les TFLOPS annoncés et le débit réel en génération.
@@ -27,14 +27,14 @@ Tout le dimensionnement matériel (RAM, VRAM, bande passante, [[00-lexique/token
 
 ## 📚 Pour comprendre en profondeur
 *Vous voulez voir l'inférence en action, pas à pas ?*
-1. [[01-fondations/le-voyage-d-un-prompt|🧠 Le Voyage d'un Prompt]] *(le cycle complet : tokenisation → prefill → decoding)*
-2. [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire]] *(pourquoi la mémoire plafonne la vitesse de génération)*
-3. [[03-stack-logicielle/moteurs-inference-vllm-ollama|⚙️ Moteurs d'Inférence]] *(les logiciels qui font tourner l'inférence : Ollama, vLLM, TensorRT-LLM)*
+1. [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]] *(le cycle complet : tokenisation → prefill → decoding)*
+2. [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire]] *(pourquoi la mémoire plafonne la vitesse de génération)*
+3. [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence]] *(les logiciels qui font tourner l'inférence : Ollama, vLLM, TensorRT-LLM)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/llm|LLM]]
 - [[00-lexique/prefill|Prefill]]
 - [[00-lexique/decoding|Decoding]]
 - [[00-lexique/memory-wall|Memory Wall]]
-- [[01-fondations/la-bande-passante-memoire|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[01-fondations/memory-bandwidth|🏎️ La Bande Passante Mémoire & Le "Memory Wall"]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

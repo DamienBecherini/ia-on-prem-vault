@@ -38,7 +38,7 @@ Create the next page of chapter `02-materiel/`:
 
 Topic: **NVIDIA multi-GPU workstations, PCIe, VRAM, NVLink/NVSwitch, and trade-offs for on-prem AI inference**.
 
-The article should complement `02-materiel/apu-et-memoire-unifiee.md`:
+The article should complement `02-materiel/apu-and-unified-memory.md`:
 
 - APU / unified memory: large shared capacity, lower bandwidth, simplicity.
 - Discrete multi-GPU: very high per-card VRAM bandwidth, cumulative capacity, but more complex interconnect and parallelism.
@@ -89,7 +89,7 @@ Existing entries linked or to verify:
 - `[[00-lexique/rdma]]`
 - `[[00-lexique/roce]]`
 - `[[00-lexique/offloading]]`
-- `[[00-lexique/tokens-par-seconde]]`
+- `[[00-lexique/tokens-per-second]]`
 - `[[00-lexique/ttft]]`
 
 Potential new entries:

@@ -31,12 +31,12 @@ Solution bureau pour relier plusieurs Mac Mini en cluster silencieux et économi
 - Pas un substitut au réseau datacenter pour la production à haute concurrence.
 
 ## 📚 Pour comprendre en profondeur
-1. [[04-blueprints/scenario-c-cluster-bureau|🖥️ Scénario C : Le Cluster Bureau]] *(Exo + Thunderbolt en pratique)*
-2. [[02-materiel/reseau-ia-roce-et-thunderbolt|🌐 Réseau IA : RoCE, InfiniBand et Thunderbolt]] *(comparaison complète des interconnexions)*
+1. [[04-blueprints/scenario-c-desktop-cluster|🖥️ Scénario C : Le Cluster Bureau]] *(Exo + Thunderbolt en pratique)*
+2. [[02-materiel/network-roce-infiniband-thunderbolt|🌐 Réseau IA : RoCE, InfiniBand et Thunderbolt]] *(comparaison complète des interconnexions)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/exo|Exo]]
 - [[00-lexique/nvlink|NVLink]]
 - [[00-lexique/rdma|RDMA]]
-- [[00-lexique/bande-passante-memoire|Bande passante mémoire]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/memory-bandwidth|Bande passante mémoire]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

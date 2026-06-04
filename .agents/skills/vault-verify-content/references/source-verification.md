@@ -58,5 +58,5 @@ When a chapter introduces or updates a concept, check:
 - whether a lexicon entry exists
 - whether the entry should link back to the chapter
 - whether definitions, formulas, acronyms, and aliases are consistent
-- whether `00-lexique/glossaire-ia.md` needs a hub or acronym update
+- whether `00-lexique/ai-glossary.md` needs a hub or acronym update
 

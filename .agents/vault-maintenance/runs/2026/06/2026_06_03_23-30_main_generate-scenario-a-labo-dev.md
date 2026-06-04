@@ -21,7 +21,7 @@ skills:
 Générer le premier article du chapitre 04 (Blueprints d'Architecture) centré sur la configuration d'entrée de gamme (PC Gamer, RTX 24GB et CPU Offloading) via le skill `vault-generate-content`.
 
 ## Files Changed
-- Création : `04-blueprints/scenario-a-labo-dev.md`
+- Création : `04-blueprints/scenario-a-dev-lab.md`
 - Modification : `site.config.json` (ajout du dossier 04 au sidebar)
 - Modification : `.agents/vault-maintenance/lexicon-backlog.md` (suivi des liens utilisés)
 - Création : ce run log.

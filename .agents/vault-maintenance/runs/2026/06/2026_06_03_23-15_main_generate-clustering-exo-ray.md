@@ -21,7 +21,7 @@ skills:
 Générer le deuxième article du chapitre 03 sur l'orchestration multi-nœuds (Exo vs Ray) en utilisant le skill `vault-generate-content` et des recherches web récentes (Mai/Juin 2026).
 
 ## Files Changed
-- Création : `03-stack-logicielle/clustering-exo-et-ray.md`
+- Création : `03-stack-logicielle/clustering-exo-and-ray.md`
 - Modification : `.agents/vault-maintenance/lexicon-backlog.md` (3 nouvelles fiches à créer)
 - Création : ce run log.
 

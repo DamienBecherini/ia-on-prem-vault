@@ -30,7 +30,7 @@ Réduit directement la latence de génération (tokens/s ×N) en production data
 
 ## 📚 Pour comprendre en profondeur
 1. [[04-blueprints/scenario-d-datacenter|🏢 Scénario D : Datacenter]] *(Tensor Parallelism + NVLink + Ray en pratique)*
-2. [[03-stack-logicielle/clustering-exo-et-ray|🌐 Clustering IA : Exo et Ray]] *(comparaison avec Pipeline Parallelism)*
+2. [[03-stack-logicielle/clustering-exo-and-ray|🌐 Clustering IA : Exo et Ray]] *(comparaison avec Pipeline Parallelism)*
 3. [[02-materiel/stations-multi-gpu|🧩 Stations Multi-GPU]] *(architecture NVLink qui rend le TP possible)*
 
 ## 🔗 Voir aussi
@@ -38,4 +38,4 @@ Réduit directement la latence de génération (tokens/s ×N) en production data
 - [[00-lexique/nvlink|NVLink]]
 - [[00-lexique/ray|Ray]]
 - [[00-lexique/multi-gpu|Multi-GPU]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

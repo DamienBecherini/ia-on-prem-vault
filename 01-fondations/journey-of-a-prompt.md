@@ -64,7 +64,7 @@ Maintenant que le modèle a "digéré" votre question et stocké le contexte dan
 
 Cette boucle continue jusqu'à ce que le modèle génère un token spécial qui signifie `<FIN>`.
 
-* **Ce qu'il se passe dans la machine :** C'est une phase très séquentielle. Le processeur doit constamment faire des allers-retours avec la mémoire pour récupérer les poids du modèle et le KV Cache, juste pour générer un malheureux token. C'est pour cela que la vitesse de génération dépend de la **[[01-fondations/la-bande-passante-memoire|Bande Passante Mémoire]]** et non plus de la puissance de calcul brute.
+* **Ce qu'il se passe dans la machine :** C'est une phase très séquentielle. Le processeur doit constamment faire des allers-retours avec la mémoire pour récupérer les poids du modèle et le KV Cache, juste pour générer un malheureux token. C'est pour cela que la vitesse de génération dépend de la **[[01-fondations/memory-bandwidth|Bande Passante Mémoire]]** et non plus de la puissance de calcul brute.
 
 ---
 
@@ -74,7 +74,7 @@ Quand un utilisateur se plaint que *"l'IA est lente"*, vous devez savoir de quel
 * **Elle met trop de temps à démarrer ?** C'est le **Prefill**. Le processeur manque de puissance de calcul brute (TFLOPS) pour digérer le prompt initial, ou le contexte envoyé est trop long.
 * **Elle écrit la réponse trop lentement ?** C'est le **Decoding**. La machine souffre du "Memory Wall" : la mémoire de la carte graphique ne peut pas envoyer les données assez vite vers la puce pour calculer le token suivant.
 
-> 👉 **Prochaine étape :** Maintenant que vous avez compris que le Decoding est limité par la vitesse de la mémoire, passez au chapitre sur [[01-fondations/la-bande-passante-memoire|La Bande Passante Mémoire]].
+> 👉 **Prochaine étape :** Maintenant que vous avez compris que le Decoding est limité par la vitesse de la mémoire, passez au chapitre sur [[01-fondations/memory-bandwidth|La Bande Passante Mémoire]].
 
 ## 📚 Sources et Références
 [^1]: Meta, *Llama 3.1 Model Card* (Architecture, vocabulaire 128 256 tokens, tokenizer Tiktoken), 2024. [GitHub — llama-models](https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md)

@@ -9,7 +9,7 @@ La **quantification** (*quantization*) réduit la précision numérique des **po
 
 En passant de la précision native **FP16/BF16** (2 octets par paramètre) à des formats compressés en **8-bit** (1 octet), **4-bit** (~0,5 octet effectif) ou plus bas, on divise l'empreinte VRAM d'un modèle par 2 à 4, ce qui permet d'exécuter localement des modèles autrement hors de portée matérielle [^1].
 
-> 🔗 **Lien connexe :** la quantification réduit les **poids fixes** ; le [[01-fondations/kv-cache-et-contexte|KV Cache]] reste un second poste VRAM dynamique, lui aussi quantifiable séparément.
+> 🔗 **Lien connexe :** la quantification réduit les **poids fixes** ; le [[01-fondations/kv-cache-and-context|KV Cache]] reste un second poste VRAM dynamique, lui aussi quantifiable séparément.
 
 ---
 
@@ -93,7 +93,7 @@ La **perplexité (PPL)** sur WikiText-2 mesure la capacité prédictive du modè
 | **Q3_K_S** | ~3,4 | 77,2 | 8,96 | 65,49 | Compression max, perte visible |
 | **Q2_K** | ~2,5 | — | — | — | Voir scoreboard llama.cpp : PPL ~9,75 sur Llama 3 **8B base** [^10] |
 
-> **Ordres de grandeur VRAM (poids seuls, 70B) :** BF16 ~140 Go ; FP8 ~70 Go ; Q4 ~40 Go (calcul : $70 \times 10^9 \times bpw / 8$). Ces chiffres n'incluent pas le KV cache — voir [[01-fondations/kv-cache-et-contexte|chapitre KV Cache]].
+> **Ordres de grandeur VRAM (poids seuls, 70B) :** BF16 ~140 Go ; FP8 ~70 Go ; Q4 ~40 Go (calcul : $70 \times 10^9 \times bpw / 8$). Ces chiffres n'incluent pas le KV cache — voir [[01-fondations/kv-cache-and-context|chapitre KV Cache]].
 
 ### 💡 Le paradoxe de la quantification (règle d'or)
 Une erreur classique : préférer un **petit modèle non quantifié** à un **grand modèle quantifié**. Sous contrainte mémoire fixe, **le nombre de paramètres domine souvent le niveau de bits** [^10][^11].

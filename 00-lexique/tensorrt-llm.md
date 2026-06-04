@@ -28,11 +28,11 @@ Incontournable pour amortir le coût des accélérateurs professionnels en datac
 - Pas adapté aux postes de travail ou aux Mac.
 
 ## 📚 Pour comprendre en profondeur
-1. [[03-stack-logicielle/moteurs-inference-vllm-ollama|⚙️ Moteurs d'Inférence]] *(comparatif llama.cpp / vLLM / TensorRT-LLM)*
+1. [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence]] *(comparatif llama.cpp / vLLM / TensorRT-LLM)*
 2. [[04-blueprints/scenario-d-datacenter|🏢 Scénario D : Datacenter]] *(TensorRT-LLM en production)*
 
 ## 🔗 Voir aussi
 - [[00-lexique/vram|VRAM]]
 - [[00-lexique/quantification|Quantification]]
 - [[00-lexique/nvlink|NVLink]]
-- [[00-lexique/glossaire-ia|📖 Glossaire IA]]
+- [[00-lexique/ai-glossary|📖 Glossaire IA]]

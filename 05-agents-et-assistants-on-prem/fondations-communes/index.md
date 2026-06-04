@@ -14,15 +14,13 @@ Elle répond à la question préalable à tout choix d'outil :
 
 ---
 
-## 📋 Contenu à venir (Phase 2)
+## 📋 Pages de cette section
 
-Les deux pages de cette section seront rédigées en Phase 2 du plan :
+- **[[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|🔒 Souveraineté & Confidentialité]]**
+  Grille 6 critères (données, modèle, mémoire, télémétrie, offline, verdict), protocole d'audit en 15 minutes, contexte RGPD/AI Act/HDS, checklist pratique.
 
-- **[[05-agents-et-assistants-on-prem/fondations-communes/souverainete-et-confidentialite|Souveraineté & Confidentialité]]** *(à venir)*
-  Grille 6 critères, protocole d'audit, contexte RGPD/AI Act, checklist pratique.
-
-- **[[05-agents-et-assistants-on-prem/fondations-communes/architectures-possibles|Architectures Possibles]]** *(à venir)*
-  Taxonomie assistant / custodien / hybride, tableau comparatif, liens blueprints A–D.
+- **[[05-agents-et-assistants-on-prem/fondations-communes/possible-architectures|🏗️ Architectures Possibles]]**
+  Taxonomie assistant / custodien / hybride, tableau comparatif, relation entre les deux pistes, dimensionnement matériel, liens blueprints A–D.
 
 ---
 

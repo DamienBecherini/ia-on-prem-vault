@@ -22,4 +22,4 @@ Elle peut offrir un excellent compromis entre capacité exploitable par le GPU e
 ## 🔗 Voir aussi
 - [[00-lexique/vram|VRAM]]
 - [[00-lexique/pcie|PCIe]]
-- [[01-fondations/memoire-unifiee-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]
+- [[01-fondations/unified-memory-vs-ram-vs-vram|⚔️ Mémoire Unifiée vs RAM vs VRAM]]
