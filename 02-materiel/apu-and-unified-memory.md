@@ -5,6 +5,9 @@ sidebar:
   order: 1
 ---
 
+> [!tip] En bref
+> Apple Silicon et AMD Gorgon Halo permettent d'allouer 120 à 160 Go de mémoire unifiée à un LLM sur une station de bureau. Apple offre le meilleur débit ; AMD offre Linux natif et Docker. Le bon choix dépend de votre stack, pas seulement de la capacité.
+
 Pour un déploiement souverain d'IA en entreprise, la **mémoire unifiée** est l'une des ruptures matérielles les plus importantes de la décennie.
 
 En supprimant la copie RAM → VRAM via PCIe, les SoC **APU** (CPU + GPU + NPU sur la même puce) accèdent à un pool de **LPDDR5X** partagé — jusqu'à **192 Go** sur les plateformes AMD Ryzen AI Max PRO 400, et jusqu'à **512 Go** sur le Mac Studio M3 Ultra [^1][^2][^4]. C'est l'architecture de référence pour exécuter des modèles **70B+ quantifiés** (ex. Llama 3.1 70B en Q4_K_M, ~40 Go de poids) sur une station de bureau silencieuse, sans serveur GPU datacenter [^3][^9].
@@ -74,6 +77,9 @@ Sur Strix Halo et Gorgon Halo, l'allocation se fait surtout via **BIOS/firmware 
 2.  Menu *Advanced* → **UMA Frame Buffer Size** (libellé variable selon OEM).
 3.  Sur un système **192 Go**, AMD documente jusqu'à **160 Go** pour le GPU et **32 Go** pour l'OS [^1][^2].
 
+> [!warning] Piège : le page cache lors du chargement
+> Si le modèle est stocké sur SSD et qu'il fait **140 Go** (ex. Llama 3.1 70B en Q8), l'OS va remplir son **page cache** dans les 32 Go système lors de la lecture du fichier GGUF — avant même que l'inférence ne commence. Résultat : OOM ou swap massif sur les 32 Go restants. Bonne pratique : laisser **au moins 10–15 % de la RAM totale** hors allocation GPU, soit ~20–28 Go libres sur un système 192 Go, pour couvrir OS + page cache + buffers de chargement.
+
 Les systèmes **PRO 400** arrivent en **T3 2026** (HP, Lenovo, ASUS…) ; les guides Strix Halo 395 restent pertinents pour llama.cpp/Vulkan/ROCm en attendant [^6][^8].
 
 ### 2. Côté Apple Silicon (macOS)
@@ -104,7 +110,7 @@ sudo sysctl iogpu.wired_limit_mb=122880
 | :--- | :--- | :--- | :--- |
 | **Puce (config LLM)** | M4 Max 16c/40c GPU [^4] | M3 Ultra 32c/80c GPU [^4] | Ryzen AI Max+ PRO 495 [^1][^2] |
 | **RAM unifiée max** | 128 Go [^4] | 512 Go (192 Go courant) [^4] | 192 Go [^1][^2] |
-| **VRAM GPU max allouable** | ~120 Go (`sysctl`, 128 Go machine) [^12] | ~160–184 Go (selon RAM totale) [^12] | **160 Go** (BIOS, 192 Go machine) [^1][^2] |
+| **VRAM GPU max allouable** | ~120 Go (`sysctl`, 128 Go machine) [^12] | ~160–184 Go (selon RAM totale) [^12] | **160 Go** (BIOS max) — en pratique ~130–140 Go pour préserver le page cache OS [^1][^2] |
 | **Bande passante** | **546 Go/s** [^3][^4] | **819 Go/s** [^4] | **~273 Go/s** [^1][^2] |
 | **Débit 70B Q4 (decode)** | **~10–12 tok/s** (MLX) [^9][^10] | **~12–15 tok/s** (MLX) [^9][^10] | **~4,5–5 tok/s** (Strix Halo 395, profil PRO 400 similaire) [^6][^9] |
 | **OS** | macOS | macOS | **Linux / Windows** [^1][^2] |
@@ -121,7 +127,7 @@ Pour un déploiement souverain on-premise :
 
 1.  **Souveraineté x86 + Docker (AMD Halo / PRO 400) :** si la stack repose sur **Linux, Docker et Python**, la plateforme AMD est la plus rationnelle : 160 Go VRAM allouables, écosystème ouvert, prix inférieur au Mac Studio équivalent en capacité [^1][^2][^7]. Acceptez un débit **~5 tok/s** sur un 70B dense — privilégiez les **MoE** (Qwen3.5-A3B, etc.) pour l'interactivité [^6].
 2.  **Vitesse et confort (Mac Studio) :** pour le meilleur ressenti sur un **70B dense** (~12–15 tok/s en MLX sur M3 Ultra), le **Mac Studio M3 Ultra 192 Go+** reste le roi de la bande passante unifiée en 2026 ; le **M4 Max 128 Go** est un excellent compromis si 128 Go suffisent [^4][^9][^10]. Budget macOS et conteneurs à anticiper.
-3.  **Dimensionnez dès l'achat :** la mémoire LPDDR5X est **soudée** — impossible d'upgrader après coup. Prévoyez marge pour **poids + KV cache + OS** (voir chapitres fondations).
+3.  **Dimensionnez dès l'achat :** la mémoire LPDDR5X est **soudée** — impossible d'upgrader après coup. Prévoyez marge pour **poids + KV cache + OS + page cache de chargement** (voir chapitres fondations). Sur un système 192 Go AMD, allouer 160 Go au GPU laisse 32 Go système — suffisant au repos, mais serré lors du premier chargement d'un modèle ≥ 100 Go.
 
 ---
 

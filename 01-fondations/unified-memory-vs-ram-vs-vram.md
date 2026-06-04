@@ -5,6 +5,9 @@ sidebar:
   order: 2
 ---
 
+> [!tip] En bref
+> La mémoire unifiée (Apple Silicon, AMD APU) supprime le goulot PCIe et permet de faire tourner des modèles 70B+ sur une station silencieuse. En contrepartie, la bande passante reste inférieure à une VRAM GDDR dédiée. Le bon choix dépend de votre contrainte : capacité ou débit.
+
 Pour un architecte système IA, comprendre la différence physique entre **RAM classique**, **VRAM dédiée** et **mémoire unifiée** est fondamental. Ce choix influence directement le débit en inférence (tokens/s), les coûts matériels et les limites d'évolutivité[^5].
 
 Voici l'analyse physique, les schémas de routage des données et le guide décisionnel pour vos audits d'entreprise.

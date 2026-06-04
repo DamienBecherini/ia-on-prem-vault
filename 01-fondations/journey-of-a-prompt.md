@@ -5,8 +5,8 @@ sidebar:
   order: 0
 ---
 
-> [!tip] Ce chapitre
-> Ce chapitre décompose ce qui se passe à l'intérieur d'un [[00-lexique/llm|LLM]] pendant l'[[00-lexique/inference|inférence]]. Pas de prérequis — juste votre curiosité.
+> [!tip] En bref
+> Quand vous envoyez un prompt, le modèle ne "comprend" pas le texte — il exécute des milliards de multiplications. Ce chapitre décompose ce voyage étape par étape : tokenisation, prefill, KV Cache, génération. Aucun prérequis requis.
 
 Quand vous tapez une question dans un modèle d'IA local, il y a une illusion de magie : la machine semble "comprendre" le texte et "réfléchir" à la réponse.
 

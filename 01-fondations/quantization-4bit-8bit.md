@@ -5,6 +5,9 @@ sidebar:
   order: 4
 ---
 
+> [!tip] En bref
+> La quantification permet de faire tourner un modèle 70B en ~40 Go au lieu de ~140 Go, en acceptant une légère perte de qualité. C'est le levier numéro un pour adapter un grand modèle à votre matériel sans dépenser 300 000 €.
+
 La **quantification** (*quantization*) réduit la précision numérique des **poids** (et parfois des **activations**) d'un réseau de neurones [^1].
 
 En passant de la précision native **FP16/BF16** (2 octets par paramètre) à des formats compressés en **8-bit** (1 octet), **4-bit** (~0,5 octet effectif) ou plus bas, on divise l'empreinte VRAM d'un modèle par 2 à 4, ce qui permet d'exécuter localement des modèles autrement hors de portée matérielle [^1].

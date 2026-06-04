@@ -5,6 +5,9 @@ sidebar:
   order: 2
 ---
 
+> [!tip] En bref
+> Plusieurs GPU multiplient la VRAM disponible, mais c'est l'interconnexion qui décide de l'efficacité. Sans NVLink (réservé aux gammes datacenter), les cartes partagent leurs données via PCIe — utile pour la capacité, pas pour le parallélisme de tenseurs.
+
 Après la [[02-materiel/apu-and-unified-memory|mémoire unifiée]], l'autre grande famille de machines IA on-premise est la **station multi-GPU** : plusieurs cartes NVIDIA dans une même tour, ou plusieurs accélérateurs dans un serveur.
 
 L'idée paraît simple : additionner la [[00-lexique/vram|VRAM]] de plusieurs cartes pour charger des modèles plus gros. En pratique, le **multi-GPU** n'est pas un simple “pool de mémoire”. Il faut choisir un mode de parallélisme, accepter des échanges entre cartes, et comprendre si ces échanges passent par [[00-lexique/pcie|PCIe]], [[00-lexique/nvlink|NVLink]] ou un fabric [[00-lexique/rdma|RDMA]] / [[00-lexique/roce|RoCE]].
