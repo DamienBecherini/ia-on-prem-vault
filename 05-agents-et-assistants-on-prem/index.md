@@ -49,7 +49,7 @@ Avant d'évaluer n'importe quel outil de cette section, une question s'impose :
 
 L'interface peut être locale, la page marketing peut dire "privacy-first", et pourtant le modèle peut tourner sur les serveurs du prestataire. Ce piège est fréquent — et souvent non documenté en première page.
 
-La [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|grille d'évaluation souveraineté]] *(à venir — Phase 2)* donne un protocole en 6 critères pour auditer n'importe quel outil en moins de 15 minutes.
+La [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|grille d'évaluation souveraineté]] donne un protocole en 6 critères pour auditer n'importe quel outil en moins de 15 minutes.
 
 ---
 

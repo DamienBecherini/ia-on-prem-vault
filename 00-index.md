@@ -5,7 +5,9 @@ description: Le point d'entrée de votre formation sur l'IA On-Premise
 
 Bienvenue dans le "Zero to Hero" de l'IA Locale. Ce Vault est conçu comme un jardin numérique : ne le lisez pas de manière linéaire. Suivez vos besoins, cliquez sur les concepts que vous ne maîtrisez pas encore, et construisez votre expertise pas à pas.
 
-> **L'objectif :** Vous apprendre à dimensionner, déployer et comprendre les infrastructures matérielles et logicielles nécessaires pour faire tourner des modèles d'IA massifs ([[00-lexique/llm|Large Language Models]]) de manière 100% locale, privée et performante.
+:::tip[L'objectif]
+Vous apprendre à dimensionner, déployer et comprendre les infrastructures matérielles et logicielles nécessaires pour faire tourner des modèles d'IA massifs ([[00-lexique/llm|Large Language Models]]) de manière 100% locale, privée et performante.
+:::
 
 ---
 
@@ -22,7 +24,9 @@ Une API cloud facture à la requête. À faible volume, c'est négligeable. À 5
 **3. Contrôle total : modèle, comportement, disponibilité**
 En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans connexion Internet et sa disponibilité ne dépend pas des politiques tarifaires ou des conditions d'utilisation d'un tiers.
 
-> 🧭 Ce vault vous donne les clés pour comprendre ces arbitrages et choisir l'architecture adaptée à votre situation — de la machine de développeur seul jusqu'au cluster datacenter souverain.
+:::tip[Lecture]
+Ce vault vous donne les clés pour comprendre ces arbitrages et choisir l'architecture adaptée à votre situation — de la machine de développeur seul jusqu'au cluster datacenter souverain.
+:::
 
 ---
 
@@ -55,13 +59,14 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 - [[04-blueprints/scenario-c-desktop-cluster|🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)]]
 - [[04-blueprints/scenario-d-datacenter|🏭 Scénario D : Datacenter (RoCE & Multi-GPU)]]
 
-### 📁 05 - Agents & Assistants On-Premise *(fiches solution en cours)*
+### 📁 05 - Agents & Assistants On-Premise
 *La couche applicative : l'IA qui vous connaît et l'IA qui agit pour vous.*
 - [[05-agents-et-assistants-on-prem/index|🤖 Vue d'ensemble : deux pistes, une question de souveraineté]]
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|🔒 Souveraineté & Confidentialité]] — grille d'audit en 6 critères, RGPD/AI Act
 - [[05-agents-et-assistants-on-prem/fondations-communes/possible-architectures|🏗️ Architectures Possibles]] — assistant, custodien, hybride
 - [[05-agents-et-assistants-on-prem/assistants-personnels/index|🧑‍💼 Assistants Personnels (l'IA qui apprend de vos données)]]
 - [[05-agents-et-assistants-on-prem/agents-custodiens/index|🤖 Agents Custodiens (l'IA qui maintient votre vault)]]
+- [[00-lexique/agent-custodian|Agent custodien]] · [[00-lexique/human-in-the-loop|Human-in-the-loop]] · [[00-lexique/memory-tree|Memory Tree]]
 
 ---
 
@@ -78,7 +83,9 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 | 50+ (production) | 70B–400B | > 300 000 € | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
 | Contrainte SLA < 500 ms | Tout | — | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
 
-> 💡 **Lecture :** Commencez par la ligne qui correspond à votre nombre d'utilisateurs, puis vérifiez que le budget correspond. En cas de doute, lisez d'abord le [[04-blueprints/scenario-a-dev-lab|Scénario A]] pour comprendre les mécanismes, puis remontez vers le scénario cible.
+:::tip[Lecture]
+Commencez par la ligne qui correspond à votre nombre d'utilisateurs, puis vérifiez que le budget correspond. En cas de doute, lisez d'abord le [[04-blueprints/scenario-a-dev-lab|Scénario A]] pour comprendre les mécanismes, puis remontez vers le scénario cible.
+:::
 
 ---
 

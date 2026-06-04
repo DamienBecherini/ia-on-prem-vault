@@ -1,6 +1,6 @@
 {
-    "userIgnoreFilters": [
-      ".agents/",
-      "docs/plans/"
-    ]
+  "userIgnoreFilters": [
+    ".agents/",
+    "docs/plans/"
+  ]
 }
