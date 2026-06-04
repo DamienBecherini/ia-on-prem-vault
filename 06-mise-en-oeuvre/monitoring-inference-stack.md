@@ -316,6 +316,80 @@ print(f'Débit: {r[\"eval_count\"]/(r[\"eval_duration\"]/1e9):.1f} tok/s')
 
 ---
 
+## 8. Traces vs. Métriques — OpenTelemetry pour les stacks agentiques
+
+Prometheus et Grafana répondent à la question *"Le serveur va-t-il bien ?"*. Ils ne répondent pas à *"Pourquoi cette requête a-t-elle pris 30 secondes ?"*.
+
+### Le problème agentique
+
+Dans un pipeline RAG ou multi-agents, une requête traverse plusieurs services avant de produire une réponse. Si un utilisateur se plaint d'une latence de 30s, Grafana vous dira que le GPU était à 70% d'utilisation — ce qui ne suffit pas à diagnostiquer la cause. Ce qu'il faut, c'est la **trace** de la requête complète :
+
+```
+Requête utilisateur (30s total)
+├── VectorDB Qdrant     — 4s  (recherche sémantique)
+├── Agent routing       — 2s  (choix de l'outil)
+├── SearXNG web search  — 20s (timeout réseau ⚠️)
+└── LLM generation      — 4s  (200 tokens @ 50 tok/s)
+```
+
+Sans traces, l'ingénieur cherche dans les logs de chaque service séparément. Avec des traces OpenTelemetry, la requête complète est visualisée en un seul waterfall dans un outil dédié.
+
+### OpenTelemetry (OTEL) — intégration native vLLM et LiteLLM
+
+LiteLLM et vLLM supportent OpenTelemetry nativement[^6][^7] :
+
+```bash
+# vLLM — activer OTEL (exporte vers un collector local)
+vllm serve meta-llama/Llama-3.1-70B-Instruct \
+  --otlp-traces-endpoint http://localhost:4317
+
+# LiteLLM — activer dans litellm_config.yaml
+general_settings:
+  otel: true
+  otel_endpoint: http://localhost:4317   # OTLP gRPC
+```
+
+### Stack d'observabilité LLM recommandée
+
+Pour une infrastructure on-premise souveraine, deux options :
+
+| Outil | Type | Points forts | Déploiement |
+| :-- | :-- | :-- | :-- |
+| **Langfuse** (self-hosted) | Traces + éval LLM | Interface dédiée LLM, coûts par token, évaluation qualité | Docker Compose[^6] |
+| **Jaeger** | Traces distribuées | Standard CNCF, léger, intégré Kubernetes | Docker `jaegertracing/all-in-one` |
+| **Arize Phoenix** | Traces + debug agent | Spécialisé agents/RAG, gratuit et open-source | `pip install arize-phoenix`[^7] |
+
+**Stack minimale recommandée pour un agent custodien :**
+
+```yaml
+# docker-compose.yml — ajouter au stack existant
+langfuse:
+  image: langfuse/langfuse:latest
+  ports:
+    - "3001:3000"
+  environment:
+    DATABASE_URL: "postgresql://langfuse:langfuse@postgres:5432/langfuse"
+    NEXTAUTH_SECRET: "votre-secret"
+    SALT: "votre-salt"
+
+otel-collector:
+  image: otel/opentelemetry-collector-contrib:latest
+  volumes:
+    - ./otel-config.yaml:/etc/otel-config.yaml
+  command: ["--config=/etc/otel-config.yaml"]
+  ports:
+    - "4317:4317"   # OTLP gRPC
+    - "4318:4318"   # OTLP HTTP
+```
+
+> [!note] Métriques ≠ Traces : les deux sont complémentaires
+> - **Prometheus/Grafana** → alerting automatique, dashboards de santé, SLOs
+> - **OTEL/Langfuse** → débogage par requête, analyse des patterns de latence, évaluation qualité des réponses agentiques
+>
+> En production d'agents, les deux sont nécessaires. Les métriques détectent qu'il y a un problème, les traces expliquent pourquoi.
+
+---
+
 ## Voir aussi
 
 - [[06-mise-en-oeuvre/configure-vllm-multi-gpu|⚙️ Configurer vLLM multi-GPU]] — endpoint `/metrics` et paramètres
@@ -331,3 +405,5 @@ print(f'Débit: {r[\"eval_count\"]/(r[\"eval_duration\"]/1e9):.1f} tok/s')
 [^3]: NVIDIA, *DCGM Exporter — Metrics Reference* (liste des métriques DCGM_FI_DEV_*, GPU utilization, memory, température, NVLink). [https://github.com/NVIDIA/dcgm-exporter](https://github.com/NVIDIA/dcgm-exporter)
 [^4]: Grafana Labs, *NVIDIA DCGM Exporter Dashboard* (ID 12239, GPU metrics visualization). [https://grafana.com/grafana/dashboards/12239](https://grafana.com/grafana/dashboards/12239)
 [^5]: Grafana Labs, *Node Exporter Full Dashboard* (ID 1860, system metrics — CPU, memory, disk, network). [https://grafana.com/grafana/dashboards/1860](https://grafana.com/grafana/dashboards/1860)
+[^6]: Langfuse, *Self-Hosting Guide & LiteLLM Integration* (Docker Compose, OTEL ingestion, LLM observability). [https://langfuse.com/docs/deployment/self-host](https://langfuse.com/docs/deployment/self-host)
+[^7]: Arize AI, *Arize Phoenix — Open-source LLM Observability* (traces agentiques, RAG debugging, OTEL-compatible). [https://docs.arize.com/phoenix](https://docs.arize.com/phoenix)

@@ -71,6 +71,14 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
 **Paramètre critique — `gpu-memory-utilization` :**
 vLLM réserve au démarrage la fraction indiquée de VRAM pour le KV Cache. Si vos prompts sont longs ou si vous avez beaucoup de requêtes concurrentes, montez à 0.95. Si des OOM apparaissent, descendez à 0.85[^2].
 
+> [!warning] Dépassement de `max-model-len` → HTTP 400, pas de troncature silencieuse
+> Si un client envoie un prompt + historique qui dépasse `--max-model-len`, vLLM **rejette la requête** avec `HTTP 400 Bad Request: prompt is too long (X tokens > Y max)`. Il ne tronque **pas** le texte automatiquement.
+>
+> **Solutions :**
+> - **LiteLLM gateway** : activer `trim_messages: true` dans `litellm_config.yaml` → LiteLLM supprime les tours d'historique les plus anciens avant d'envoyer au moteur.
+> - **Côté client** : compter les tokens avant envoi (`tiktoken` ou `transformers.AutoTokenizer`) et afficher un message métier explicite ("Document trop long — limite : ~6 000 mots").
+> - **Prompt engineering** : imposer un `max_tokens` raisonnable dans le system prompt pour éviter que des réponses longues saturent progressivement l'historique.
+
 ### Modèles quantifiés (AWQ / GPTQ)
 
 ```bash
@@ -223,6 +231,29 @@ vllm serve ... \
   --calculate-kv-cache-size         # affiche la taille KV cache configurée
 ```
 
+### Automatic Prefix Caching (APC) — indispensable pour RAG et agents
+
+En environnement multi-utilisateurs ou multi-agents, plusieurs requêtes partagent souvent le même **System Prompt** (500-2000 tokens) ou le même document RAG en contexte. Sans APC, vLLM calcule et stocke le KV Cache de ce préfixe **N fois** — une fois par requête — gaspillant VRAM et temps de calcul.
+
+```bash
+vllm serve meta-llama/Llama-3.1-70B-Instruct \
+  --enable-prefix-caching \            # active le hachage de blocs de prompt
+  --max-model-len 8192 \
+  --gpu-memory-utilization 0.90
+```
+
+**Fonctionnement :** vLLM hache chaque bloc de 16 tokens. Si une nouvelle requête commence par la même séquence de blocs qu'une requête précédente encore en cache GPU, les vecteurs Key/Value sont réutilisés directement — sans recalcul du Prefill[^7].
+
+**Impact mesuré :**
+
+| Scénario | Sans APC | Avec APC |
+| :-- | :-- | :-- |
+| 20 agents parallèles, même system prompt 800 tokens | TTFT 3-8s chacun | TTFT < 100ms dès la 2e requête |
+| Pipeline RAG : même contexte document partagé | recalcul intégral × N | hit cache : ~96% VRAM économisée sur le préfixe |
+
+> [!note] Compatibilité
+> L'APC est **incompatible** avec la désagrégation Prefill/Decode (`--role prefill/decode`). Ne pas activer les deux simultanément. Compatible avec le Tensor Parallelism et la quantification FP8 du KV Cache[^7].
+
 ### Systemd service (Linux)
 
 ```ini
@@ -298,3 +329,4 @@ curl http://localhost:8000/metrics | grep vllm
 [^4]: Anyscale & vLLM Blog, *Streamlined multi-node serving with Ray symmetric-run* (configuration Ray cluster, pipeline parallelism inter-nœuds). [https://www.anyscale.com/blog/streamlined-multi-node-serving](https://www.anyscale.com/blog/streamlined-multi-node-serving), Novembre 2025.
 [^5]: vLLM Project, *Disaggregated Prefill and Decode* (architecture séparation phases, réduction TTFT). [https://docs.vllm.ai/en/stable/features/disagg_prefill.html](https://docs.vllm.ai/en/stable/features/disagg_prefill.html)
 [^6]: vLLM Project, *KV Cache Quantization* (FP8 KV cache, prise en charge NVIDIA Hopper, impact mémoire). [https://docs.vllm.ai/en/stable/features/quantization/fp8_kv_cache.html](https://docs.vllm.ai/en/stable/features/quantization/fp8_kv_cache.html)
+[^7]: vLLM Project, *Automatic Prefix Caching* (fonctionnement par blocs de 16 tokens, impact TTFT, compatibilité tensor parallelism). [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching.html](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching.html)

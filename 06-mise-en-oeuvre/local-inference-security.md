@@ -194,6 +194,41 @@ Le modèle génère du code, du HTML ou du JSON que l'application exécute sans 
 - Passer les sorties dans un validateur avant exécution (JSON Schema, AST parser pour le code)
 - Désactiver `eval()` dans les couches d'exécution
 
+### LLM04 — Fuite du System Prompt via les erreurs backend (Error Leakage)
+
+Lorsqu'un moteur d'inférence (vLLM) renvoie une erreur 500 — OOM GPU, timeout, requête malformée — le message d'erreur inclut parfois le **payload complet de la requête ayant échoué**, y compris le System Prompt.
+
+Si LiteLLM propage cette erreur brute au client, l'utilisateur (ou un attaquant) voit s'afficher l'intégralité des instructions secrètes de l'agent, des règles de sécurité, ou des clés d'accès injectées dans le contexte.
+
+**Contre-mesures :**
+
+```yaml
+# litellm_config.yaml — masquer les erreurs backend en production
+general_settings:
+  master_key: "sk-..."
+  # Intercepte les erreurs 5xx du backend et renvoie un message générique
+  return_response_headers: false
+
+# Dans le code d'un proxy custom, intercepter les erreurs :
+# if response.status >= 500:
+#     return JSONResponse({"error": "503 Service Unavailable"}, status_code=503)
+```
+
+Pour les équipes qui déploient un reverse proxy (Caddy/Nginx) devant LiteLLM, ajoutez un bloc de réécriture d'erreur :
+
+```nginx
+# Nginx — remplacer les erreurs 500/502/504 par un message générique
+error_page 500 502 503 504 /generic_error.json;
+location = /generic_error.json {
+    internal;
+    return 503 '{"error":"Service temporairement indisponible"}';
+    add_header Content-Type application/json;
+}
+```
+
+> [!note] Debug vs Production
+> En environnement de développement, les traces complètes sont utiles. En production, activez ce filtrage systématiquement — et loggez les erreurs détaillées **côté serveur uniquement**, dans vos fichiers de log, jamais dans la réponse HTTP.
+
 ### LLM06 — Divulgation d'informations sensibles
 
 Le modèle "mémorise" des données d'entraînement ou, pire, des données du contexte de session, et les restitue à un autre utilisateur.
@@ -347,7 +382,49 @@ Analyse les données ci-dessus et liste les liens cassés.
 
 ---
 
-## 8. Logging et traçabilité
+## 8. Chaîne d'approvisionnement des modèles (Model Supply Chain)
+
+`ollama pull model:tag` et `huggingface-cli download` téléchargent des gigaoctets de données opaques depuis Internet. Bien que les formats `.safetensors` et `.gguf` ne soient pas exécutables au sens traditionnel (contrairement aux anciens `.pt` / pickle PyTorch), un modèle **empoisonné** (*backdoored*) peut avoir été publié sur HuggingFace ou Ollama Hub par un attaquant : il se comportera normalement 99 % du temps, mais exécutera des comportements malveillants si un mot-clé précis est injecté dans le prompt.
+
+> [!warning] Risque supply chain
+> Dans une infrastructure souveraine ou air-gapped, **ne télécharger des modèles que depuis les dépôts officiels** des éditeurs (`meta-llama`, `Qwen`, `mistralai`, `microsoft`) et **vérifier le hash SHA-256** avant de promouvoir en production.
+
+### Vérification SHA-256 — GGUF (Ollama / llama.cpp)
+
+```bash
+# 1. Récupérer le hash officiel depuis le Model Card HuggingFace
+#    (onglet "Files and versions" > colonne "SHA256")
+EXPECTED_HASH="abc123def456..."   # exemple
+
+# 2. Télécharger le modèle
+huggingface-cli download bartowski/Llama-3.1-70B-Instruct-GGUF \
+  --include "Llama-3.1-70B-Instruct-Q4_K_M.gguf" \
+  --local-dir ./models/
+
+# 3. Vérifier
+sha256sum ./models/Llama-3.1-70B-Instruct-Q4_K_M.gguf
+# → doit correspondre à $EXPECTED_HASH
+```
+
+### Vérification SHA-256 — Safetensors (vLLM / HuggingFace)
+
+HuggingFace fournit un fichier `model.safetensors.index.json` contenant les hashes individuels de chaque shard. La CLI `huggingface-cli` les vérifie automatiquement lors du téléchargement si `--verify` est passé[^8] :
+
+```bash
+huggingface-cli download meta-llama/Llama-3.1-70B-Instruct \
+  --verify \
+  --local-dir ./models/llama-70b/
+```
+
+### Recommandations pour infrastructure souveraine
+
+1. **Dépôt interne privé** : après vérification, poussez les poids vérifiés dans un registre de modèles interne (ex: Artifactory, MinIO avec checksums) — les machines de production ne téléchargent jamais directement depuis Internet.
+2. **Allowlist des éditeurs** : seuls les modèles des organisations vérifiées (`meta-llama`, `Qwen`, `mistralai`, `microsoft`, `google`, `deepseek-ai`) sont autorisés — les forks non officiels sont bloqués.
+3. **Audit des licences** : vérifiez la licence commerciale avant tout déploiement métier (Llama 3 : licence Meta acceptable pour la plupart des usages commerciaux ; DeepSeek-R1 : licence MIT).
+
+---
+
+## 9. Logging et traçabilité
 
 En conformité RGPD/AI Act, les interactions avec un LLM traitant des données personnelles doivent être tracées.
 
@@ -374,17 +451,22 @@ En conformité RGPD/AI Act, les interactions avec un LLM traitant des données p
 □ Le moteur d'inférence n'écoute pas sur 0.0.0.0 (ou le pare-feu bloque l'accès externe)
 □ Un reverse proxy avec auth Bearer ou LiteLLM gateway est en place
 □ TLS activé entre clients et gateway (certificat valide)
+□ Les erreurs backend (500/502) sont interceptées et retournent un message générique au client
 □ Les logs d'inférence ne contiennent pas de données personnelles en clair
 □ Le chiffrement disque est activé sur la partition des logs et des données de session
 □ Les agents tournent avec un utilisateur non-root et --cap-drop ALL
 □ Les entrées externes (fichiers, issues, web) sont isolées dans le prompt agent
 □ Une procédure de révocation de clé API existe et a été testée
 □ Les mises à jour du moteur d'inférence sont planifiées (CVE tracking)
+□ Les poids des modèles sont vérifiés par hash SHA-256 avant déploiement en production
+□ Seuls les modèles des dépôts officiels (meta-llama, Qwen, mistralai...) sont autorisés
 ```
 
 ---
 
 ## Références
+
+[^8]: HuggingFace, *huggingface_hub CLI — download with hash verification* (`--verify` flag, intégrité des safetensors). [https://huggingface.co/docs/huggingface_hub/guides/download](https://huggingface.co/docs/huggingface_hub/guides/download)
 
 - [OWASP Top 10 for LLM Applications (2025)](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [Firecracker MicroVM](https://firecracker-microvm.github.io/) — isolation légère pour exécution de code non fiable

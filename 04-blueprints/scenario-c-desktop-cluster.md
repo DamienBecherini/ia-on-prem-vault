@@ -94,6 +94,15 @@ ollama logs
 > [!note] Monitoring avancé
 > Pour un monitoring centralisé (Prometheus + Grafana), le projet communautaire [ollama-exporter](https://github.com/marcboeker/go-ollama) expose des métriques compatibles. Non officiel — à valider avant usage en production.
 
+### Storage Wall — temps de rechargement du modèle
+
+> [!warning] SLA et redémarrages
+> Un redémarrage du cluster Exo (crash, mise à jour) implique de recharger le modèle depuis le SSD vers la mémoire unifiée de chaque nœud. Pour un modèle 70B Q4 (~40 Go par nœud) sur un SSD PCIe 3.0 (~2,5 Go/s réels) :
+>
+> **Temps de rechargement estimé :** ~16 secondes par nœud, mais si les nœuds rechargent en séquence, le cluster peut rester indisponible **30 à 60 secondes** avant d'être opérationnel.
+>
+> **Recommandation :** Privilégier un SSD NVMe PCIe 4.0 ou 5.0 pour réduire ce temps de démarrage à froid. Sur un cluster de 3 Mac Studio, le rechargement parallèle sur Thunderbolt 5 permet de ramener ce délai à < 10 secondes.
+
 ---
 
 ## 📚 Sources et Références
