@@ -49,6 +49,7 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 - [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence : vLLM, Ollama et TensorRT-LLM]]
 - [[03-stack-logicielle/clustering-exo-and-ray|🌐 Clustering IA : Relier les GPU avec Exo et Ray]]
 - [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents : L'architecture de la connaissance]]
+- [[03-stack-logicielle/choisir-son-modele|🗺️ Choisir son modèle local]] — familles 2026, tailles, spécialisations, correspondance blueprints
 
 ### 📁 04 - Les Blueprints d'Architecture (Scénarios)
 *Des configurations prêtes à être proposées à vos clients.*
