@@ -8,7 +8,7 @@ sidebar:
 > [!tip] En bref
 > La mémoire unifiée (Apple Silicon, AMD APU) supprime le goulot PCIe et permet de faire tourner des modèles 70B+ sur une station silencieuse. En contrepartie, la bande passante reste inférieure à une VRAM GDDR dédiée. Le bon choix dépend de votre contrainte : capacité ou débit.
 
-Pour un architecte système IA, comprendre la différence physique entre **RAM classique**, **VRAM dédiée** et **mémoire unifiée** est fondamental. Ce choix influence directement le débit en inférence (tokens/s), les coûts matériels et les limites d'évolutivité[^5].
+Pour un architecte système IA, comprendre la différence physique entre **RAM classique**, **VRAM dédiée** et **mémoire unifiée** est fondamental. Ce choix influence directement le débit en inférence ([[00-lexique/tokens-per-second|tokens/s]]), les coûts matériels et les limites d'évolutivité[^5].
 
 Voici l'analyse physique, les schémas de routage des données et le guide décisionnel pour vos audits d'entreprise.
 
@@ -41,10 +41,10 @@ graph TD
 ---
 
 ## 1. La VRAM Dédiée (Le Standard Nvidia)
-La **VRAM (Video RAM)** est placée au plus près du GPU. En 2026, on retrouve surtout de la **GDDR7** sur les cartes grand public (ex: RTX 5090) et de la **HBM** sur des accélérateurs datacenter.
+La **[[00-lexique/vram|VRAM]] (Video RAM)** est placée au plus près du GPU. En 2026, on retrouve surtout de la **GDDR7** sur les cartes grand public (ex: RTX 5090) et de la **[[00-lexique/hbm|HBM]]** sur des accélérateurs datacenter.
 
 *   **Le routage physique :** Le GPU accède à la VRAM par un bus mémoire très large (jusqu'à 512-bit). La distance physique entre la puce de calcul et la puce mémoire se compte en millimètres.
-*   **Pourquoi c'est rapide :** la RTX 5090 atteint ~**1,79 To/s** (1 792 Go/s), ce qui change radicalement le débit en decoding[^1][^2].
+*   **Pourquoi c'est rapide :** la RTX 5090 atteint ~**1,79 To/s** (1 792 Go/s), ce qui change radicalement le débit en [[00-lexique/decoding|decoding]][^1][^2].
 *   **La limite physique (Le coût de la capacité) :** Les puces de VRAM coûtent extrêmement cher à produire. Les cartes grand public plafonnent à 24 Go ou 32 Go. Pour obtenir 128 Go de VRAM, vous devez acheter 4 cartes graphiques physiques, ce qui pose des problèmes thermiques et électriques massifs.
 
 ---
@@ -52,7 +52,7 @@ La **VRAM (Video RAM)** est placée au plus près du GPU. En 2026, on retrouve s
 ## 2. La Mémoire Unifiée (L'approche Apple Silicon & AMD APU)
 Popularisée par Apple et renforcée côté x86 par AMD Ryzen AI Max PRO 400, la **mémoire unifiée** supprime la séparation classique RAM/VRAM.
 
-*   **Le routage physique :** Le processeur central (CPU), la puce graphique (GPU) et l'accélérateur d'IA (NPU) sont réunis sur la même puce de silicium (SoC). Les barrettes de mémoire (LPDDR5X-8000/8533) sont soudées juste à côté, sur le même composant.
+*   **Le routage physique :** Le processeur central (CPU), la puce graphique (GPU) et l'accélérateur d'IA ([[00-lexique/npu|NPU]]) sont réunis sur la même puce de silicium (SoC). Les barrettes de mémoire (LPDDR5X-8000/8533) sont soudées juste à côté, sur le même composant.
 *   **L'élimination de la copie :** Dans un PC classique, pour que la carte graphique traite une donnée stockée dans la RAM, le CPU doit copier la donnée, la faire passer par le bus PCIe (limité à 64 Go/s), puis la ré-écrire dans la VRAM. **En mémoire unifiée, cette étape de copie est éliminée.** Le GPU lit directement dans la mémoire partagée.
 *   **La nuance de bande passante (AMD vs Apple) :** 
     *   **Apple Silicon :** M4 Max monte à **546 Go/s** (version 16c CPU / 40c GPU) ; M3 Ultra à **819 Go/s**[^3].

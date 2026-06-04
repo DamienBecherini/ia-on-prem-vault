@@ -10,7 +10,7 @@ sidebar:
 
 La **quantification** (*quantization*) réduit la précision numérique des **poids** (et parfois des **activations**) d'un réseau de neurones [^1].
 
-En passant de la précision native **FP16/BF16** (2 octets par paramètre) à des formats compressés en **8-bit** (1 octet), **4-bit** (~0,5 octet effectif) ou plus bas, on divise l'empreinte VRAM d'un modèle par 2 à 4, ce qui permet d'exécuter localement des modèles autrement hors de portée matérielle [^1].
+En passant de la précision native **FP16/BF16** (2 octets par paramètre) à des formats compressés en **8-bit** (1 octet), **4-bit** (~0,5 octet effectif) ou plus bas, on divise l'empreinte [[00-lexique/vram|VRAM]] d'un modèle par 2 à 4, ce qui permet d'exécuter localement des modèles autrement hors de portée matérielle [^1].
 
 > [!note] Lien connexe
 > La quantification réduit les **poids fixes** ; le [[01-fondations/kv-cache-and-context|KV Cache]] reste un second poste VRAM dynamique, lui aussi quantifiable séparément.
@@ -54,7 +54,7 @@ Toute la recherche récente en quantification LLM vise à contourner ce problèm
 Le choix du format dépend de votre **infrastructure cible** (CPU, GPU dédié, mémoire unifiée) et du **moteur d'inférence** (llama.cpp, vLLM, TensorRT-LLM).
 
 ### 1. GGUF (llama.cpp) : le standard CPU / mémoire unifiée
-Le format **GGUF** (écosystème [llama.cpp](https://github.com/ggml-org/llama.cpp)) cible l'inférence locale, l'offloading partiel vers la RAM et Apple Silicon [^3][^4].
+Le format **[[00-lexique/gguf|GGUF]]** (écosystème [llama.cpp](https://github.com/ggml-org/llama.cpp)) cible l'inférence locale, l'[[00-lexique/offloading|offloading]] partiel vers la RAM et Apple Silicon [^3][^4].
 
 *   **Les K-Quants (superblocks) :** les poids sont découpés en super-blocs de **256 valeurs**, avec des sous-blocs et des échelles multiples [^4]. Les variantes `Q4_K_M`, `Q5_K_M`, etc. utilisent une **précision mixte** : les tenseurs sensibles (souvent les matrices d'attention) restent à plus haute précision que le reste du réseau [^4].
 *   **Idéal pour :** Mac Studio, Ryzen x86, inférence CPU-first, déploiements souverains sans stack GPU lourde [^3].
