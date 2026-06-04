@@ -27,6 +27,14 @@ Check:
 - public content that contains agent-only maintenance notes
 - publish safety for `.agents/**`, `.cursor/**`, `docs/plans/**`, `_private/**`
 
+## Plan Archive Hygiene
+
+When scanning implementation plans, treat `docs/plans/archive/**` as historical context only.
+Do not infer active tasks from archived plans, even if they still contain pending TODOs.
+
+If a plan is marked `SUPERSEDED`, `superseded`, `deprecated`, or clearly replaced by a newer plan,
+recommend moving it to `docs/plans/archive/` unless the user explicitly needs it in the active plan list.
+
 ## Report Format
 
 ```markdown

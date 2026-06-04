@@ -7,11 +7,18 @@ Agent and maintainer plans for [`ia-on-prem-vault`](../../). Written in English.
 | Plan | Topic | Status |
 |------|-------|--------|
 | [2026_06_02_18-35_main_vault-agent-skills-and-rules.plan.md](2026_06_02_18-35_main_vault-agent-skills-and-rules.plan.md) | Agent skills and Cursor rules | Delivered |
-| [2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md](2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md) | On-prem autonomous agents mini-book (section 05) | Pending |
 | [2026_06_02_20-14_main_stations-multi-gpu.plan.md](2026_06_02_20-14_main_stations-multi-gpu.plan.md) | Chapter `02-materiel/stations-multi-gpu.md` | Delivered |
 | [2026_06_02_20-38_main_vault-maintenance-skills-and-run-logs.plan.md](2026_06_02_20-38_main_vault-maintenance-skills-and-run-logs.plan.md) | Maintenance skills and run logs | Delivered |
 | [2026_06_02_23-18_main_vault-skills-calibration-tests.plan.md](2026_06_02_23-18_main_vault-skills-calibration-tests.plan.md) | Skill calibration tests | Delivered |
 | [2026_06_03_23-18_main_gemini-content-review-phased.plan.md](2026_06_03_23-18_main_gemini-content-review-phased.plan.md) | Phased review of Gemini batch (ch. 01/03/04, lexicon, sources) | Pending |
+
+## Archive
+
+Archived plans are historical context only. Agents should not infer active tasks from `archive/**`.
+
+| Plan | Topic | Status |
+|------|-------|--------|
+| [archive/2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md](archive/2026_06_02_20-11_main_agents-autonomes-on-prem-mini-livre.plan.md) | Superseded by `2026_06_04_08-14_main_agents-et-assistants-on-prem.plan.md` | Superseded |
 
 ## Related engine plans
 
