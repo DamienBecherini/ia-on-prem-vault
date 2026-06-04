@@ -75,6 +75,11 @@
       "label": "04 - Les Blueprints",
       "translations": { "en": "04 - Blueprints" },
       "items": [{ "autogenerate": { "directory": "04-blueprints" } }]
+    },
+    {
+      "label": "05 - Agents & Assistants",
+      "translations": { "en": "05 - Agents & Assistants" },
+      "items": [{ "autogenerate": { "directory": "05-agents-et-assistants-on-prem" } }]
     }
   ]
 }
