@@ -9,7 +9,8 @@ Après la [[02-materiel/stations-multi-gpu|station multi-GPU]], la question suiv
 
 Oui, mais le réseau devient vite plus important que le nombre de GPU. Une carte moderne lit sa [[00-lexique/vram|VRAM]] à des centaines ou milliers de Go/s, alors qu'un lien réseau se compte souvent en dizaines ou centaines de Gb/s. Même [[00-lexique/rdma|RDMA]] ne transforme pas un cluster de bureau en système [[00-lexique/nvlink|NVLink]] externe.
 
-> 🔗 **Lien connexe :** pour comprendre pourquoi l'interconnexion limite le parallélisme modèle, voir [[02-materiel/stations-multi-gpu|Stations Multi-GPU]] et [[00-lexique/memory-bandwidth|Bande passante mémoire]].
+> [!note] Lien connexe
+> Pour comprendre pourquoi l'interconnexion limite le parallélisme modèle, voir [[02-materiel/stations-multi-gpu|Stations Multi-GPU]] et [[00-lexique/memory-bandwidth|Bande passante mémoire]].
 
 ---
 

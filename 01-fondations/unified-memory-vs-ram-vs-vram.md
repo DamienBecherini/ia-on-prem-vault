@@ -89,8 +89,8 @@ Pour conseiller votre client PME dans le cadre d'un déploiement local :
 3.  **Mémoire unifiée AMD PRO 400** : forte capacité mémoire locale en x86, adaptée aux besoins de souveraineté Linux/Windows.
 4.  **RAM DDR5 seule** : pertinent surtout pour des traitements différés ou des modèles plus petits.
 
-> 🔗 **Lien connexe :**
-> Pour comprendre comment dimensionner la capacité de mémoire nécessaire pour votre modèle sans faire d'erreur "Out Of Memory" (OOM), consultez le chapitre sur la [[01-fondations/quantization-4bit-8bit\|Quantification des modèles]].
+> [!note] Lien connexe
+> Pour comprendre comment dimensionner la capacité de mémoire nécessaire pour votre modèle sans faire d'erreur "Out Of Memory" (OOM), consultez le chapitre sur la [[01-fondations/quantization-4bit-8bit|Quantification des modèles]].
 
 ---
 

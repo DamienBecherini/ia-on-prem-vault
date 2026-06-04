@@ -9,7 +9,8 @@ Pour un déploiement souverain d'IA en entreprise, la **mémoire unifiée** est 
 
 En supprimant la copie RAM → VRAM via PCIe, les SoC **APU** (CPU + GPU + NPU sur la même puce) accèdent à un pool de **LPDDR5X** partagé — jusqu'à **192 Go** sur les plateformes AMD Ryzen AI Max PRO 400, et jusqu'à **512 Go** sur le Mac Studio M3 Ultra [^1][^2][^4]. C'est l'architecture de référence pour exécuter des modèles **70B+ quantifiés** (ex. Llama 3.1 70B en Q4_K_M, ~40 Go de poids) sur une station de bureau silencieuse, sans serveur GPU datacenter [^3][^9].
 
-> 🔗 **Lien connexe :** pour le dimensionnement mémoire (poids + KV cache), voir [[01-fondations/quantization-4bit-8bit|Quantification]] et [[01-fondations/kv-cache-and-context|KV Cache]].
+> [!note] Lien connexe
+> Pour le dimensionnement mémoire (poids + KV cache), voir [[01-fondations/quantization-4bit-8bit|Quantification]] et [[01-fondations/kv-cache-and-context|KV Cache]].
 
 ---
 
@@ -90,7 +91,8 @@ sudo sysctl iogpu.wired_limit_mb=122880
 *   **Laisser 8–16 Go** au système pour éviter pression mémoire / swap [^12][^13].
 *   La modification est **volatile** (perdue au reboot) ; pour la persistance, utiliser un LaunchDaemon ou équivalent — non supporté officiellement par Apple [^12][^13].
 
-> ⚠️ L'ancienne clé `iogpu.wired_mem_limit` (en kilo-octets) et le dépôt `apple-silicon-inference/guide` circulent encore en ligne mais ne sont **pas** la référence fiable actuelle.
+> [!warning] Documentation obsolète
+> L'ancienne clé `iogpu.wired_mem_limit` (en kilo-octets) et le dépôt `apple-silicon-inference/guide` circulent encore en ligne mais ne sont **pas** la référence fiable actuelle.
 
 ---
 
@@ -108,6 +110,7 @@ sudo sysctl iogpu.wired_limit_mb=122880
 | **OS** | macOS | macOS | **Linux / Windows** [^1][^2] |
 | **Tarif indicatif** | ~4 500–5 500 € (128 Go, CTO) [^4][^5] | ~5 000–7 500 € (192 Go+, CTO) [^4][^5] | **~3 700 €** (Ryzen AI Halo 128 Go, 3 999 $) [^7][^8] |
 
+> [!note] Lecture des chiffres
 > Les vitesses Apple proviennent de benchmarks communautaires **MLX** ; **llama.cpp/Metal** est souvent légèrement plus lent en decode pur, mais plus flexible en long contexte [^9][^10]. La borne théorique memory-bound (~13–21 tok/s Apple vs ~7 tok/s AMD) est détaillée dans [[01-fondations/unified-memory-vs-ram-vs-vram|Mémoire unifiée vs RAM vs VRAM]].
 
 ---

@@ -37,11 +37,12 @@ Si vous déployez des puces NVIDIA Blackwell (B200), le logiciel utilisera nativ
 
 ---
 
-## ⚠️ Le Piège de l'Ingénierie Réseau (Le drame RoCE)
+## Le Piège de l'Ingénierie Réseau (Le drame RoCE)
 
-Beaucoup d'entreprises achètent les serveurs GPU, puis branchent le tout sur leur réseau Ethernet classique en espérant que le RDMA fonctionne tout seul.
-C'est le plus grand piège de ce blueprint : **RoCE n'est pas plug-and-play**. Il nécessite un réseau dit "Lossless" (sans perte). Si vos switchs réseau ne sont pas rigoureusement configurés avec des protocoles stricts de contrôle de congestion ([[00-lexique/pfc|PFC]], [[00-lexique/ecn|ECN]]), les paquets de données liés à l'IA vont saturer les câbles, provoquant des retransmissions. 
-**Une latence réseau qui passe de 2 microsecondes à 5 millisecondes suffit à diviser par dix la vitesse de votre cluster IA**[^2].
+> [!warning] RoCE n'est pas plug-and-play
+> Beaucoup d'entreprises achètent les serveurs GPU, puis branchent le tout sur leur réseau Ethernet classique en espérant que le RDMA fonctionne tout seul.
+> C'est le plus grand piège de ce blueprint : **RoCE n'est pas plug-and-play**. Il nécessite un réseau dit "Lossless" (sans perte). Si vos switchs réseau ne sont pas rigoureusement configurés avec des protocoles stricts de contrôle de congestion ([[00-lexique/pfc|PFC]], [[00-lexique/ecn|ECN]]), les paquets de données liés à l'IA vont saturer les câbles, provoquant des retransmissions. 
+> **Une latence réseau qui passe de 2 microsecondes à 5 millisecondes suffit à diviser par dix la vitesse de votre cluster IA**[^2].
 
 ---
 

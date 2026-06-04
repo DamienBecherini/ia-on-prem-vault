@@ -37,10 +37,11 @@ La latence du réseau, même en Thunderbolt, est infiniment plus lente que la vi
 
 ---
 
-## ⚠️ Le Piège de la Latence (TTFT)
+## Le Piège de la Latence (TTFT)
 
-Le plus gros problème de cette architecture n'est pas le débit de lecture, mais le **[[00-lexique/ttft|TTFT]]** (Time To First Token). 
-Pendant la phase de lecture du prompt (le Prefill), une immense quantité de données doit transiter entre les machines. Si vous envoyez un document de 50 pages à analyser à votre cluster, le ping-pong réseau entre les 6 Mac Mini peut prendre **plusieurs dizaines de secondes** avant que le premier mot de la réponse n'apparaisse à l'écran. 
+> [!warning] Latence avant le premier token
+> Le plus gros problème de cette architecture n'est pas le débit de lecture, mais le **[[00-lexique/ttft|TTFT]]** (Time To First Token). 
+> Pendant la phase de lecture du prompt (le Prefill), une immense quantité de données doit transiter entre les machines. Si vous envoyez un document de 50 pages à analyser à votre cluster, le ping-pong réseau entre les 6 Mac Mini peut prendre **plusieurs dizaines de secondes** avant que le premier mot de la réponse n'apparaisse à l'écran. 
 
 ---
 

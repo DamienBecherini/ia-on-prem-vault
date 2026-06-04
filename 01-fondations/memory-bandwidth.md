@@ -5,7 +5,8 @@ sidebar:
   order: 1
 ---
 
-> 💡 **Prérequis conseillé :** Ce chapitre suppose que vous savez comment un token est généré. Si ce n'est pas le cas, commencez par [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]].
+> [!info] Prérequis conseillé
+> Ce chapitre suppose que vous savez comment un token est généré. Si ce n'est pas le cas, commencez par [[01-fondations/journey-of-a-prompt|🧠 Le Voyage d'un Prompt]].
 
 En architecture système appliquée à l'IA, une réalité revient en permanence : en [[00-lexique/inference|inférence LLM]], la limite est souvent la **mémoire** avant le calcul brut[^1].
 
@@ -44,12 +45,14 @@ Pour dimensionner rapidement une machine, on utilise une borne supérieure :
 
 $$\text{Vitesse Max (tokens/s)} = \frac{\text{Bande Passante Mémoire (Go/s)}}{\text{Taille du Modèle en Mémoire (Go)}}$$
 
+> [!note] Approximation
 > Cette formule est une **approximation de premier ordre** : elle n'intègre pas tous les effets runtime (kernel, KV cache, scheduler, batch, fragmentation, etc.).
 
 ### Cas Pratique : Modèle dense 70B en quantification 4-bit (Q4)
 Un modèle dense de 70B quantifié en 4-bit occupe environ **40 Go** en mémoire de poids (ordre de grandeur).
 
-> Note importante : il n'existe pas de "Llama 4 70B" officiel. Llama 4 est publié en variantes MoE (Scout/Maverick). Pour un exemple dense 70B, la famille Llama 3.x est plus adaptée[^2].
+> [!note] Note importante
+> Il n'existe pas de "Llama 4 70B" officiel. Llama 4 est publié en variantes MoE (Scout/Maverick). Pour un exemple dense 70B, la famille Llama 3.x est plus adaptée[^2].
 
 1.  **Sur un PC classique (RAM DDR5 Dual Channel) :**
     *   Bande passante réelle : $\sim 100 \text{ Go/s}$
@@ -81,14 +84,15 @@ Valeurs ci-dessous : ordres de grandeur utiles pour l'architecture (les performa
 
 ---
 
-## ⚠️ Les Limites du Clustering Réseau
+## Les Limites du Clustering Réseau
 
-Dès qu'on cumule la mémoire de plusieurs machines, l'interconnexion devient le point de rupture :
+> [!warning] Point de rupture
+> Dès qu'on cumule la mémoire de plusieurs machines, l'interconnexion devient le point de rupture :
+>
+> 1.  **Le câble peut dominer toute la chaîne :** une liaison 10 GbE plafonne autour de 1,25 Go/s, très loin des centaines de Go/s des mémoires locales.
+> 2.  **RDMA est clé en environnement pro :** RoCE/InfiniBand réduit le coût CPU des transferts et améliore la latence inter-nœuds.
 
-1.  **Le câble peut dominer toute la chaîne :** une liaison 10 GbE plafonne autour de 1,25 Go/s, très loin des centaines de Go/s des mémoires locales.
-2.  **RDMA est clé en environnement pro :** RoCE/InfiniBand réduit le coût CPU des transferts et améliore la latence inter-nœuds.
-
-> 💡 **Le Conseil de l'Architecte :**
+> [!tip] Conseil de l'Architecte
 > Dans tout déploiement on-premise, la méthode [[03-stack-logicielle/rag-and-agents|RAG]] est une alliée clé de la bande passante. En n'injectant dans le contexte que les passages pertinents (plutôt que des documents entiers), on évite de saturer la mémoire avec des données inutiles et on maintient le TTFT sous contrôle.
 
 ---
