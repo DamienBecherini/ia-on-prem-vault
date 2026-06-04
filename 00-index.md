@@ -74,6 +74,9 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 - [[06-mise-en-oeuvre/getting-started-with-ollama|🚀 Démarrer avec Ollama]] — installation, premier modèle, API, réglages de base
 - [[06-mise-en-oeuvre/evaluate-local-model|🧪 Évaluer un modèle local]] — qualité, hallucinations, RAG, agents, KPI et performances
 - [[06-mise-en-oeuvre/local-inference-security|🔒 Sécurité de l'inférence locale]] — auth API, isolation réseau, OWASP LLM Top 10, agents
+- [[06-mise-en-oeuvre/configure-vllm-multi-gpu|⚙️ Configurer vLLM multi-GPU]] — tensor parallelism, Ray, production
+- [[06-mise-en-oeuvre/monitoring-inference-stack|📊 Monitoring Prometheus + Grafana]] — métriques GPU, KV Cache, alertes
+- [[06-mise-en-oeuvre/migrate-ollama-to-vllm|🔄 Migrer d'Ollama vers vLLM]] — bascule sans coupure, compatibilité API
 
 ---
 

@@ -17,11 +17,9 @@ La section 06 transforme les concepts des fondations, du matériel, de la stack 
 1. [[06-mise-en-oeuvre/getting-started-with-ollama|Démarrer avec Ollama]] — installation, premier modèle, API, réglages de base.
 2. [[06-mise-en-oeuvre/evaluate-local-model|Évaluer un modèle local]] — comparer qualité, hallucinations, cohérence, RAG, agents et performances.
 3. [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]] — authentification API, isolation réseau, OWASP LLM Top 10, agents sécurisés.
-
-Les prochains guides pratiques pourront couvrir :
-
-- configurer vLLM en production multi-GPU ;
-- migrer de Ollama vers vLLM sans changer les clients.
+4. [[06-mise-en-oeuvre/configure-vllm-multi-gpu|Configurer vLLM multi-GPU]] — tensor parallelism, Ray multi-nœuds, production hardening.
+5. [[06-mise-en-oeuvre/monitoring-inference-stack|Monitoring Prometheus + Grafana]] — métriques vLLM, GPU DCGM, dashboards et alertes.
+6. [[06-mise-en-oeuvre/migrate-ollama-to-vllm|Migrer d'Ollama vers vLLM]] — compatibilité API, conversion modèles, stratégie de bascule sans coupure.
 
 ---
 
