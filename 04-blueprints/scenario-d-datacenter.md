@@ -134,6 +134,48 @@ Pour un SLA datacenter avec objectif de MTTR (Mean Time To Recovery) sous 2 minu
 
 ---
 
+## 🛡️ Haute Disponibilité et Reprise (DRP)
+
+Le Blueprint D est le seul scénario pour lequel un PRA formel est justifié économiquement. Un downtime de 2 heures sur un nœud HGX en production représente un coût opérationnel et réputationnel significatif.
+
+### Stratégies HA par composant
+
+| Composant | Stratégie HA | Notes |
+| :-- | :-- | :-- |
+| **vLLM** | Double instance avec load balancer (Nginx / HAProxy) | Rolling restart pour les mises à jour sans downtime |
+| **Qdrant cluster** | Mode distribué (3 nœuds minimum) avec réplication | Qdrant supporte nativement le sharding et la réplication |
+| **PostgreSQL / SQLite** | Streaming replication (Postgres) ou WAL archiving | SQLite insuffisant en production D — migrer vers Postgres |
+| **Stockage modèles** | NVMe RAID 0 + snapshot quotidien vers NAS ou S3 souverain | GPUDirect Storage nécessite un chemin dédié, à exclure du RAID logiciel |
+| **Réseau RoCE** | Redondance de switch (dual-spine) + monitoring PFC/ECN actif | Une perte de paquet non contrôlée s'effondre silencieusement |
+
+### Objectifs RTO / RPO
+
+| Incident | RTO cible | RPO cible | Action |
+| :-- | :-- | :-- | :-- |
+| Crash process vLLM | < 2 min | 0 (sans perte de données) | Redémarrage automatique (systemd / Docker restart policy) |
+| Panne GPU unique (8 GPU) | < 5 min | 0 | Tensor Parallelism réduit à 7 GPU le temps du remplacement |
+| Panne nœud complet | < 30 min | < 15 min | Bascule sur nœud de secours pré-configuré |
+| Corruption base vectorielle | < 1 h | < 1 h | Restauration depuis snapshot Qdrant le plus récent |
+| Sinistre salle (incendie, inondation) | < 4 h | < 24 h | Réplication hors-site (datacenter secondaire ou cloud souverain) |
+
+### Sauvegarde quotidienne minimale
+
+```bash
+# Snapshot Qdrant (toutes les collections)
+curl -X POST http://localhost:6333/snapshots
+
+# Export Postgres (historiques, métadonnées agents)
+pg_dump -Fc ia_on_prem_db > /backup/$(date +%F)_pg.dump
+
+# Copie hors-site (exemple rsync vers NAS secondaire)
+rsync -az /backup/ nas-secondary:/ia-on-prem-backup/
+```
+
+> [!note] Le temps de rechargement des poids conditionne votre RTO
+> Voir la section **Storage Wall** ci-dessus : un modèle 405B en BF16 sur SSD PCIe 3.0 prend ~4,5 minutes à recharger. Dimensionner votre RTO en tenant compte de ce délai incompressible.
+
+---
+
 ## 📚 Sources et Références
 
 [^1]: NVIDIA Technical Blog, *NVIDIA NVLink and NVIDIA NVSwitch Supercharge Large Language Model Inference* (Architecture HGX, Blackwell NVLink 1.8 TB/s), 2024-2026.

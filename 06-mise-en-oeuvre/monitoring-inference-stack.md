@@ -390,6 +390,59 @@ otel-collector:
 
 ---
 
+## Sauvegarde de l'état applicatif (DRP)
+
+Le monitoring détecte les pannes — mais sans sauvegarde, le redémarrage après incident peut prendre des heures ou perdre des données. Voici les états à protéger dans une stack d'inférence locale.
+
+### Ce qu'il faut sauvegarder
+
+| Composant | Données critiques | Méthode recommandée |
+| :-- | :-- | :-- |
+| **Qdrant** (base vectorielle) | Collections + snapshots d'index | `POST /collections/{name}/snapshots` → snapshot local ; copier vers stockage externe |
+| **Milvus** (base vectorielle) | Collections, segments, métadonnées | Milvus Backup CLI (`milvus-backup create`) vers S3 local ou NAS |
+| **SQLite** (Memory Tree, historiques) | Fichier `.db` | `cp` avec rotation quotidienne ou `sqlite3 .backup` en chaud |
+| **Configuration vLLM / Ollama** | `config.yaml`, scripts de démarrage | Versionné dans Git — déjà couvert |
+| **Modèles et adaptateurs** | Poids GGUF, LoRA fine-tunés | Poids de base = immuables (retélécharger) ; adaptateurs fine-tunés = sauvegarder sur NAS |
+
+### Fréquences suggérées
+
+```
+Qdrant snapshot        → quotidien (cron 02:00), conservation 7 jours
+Milvus backup          → quotidien (cron 03:00), conservation 7 jours
+SQLite Memory Tree     → toutes les heures (si écriture fréquente), sinon quotidien
+Adaptateurs LoRA       → à chaque fin d'entraînement
+```
+
+### Exemple de snapshot Qdrant (curl)
+
+```bash
+# Créer un snapshot
+curl -X POST http://localhost:6333/collections/my_collection/snapshots
+
+# Lister les snapshots disponibles
+curl http://localhost:6333/collections/my_collection/snapshots
+
+# Copier vers stockage externe (exemple NAS monté)
+cp /qdrant/snapshots/my_collection/*.snapshot /mnt/backup/qdrant/
+```
+
+### Procédure de reprise (RTO indicatif)
+
+1. **Redémarrer le conteneur** vLLM ou Ollama → rechargement des poids depuis SSD (~15–120 s selon modèle)
+2. **Restaurer Qdrant** depuis le dernier snapshot → `PUT /collections/{name}/snapshots/recover`
+3. **Restaurer SQLite** → copier le fichier `.db` de sauvegarde à la place du fichier corrompu
+4. **Vérifier** l'endpoint de santé (`/health` ou `/v1/models`)
+
+> [!note] RTO / RPO indicatifs par blueprint
+>
+> | Blueprint | RTO cible | RPO cible | Stratégie |
+> | :-- | :-- | :-- | :-- |
+> | A — Labo Dev | < 30 min | 24 h | Sauvegarde quotidienne suffisante |
+> | B — Appliance PME | < 15 min | 1 h | Snapshots horaires + machine de spare |
+> | D — Datacenter | < 2 min | < 15 min | Double instance + rolling restart (voir Scénario D) |
+
+---
+
 ## Voir aussi
 
 - [[06-mise-en-oeuvre/configure-vllm-multi-gpu|⚙️ Configurer vLLM multi-GPU]] — endpoint `/metrics` et paramètres

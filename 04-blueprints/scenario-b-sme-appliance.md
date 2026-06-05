@@ -63,6 +63,32 @@ Pour dépasser cette contrainte de capacité fixe et rester sur du matériel de 
 
 ---
 
+## 🛡️ Sauvegarde et Reprise (DRP)
+
+> [!warning] La mémoire unifiée est soudée — la donnée, elle, ne l'est pas
+> En cas de panne matérielle d'un Mac Studio ou d'un APU Gorgon Halo, le remplacement prend plusieurs jours. Sauvegarder les données applicatives permet de reprendre le service sur une machine de prêt ou un cloud temporaire en moins d'une heure.
+
+### Ce qu'il faut sauvegarder sur le Blueprint B
+
+| Données | Emplacement typique | Fréquence |
+| :-- | :-- | :-- |
+| Base vectorielle (Qdrant / Chroma) | `/qdrant/storage/` ou volume Docker | Quotidien — snapshot API |
+| Historiques de conversations (SQLite) | `~/.open-webui/data/` ou volume Docker | Quotidien ou horaire |
+| Configuration Ollama / vLLM | `~/.ollama/` ou `config.yaml` | À chaque modification (Git) |
+| Adaptateurs LoRA fine-tunés | Répertoire dédié | Après chaque session d'entraînement |
+| Modèles de base (GGUF) | `~/.ollama/models/` | Non prioritaire — re-téléchargeable |
+
+### Procédure de reprise minimale
+
+1. Démarrer une instance temporaire (autre Mac, VM cloud souverain) avec Ollama
+2. Restaurer la base vectorielle depuis le dernier snapshot
+3. Restaurer l'historique SQLite
+4. Pointer les clients (Open WebUI, LiteLLM) vers la nouvelle IP
+
+**RTO indicatif Blueprint B : < 45 minutes** avec une sauvegarde quotidienne à jour.
+
+---
+
 ## 📚 Sources et Références
 
 [^1]: llmhardware.io, *Mac Studio M4 Max / M3 Ultra for LLMs* (Performances Llama 3 70B Q4_K_M avec MLX et allocation de mémoire Metal maximale), 2025-2026.

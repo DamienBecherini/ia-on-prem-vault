@@ -137,6 +137,33 @@ For detailed sizing, see [[04-blueprints/scenario-a-dev-lab|Blueprints A–D]].
 
 ---
 
+## 💻 Getting started with code (external resources)
+
+This guide covers architecture theory. To move to practice, here are the recommended entry points for each track:
+
+### Track A — Personal Assistant
+
+| Tool | Starting point |
+| :-- | :-- |
+| **Open WebUI** | [Official documentation](https://docs.openwebui.com/) — Docker install in 5 minutes, Ollama connection |
+| **AnythingLLM** | [AnythingLLM GitHub](https://github.com/Mintplex-Labs/anything-llm) — full local RAG, multi-model interface |
+| **Khoj** | [Khoj self-hosted guide](https://docs.khoj.dev/clients/desktop/) — personal memory + local file access |
+
+### Track B — Custodian Agent
+
+| Tool | Starting point |
+| :-- | :-- |
+| **Aider** | [Aider quickstart](https://aider.chat/docs/usage/tutorials.html) — local coding agent, Ollama-compatible |
+| **OpenHands** | [OpenHands Docker setup](https://github.com/All-Hands-AI/OpenHands) — autonomous task-execution agent |
+| **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — unified routing to a local model |
+| **SmolAgents** | [SmolAgents cookbook](https://huggingface.co/docs/smolagents/tutorials/building_good_agents) — minimal agent framework, HuggingFace |
+| **LangGraph** | [LangGraph "local agent" tutorial](https://langchain-ai.github.io/langgraph/tutorials/introduction/) — agent orchestration with state graphs |
+
+> [!note] No inline code in this vault
+> This guide is an architecture reference, not a step-by-step tutorial. Code snippets have a short shelf life (APIs and versions evolve) — the links above point to the maintained sources. A companion repository `ia-on-prem-starter-kit` is planned to host versioned code examples separately.
+
+---
+
 ## 🔗 See also
 
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|🔒 Sovereignty & Privacy]] — tool evaluation grid
