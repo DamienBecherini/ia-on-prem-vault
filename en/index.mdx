@@ -14,8 +14,6 @@ hero:
       On-Premise AI
     </span>
   tagline: Sovereign, private, and high-performance architectures for LLMs. From hardware physics to enterprise deployment.
-  image:
-    file: ../../../assets/houston.webp
   actions:
     - text: Start Reading
       link: /en/00-index/
@@ -36,12 +34,15 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 		Understand the physics of AI. Why VRAM and **memory bandwidth** dictate the rules, and how to choose between standard DDR5 PCs, Mac Studios (Unified Memory), and Multi-GPU workstations.
 	</Card>
 	<Card title="The Software Stack" icon="setting">
-		Discover the engines powering local models: **llama.cpp, Ollama, vLLM**, and how to orchestrate a cluster using **Exo**.
+		Discover the engines powering local models: **Ollama, vLLM**, how to choose the right model, and how to orchestrate a cluster using **Exo** or **Ray**.
 	</Card>
 	<Card title="Architecture Blueprints" icon="document">
-		Ready-to-use deployment scenarios. From a simple Dev Lab (CPU Offloading) to an Enterprise Datacenter (RoCE + Multi-GPU) to meet the needs of SMBs and large corporations.
+		Ready-to-use deployment scenarios. From a simple Dev Lab (CPU Offloading) to an Enterprise Datacenter (RoCE + Multi-GPU), with a full TCO comparison.
 	</Card>
-	<Card title="RAG & Agentic Workflows" icon="puzzle">
-		Optimize your hardware resources by using RAG (Retrieval-Augmented Generation) to design sovereign agentic workflows (e.g., *OpenHuman*).
+	<Card title="Agents & Assistants" icon="puzzle">
+		Custodian agents, sovereign RAG, local interfaces (Open WebUI, AnythingLLM) and coding tools (OpenHands, Cursor CLI, Aider) — human-in-the-loop workflows, no cloud required.
+	</Card>
+	<Card title="Implementation" icon="rocket">
+		From setting up Ollama to deploying vLLM on multi-GPU: monitoring, inference security, model evaluation, and real-world migration.
 	</Card>
 </CardGrid>
