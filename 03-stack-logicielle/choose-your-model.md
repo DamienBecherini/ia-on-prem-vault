@@ -1,4 +1,4 @@
-﻿---
+---
 title: "🗺️ Choisir son modèle local"
 description: Guide pratique pour naviguer le paysage des LLM open weights en 2026 — familles, tailles, spécialisations et correspondance avec les scénarios on-premise.
 sidebar:

@@ -45,31 +45,26 @@ Provide full English content under `en/` so the Starlight `en` locale serves tra
 
 ## Phased execution
 
-### Phase 1 — P0: Entry + Foundations (this session)
+### Phase 1 — P0: Entry + Foundations ✅
 
-- [ ] `en/00-index.md` — full mirror of `00-index.md`
-- [ ] `en/01-fondations/journey-of-a-prompt.md`
-- [ ] `en/01-fondations/memory-bandwidth.md`
-- [ ] `en/01-fondations/unified-memory-vs-ram-vs-vram.md`
-- [ ] `en/01-fondations/kv-cache-and-context.md`
-- [ ] `en/01-fondations/quantization-4bit-8bit.md`
+- [x] `en/00-index.md`
+- [x] `en/01-fondations/*` (5)
 
-### Phase 2 — P1: Hardware, stack, blueprints
+### Phase 2 — P1: Hardware, stack, blueprints ✅
 
-- [ ] `en/02-materiel/*` (3)
-- [ ] `en/03-stack-logicielle/*` (4)
-- [ ] `en/04-blueprints/*` (5)
+- [x] `en/02-materiel/*` (3)
+- [x] `en/03-stack-logicielle/*` (4)
+- [x] `en/04-blueprints/*` (5)
 
-### Phase 3 — P2: Agents + implementation
+### Phase 3 — P2: Agents + implementation ✅
 
-- [ ] `en/05-agents-et-assistants-on-prem/**` (22)
-- [ ] `en/06-mise-en-oeuvre/**` (7)
+- [x] `en/05-agents-et-assistants-on-prem/**` (21)
+- [x] `en/06-mise-en-oeuvre/**` (7)
 
-### Phase 4 — P3: Lexicon
+### Phase 4 — P3: Lexicon ✅
 
-- [ ] `en/00-lexique/ai-glossary.md` (hub first)
-- [ ] Remaining `en/00-lexique/*.md` (52)
-- [ ] Optional: English lexicon index intro in `site.config.json` if split index needed
+- [x] `en/00-lexique/*` (57 entries incl. `ai-glossary.md`)
+- [ ] Optional: dedicated `en/00-lexique/lexicon-index.md` (still FR fallback via build generator)
 
 ---
 
@@ -83,4 +78,33 @@ Provide full English content under `en/` so the Starlight `en` locale serves tra
 
 ## Implementation report
 
-*(Appended after each phase)*
+**Date:** 2026-06-04
+
+### Summary
+
+Full English locale coverage for all published vault content except auto-generated `lexicon-index.md` (still generated in French at build; EN locale falls back or uses FR index until a separate generator pass is added).
+
+### Files created
+
+| Section | Count |
+|---------|------:|
+| `en/00-index.md` | 1 |
+| `en/01-fondations/` | 5 |
+| `en/02-materiel/` | 3 |
+| `en/03-stack-logicielle/` | 4 |
+| `en/04-blueprints/` | 5 |
+| `en/05-agents-et-assistants-on-prem/` | 21 |
+| `en/06-mise-en-oeuvre/` | 7 |
+| `en/00-lexique/` | 57 |
+| **Total** | **103** |
+
+### Validation
+
+- `npm run audit:links` — ✅ no unresolved internal links
+- `npm run build` — ✅ 211 pages, ~105 under `dist/en/`
+- No empty `en/` stubs created
+
+### Optional follow-up
+
+- English `lexicon-index.md` generation (extend `generate-lexicon-index.mjs` for `en/` locale)
+- Spot-review long chapters for terminology consistency (vLLM, MoE, Strix Halo)

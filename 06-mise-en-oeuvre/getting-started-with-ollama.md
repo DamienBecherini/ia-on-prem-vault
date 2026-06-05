@@ -1,4 +1,4 @@
-﻿---
+---
 title: "🚀 Démarrer avec Ollama"
 description: Installation, premier modèle, test API et premières bonnes pratiques pour une inférence locale en moins de 15 minutes.
 sidebar:

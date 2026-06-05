@@ -1,4 +1,4 @@
-﻿---
+---
 title: "💰 Comparaison TCO : On-Premise vs Cloud API"
 description: Analyse du coût total de possession (TCO) des quatre blueprints on-premise face aux API cloud IA en 2026 — matériel, énergie, maintenance et point de rentabilité.
 sidebar:

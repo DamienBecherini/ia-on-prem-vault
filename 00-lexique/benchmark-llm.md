@@ -1,4 +1,4 @@
-﻿---
+---
 title: Benchmark LLM
 description: Jeu de tests standardisé pour comparer les capacités, limites et risques de modèles de langage.
 aliases:

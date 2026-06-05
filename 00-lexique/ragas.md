@@ -1,4 +1,4 @@
-﻿---
+---
 title: RAGAS
 description: Framework d'évaluation automatique pour pipelines RAG.
 aliases:
