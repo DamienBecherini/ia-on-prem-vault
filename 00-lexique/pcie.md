@@ -7,6 +7,7 @@ aliases:
 tags:
   - lexique
   - materiel
+last_modified: "2026-06-04"
 ---
 
 

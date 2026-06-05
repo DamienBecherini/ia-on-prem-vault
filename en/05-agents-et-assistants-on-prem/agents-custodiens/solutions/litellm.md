@@ -3,6 +3,7 @@ title: "LiteLLM"
 description: OpenAI-compatible gateway to route agents and applications to Ollama, vLLM, cloud providers, or internal models.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Quick overview

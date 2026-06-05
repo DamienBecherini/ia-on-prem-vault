@@ -3,6 +3,7 @@ title: "⚙️ Workflow : Human-in-the-loop de bout en bout"
 description: "Cycle d'exécution recommandé pour un agent custodien : déclencheur, branche, diff, rapport, revue humaine, merge et publication."
 sidebar:
   order: 3
+last_modified: "2026-06-04"
 ---
 
 Un agent custodien doit être autonome dans l'analyse, mais conservateur dans l'action. Le workflow ci-dessous garde cette séparation nette.

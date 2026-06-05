@@ -8,6 +8,7 @@ aliases:
 tags:
   - lexique
   - agents
+last_modified: "2026-06-04"
 ---
 
 ## 📝 Short definition

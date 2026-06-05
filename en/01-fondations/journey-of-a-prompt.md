@@ -3,6 +3,7 @@ title: "🧠 The Journey of a Prompt: How Does an LLM Work?"
 description: From your keyboard to the answer. No magic—just electricity and mathematics. Discover the key stages (tokenization, prefill, KV cache, decoding).
 sidebar:
   order: 0
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

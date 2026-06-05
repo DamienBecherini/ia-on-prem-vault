@@ -1,6 +1,7 @@
 ---
 title: Index du lexique
 description: Liste alphabétique de toutes les fiches du lexique IA on-premise.
+last_modified: "2026-06-05"
 ---
 
 Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-lexique/ai-glossary|Glossaire IA]].

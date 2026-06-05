@@ -9,6 +9,7 @@ tags:
   - lexique
   - stack-logicielle
   - agents
+last_modified: "2026-06-04"
 ---
 
 ## 📝 Short definition

@@ -6,6 +6,7 @@ aliases:
 tags:
   - lexique
   - reseau
+last_modified: "2026-06-04"
 ---
 
 

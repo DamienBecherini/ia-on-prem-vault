@@ -3,6 +3,7 @@ title: "🗺️ Choosing your local model"
 description: Practical guide to navigating the open-weights LLM landscape in 2026 — families, sizes, specializations, and mapping to on-premise scenarios.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

@@ -3,6 +3,7 @@ title: "OpenHands"
 description: Plateforme agentique Docker-based pour développement logiciel, puissante mais plus lourde à opérer qu'un CLI simple.
 sidebar:
   order: 3
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Vue d'ensemble rapide

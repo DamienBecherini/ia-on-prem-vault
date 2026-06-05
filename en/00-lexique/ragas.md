@@ -7,6 +7,7 @@ tags:
   - lexique
   - evaluation
   - rag
+last_modified: "2026-06-04"
 ---
 
 ## 📝 Short definition

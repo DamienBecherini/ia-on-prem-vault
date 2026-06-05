@@ -21,6 +21,7 @@ todos:
     content: Verify sources, linking, Starlight build, and append the implementation report
     status: pending
 isProject: false
+last_modified: "2026-06-04"
 ---
 
 > ⚠️ **SUPERSEDED — 2026-06-04**

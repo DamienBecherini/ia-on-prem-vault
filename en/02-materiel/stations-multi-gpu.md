@@ -3,6 +3,7 @@ title: "🧩 Multi-GPU Workstations: NVIDIA, PCIe, and VRAM"
 description: "Understand when multiple discrete GPUs truly help on-premise AI inference, and why interconnect often matters more than card count."
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

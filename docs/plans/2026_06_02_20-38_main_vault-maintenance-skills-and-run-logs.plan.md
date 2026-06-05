@@ -21,6 +21,7 @@ todos:
     content: Verify skills, run diagnostics/build, and append the report
     status: completed
 isProject: false
+last_modified: "2026-06-03"
 ---
 
 # Vault maintenance skills and run logs

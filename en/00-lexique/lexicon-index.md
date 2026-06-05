@@ -1,6 +1,7 @@
 ---
 title: Lexicon index
 description: Alphabetical list of all on-premise AI lexicon entries.
+last_modified: "2026-06-05"
 ---
 
 Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI Glossary]].

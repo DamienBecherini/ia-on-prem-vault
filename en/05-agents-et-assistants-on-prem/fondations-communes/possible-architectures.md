@@ -5,6 +5,7 @@ description: >
   Comparison table, hardware requirements, and relationship between the two tracks.
 sidebar:
   order: 3
+last_modified: "2026-06-05"
 ---
 
 Not all local AI applications do the same thing. Before choosing a tool, it helps to understand which **architectural category** it belongs to — and what that category implies for hardware, complexity, and sovereignty.

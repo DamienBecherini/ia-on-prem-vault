@@ -3,6 +3,7 @@ title: "🧩 Stations Multi-GPU : NVIDIA, PCIe et VRAM"
 description: "Comprendre quand plusieurs GPU discrets aident vraiment l'inférence IA on-premise, et pourquoi l'interconnexion décide souvent plus que le nombre de cartes."
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 > [!tip] En bref

@@ -3,6 +3,7 @@ title: 🏎️ Memory Bandwidth & The "Memory Wall"
 description: Mathematical and hardware analysis of the real bottleneck in local LLM inference.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

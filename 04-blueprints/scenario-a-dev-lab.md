@@ -3,6 +3,7 @@ title: "🛠️ Scénario A : Le Labo Dev (PC GPU ou mémoire unifiée)"
 description: Le blueprint pour s'initier à l'IA locale à moindre coût. PC RTX avec CPU offloading, ou laptop/station à mémoire unifiée pour un meilleur confort solo.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 Vous êtes un développeur seul, un passionné (*homelab*) ou une TPE qui souhaite tester des agents autonomes sans investir immédiatement 5 000 à 10 000 € dans une machine IA dédiée.

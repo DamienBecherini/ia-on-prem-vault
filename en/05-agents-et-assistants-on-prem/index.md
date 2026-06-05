@@ -5,6 +5,7 @@ description: >
   and custodian agents that act on your behalf — evaluated through the lens of sovereignty.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 You have the hardware. You have the inference engine. The next question is inevitable:

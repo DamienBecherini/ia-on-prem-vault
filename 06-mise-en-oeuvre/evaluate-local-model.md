@@ -3,6 +3,7 @@ title: "🧪 Évaluer un modèle local"
 description: Protocole pratique pour comparer des LLM locaux sur la qualité, la factualité, les hallucinations, le RAG, le code-editing et les performances.
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 Choisir un modèle local ne consiste pas à prendre le premier nom en haut d'un leaderboard. Un modèle peut être excellent en mathématiques, médiocre en français métier, rapide mais halluciné, ou très bon en RAG mais dangereux pour modifier un dépôt.

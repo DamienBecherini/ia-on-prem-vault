@@ -3,6 +3,7 @@ title: "⚙️ Workflow: End-to-end human-in-the-loop"
 description: "Recommended execution cycle for a custodian agent: trigger, branch, diff, report, human review, merge, and publication."
 sidebar:
   order: 3
+last_modified: "2026-06-04"
 ---
 
 A custodian agent should be autonomous in analysis but conservative in action. The workflow below keeps that separation clear.

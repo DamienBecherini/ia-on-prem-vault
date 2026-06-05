@@ -3,6 +3,7 @@ title: "🔒 Sécurité de l'inférence locale"
 description: Authentification de l'API locale, isolation réseau, chiffrement, OWASP LLM Top 10 et protection contre l'injection de prompt pour une stack d'inférence on-premise.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 > [!tip] En bref

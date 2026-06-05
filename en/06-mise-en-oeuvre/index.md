@@ -3,6 +3,7 @@ title: "🧪 Practical implementation"
 description: Concrete protocols to choose, test, secure, and operate local AI beyond hardware sizing.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 Section 06 turns concepts from foundations, hardware, the software stack, and blueprints into **decision methods**.

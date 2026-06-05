@@ -3,6 +3,7 @@ title: "AnythingLLM"
 description: Local-first application for RAG, agents, documents, and workflows, with Ollama support and disableable telemetry.
 sidebar:
   order: 3
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Quick overview

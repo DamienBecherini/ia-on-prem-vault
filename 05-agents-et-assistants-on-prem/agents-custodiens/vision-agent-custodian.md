@@ -3,6 +3,7 @@ title: "🔭 Vision : Qu'est-ce qu'un agent custodien ?"
 description: Définition, périmètre et trajectoire d'architecture d'un agent autonome chargé de maintenir un vault ou un dépôt.
 sidebar:
   order: 2
+last_modified: "2026-06-05"
 ---
 
 Un **[[00-lexique/agent-custodian|agent custodien]]** est un [[00-lexique/autonomous-agent|agent autonome]] chargé de maintenir un actif numérique : vault Markdown, documentation technique, dépôt Git, backlog de sources, index de liens, ou base de connaissances.

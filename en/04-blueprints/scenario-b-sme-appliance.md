@@ -3,6 +3,7 @@ title: "🏢 Scenario B: The SME Appliance (Unified Memory)"
 description: The ideal blueprint for SMEs. How to serve a team of 10 to 50 people with a 70B model using a Mac Studio or an AMD APU.
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 Your client (a law firm, a medical practice, an SME) needs a local assistant capable of processing confidential documents. The chosen model is a heavy LLM (70B quantized class, ~40 GB of weights).

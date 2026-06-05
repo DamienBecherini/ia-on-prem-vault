@@ -5,6 +5,7 @@ description: >
   et agents custodiens qui agissent pour vous — évalués sous le prisme de la souveraineté.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 Vous avez le matériel. Vous avez le moteur d'inférence. La question suivante est inévitable :

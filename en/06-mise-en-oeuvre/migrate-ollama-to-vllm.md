@@ -3,6 +3,7 @@ title: "🔄 Migrate from Ollama to vLLM"
 description: When and how to move from Ollama to vLLM without breaking existing clients — API compatibility, model conversion, cutover strategy, and rollback plan.
 sidebar:
   order: 7
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

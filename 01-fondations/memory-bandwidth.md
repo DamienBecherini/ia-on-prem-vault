@@ -3,6 +3,7 @@ title: 🏎️ La Bande Passante Mémoire & Le "Memory Wall"
 description: Analyse mathématique et matérielle du véritable goulot d'étranglement de l'inférence locale.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 > [!tip] En bref

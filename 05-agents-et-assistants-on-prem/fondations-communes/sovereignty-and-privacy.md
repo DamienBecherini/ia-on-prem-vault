@@ -5,6 +5,7 @@ description: >
   concrète, contexte réglementaire RGPD/AI Act et checklist pratique.
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 Avant de choisir un assistant personnel ou un agent custodien, une question mérite une réponse honnête :

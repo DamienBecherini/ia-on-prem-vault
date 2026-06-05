@@ -3,6 +3,7 @@ title: "OpenHuman"
 description: Local-first personal assistant with Memory Tree, but managed cloud experience by default for model routing, OAuth, and some integrations.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Quick overview

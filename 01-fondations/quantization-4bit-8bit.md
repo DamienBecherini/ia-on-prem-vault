@@ -3,6 +3,7 @@ title: 🗜️ La Quantification (4-bit & 8-bit)
 description: Comprendre la physique mathématique de la compression de modèles (GGUF, AWQ, MXFP4) et l'arbitrage Perplexité vs VRAM.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 > [!tip] En bref

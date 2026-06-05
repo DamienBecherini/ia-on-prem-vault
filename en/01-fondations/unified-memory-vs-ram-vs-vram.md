@@ -3,6 +3,7 @@ title: ⚔️ Unified Memory vs RAM vs VRAM
 description: In-depth comparative analysis of the three physical memory architectures for LLM inference.
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

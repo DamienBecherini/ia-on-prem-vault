@@ -1,6 +1,7 @@
 ---
 title: "Frontmatter Schema"
 description: "Standard frontmatter fields for all vault notes — editorial metadata, pricing validity, and verification chain."
+last_modified: "2026-06-05"
 ---
 
 # Frontmatter Schema — IA On-Premise Vault

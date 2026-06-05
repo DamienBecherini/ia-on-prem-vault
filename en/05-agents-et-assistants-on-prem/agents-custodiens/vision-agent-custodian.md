@@ -3,6 +3,7 @@ title: "🔭 Vision: What is a custodian agent?"
 description: Definition, scope, and architecture trajectory of an autonomous agent tasked with maintaining a vault or repository.
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 A **[[00-lexique/agent-custodian|custodian agent]]** is an [[00-lexique/autonomous-agent|autonomous agent]] tasked with maintaining a digital asset: Markdown vault, technical documentation, Git repository, source backlog, link index, or knowledge base.

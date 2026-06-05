@@ -3,6 +3,7 @@ title: 💾 Le KV Cache & La Gestion du Contexte
 description: Analyse mathématique de la consommation mémoire dynamique et techniques d'optimisation (GQA, Quantification, PagedAttention).
 sidebar:
   order: 3
+last_modified: "2026-06-04"
 ---
 
 > [!tip] En bref

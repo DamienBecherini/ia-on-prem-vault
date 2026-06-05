@@ -3,6 +3,7 @@ title: ⚔️ Mémoire Unifiée vs RAM vs VRAM
 description: Analyse comparative approfondie des trois architectures physiques de mémoire pour l'inférence de LLM.
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 > [!tip] En bref

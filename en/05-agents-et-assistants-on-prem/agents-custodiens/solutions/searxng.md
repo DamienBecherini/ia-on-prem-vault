@@ -3,6 +3,7 @@ title: "SearXNG"
 description: Self-hosted, privacy-first meta-search engine, useful for giving a custodian agent controlled web access.
 sidebar:
   order: 5
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Quick overview

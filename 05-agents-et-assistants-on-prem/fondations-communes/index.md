@@ -5,6 +5,7 @@ description: >
   Assistants Personnels et Agents Custodiens.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 Cette section pose les bases communes aux deux pistes de la section 05.

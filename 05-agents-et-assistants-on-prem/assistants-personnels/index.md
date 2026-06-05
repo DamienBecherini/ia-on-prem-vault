@@ -5,6 +5,7 @@ description: >
   le contrôle du modèle et la persistance de la mémoire.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 Un assistant personnel local vous permet d'interagir avec un LLM **qui connaît votre contexte** — vos notes, vos documents, l'historique de vos échanges — sans envoyer ces données à un service tiers.

@@ -3,6 +3,7 @@ title: "🌐 AI Clustering: Connecting GPUs with Exo and Ray"
 description: How to merge memory across multiple machines for local AI. Comparison between Exo (Apple Silicon / homelab) and Ray Serve (datacenter).
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

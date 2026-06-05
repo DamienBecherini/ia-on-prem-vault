@@ -3,6 +3,7 @@ title: 💾 KV Cache & Context Management
 description: Mathematical analysis of dynamic memory consumption and optimization techniques (GQA, quantization, PagedAttention).
 sidebar:
   order: 3
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief
