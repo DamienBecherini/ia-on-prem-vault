@@ -1,4 +1,4 @@
-﻿---
+---
 title: 🚀 Index Zero to Hero
 description: Le point d'entrée de votre formation sur l'IA On-Premise
 ---

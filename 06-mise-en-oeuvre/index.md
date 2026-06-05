@@ -1,4 +1,4 @@
-﻿---
+---
 title: "🧪 Mise en œuvre pratique"
 description: Protocoles concrets pour choisir, tester, sécuriser et opérer une IA locale au-delà du dimensionnement matériel.
 sidebar:

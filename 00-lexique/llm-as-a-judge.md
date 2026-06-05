@@ -1,4 +1,4 @@
-﻿---
+---
 title: LLM-as-a-judge
 description: Technique d'évaluation où un modèle de langage sert de juge pour noter ou comparer des réponses.
 aliases:

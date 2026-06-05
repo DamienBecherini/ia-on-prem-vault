@@ -1,0 +1,63 @@
+---
+title: Lexicon index
+description: Alphabetical list of all on-premise AI lexicon entries.
+---
+
+Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI Glossary]].
+
+- [[00-lexique/apu|APU]] — Chip combining CPU, GPU, and NPU on one SoC with shared unified memory.
+- [[00-lexique/attention|Attention (mechanism)]] — Core Transformer mechanism that lets each token weight the importance of other tokens in context.
+- [[00-lexique/autonomous-agent|Autonomous agent (LLM)]] — System where an LLM drives tools and decisions itself to complete a multi-step task.
+- [[00-lexique/context-window|Context window]] — Maximum number of tokens an LLM can handle in active input — drives dynamic inference memory cost.
+- [[00-lexique/agent-custodian|Custodian agent]] — Autonomous agent responsible for maintaining a vault, repository, or document corpus by proposing human-validated corrections.
+- [[00-lexique/decoding|Decoding]] — Autoregressive token-by-token generation phase.
+- [[00-lexique/ecn|ECN]] — Explicit Congestion Notification — network congestion signaling used with RoCE to avoid packet loss.
+- [[00-lexique/embedding|Embedding]] — Dense numerical representation of a token or document in vector space.
+- [[00-lexique/exo|Exo]] — Open-source P2P orchestrator to merge memory across machines into a local AI cluster.
+- [[00-lexique/gguf|GGUF]] — Portable file format for local inference with llama.cpp, optimized for K-quant quantization.
+- [[00-lexique/gpudirect-rdma|GPUDirect RDMA]] — Mechanism letting GPUs exchange data directly with network devices without CPU copies.
+- [[00-lexique/graphrag|GraphRAG]] — RAG evolution based on a knowledge graph rather than a vector database alone.
+- [[00-lexique/hbm|HBM]] — Stacked high-bandwidth memory used on professional AI accelerators.
+- [[00-lexique/human-in-the-loop|Human-in-the-loop]] — Governance mode where an important automated action waits for human validation before it is applied.
+- [[00-lexique/infiniband|InfiniBand]] — Dedicated high-performance network fabric for GPU clusters, HPC and AI datacenter standard.
+- [[00-lexique/kv-cache|KV Cache]] — Cache of attention keys/values used during generation.
+- [[00-lexique/litellm|LiteLLM]] — OpenAI-compatible gateway routing LLM calls to local or cloud models through one interface.
+- [[00-lexique/llm|LLM]] — Large Language Model.
+- [[00-lexique/benchmark-llm|LLM benchmark]] — Standardized test suite to compare capabilities, limits, and risks of language models.
+- [[00-lexique/inference|LLM inference]] — Using a trained model to generate text on demand.
+- [[00-lexique/llm-as-a-judge|LLM-as-a-judge]] — Evaluation technique where a language model judges or scores responses.
+- [[00-lexique/memory-bandwidth|Memory bandwidth]] — Rate at which memory feeds compute units.
+- [[00-lexique/memory-tree|Memory Tree]] — Memory architecture organizing documents and summaries in a hierarchy to limit context injected into the LLM.
+- [[00-lexique/memory-wall|Memory Wall]] — Performance limit caused by memory rather than compute.
+- [[00-lexique/moe|MoE]] — Mixture of Experts — architecture activating only some sub-networks per token, enabling huge models with controlled inference cost.
+- [[00-lexique/multi-gpu|Multi-GPU]] — Joint use of several GPUs.
+- [[00-lexique/nccl|NCCL]] — NVIDIA collective communication library optimized for large-scale GPU-to-GPU transfers.
+- [[00-lexique/npu|NPU]] — Neural Processing Unit — AI accelerator in modern SoCs, useful for some tasks but limited for large LLMs.
+- [[00-lexique/nvlink|NVLink]] — High-bandwidth interconnect between NVIDIA GPUs.
+- [[00-lexique/nvswitch|NVSwitch]] — NVIDIA switch that connects multiple GPUs into a fully non-blocking NVLink fabric inside a node.
+- [[00-lexique/offloading|Offloading]] — Technique that places part of the model in RAM or on SSD when VRAM is insufficient, at the cost of reduced throughput.
+- [[00-lexique/on-premise|On-Premise (AI)]] — AI infrastructure hosted and operated on the organization's own equipment, without delegating to a cloud provider.
+- [[00-lexique/pagedattention|PagedAttention]] — KV Cache management technique using virtual memory blocks, popularized by vLLM.
+- [[00-lexique/pcie|PCIe]] — High-bandwidth interconnect bus between components.
+- [[00-lexique/pfc|PFC]] — Priority Flow Control — Ethernet per-priority pause mechanism for a lossless network required by RoCE.
+- [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] — Strategy for distributing an LLM in layer slices across multiple machines.
+- [[00-lexique/prefill|Prefill]] — Inference phase that processes the initial prompt in parallel before word-by-word generation.
+- [[00-lexique/quantification-q4|Q4 Quantization]] — The most widely used 4-bit quantization format for local inference — especially Q4_K_M in the GGUF/Ollama ecosystem.
+- [[00-lexique/quantification|Quantization]] — Reducing numerical precision of LLM weights to lower memory footprint and speed up inference.
+- [[00-lexique/rag|RAG]] — Architecture that combines document retrieval and LLM generation.
+- [[00-lexique/ragas|RAGAS]] — Automatic evaluation framework for RAG pipelines.
+- [[00-lexique/ram|RAM]] — System main memory, second choice for LLM inference when VRAM is insufficient.
+- [[00-lexique/ray|Ray]] — Distributed computing framework for multi-node LLM orchestration in production.
+- [[00-lexique/rdma|RDMA]] — Remote direct memory access without classic CPU copying.
+- [[00-lexique/roce|RoCE]] — RDMA implementation on converged Ethernet.
+- [[00-lexique/smolagents|SmolAgents]] — Lightweight Hugging Face framework for local agentic orchestration—a sovereign alternative to LangChain.
+- [[00-lexique/tensor-parallelism|Tensor Parallelism]] — Strategy for distributing an LLM by splitting weight matrices across multiple GPUs on the same node.
+- [[00-lexique/tensorrt-llm|TensorRT-LLM]] — NVIDIA SDK for compiling and running ultra-optimized LLM inference on datacenter GPUs.
+- [[00-lexique/tflops|TFLOPS]] — Measure of floating-point compute throughput.
+- [[00-lexique/thunderbolt|Thunderbolt]] — High-throughput wired interface for workstations and desktop AI clusters.
+- [[00-lexique/tokenisation|Tokenization]] — Splitting text into numeric units (tokens) before an LLM processes it.
+- [[00-lexique/tokens-per-second|Tokens per second]] — Measure of a model's generation throughput.
+- [[00-lexique/ttft|TTFT]] — Time To First Token.
+- [[00-lexique/unified-memory|Unified Memory]] — Memory architecture shared between CPU, GPU, and NPU.
+- [[00-lexique/vectordb|Vector database]] — Database specialized in storing and searching embedding vectors for RAG.
+- [[00-lexique/vram|VRAM]] — Video memory dedicated to the GPU.

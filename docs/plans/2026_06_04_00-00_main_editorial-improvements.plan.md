@@ -1,4 +1,4 @@
-﻿# Editorial Improvements Plan
+# Editorial Improvements Plan
 
 **Date:** 2026-06-04  
 **Branch:** main  

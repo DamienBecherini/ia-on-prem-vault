@@ -11,6 +11,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 - [[00-lexique/attention|Attention (mécanisme)]] — Mécanisme central du Transformer qui permet à chaque token de pondérer l'importance des autres tokens du contexte.
 - [[00-lexique/memory-bandwidth|Bande passante mémoire]] — Débit auquel la mémoire alimente les unités de calcul.
 - [[00-lexique/vectordb|Base de données vectorielle]] — Base de données spécialisée dans le stockage et la recherche de vecteurs d'embeddings pour le RAG.
+- [[00-lexique/benchmark-llm|Benchmark LLM]] — Jeu de tests standardisé pour comparer les capacités, limites et risques de modèles de langage.
 - [[00-lexique/decoding|Decoding]] — Phase de génération auto-régressive token par token.
 - [[00-lexique/ecn|ECN]] — Explicit Congestion Notification — mécanisme de signalement de congestion réseau utilisé avec RoCE pour éviter les pertes de paquets.
 - [[00-lexique/embedding|Embedding]] — Représentation numérique dense d'un token ou d'un document dans un espace vectoriel.
@@ -26,6 +27,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 - [[00-lexique/kv-cache|KV Cache]] — Cache des clés/valeurs d'attention utilisé pendant la génération.
 - [[00-lexique/litellm|LiteLLM]] — Gateway OpenAI-compatible qui route les appels LLM vers des modèles locaux ou cloud depuis une interface unique.
 - [[00-lexique/llm|LLM]] — Large Language Model.
+- [[00-lexique/llm-as-a-judge|LLM-as-a-judge]] — Technique d'évaluation où un modèle de langage sert de juge pour noter ou comparer des réponses.
 - [[00-lexique/unified-memory|Mémoire unifiée]] — Architecture mémoire partagée entre CPU/GPU/NPU.
 - [[00-lexique/memory-tree|Memory Tree]] — Architecture mémoire qui organise documents et résumés en arbre hiérarchique pour limiter le contexte injecté au LLM.
 - [[00-lexique/memory-wall|Memory Wall]] — Limite de performance causée par la mémoire plus que par le calcul.
@@ -45,6 +47,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 - [[00-lexique/quantification|Quantification]] — Réduction de précision numérique des poids d'un LLM pour diminuer l'empreinte mémoire et accélérer l'inférence.
 - [[00-lexique/quantification-q4|Quantification Q4]] — Format de quantification 4-bit le plus utilisé en pratique pour l'inférence locale — en particulier Q4_K_M dans l'écosystème GGUF/Ollama.
 - [[00-lexique/rag|RAG]] — Architecture qui combine recherche documentaire et génération LLM.
+- [[00-lexique/ragas|RAGAS]] — Framework d'évaluation automatique pour pipelines RAG.
 - [[00-lexique/ram|RAM]] — Mémoire vive système, second choix pour l'inférence LLM quand la VRAM est insuffisante.
 - [[00-lexique/ray|Ray]] — Framework de calcul distribué pour l'orchestration multi-nœuds de LLM en production.
 - [[00-lexique/rdma|RDMA]] — Accès mémoire distant direct sans copie CPU classique.

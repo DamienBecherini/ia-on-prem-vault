@@ -1,4 +1,4 @@
-﻿---
+---
 title: "🔍 Recherche Web & Sources"
 description: Comment donner un accès web contrôlé à un agent custodien sans dépendre d'un service de recherche cloud.
 sidebar:

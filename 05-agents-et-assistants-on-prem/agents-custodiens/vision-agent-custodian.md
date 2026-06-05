@@ -1,4 +1,4 @@
-﻿---
+---
 title: "🔭 Vision : Qu'est-ce qu'un agent custodien ?"
 description: Définition, périmètre et trajectoire d'architecture d'un agent autonome chargé de maintenir un vault ou un dépôt.
 sidebar:
