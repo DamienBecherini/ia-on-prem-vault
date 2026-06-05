@@ -1,3 +1,8 @@
+---
+title: "Frontmatter Schema"
+description: "Standard frontmatter fields for all vault notes — editorial metadata, pricing validity, and verification chain."
+---
+
 # Frontmatter Schema — IA On-Premise Vault
 
 This document defines the standard frontmatter fields for all vault notes. Fields marked **required** must be present on all new pages. Fields marked **optional** should be added when the information is available, and are mandatory after a verification run.
