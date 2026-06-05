@@ -14,8 +14,6 @@ hero:
       On-Premise AI
     </span>
   tagline: Architectures souveraines, privées et hautes performances pour les LLMs. De la physique du matériel jusqu'au déploiement en entreprise.
-  #image:
-    #file: ../../assets/houston.webp
   actions:
     - text: Commencer la lecture
       link: /00-index/
@@ -36,12 +34,15 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 		Comprenez la physique de l'IA. Pourquoi la VRAM et la **bande passante mémoire** dictent les règles, et comment choisir entre PC DDR5, Mac Studio (Mémoire Unifiée) et stations Multi-GPU.
 	</Card>
 	<Card title="La Stack Logicielle" icon="setting">
-		Découvrez les moteurs qui font tourner les modèles locaux : **llama.cpp, Ollama, vLLM**, et comment orchestrer un cluster avec **Exo**.
+		Découvrez les moteurs qui font tourner les modèles locaux : **Ollama, vLLM**, comment choisir son modèle, et comment orchestrer un cluster avec **Exo** ou **Ray**.
 	</Card>
 	<Card title="Blueprints d'Architecture" icon="document">
-		Des scénarios de déploiement prêts à l'emploi. Du simple Labo de dev (CPU Offloading) jusqu'au Datacenter Enterprise (RoCE + Multi-GPU) pour répondre aux besoins des PME et grands comptes.
+		Des scénarios de déploiement prêts à l'emploi. Du simple Labo de dev (CPU Offloading) jusqu'au Datacenter Enterprise (RoCE + Multi-GPU), avec comparatif TCO.
 	</Card>
-	<Card title="Approche RAG & Agents" icon="puzzle">
-		Optimisez vos ressources matérielles en utilisant la méthode RAG (Retrieval-Augmented Generation) pour concevoir des workflows agentiques souverains (Ex: *OpenHuman*).
+	<Card title="Agents & Assistants" icon="puzzle">
+		Agents custodiens, RAG souverain, interfaces locales (Open WebUI, AnythingLLM) et outils de coding assisté (OpenHands, Cursor CLI, Aider) — des workflows humain-dans-la-boucle, sans cloud.
+	</Card>
+	<Card title="Mise en Œuvre" icon="rocket">
+		De l'installation d'Ollama au déploiement vLLM multi-GPU : monitoring, sécurité de l'inférence, évaluation des modèles et migration en conditions réelles.
 	</Card>
 </CardGrid>
