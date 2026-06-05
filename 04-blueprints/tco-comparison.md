@@ -3,6 +3,10 @@ title: "💰 Comparaison TCO : On-Premise vs Cloud API"
 description: Analyse du coût total de possession (TCO) des quatre blueprints on-premise face aux API cloud IA en 2026 — matériel, énergie, maintenance et point de rentabilité.
 sidebar:
   order: 5
+prices_valid_as_of: "2026-06"
+last_verified: "2026-06-05"
+verified_by: "vault-verify-content@1.0"
+verified_hitl: "Damien"
 ---
 
 > [!tip] En bref
@@ -15,6 +19,11 @@ sidebar:
 Avant de comparer, il faut aligner les unités. L'usage d'un LLM se mesure en **millions de tokens traités par mois** — c'est l'unité de facturation du cloud, et c'est aussi le bon dénominateur pour calculer le coût on-premise.
 
 **Côté cloud :** les fournisseurs facturent au token (input + output séparément). En 2026, les tarifs de référence pour les modèles de classe 70B-class :
+
+> [!warning] Prix et tarifs — validité
+> Tarifs capturés en **juin 2026**. Les prix des API cloud varient fréquemment (parfois toutes les 6-8 semaines).
+> Vérifiez les pages tarifaires officielles avant de construire un business case :
+> [OpenAI Pricing](https://openai.com/pricing) · [Anthropic Pricing](https://www.anthropic.com/pricing) · [Mistral Pricing](https://mistral.ai/technology/#pricing) · [Groq Pricing](https://groq.com/pricing/)
 
 | API | Tarif input | Tarif output | Modèle |
 | :-- | :-- | :-- | :-- |

@@ -101,6 +101,21 @@ Use this format:
 Short note on anything not verified.
 ```
 
+## Frontmatter Update After Verification
+
+After completing a verification run on a page and receiving HITL approval, update the page frontmatter:
+
+```yaml
+last_verified: YYYY-MM-DD      # today's date
+verified_by: vault-verify-content@1.0
+```
+
+Do not set `verified_hitl` — that field is set by `vault-log-run` after explicit human sign-off.
+
+If the page does not yet have these fields, add them after the existing frontmatter keys.
+
+See `docs/frontmatter-schema.md` for the full field specification.
+
 ## Run Log
 
 For significant verification tasks, invoke `vault-log-run` and record:

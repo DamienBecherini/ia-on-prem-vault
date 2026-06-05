@@ -137,6 +137,33 @@ Pour le sizing détaillé, voir les [[04-blueprints/scenario-a-dev-lab|Blueprint
 
 ---
 
+## 💻 Démarrer avec du code (ressources externes)
+
+Ce guide couvre la théorie des architectures. Pour passer à la pratique, voici les points d'entrée recommandés selon chaque piste :
+
+### Piste A — Assistant Personnel
+
+| Outil | Point de départ |
+| :-- | :-- |
+| **Open WebUI** | [Documentation officielle](https://docs.openwebui.com/) — installation Docker en 5 minutes, connexion à Ollama |
+| **AnythingLLM** | [GitHub AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) — RAG local complet, interface multi-modèles |
+| **Khoj** | [Khoj self-hosted guide](https://docs.khoj.dev/clients/desktop/) — mémoire personnelle + accès fichiers locaux |
+
+### Piste B — Agent Custodien
+
+| Outil | Point de départ |
+| :-- | :-- |
+| **Aider** | [Aider quickstart](https://aider.chat/docs/usage/tutorials.html) — agent de code local, compatible Ollama |
+| **OpenHands** | [OpenHands Docker setup](https://github.com/All-Hands-AI/OpenHands) — agent d'exécution de tâches autonomes |
+| **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — routage unifié vers un modèle local |
+| **SmolAgents** | [SmolAgents cookbook](https://huggingface.co/docs/smolagents/tutorials/building_good_agents) — framework agent minimaliste, HuggingFace |
+| **LangGraph** | [LangGraph "local agent" tutorial](https://langchain-ai.github.io/langgraph/tutorials/introduction/) — orchestration d'agents avec graphes d'état |
+
+> [!note] Pas de code inline dans ce vault
+> Ce guide est une référence d'architecture, pas un tutoriel pas-à-pas. Les snippets de code ont une durée de vie courte (APIs et versions évoluent) — les liens ci-dessus pointent vers les sources maintenues. Un dépôt compagnon `ia-on-prem-starter-kit` est prévu pour héberger des exemples de code versionés séparément.
+
+---
+
 ## 🔗 Voir aussi
 
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|🔒 Souveraineté & Confidentialité]] — la grille d'évaluation des outils

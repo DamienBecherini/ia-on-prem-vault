@@ -90,6 +90,20 @@ Each line is a JSON object:
 This allows a maintenance agent to orient itself by reading the compact index (a few KB) rather than loading all detailed logs (potentially hundreds of KB) to understand recent history.
 Only open the full detailed log when investigating a specific run.
 
+## HITL Sign-Off and Frontmatter
+
+When a human (HITL) approves the results of a verification run:
+
+1. Set `verified_hitl: <name>` in the frontmatter of each verified page.
+2. Record the approval in the run log under `## Validation`.
+3. Do not set `verified_hitl` autonomously without explicit human confirmation.
+
+```yaml
+verified_hitl: Damien   # example — use the actual approver's name
+```
+
+See `docs/frontmatter-schema.md` for the full field specification.
+
 ## Retention
 
 After writing a run log:
