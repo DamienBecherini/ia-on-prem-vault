@@ -53,6 +53,8 @@ The encoder and projector are additional weights loaded **on top of** the LLM ba
 | Pixtral 12B (Mistral) | 12B | Vision encoder 400M (~0.8 GB) | ~26 GB | up to 1,024 |
 | Gemma 3 27B Vision | 27B | SigLIP (~0.4 GB) | ~54 GB | 256–729 |
 
+*Sources: LLaVA [^1] · Qwen2-VL [^2]*
+
 > [!note] Order of magnitude
 > The visual encoder itself typically weighs **0.3 to 1 GB** of VRAM — negligible compared to the backbone. The dominant memory impact comes from **visual tokens injected into the KV Cache**, not from the encoder itself.
 
@@ -85,6 +87,8 @@ For a typical 7B LLM (32 layers, 128 head dim):
 | 1024×1024 image (LLaVA 1.6 HD) | ~576 tokens | ~9 MB |
 | 1024×1024 image (Qwen2-VL dynamic) | ~1,024 tokens | ~16 MB |
 | 10-page PDF converted to images | ~5,000–10,000 tokens | ~80–160 MB |
+
+*Source: vLLM metrics [^4]*
 
 > [!warning] Cumulative effect in a batch
 > In production with multiple concurrent requests (vLLM continuous batching), each image in the batch occupies its KV Cache slot. Ten simultaneous 1024×1024 images on a Qwen2-VL 7B: ~160 MB of KV Cache for images alone, before any text context.
@@ -119,6 +123,8 @@ LLM backbone (if transcript analysis is needed)
 | small | 244 M | ~480 MB |
 | medium | 769 M | ~1.5 GB |
 | large-v3 | 1.5 B | ~3 GB |
+
+*Source: OpenAI Whisper [^3]*
 
 > [!tip] Whisper can run on CPU
 > For non-real-time transcription (batch), Whisper works well on CPU with `whisper.cpp`. GPU VRAM is only mobilised if you force GPU transcription for real-time latency.
@@ -162,3 +168,12 @@ LLM backbone (if transcript analysis is needed)
 - [[01-fondations/kv-cache-and-context|🧠 KV Cache and context window]]
 - [[01-fondations/unified-memory-vs-ram-vs-vram|💾 Unified memory vs RAM vs VRAM]]
 - [[04-blueprints/scenario-b-sme-appliance|🏢 Scenario B — SME Appliance]]
+
+---
+
+## Sources and references
+
+[^1]: Liu et al., *Visual Instruction Tuning (LLaVA)* (architecture: CLIP-ViT-L/14 encoder + MLP projector + LLM backbone; encoder VRAM derived from published parameter count). [https://arxiv.org/abs/2304.08485](https://arxiv.org/abs/2304.08485)
+[^2]: Alibaba Cloud, *Qwen2-VL model documentation* (dynamic visual tokens by resolution, SigLIP architecture). [https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct)
+[^3]: OpenAI, *Whisper model card* (tiny to large-v3 sizes, parameters and indicative memory footprint). [https://github.com/openai/whisper](https://github.com/openai/whisper)
+[^4]: vLLM Project, *Production Metrics — KV cache usage* (KV Cache behaviour under continuous batching). [https://docs.vllm.ai/en/stable/serving/metrics.html](https://docs.vllm.ai/en/stable/serving/metrics.html)

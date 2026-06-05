@@ -68,6 +68,32 @@ To overcome this fixed capacity constraint while staying on affordable desktop h
 
 ---
 
+## 🛡️ Backup and Recovery (DRP)
+
+> [!warning] Unified memory is soldered — data is not
+> If a Mac Studio or Gorgon Halo APU fails, hardware replacement can take several days. Backing up application data lets you resume service on a loaner machine or temporary sovereign cloud in under an hour.
+
+### What to back up on Blueprint B
+
+| Data | Typical location | Frequency |
+| :-- | :-- | :-- |
+| Vector DB (Qdrant / Chroma) | `/qdrant/storage/` or Docker volume | Daily — API snapshot |
+| Conversation histories (SQLite) | `~/.open-webui/data/` or Docker volume | Daily or hourly |
+| Ollama / vLLM configuration | `~/.ollama/` or `config.yaml` | On every change (Git) |
+| Fine-tuned LoRA adapters | Dedicated directory | After each training session |
+| Base models (GGUF) | `~/.ollama/models/` | Low priority — re-downloadable |
+
+### Minimal recovery procedure
+
+1. Start a temporary instance (another Mac, sovereign cloud VM) with Ollama
+2. Restore the vector DB from the latest snapshot
+3. Restore the SQLite history
+4. Point clients (Open WebUI, LiteLLM) to the new IP
+
+**Indicative Blueprint B RTO: < 45 minutes** with an up-to-date daily backup.
+
+---
+
 ## 📚 Sources and References
 
 [^1]: llmhardware.io, *Mac Studio M4 Max / M3 Ultra for LLMs* (Llama 3 70B Q4_K_M performance with MLX and maximum Metal memory allocation), 2025-2026.

@@ -53,6 +53,8 @@ L'encodeur et le projecteur sont des poids supplémentaires chargés **en plus**
 | Pixtral 12B (Mistral) | 12B | Vision encoder 400M (~0,8 Go) | ~26 Go | jusqu'à 1 024 |
 | Gemma 3 27B Vision | 27B | SigLIP (~0,4 Go) | ~54 Go | 256–729 |
 
+*Sources : LLaVA [^1] · Qwen2-VL [^2]*
+
 > [!note] Ordres de grandeur
 > L'encodeur visuel lui-même pèse généralement **0,3 à 1 Go** de VRAM — négligeable comparé au backbone. L'impact mémoire dominant vient des **visual tokens injectés dans le KV Cache**, pas de l'encodeur.
 
@@ -85,6 +87,8 @@ Pour un LLM 7B typique (32 couches, 128 dim de tête) :
 | Image 1024×1024 (LLaVA 1.6 HD) | ~576 tokens | ~9 Mo |
 | Image 1024×1024 (Qwen2-VL dynamique) | ~1 024 tokens | ~16 Mo |
 | PDF 10 pages converti en images | ~5 000–10 000 tokens | ~80–160 Mo |
+
+*Source : vLLM metrics [^4]*
 
 > [!warning] L'effet cumulatif dans un batch
 > En production avec plusieurs requêtes concurrentes (vLLM continuous batching), chaque image dans le batch occupe son slot KV Cache. Dix images 1024×1024 simultanées sur un Qwen2-VL 7B : ~160 Mo de KV Cache pour les images seules, avant tout contexte texte.
@@ -119,6 +123,8 @@ LLM backbone (si analyse du transcript est souhaitée)
 | small | 244 M | ~480 Mo |
 | medium | 769 M | ~1,5 Go |
 | large-v3 | 1,5 B | ~3 Go |
+
+*Source : OpenAI Whisper [^3]*
 
 > [!tip] Whisper peut tourner en CPU
 > Pour la transcription non-temps-réel (batch), Whisper fonctionne correctement sur CPU avec `whisper.cpp`. La VRAM GPU n'est mobilisée que si vous forcez la transcription GPU pour la latence temps réel.
@@ -162,3 +168,12 @@ LLM backbone (si analyse du transcript est souhaitée)
 - [[01-fondations/kv-cache-and-context|🧠 KV Cache et fenêtre de contexte]]
 - [[01-fondations/unified-memory-vs-ram-vs-vram|💾 Mémoire unifiée vs RAM vs VRAM]]
 - [[04-blueprints/scenario-b-sme-appliance|🏢 Scénario B — Appliance PME]]
+
+---
+
+## Sources et Références
+
+[^1]: Liu et al., *Visual Instruction Tuning (LLaVA)* (architecture : encodeur CLIP-ViT-L/14 + projecteur MLP + LLM backbone ; le poids de l'encodeur VRAM est calculé à partir de la taille des paramètres publiés). [https://arxiv.org/abs/2304.08485](https://arxiv.org/abs/2304.08485)
+[^2]: Alibaba Cloud, *Qwen2-VL model documentation* (tokens visuels dynamiques selon résolution, architecture SigLIP). [https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct)
+[^3]: OpenAI, *Whisper model card* (tailles tiny à large-v3, paramètres et empreinte mémoire indicative). [https://github.com/openai/whisper](https://github.com/openai/whisper)
+[^4]: vLLM Project, *Production Metrics — KV cache usage* (comportement du KV Cache en batch continu). [https://docs.vllm.ai/en/stable/serving/metrics.html](https://docs.vllm.ai/en/stable/serving/metrics.html)

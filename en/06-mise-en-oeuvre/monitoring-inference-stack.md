@@ -191,7 +191,7 @@ NVIDIA DCGM Exporter exposes detailed GPU metrics[^3]:
 
 ### Prometheus query — VRAM used per GPU
 
-```promql
+```text
 DCGM_FI_DEV_FB_USED{gpu=~".*"}
 ```
 
@@ -215,22 +215,22 @@ DCGM_FI_DEV_FB_USED{gpu=~".*"}
 ### Essential panels to build manually
 
 **Panel "Throughput tokens/s":**
-```promql
+```text
 rate(vllm:generation_tokens_total[1m])
 ```
 
 **Panel "KV Cache %":**
-```promql
+```text
 vllm:gpu_cache_usage_perc * 100
 ```
 
 **Panel "Queue":**
-```promql
+```text
 vllm:num_requests_waiting
 ```
 
 **Panel "TTFT P95" (95th percentile):**
-```promql
+```text
 histogram_quantile(0.95, rate(vllm:time_to_first_token_seconds_bucket[5m]))
 ```
 
@@ -392,6 +392,59 @@ otel-collector:
 > - **OTEL/Langfuse** → per-request debugging, latency pattern analysis, agentic response quality evaluation
 >
 > In agent production, you need both. Metrics detect that there is a problem; traces explain why.
+
+---
+
+## Application state backup (DRP)
+
+Monitoring detects failures — but without backups, recovery after an incident can take hours or lose data. Here is the state to protect in a local inference stack.
+
+### What to back up
+
+| Component | Critical data | Recommended method |
+| :-- | :-- | :-- |
+| **Qdrant** (vector DB) | Collections + index snapshots | `POST /collections/{name}/snapshots` → local snapshot; copy to external storage |
+| **Milvus** (vector DB) | Collections, segments, metadata | Milvus Backup CLI (`milvus-backup create`) to local S3 or NAS |
+| **SQLite** (Memory Tree, histories) | `.db` file | Daily `cp` with rotation or hot `sqlite3 .backup` |
+| **vLLM / Ollama config** | `config.yaml`, startup scripts | Versioned in Git — already covered |
+| **Models and adapters** | GGUF weights, fine-tuned LoRA | Base weights = immutable (re-download); fine-tuned adapters = back up to NAS |
+
+### Suggested frequencies
+
+```
+Qdrant snapshot        → daily (cron 02:00), 7-day retention
+Milvus backup          → daily (cron 03:00), 7-day retention
+SQLite Memory Tree     → hourly (if frequent writes), otherwise daily
+LoRA adapters          → after each training session
+```
+
+### Qdrant snapshot example (curl)
+
+```bash
+# Create a snapshot
+curl -X POST http://localhost:6333/collections/my_collection/snapshots
+
+# List available snapshots
+curl http://localhost:6333/collections/my_collection/snapshots
+
+# Copy to external storage (mounted NAS example)
+cp /qdrant/snapshots/my_collection/*.snapshot /mnt/backup/qdrant/
+```
+
+### Recovery procedure (indicative RTO)
+
+1. **Restart the container** vLLM or Ollama → reload weights from SSD (~15–120 s depending on model)
+2. **Restore Qdrant** from latest snapshot → `PUT /collections/{name}/snapshots/recover`
+3. **Restore SQLite** → copy backup `.db` over the corrupted file
+4. **Verify** health endpoint (`/health` or `/v1/models`)
+
+> [!note] Indicative RTO / RPO by blueprint
+>
+> | Blueprint | Target RTO | Target RPO | Strategy |
+> | :-- | :-- | :-- | :-- |
+> | A — Dev Lab | < 30 min | 24 h | Daily backup sufficient |
+> | B — SME Appliance | < 15 min | 1 h | Hourly snapshots + spare machine |
+> | D — Datacenter | < 2 min | < 15 min | Double instance + rolling restart (see Scenario D) |
 
 ---
 
