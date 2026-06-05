@@ -4,6 +4,10 @@ description: Mise en place d'un monitoring Prometheus + Grafana pour une stack v
 sidebar:
   order: 6
 last_modified: "2026-06-05"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] En bref

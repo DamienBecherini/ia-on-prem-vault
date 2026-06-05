@@ -4,6 +4,10 @@ description: Guide pratique pour naviguer le paysage des LLM open weights en 202
 sidebar:
   order: 4
 last_modified: "2026-06-05"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] En bref

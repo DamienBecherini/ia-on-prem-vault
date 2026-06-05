@@ -4,6 +4,10 @@ description: How to isolate a custodian agent's work in Git and notify a human w
 sidebar:
   order: 4
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Git is the natural guardrail for a custodian agent. It turns a risky action ("the agent modifies the vault") into a reversible proposal ("the agent opens a branch with a diff").

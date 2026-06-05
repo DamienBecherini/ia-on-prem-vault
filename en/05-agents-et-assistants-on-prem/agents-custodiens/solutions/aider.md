@@ -4,6 +4,10 @@ description: Terminal-first, open-source, model-agnostic code agent capable of w
 sidebar:
   order: 2
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 ## 🔍 Quick overview

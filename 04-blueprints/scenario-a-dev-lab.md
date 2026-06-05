@@ -4,6 +4,10 @@ description: Le blueprint pour s'initier à l'IA locale à moindre coût. PC RTX
 sidebar:
   order: 1
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Vous êtes un développeur seul, un passionné (*homelab*) ou une TPE qui souhaite tester des agents autonomes sans investir immédiatement 5 000 à 10 000 € dans une machine IA dédiée.

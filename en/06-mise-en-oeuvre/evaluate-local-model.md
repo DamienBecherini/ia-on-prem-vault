@@ -4,6 +4,10 @@ description: Practical protocol to compare local LLMs on quality, factuality, ha
 sidebar:
   order: 2
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Choosing a local model is not about picking the first name at the top of a leaderboard. A model can excel at math, be mediocre at domain-specific French, fast but hallucinated, or very good at RAG but risky for editing a repository.

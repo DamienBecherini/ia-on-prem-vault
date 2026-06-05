@@ -4,6 +4,10 @@ description: Local API authentication, network isolation, encryption, OWASP LLM 
 sidebar:
   order: 4
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] In brief

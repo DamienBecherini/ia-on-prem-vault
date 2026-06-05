@@ -6,6 +6,10 @@ description: >
 sidebar:
   order: 1
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Un assistant personnel local vous permet d'interagir avec un LLM **qui connaît votre contexte** — vos notes, vos documents, l'historique de vos échanges — sans envoyer ces données à un service tiers.

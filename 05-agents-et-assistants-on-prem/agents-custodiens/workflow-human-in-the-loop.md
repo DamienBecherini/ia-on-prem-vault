@@ -4,6 +4,10 @@ description: "Cycle d'exécution recommandé pour un agent custodien : déclench
 sidebar:
   order: 3
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Un agent custodien doit être autonome dans l'analyse, mais conservateur dans l'action. Le workflow ci-dessous garde cette séparation nette.

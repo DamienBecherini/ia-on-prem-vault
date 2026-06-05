@@ -4,6 +4,10 @@ description: Realistic path from a Cursor CLI MVP to a sovereign custodian stack
 sidebar:
   order: 6
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 The right architecture is not the purest on day one. It is the one that lets you validate the workflow without lying about sovereignty.

@@ -4,6 +4,10 @@ description: Protocole pratique pour comparer des LLM locaux sur la qualité, la
 sidebar:
   order: 2
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Choisir un modèle local ne consiste pas à prendre le premier nom en haut d'un leaderboard. Un modèle peut être excellent en mathématiques, médiocre en français métier, rapide mais halluciné, ou très bon en RAG mais dangereux pour modifier un dépôt.

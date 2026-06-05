@@ -2,6 +2,10 @@
 title: 🚀 Zero to Hero Index
 description: Your entry point for On-Premise AI training
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Welcome to the Local AI "Zero to Hero" guide. This vault is designed as a digital garden: don't read it linearly. Follow your needs, click on concepts you haven't mastered yet, and build your expertise step by step.

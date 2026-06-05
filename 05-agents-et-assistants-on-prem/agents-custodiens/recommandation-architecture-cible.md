@@ -4,6 +4,10 @@ description: Trajectoire réaliste pour passer d'un MVP Cursor CLI à une stack 
 sidebar:
   order: 6
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 La bonne architecture n'est pas la plus pure dès le premier jour. C'est celle qui permet de valider le workflow sans mentir sur la souveraineté.

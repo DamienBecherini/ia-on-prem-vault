@@ -4,6 +4,10 @@ description: The Enterprise AI blueprint. HGX 8-GPU nodes, RoCE/InfiniBand netwo
 sidebar:
   order: 4
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Your client is a large enterprise, a sovereign cloud host, or a public institution. The requirements are uncompromising: host a 70B-class model or a 400B+ giant, and above all, **serve dozens or even hundreds of users at the same time** with instant response time.

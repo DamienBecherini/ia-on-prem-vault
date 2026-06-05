@@ -4,6 +4,10 @@ description: The ideal blueprint for SMEs. How to serve a team of 10 to 50 peopl
 sidebar:
   order: 2
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Your client (a law firm, a medical practice, an SME) needs a local assistant capable of processing confidential documents. The chosen model is a heavy LLM (70B quantized class, ~40 GB of weights).

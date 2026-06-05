@@ -4,6 +4,10 @@ description: Le blueprint de l'Enterprise IA. Nœuds HGX 8-GPU, réseau RoCE/Inf
 sidebar:
   order: 4
 last_modified: "2026-06-05"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Votre client est un grand compte, un hébergeur cloud souverain ou une institution publique. Le cahier des charges est implacable : il faut héberger un modèle de la classe 70B ou un géant de 400B+, et surtout, pouvoir **servir des dizaines, voire des centaines d'utilisateurs en même temps** avec un temps de réponse instantané.
