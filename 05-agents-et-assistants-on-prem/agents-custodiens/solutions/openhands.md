@@ -4,6 +4,10 @@ description: Plateforme agentique Docker-based pour développement logiciel, pui
 sidebar:
   order: 3
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 ## 🔍 Vue d'ensemble rapide

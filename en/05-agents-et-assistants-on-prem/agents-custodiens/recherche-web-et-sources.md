@@ -4,6 +4,10 @@ description: How to give a custodian agent controlled web access without dependi
 sidebar:
   order: 5
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 A custodian agent that maintains a technical vault must verify source freshness. But giving it raw web access can expose queries, documents, and the organization's intent.

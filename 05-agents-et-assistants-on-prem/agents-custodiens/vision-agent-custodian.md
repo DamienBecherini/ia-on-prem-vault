@@ -4,6 +4,10 @@ description: Définition, périmètre et trajectoire d'architecture d'un agent a
 sidebar:
   order: 2
 last_modified: "2026-06-05"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Un **[[00-lexique/agent-custodian|agent custodien]]** est un [[00-lexique/autonomous-agent|agent autonome]] chargé de maintenir un actif numérique : vault Markdown, documentation technique, dépôt Git, backlog de sources, index de liens, ou base de connaissances.

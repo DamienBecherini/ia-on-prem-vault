@@ -2,6 +2,10 @@
 title: 🚀 Index Zero to Hero
 description: Le point d'entrée de votre formation sur l'IA On-Premise
 last_modified: "2026-06-05"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Bienvenue dans le "Zero to Hero" de l'IA Locale. Ce Vault est conçu comme un jardin numérique : ne le lisez pas de manière linéaire. Suivez vos besoins, cliquez sur les concepts que vous ne maîtrisez pas encore, et construisez votre expertise pas à pas.

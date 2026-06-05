@@ -4,6 +4,10 @@ description: Definition, scope, and architecture trajectory of an autonomous age
 sidebar:
   order: 2
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 A **[[00-lexique/agent-custodian|custodian agent]]** is an [[00-lexique/autonomous-agent|autonomous agent]] tasked with maintaining a digital asset: Markdown vault, technical documentation, Git repository, source backlog, link index, or knowledge base.

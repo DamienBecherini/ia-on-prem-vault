@@ -4,6 +4,10 @@ description: Assistant personnel local-first avec Memory Tree, mais expérience 
 sidebar:
   order: 1
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 ## 🔍 Vue d'ensemble rapide

@@ -103,14 +103,14 @@ Short note on anything not verified.
 
 ## Frontmatter Update After Verification
 
-After completing a verification run on a page and receiving HITL approval, update the page frontmatter:
+After completing a verification run on a page and receiving HITL approval, read `site.config.json` → `editorial` (see `.agents/references/site-config-editorial.md`), then update the page frontmatter:
 
 ```yaml
-last_verified: YYYY-MM-DD      # today's date
-verified_by: vault-verify-content@1.0
+last_verified: YYYY-MM-DD              # today's date
+verified_by: <editorial.defaultAgent>    # from site.config.json
 ```
 
-Do not set `verified_hitl` — that field is set by `vault-log-run` after explicit human sign-off.
+Do not set `verified_hitl` — that field is set by `vault-log-run` after explicit human sign-off, using `editorial.hitl` from the same config.
 
 If the page does not yet have these fields, add them after the existing frontmatter keys.
 

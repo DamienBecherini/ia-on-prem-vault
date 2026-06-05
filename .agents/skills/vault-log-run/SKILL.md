@@ -94,12 +94,14 @@ Only open the full detailed log when investigating a specific run.
 
 When a human (HITL) approves the results of a verification run:
 
-1. Set `verified_hitl: <name>` in the frontmatter of each verified page.
-2. Record the approval in the run log under `## Validation`.
-3. Do not set `verified_hitl` autonomously without explicit human confirmation.
+1. Read `site.config.json` → `editorial.hitl` (see `.agents/references/site-config-editorial.md`).
+2. Set `verified_hitl` and `verified_hitl_url` from that config in each verified page frontmatter.
+3. Record the approval in the run log under `## Validation`.
+4. Do not set HITL fields autonomously without explicit human confirmation.
 
 ```yaml
-verified_hitl: Damien   # example — use the actual approver's name
+verified_hitl: <editorial.hitl.name>
+verified_hitl_url: <editorial.hitl.url>
 ```
 
 See `docs/frontmatter-schema.md` for the full field specification.

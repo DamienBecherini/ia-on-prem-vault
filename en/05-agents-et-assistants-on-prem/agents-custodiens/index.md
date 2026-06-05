@@ -6,6 +6,10 @@ description: >
 sidebar:
   order: 1
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 A [[00-lexique/agent-custodian|custodian agent]] is not an assistant: you do not chat with it to ask questions. You entrust it with **recurring or event-driven tasks** — keeping a vault up to date, detecting obsolete code, proposing sourced fixes — and it works autonomously while leaving the final decision to a human.

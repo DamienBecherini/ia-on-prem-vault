@@ -4,6 +4,10 @@ description: Comment isoler les travaux d'un agent custodien dans Git et notifie
 sidebar:
   order: 4
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Git est le garde-fou naturel d'un agent custodien. Il transforme une action risquée ("l'agent modifie le vault") en proposition réversible ("l'agent ouvre une branche avec un diff").

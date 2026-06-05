@@ -4,6 +4,10 @@ description: Local-first application for RAG, agents, documents, and workflows, 
 sidebar:
   order: 3
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 ## 🔍 Quick overview

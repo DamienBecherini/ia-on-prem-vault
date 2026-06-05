@@ -4,6 +4,10 @@ description: The blueprint for getting started with local AI at low cost. RTX PC
 sidebar:
   order: 1
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 You are a solo developer, a hobbyist (*homelab*), or a small business that wants to test autonomous agents without immediately investing €5,000 to €10,000 in a dedicated AI machine.

@@ -2,6 +2,10 @@
 title: "Frontmatter Schema"
 description: "Standard frontmatter fields for all vault notes — editorial metadata, pricing validity, and verification chain."
 last_modified: "2026-06-05"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 # Frontmatter Schema — IA On-Premise Vault
@@ -30,9 +34,14 @@ These fields track content freshness and the editorial verification chain.
 ```yaml
 last_modified: YYYY-MM-DD      # optional — date of last substantive content change (git-tracked)
 last_verified: YYYY-MM-DD      # optional — date of last human-approved verification run
-verified_by: agent-slug@x.y    # optional — skill slug + version that ran the verification
-verified_hitl: Damien           # optional — name of the human who approved the verification
+verified_by: Sonnet 4.6        # optional — from site.config.json → editorial.defaultAgent
+verified_hitl: Damien BECHERINI # optional — from site.config.json → editorial.hitl.name
+verified_hitl_url: https://damien.becherini.fr  # optional — from site.config.json → editorial.hitl.url
 ```
+
+### Single source of truth
+
+HITL name, HITL URL, and default agent slug are defined in **`site.config.json`** under `editorial`, not hardcoded in skills or scripts. See `.agents/references/site-config-editorial.md`.
 
 ### Field rules
 
@@ -81,8 +90,9 @@ sidebar:
   order: 3
 last_modified: 2026-06-05
 last_verified: 2026-06-05
-verified_by: vault-verify-content@1.0
-verified_hitl: Damien
+verified_by: Sonnet 4.6
+verified_hitl: Damien BECHERINI
+verified_hitl_url: https://damien.becherini.fr
 ---
 ```
 

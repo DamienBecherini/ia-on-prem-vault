@@ -4,6 +4,10 @@ description: Protocoles concrets pour choisir, tester, sécuriser et opérer une
 sidebar:
   order: 1
 last_modified: "2026-06-05"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 La section 06 transforme les concepts des fondations, du matériel, de la stack logicielle et des blueprints en **méthodes de décision**.

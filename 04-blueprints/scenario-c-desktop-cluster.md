@@ -4,6 +4,10 @@ description: Le blueprint de l'évolutivité. Relier plusieurs Mac Mini ou PC co
 sidebar:
   order: 3
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Le [[04-blueprints/scenario-b-sme-appliance|Scénario B]] (l'Appliance) a un défaut majeur : sa mémoire est figée. Si le besoin de votre client évolue et qu'il souhaite déployer un modèle [[00-lexique/moe|MoE]] colossal de plus de 400 milliards de paramètres (nécessitant plus de 300 Go de mémoire), aucune machine de bureau unique au monde ne pourra l'accueillir.

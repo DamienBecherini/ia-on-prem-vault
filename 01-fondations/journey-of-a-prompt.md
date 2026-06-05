@@ -4,6 +4,10 @@ description: De votre clavier jusqu'à la réponse. Pas de magie, juste de l'él
 sidebar:
   order: 0
 last_modified: "2026-06-04"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] En bref

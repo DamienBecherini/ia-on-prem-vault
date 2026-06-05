@@ -4,6 +4,10 @@ description: Le blueprint idéal pour les PME. Comment servir une équipe de 10 
 sidebar:
   order: 2
 last_modified: "2026-06-05"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Votre client (une agence d'avocats, un cabinet médical, une PME) a besoin d'un assistant local capable de traiter des documents confidentiels. Le modèle retenu est un LLM lourd (classe 70B quantifié, soit ~40 Go de poids). 

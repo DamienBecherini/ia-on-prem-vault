@@ -2,6 +2,10 @@
 title: Lexicon index
 description: Alphabetical list of all on-premise AI lexicon entries.
 last_modified: "2026-06-05"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI Glossary]].

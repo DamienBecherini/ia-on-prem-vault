@@ -4,6 +4,10 @@ description: Comment donner un accès web contrôlé à un agent custodien sans 
 sidebar:
   order: 5
 last_modified: "2026-06-05"
+last_verified: "2026-06-05"
+verified_by: "Sonnet 4.6"
+verified_hitl: "Damien BECHERINI"
+verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Un agent custodien qui maintient un vault technique doit vérifier l'actualité des sources. Mais lui donner un accès web brut peut exposer les requêtes, les documents et les intentions de l'organisation.
