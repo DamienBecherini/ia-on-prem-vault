@@ -191,7 +191,7 @@ NVIDIA DCGM Exporter expose des métriques GPU détaillées[^3] :
 
 ### Requête Prometheus — VRAM utilisée par GPU
 
-```promql
+```text
 DCGM_FI_DEV_FB_USED{gpu=~".*"}
 ```
 
@@ -215,22 +215,22 @@ DCGM_FI_DEV_FB_USED{gpu=~".*"}
 ### Panels essentiels à construire manuellement
 
 **Panel "Débit tokens/s" :**
-```promql
+```text
 rate(vllm:generation_tokens_total[1m])
 ```
 
 **Panel "KV Cache %" :**
-```promql
+```text
 vllm:gpu_cache_usage_perc * 100
 ```
 
 **Panel "File d'attente" :**
-```promql
+```text
 vllm:num_requests_waiting
 ```
 
 **Panel "TTFT P95" (95e percentile) :**
-```promql
+```text
 histogram_quantile(0.95, rate(vllm:time_to_first_token_seconds_bucket[5m]))
 ```
 

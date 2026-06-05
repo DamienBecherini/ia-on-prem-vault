@@ -23,10 +23,12 @@ to which this vault is attached via a junction. Only the **notes** live here —
 
 ## Content
 
-- **Foundations** — AI physics: memory bandwidth, unified memory vs RAM vs VRAM, KV cache, quantization.
-- **Hardware** — APUs & unified memory (Strix Halo, Mac), multi-GPU workstations, AI networking (RoCE, Thunderbolt).
-- **Software stack** — inference engines (llama.cpp, Ollama, vLLM), clustering (Exo, Ray), RAG & agents.
-- **Blueprints** — ready-to-use deployment scenarios, from dev lab to enterprise datacenter.
+- **Foundations** — AI physics: memory bandwidth, unified memory vs RAM vs VRAM, KV cache, quantization, prompt journey.
+- **Hardware** — APUs & unified memory (Strix Halo, Mac), multi-GPU workstations, AI networking (RoCE, InfiniBand, Thunderbolt).
+- **Software stack** — inference engines (Ollama, vLLM, TensorRT-LLM), clustering (Exo, Ray), RAG & agents, model selection guide.
+- **Blueprints** — four ready-to-use scenarios from dev lab to enterprise datacenter, with TCO comparison.
+- **Agents & assistants** — personal assistants (Open WebUI, AnythingLLM, Khoj, Jan AI), custodian agents (OpenHands, Aider, LiteLLM), sovereignty & privacy audit grid.
+- **Implementation** — getting started with Ollama, evaluating models, securing local inference, multi-GPU vLLM, Prometheus/Grafana monitoring, Ollama → vLLM migration.
 
 Site content is **French and English** (`en/` locale folder). This README is **English only** (repository documentation).
 
@@ -34,15 +36,24 @@ Site content is **French and English** (`en/` locale folder). This README is **E
 
 ```
 site.config.json        site manifest for the engine (title, locales, sidebar, social, lexicon)
+.env.example            deploy credentials template (copy to .env, never committed)
+package.json            vault-local npm scripts (delegate to the engine)
 index.mdx               home page (hero)
-00-index.md             “Zero to Hero” table of contents
+00-index.md             "Zero to Hero" table of contents
 00-lexique/             AI glossary (term pages + hub + generated index)
-01-fondations/          French notes
-en/                     English notes
-_templates/             Obsidian templates (e.g. _Terme Lexique.md)
+01-fondations/          ch. 01 — AI physics (FR + en/ mirror)
+02-materiel/            ch. 02 — hardware (FR + en/ mirror)
+03-stack-logicielle/    ch. 03 — software stack (FR + en/ mirror)
+04-blueprints/          ch. 04 — deployment scenarios (FR + en/ mirror)
+05-agents-et-assistants-on-prem/  ch. 05 — agents & assistants (FR + en/ mirror)
+06-mise-en-oeuvre/      ch. 06 — practical implementation (FR + en/ mirror)
+en/                     English locale root (mirrors FR chapters under en/)
+scripts/                vault-local maintenance scripts (audit, backfill, delegate)
+_templates/             Obsidian templates (_Terme Lexique.md, _Nouveau Chapitre.md)
 _private/               confidential notes (gitignored, never published)
 docs/plans/             agent implementation plans (excluded from publish; see README there)
 .agents/                agent skills and maintenance (excluded from publish)
+.cursor/rules/          Cursor AI rules (tracked; rest of .cursor/ is gitignored)
 ```
 
 ### Lexicon (this vault)
@@ -50,7 +61,7 @@ docs/plans/             agent implementation plans (excluded from publish; see R
 - **Hub** : `00-lexique/ai-glossary.md` (curated overview).
 - **Generated index** : `00-lexique/lexicon-index.md` (alphabetical table; regen at build when `lexicon.enabled` in `site.config.json`).
 - **New term** : use `_templates/_Terme Lexique.md`, tag `lexique` in frontmatter.
-- **Regenerate index manually** (from the engine repo): `npm run lexicon:index` with `VAULT_PATH` pointing here.
+- **Regenerate index manually** (from the engine repo): `npm run lexicon:index` (vault is resolved via the `src/content/docs` junction; no `VAULT_PATH` needed after `npm run link:vault`).
 - **Commit policy** : commit `lexicon-index.md` with the vault when you add or change lexicon entries.
 
 The engine excludes everything matched by the vault [`.gitignore`](.gitignore) (including `_private/*`) and
@@ -72,7 +83,9 @@ Use the `DEPLOY_*` variables; pick the protocol with `DEPLOY_PROTOCOL`.
 ```bash
 cp .env.example .env    # ENGINE_PATH + DEPLOY_*
 npm run publish         # git + build + incremental upload (FTPS/SFTP)
+npm run publish:full    # git + build + full remote scan + upload all + mirror
 npm run deploy          # build + incremental upload (no git)
+npm run deploy:full     # build + full remote scan + upload all + mirror
 npm run upload          # incremental upload only (existing dist/)
 npm run upload:full     # full remote scan + upload all + mirror
 ```
@@ -81,11 +94,11 @@ Incremental deploy uses `.deploy-manifest.json` (gitignored in this vault) plus 
 `{DEPLOY_REMOTE_PATH}/.deploy-manifest.json`. The engine merges both before comparing `dist/` hashes, so
 CI and multi-machine deploys stay in sync; only changed files are uploaded after each build.
 
+Add `-- --yes` to skip the confirmation prompt (e.g. `npm run upload:full -- --yes`). Do **not** use `npm run upload --full` — npm silently consumes flags placed before `--` and they never reach the script.
+
 Run `npm run audit:links` in the engine to list unresolved wiki/MD links (lexicon backlog and [link audit allowlist](.agents/vault-maintenance/link-audit-allowlist.md)).
 
 Agent implementation plans live in [docs/plans/README.md](docs/plans/README.md) (English, not published).
-
-Full deploy: `npm run upload:full -- --yes` or `npm run upload -- --full --yes`. Do not use `npm run upload --full` — npm consumes `--full` and never passes it to the script.
 
 To make the site **private** (Apache Basic Auth), fill in `AUTH_*` in `.env`, then:
 

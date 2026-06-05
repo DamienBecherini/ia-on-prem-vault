@@ -230,11 +230,16 @@ Each addition covers:
 
 ---
 
-## Out of Scope
+## Out of Scope (at plan creation)
 
-- Starlight `<VerifiedBadge>` UI component (separate engine repo task)
 - `ia-on-prem-starter-kit` companion repository (separate initiative)
 - Full translation of existing pages to EN (ongoing background task)
+
+## Post-plan follow-up (2026-06-05)
+
+- Starlight `<VerifiedBadge>` UI component — **delivered** in `starlight-obsidian-engine`
+- `site.config.json` → `editorial` block for HITL/agent defaults — **delivered**
+- EN DRP parity, VerifiedBadge i18n, multimodality sources, promql build warning — **delivered** in follow-up session
 
 ---
 
@@ -278,7 +283,6 @@ Each addition covers:
 
 ### Limitations / Residual Risk
 
-- Multimodality VRAM figures are order-of-magnitude estimates — no live source was fetched during this run. A `vault-verify-content` pass with source fetching is recommended before publishing.
-- DRP RTO/RPO values are indicative — they should be validated against actual hardware timing (model reload benchmarks) per blueprint.
+- Multimodality VRAM figures remain order-of-magnitude — footnotes added (LLaVA, Qwen2-VL, Whisper, vLLM) but not benchmark-validated per hardware.
+- DRP RTO/RPO values are indicative — validate against actual model reload benchmarks per blueprint.
 - The `ia-on-prem-starter-kit` companion repo is referenced as a placeholder — it does not exist yet.
-- Starlight `<VerifiedBadge>` component (engine repo) is not implemented — frontmatter fields will be silently ignored until that work is done.

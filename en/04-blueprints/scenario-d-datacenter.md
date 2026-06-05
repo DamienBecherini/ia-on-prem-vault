@@ -139,6 +139,48 @@ For a datacenter SLA with an MTTR (Mean Time To Recovery) target under 2 minutes
 
 ---
 
+## 🛡️ High Availability and Recovery (DRP)
+
+Blueprint D is the only scenario where a formal disaster recovery plan is economically justified. Two hours of downtime on a production HGX node represents significant operational and reputational cost.
+
+### HA strategies by component
+
+| Component | HA strategy | Notes |
+| :-- | :-- | :-- |
+| **vLLM** | Dual instance with load balancer (Nginx / HAProxy) | Rolling restart for zero-downtime updates |
+| **Qdrant cluster** | Distributed mode (3 nodes minimum) with replication | Qdrant natively supports sharding and replication |
+| **PostgreSQL / SQLite** | Streaming replication (Postgres) or WAL archiving | SQLite insufficient for production D — migrate to Postgres |
+| **Model storage** | NVMe RAID 0 + daily snapshot to NAS or sovereign S3 | GPUDirect Storage needs a dedicated path — exclude from software RAID |
+| **RoCE network** | Switch redundancy (dual-spine) + active PFC/ECN monitoring | Uncontrolled packet loss silently collapses throughput |
+
+### RTO / RPO targets
+
+| Incident | Target RTO | Target RPO | Action |
+| :-- | :-- | :-- | :-- |
+| vLLM process crash | < 2 min | 0 (no data loss) | Automatic restart (systemd / Docker restart policy) |
+| Single GPU failure (8 GPU) | < 5 min | 0 | Tensor Parallelism reduced to 7 GPUs until replacement |
+| Full node failure | < 30 min | < 15 min | Failover to pre-configured standby node |
+| Vector DB corruption | < 1 h | < 1 h | Restore from latest Qdrant snapshot |
+| Site disaster (fire, flood) | < 4 h | < 24 h | Off-site replication (secondary datacenter or sovereign cloud) |
+
+### Minimum daily backup
+
+```bash
+# Qdrant snapshot (all collections)
+curl -X POST http://localhost:6333/snapshots
+
+# Postgres export (histories, agent metadata)
+pg_dump -Fc ia_on_prem_db > /backup/$(date +%F)_pg.dump
+
+# Off-site copy (rsync to secondary NAS example)
+rsync -az /backup/ nas-secondary:/ia-on-prem-backup/
+```
+
+> [!note] Weight reload time conditions your RTO
+> See the **Storage Wall** section above: a 405B model in BF16 on PCIe 3.0 SSD takes ~4.5 minutes to reload. Size your RTO accounting for this non-compressible delay.
+
+---
+
 ## 📚 Sources and References
 
 [^1]: NVIDIA Technical Blog, *NVIDIA NVLink and NVIDIA NVSwitch Supercharge Large Language Model Inference* (HGX architecture, Blackwell NVLink 1.8 TB/s), 2024-2026.
