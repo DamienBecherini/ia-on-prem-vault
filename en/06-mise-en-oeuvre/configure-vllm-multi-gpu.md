@@ -3,6 +3,7 @@ title: "⚙️ Configure vLLM for multi-GPU production"
 description: Installation, tensor parallel configuration, multi-node deployment with Ray, and production best practices for vLLM on NVIDIA GPUs.
 sidebar:
   order: 5
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

@@ -24,6 +24,7 @@ todos:
     content: Update the generation skill so it no longer publishes Lexique - actions sections
     status: pending
 isProject: false
+last_modified: "2026-06-04"
 ---
 
 # Multi-GPU Workstations - Plan

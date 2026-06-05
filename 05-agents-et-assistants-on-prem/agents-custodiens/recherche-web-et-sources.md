@@ -3,6 +3,7 @@ title: "🔍 Recherche Web & Sources"
 description: Comment donner un accès web contrôlé à un agent custodien sans dépendre d'un service de recherche cloud.
 sidebar:
   order: 5
+last_modified: "2026-06-05"
 ---
 
 Un agent custodien qui maintient un vault technique doit vérifier l'actualité des sources. Mais lui donner un accès web brut peut exposer les requêtes, les documents et les intentions de l'organisation.

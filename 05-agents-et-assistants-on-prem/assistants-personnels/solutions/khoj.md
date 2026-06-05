@@ -3,6 +3,7 @@ title: "Khoj"
 description: Assistant personnel self-hostable orienté second cerveau, documents, web, agents et automatisations, avec support de modèles locaux via Ollama.
 sidebar:
   order: 5
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Vue d'ensemble rapide

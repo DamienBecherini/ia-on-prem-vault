@@ -3,6 +3,7 @@ title: "🌿 Branches, PRs & Notifications"
 description: Comment isoler les travaux d'un agent custodien dans Git et notifier un humain sans automatiser le merge.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 Git est le garde-fou naturel d'un agent custodien. Il transforme une action risquée ("l'agent modifie le vault") en proposition réversible ("l'agent ouvre une branche avec un diff").

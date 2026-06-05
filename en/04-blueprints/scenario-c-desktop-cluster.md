@@ -3,6 +3,7 @@ title: "🖥️ Scenario C: The Desktop Cluster (Exo & Thunderbolt)"
 description: The scalability blueprint. Connect several Mac Minis or compact PCs via Thunderbolt to run massive models inaccessible on a single machine.
 sidebar:
   order: 3
+last_modified: "2026-06-04"
 ---
 
 [[04-blueprints/scenario-b-sme-appliance|Scenario B]] (the Appliance) has a major flaw: its memory is fixed. If your client's needs evolve and they want to deploy a colossal [[00-lexique/moe|MoE]] model with more than 400 billion parameters (requiring more than 300 GB of memory), no single desktop machine in the world can host it.

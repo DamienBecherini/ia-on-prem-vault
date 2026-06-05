@@ -18,6 +18,7 @@ todos:
     content: Verify build, publication exclusions, run logs, and output quality
     status: completed
 isProject: false
+last_modified: "2026-06-04"
 ---
 
 # Vault skills calibration tests

@@ -3,6 +3,7 @@ title: "🔒 Local inference security"
 description: Local API authentication, network isolation, encryption, OWASP LLM Top 10, and prompt injection protection for an on-premise inference stack.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

@@ -7,6 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
+last_modified: "2026-06-04"
 ---
 
 ## 📝 Short definition

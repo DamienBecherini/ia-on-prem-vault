@@ -5,6 +5,7 @@ description: >
   Personal Assistants and Custodian Agents tracks.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 This section establishes the common foundations for both tracks in section 05.

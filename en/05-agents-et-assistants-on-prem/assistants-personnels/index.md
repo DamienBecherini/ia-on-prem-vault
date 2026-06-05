@@ -5,6 +5,7 @@ description: >
   model control, and memory persistence.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 A local personal assistant lets you interact with an LLM **that knows your context** — your notes, documents, exchange history — without sending that data to a third-party service.

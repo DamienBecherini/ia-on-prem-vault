@@ -1,6 +1,7 @@
 ---
 title: 🚀 Zero to Hero Index
 description: Your entry point for On-Premise AI training
+last_modified: "2026-06-04"
 ---
 
 Welcome to the Local AI "Zero to Hero" guide. This vault is designed as a digital garden: don't read it linearly. Follow your needs, click on concepts you haven't mastered yet, and build your expertise step by step.

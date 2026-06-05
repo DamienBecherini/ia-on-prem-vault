@@ -5,6 +5,7 @@ description: >
   Tableau comparatif, exigences matérielles et relation entre les deux pistes.
 sidebar:
   order: 3
+last_modified: "2026-06-05"
 ---
 
 Toutes les applications IA locales ne font pas la même chose. Avant de choisir un outil, il est utile de comprendre dans quelle **catégorie architecturale** il s'inscrit — et ce que cette catégorie implique en termes de matériel, de complexité et de souveraineté.

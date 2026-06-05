@@ -3,6 +3,7 @@ title: "Open WebUI"
 description: Self-hosted web interface for Ollama and OpenAI-compatible backends, suited to local multi-user deployments.
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Quick overview

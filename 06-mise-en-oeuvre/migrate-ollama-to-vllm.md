@@ -3,6 +3,7 @@ title: "🔄 Migrer d'Ollama vers vLLM"
 description: Quand et comment passer d'Ollama à vLLM sans casser les clients existants — compatibilité API, conversion de modèles, stratégie de bascule et plan de rollback.
 sidebar:
   order: 7
+last_modified: "2026-06-04"
 ---
 
 > [!tip] En bref

@@ -3,6 +3,7 @@ title: "⚙️ Inference Engines: vLLM, Ollama, and TensorRT-LLM"
 description: Comparison of local deployment engines in 2026. When to use GGUF and llama.cpp on Mac, and when to switch to vLLM or TensorRT-LLM in production.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

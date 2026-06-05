@@ -3,6 +3,7 @@ title: "Cursor CLI"
 description: Interface terminal de l'agent Cursor, très efficace pour prototyper un agent custodien, mais non souveraine au sens on-prem strict.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Vue d'ensemble rapide

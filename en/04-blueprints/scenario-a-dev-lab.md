@@ -3,6 +3,7 @@ title: "🛠️ Scenario A: The Dev Lab (GPU PC or unified memory)"
 description: The blueprint for getting started with local AI at low cost. RTX PC with CPU offloading, or laptop/station with unified memory for better solo comfort.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 You are a solo developer, a hobbyist (*homelab*), or a small business that wants to test autonomous agents without immediately investing €5,000 to €10,000 in a dedicated AI machine.

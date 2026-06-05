@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "audit:i18n": "node scripts/audit-i18n.mjs",
+    "backfill:dates": "node scripts/backfill-last-modified.mjs",
+    "backfill:dates:write": "node scripts/backfill-last-modified.mjs --write",
     "publish": "node scripts/delegate.mjs publish",
     "publish:full": "node scripts/delegate.mjs publish --full",
     "deploy": "node scripts/delegate.mjs deploy",

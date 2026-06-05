@@ -3,6 +3,7 @@ title: "🧩 RAG & Agents: The knowledge architecture"
 description: How to give a local LLM private memory and autonomy. From standard RAG to agentic workflows (SmolAgents, LangGraph) and the Memory Tree approach for VRAM savings.
 sidebar:
   order: 3
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

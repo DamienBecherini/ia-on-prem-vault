@@ -3,6 +3,7 @@ title: "🏗️ Target architecture recommendation"
 description: Realistic path from a Cursor CLI MVP to a sovereign custodian stack based on Aider, Ollama/vLLM, LiteLLM, and SearXNG.
 sidebar:
   order: 6
+last_modified: "2026-06-04"
 ---
 
 The right architecture is not the purest on day one. It is the one that lets you validate the workflow without lying about sovereignty.

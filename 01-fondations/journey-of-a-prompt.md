@@ -3,6 +3,7 @@ title: "🧠 Le Voyage d'un Prompt : Comment fonctionne un LLM ?"
 description: De votre clavier jusqu'à la réponse. Pas de magie, juste de l'électricité et des mathématiques. Découvrez les étapes clés (Tokenisation, Prefill, KV Cache, Decoding).
 sidebar:
   order: 0
+last_modified: "2026-06-04"
 ---
 
 > [!tip] En bref

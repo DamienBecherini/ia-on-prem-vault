@@ -3,6 +3,7 @@ title: "Khoj"
 description: Self-hostable personal assistant oriented second brain, documents, web, agents, and automations, with local model support via Ollama.
 sidebar:
   order: 5
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Quick overview

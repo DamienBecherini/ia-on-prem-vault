@@ -3,6 +3,7 @@ title: "🌿 Branches, PRs & Notifications"
 description: How to isolate a custodian agent's work in Git and notify a human without automating the merge.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 Git is the natural guardrail for a custodian agent. It turns a risky action ("the agent modifies the vault") into a reversible proposal ("the agent opens a branch with a diff").

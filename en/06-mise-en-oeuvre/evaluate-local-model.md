@@ -3,6 +3,7 @@ title: "🧪 Evaluate a local model"
 description: Practical protocol to compare local LLMs on quality, factuality, hallucinations, RAG, code editing, and performance.
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 Choosing a local model is not about picking the first name at the top of a leaderboard. A model can excel at math, be mediocre at domain-specific French, fast but hallucinated, or very good at RAG but risky for editing a repository.

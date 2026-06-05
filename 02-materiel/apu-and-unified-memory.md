@@ -3,6 +3,7 @@ title: 🧠 APU & Mémoire Unifiée
 description: Analyse comparative des puces Apple Silicon M4 Max / M3 Ultra et des APU AMD Ryzen AI Max PRO 400 (Gorgon Halo) pour l'inférence de grands LLM.
 sidebar:
   order: 1
+last_modified: "2026-06-04"
 ---
 
 > [!tip] En bref

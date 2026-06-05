@@ -3,6 +3,7 @@ title: "🏗️ Recommandation d'architecture cible"
 description: Trajectoire réaliste pour passer d'un MVP Cursor CLI à une stack custodienne souveraine basée sur Aider, Ollama/vLLM, LiteLLM et SearXNG.
 sidebar:
   order: 6
+last_modified: "2026-06-04"
 ---
 
 La bonne architecture n'est pas la plus pure dès le premier jour. C'est celle qui permet de valider le workflow sans mentir sur la souveraineté.

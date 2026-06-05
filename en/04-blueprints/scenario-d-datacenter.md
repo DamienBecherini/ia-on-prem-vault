@@ -3,6 +3,7 @@ title: "🏭 Scenario D: Datacenter (RoCE & Multi-GPU)"
 description: The Enterprise AI blueprint. HGX 8-GPU nodes, RoCE/InfiniBand network, and Tensor Parallelism for very high-concurrency production.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 Your client is a large enterprise, a sovereign cloud host, or a public institution. The requirements are uncompromising: host a 70B-class model or a 400B+ giant, and above all, **serve dozens or even hundreds of users at the same time** with instant response time.

@@ -3,6 +3,7 @@ title: "SearXNG"
 description: Métamoteur de recherche auto-hébergé et privacy-first, utile pour donner un accès web contrôlé à un agent custodien.
 sidebar:
   order: 5
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Vue d'ensemble rapide

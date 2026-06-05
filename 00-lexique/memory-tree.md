@@ -8,6 +8,7 @@ tags:
   - lexique
   - rag
   - agents
+last_modified: "2026-06-04"
 ---
 
 ## 📝 Définition courte

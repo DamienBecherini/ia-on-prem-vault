@@ -3,6 +3,7 @@ title: "LiteLLM"
 description: Gateway OpenAI-compatible pour router agents et applications vers Ollama, vLLM, cloud providers ou modèles internes.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Vue d'ensemble rapide

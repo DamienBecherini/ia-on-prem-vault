@@ -3,6 +3,7 @@ title: "📊 Monitoring the inference stack"
 description: Setting up Prometheus + Grafana monitoring for a vLLM or Ollama stack — GPU metrics, KV Cache, throughput, and operational alerts.
 sidebar:
   order: 6
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

@@ -3,6 +3,7 @@ title: "Jan.ai"
 description: Alternative open-source à ChatGPT qui fait tourner des modèles localement via llama.cpp, avec serveur API local OpenAI-compatible.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Vue d'ensemble rapide

@@ -3,6 +3,7 @@ title: "Aider"
 description: Agent de code terminal-first, open-source, model-agnostic, capable de travailler directement avec Ollama.
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 ## 🔍 Vue d'ensemble rapide

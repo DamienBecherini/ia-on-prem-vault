@@ -7,6 +7,7 @@ prices_valid_as_of: "2026-06"
 last_verified: "2026-06-05"
 verified_by: "vault-verify-content@1.0"
 verified_hitl: "Damien"
+last_modified: "2026-06-05"
 ---
 
 > [!tip] In brief

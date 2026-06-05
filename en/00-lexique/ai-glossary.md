@@ -1,6 +1,7 @@
 ---
 title: 📖 AI Glossary
 description: Lexicon of technical terms and acronyms used in the vault.
+last_modified: "2026-06-04"
 ---
 
 This glossary centralizes key on-prem AI concepts.  

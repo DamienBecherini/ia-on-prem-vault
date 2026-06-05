@@ -3,6 +3,7 @@ title: 🗜️ Quantization (4-bit & 8-bit)
 description: Understand the mathematical physics of model compression (GGUF, AWQ, MXFP4) and the Perplexity vs VRAM trade-off.
 sidebar:
   order: 4
+last_modified: "2026-06-04"
 ---
 
 > [!tip] In brief

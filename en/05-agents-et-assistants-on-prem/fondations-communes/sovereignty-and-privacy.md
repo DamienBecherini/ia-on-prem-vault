@@ -5,6 +5,7 @@ description: >
   GDPR/AI Act regulatory context, and practical checklist.
 sidebar:
   order: 2
+last_modified: "2026-06-04"
 ---
 
 Before choosing a personal assistant or custodian agent, one question deserves an honest answer:

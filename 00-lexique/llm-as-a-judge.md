@@ -8,6 +8,7 @@ aliases:
 tags:
   - lexique
   - evaluation
+last_modified: "2026-06-05"
 ---
 
 ## 📝 Définition courte

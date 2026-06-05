@@ -36,6 +36,7 @@ todos:
     content: "Phase 6 — Build, link audit, backlog update, report"
     status: done
 isProject: true
+last_modified: "2026-06-04"
 ---
 
 # Agents & Assistants On-Prem — Combined Plan

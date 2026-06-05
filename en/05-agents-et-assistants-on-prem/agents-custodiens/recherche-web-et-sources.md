@@ -3,6 +3,7 @@ title: "🔍 Web Search & Sources"
 description: How to give a custodian agent controlled web access without depending on a cloud search service.
 sidebar:
   order: 5
+last_modified: "2026-06-04"
 ---
 
 A custodian agent that maintains a technical vault must verify source freshness. But giving it raw web access can expose queries, documents, and the organization's intent.
