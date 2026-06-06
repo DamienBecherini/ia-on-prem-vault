@@ -146,6 +146,7 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 | [[00-lexique/autonomous-agent\|Agent autonome]] | LLM équipé d'outils qui raisonne en boucle pour accomplir des tâches. |
 | [[00-lexique/agent-custodian\|Agent custodien]] | Agent de maintenance qui propose des corrections et attend validation humaine. |
 | [[00-lexique/human-in-the-loop\|Human-in-the-loop]] | Gouvernance où l'humain valide les actions critiques avant application. |
+| [[00-lexique/excessive-agency\|Excessive Agency]] | Vulnérabilité OWASP LLM06 : agent trop permissif en outils, droits ou autonomie. |
 | [[00-lexique/litellm\|LiteLLM]] | Gateway OpenAI-compatible pour router vers modèles locaux ou cloud. |
 | [[00-lexique/smolagents\|SmolAgents]] | Framework léger Hugging Face pour agents souverains sans télémétrie cloud. |
 | [[00-lexique/context-window\|Fenêtre de contexte]] | Nombre maximal de tokens que le modèle peut traiter en entrée active. |

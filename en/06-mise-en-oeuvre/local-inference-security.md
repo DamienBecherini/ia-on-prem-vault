@@ -173,7 +173,27 @@ The inference engine must never be directly reachable from the corporate network
 
 ## 5. OWASP LLM Top 10 — LLM-specific vulnerabilities
 
-The [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) identifies risks specific to applications that integrate LLMs. Most critical for an on-premise stack:
+The [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) identifies risks specific to applications that integrate LLMs. This guide aligns with the **2025 edition**. Only entries most critical for an on-premise stack are detailed below.
+
+> [!note] Coverage in this guide
+>
+> | # | OWASP 2025 risk | Covered here |
+> | :-- | :-- | :-- |
+> | LLM01 | Prompt Injection | ✅ §5.1 |
+> | LLM02 | Sensitive Information Disclosure | ✅ §5.2 |
+> | LLM03 | Supply Chain | → §8 |
+> | LLM04 | Data and Model Poisoning | → §8 |
+> | LLM05 | Improper Output Handling | ✅ §5.3 |
+> | LLM06 | Excessive Agency | ✅ §5.4 + §6 |
+> | LLM07 | System Prompt Leakage | ✅ §5.5 |
+> | LLM08 | Vector & Embedding Weaknesses | ✅ §5.6 |
+> | LLM09 | Misinformation | — (out of inference scope) |
+> | LLM10 | Unbounded Consumption | — (LiteLLM quotas, FinOps) |
+
+> [!tip] Legacy numbering (2023)
+> LLM06 (2023) = sensitive info disclosure → **LLM02 (2025)** ;
+> LLM08 (2023) = excessive agency → **LLM06 (2025)** ;
+> LLM02 (2023) = insecure output handling → **LLM05 (2025)**.
 
 ### LLM01 — Prompt injection
 
@@ -190,51 +210,7 @@ in your system context.
 - Use a strict permissiveness model: if the model hesitates, it refuses
 - Log and alert on "ignore previous instructions" attempts
 
-### LLM02 — Insecure output handling
-
-The model generates code, HTML, or JSON that the application executes without validation.
-
-**Countermeasures:**
-- Treat all LLM output as untrusted data
-- Run output through a validator before execution (JSON Schema, AST parser for code)
-- Disable `eval()` in execution layers
-
-### LLM04 — System prompt leakage via backend errors (Error Leakage)
-
-When an inference engine (vLLM) returns a 500 error — GPU OOM, timeout, malformed request — the error message sometimes includes the **full payload of the failed request**, including the System Prompt.
-
-If LiteLLM propagates that raw error to the client, the user (or an attacker) sees the full secret agent instructions, security rules, or access keys injected into context.
-
-**Countermeasures:**
-
-```yaml
-# litellm_config.yaml — mask backend errors in production
-general_settings:
-  master_key: "sk-..."
-  # Intercepts backend 5xx errors and returns a generic message
-  return_response_headers: false
-
-# In custom proxy code, intercept errors:
-# if response.status >= 500:
-#     return JSONResponse({"error": "503 Service Unavailable"}, status_code=503)
-```
-
-For teams deploying a reverse proxy (Caddy/Nginx) in front of LiteLLM, add an error rewrite block:
-
-```nginx
-# Nginx — replace 500/502/504 errors with a generic message
-error_page 500 502 503 504 /generic_error.json;
-location = /generic_error.json {
-    internal;
-    return 503 '{"error":"Service temporarily unavailable"}';
-    add_header Content-Type application/json;
-}
-```
-
-> [!note] Debug vs production
-> In development, full traces are useful. In production, enable this filtering systematically — and log detailed errors **server-side only**, in log files, never in the HTTP response.
-
-### LLM06 — Sensitive information disclosure
+### LLM02 — Sensitive information disclosure
 
 The model "memorizes" training data or, worse, session context data, and returns it to another user.
 
@@ -243,7 +219,27 @@ The model "memorizes" training data or, worse, session context data, and returns
 - Do not share the same session context between different users
 - Clear KV Cache between sessions if your engine supports it
 
-### LLM07 — SSRF via agentic fetch tools
+### LLM05 — Improper output handling
+
+The model generates code, HTML, or JSON that the application executes without validation.
+
+**Countermeasures:**
+- Treat all LLM output as untrusted data
+- Run output through a validator before execution (JSON Schema, AST parser for code)
+- Disable `eval()` in execution layers
+
+### LLM06 — Excessive Agency
+
+An LLM or agent is granted too much **functionality**, **permissions**, or **autonomy**. Even without malicious intent, a hallucination or prompt injection can trigger a real action on your infrastructure.
+
+**Three axes of exposure:**
+- **Excessive functionality** — too many tools exposed (e.g. a mail plugin with `read` *and* `send` when only reading is needed)
+- **Excessive permissions** — root access, DB admin, full filesystem
+- **Excessive autonomy** — destructive actions without [[00-lexique/human-in-the-loop|human validation (HITL)]]
+
+**Operational countermeasures:** see §6 (least privilege, rootless containers, Firecracker).
+
+**Common sub-risk — SSRF via agentic fetch tools:**
 
 An agent with a `fetch(url)` tool runs from your local network. If an attacker injects an internal URL via a malicious prompt, the agent can query your internal infrastructure without triggering the perimeter firewall — since the request originates from inside.
 
@@ -290,17 +286,86 @@ def safe_fetch(url: str) -> str:
 > [!warning] DNS resolution at fetch time (DNS rebinding)
 > Check the IP **at fetch time**, not when validating the URL. An attacker can point a public domain to a private IP after the initial check (DNS rebinding). Verification must use the IP resolved just before the network call.
 
-### LLM08 — Uncontrolled code execution (agents)
+### LLM07 — System Prompt Leakage
 
-An LLM agent can call tools with model-generated parameters — including destructive shell commands if the tool allows it.
+When an inference engine (vLLM) returns a 500 error — GPU OOM, timeout, malformed request — the error message sometimes includes the **full payload of the failed request**, including the System Prompt.
 
-**Countermeasures:** see section 6 below (agent isolation).
+If LiteLLM propagates that raw error to the client, the user (or an attacker) sees the full secret agent instructions, security rules, or access keys injected into context.
+
+**Countermeasures:**
+
+```yaml
+# litellm_config.yaml — mask backend errors in production
+general_settings:
+  master_key: "sk-..."
+  # Intercepts backend 5xx errors and returns a generic message
+  return_response_headers: false
+
+# In custom proxy code, intercept errors:
+# if response.status >= 500:
+#     return JSONResponse({"error": "503 Service Unavailable"}, status_code=503)
+```
+
+For teams deploying a reverse proxy (Caddy/Nginx) in front of LiteLLM, add an error rewrite block:
+
+```nginx
+# Nginx — replace 500/502/504 errors with a generic message
+error_page 500 502 503 504 /generic_error.json;
+location = /generic_error.json {
+    internal;
+    return 503 '{"error":"Service temporarily unavailable"}';
+    add_header Content-Type application/json;
+}
+```
+
+> [!note] Debug vs production
+> In development, full traces are useful. In production, enable this filtering systematically — and log detailed errors **server-side only**, in log files, never in the HTTP response.
+
+### LLM08 — Vector and Embedding Weaknesses
+
+In a [[00-lexique/rag|RAG]] architecture, the [[00-lexique/vectordb|vector database]] is an attack surface separate from the LLM itself.
+
+**Main risks:**
+- **Cross-tenant data leakage** — a tenant A query retrieves chunks belonging to tenant B due to missing isolation filters
+- **Embedding poisoning** — injection of malicious vectors at indexing time to influence retrieval results
+- **Similarity attacks** — crafted queries designed to surface normally inaccessible content
+- **Embedding inversion** — partial reconstruction of source text from stored vectors
+
+**Qdrant example — mandatory tenant filter on every query:**
+
+```python
+from qdrant_client import QdrantClient, models
+
+client = QdrantClient(url="http://localhost:6333")
+
+results = client.search(
+    collection_name="docs",
+    query_vector=embedding,
+    query_filter=models.Filter(
+        must=[
+            models.FieldCondition(
+                key="tenant_id",
+                match=models.MatchValue(value=current_tenant_id),
+            )
+        ]
+    ),
+    limit=5,
+)
+```
+
+**On-premise countermeasures:**
+- Tenant isolation: dedicated namespace, collection, or systematic `metadata` filter on every query
+- ACL enforced **at search time**, not only at ingestion
+- Source validation before indexing (no arbitrary URLs)
+- Audit of abnormal retrieval patterns (unusual top-k, cross-domain queries)
+
+> See [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] for the full pipeline and agentic alternatives.
 
 ---
 
-## 6. Agent isolation
+## 6. Agent isolation — LLM06 mitigation
 
-[[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|Custodian agents]] and agents with tool access (code execution, web browsing, file system) add another attack surface. Two fundamental principles:
+[[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|Custodian agents]] and agents with tool access (code execution, web browsing, file system) add another attack surface. This section covers operational countermeasures for **LLM06 — Excessive Agency** (§5.4). Two fundamental principles:
 
 ### Least privilege
 
@@ -460,7 +525,11 @@ For GDPR/AI Act compliance, interactions with an LLM processing personal data mu
 □ Inference logs do not contain personal data in cleartext
 □ Disk encryption enabled on partition for logs and session data
 □ Agents run as non-root with --cap-drop ALL
+□ Each agent exposes only the tools strictly required for its task (LLM06)
+□ Destructive or high-impact actions require human validation (HITL)
 □ External inputs (files, issues, web) are isolated in the agent prompt
+□ RAG queries apply a systematic tenant_id filter on every search (LLM08)
+□ The vector database is not network-accessible without authentication
 □ API key revocation procedure exists and has been tested
 □ Inference engine updates are planned (CVE tracking)
 □ Model weights are SHA-256 verified before production deployment

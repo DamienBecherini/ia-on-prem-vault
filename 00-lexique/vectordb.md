@@ -32,6 +32,7 @@ Brique centrale du RAG standard. Doit être déployée localement pour préserve
 ## ⚠️ Pièges fréquents
 - Renvoyer trop de résultats (ex : top-20) gonfle le prompt et sature la [[00-lexique/context-window|Fenêtre de contexte]] du modèle.
 - La qualité des embeddings est critique : un mauvais modèle d'embedding donne de mauvais résultats de recherche indépendamment de la base.
+- **Cross-tenant data leakage** — en environnement multi-utilisateurs, une requête peut remonter des documents d'un autre tenant si aucun filtre d'isolation (namespace, `tenant_id` en metadata) n'est appliqué **à chaque recherche**. Les ACL à l'ingestion ne suffisent pas : le filtre doit être réévalué au moment de la requête. Voir [[06-mise-en-oeuvre/local-inference-security|LLM08 — Vector & Embedding Weaknesses]].
 
 ## 📚 Pour comprendre en profondeur
 1. [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] *(le pipeline complet RAG et ses alternatives agentiques)*

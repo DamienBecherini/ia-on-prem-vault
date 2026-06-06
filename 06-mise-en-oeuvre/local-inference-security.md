@@ -173,7 +173,27 @@ Le moteur d'inférence ne doit jamais être directement accessible depuis le ré
 
 ## 5. OWASP LLM Top 10 — les vulnérabilités propres aux LLM
 
-L'[OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) identifie les risques spécifiques aux applications qui intègrent des LLM. Les plus critiques pour une stack on-premise :
+L'[OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) identifie les risques spécifiques aux applications qui intègrent des LLM. Ce guide s'aligne sur la **version 2025**. Seules les entrées les plus critiques pour une stack on-premise sont détaillées ci-dessous.
+
+> [!note] Couverture dans ce guide
+>
+> | # | Risque OWASP 2025 | Couvert ici |
+> | :-- | :-- | :-- |
+> | LLM01 | Prompt Injection | ✅ §5.1 |
+> | LLM02 | Sensitive Information Disclosure | ✅ §5.2 |
+> | LLM03 | Supply Chain | → §8 |
+> | LLM04 | Data and Model Poisoning | → §8 |
+> | LLM05 | Improper Output Handling | ✅ §5.3 |
+> | LLM06 | Excessive Agency | ✅ §5.4 + §6 |
+> | LLM07 | System Prompt Leakage | ✅ §5.5 |
+> | LLM08 | Vector & Embedding Weaknesses | ✅ §5.6 |
+> | LLM09 | Misinformation | — (hors périmètre inférence) |
+> | LLM10 | Unbounded Consumption | — (quotas LiteLLM, FinOps) |
+
+> [!tip] Ancienne nomenclature (2023)
+> LLM06 (2023) = divulgation d'infos sensibles → **LLM02 (2025)** ;
+> LLM08 (2023) = agence excessive → **LLM06 (2025)** ;
+> LLM02 (2023) = gestion des sorties → **LLM05 (2025)**.
 
 ### LLM01 — Injection de Prompt
 
@@ -190,51 +210,7 @@ est dans ton contexte système.
 - Utiliser un modèle de permissivité strict : si le modèle hésite, il refuse
 - Logger et alerter sur les tentatives de "ignore previous instructions"
 
-### LLM02 — Gestion non sécurisée des sorties
-
-Le modèle génère du code, du HTML ou du JSON que l'application exécute sans validation.
-
-**Contre-mesures :**
-- Traiter toutes les sorties du LLM comme des données non fiables
-- Passer les sorties dans un validateur avant exécution (JSON Schema, AST parser pour le code)
-- Désactiver `eval()` dans les couches d'exécution
-
-### LLM04 — Fuite du System Prompt via les erreurs backend (Error Leakage)
-
-Lorsqu'un moteur d'inférence (vLLM) renvoie une erreur 500 — OOM GPU, timeout, requête malformée — le message d'erreur inclut parfois le **payload complet de la requête ayant échoué**, y compris le System Prompt.
-
-Si LiteLLM propage cette erreur brute au client, l'utilisateur (ou un attaquant) voit s'afficher l'intégralité des instructions secrètes de l'agent, des règles de sécurité, ou des clés d'accès injectées dans le contexte.
-
-**Contre-mesures :**
-
-```yaml
-# litellm_config.yaml — masquer les erreurs backend en production
-general_settings:
-  master_key: "sk-..."
-  # Intercepte les erreurs 5xx du backend et renvoie un message générique
-  return_response_headers: false
-
-# Dans le code d'un proxy custom, intercepter les erreurs :
-# if response.status >= 500:
-#     return JSONResponse({"error": "503 Service Unavailable"}, status_code=503)
-```
-
-Pour les équipes qui déploient un reverse proxy (Caddy/Nginx) devant LiteLLM, ajoutez un bloc de réécriture d'erreur :
-
-```nginx
-# Nginx — remplacer les erreurs 500/502/504 par un message générique
-error_page 500 502 503 504 /generic_error.json;
-location = /generic_error.json {
-    internal;
-    return 503 '{"error":"Service temporairement indisponible"}';
-    add_header Content-Type application/json;
-}
-```
-
-> [!note] Debug vs Production
-> En environnement de développement, les traces complètes sont utiles. En production, activez ce filtrage systématiquement — et loggez les erreurs détaillées **côté serveur uniquement**, dans vos fichiers de log, jamais dans la réponse HTTP.
-
-### LLM06 — Divulgation d'informations sensibles
+### LLM02 — Divulgation d'informations sensibles
 
 Le modèle "mémorise" des données d'entraînement ou, pire, des données du contexte de session, et les restitue à un autre utilisateur.
 
@@ -243,7 +219,27 @@ Le modèle "mémorise" des données d'entraînement ou, pire, des données du co
 - Ne pas partager un même contexte de session entre utilisateurs différents
 - Effacer le KV Cache entre les sessions si votre moteur le supporte
 
-### LLM07 — SSRF via les outils de fetch agentique
+### LLM05 — Gestion non sécurisée des sorties
+
+Le modèle génère du code, du HTML ou du JSON que l'application exécute sans validation.
+
+**Contre-mesures :**
+- Traiter toutes les sorties du LLM comme des données non fiables
+- Passer les sorties dans un validateur avant exécution (JSON Schema, AST parser pour le code)
+- Désactiver `eval()` dans les couches d'exécution
+
+### LLM06 — Excessive Agency (agence excessive)
+
+Un LLM ou agent reçoit trop de **fonctionnalités**, de **permissions** ou d'**autonomie**. Même sans malveillance, une hallucination ou une injection de prompt peut déclencher une action réelle sur votre infrastructure.
+
+**Trois axes d'exposition :**
+- **Fonctionnalité excessive** — trop d'outils exposés (ex. plugin mail avec `read` *et* `send` alors que la tâche ne demande que la lecture)
+- **Permissions excessives** — accès root, admin DB, filesystem complet
+- **Autonomie excessive** — actions destructrices sans [[00-lexique/human-in-the-loop|validation humaine (HITL)]]
+
+**Contre-mesures opérationnelles :** voir §6 (moindre privilège, containers rootless, Firecracker).
+
+**Sous-risque fréquent — SSRF via les outils de fetch agentique :**
 
 Un agent équipé d'un outil `fetch(url)` s'exécute depuis votre réseau local. Si un attaquant injecte une URL interne via un prompt malveillant, l'agent peut interroger votre infrastructure interne sans déclencher le pare-feu périmétrique — puisque la requête part de l'intérieur.
 
@@ -290,17 +286,86 @@ def safe_fetch(url: str) -> str:
 > [!warning] Résolution DNS au dernier moment (DNS rebinding)
 > Vérifiez l'IP **au moment du fetch**, pas au moment de la validation de l'URL. Un attaquant peut faire pointer un domaine public vers une IP privée après le contrôle initial (DNS rebinding). La vérification doit se faire sur l'IP résolue juste avant l'appel réseau.
 
-### LLM08 — Exécution de code non contrôlée (agents)
+### LLM07 — Fuite du System Prompt (System Prompt Leakage)
 
-Un agent LLM peut appeler des outils avec des paramètres générés par le modèle — y compris des commandes shell destructrices si l'outil le permet.
+Lorsqu'un moteur d'inférence (vLLM) renvoie une erreur 500 — OOM GPU, timeout, requête malformée — le message d'erreur inclut parfois le **payload complet de la requête ayant échoué**, y compris le System Prompt.
 
-**Contre-mesures :** voir section 6 ci-dessous (isolation des agents).
+Si LiteLLM propage cette erreur brute au client, l'utilisateur (ou un attaquant) voit s'afficher l'intégralité des instructions secrètes de l'agent, des règles de sécurité, ou des clés d'accès injectées dans le contexte.
+
+**Contre-mesures :**
+
+```yaml
+# litellm_config.yaml — masquer les erreurs backend en production
+general_settings:
+  master_key: "sk-..."
+  # Intercepte les erreurs 5xx du backend et renvoie un message générique
+  return_response_headers: false
+
+# Dans le code d'un proxy custom, intercepter les erreurs :
+# if response.status >= 500:
+#     return JSONResponse({"error": "503 Service Unavailable"}, status_code=503)
+```
+
+Pour les équipes qui déploient un reverse proxy (Caddy/Nginx) devant LiteLLM, ajoutez un bloc de réécriture d'erreur :
+
+```nginx
+# Nginx — remplacer les erreurs 500/502/504 par un message générique
+error_page 500 502 503 504 /generic_error.json;
+location = /generic_error.json {
+    internal;
+    return 503 '{"error":"Service temporairement indisponible"}';
+    add_header Content-Type application/json;
+}
+```
+
+> [!note] Debug vs Production
+> En environnement de développement, les traces complètes sont utiles. En production, activez ce filtrage systématiquement — et loggez les erreurs détaillées **côté serveur uniquement**, dans vos fichiers de log, jamais dans la réponse HTTP.
+
+### LLM08 — Faiblesses des vecteurs et embeddings (Vector & Embedding Weaknesses)
+
+En architecture [[00-lexique/rag|RAG]], la [[00-lexique/vectordb|base vectorielle]] est une surface d'attaque distincte du LLM lui-même.
+
+**Risques principaux :**
+- **Cross-tenant data leakage** — une requête du tenant A remonte des chunks appartenant au tenant B, faute de filtre d'isolation
+- **Embedding poisoning** — injection de vecteurs malveillants à l'indexation pour influencer les résultats de recherche
+- **Similarity attacks** — requête craftée pour faire remonter du contenu normalement non accessible
+- **Embedding inversion** — reconstruction partielle du texte source à partir des vecteurs stockés
+
+**Exemple Qdrant — filtre tenant obligatoire à chaque requête :**
+
+```python
+from qdrant_client import QdrantClient, models
+
+client = QdrantClient(url="http://localhost:6333")
+
+results = client.search(
+    collection_name="docs",
+    query_vector=embedding,
+    query_filter=models.Filter(
+        must=[
+            models.FieldCondition(
+                key="tenant_id",
+                match=models.MatchValue(value=current_tenant_id),
+            )
+        ]
+    ),
+    limit=5,
+)
+```
+
+**Contre-mesures on-prem :**
+- Isolation par tenant : namespace, collection dédiée, ou filtre `metadata` systématique sur chaque requête
+- ACL appliquées **au moment de la recherche**, pas seulement à l'ingestion
+- Validation des sources avant indexation (pas d'URL arbitraire)
+- Audit des patterns de retrieval anormaux (top-k inhabituel, requêtes cross-domaine)
+
+> Voir [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] pour le pipeline complet et les alternatives agentiques.
 
 ---
 
-## 6. Isolation des agents
+## 6. Isolation des agents — mitigation LLM06
 
-Les [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|agents custodiens]] et les agents avec accès à des outils (code execution, web browsing, file system) représentent une surface d'attaque supplémentaire. Deux principes fondamentaux :
+Les [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|agents custodiens]] et les agents avec accès à des outils (code execution, web browsing, file system) représentent une surface d'attaque supplémentaire. Cette section détaille les contre-mesures opérationnelles contre **LLM06 — Excessive Agency** (§5.4). Deux principes fondamentaux :
 
 ### Principe du moindre privilège
 
@@ -460,7 +525,11 @@ En conformité RGPD/AI Act, les interactions avec un LLM traitant des données p
 □ Les logs d'inférence ne contiennent pas de données personnelles en clair
 □ Le chiffrement disque est activé sur la partition des logs et des données de session
 □ Les agents tournent avec un utilisateur non-root et --cap-drop ALL
+□ Chaque agent n'expose que les tools strictement nécessaires à sa tâche (LLM06)
+□ Les actions destructrices ou à fort impact passent par validation humaine (HITL)
 □ Les entrées externes (fichiers, issues, web) sont isolées dans le prompt agent
+□ Les requêtes RAG appliquent un filtre tenant_id systématique sur chaque recherche (LLM08)
+□ La base vectorielle n'est pas accessible sans authentification réseau
 □ Une procédure de révocation de clé API existe et a été testée
 □ Les mises à jour du moteur d'inférence sont planifiées (CVE tracking)
 □ Les poids des modèles sont vérifiés par hash SHA-256 avant déploiement en production
