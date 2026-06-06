@@ -74,3 +74,17 @@ For significant maintenance reports, invoke `vault-log-run` and write a run log 
 
 If no files were changed, record the report path and `commitCreated: false`.
 
+## Delivery
+
+**Read-only report (default):** no branch, no commit, no PR. Report findings in chat only.
+
+**If the user requests implementation** (e.g. "apply the fixes", "execute the recommendations"):
+
+1. **Branch** — create `chore/vault-maintenance-<YYYY-MM-DD>`.
+2. **Stage** — only the files modified by the implementation (not unrelated files).
+3. **Commit** — `chore(maintenance): <short description>`.
+4. **Push + PR** — open a PR using the template in `git-workflow.mdc`. Reference the run log path.
+5. **Report** — paste the PR URL in chat.
+
+Exception: if the user says "commit to main" or "push directly", skip branch and PR.
+
