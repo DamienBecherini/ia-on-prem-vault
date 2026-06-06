@@ -14,7 +14,12 @@ When an item is completed, move it to `## Done` with the date and related source
 
 ## To Create
 
-*(empty — all pending entries from the 2026-06-03 Gemini batch have been created)*
+*(empty)*
+
+## Already Linked From `06-mise-en-oeuvre/local-inference-security.md` (2026-06-06)
+
+- `00-lexique/excessive-agency.md` — created; linked from §5.4 and §6
+- `00-lexique/vectordb.md` — updated; cross-tenant leakage pitfall added
 
 ---
 
