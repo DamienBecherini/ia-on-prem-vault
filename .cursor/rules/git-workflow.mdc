@@ -1,0 +1,62 @@
+---
+description: Git branch and PR policy for all agent-produced changes in this vault
+alwaysApply: true
+---
+
+# Git Workflow
+
+All agent-produced changes to vault content go through a **branch + PR**, never directly to `main`.
+
+## Branch naming
+
+```
+<type>/<kebab-slug>
+```
+
+| Type | When to use |
+|---|---|
+| `feat` | New content (chapter, lexicon entry, new section) |
+| `fix` | Corrections to existing content (broken links, wrong facts, typos) |
+| `chore` | Maintenance, refresh runs, backlog updates, agent-only files |
+| `docs` | Changes to meta files only (rules, skills, plans) |
+
+Examples: `feat/owasp-2025-alignment`, `chore/vault-refresh-2026-06`, `fix/broken-links-audit`
+
+## PR required before merge
+
+- Always push to the named branch, not to `main`.
+- Always open a PR so the human can review the diff before merging.
+- Never force-push to `main`.
+
+## Exception
+
+The user may say explicitly: *"commit to main"* or *"push directly"*. Only then bypass the PR step.
+
+## PR body template
+
+Use this structure for vault content PRs:
+
+```markdown
+## Summary
+- <bullet: what changed and why>
+
+## Files changed
+- `path/to/file.md` — description
+
+## Test plan
+- [ ] Wikilinks resolve in Obsidian
+- [ ] No agent-only content left in public articles
+- [ ] FR/EN files are in sync
+- [ ] Sources cited where claims are made
+```
+
+## Commit message format
+
+```
+<type>(<scope>): <short imperative description>
+```
+
+Examples:
+- `feat(security): add LLM08 vector embedding weaknesses section`
+- `chore(lexique): refresh quantification entry with 2026 benchmarks`
+- `fix(links): repair broken wikilinks in rag-and-agents`

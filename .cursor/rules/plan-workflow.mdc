@@ -16,5 +16,17 @@ When the user asks to create a plan:
 - Include the goal, scope, files to create/modify, execution tasks, and validation steps.
 - Write plan content in English.
 - If the user asks to execute the plan, append a final implementation/build report to the same plan file with changed files, validation evidence, and limitations.
-- Do not create commits unless the user explicitly asks.
+
+## PR Delivery (default for all executions)
+
+When executing a plan, follow the git workflow in `git-workflow.mdc`:
+
+1. **Create a branch** before making any file changes: `<type>/<plan-title-slug>` (derive type from the plan: `feat`, `fix`, `chore`, or `docs`).
+2. **Apply all file changes** on that branch.
+3. **Commit** with: `<type>(<scope>): <plan title in imperative>`.
+4. **Push** to origin.
+5. **Create a PR** using the template from `git-workflow.mdc`. Include the plan filename in the PR body.
+6. **Report the PR URL** in chat.
+
+Exception: if the user says "commit to main" or "push directly", skip the branch and PR steps.
 
