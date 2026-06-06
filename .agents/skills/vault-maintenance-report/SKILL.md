@@ -83,7 +83,7 @@ If no files were changed, record the report path and `commitCreated: false`.
 1. **Branch** — create `chore/vault-maintenance-<YYYY-MM-DD>`.
 2. **Stage** — only the files modified by the implementation (not unrelated files).
 3. **Commit** — `chore(maintenance): <short description>`.
-4. **Push + PR** — open a PR using the template in `git-workflow.mdc`. Reference the run log path.
+4. **Push + PR** — read `.cursor/rules/git-workflow.mdc` for the PR body template and branch naming rules. Reference the run log path in the PR body.
 5. **Report** — paste the PR URL in chat.
 
 Exception: if the user says "commit to main" or "push directly", skip branch and PR.

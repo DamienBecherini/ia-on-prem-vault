@@ -68,7 +68,7 @@ After the run log is written:
 1. **Branch** — create `chore/vault-refresh-<YYYY-MM-DD>` (or reuse the active plan branch).
 2. **Stage** — only the refreshed files and the run log.
 3. **Commit** — `chore(refresh): <short description of what was refreshed>`.
-4. **Push + PR** — open a PR using the template in `git-workflow.mdc`.
+4. **Push + PR** — read `.cursor/rules/git-workflow.mdc` for the PR body template and branch naming rules.
 5. **Report** — paste the PR URL in chat.
 
 Exception: if the user says "commit to main" or "push directly", skip branch and PR.

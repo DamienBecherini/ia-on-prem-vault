@@ -115,7 +115,7 @@ After content is written, validated, and the run log is created:
 1. **Branch** — create `feat/vault-<kebab-title>` before any file change (or reuse the active plan branch if one exists).
 2. **Stage** — only the files created or modified by this task.
 3. **Commit** — `feat(content): <short imperative description>`.
-4. **Push + PR** — open a PR using the template in `git-workflow.mdc`. Mention the run log path in the PR body.
+4. **Push + PR** — read `.cursor/rules/git-workflow.mdc` for the PR body template and branch naming rules. Mention the run log path in the PR body.
 5. **Report** — paste the PR URL in chat.
 
 Exception: if the user says "commit to main" or "push directly", skip branch and PR.
