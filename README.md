@@ -8,6 +8,7 @@
 [![Obsidian](https://img.shields.io/badge/Obsidian-vault-7C3AED?logo=obsidian&logoColor=white)](https://obsidian.md)
 [![Lang](https://img.shields.io/badge/lang-FR%20%2F%20EN-0A7EA4)](#content)
 [![Digital garden](https://img.shields.io/badge/type-digital%20garden-2EA043)](#)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 </div>
 
@@ -108,6 +109,15 @@ npm run auth:remove     # make the site public again
 ```
 
 Full docs: engine [Publishing](https://github.com/DamienBecherini/starlight-obsidian-engine#publishing) section.
+
+## License
+
+Content in this vault is released under the
+[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license.  
+You are free to share and adapt the material for any purpose, including commercially, provided you give
+appropriate credit to **Damien Becherini** and link back to the original source.
+
+Third-party content (vendor documentation excerpts, logos, trademarks) remains subject to the respective owners' terms.
 
 ---
 
