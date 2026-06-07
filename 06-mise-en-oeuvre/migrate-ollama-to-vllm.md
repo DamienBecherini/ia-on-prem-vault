@@ -3,7 +3,7 @@ title: "🔄 Migrer d'Ollama vers vLLM"
 description: Quand et comment passer d'Ollama à vLLM sans casser les clients existants — compatibilité API, conversion de modèles, stratégie de bascule et plan de rollback.
 sidebar:
   order: 7
-last_modified: "2026-06-04"
+last_modified: "2026-06-07"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -126,7 +126,7 @@ vllm serve hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4 \
 Si vous avez un modèle GGUF custom (fine-tuné, merged), la conversion est possible via `llama.cpp` :
 
 ```bash
-git clone https://github.com/ggerganov/llama.cpp
+git clone https://github.com/ggml-org/llama.cpp
 cd llama.cpp
 pip install -r requirements.txt
 

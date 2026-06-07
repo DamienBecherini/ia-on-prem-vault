@@ -3,7 +3,7 @@ title: "Open WebUI"
 description: Interface web self-hosted pour Ollama et backends OpenAI-compatibles, adaptée aux déploiements locaux multi-utilisateurs.
 sidebar:
   order: 2
-last_modified: "2026-06-04"
+last_modified: "2026-06-07"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -65,4 +65,4 @@ Projet très utilisé et activement maintenu, avec une large communauté GitHub 
 
 [^1]: Open WebUI GitHub — plateforme self-hosted offline, support Ollama et images Docker/Kubernetes. [https://github.com/open-webui/open-webui](https://github.com/open-webui/open-webui)
 [^2]: Open WebUI Docs — home, providers et fonctionnalités. [https://docs.openwebui.com/](https://docs.openwebui.com/)
-[^3]: Open WebUI Configuration — `OLLAMA_BASE_URL`, télémétrie, secrets, OpenTelemetry. [https://www.mintlify.com/open-webui/open-webui/configuration](https://www.mintlify.com/open-webui/open-webui/configuration)
+[^3]: Open WebUI Configuration — `OLLAMA_BASE_URL`, télémétrie, secrets, OpenTelemetry. [https://docs.openwebui.com/getting-started/advanced-topics/](https://docs.openwebui.com/getting-started/advanced-topics/)
