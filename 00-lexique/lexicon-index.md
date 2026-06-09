@@ -1,13 +1,16 @@
 ---
 title: Index du lexique
 description: Liste alphabétique de toutes les fiches du lexique IA on-premise.
-last_modified: "2026-06-05"
 ---
 
 Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-lexique/ai-glossary|Glossaire IA]].
 
 | Terme | Définition |
 | :-- | :-- |
+| [⚡ SGLang](/00-lexique/sglang/) | Framework open-source d'inférence et de serving LLM, alternative à vLLM pour les workloads agentiques et les sorties structurées. |
+| [🌳 RadixAttention](/00-lexique/radixattention/) | Technique de gestion du KV Cache par arbre de préfixes, introduite par SGLang pour réutiliser les contextes communs entre requêtes. |
+| [🏢 Multi-tenant](/00-lexique/multi-tenant/) | Architecture SaaS IA où une même infrastructure sert plusieurs organisations isolées, avec risque de fuite inter-tenant en RAG. |
+| [🔐 Zero Data Retention (ZDR)](/00-lexique/zero-data-retention/) | Clause contractuelle d'API cloud LLM garantissant l'absence de persistance, de réutilisation et de revue humaine des prompts et réponses. |
 | [Agent autonome (LLM)](/00-lexique/autonomous-agent/) | Système où un LLM pilote lui-même des outils et des décisions pour accomplir une tâche multi-étapes. |
 | [Agent custodien](/00-lexique/agent-custodian/) | Agent autonome chargé de maintenir un vault, dépôt ou corpus documentaire en proposant des corrections validées par l'humain. |
 | [APU](/00-lexique/apu/) | Puce combinant CPU, GPU et NPU sur un même SoC, avec mémoire unifiée partagée. |

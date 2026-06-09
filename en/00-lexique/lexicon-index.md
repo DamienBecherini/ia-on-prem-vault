@@ -1,15 +1,14 @@
 ---
 title: Lexicon index
 description: Alphabetical list of all on-premise AI lexicon entries.
-last_modified: "2026-06-05"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
-verified_hitl: "Damien BECHERINI"
-verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI Glossary]].
 
+- [[00-lexique/sglang|⚡ SGLang]] — Open-source LLM inference and serving framework, an alternative to vLLM for agentic workloads and structured outputs.
+- [[00-lexique/radixattention|🌳 RadixAttention]] — KV Cache management technique using a prefix tree, introduced by SGLang to reuse common contexts across requests.
+- [[00-lexique/multi-tenant|🏢 Multi-tenant]] — AI SaaS architecture where a single infrastructure serves multiple isolated organizations, with inter-tenant leakage risk in RAG.
+- [[00-lexique/zero-data-retention|🔐 Zero Data Retention (ZDR)]] — Cloud LLM API contractual clause guaranteeing no persistence, reuse, or human review of prompts and responses.
 - [[00-lexique/apu|APU]] — Chip combining CPU, GPU, and NPU on one SoC with shared unified memory.
 - [[00-lexique/attention|Attention (mechanism)]] — Core Transformer mechanism that lets each token weight the importance of other tokens in context.
 - [[00-lexique/autonomous-agent|Autonomous agent (LLM)]] — System where an LLM drives tools and decisions itself to complete a multi-step task.
@@ -18,6 +17,7 @@ Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI
 - [[00-lexique/decoding|Decoding]] — Autoregressive token-by-token generation phase.
 - [[00-lexique/ecn|ECN]] — Explicit Congestion Notification — network congestion signaling used with RoCE to avoid packet loss.
 - [[00-lexique/embedding|Embedding]] — Dense numerical representation of a token or document in vector space.
+- [[00-lexique/excessive-agency|Excessive Agency]] — OWASP LLM06 (2025) — an AI agent has too much functionality, permissions, or autonomy, enabling unintended real-world actions.
 - [[00-lexique/exo|Exo]] — Open-source P2P orchestrator to merge memory across machines into a local AI cluster.
 - [[00-lexique/gguf|GGUF]] — Portable file format for local inference with llama.cpp, optimized for K-quant quantization.
 - [[00-lexique/gpudirect-rdma|GPUDirect RDMA]] — Mechanism letting GPUs exchange data directly with network devices without CPU copies.

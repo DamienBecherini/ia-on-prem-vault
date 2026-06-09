@@ -3,8 +3,8 @@ title: "🧩 RAG & Agents: The knowledge architecture"
 description: How to give a local LLM private memory and autonomy. From standard RAG to agentic workflows (SmolAgents, LangGraph) and the Memory Tree approach for VRAM savings.
 sidebar:
   order: 3
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
+last_modified: "2026-06-09"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -86,7 +86,105 @@ Vector database choice depends on data volume, required sovereignty level, and a
 >   -d '{"vectors": {"size": 1024, "distance": "Cosine"}}'
 > ```
 
-## 5. Reference architecture — Sovereign RAG stack
+## 5. Multi-tenant RAG: embedding isolation
+
+In **[[00-lexique/multi-tenant|multi-tenant]]** deployments — a shared inference server for multiple organizations or teams — RAG introduces a critical security risk: documents from one tenant leaking into another tenant's search results.
+
+OWASP formally classified this risk in its Top 10 LLM 2025 under **LLM08: Vector and Embedding Weaknesses**[^7]. A naive vector database implementation without per-tenant isolation can allow a query from "Client B" to surface embeddings belonging to "Client A".
+
+### Pattern 1 — Row-Level Security with pgvector
+
+If your infrastructure already relies on **PostgreSQL**, the `pgvector` extension lets you store embeddings in the same database. Isolation relies on the engine's native **Row-Level Security (RLS)** mechanism[^8]:
+
+```sql
+-- Enable RLS on the embeddings table
+ALTER TABLE documents ENABLE ROW LEVEL SECURITY;
+
+-- Policy: each tenant sees only its own rows
+CREATE POLICY tenant_isolation ON documents
+  USING (tenant_id = current_setting('app.current_tenant')::uuid);
+
+-- At runtime: set the tenant before each search
+SET app.current_tenant = '{{tenant_uuid}}';
+SELECT content, embedding <=> query_embedding AS distance
+FROM documents ORDER BY distance LIMIT 5;
+```
+
+**Advantage:** the PostgreSQL engine applies the tenant filter at the lowest level — a malformed application-level query cannot bypass the policy. Isolation is **mathematically guaranteed by the database**, not by application logic.
+
+**Limit:** `pgvector` performance remains below that of a native vector database for volumes above ~1M embeddings.
+
+### Pattern 2 — Payload-based partitioning with Qdrant
+
+Qdrant natively recommends a single-collection architecture using **Payload-based Partitioning**[^9]. Each embedding is indexed with a `tenant_id` payload, and vector access keys are scoped to a tenant at search time:
+
+```python
+from qdrant_client import QdrantClient
+from qdrant_client.models import Filter, FieldCondition, MatchValue
+
+client = QdrantClient(url="http://localhost:6333")
+
+# Scoped search: only vectors from the current tenant are compared
+results = client.search(
+    collection_name="documents",
+    query_vector=query_embedding,
+    query_filter=Filter(
+        must=[FieldCondition(
+            key="tenant_id",
+            match=MatchValue(value=current_tenant_id)
+        )]
+    ),
+    limit=5
+)
+```
+
+**Advantage:** a single collection, no multiplication of collections per tenant (which would collapse the cluster at scale). The payload filter is applied before vector similarity computation.
+
+> [!warning] Application-level isolation ≠ mathematical isolation
+> Never rely solely on a Python/Node application filter for multi-tenant isolation. If the filter is omitted by mistake (bug, refactoring), one tenant's data leaks. PostgreSQL RLS and Qdrant payload filtering guarantee isolation at the engine level, independent of application code.
+
+---
+
+## 6. FinOps: CPU/GPU routing and RAG pre-filtering
+
+GPU inference is expensive. A well-designed architecture reserves the GPU for the one task where it is irreplaceable — **text generation** — and delegates auxiliary tasks to the CPU.
+
+### CPU/GPU routing
+
+| Task | Recommended engine | Hardware |
+| :-- | :-- | :-- |
+| Text generation (LLM) | vLLM, SGLang | GPU (exclusive VRAM) |
+| Embedding generation | `nomic-embed-text`, `mxbai-embed` via Ollama | **CPU** |
+| Speech transcription (STT) | `faster-whisper` (CTranslate2)[^10] | **CPU** |
+| Re-ranking, scoring | Lightweight CrossEncoder | **CPU** |
+
+`faster-whisper` (SYSTRAN's Whisper implementation on the CTranslate2 engine) can transcribe short audio in real time directly on CPU, without using a single byte of VRAM[^10]. Embedding models like `nomic-embed-text` are small enough to run efficiently in asynchronous batches on CPU.
+
+**Benefit:** 100% of GPU VRAM remains available for generation. On a 2× L40S server (96 GB), this routing can double or triple the number of concurrent users served compared to a configuration where embeddings and Whisper share VRAM.
+
+### RAG pre-filtering: the most powerful FinOps lever
+
+The classic mistake is sending the LLM the entirety of documents retrieved by the vector database. Cloud APIs bill per token; local models saturate their context window.
+
+The principle: **the Python microservice runs semantic search, not the LLM.** The LLM receives only the top K results, truncated to a few hundred tokens each:
+
+```python
+# Python selects the Top-K before calling the LLM
+top_chunks = vector_db.search(query_embedding, limit=3)
+
+# The LLM receives only relevant context — never the entire database
+context = "\n\n".join([chunk.text for chunk in top_chunks])
+response = llm.generate(prompt=f"Context:\n{context}\n\nQuestion: {user_query}")
+```
+
+On a document-copilot use case, going from 20 results (common practice) to 3 filtered results reduces tokens sent to the LLM by a factor of 5 to 10, with no perceptible quality degradation if semantic search is well calibrated.
+
+> [!tip] See also
+> For FinOps strategy on the hardware side (L40S vs A100, TCO per token), see [[04-blueprints/tco-comparison|💰 TCO Comparison]] and [[02-materiel/stations-multi-gpu|🧩 Multi-GPU Workstations]].
+
+---
+
+## 7. Reference architecture — Sovereign RAG stack
 
 ```
 Documents (PDF, MD, DOCX)
@@ -133,14 +231,20 @@ To build a sovereign enterprise software stack in 2026:
 1.  **Dedicate a small model to routing:** Do not use your large 70B model to choose which tool to call. Use an ultra-fast model (e.g. Qwen 2.5 7B or Llama 3 8B) configured specifically for *Function Calling*. It will call the database.
 2.  **Keep large models for synthesis:** Once the small agent has retrieved the right text blocks, send everything to the heavy model (the "brain") to write the final answer.
 3.  **Avoid cloud dependencies:** If you use LangChain or LlamaIndex, audit telemetry. In pure on-premise setups, minimal frameworks like [[00-lexique/smolagents|SmolAgents]] ensure your prompts will not leak to an external API during orchestration[^4].
+4.  **Isolate embeddings per tenant from day one.** Multi-tenant RAG without isolation (pgvector RLS or Qdrant payload) is a guaranteed security flaw. Adding this isolation after the fact on a production database is costly.
+5.  **Route auxiliary tasks to CPU.** Embeddings and Whisper transcription consume no VRAM when using `faster-whisper` and `nomic-embed-text` on CPU. Freed VRAM multiplies concurrent inference capacity.
 
 ---
 
 ## 📚 Sources and References
 
-[^1]: Lyzr Blog, *What is Agentic RAG? Everything You Need to Know in 2026* (Évolution des pipelines statiques vers l'adaptation intelligente), Janvier 2026.
-[^2]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (Impact du contexte long sur le KV Cache), Novembre 2023.
-[^3]: Vinod Rane (Medium), *Next-Generation Agentic RAG with LangGraph (2026 Edition)* (Graph orchestration, self-correcting RAG), Mars 2026.
+[^1]: Lyzr Blog, *What is Agentic RAG? Everything You Need to Know in 2026* (Evolution from static pipelines to intelligent adaptation), January 2026.
+[^2]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (Impact of long context on KV Cache), November 2023.
+[^3]: Vinod Rane (Medium), *Next-Generation Agentic RAG with LangGraph (2026 Edition)* (Graph orchestration, self-correcting RAG), March 2026.
 [^4]: Hugging Face, *Agentic RAG with SmolAgents* (RAG orchestration via Hugging Face light framework), 2025.
-[^5]: Neo4j Developer Blog, *What is agentic RAG? A developer's guide* (GraphRAG, ReAct, multi-agent RAG patterns), Mai 2026.
-[^6]: OpenHuman, *Memory Trees* (GitBook — pipeline local SQLite + Markdown, injection sélective pour économie VRAM), 2025. Note : OpenHuman utilise par défaut un backend cloud pour le routage des modèles. Le *pattern* Memory Tree reste applicable dans une implémentation 100% on-premise indépendante du projet.
+[^5]: Neo4j Developer Blog, *What is agentic RAG? A developer's guide* (GraphRAG, ReAct, multi-agent RAG patterns), May 2026.
+[^6]: OpenHuman, *Memory Trees* (GitBook — local SQLite + Markdown pipeline, selective injection for VRAM savings), 2025. Note: OpenHuman uses a cloud backend by default for model routing. The Memory Tree *pattern* remains applicable in a 100% on-premise implementation independent of the project.
+[^7]: OWASP, *Top 10 for Large Language Model Applications 2025 — LLM08: Vector and Embedding Weaknesses*. https://owasp.org/www-project-top-10-for-large-language-model-applications/
+[^8]: Crunchy Data, *Row-Level Security for tenants in Postgres / pgvector*. https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres
+[^9]: Qdrant, *Multitenancy — Payload-based Partitioning*. https://qdrant.tech/documentation/guides/multiple-partitions/
+[^10]: SYSTRAN, *faster-whisper — High-throughput Whisper inference on CPU and GPU (CTranslate2)*. https://github.com/SYSTRAN/faster-whisper

@@ -3,8 +3,8 @@ title: "🔒 Sécurité de l'inférence locale"
 description: Authentification de l'API locale, isolation réseau, chiffrement, OWASP LLM Top 10 et protection contre l'injection de prompt pour une stack d'inférence on-premise.
 sidebar:
   order: 4
-last_modified: "2026-06-07"
-last_verified: "2026-06-05"
+last_modified: "2026-06-09"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -279,6 +279,9 @@ Dans une stack RAG on-premise, la base vectorielle est une surface d'attaque : i
 - Contrôler les sources d'alimentation de la base vectorielle (documents vérifiés uniquement)
 - Restreindre l'accès à l'API de la base vectorielle (Qdrant, Milvus, pgvector) — même règle que pour le moteur d'inférence : localhost ou réseau privé uniquement
 - Ne pas exposer les scores de similarité bruts aux utilisateurs (ils permettent d'inférer les distances dans l'espace vectoriel)
+
+> [!tip] Cloisonnement RAG multi-locataire
+> En contexte SaaS, isoler les embeddings par tenant au niveau de la base vectorielle est non négociable. Les patterns RLS (pgvector) et payload partitioning (Qdrant) sont documentés dans [[03-stack-logicielle/rag-and-agents|RAG & Agents — section multi-locataire]].
 
 ### LLM09:2025 — Désinformation (Misinformation)
 

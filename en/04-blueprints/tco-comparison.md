@@ -4,10 +4,10 @@ description: Total cost of ownership (TCO) analysis of the four on-premise bluep
 sidebar:
   order: 5
 prices_valid_as_of: "2026-06"
-last_verified: "2026-06-05"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
-last_modified: "2026-06-05"
+last_modified: "2026-06-09"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
@@ -181,6 +181,18 @@ Monthly token volume          Sovereignty constraint   → Recommended blueprint
 > - **Administration time** (updates, monitoring, backups) — often underestimated
 > - **Hardware obsolescence:** 2024–2025 GPUs may not optimally support 2027 models
 > - **Cooling and space costs** for blueprints C and D
+
+---
+
+## Software FinOps: reduce cost per request before hardware
+
+Before investing in more GPUs, two software optimizations can divide the real per-token cost by a significant factor:
+
+**1. RAG pre-filtering:** by limiting the context sent to the LLM to the K best results (Top-3 instead of Top-20), input tokens are reduced by a factor of 5 to 10 without perceptible quality degradation. On a cloud API billed per input token, the savings are direct. On a local model, that frees VRAM and compute time. See [[03-stack-logicielle/rag-and-agents|RAG & Agents — FinOps section]].
+
+**2. CPU/GPU routing:** offloading embeddings and voice transcription (Whisper) to CPU frees all GPU VRAM for generation. On a 2× L40S server, this routing can multiply by 2 to 3 the number of simultaneous users served without changing a single hardware line.
+
+These two levers apply to all blueprints, but their impact is strongest on Blueprints B and D where multi-user concurrency is the sizing factor.
 
 ---
 

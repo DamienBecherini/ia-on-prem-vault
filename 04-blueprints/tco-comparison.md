@@ -4,10 +4,10 @@ description: Analyse du coût total de possession (TCO) des quatre blueprints on
 sidebar:
   order: 5
 prices_valid_as_of: "2026-06"
-last_verified: "2026-06-05"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
-last_modified: "2026-06-05"
+last_modified: "2026-06-09"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
@@ -181,6 +181,18 @@ Modèles 100B+                  Quelconque                → Blueprint C (proto
 > - **Temps d'administration** (mises à jour, monitoring, backups) — souvent sous-estimé
 > - **Obsolescence matérielle** : les GPU de 2024-2025 peuvent ne pas supporter les modèles de 2027 optimalement
 > - **Coûts de refroidissement et d'espace** pour les blueprints C et D
+
+---
+
+## FinOps logicielle : réduire le coût par requête avant le matériel
+
+Avant d'investir dans plus de GPU, deux optimisations logicielles peuvent diviser le coût réel par token d'un facteur important :
+
+**1. Pré-filtrage RAG :** en limitant le contexte envoyé au LLM aux K meilleurs résultats (Top-3 au lieu de Top-20), on réduit les tokens d'entrée d'un facteur 5 à 10 sans dégradation de qualité perceptible. Sur un API cloud facturant à l'input token, l'économie est directe. Sur un modèle local, c'est autant de VRAM et de temps de calcul libérés. Voir [[03-stack-logicielle/rag-and-agents|RAG & Agents — section FinOps]].
+
+**2. Routage CPU/GPU :** décharger les embeddings et la transcription vocale (Whisper) sur CPU libère la totalité de la VRAM GPU pour la génération. Sur un serveur 2× L40S, ce routage peut multiplier par 2 à 3 le nombre d'utilisateurs simultanés servis sans changer la moindre ligne matérielle.
+
+Ces deux leviers s'appliquent à tous les blueprints, mais leur impact est le plus fort sur les Blueprints B et D où la concurrence multi-utilisateurs est dimensionnante.
 
 ---
 

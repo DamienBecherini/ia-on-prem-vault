@@ -3,8 +3,8 @@ title: "🧪 Évaluer un modèle local"
 description: Protocole pratique pour comparer des LLM locaux sur la qualité, la factualité, les hallucinations, le RAG, le code-editing et les performances.
 sidebar:
   order: 2
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
+last_modified: "2026-06-09"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -251,6 +251,39 @@ Le meilleur modèle est rarement le plus gros. Le bon modèle est celui qui pass
 - [[00-lexique/benchmark-llm|Benchmark LLM]]
 - [[00-lexique/llm-as-a-judge|LLM-as-a-judge]]
 - [[00-lexique/ragas|RAGAS]]
+
+## Stratégie de déploiement progressif
+
+Au-delà de l'évaluation hors production, une mise en service progressive réduit le risque d'exposer des utilisateurs à un modèle non maîtrisé. Trois phases séquentielles constituent le pattern recommandé.
+
+### Phase 1 — Mock-First
+
+Avant de connecter un LLM réel, toute l'infrastructure asynchrone (API, file d'attente, workers, réactions frontend) est validée avec des réponses mock déterministes. Cette phase vérifie que le système gère correctement la latence et que l'interface se dégrade proprement — sans introduire la non-déterminisme d'un vrai modèle.
+
+### Phase 2 — Shadow Mode
+
+Le LLM réel est connecté au trafic de production, mais ses sorties sont **uniquement journalisées** — jamais affichées aux utilisateurs. Cette phase mesure :
+
+- le taux d'erreurs de formatage JSON (le modèle respecte-t-il fiablement le schéma de sortie ?) ;
+- la latence p95 sous charge réelle ;
+- la pertinence RAG (les documents récupérés sont-ils utiles pour la requête ?).
+
+Durée typique : 1 à 2 semaines sur trafic réel avant de passer à la phase suivante.
+
+### Phase 3 — Human-in-the-Loop activation
+
+Les résultats IA deviennent visibles pour les utilisateurs. Toute action d'écriture (auto-classification, pré-remplissage, modification de contenu) exige une confirmation humaine explicite avant exécution. C'est la dernière barrière de sécurité avant l'automatisation complète.
+
+```mermaid
+flowchart LR
+    A[Mock-First] --> B[Shadow Mode]
+    B --> C{Métriques OK ?}
+    C -- Non --> B
+    C -- Oui --> D[HITL activation]
+    D --> E{Confiance ≥ seuil ?}
+    E -- Non --> F[Dégradation silencieuse]
+    E -- Oui --> G[Action automatique]
+```
 
 ## Sources
 

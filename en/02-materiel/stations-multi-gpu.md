@@ -3,8 +3,8 @@ title: "🧩 Multi-GPU Workstations: NVIDIA, PCIe, and VRAM"
 description: "Understand when multiple discrete GPUs truly help on-premise AI inference, and why interconnect often matters more than card count."
 sidebar:
   order: 2
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
+last_modified: "2026-06-09"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -54,7 +54,42 @@ These cards are very attractive for on-premise because they offer **fast local V
 > It is therefore **impossible to buy two RTX PRO 6000 cards and link them via NVLink**: the connector simply does not exist on these cards [^1][^2].
 > NVLink today is **exclusively for server GPUs** in SXM form factor (A100, H100, H200, B200) and HGX/DGX systems — a different machine category starting above €100,000.
 
-### 2. NVLink / NVSwitch Servers
+### 2. SaaS Inference Servers (L40S, A100)
+
+Between PCIe workstation towers and HGX datacenter nodes, there is a category often overlooked but central for sovereign deployments at team or SaaS scale: the **rack inference server**, optimized to serve 10 to 200 simultaneous users at a controlled cost per token.
+
+| GPU | VRAM | Bandwidth | Native FP8 | Positioning |
+| :-- | :-- | :-- | :-- | :-- |
+| **NVIDIA L40S** | 48 GB GDDR6 | 864 GB/s | ✅ Yes (Ada Lovelace) | SaaS inference — best cost/token in production |
+| **NVIDIA A100 (80 GB)** | 80 GB HBM2e | 2,000 GB/s | ❌ No (FP16 max) | Solid legacy, available from sovereign FR hosts |
+| **NVIDIA A100 (40 GB)** | 40 GB HBM2e | 1,555 GB/s | ❌ No | Capacity/cost compromise for 13–34B models |
+| RTX 6000 Ada / RTX 4090 | 48 / 24 GB | 960 / 1,008 GB/s | ⚠️ Partial | On-prem client air-gapped (client-supplied hardware) |
+
+#### The NVIDIA L40S — the "hidden gem" of 2026 inference
+
+The L40S (Ada Lovelace architecture) is often underestimated because it lacks HBM bandwidth like an H100. It compensates with two decisive advantages for production inference[^7]:
+
+1.  **4th-generation Tensor Cores with native FP8:** FP8 quantization of the model and [[00-lexique/kv-cache|KV Cache]] is native, without software workarounds. On Hopper architectures (H100), vLLM must use software FP8 emulation; on Ada, it is silicon[^8].
+2.  **Best cost/token in inference:** MLPerf Inference Datacenter 2024 benchmarks rank the L40S as the GPU with the lowest cost per generated token for 70B-class models in production — ahead of the A100 and roughly on par with the H100 on that specific ratio[^8].
+
+A bare-metal server with two L40S cards (96 GB total VRAM) is the reference topology for hosting a 70B model in FP8 quantization and serving 20 to 80 simultaneous users with [[00-lexique/ttft|TTFT]] < 2 s.
+
+#### The A100 — the historical workhorse
+
+The A100 remains the most available datacenter GPU from French sovereign hosts (OVHcloud, Scaleway, Outscale). Its immense HBM2e bandwidth compensates for the lack of native FP8 for FP16 or BF16 models. It remains relevant for:
+- Models not yet available with optimized FP8.
+- Deployments at HDS/SecNumCloud-certified hosts where the L40S is not yet offered.
+
+#### RTX Workstation for On-Prem Client (Tier Air-Gapped)
+
+When a client deploys the stack on **its own hardware** (Tier 3 / air-gapped), there is no need to impose €15,000 datacenter GPUs. A workstation with one or two RTX 6000 Ada cards (48 GB PCIe) is enough to serve internal requests for a team of 10 to 30 people, provided the inference engine (vLLM or SGLang) is configured correctly.
+
+> [!warning] RTX workstation ≠ SLA guarantee
+> Without NVLink or HBM, RTX workstation cards cannot match L40S throughput under concurrent load. They suit moderate on-site use, not multi-tenant SaaS with strict SLAs.
+
+---
+
+### 3. NVLink / NVSwitch Servers
 
 NVIDIA datacenter servers change category: in an HGX/DGX system, GPUs can communicate via **NVLink** and **NVSwitch** rather than PCIe alone.
 
@@ -144,6 +179,7 @@ vLLM recommends combining tensor and pipeline parallel when the model exceeds a 
 | Quantized 70B LLM, low noise, large RAM | APU / unified memory | Simple, high capacity, no RAM→VRAM copy |
 | Model fits in 48–96 GB VRAM | Single workstation GPU | Simple, fast, little synchronization |
 | Several users / several models | Multi-GPU replication | Each GPU serves independent load |
+| Sovereign SaaS, 10–200 users, optimized cost/token | L40S or A100 server | Native FP8, best inference TCO, available from FR hosts |
 | Model too large for one card, same node | Multi-GPU with TP/PP | Possible if the engine supports sharding |
 | Very large models, low latency, production | NVLink/NVSwitch server | Inter-GPU fabric suited to frequent communication |
 
@@ -158,8 +194,9 @@ For sovereign on-premise deployment:
 1. **Start from service needs, not GPU count.** A single user on a dense large model has different constraints than a multi-user server.
 2. **Prefer single GPU when the model fits.** One RTX PRO 6000 Blackwell 96 GB can be simpler than a 2 × 48 GB station for a model that fits in 96 GB [^2].
 3. **Use PCIe multi-GPU for throughput.** Several cards can serve multiple replicas or models with little inter-card communication.
-4. **Reserve demanding tensor parallel for fast interconnect.** vLLM and TensorRT-LLM support TP, but docs stress network/interconnect to avoid communication dominating [^5][^6].
-5. **Do not confuse workstation and datacenter.** NVLink/NVSwitch radically changes the profile but belongs mainly to compatible NVIDIA server platforms [^3].
+4. **For sovereign SaaS or multi-user service, evaluate L40S or A100.** A bare-metal 2× L40S server offers the best inference TCO for a 70B model in production. The A100 remains the default choice at French sovereign hosts already certified HDS.
+5. **Reserve demanding tensor parallel for fast interconnect.** vLLM and TensorRT-LLM support TP, but docs stress network/interconnect to avoid communication dominating [^5][^6].
+6. **Do not confuse workstation and datacenter.** NVLink/NVSwitch radically changes the profile but belongs mainly to compatible NVIDIA server platforms [^3].
 
 ---
 
@@ -171,3 +208,5 @@ For sovereign on-premise deployment:
 [^4]: PCI-SIG, *PCI Express 5.0 FAQ* (32 GT/s per lane, double PCIe 4.0). [https://pcisig.com/faq?field_category_value%5B%5D=pci_express_5.0](https://pcisig.com/faq?field_category_value%5B%5D=pci_express_5.0)
 [^5]: NVIDIA TensorRT-LLM, *Parallelism in TensorRT LLM* (TP, PP, DP, EP, CP). [https://nvidia.github.io/TensorRT-LLM/features/parallel-strategy.html](https://nvidia.github.io/TensorRT-LLM/features/parallel-strategy.html)
 [^6]: vLLM, *Parallelism and Scaling* (tensor parallel, pipeline parallel, Ray, multiprocessing, GPUDirect RDMA). [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/)
+[^7]: NVIDIA, *L40S Product Page* (Ada Lovelace, FP8 Tensor Cores, 48 GB GDDR6 ECC). [https://www.nvidia.com/en-us/data-center/l40s/](https://www.nvidia.com/en-us/data-center/l40s/)
+[^8]: MLCommons, *MLPerf Inference Datacenter v4.1 Results* (datacenter inference benchmark, cost/token). [https://mlcommons.org/benchmarks/inference-datacenter/](https://mlcommons.org/benchmarks/inference-datacenter/)

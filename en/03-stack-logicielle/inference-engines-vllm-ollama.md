@@ -3,8 +3,8 @@ title: "⚙️ Inference Engines: vLLM, Ollama, and TensorRT-LLM"
 description: Comparison of local deployment engines in 2026. When to use GGUF and llama.cpp on Mac, and when to switch to vLLM or TensorRT-LLM in production.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
+last_modified: "2026-06-09"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -61,6 +61,35 @@ Compiling a TensorRT engine is heavy (*Ahead-of-Time*), very strict about the ta
 
 ---
 
+## 4. SGLang: Agentic orchestration and structured generation
+
+[SGLang](https://github.com/sgl-project/sglang) (Structured Generation Language) is an open-source inference engine developed by LMSys (Berkeley). Emerging as a direct competitor to vLLM in late 2023, it gained the upper hand in 2026 in two specific areas where vLLM remains less optimized: **agentic loops** and **constrained JSON generation**[^7].
+
+### 🌟 Strengths
+
+*   **[[00-lexique/radixattention|RadixAttention]] — Shared prefix cache:** SGLang organizes the [[00-lexique/kv-cache|KV Cache]] as a radix tree. When multiple requests share a long common prefix — a system prompt, retrieved RAG context, or a tool schema — that prefix is computed only once and reused by all requests that share it. In an agentic loop where the agent calls a tool, reads the result, then calls the tool again over several turns, most of the context stays identical. SGLang avoids recalculating the KV Cache on every turn, which significantly reduces [[00-lexique/ttft|TTFT]] on these repetitive workloads[^8].
+*   **Structured JSON generation without penalty:** SGLang constrains the LLM to produce output strictly conforming to a defined JSON schema, without degrading generation speed. This is a critical property for architectures where the inference engine must communicate with an application backend via typed tool calls (*function calling* / *tool calling*)[^7].
+
+### ⚠️ Limits
+
+*   SGLang is optimized for Linux + NVIDIA GPU. AMD ROCm and macOS support remains more limited than vLLM's.
+*   On **raw throughput** benchmarks (independent requests without shared prefix), vLLM remains the reference or equivalent[^9].
+
+### When to choose SGLang over vLLM?
+
+| Criterion | vLLM | SGLang |
+| :-- | :-- | :-- |
+| Raw throughput, independent requests | ✅ Reference | Comparable |
+| Agentic loops, shared prefixes | ⚠️ No native prefix cache | ✅ RadixAttention |
+| Constrained JSON generation | ⚠️ Possible, slower | ✅ Native, no penalty |
+| Hardware compatibility (AMD, Mac) | ✅ Broad | ⚠️ NVIDIA primarily |
+| Ecosystem maturity | ✅ Very broad | ✅ Mature since 2025 |
+
+> [!tip] Practical rule
+> **Deploy vLLM** for simple RAG or concurrent text generation. **Switch to SGLang** if your application uses intensive *tool calling*, agentic loops with shared context, or if you need strict guarantees on the JSON format of model outputs.
+
+---
+
 ## 📋 The Architect's Advice
 
 For an on-premise agent project deployed at customer sites, engine choice depends purely on the architecture scenario:
@@ -71,6 +100,8 @@ For an on-premise agent project deployed at customer sites, engine choice depend
     **Switch to vLLM without hesitation.** PagedAttention and continuous batching ensure the AI will not collapse when five collaborators launch RAG requests at the same time. Use weights in **AWQ or FP8** precision.
 3.  **"Sovereign Datacenter" use case (high volume, multi-node):**
     Use **TensorRT-LLM** behind NVIDIA's Triton server. This is the most efficient way to amortize the cost of professional accelerators.
+4.  **"Agents and backend integration" use case (tool calling, structured JSON):**
+    Prefer **[[00-lexique/sglang|SGLang]]**. Its native prefix cache management ([[00-lexique/radixattention|RadixAttention]]) reduces latency in agentic loops, and its constrained JSON generation guarantees reliable interfaces with any application backend.
 
 ---
 
@@ -82,3 +113,6 @@ For an on-premise agent project deployed at customer sites, engine choice depend
 [^4]: Ayi NEDJIMI Consultants, *LLM Local 2026 : Ollama vs LM Studio vs vLLM* (article de blog, comparaison d'architectures, Continuous Batching), Février 2026.
 [^5]: vLLM Project Documentation & Spheron Blog, *vLLM Production Deployment 2026: Multi-GPU Tensor Parallel + FP8* (Model Runner V2, Hopper/Blackwell support), Mai 2026.
 [^6]: NVIDIA, *TensorRT-LLM Documentation* (FP4 Support, Blackwell optimization, DeepSeek-R1 performance records), Mai 2026.
+[^7]: SGLang Project, *SGLang — Fast Serving Framework for LLMs and VLMs* (RadixAttention, structured output). https://github.com/sgl-project/sglang
+[^8]: Lianmin Zheng et al., *Efficiently Programming Large Language Models using SGLang* (RadixAttention, prefix cache, TTFT reduction). https://lmsys.org/blog/2024-01-17-sglang/
+[^9]: SGLang Contributors, *SGLang vs vLLM — scaling benchmark under high concurrency* (throughput comparison). https://github.com/sgl-project/sglang/issues/21061
