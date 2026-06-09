@@ -44,10 +44,9 @@ For this vault, the reasonable level is **2 or 3**: branch/PR, human validation,
 Before each run:
 
 - **Verify the repo is clean (`git status --porcelain`):** if the repo is *dirty* (uncommitted changes), the agent must **abort** and notify the operator. It must never bundle human work-in-progress into its commit. Explicit exception only: `git stash` with a timestamped name if the operator enabled that mode in agent configuration.
-- verify the active plan is not in `docs/plans/archive/`;
-- ignore `_private/`, `build/`, `dist/`, `.git/`, obsolete logs, and superseded plans;
+- verify the active plan lives in `.cursor/plans/` (not a superseded copy elsewhere);
+- ignore `_private/`, `build/`, `dist/`, `.git/`, and obsolete logs;
 - refuse destructive commands;
-- record the run under `.agents/vault-maintenance/runs/`;
 - cite sources for any factual change.
 
 > [!warning] Race condition — dirty repo
@@ -55,7 +54,7 @@ Before each run:
 
 ## Expected report
 
-Each run should produce:
+When delivery goes through git, the **PR** (description + diff) is the primary trace. Otherwise, a chat report is enough:
 
 - objective;
 - modified files;

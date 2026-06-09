@@ -1,6 +1,6 @@
 ---
 name: vault-log-run
-description: Create or update IA on-premise vault agent run logs. Use when finishing content generation, verification, recurring maintenance, source audits, refresh work, or any agent task that changes files or produces a durable maintenance report.
+description: Optional durable run logs for IA on-premise vault agent tasks without a PR, or when the user explicitly requests a run log. Default audit trail is the PR description and git diff — do not invoke for routine content generation.
 paths:
   - "**/*.md"
   - "**/*.mdx"
@@ -8,18 +8,21 @@ paths:
 
 # Vault Log Run
 
+## When to use (and when to skip)
+
+**Skip by default** for content generation, verification, or refresh work that ends with a branch + PR. The PR body and `git diff` are enough.
+
+**Use only when:**
+
+- the user explicitly asks for a run log;
+- the task is read-only (maintenance report) with no PR;
+- a run failed and diagnostics should be kept outside chat;
+- no git commit will be created;
+- **the runner is non-interactive** (scheduled automation, CI job, Aider on-prem): always invoke, even when a PR is also created — the run log is the primary audit trail when no human is watching the chat.
+
 ## Quick Start
 
 Read `references/run-log-policy.md` before writing or updating a run log.
-
-Create a run log for every significant agent task:
-
-- content generation or rewrite
-- verification or source audit
-- recurring maintenance report
-- lexicon maintenance
-- branch/PR preparation
-- failed run with useful diagnostics
 
 Do not put run metadata inside public articles.
 
@@ -96,7 +99,7 @@ When a human (HITL) approves the results of a verification run:
 
 1. Read `site.config.json` → `editorial.hitl` (see `.agents/references/site-config-editorial.md`).
 2. Set `verified_hitl` and `verified_hitl_url` from that config in each verified page frontmatter.
-3. Record the approval in the run log under `## Validation`.
+3. Record the approval in the run log under `## Validation`, or in the PR/plan if no run log was created.
 4. Do not set HITL fields autonomously without explicit human confirmation.
 
 ```yaml
@@ -115,4 +118,3 @@ After writing a run log:
 3. If consolidation is needed, create or update the monthly summary with the LLM.
 4. Do not delete detailed logs unless a deterministic validation/prune script exists and confirms every run ID is summarized.
 5. Until that script exists, record `Retention Check: summary recommended` or `Retention Check: no action`.
-

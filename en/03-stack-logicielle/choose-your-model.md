@@ -3,7 +3,7 @@ title: "🗺️ Choosing your local model"
 description: Practical guide to navigating the open-weights LLM landscape in 2026 — families, sizes, specializations, and mapping to on-premise scenarios.
 sidebar:
   order: 4
-last_modified: "2026-06-04"
+last_modified: "2026-06-07"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -56,11 +56,24 @@ The market has stabilized around a few dominant families. Here is how to read th
 
 ### Llama 3.x (Meta)
 
-The generalist reference. Llama 3.1/3.3 models are available in 8B, 70B, and 405B. Well documented, supported by all engines (Ollama, vLLM, TensorRT-LLM), with a permissive commercial license.
+The generalist reference of previous generations. Llama 3.1/3.3 models are available in 8B, 70B, and 405B. Well documented, supported by all engines (Ollama, vLLM, TensorRT-LLM), with a permissive commercial license.
 
 - **Llama 3.3 70B:** Best quality/size ratio for most SMB use cases. Strong instruction following, reasoning, and multilingual (including French).
 - **Llama 3.1 8B:** Good for constrained workstations or simple tasks. Visible limits on complex reasoning tasks.
 - **Llama 3.1 405B:** Requires a multi-GPU cluster (scenario D). Performance close to frontier models on general tasks.
+
+> [!note] Llama 4: MoE architecture, not suited for consumer GPUs
+> Llama 4 Scout (109B total, 17B active, 16 experts) and Llama 4 Maverick (400B total, 17B active, 128 experts) were released in April 2025. **These models require datacenter servers** (H100 minimum with int4 quantization for Scout). They do not fit scenarios A, B, or C in this vault. See [[04-blueprints/scenario-d-datacenter|Scenario D]].
+
+### Llama 4 (Meta) — scenario D only
+
+Natively multimodal (text + image), MoE architecture.
+
+- **Llama 4 Scout (109B total / 17B active, 16 experts):** 10M token context. Fits on a single H100 with int4 quantization. Relevant only for scenario D (datacenter).
+- **Llama 4 Maverick (400B total / 17B active, 128 experts):** 1M token context. Requires a full DGX host in FP8 or BF16. Performance comparable to frontier models on STEM benchmarks.
+
+> [!warning] Llama 4 ≠ replacement for Llama 3.x for SMEs
+> Unlike Llama 3.1 8B or 3.3 70B, there is no Llama 4 variant usable on a desktop machine or APU. For scenarios A, B, and C, **Llama 3.3 70B or Qwen 2.5 72B remain the references**.
 
 ### Qwen 2.5 / Qwen3 (Alibaba)
 
@@ -99,7 +112,7 @@ Compact models (3.8B–14B) with high reasoning quality for their size. Interest
 | [[04-blueprints/scenario-a-dev-lab\|A — Dev Lab]] | PC 16 GB VRAM + offloading | Llama 3.1 8B / Phi-4 14B | Solo dev, tests, prototyping |
 | [[04-blueprints/scenario-b-sme-appliance\|B — SMB Appliance]] | APU 128 GB unified memory | Qwen 2.5 72B Q4 or Llama 3.3 70B Q4 | Team assistant, document RAG |
 | [[04-blueprints/scenario-c-desktop-cluster\|C — Desktop Cluster]] | 2–4 Thunderbolt machines | DeepSeek V3 (MoE) or Llama 405B | Advanced SMB, very capable model |
-| [[04-blueprints/scenario-d-datacenter\|D — Datacenter]] | Multi-H100 / MI300X | Llama 3.1 405B BF16, DeepSeek V3 | 50+ users production, SLA |
+| [[04-blueprints/scenario-d-datacenter\|D — Datacenter]] | Multi-H100 / MI300X | Llama 3.1 405B BF16, DeepSeek V3, Llama 4 Scout/Maverick | 50+ users production, SLA, multimodal |
 
 ---
 

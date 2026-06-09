@@ -5,7 +5,7 @@ Maintenance reports are designed to keep the vault accurate without silently rew
 ## Default Safety
 
 - Read-only unless explicitly asked to implement.
-- Prefer issues, plans, branches or PRs for follow-up.
+- Prefer issues, `.cursor/plans/`, branches or PRs for follow-up.
 - Never publish directly.
 - Never commit unless explicitly asked.
 - Never mix agent notes into public pages.
@@ -43,7 +43,7 @@ Flag any reader-facing page that contains:
 - run log metadata
 - TODOs intended for agents
 
-Move those items to a plan, run log or `.agents/vault-maintenance/` backlog.
+Move those items to the active plan (`.cursor/plans/`), `.agents/vault-maintenance/lexicon-backlog.md`, or (only if requested) a run log under `.agents/vault-maintenance/runs/`.
 
 ## Output Policy
 

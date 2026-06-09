@@ -46,7 +46,9 @@ Use this structure for vault content PRs:
 ## Test plan
 - [ ] Wikilinks resolve in Obsidian
 - [ ] No agent-only content left in public articles
-- [ ] FR/EN files are in sync
+- [ ] `last_modified` updated on changed FR pages
+- [ ] FR source updated (EN translation deferred unless this PR includes it)
+- [ ] If EN sync is deferred: `npm run audit:i18n:strict` run and stale files noted in PR body
 - [ ] Sources cited where claims are made
 ```
 

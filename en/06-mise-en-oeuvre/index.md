@@ -3,7 +3,7 @@ title: "🧪 Practical implementation"
 description: Concrete protocols to choose, test, secure, and operate local AI beyond hardware sizing.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
+last_modified: "2026-06-05"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
