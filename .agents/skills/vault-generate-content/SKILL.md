@@ -63,6 +63,13 @@ Respect explicit user overrides. If the user asks not to use this skill or the p
 
 Do not leave this working section in a published chapter article. Put it in the active plan (`.cursor/plans/`) and, for durable follow-up, update `.agents/vault-maintenance/lexicon-backlog.md`.
 
+When adding items to `lexicon-backlog.md`, use the appropriate section:
+- `## To Create` for new entries not yet written.
+- `## To Verify Or Update` for existing entries that need a check.
+- `## Already Linked From` for entries already cross-linked from the article (no action needed).
+
+When a `## To Create` or `## To Verify Or Update` item is completed, move it to `## Done` with today's date and the source article path.
+
 If any wikilink targets a page that does not yet exist (planned but not yet published), add its slug to `.agents/vault-maintenance/link-audit-allowlist.md` → section `## Slugs`. This prevents `npm run audit:links` from raising a false error on an intentional forward link.
 
 When the article introduces an important missing term, either create a minimal lexicon entry if the user asked for lexicon execution, or add a precise backlog item. Do not silently drop the lexicon follow-up.
@@ -79,6 +86,7 @@ When the article introduces an important missing term, either create a minimal l
    - `## Voir aussi`
 4. Add chapter links in `Voir aussi` when relevant.
 5. Avoid unsourced performance numbers. If a numeric claim is necessary, cite it.
+6. After adding or renaming a lexicon entry, regenerate `00-lexique/lexicon-index.md` from the engine repo (`npm run lexicon:index`) and commit the updated file alongside the new entry.
 
 ## Frontmatter on save
 
