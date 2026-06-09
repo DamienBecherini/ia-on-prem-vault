@@ -58,6 +58,15 @@ When finishing, report:
 - validation run
 - residual risk
 
+## Frontmatter on save
+
+For every French page (outside `en/`) modified during a refresh:
+
+- Set `last_modified: YYYY-MM-DD` to today's date.
+- Add the field if missing (see `docs/frontmatter-schema.md`).
+
+Do not update `en/` mirrors or their `last_modified` unless the user explicitly requested translation. In the PR body, note whether EN sync is deferred and record the stale count from `npm run audit:i18n:strict`.
+
 ## Delivery
 
 After validation and (when requested) push:

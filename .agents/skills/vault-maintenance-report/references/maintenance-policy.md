@@ -54,3 +54,11 @@ Every recommendation should include:
 - suggested next action
 - confidence level: high, medium or low
 
+## Translation Drift
+
+After any FR content change, run `npm run audit:i18n:strict` to list EN mirrors lagging behind. Include the stale count in the report under `## Translation Drift (FR → EN)`. Do not translate during a maintenance report — flag for a dedicated `vault-translate-content` pass.
+
+## Link Audit Allowlist
+
+Check `.agents/vault-maintenance/link-audit-allowlist.md` for slugs whose target pages now exist and can be removed. Running `npm run audit:links` from the engine repo surfaces all remaining unresolved links. Flag stale allowlist entries in the report under `## Publish Safety`.
+
