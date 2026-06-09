@@ -3,8 +3,8 @@ title: "🔒 Local inference security"
 description: Local API authentication, network isolation, encryption, OWASP LLM Top 10, and prompt injection protection for an on-premise inference stack.
 sidebar:
   order: 4
-last_modified: "2026-06-07"
-last_verified: "2026-06-05"
+last_modified: "2026-06-09"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -279,6 +279,9 @@ In an on-premise RAG stack, the vector database is an attack surface: malicious 
 - Control vector database ingestion sources (verified documents only)
 - Restrict access to the vector database API (Qdrant, Milvus, pgvector) — same rule as for the inference engine: localhost or private network only
 - Do not expose raw similarity scores to users (they allow inferring distances in vector space)
+
+> [!tip] Multi-tenant RAG isolation
+> In a SaaS context, isolating embeddings by tenant at the vector database level is non-negotiable. RLS patterns (pgvector) and payload partitioning (Qdrant) are documented in [[03-stack-logicielle/rag-and-agents|RAG & Agents — multi-tenant section]].
 
 ### LLM09:2025 — Misinformation
 

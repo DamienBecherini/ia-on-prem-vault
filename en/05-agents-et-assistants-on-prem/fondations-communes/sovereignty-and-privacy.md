@@ -5,8 +5,8 @@ description: >
   GDPR/AI Act regulatory context, and practical checklist.
 sidebar:
   order: 2
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
+last_modified: "2026-06-09"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -131,6 +131,20 @@ On-premise AI is one of the few architectures that allows processing personal da
 
 The AI Act distinguishes limited-risk systems (general assistants) from high-risk systems (used in healthcare, justice, education, HR, etc.). For high-risk use, traceability, auditability, and human control are mandatory — requirements that are hard to meet with a "black box" cloud model.
 
+### EU AI Act — Transparency obligations (Article 50)
+
+From August 2026, Article 50 of Regulation (EU) 2024/1689 (EU AI Act) imposes transparency obligations on deployers of AI systems that interact with humans[^3][^4]:
+
+1. **Labeling of AI-generated content:** any text, image, or audio generated or significantly modified by an AI system and presented to a human must be clearly identified as such. This covers content suggestions, automatic translations, auto-classification results, and pre-filled forms.
+
+2. **Information about AI interaction:** systems that interact with users via text or voice (chatbots, assistants) must inform the user that they are interacting with AI, unless the context makes this information obvious.
+
+3. **Synthetic media:** deepfakes and AI-generated audio/video content must carry explicit marking, readable by both machines and humans.
+
+**Practical implication for [[00-lexique/on-premise|on-premise]] deployments:** any interface displaying LLM-generated suggestions (summaries, classifications, translations, pre-filled fields) must include a visible indicator. The "suggested by AI" pattern constitutes the minimum compliant implementation. Automated write actions must remain subject to [[00-lexique/human-in-the-loop|human-in-the-loop]] validation until confidence reaches the defined threshold.
+
+**Penalty for non-compliance:** fines of up to €15 million or 3% of worldwide annual turnover (Article 99).
+
 ### Sector-specific constraints
 
 | Sector | Constraint | Implication |
@@ -156,6 +170,64 @@ Before integrating a tool into your on-prem stack:
 
 ---
 
+## 🏗️ Three sovereign deployment tiers (Privacy Tiers)
+
+This vault advocates on-premise AI, but not every organization faces the same level of constraint. Before investing in dedicated infrastructure, it is useful to position your use case on a three-tier scale.
+
+```mermaid
+flowchart TD
+    A[Can your data transit\nto a vendor under\na ZDR contract?] -- Yes --> B[Tier 1 — Cloud ZDR]
+    A -- No --> C[Can data leave your premises\nbut remain on dedicated\nFR infrastructure?]
+    C -- Yes --> D[Tier 2 — Sovereign vendor]
+    C -- No --> E[Tier 3 — On-Premise\n/ Air-Gapped]
+```
+
+### Tier 1 — Cloud LLM with Zero Data Retention
+
+**For whom:** organizations without strict legal data localization constraints; SMBs, startups, product teams.
+
+A cloud provider API (Mistral, OpenAI, Anthropic) is used under a **[[00-lexique/zero-data-retention|Zero Data Retention (ZDR)]]** contract: requests and responses are processed in memory only, never written to disk or used for training.
+
+**What ZDR guarantees:** no persistence of your data at the vendor.  
+**What ZDR does not guarantee:** your data still transits through the vendor's servers. For organizations subject to strict constraints (HDS, professional secrecy, IGI 1300), this transit alone is enough to rule out Tier 1.
+
+**Recommended models:** Mistral Large, Llama 3 via European-hosted API — Enterprise contracts with explicit GDPR DPA.
+
+---
+
+### Tier 2 — Sovereign SaaS (vendor hosting on certified infrastructure)
+
+**For whom:** B2B players serving the public sector, healthcare, local authorities, and large French enterprises.
+
+The AI vendor is no longer an American cloud but the **vendor itself**, hosting GPUs on **SecNumCloud** and/or **HDS** certified infrastructure in France (OVHcloud, Scaleway, Outscale).
+
+| Aspect | Tier 1 | Tier 2 |
+| :-- | :-- | :-- |
+| Data transits through a third party | Yes (LLM vendor) | Yes (vendor, GDPR sub-processor) |
+| Infrastructure in France | ❌ Variable | ✅ Yes (SecNumCloud / HDS) |
+| Open-weights models | ❌ Proprietary | ✅ Mistral, Llama, etc. |
+| Applicable to public procurement | ❌ Often no | ✅ Yes with adequate qualification |
+| Infrastructure cost | €0 (usage/token) | Shared (subscription) |
+
+European open-weights models (`Mistral-Nemo-12B`, quantized `Llama-3-70B`) served on dedicated GPU deliver performance sufficient for 95% of B2B use cases (RAG, classification, translation) while remaining within the French legal perimeter[^5].
+
+---
+
+### Tier 3 — On-Premise / Air-Gapped (deployment at the customer site)
+
+**For whom:** Defense sector, sensitive R&D, networks cut off from the Internet, ultra-confidential data.
+
+The model and the entire inference stack run **at the end customer**, on their own hardware, with no outbound network calls. This is the core of this vault: the [[04-blueprints/scenario-a-dev-lab|Blueprints A through D]] describe the corresponding hardware architectures.
+
+**Main constraint:** the customer must provide or fund GPU hardware. The vendor delivers the stack as containers (Docker/Kubernetes) with ready-to-use configuration.
+
+---
+
+> [!tip] Which tier to choose?
+> Start by identifying your strongest constraint: legal (HDS, IGI 1300), commercial (public tenders), or technical (isolated network). That constraint dictates the minimum tier. Cost and operational complexity do the rest.
+
+---
+
 ## 🔗 See also
 
 - [[05-agents-et-assistants-on-prem/fondations-communes/possible-architectures|🏗️ Possible Architectures]] — taxonomy and pattern comparison
@@ -163,3 +235,7 @@ Before integrating a tool into your on-prem stack:
 - [[05-agents-et-assistants-on-prem/agents-custodiens/index|🤖 Custodian Agents]] — solution sheets with sovereignty verdict
 - [[00-lexique/on-premise|On-Premise (AI)]] — definition and motivations
 - [[00-lexique/rag|RAG]] — common memory architecture in local assistants
+
+[^3]: Regulation (EU) 2024/1689 — Artificial Intelligence Act. [https://eur-lex.europa.eu/eli/reg/2024/1689/oj](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
+[^4]: EU AI Act Service Desk, *Article 50 — Transparency obligations*. [https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50)
+[^5]: NVIDIA Developer Blog, *NVIDIA-Accelerated Mistral 3 Open Models Deliver Efficiency and Accuracy at Any Scale* (Mistral-Nemo-Minitron 8B, B2B performance). [https://developer.nvidia.com/blog/nvidia-accelerated-mistral-3-open-models-deliver-efficiency-accuracy-at-any-scale/](https://developer.nvidia.com/blog/nvidia-accelerated-mistral-3-open-models-deliver-efficiency-accuracy-at-any-scale/)

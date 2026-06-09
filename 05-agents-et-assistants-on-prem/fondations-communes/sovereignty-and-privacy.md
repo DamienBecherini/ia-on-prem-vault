@@ -5,8 +5,8 @@ description: >
   concrète, contexte réglementaire RGPD/AI Act et checklist pratique.
 sidebar:
   order: 2
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
+last_modified: "2026-06-09"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -131,6 +131,20 @@ L'IA on-premise est l'une des rares architectures qui permet de traiter des donn
 
 L'AI Act distingue les systèmes à risque limité (assistants généraux) des systèmes à haut risque (employés dans la santé, la justice, l'éducation, les RH...). Pour les usages à haut risque, la traçabilité, l'auditabilité et le contrôle humain sont obligatoires — des exigences difficiles à satisfaire avec un modèle cloud "boîte noire".
 
+### EU AI Act — Obligations de transparence (Article 50)
+
+À compter d'août 2026, l'article 50 du Règlement (UE) 2024/1689 (EU AI Act) impose des obligations de transparence aux déployeurs de systèmes d'IA qui interagissent avec des humains[^3][^4] :
+
+1. **Étiquetage du contenu généré par IA** : tout texte, image ou audio généré ou significativement modifié par un système d'IA et présenté à un humain doit être clairement identifié comme tel. Cela couvre les suggestions de contenu, les traductions automatiques, les résultats d'auto-classification et les formulaires pré-remplis.
+
+2. **Information sur l'interaction IA** : les systèmes qui interagissent avec les utilisateurs par texte ou voix (chatbots, assistants) doivent informer l'utilisateur qu'il interagit avec une IA, sauf si le contexte rend cette information évidente.
+
+3. **Médias synthétiques** : les deepfakes et contenus audio/vidéo générés par IA doivent porter un marquage explicite, lisible par machine et par l'humain.
+
+**Implication pratique pour les déploiements [[00-lexique/on-premise|on-premise]]** : toute interface affichant des suggestions générées par LLM (résumés, classifications, traductions, champs pré-remplis) doit inclure un indicateur visible. Le pattern « suggéré par l'IA » constitue l'implémentation minimale conforme. Les actions d'écriture automatisées doivent rester soumises à une validation [[00-lexique/human-in-the-loop|human-in-the-loop]] tant que la confiance n'atteint pas le seuil défini.
+
+**Sanction en cas de non-conformité** : amendes pouvant atteindre 15 millions d'euros ou 3 % du chiffre d'affaires annuel mondial (article 99).
+
 ### Secteurs spécifiques
 
 | Secteur | Contrainte | Implication |
@@ -156,6 +170,64 @@ Avant d'intégrer un outil dans votre stack on-premise :
 
 ---
 
+## 🏗️ Les trois niveaux de déploiement souverain (Privacy Tiers)
+
+Le vault défend l'IA on-premise, mais toutes les organisations n'ont pas le même niveau de contrainte. Avant d'investir dans une infrastructure dédiée, il est utile de positionner votre cas d'usage sur une échelle de trois niveaux.
+
+```mermaid
+flowchart TD
+    A[Vos données peuvent-elles\ntransiter vers un prestataire\nsous contrat ZDR ?] -- Oui --> B[Tier 1 — Cloud ZDR]
+    A -- Non --> C[La donnée peut-elle quitter\nvos locaux mais rester\nsur infrastructure dédiée FR ?]
+    C -- Oui --> D[Tier 2 — Souverain éditeur]
+    C -- Non --> E[Tier 3 — On-Premise\n/ Air-Gapped]
+```
+
+### Tier 1 — Cloud LLM avec Zero Data Retention
+
+**Pour qui :** organisations sans contrainte légale stricte de localisation ; PME, startups, équipes produit.
+
+L'API d'un fournisseur cloud (Mistral, OpenAI, Anthropic) est utilisée sous contrat **[[00-lexique/zero-data-retention|Zero Data Retention (ZDR)]]** : les requêtes et réponses sont traitées en mémoire uniquement, jamais écrites sur disque ni utilisées pour l'entraînement.
+
+**Ce que ZDR garantit :** pas de persistance de vos données chez le prestataire.  
+**Ce que ZDR ne garantit pas :** vos données transitent quand même sur les serveurs du prestataire. Pour les organisations soumises à des contraintes strictes (HDS, secret professionnel, IGI 1300), ce transit suffit à exclure le Tier 1.
+
+**Modèles recommandés :** Mistral Large, Llama 3 via API hébergée européenne — contrats Enterprise avec DPA RGPD explicite.
+
+---
+
+### Tier 2 — SaaS Souverain (hébergement éditeur sur infrastructure certifiée)
+
+**Pour qui :** acteurs B2B adressant le secteur public, la santé, les collectivités, les grands comptes français.
+
+Le prestataire IA n'est plus un cloud américain mais l'**éditeur lui-même**, hébergeant les GPU sur une infrastructure certifiée **SecNumCloud** et/ou **HDS** en France (OVHcloud, Scaleway, Outscale).
+
+| Aspect | Tier 1 | Tier 2 |
+| :-- | :-- | :-- |
+| Données transitent chez un tiers | Oui (prestataire LLM) | Oui (éditeur, sous-traitant RGPD) |
+| Infrastructure en France | ❌ Variable | ✅ Oui (SecNumCloud / HDS) |
+| Modèles open-weights | ❌ Propriétaires | ✅ Mistral, Llama, etc. |
+| Applicable aux marchés publics | ❌ Souvent non | ✅ Oui si qualification adéquate |
+| Coût infrastructure | 0 € (usage/token) | Partagé (abonnement) |
+
+Les modèles open-weights européens (`Mistral-Nemo-12B`, `Llama-3-70B` quantifié) servis sur GPU dédié atteignent des performances suffisantes pour 95 % des cas d'usage B2B (RAG, classification, traduction) tout en restant dans le périmètre juridique français[^5].
+
+---
+
+### Tier 3 — On-Premise / Air-Gapped (déploiement chez le client)
+
+**Pour qui :** secteur Défense, R&D sensible, réseaux coupés d'Internet, données ultra-confidentielles.
+
+Le modèle et toute la stack d'inférence tournent **chez le client final**, sur son propre matériel, sans aucun appel réseau sortant. C'est le cœur de ce vault : les [[04-blueprints/scenario-a-dev-lab|Blueprints A à D]] décrivent les architectures matérielles correspondantes.
+
+**Contrainte principale :** le client doit fournir ou financer le matériel GPU. L'éditeur livre la stack sous forme de conteneurs (Docker/Kubernetes) avec configuration prête à l'emploi.
+
+---
+
+> [!tip] Quel tier choisir ?
+> Commencez par identifier votre contrainte la plus forte : légale (HDS, IGI 1300), commerciale (appels d'offres publics), ou technique (réseau isolé). Cette contrainte dicte le tier minimum. Le coût et la complexité opérationnelle font le reste.
+
+---
+
 ## 🔗 Voir aussi
 
 - [[05-agents-et-assistants-on-prem/fondations-communes/possible-architectures|🏗️ Architectures Possibles]] — taxonomie et comparatif des patterns
@@ -163,3 +235,7 @@ Avant d'intégrer un outil dans votre stack on-premise :
 - [[05-agents-et-assistants-on-prem/agents-custodiens/index|🤖 Agents Custodiens]] — fiches solution avec verdict souveraineté
 - [[00-lexique/on-premise|On-Premise (IA)]] — définition et motivations
 - [[00-lexique/rag|RAG]] — architecture mémoire courante dans les assistants locaux
+
+[^3]: Règlement (UE) 2024/1689 — Artificial Intelligence Act. [https://eur-lex.europa.eu/eli/reg/2024/1689/oj](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
+[^4]: EU AI Act Service Desk, *Article 50 — Transparency obligations*. [https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50)
+[^5]: NVIDIA Developer Blog, *NVIDIA-Accelerated Mistral 3 Open Models Deliver Efficiency and Accuracy at Any Scale* (Mistral-Nemo-Minitron 8B, performance B2B). [https://developer.nvidia.com/blog/nvidia-accelerated-mistral-3-open-models-deliver-efficiency-accuracy-at-any-scale/](https://developer.nvidia.com/blog/nvidia-accelerated-mistral-3-open-models-deliver-efficiency-accuracy-at-any-scale/)
