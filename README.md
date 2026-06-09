@@ -52,7 +52,7 @@ en/                     English locale root (mirrors FR chapters under en/)
 scripts/                vault-local maintenance scripts (audit, backfill, delegate)
 _templates/             Obsidian templates (_Terme Lexique.md, _Nouveau Chapitre.md)
 _private/               confidential notes (gitignored, never published)
-docs/plans/             agent implementation plans (excluded from publish; see README there)
+.cursor/plans/          Cursor agent plans (gitignored except rules; excluded from publish)
 .agents/                agent skills and maintenance (excluded from publish)
 .cursor/rules/          Cursor AI rules (tracked; rest of .cursor/ is gitignored)
 ```
@@ -99,7 +99,18 @@ Add `-- --yes` to skip the confirmation prompt (e.g. `npm run upload:full -- --y
 
 Run `npm run audit:links` in the engine to list unresolved wiki/MD links (lexicon backlog and [link audit allowlist](.agents/vault-maintenance/link-audit-allowlist.md)).
 
-Agent implementation plans live in [docs/plans/README.md](docs/plans/README.md) (English, not published).
+### FR/EN translation drift
+
+After French content changes, list EN mirrors that need updating:
+
+```bash
+npm run audit:i18n          # default: FR newer than EN by > 7 days
+npm run audit:i18n:strict   # any FR newer than EN (translation backlog)
+```
+
+Relies on `last_modified` frontmatter on FR and EN pairs. Backfill missing dates with `npm run backfill:dates:write`.
+
+Agent implementation plans live in `.cursor/plans/` (Cursor default, not published). Skills and maintenance notes live under `.agents/`.
 
 To make the site **private** (Apache Basic Auth), fill in `AUTH_*` in `.env`, then:
 

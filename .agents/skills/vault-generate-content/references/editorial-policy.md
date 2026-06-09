@@ -39,9 +39,26 @@ During chapter generation:
 
 ## Language
 
-Vault note content may be in any language defined by `site.config.json` locales and the note's folder (for example French at the root, English under `en/`). Match the target path; do not default to English for fiches unless the note lives in an English locale folder.
+French-first for generation and substantial rewrites:
+
+- Draft new chapter articles and lexicon entries in **French** at vault root paths (outside `en/`).
+- Do **not** create or update `en/` mirrors during generation unless the user explicitly requests translation.
+- When editing an existing file, keep its current language (French at root, English under `en/`).
+
+English translation is a separate task: mirror the validated French source under `en/` with faithful translation, not a second editorial pass.
 
 Repository tooling, skills, and agent plans remain in English.
+
+## last_modified (FR/EN drift tracking)
+
+On every substantive edit to a French page (vault root, outside `en/`):
+
+- Set or update `last_modified: YYYY-MM-DD` in frontmatter to **today's date**.
+- Do not bump `last_modified` for typo-only fixes unless the meaning changed.
+
+This field powers `npm run audit:i18n:strict`, which lists EN mirrors that lag behind FR.
+
+When the user requests EN translation of a page, update the EN mirror and set its `last_modified` to match or exceed the FR source date.
 
 ## Links And Style
 

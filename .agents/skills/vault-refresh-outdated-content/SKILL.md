@@ -14,7 +14,6 @@ Use this with:
 
 - `vault-generate-content` for drafting changes
 - `vault-verify-content` for adversarial verification
-- `vault-log-run` for the final operational trace
 
 Default to human-in-the-loop:
 
@@ -23,7 +22,7 @@ Default to human-in-the-loop:
 3. Propose focused edits.
 4. Apply edits only when the user requested execution.
 5. Verify sources and build.
-6. Write a run log.
+6. Open a PR when delivery is requested (default audit trail).
 
 ## Refresh Rules
 
@@ -59,14 +58,12 @@ When finishing, report:
 - validation run
 - residual risk
 
-Then invoke `vault-log-run`.
-
 ## Delivery
 
-After the run log is written:
+After validation and (when requested) push:
 
 1. **Branch** — create `chore/vault-refresh-<YYYY-MM-DD>` (or reuse the active plan branch).
-2. **Stage** — only the refreshed files and the run log.
+2. **Stage** — only the refreshed files.
 3. **Commit** — `chore(refresh): <short description of what was refreshed>`.
 4. **Push + PR** — read `.cursor/rules/git-workflow.mdc` for the PR body template and branch naming rules.
 5. **Report** — paste the PR URL in chat.

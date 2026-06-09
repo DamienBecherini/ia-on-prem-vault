@@ -19,7 +19,6 @@
   },
   "publish": {
     "exclude": [
-      "docs/plans/**",
       ".agents/**",
       ".cursor/**"
     ]

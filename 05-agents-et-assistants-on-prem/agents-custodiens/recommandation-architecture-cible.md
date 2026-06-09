@@ -3,7 +3,7 @@ title: "🏗️ Recommandation d'architecture cible"
 description: Trajectoire réaliste pour passer d'un MVP Cursor CLI à une stack custodienne souveraine basée sur Aider, Ollama/vLLM, LiteLLM et SearXNG.
 sidebar:
   order: 6
-last_modified: "2026-06-04"
+last_modified: "2026-06-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -30,7 +30,7 @@ Pour automatiser :
 
 - tâche planifiée (cron, systemd timer, GitHub Actions self-hosted) ;
 - branche datée ;
-- logs sous `.agents/vault-maintenance/runs/` ;
+- run logs via `vault-log-run` sous `.agents/vault-maintenance/runs/` ;
 - rapport de sources ;
 - notification sans merge automatique.
 

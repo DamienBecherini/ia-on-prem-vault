@@ -3,7 +3,7 @@ title: "🚀 Getting started with Ollama"
 description: Installation, first model, API testing, and initial best practices for local inference in under 15 minutes.
 sidebar:
   order: 3
-last_modified: "2026-06-04"
+last_modified: "2026-06-05"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"

@@ -5,7 +5,7 @@ description: >
   Comparison table, hardware requirements, and relationship between the two tracks.
 sidebar:
   order: 3
-last_modified: "2026-06-05"
+last_modified: "2026-06-07"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -159,7 +159,7 @@ This guide covers architecture theory. To move to practice, here are the recomme
 | Tool | Starting point |
 | :-- | :-- |
 | **Aider** | [Aider quickstart](https://aider.chat/docs/usage/tutorials.html) — local coding agent, Ollama-compatible |
-| **OpenHands** | [OpenHands Docker setup](https://github.com/All-Hands-AI/OpenHands) — autonomous task-execution agent |
+| **OpenHands** | [OpenHands Docker setup](https://github.com/OpenHands/OpenHands) — autonomous task-execution agent |
 | **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — unified routing to a local model |
 | **SmolAgents** | [SmolAgents cookbook](https://huggingface.co/docs/smolagents/tutorials/building_good_agents) — minimal agent framework, HuggingFace |
 | **LangGraph** | [LangGraph "local agent" tutorial](https://langchain-ai.github.io/langgraph/tutorials/introduction/) — agent orchestration with state graphs |

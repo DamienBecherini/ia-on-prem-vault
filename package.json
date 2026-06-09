@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "audit:i18n": "node scripts/audit-i18n.mjs",
+    "audit:i18n:strict": "node scripts/audit-i18n.mjs --stale-days=0",
     "backfill:dates": "node scripts/backfill-last-modified.mjs",
     "backfill:dates:write": "node scripts/backfill-last-modified.mjs --write",
     "backfill:verified": "node scripts/backfill-verified.mjs",

@@ -3,7 +3,7 @@ title: "🔭 Vision: What is a custodian agent?"
 description: Definition, scope, and architecture trajectory of an autonomous agent tasked with maintaining a vault or repository.
 sidebar:
   order: 2
-last_modified: "2026-06-04"
+last_modified: "2026-06-05"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"

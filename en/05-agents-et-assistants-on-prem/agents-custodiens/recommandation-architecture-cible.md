@@ -3,7 +3,7 @@ title: "🏗️ Target architecture recommendation"
 description: Realistic path from a Cursor CLI MVP to a sovereign custodian stack based on Aider, Ollama/vLLM, LiteLLM, and SearXNG.
 sidebar:
   order: 6
-last_modified: "2026-06-04"
+last_modified: "2026-06-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -30,7 +30,7 @@ To automate:
 
 - scheduled task (cron, systemd timer, self-hosted GitHub Actions);
 - dated branch;
-- logs under `.agents/vault-maintenance/runs/`;
+- run logs via `vault-log-run` under `.agents/vault-maintenance/runs/`;
 - source report;
 - notification without automatic merge.
 

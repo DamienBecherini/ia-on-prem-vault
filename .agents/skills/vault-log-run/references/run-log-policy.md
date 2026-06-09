@@ -1,6 +1,8 @@
 # Run Log Policy
 
-Run logs are operational traces for agents maintaining this vault. They complement Git and implementation plans.
+Run logs are optional operational traces. **Default audit trail:** PR description + `git diff`. Create a run log only when no PR exists or the user explicitly asks.
+
+They complement Git and active plans in `.cursor/plans/`.
 
 ## What Git Provides
 

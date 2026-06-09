@@ -7,12 +7,15 @@ alwaysApply: false
 # Vault Editorial Basics
 
 - This repo is an Obsidian/Starlight content vault for IA on-premise documentation.
-- Vault note language follows vault locale and folder layout (see `language-policy`); code and repo tooling stay in English.
+- **French-first generation:** new or substantially rewritten public notes are written in French at vault root paths; English under `en/` only on explicit translation tasks (see `language-policy`).
+- Code and repo tooling stay in English.
 - For generation or major rewrites, prefer the `vault-generate-content` skill.
+- For targeted updates to stale or outdated content (specific claims, benchmarks, links), prefer the `vault-refresh-outdated-content` skill over a full rewrite.
+- For EN translation of validated FR pages, prefer the `vault-translate-content` skill.
 - For audits, source checks, or factual review, prefer the `vault-verify-content` skill.
 - Lexicon structure is mandatory only for `00-lexique/` entries; chapter articles keep a flexible topic-driven structure.
 - For chapter generation, track lexicon follow-up: existing terms to link, new entries to create, and linked entries to verify/update.
+- On every substantive FR edit, set or update `last_modified: YYYY-MM-DD` in frontmatter (today's date). This feeds `npm run audit:i18n` for EN translation backlog.
 - Never invent sources. Performance claims must be cited with relevant context or written as cautious order-of-magnitude statements.
 - Use Obsidian wikilinks for internal references and footnotes for external sources.
 - If the user explicitly asks not to use project skills or workflows, respect that request while keeping factuality and source constraints.
-

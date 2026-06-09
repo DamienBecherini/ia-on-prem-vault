@@ -16,7 +16,7 @@ Use a review stance: findings first, ordered by severity. Prefer concrete fixes 
 
 Respect explicit user overrides. If the user asks not to use this skill or the project workflow, do not apply it; keep only factuality, source, and safety constraints.
 
-For significant audits, also use `vault-log-run` before finishing.
+For significant audits that produce a PR, the PR body is the default audit trail. Invoke `vault-log-run` only when the user asks for a durable run log or when no PR will be created.
 
 ## Verification Checklist
 
@@ -56,6 +56,10 @@ For lexicon entries:
 - It should define, not duplicate, a full chapter.
 - It should include useful `Voir aussi` links.
 
+## Link Audit Allowlist
+
+When verifying that a chapter page is live and its content is valid, check whether its slug appears in `.agents/vault-maintenance/link-audit-allowlist.md` → section `## Slugs`. If the page now exists and is published, remove its entry from the allowlist — it is no longer a forward link.
+
 ## Public Content Boundary
 
 For reader-facing pages, flag agent-only maintenance content:
@@ -65,7 +69,7 @@ For reader-facing pages, flag agent-only maintenance content:
 - internal TODOs meant for agents
 - maintenance reports embedded in article prose
 
-Move those items to `docs/plans/`, `.agents/vault-maintenance/lexicon-backlog.md`, or `.agents/vault-maintenance/runs/`.
+Move those items to the active plan (`.cursor/plans/`), `.agents/vault-maintenance/lexicon-backlog.md`, or (only if explicitly requested) `.agents/vault-maintenance/runs/`.
 
 ## Report Format
 
@@ -110,20 +114,9 @@ last_verified: YYYY-MM-DD              # today's date
 verified_by: <editorial.defaultAgent>    # from site.config.json
 ```
 
-Do not set `verified_hitl` — that field is set by `vault-log-run` after explicit human sign-off, using `editorial.hitl` from the same config.
+Do not set `verified_hitl` — that field is set after explicit human sign-off, using `editorial.hitl` from `site.config.json` (record the approval in the PR or plan, not necessarily a run log).
 
 If the page does not yet have these fields, add them after the existing frontmatter keys.
 
 See `docs/frontmatter-schema.md` for the full field specification.
-
-## Run Log
-
-For significant verification tasks, invoke `vault-log-run` and record:
-
-- target files
-- sources checked
-- findings count by severity
-- lexicon follow-up
-- whether edits were made
-- validation performed
 

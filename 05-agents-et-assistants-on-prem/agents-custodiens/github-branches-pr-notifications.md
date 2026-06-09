@@ -3,7 +3,7 @@ title: "🌿 Branches, PRs & Notifications"
 description: Comment isoler les travaux d'un agent custodien dans Git et notifier un humain sans automatiser le merge.
 sidebar:
   order: 4
-last_modified: "2026-06-04"
+last_modified: "2026-06-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -47,7 +47,7 @@ Canaux possibles :
 - GitHub PR ;
 - email ;
 - webhook Slack/Matrix/Discord ;
-- fichier Markdown dans `.agents/vault-maintenance/runs/`.
+- fichier de log via `vault-log-run` sous `.agents/vault-maintenance/runs/` (trace principale pour les runners non-interactifs ou les tâches sans PR).
 
 Le canal importe moins que la règle : **la notification ne vaut pas validation**.
 
