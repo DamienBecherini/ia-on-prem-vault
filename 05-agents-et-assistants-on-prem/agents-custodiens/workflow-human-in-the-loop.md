@@ -44,10 +44,9 @@ Pour ce vault, le niveau raisonnable est **2 ou 3** : branche/PR, validation hum
 Avant chaque run :
 
 - **Vérifier que le repo est propre (`git status --porcelain`)** : si le repo est *dirty* (modifications non commitées), l'agent doit **avorter** et notifier l'opérateur. Il ne doit jamais embarquer un brouillon humain en cours dans son commit. Exception explicite uniquement : `git stash` avec un nom horodaté si l'opérateur a activé ce mode dans la configuration de l'agent.
-- vérifier que le plan actif n'est pas dans `docs/plans/archive/` ;
-- ignorer `_private/`, `build/`, `dist/`, `.git/`, logs obsolètes et plans superseded ;
+- vérifier que le plan actif est bien dans `.cursor/plans/` (pas un plan obsolète) ;
+- ignorer `_private/`, `build/`, `dist/`, `.git/` et les logs obsolètes ;
 - refuser les commandes destructrices ;
-- enregistrer le run sous `.agents/vault-maintenance/runs/` ;
 - citer les sources pour tout changement factuel.
 
 > [!warning] Condition de course — repo dirty
@@ -55,7 +54,7 @@ Avant chaque run :
 
 ## Rapport attendu
 
-Chaque run devrait produire :
+Pour un run avec livraison git, la **PR** (description + diff) est la trace principale. Sinon, un rapport en chat suffit :
 
 - objectif ;
 - fichiers modifiés ;

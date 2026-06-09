@@ -1,6 +1,7 @@
 ---
 title: Index du lexique
 description: Liste alphabétique de toutes les fiches du lexique IA on-premise.
+last_modified: "2026-06-05"
 ---
 
 Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-lexique/ai-glossary|Glossaire IA]].
@@ -17,6 +18,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [Decoding](/00-lexique/decoding/) | Phase de génération auto-régressive token par token. |
 | [ECN](/00-lexique/ecn/) | Explicit Congestion Notification — mécanisme de signalement de congestion réseau utilisé avec RoCE pour éviter les pertes de paquets. |
 | [Embedding](/00-lexique/embedding/) | Représentation numérique dense d'un token ou d'un document dans un espace vectoriel. |
+| [Excessive Agency](/00-lexique/excessive-agency/) | Vulnérabilité OWASP LLM06 (2025) — un agent IA dispose de trop de fonctionnalités, permissions ou autonomie, permettant des actions réelles non souhaitées. |
 | [Exo](/00-lexique/exo/) | Orchestrateur P2P open-source pour fusionner la mémoire de plusieurs machines en un cluster IA local. |
 | [Fenêtre de contexte](/00-lexique/context-window/) | Nombre maximal de tokens qu'un LLM peut traiter en entrée active — détermine le coût mémoire dynamique de l'inférence. |
 | [GGUF](/00-lexique/gguf/) | Format de fichier portable pour l'inférence locale avec llama.cpp, optimisé pour les quantifications K-quant. |

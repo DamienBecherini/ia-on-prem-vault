@@ -25,7 +25,9 @@ Check:
 - lexicon backlog items
 - missing lexicon entries for recurring terms
 - public content that contains agent-only maintenance notes
-- publish safety for `.agents/**`, `.cursor/**`, `docs/plans/**`, `_private/**`
+- publish safety for `.agents/**`, `.cursor/**`, `_private/**`
+- translation drift: EN mirrors lagging behind FR source (`npm run audit:i18n:strict`)
+- link-audit allowlist hygiene: slugs in `.agents/vault-maintenance/link-audit-allowlist.md` whose target pages now exist and can be removed
 
 ## Lexicon Backlog Hygiene
 
@@ -40,13 +42,9 @@ When these history sections exceed ~150 lines total, recommend (or perform if as
 
 This keeps the backlog file small so agents do not waste tokens re-reading stale history.
 
-## Plan Archive Hygiene
+## Plan hygiene
 
-When scanning implementation plans, treat `docs/plans/archive/**` as historical context only.
-Do not infer active tasks from archived plans, even if they still contain pending TODOs.
-
-If a plan is marked `SUPERSEDED`, `superseded`, `deprecated`, or clearly replaced by a newer plan,
-recommend moving it to `docs/plans/archive/` unless the user explicitly needs it in the active plan list.
+Active implementation plans live in `.cursor/plans/` (Cursor default, excluded from publish). Do not infer active tasks from superseded or archived plans elsewhere in the repo.
 
 ## Report Format
 
@@ -54,6 +52,8 @@ recommend moving it to `docs/plans/archive/` unless the user explicitly needs it
 ## Executive Summary
 
 ## Highest Priority Findings
+
+## Translation Drift (FR → EN)
 
 ## Source Freshness
 
@@ -64,15 +64,9 @@ recommend moving it to `docs/plans/archive/` unless the user explicitly needs it
 ## Publish Safety
 
 ## Recommended Next Runs
-
-## Run Log
 ```
 
-## Run Log
-
-For significant maintenance reports, invoke `vault-log-run` and write a run log under `.agents/vault-maintenance/runs/`.
-
-If no files were changed, record the report path and `commitCreated: false`.
+Report findings in chat. For read-only maintenance, a PR is usually not required. Invoke `vault-log-run` only if the user asks for a durable log file.
 
 ## Delivery
 
@@ -83,7 +77,7 @@ If no files were changed, record the report path and `commitCreated: false`.
 1. **Branch** — create `chore/vault-maintenance-<YYYY-MM-DD>`.
 2. **Stage** — only the files modified by the implementation (not unrelated files).
 3. **Commit** — `chore(maintenance): <short description>`.
-4. **Push + PR** — read `.cursor/rules/git-workflow.mdc` for the PR body template and branch naming rules. Reference the run log path in the PR body.
+4. **Push + PR** — read `.cursor/rules/git-workflow.mdc` for the PR body template and branch naming rules.
 5. **Report** — paste the PR URL in chat.
 
 Exception: if the user says "commit to main" or "push directly", skip branch and PR.

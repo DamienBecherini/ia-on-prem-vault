@@ -3,7 +3,7 @@ title: "🔍 Web Search & Sources"
 description: How to give a custodian agent controlled web access without depending on a cloud search service.
 sidebar:
   order: 5
-last_modified: "2026-06-04"
+last_modified: "2026-06-05"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"

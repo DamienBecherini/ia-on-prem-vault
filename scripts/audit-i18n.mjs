@@ -9,8 +9,9 @@
  * Usage:
  *   node scripts/audit-i18n.mjs
  *   node scripts/audit-i18n.mjs --stale-days=14
+ *   node scripts/audit-i18n.mjs --stale-days=0   # strict: any FR newer than EN
  *
- * Output: Markdown-formatted report to stdout.
+ * npm scripts: audit:i18n | audit:i18n:strict
  */
 
 import { readFileSync, readdirSync, statSync } from "fs";
@@ -36,6 +37,9 @@ const EXCLUDED_DIRS = new Set([
   "en",        // EN tree is the target; we walk FR tree only
   "references",
 ]);
+
+/** FR paths that intentionally have no EN mirror (repo docs, not published notes) */
+const EXCLUDED_FILES = new Set(["README.md"]);
 
 const STALE_DAYS = (() => {
   const arg = process.argv.find((a) => a.startsWith("--stale-days="));
@@ -91,6 +95,9 @@ const stale = [];
 const missingEn = [];
 
 for (const frPath of walkMd(VAULT_ROOT)) {
+  const frRel = relative(VAULT_ROOT, frPath).replaceAll(sep, "/");
+  if (EXCLUDED_FILES.has(frRel)) continue;
+
   const enPath = toEnPath(frPath);
 
   let enExists = false;
@@ -109,8 +116,6 @@ for (const frPath of walkMd(VAULT_ROOT)) {
   const frDate = getModifiedDate(frPath);
   const enDate = getModifiedDate(enPath);
   const diffDays = Math.round((frDate - enDate) / (1000 * 60 * 60 * 24));
-
-  const frRel = relative(VAULT_ROOT, frPath).replaceAll(sep, "/");
 
   if (diffDays > STALE_DAYS) {
     stale.push({ path: frRel, frDate, enDate, diffDays });

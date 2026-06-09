@@ -3,7 +3,7 @@ title: "🏢 Scenario B: The SME Appliance (Unified Memory)"
 description: The ideal blueprint for SMEs. How to serve a team of 10 to 50 people with a 70B model using a Mac Studio or an AMD APU.
 sidebar:
   order: 2
-last_modified: "2026-06-04"
+last_modified: "2026-06-05"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
