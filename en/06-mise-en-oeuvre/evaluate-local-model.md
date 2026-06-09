@@ -3,8 +3,8 @@ title: "🧪 Evaluate a local model"
 description: Practical protocol to compare local LLMs on quality, factuality, hallucinations, RAG, code editing, and performance.
 sidebar:
   order: 2
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
+last_modified: "2026-06-09"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -251,6 +251,39 @@ The best model is rarely the largest. The right model is the one that meets thre
 - [[00-lexique/benchmark-llm|LLM benchmark]]
 - [[00-lexique/llm-as-a-judge|LLM-as-a-judge]]
 - [[00-lexique/ragas|RAGAS]]
+
+## Progressive deployment strategy
+
+Beyond out-of-production evaluation, progressive rollout reduces the risk of exposing users to an uncontrolled model. Three sequential phases constitute the recommended pattern.
+
+### Phase 1 — Mock-First
+
+Before connecting a real LLM, all async infrastructure (API, queue, workers, frontend reactions) is validated with deterministic mock responses. This phase verifies that the system handles latency correctly and that the interface degrades gracefully — without introducing the non-determinism of a real model.
+
+### Phase 2 — Shadow Mode
+
+The real LLM is connected to production traffic, but its outputs are **only logged** — never shown to users. This phase measures:
+
+- JSON formatting error rate (does the model reliably respect the output schema?);
+- p95 latency under real load;
+- RAG relevance (are retrieved documents useful for the query?).
+
+Typical duration: 1 to 2 weeks on real traffic before moving to the next phase.
+
+### Phase 3 — Human-in-the-Loop activation
+
+AI results become visible to users. Any write action (auto-classification, pre-fill, content modification) requires explicit human confirmation before execution. This is the last safety barrier before full automation.
+
+```mermaid
+flowchart LR
+    A[Mock-First] --> B[Shadow Mode]
+    B --> C{Metrics OK?}
+    C -- No --> B
+    C -- Yes --> D[HITL activation]
+    D --> E{Confidence ≥ threshold?}
+    E -- No --> F[Silent degradation]
+    E -- Yes --> G[Automatic action]
+```
 
 ## Sources
 

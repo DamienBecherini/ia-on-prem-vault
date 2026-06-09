@@ -3,8 +3,8 @@ title: "⚙️ Moteurs d'Inférence : vLLM, Ollama et TensorRT-LLM"
 description: Comparatif des moteurs de déploiement locaux en 2026. Quand utiliser GGUF et llama.cpp sur Mac, et quand basculer sur vLLM ou TensorRT-LLM en production.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
+last_modified: "2026-06-09"
+last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -61,6 +61,35 @@ La compilation d'un moteur TensorRT est lourde (*Ahead-of-Time*), très stricte 
 
 ---
 
+## 4. SGLang : Orchestration agentique et génération structurée
+
+[SGLang](https://github.com/sgl-project/sglang) (Structured Generation Language) est un moteur d'inférence open-source développé par LMSys (Berkeley). Apparu comme concurrent direct de vLLM fin 2023, il a pris l'ascendant en 2026 sur deux domaines précis où vLLM reste moins optimisé : les **boucles agentiques** et la **génération JSON contrainte**[^7].
+
+### 🌟 Les forces
+
+*   **[[00-lexique/radixattention|RadixAttention]] — Le cache de préfixe partagé :** SGLang organise le [[00-lexique/kv-cache|KV Cache]] sous forme d'arbre radix (*radix tree*). Lorsque plusieurs requêtes partagent un long préfixe commun — un prompt système, un contexte RAG récupéré, ou un schéma d'outils — ce préfixe n'est calculé qu'une seule fois et réutilisé par toutes les requêtes qui le partagent. Dans une boucle agentique où l'agent appelle un outil, lit le résultat, puis rappelle l'outil plusieurs tours de suite, la majorité du contexte reste identique. SGLang évite de recalculer le KV Cache à chaque tour, ce qui réduit significativement le [[00-lexique/ttft|TTFT]] sur ces charges répétitives[^8].
+*   **Génération JSON structurée sans pénalité :** SGLang contraint le LLM à produire une sortie strictement conforme à un schéma JSON défini, sans dégrader la vitesse de génération. C'est une propriété critique pour les architectures où le moteur d'inférence doit communiquer avec un backend applicatif via des appels d'outils typés (*function calling* / *tool calling*)[^7].
+
+### ⚠️ Les limites
+
+*   SGLang est optimisé pour Linux + GPU NVIDIA. Le support AMD ROCm et macOS reste plus limité que celui de vLLM.
+*   Sur les benchmarks de **débit brut** (requêtes indépendantes sans préfixe partagé), vLLM reste la référence ou l'équivalent[^9].
+
+### Quand choisir SGLang plutôt que vLLM ?
+
+| Critère | vLLM | SGLang |
+| :-- | :-- | :-- |
+| Débit brut, requêtes indépendantes | ✅ Référence | Comparable |
+| Boucles agentiques, préfixes partagés | ⚠️ Pas de prefix cache natif | ✅ RadixAttention |
+| Génération JSON contrainte | ⚠️ Possible, plus lent | ✅ Natif, sans pénalité |
+| Compatibilité matérielle (AMD, Mac) | ✅ Large | ⚠️ NVIDIA principalement |
+| Maturité écosystème | ✅ Très large | ✅ Mature depuis 2025 |
+
+> [!tip] Règle pratique
+> **Déployez vLLM** pour du RAG simple ou de la génération textuelle concurrente. **Basculez sur SGLang** si votre application utilise du *tool calling* intensif, des boucles agentiques avec contexte partagé, ou si vous avez besoin de garanties strictes sur le format JSON des sorties du modèle.
+
+---
+
 ## 📋 Le Conseil de l'Architecte
 
 Pour un projet d'agent on-premise déployé chez des clients, le choix du moteur dépend purement du scénario d'architecture :
@@ -71,6 +100,8 @@ Pour un projet d'agent on-premise déployé chez des clients, le choix du moteur
     Basculez **impérativement sur vLLM**. PagedAttention et le continuous batching garantissent que l'IA ne s'effondrera pas lorsque cinq collaborateurs lanceront des requêtes RAG en même temps. Utilisez des poids en précision **AWQ ou FP8**.
 3.  **Cas d'usage "Datacenter Souverain" (Gros volume, multi-nœuds) :**
     Utilisez **TensorRT-LLM** derrière le serveur Triton de NVIDIA. C'est le moyen le plus efficace d'amortir le coût des accélérateurs professionnels.
+4.  **Cas d'usage "Agents et intégration backend" (tool calling, JSON structuré) :**
+    Préférez **[[00-lexique/sglang|SGLang]]**. Sa gestion native du cache de préfixe ([[00-lexique/radixattention|RadixAttention]]) réduit la latence dans les boucles agentiques, et sa génération JSON contrainte garantit la fiabilité des interfaces avec tout backend applicatif.
 
 ---
 
@@ -82,3 +113,6 @@ Pour un projet d'agent on-premise déployé chez des clients, le choix du moteur
 [^4]: Ayi NEDJIMI Consultants, *LLM Local 2026 : Ollama vs LM Studio vs vLLM* (article de blog, comparaison d'architectures, Continuous Batching), Février 2026.
 [^5]: vLLM Project Documentation & Spheron Blog, *vLLM Production Deployment 2026: Multi-GPU Tensor Parallel + FP8* (Model Runner V2, Hopper/Blackwell support), Mai 2026.
 [^6]: NVIDIA, *TensorRT-LLM Documentation* (FP4 Support, Blackwell optimization, DeepSeek-R1 performance records), Mai 2026.
+[^7]: SGLang Project, *SGLang — Fast Serving Framework for LLMs and VLMs* (RadixAttention, structured output). https://github.com/sgl-project/sglang
+[^8]: Lianmin Zheng et al., *Efficiently Programming Large Language Models using SGLang* (RadixAttention, prefix cache, TTFT reduction). https://lmsys.org/blog/2024-01-17-sglang/
+[^9]: SGLang Contributors, *SGLang vs vLLM — scaling benchmark under high concurrency* (throughput comparison). https://github.com/sgl-project/sglang/issues/21061
