@@ -14,17 +14,25 @@ Git is the natural guardrail for a custodian agent. It turns a risky action ("th
 
 ## Branch convention
 
-Recommended format:
+Recommended format — aligned with `.cursor/rules/git-workflow.mdc`:
 
 ```text
-agent/YYYY-MM-DD/<short-objective>
+<type>/<short-objective>
 ```
+
+| Type | When to use |
+|------|-------------|
+| `feat` | New content (chapter, lexicon entry, new section) |
+| `fix` | Corrections (broken links, wrong facts, typos) |
+| `chore` | Maintenance, refresh, backlog, agent-only files |
+| `docs` | Meta files only (rules, skills, plans) |
 
 Examples:
 
-- `agent/2026-06-04/link-audit`
-- `agent/2026-06-04/refresh-nvlink`
-- `agent/2026-06-04/lexicon-backlog-cleanup`
+- `feat/owasp-2025-alignment`
+- `chore/vault-refresh-2026-06`
+- `fix/broken-links-audit`
+- `chore/lexique-backlog-cleanup`
 
 ## Minimum content of an agent PR
 

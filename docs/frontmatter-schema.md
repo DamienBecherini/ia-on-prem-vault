@@ -49,7 +49,7 @@ HITL name, HITL URL, and default agent slug are defined in **`site.config.json`*
 | :-- | :-- | :-- |
 | `last_modified` | Agent or author | On every substantive content edit |
 | `last_verified` | `vault-verify-content` skill | After a verification run completes |
-| `verified_by` | `vault-verify-content` skill | Same run — format: `skill-name@version` |
+| `verified_by` | `vault-verify-content` skill | Same run — value read from `site.config.json → editorial.defaultAgent` (e.g. `Sonnet 4.6`) |
 | `verified_hitl` | Agent (`vault-log-run`) or PR/plan approval | After explicit human sign-off on the verification result |
 
 ### Behaviour
