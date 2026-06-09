@@ -14,17 +14,25 @@ Git est le garde-fou naturel d'un agent custodien. Il transforme une action risq
 
 ## Convention de branche
 
-Format recommandé :
+Format recommandé — conforme à `.cursor/rules/git-workflow.mdc` :
 
 ```text
-agent/YYYY-MM-DD/<objectif-court>
+<type>/<objectif-court>
 ```
+
+| Type | Quand l'utiliser |
+|------|------------------|
+| `feat` | Nouveau contenu (chapitre, entrée lexique, nouvelle section) |
+| `fix` | Corrections (liens cassés, faits erronés, typos) |
+| `chore` | Maintenance, refresh, backlog, fichiers agent |
+| `docs` | Méta uniquement (rules, skills, plans) |
 
 Exemples :
 
-- `agent/2026-06-04/link-audit`
-- `agent/2026-06-04/refresh-nvlink`
-- `agent/2026-06-04/lexicon-backlog-cleanup`
+- `feat/owasp-2025-alignment`
+- `chore/vault-refresh-2026-06`
+- `fix/broken-links-audit`
+- `chore/lexique-backlog-cleanup`
 
 ## Contenu minimal d'une PR agent
 
