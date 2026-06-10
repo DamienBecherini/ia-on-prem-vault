@@ -20,7 +20,14 @@ if (fs.existsSync(envPath)) {
 }
 
 const command = process.argv[2];
-const allowed = new Set(['publish', 'deploy', 'upload', 'auth-install', 'auth-remove']);
+const allowed = new Set([
+    'publish',
+    'deploy',
+    'upload',
+    'auth-install',
+    'auth-remove',
+    'audit-links',
+]);
 if (!command || !allowed.has(command)) {
     console.error(`❌ Usage: node scripts/delegate.mjs <${[...allowed].join('|')}>`);
     process.exit(1);
@@ -42,10 +49,14 @@ if (!fs.existsSync(engineScript)) {
 
 console.log(`↪ Delegating ${command} to ${enginePath}\n`);
 
+const delegateEnv = command === 'audit-links'
+    ? { ...process.env, VAULT_PATH: vaultRoot, FORCE_VAULT_PATH: '1' }
+    : process.env;
+
 const result = spawnSync(process.execPath, [engineScript, ...process.argv.slice(3)], {
     cwd: enginePath,
     stdio: 'inherit',
-    env: process.env,
+    env: delegateEnv,
 });
 
 process.exit(result.status ?? 1);
