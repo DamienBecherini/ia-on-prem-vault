@@ -3,7 +3,7 @@ title: "🖼️ Multimodalité : Impact Matériel (VRAM & KV Cache)"
 description: Ce qui change dans votre infrastructure quand vous traitez des images, des documents scannés ou de l'audio — encodeurs visuels, coût VRAM, interaction avec le KV Cache, et carte des blueprints concernés.
 sidebar:
   order: 6
-last_modified: "2026-06-05"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -27,18 +27,12 @@ Un **VLM (Vision Language Model)** ajoute un composant amont : un **encodeur vis
 
 ### Comment ça fonctionne
 
-```
-Image (pixels)
-    │
-    ▼
-Encodeur visuel (ex. CLIP-ViT-L/14, SigLIP)
-    │  découpe l'image en patches (ex. 14×14 px)
-    │  encode chaque patch en vecteur
-    ▼
-Séquence de visual tokens (ex. 256 à 1 024 tokens)
-    │
-    ▼
-Projecteur (MLP de connexion) ──► LLM backbone (Qwen, Mistral, LLaMA…)
+```mermaid
+flowchart TD
+    A["🖼️ Image (pixels)"] --> B["Encodeur visuel\n(ex. CLIP-ViT-L/14, SigLIP)\ndécoupe en patches 14×14 px\nencode chaque patch en vecteur"]
+    B --> C["Séquence de visual tokens\n(256 à 1 024 tokens)"]
+    C --> D["Projecteur (MLP de connexion)"]
+    D --> E["LLM backbone\n(Qwen, Mistral, LLaMA…)"]
 ```
 
 L'encodeur et le projecteur sont des poids supplémentaires chargés **en plus** du LLM backbone.
@@ -101,17 +95,11 @@ La transcription audio (réunions, dictées, appels clients) est souvent mention
 
 **Whisper n'est pas un VLM.** C'est un modèle sequence-to-sequence indépendant :
 
-```
-Audio (WAV/MP3)
-    │
-    ▼
-Whisper (modèle distinct — 39 Mo à 1,5 Go selon taille)
-    │  transcrit en texte
-    ▼
-Texte (tokens normaux)
-    │
-    ▼
-LLM backbone (si analyse du transcript est souhaitée)
+```mermaid
+flowchart TD
+    A["🎵 Audio (WAV/MP3)"] --> B["Whisper\n(modèle distinct — 39 Mo à 1,5 Go)\ntranscrit en texte"]
+    B --> C["Texte (tokens normaux)"]
+    C --> D["LLM backbone\n(si analyse du transcript souhaitée)"]
 ```
 
 ### Empreinte VRAM Whisper

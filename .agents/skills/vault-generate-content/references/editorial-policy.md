@@ -60,6 +60,19 @@ This field powers `npm run audit:i18n:strict`, which lists EN mirrors that lag b
 
 When the user requests EN translation of a page, update the EN mirror and set its `last_modified` to match or exceed the FR source date.
 
+## Diagrams
+
+Use **Mermaid** for all architecture diagrams, pipelines, flow charts, and topology schemas. Never use ASCII art (`┌`, `│`, `▼`, `──►`, etc.) in new or revised diagrams.
+
+```mermaid
+flowchart TD
+    A["Source"] --> B["Processing"] --> C["Output"]
+```
+
+ASCII is only acceptable inside a ```` ``` ```` block when it represents actual command output or a log trace — not an explanatory diagram.
+
+When editing a file that contains ASCII diagrams, convert them to Mermaid as part of the edit and update `last_modified`.
+
 ## Links And Style
 
 Use Obsidian wikilinks for internal vault references:
