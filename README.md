@@ -4,10 +4,13 @@
 
 **Zero to Hero — architect and deploy self-hosted LLMs: sovereign, private, high-performance.**
 
+**[Read online → ia-on-prem.damien.becherini.fr](https://ia-on-prem.damien.becherini.fr)**
+
+[![Live site](https://img.shields.io/badge/live-ia--on--prem.damien.becherini.fr-0A7EA4)](https://ia-on-prem.damien.becherini.fr)
 [![Built with starlight-obsidian-engine](https://img.shields.io/badge/built%20with-starlight--obsidian--engine-BC52EE?logo=astro&logoColor=white)](https://github.com/DamienBecherini/starlight-obsidian-engine)
 [![Obsidian](https://img.shields.io/badge/Obsidian-vault-7C3AED?logo=obsidian&logoColor=white)](https://obsidian.md)
 [![Lang](https://img.shields.io/badge/lang-FR%20%2F%20EN-0A7EA4)](#content)
-[![Digital garden](https://img.shields.io/badge/type-digital%20garden-2EA043)](#)
+[![Digital garden](https://img.shields.io/badge/type-digital%20garden-2EA043)](https://ia-on-prem.damien.becherini.fr)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 </div>
