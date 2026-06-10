@@ -122,10 +122,10 @@ Dans une station standard, les échanges GPU↔GPU transitent via le CPU : GPU 0
 
 Les meilleures stations IA (et certains serveurs de workstation denses) utilisent des **puces Switch PCIe** — principalement les séries **Broadcom PLX PEX** — intégrées à la carte mère ou à une carte d'expansion. Ces puces permettent un transfert **Peer-to-Peer (P2P DMA)** direct :
 
-```
-GPU 0 VRAM ──► Switch PCIe (PLX) ──► GPU 1 VRAM
-                   (P2P DMA)
-                ← sans passer par le CPU ni la RAM système →
+```mermaid
+flowchart LR
+    A["GPU 0 VRAM"] -->|"P2P DMA\n(sans CPU ni RAM système)"| B["Switch PCIe (PLX)"]
+    B --> C["GPU 1 VRAM"]
 ```
 
 **Avantages concrets :**

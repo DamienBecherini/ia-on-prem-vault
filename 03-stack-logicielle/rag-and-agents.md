@@ -3,7 +3,7 @@ title: "🧩 RAG & Agents : L'architecture de la connaissance"
 description: Comment donner une mémoire privée et de l'autonomie à un LLM local. Du RAG standard aux workflows agentiques (SmolAgents, LangGraph) et l'approche Memory Tree pour l'économie de VRAM.
 sidebar:
   order: 3
-last_modified: "2026-06-09"
+last_modified: "2026-06-10"
 last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -186,28 +186,16 @@ Sur un cas d'usage de type "copilot documentaire", passer de 20 résultats (prat
 
 ## 7. Architecture de référence — Stack RAG souveraine
 
-```
-Documents (PDF, MD, DOCX)
-        │
-        ▼
-  Chunking + Embedding
-  (modèle local : nomic-embed-text, mxbai-embed via Ollama)
-        │
-        ▼
-  Base vectorielle locale (Qdrant)
-        │
-        ▼
-  Agent de routage (modèle 7-8B rapide)
-  ┌─────┴─────┐
-  │           │
-  ▼           ▼
-Base vec.  Outil web / FS
-  │
-  ▼
-Contexte assemblé
-  │
-  ▼
-LLM principal (70B) — génération de la réponse
+```mermaid
+flowchart TD
+    A["Documents\n(PDF, MD, DOCX)"] --> B["Chunking + Embedding\n(nomic-embed-text, mxbai-embed via Ollama)"]
+    B --> C["Base vectorielle locale\n(Qdrant)"]
+    C --> D["Agent de routage\n(modèle 7–8B rapide)"]
+    D --> E["Base vec."]
+    D --> F["Outil web / FS"]
+    E --> G["Contexte assemblé"]
+    F --> G
+    G --> H["LLM principal (70B)\n— génération de la réponse"]
 ```
 
 **Modèles d'embedding locaux recommandés :**

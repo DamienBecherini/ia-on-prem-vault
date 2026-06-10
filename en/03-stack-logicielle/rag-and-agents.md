@@ -3,7 +3,7 @@ title: "🧩 RAG & Agents: The knowledge architecture"
 description: How to give a local LLM private memory and autonomy. From standard RAG to agentic workflows (SmolAgents, LangGraph) and the Memory Tree approach for VRAM savings.
 sidebar:
   order: 3
-last_modified: "2026-06-09"
+last_modified: "2026-06-10"
 last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -186,28 +186,16 @@ On a document-copilot use case, going from 20 results (common practice) to 3 fil
 
 ## 7. Reference architecture — Sovereign RAG stack
 
-```
-Documents (PDF, MD, DOCX)
-        │
-        ▼
-  Chunking + Embedding
-  (local model: nomic-embed-text, mxbai-embed via Ollama)
-        │
-        ▼
-  Local vector database (Qdrant)
-        │
-        ▼
-  Routing agent (fast 7–8B model)
-  ┌─────┴─────┐
-  │           │
-  ▼           ▼
-Vector DB   Web / FS tool
-  │
-  ▼
-Assembled context
-  │
-  ▼
-Main LLM (70B) — answer generation
+```mermaid
+flowchart TD
+    A["Documents\n(PDF, MD, DOCX)"] --> B["Chunking + Embedding\n(nomic-embed-text, mxbai-embed via Ollama)"]
+    B --> C["Local vector database\n(Qdrant)"]
+    C --> D["Routing agent\n(fast 7–8B model)"]
+    D --> E["Vector DB"]
+    D --> F["Web / FS tool"]
+    E --> G["Assembled context"]
+    F --> G
+    G --> H["Main LLM (70B)\n— answer generation"]
 ```
 
 **Recommended local embedding models:**

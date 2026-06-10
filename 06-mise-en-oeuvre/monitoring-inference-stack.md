@@ -3,7 +3,7 @@ title: "📊 Monitoring de la stack d'inférence"
 description: Mise en place d'un monitoring Prometheus + Grafana pour une stack vLLM ou Ollama — métriques GPU, KV Cache, débit et alertes opérationnelles.
 sidebar:
   order: 6
-last_modified: "2026-06-05"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -17,22 +17,15 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## Architecture de monitoring
 
-```
-┌─────────────────────────────────────────────┐
-│  Sources de métriques                       │
-│                                             │
-│  vLLM /metrics ──────────────────────────┐  │
-│  nvidia-smi ──► nvidia-dcgm-exporter ────┤  │
-│  OS ──────────► node-exporter ───────────┤  │
-└───────────────────────────────────────── │ ─┘
-                                           │
-                                           ▼
-                                     Prometheus
-                                     (scrape + store)
-                                           │
-                                           ▼
-                                      Grafana
-                                   (dashboards + alertes)
+```mermaid
+flowchart TD
+    subgraph Sources["Sources de métriques"]
+        A["vLLM /metrics"]
+        B["nvidia-smi"] --> C["nvidia-dcgm-exporter"]
+        D["OS"] --> E["node-exporter"]
+    end
+    Sources --> P["Prometheus\n(scrape + store)"]
+    P --> G["Grafana\n(dashboards + alertes)"]
 ```
 
 ---

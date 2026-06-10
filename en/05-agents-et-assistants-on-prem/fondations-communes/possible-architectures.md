@@ -5,7 +5,7 @@ description: >
   Comparison table, hardware requirements, and relationship between the two tracks.
 sidebar:
   order: 3
-last_modified: "2026-06-07"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -85,27 +85,13 @@ Not all local AI applications do the same thing. Before choosing a tool, it help
 
 The two tracks in this section are not competitors — they are **complementary** and can coexist on the same infrastructure.
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  Your machine (or your on-premise server)                       │
-│                                                                 │
-│  ┌──────────────────────┐     ┌──────────────────────────────┐  │
-│  │  Track A             │     │  Track B                     │  │
-│  │  Personal Assistant  │────▶│  Custodian Agent             │  │
-│  │                      │     │                              │  │
-│  │  • Knows you         │     │  • Maintains your vault       │  │
-│  │  • Answers your      │     │  • Proposes fixes             │  │
-│  │    questions         │     │  • Creates branches/PRs       │  │
-│  │  • Long memory       │     │  • Notifies you               │  │
-│  └──────────────────────┘     └──────────────────────────────┘  │
-│           │                              │                      │
-│           └──────────────┬───────────────┘                      │
-│                          ▼                                      │
-│              ┌─────────────────────┐                            │
-│              │  Inference engine   │                            │
-│              │  (Ollama / vLLM)    │                            │
-│              └─────────────────────┘                            │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Machine["Your machine (or on-premise server)"]
+        A["**Track A — Personal Assistant**\n• Knows you\n• Answers your questions\n• Long memory"] -->|"feeds"| B["**Track B — Custodian Agent**\n• Maintains your vault\n• Proposes fixes\n• Creates branches/PRs\n• Notifies you"]
+        A --> ENG["**Inference engine**\n(Ollama / vLLM)"]
+        B --> ENG
+    end
 ```
 
 **How they feed each other:**
