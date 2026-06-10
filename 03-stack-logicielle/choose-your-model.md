@@ -3,7 +3,7 @@ title: "🗺️ Choisir son modèle local"
 description: Guide pratique pour naviguer le paysage des LLM open weights en 2026 — familles, tailles, spécialisations et correspondance avec les scénarios on-premise.
 sidebar:
   order: 4
-last_modified: "2026-06-07"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -31,7 +31,7 @@ Avant de regarder un leaderboard, répondez à ces trois questions dans l'ordre 
 
 **2. Combien de VRAM avez-vous ?**
 
-Voir [[01-fondations/quantization-4bit-8bit|Quantification]] pour calculer l'empreinte exacte. En Q4_K_M, règle approximative :
+Voir [[01-fondations/quantization-4bit-8bit|Quantification]] pour calculer l'empreinte exacte. En Q4_K_M, règle approximative[^1] :
 
 | VRAM disponible | Taille de modèle accessible |
 | :-- | :-- |
@@ -63,7 +63,7 @@ La référence généraliste des versions précédentes. Les modèles Llama 3.1/
 - **Llama 3.1 405B** : nécessite un cluster multi-GPU (scénario D). Performances proches des modèles frontière sur les tâches générales.
 
 > [!note] Llama 4 : architecture MoE, non adapté aux GPU consumer
-> Llama 4 Scout (109B total, 17B actifs, 16 experts) et Llama 4 Maverick (400B total, 17B actifs, 128 experts) sont sortis en avril 2025. **Ces modèles nécessitent des serveurs de datacenter** (H100 minimum avec quantification int4 pour Scout). Ils ne rentrent pas dans les scénarios A, B ou C de ce vault. Voir [[04-blueprints/scenario-d-datacenter|Scénario D]].
+> Llama 4 Scout (109B total, 17B actifs, 16 experts) et Llama 4 Maverick (400B total, 17B actifs, 128 experts) sont sortis en avril 2025[^2]. **Ces modèles nécessitent des serveurs de datacenter** (H100 minimum avec quantification int4 pour Scout). Ils ne rentrent pas dans les scénarios A, B ou C de ce vault. Voir [[04-blueprints/scenario-d-datacenter|Scénario D]].
 
 ### Llama 4 (Meta) — scénario D uniquement
 
@@ -89,7 +89,7 @@ La famille la plus polyvalente du paysage open weights en 2026, avec une excelle
 - **DeepSeek V3 (MoE, 671B)** : paramètres totaux très élevés mais ~37B actifs par token. Qualité proche de GPT-4o sur de nombreux benchmarks. Nécessite un cluster (scénario C ou D).
 
 > [!warning] MoE : ne pas confondre total et actif
-> Un modèle MoE 671B nécessite de **charger tous les experts en VRAM** même si seuls 2/64 sont actifs par token. DeepSeek V3 requiert ~390 Go de VRAM totale. Voir [[00-lexique/moe|MoE]] pour le détail.
+> Un modèle MoE 671B nécessite de **charger tous les experts en VRAM** même si seuls 2/64 sont actifs par token. DeepSeek V3 requiert ~390 Go de VRAM totale[^3]. Voir [[00-lexique/moe|MoE]] pour le détail.
 
 ### Mistral / Mixtral (Mistral AI)
 
@@ -109,7 +109,7 @@ Modèles compacts (3.8B–14B) avec une qualité de raisonnement élevée pour l
 
 | Scénario | Matériel type | Modèle recommandé | Cas d'usage |
 | :-- | :-- | :-- | :-- |
-| [[04-blueprints/scenario-a-dev-lab\|A — Labo Dev]] | PC 16 Go VRAM + offloading | Llama 3.1 8B / Phi-4 14B | Dev solo, tests, prototypage |
+| [[04-blueprints/scenario-a-dev-lab|A — Labo Dev]] | PC 16 Go VRAM + offloading | Llama 3.1 8B / Phi-4 14B | Dev solo, tests, prototypage |
 | [[04-blueprints/scenario-b-sme-appliance\|B — Appliance PME]] | APU 128 Go mémoire unifiée | Qwen 2.5 72B Q4 ou Llama 3.3 70B Q4 | Assistant équipe, RAG documentaire |
 | [[04-blueprints/scenario-c-desktop-cluster\|C — Cluster Bureau]] | 2–4 machines Thunderbolt | DeepSeek V3 (MoE) ou Llama 405B | PME avancée, modèle très capable |
 | [[04-blueprints/scenario-d-datacenter\|D — Datacenter]] | Multi-H100 / MI300X | Llama 3.1 405B BF16, DeepSeek V3, Llama 4 Scout/Maverick | Production 50+ utilisateurs, SLA, multimodal |
@@ -160,9 +160,9 @@ Les classements publics (Chatbot Arena, Open LLM Leaderboard, HELM) sont utiles 
 
 Ce que les leaderboards disent quand même d'utile :
 
-- **Chatbot Arena (LMSYS)** : comparaison par préférence humaine, multi-tour — bon indicateur de la qualité conversationnelle générale.
-- **Open LLM Leaderboard (HuggingFace)** : suivi des modèles open weights, versions et quantifications disponibles.
-- **SWE-bench** : le seul leaderboard vraiment représentatif pour les agents de code — mesure sur de vraies issues GitHub.
+- **Chatbot Arena (LMSYS)**[^4] : comparaison par préférence humaine, multi-tour — bon indicateur de la qualité conversationnelle générale.
+- **Open LLM Leaderboard (HuggingFace)**[^5] : suivi des modèles open weights, versions et quantifications disponibles.
+- **SWE-bench**[^6] : le seul leaderboard vraiment représentatif pour les agents de code — mesure sur de vraies issues GitHub.
 
 ---
 
@@ -186,3 +186,14 @@ Avant de télécharger un modèle :
 - [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'inférence]] — choisir le bon moteur selon l'usage
 - [[00-lexique/moe|MoE]] — comprendre les architectures Mixture of Experts
 - [[00-lexique/benchmark-llm|Benchmark LLM]]
+
+---
+
+## 📚 Sources et Références
+
+[^1]: SitePoint, *Quantization Explained: Run 70B Models on Consumer GPUs* (règle empreinte Q4_K_M ≈ 0,5 byte/paramètre + marge KV Cache), 2026. [https://www.sitepoint.com/quantization-explained-consumer-gpu/](https://www.sitepoint.com/quantization-explained-consumer-gpu/)
+[^2]: Meta AI, *The Llama 4 herd: natively multimodal AI innovation* (Scout 109B/17B actifs, Maverick 400B/17B actifs, architecture MoE), Avril 2025. [https://ai.meta.com/blog/llama-4-multimodal-intelligence/](https://ai.meta.com/blog/llama-4-multimodal-intelligence/)
+[^3]: LLMHardware.io, *DeepSeek V3 Hardware Requirements* (MoE 671B — tous les experts résidents en VRAM, ~390 Go en Q4_K_M), 2026. [https://llmhardware.io/guides/deepseek-v3-hardware-requirements](https://llmhardware.io/guides/deepseek-v3-hardware-requirements)
+[^4]: LMSYS, *Chatbot Arena* (classement par préférence humaine multi-tour). [https://chat.lmsys.org/](https://chat.lmsys.org/)
+[^5]: Hugging Face, *Open LLM Leaderboard* (benchmarks modèles open weights). [https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard)
+[^6]: SWE-bench, *Software Engineering Benchmark* (évaluation agents de code sur issues GitHub réelles). [https://www.swebench.com/](https://www.swebench.com/)

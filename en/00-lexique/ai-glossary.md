@@ -1,8 +1,8 @@
 ---
 title: 📖 AI Glossary
 description: Lexicon of technical terms and acronyms used in the vault.
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
+last_modified: "2026-06-10"
+last_verified: "2026-06-10"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -64,8 +64,8 @@ Use it as a quick entry point, then open detailed entries.
 | Term | Quick definition |
 | :-- | :-- |
 | [[00-lexique/tokenisation\|Tokenisation]] | Splitting text into numeric units the model processes. |
-| [[00-lexique/embedding\|Embedding]] | Coordinate vector encoding a token’s meaning. |
-| [[00-lexique/attention\|Attention]] | Mechanism weighting each token’s importance in context. |
+| [[00-lexique/embedding\|Embedding]] | Coordinate vector encoding a token's meaning. |
+| [[00-lexique/attention\|Attention]] | Mechanism weighting each token's importance in context. |
 
 ---
 
@@ -86,7 +86,12 @@ Use it as a quick entry point, then open detailed entries.
 
 | Term | Quick definition |
 | :-- | :-- |
-| [[00-lexique/pagedattention\|PagedAttention]] | KV Cache managed in virtual blocks; key to vLLM production. |
+| [[00-lexique/ollama|Ollama]] | Local llama.cpp runtime + OpenAI API for testing and lab use. |
+| [[00-lexique/vllm|vLLM]] | High-throughput production engine, PagedAttention, multi-user. |
+| [[00-lexique/sglang|SGLang]] | Agentic inference, RadixAttention, structured JSON. |
+| [[00-lexique/radixattention|RadixAttention]] | Prefix-tree KV Cache (SGLang). |
+| [[00-lexique/speculative-decoding|Speculative Decoding]] | Small draft model + large validator model to speed decoding. |
+| [[00-lexique/pagedattention|PagedAttention]] | KV Cache managed in virtual blocks; key to vLLM production. |
 | [[00-lexique/gguf\|GGUF]] | Portable format for local inference with llama.cpp/Ollama. |
 | [[00-lexique/tensorrt-llm\|TensorRT-LLM]] | NVIDIA SDK for highly optimized datacenter GPU compilation. |
 | [[00-lexique/exo\|Exo]] | P2P orchestrator for desktop AI clusters (Mac Mini + Thunderbolt). |
@@ -128,7 +133,7 @@ Use it as a quick entry point, then open detailed entries.
 
 | Term | Quick definition |
 | :-- | :-- |
-| [[00-lexique/on-premise\|On-Premise]] | AI infrastructure hosted on the organization’s own hardware. |
+| [[00-lexique/on-premise\|On-Premise]] | AI infrastructure hosted on the organization's own hardware. |
 | [[00-lexique/llm\|LLM]] | Large language model trained on vast text corpora. |
 | [[00-lexique/inference\|LLM inference]] | Running a trained LLM to generate text on demand. |
 
@@ -149,6 +154,11 @@ Use it as a quick entry point, then open detailed entries.
 | [[00-lexique/excessive-agency\|Excessive Agency]] | OWASP LLM06: agent too permissive in tools, rights, or autonomy. |
 | [[00-lexique/litellm\|LiteLLM]] | OpenAI-compatible gateway routing to local or cloud models. |
 | [[00-lexique/smolagents\|SmolAgents]] | Lightweight Hugging Face agent framework without cloud telemetry. |
+| [[00-lexique/langgraph\|LangGraph]] | State graph for multi-step agents and agentic RAG. |
+| [[00-lexique/appel-outils\|Tool calling]] | Function / tool calling — LLM to structured external functions. |
+| [[00-lexique/prompt-injection\|Prompt injection]] | OWASP LLM01 — hijacking via untrusted content (RAG, web). |
+| [[00-lexique/zero-data-retention\|Zero Data Retention]] | ZDR clause: no cloud persistence of prompts. |
+| [[00-lexique/multi-tenant\|Multi-tenant]] | Multi-organization isolation; inter-tenant RAG risk. |
 | [[00-lexique/context-window\|Context window]] | Maximum tokens the model can handle in active input. |
 | [[00-lexique/quantification\|Quantization]] | Lower numeric precision to cut memory and compute cost. |
 | [[00-lexique/moe\|MoE]] | Architecture with specialized experts partially activated per token. |

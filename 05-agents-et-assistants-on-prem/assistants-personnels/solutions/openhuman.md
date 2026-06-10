@@ -3,7 +3,7 @@ title: "OpenHuman"
 description: Assistant personnel local-first avec Memory Tree, mais expérience managée cloud par défaut pour le routage modèle, OAuth et certaines intégrations.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -61,6 +61,13 @@ OpenHuman est pertinent comme :
 ## 📊 Maturité du projet
 
 Projet open-source en évolution rapide. À auditer avant déploiement client : fréquence des releases, dépendances réseau, modèle d'authentification, politique de conservation des tokens OAuth et options réelles de self-host.
+
+## 🔗 Voir aussi
+
+- [[00-lexique/memory-tree|Memory Tree]] · [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]]
+- [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté]] — piège « local-first ≠ souverain »
+- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj|Khoj]] · [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm|AnythingLLM]]
+- [[04-blueprints/scenario-a-dev-lab|Scénario A]]
 
 ## 📚 Sources
 

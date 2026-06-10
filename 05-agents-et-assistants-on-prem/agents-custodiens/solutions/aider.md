@@ -3,7 +3,7 @@ title: "Aider"
 description: Agent de code terminal-first, open-source, model-agnostic, capable de travailler directement avec Ollama.
 sidebar:
   order: 2
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -66,6 +66,13 @@ Aider est le meilleur candidat pour la première cible souveraine :
 ## 📊 Maturité du projet
 
 Projet mature et très actif, spécialisé dans l'édition de code. Plus étroit qu'OpenHands, mais beaucoup plus simple à opérer.
+
+## 🔗 Voir aussi
+
+- [[00-lexique/autonomous-agent|Agent autonome]] · [[00-lexique/appel-outils|Appel d'outils]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] · [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli|Cursor CLI]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|Workflow HITL]] · [[05-agents-et-assistants-on-prem/agents-custodiens/github-branches-pr-notifications|Branches & PR]]
+- [[04-blueprints/scenario-a-dev-lab|Scénario A]]
 
 ## 📚 Sources
 

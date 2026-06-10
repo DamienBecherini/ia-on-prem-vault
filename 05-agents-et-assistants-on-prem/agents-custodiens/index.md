@@ -5,7 +5,7 @@ description: >
   et attendent la validation humaine avant d'agir.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -14,8 +14,8 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 Un [[00-lexique/agent-custodian|agent custodien]] n'est pas un assistant : on ne lui parle pas pour lui poser des questions. On lui confie des **tâches récurrentes ou événementielles** — maintenir un vault à jour, détecter du code obsolète, proposer des corrections sourcées — et il travaille de manière autonome, en laissant la décision finale à un humain.
 
-> [!tip] Exemple vivant
-> Ce vault lui-même est maintenu en partie par un agent custodien. Le dossier `.agents/` contient les scripts, prompts et journaux d'exécution qui orchestrent cette maintenance.
+> [!tip] Exemple vivant (meta-pédagogique)
+> **Dans ce vault de démonstration**, une partie de la maintenance est orchestrée par un agent custodien : le dossier `.agents/` (hors publication site) contient skills, prompts et journaux d'exécution. Le pattern reste reproductible avec OpenHands, Aider ou tout runner CI — voir les [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|fiches solutions]].
 
 ---
 

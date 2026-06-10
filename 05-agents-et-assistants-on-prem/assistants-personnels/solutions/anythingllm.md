@@ -3,7 +3,7 @@ title: "AnythingLLM"
 description: Application local-first pour RAG, agents, documents et workflows, avec support Ollama et télémétrie désactivable.
 sidebar:
   order: 3
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -57,6 +57,13 @@ AnythingLLM est pertinent pour :
 ## 📊 Maturité du projet
 
 Projet mature et très suivi côté GitHub. Le modèle de licence/édition doit être vérifié avant usage commercial, mais la version self-hosted est suffisamment documentée pour un pilote on-prem.
+
+## 🔗 Voir aussi
+
+- [[00-lexique/rag|RAG]] · [[00-lexique/vectordb|Base vectorielle]] · [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]]
+- [[00-lexique/ollama|Ollama]] · [[06-mise-en-oeuvre/getting-started-with-ollama|🚀 Démarrer avec Ollama]]
+- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|Open WebUI]] · [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj|Khoj]]
+- [[04-blueprints/scenario-b-sme-appliance|Scénario B]] · [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté]]
 
 ## 📚 Sources
 

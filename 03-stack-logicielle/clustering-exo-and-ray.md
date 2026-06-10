@@ -3,7 +3,7 @@ title: "🌐 Clustering IA : Relier les GPU avec Exo et Ray"
 description: Comment fusionner la mémoire de plusieurs machines pour l'IA locale. Comparatif entre Exo (Apple Silicon / Homelab) et Ray Serve (Datacenter).
 sidebar:
   order: 2
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -109,7 +109,7 @@ Pour déployer des agents autonomes on-premise chez des clients :
 ---
 
 ## 📚 Sources et Références
-[^1]: Exo Labs, *GitHub - exo-explore/exo: Run frontier AI locally* (2026).
-[^2]: Particula Tech, *Running DeepSeek V3 671B on M4 Mac Mini Cluster* (Performances via Thunderbolt 5 et Exo), Mars 2026.
-[^3]: Anyscale & vLLM Blog, *Streamlined multi-node serving with Ray symmetric-run* (Lancement vLLM multi-nœuds), Novembre 2025.
-[^4]: Ray Summit 2025, *Ray + vLLM Efficient Multi Node Orchestration for Sparse MoE Model Serving* (Désagrégation Prefill/Decode, MoE), Novembre 2025.
+[^1]: Exo Labs, *GitHub - exo-explore/exo: Run frontier AI locally* (2026). [https://github.com/exo-explore/exo](https://github.com/exo-explore/exo)
+[^2]: Exo Labs, *Running DeepSeek V3 671B on M4 Mac Mini Cluster* (Performances via Thunderbolt 5 et Exo, 3–5 tok/s), Mars 2026. [https://blog.exolabs.net/day-2](https://blog.exolabs.net/day-2)
+[^3]: Anyscale & vLLM Blog, *Streamlined multi-node serving with Ray symmetric-run* (Lancement vLLM multi-nœuds), Novembre 2025. [https://vllm.ai/blog/2025-11-22-ray-symmetric-run](https://vllm.ai/blog/2025-11-22-ray-symmetric-run)
+[^4]: Anyscale, *Ray Serve LLM — Wide-EP disaggregated serving with vLLM* (Désagrégation Prefill/Decode, MoE), 2025. [https://www.anyscale.com/blog/ray-serve-llm-anyscale-apis-wide-ep-disaggregated-serving-vllm](https://www.anyscale.com/blog/ray-serve-llm-anyscale-apis-wide-ep-disaggregated-serving-vllm)

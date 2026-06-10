@@ -1,7 +1,7 @@
 ---
 title: 🚀 Zero to Hero Index
 description: Your entry point for On-Premise AI training
-last_modified: "2026-06-05"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -28,7 +28,7 @@ Cloud APIs bill per request. At low volume, that's negligible. With 50 employees
 **3. Full control: model, behavior, availability**
 On-premises, you choose the model, customize it, run without an Internet connection, and availability does not depend on a third party's pricing or terms of service.
 
-> [!tip] Reading path
+> [!tip] Reading
 > This vault gives you the keys to understand these trade-offs and choose the architecture suited to your situation — from a solo developer machine to a sovereign datacenter cluster.
 
 ---
@@ -38,15 +38,17 @@ On-premises, you choose the model, customize it, run without an Internet connect
 ### 📁 01 - Foundations (The physics of AI)
 *Understand why a €4,000 computer can still be too slow for AI.*
 - [[01-fondations/journey-of-a-prompt|🧠 The Journey of a Prompt (How it works)]]
-- [[01-fondations/memory-bandwidth|🏎️ Memory Bandwidth]]
+- [[01-fondations/memory-bandwidth|🏎️ Memory Bandwidth]] (Memory Bandwidth)
 - [[01-fondations/unified-memory-vs-ram-vs-vram|⚔️ Unified Memory vs RAM vs VRAM]]
 - [[01-fondations/kv-cache-and-context|💾 KV Cache and Context]]
 - [[01-fondations/quantization-4bit-8bit|🗜️ 4-bit & 8-bit Quantization]]
 
 ### 📁 02 - Hardware
 *A catalog of architectures.*
+- [[02-materiel/index|🖥️ Hardware Index]] — blueprint-guided tour
 - [[02-materiel/apu-and-unified-memory|🧠 APU & Unified Memory]] (AMD Strix Halo & Mac)
 - [[02-materiel/stations-multi-gpu|🧩 Multi-GPU Workstations]] (Nvidia, PCIe)
+- [[02-materiel/gpu-rack-servers|🏭 GPU rack servers]] (1U–HGX, RTX vs datacenter)
 - [[02-materiel/network-roce-infiniband-thunderbolt|🌐 AI Networking: RoCE, InfiniBand, and Thunderbolt]]
 
 ### 📁 03 - Software stack (The engines)
@@ -58,8 +60,8 @@ On-premises, you choose the model, customize it, run without an Internet connect
 
 ### 📁 04 - Architecture blueprints (Scenarios)
 *Ready-to-propose configurations for your clients.*
-- [[04-blueprints/scenario-a-dev-lab|🛠️ Scenario A: Dev Lab (CPU offloading)]]
-- [[04-blueprints/scenario-b-sme-appliance|🏢 Scenario B: SME Appliance (Unified memory)]]
+- [[04-blueprints/scenario-a-dev-lab|🛠️ Scenario A: Dev Lab (CPU Offloading)]]
+- [[04-blueprints/scenario-b-sme-appliance|🏢 Scenario B: SME Appliance (Unified Memory)]]
 - [[04-blueprints/scenario-c-desktop-cluster|🖥️ Scenario C: Desktop Cluster (Exo & Thunderbolt)]]
 - [[04-blueprints/scenario-d-datacenter|🏭 Scenario D: Datacenter (RoCE & Multi-GPU)]]
 - [[04-blueprints/tco-comparison|💰 TCO comparison: On-premise vs Cloud API]] — break-even by scenario
@@ -98,7 +100,7 @@ On-premises, you choose the model, customize it, run without an Internet connect
 | 50+ (production) | 70B–400B | > €300,000 | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
 | SLA constraint < 500 ms | Any | — | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
 
-> [!tip] Reading path
+> [!tip] Reading
 > Start with the row that matches your user count, then check that the budget fits. When in doubt, read [[04-blueprints/scenario-a-dev-lab|Scenario A]] first to understand the mechanisms, then move up to your target scenario.
 
 ---

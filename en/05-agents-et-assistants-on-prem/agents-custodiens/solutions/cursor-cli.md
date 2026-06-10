@@ -3,7 +3,7 @@ title: "Cursor CLI"
 description: Cursor agent terminal interface, very effective for prototyping a custodian agent, but not sovereign in the strict on-prem sense.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -20,7 +20,7 @@ For this vault, Cursor CLI is an **excellent MVP**: it quickly validates the "au
 
 ## ✅ Strengths
 
-- Very productive on an existing repo.
+- Very productive for working on an existing repo.
 - Headless mode suited to scripts.
 - Compatible with rules, `AGENTS.md`, MCP, search, and shell per configuration.
 - Good tool for generating a branch or maintenance report.
@@ -39,7 +39,7 @@ For this vault, Cursor CLI is an **excellent MVP**: it quickly validates the "au
 - **Memory:** depends on Cursor and the session.
 - **Telemetry:** depends on Cursor/Privacy Mode.
 - **100% offline mode:** no.
-- **Verdict:** ❌ strict on-prem incompatible, but useful as MVP.
+- **Verdict:** ❌ incompatible with strict on-prem, but useful as an MVP.
 
 See the grid: [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Sovereignty & Privacy]].
 
@@ -49,14 +49,21 @@ Cursor CLI can trigger:
 
 - a link audit;
 - a lexicon update;
-- a source report;
+- a sources report;
 - a manual or semi-automated PR.
 
-This vault's `.agents/` folder is an example of structuring compatible with this approach.
+The `.agents/` folder in this vault is an example of structuring compatible with this approach.
 
 ## 📊 Project maturity
 
-Product integrated with Cursor, very practical for prototyping and personal use. For an organization under strict sovereignty, it should remain a development tool, not the final target.
+Product integrated with Cursor, very practical for prototyping and personal use. For an organization subject to strict sovereignty, it must remain a development tool, not the final target.
+
+## 🔗 See also
+
+- [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]] · [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]]
+- [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Sovereignty]] — cloud IDE vs on-prem custodian
+- [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|HITL Workflow]]
+- [[04-blueprints/scenario-a-dev-lab|Scenario A]]
 
 ## 📚 Sources
 
