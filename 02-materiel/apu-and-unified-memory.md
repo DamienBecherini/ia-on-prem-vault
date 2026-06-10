@@ -1,9 +1,9 @@
 ---
 title: 🧠 APU & Mémoire Unifiée
-description: Analyse comparative des puces Apple Silicon M4 Max / M3 Ultra et des APU AMD Ryzen AI Max PRO 400 (Gorgon Halo) pour l'inférence de grands LLM.
+description: Analyse comparative des puces Apple Silicon M4 Max / M3 Ultra, des APU AMD Ryzen AI Max PRO 400 (Gorgon Halo) et de la famille NVIDIA Grace Blackwell (DGX Spark) pour l'inférence de grands LLM.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -11,7 +11,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] En bref
-> Apple Silicon et AMD Gorgon Halo permettent d'allouer 120 à 160 Go de mémoire unifiée à un LLM sur une station de bureau. Apple offre le meilleur débit ; AMD offre Linux natif et Docker. Le bon choix dépend de votre stack, pas seulement de la capacité.
+> Apple Silicon, AMD Gorgon Halo et NVIDIA DGX Spark offrent tous 128 Go+ de mémoire unifiée sur une station de bureau. Apple domine la bande passante ; AMD offre Linux natif et Docker ; NVIDIA DGX Spark apporte le FP4 natif, CUDA et un port scale-out QSFP 200 Gbps. Le bon choix dépend de votre stack, pas seulement de la capacité.
 
 Pour un déploiement souverain d'IA en entreprise, la **mémoire unifiée** est l'une des ruptures matérielles les plus importantes de la décennie.
 
@@ -43,6 +43,21 @@ Refresh professionnel de la plateforme **Strix Halo** (Zen 5 + RDNA 3.5), annonc
 *   **Allocation GPU :** jusqu'à **160 Go** réservables comme VRAM iGPU, **32 Go** laissés au système [^1][^2].
 *   **Forces :** x86 ouvert (Linux / Windows / Docker natif), rapport capacité/prix attractif sur la plateforme **Ryzen AI Halo** (~3 999 $ pour la config 128 Go actuelle) [^7][^8].
 *   **Limites :** bande passante ~**2× inférieure** au M4 Max — le décodage des modèles denses 70B reste memory-bound (~5 tok/s mesurés sur Strix Halo 395, profil similaire attendu sur PRO 400) [^2][^6][^9].
+
+### 3. NVIDIA Grace Blackwell (DGX Spark / RTX Spark)
+
+Annoncé en 2025 et disponible à partir de 2026, le **DGX Spark** (anciennement Project Digits) est le premier produit NVIDIA combinant un SoC ARM et un GPU Blackwell sur un boîtier de bureau [^14].
+
+*   **Architecture :** SoC **Grace Blackwell** — CPU ARM 20 cœurs (Grace) + GPU Blackwell, co-développé avec MediaTek, gravé TSMC 3nm [^14].
+*   **Mémoire unifiée LPDDR5x :** **128 Go** sur le DGX Spark (~3 999 $) ; la DGX Station monte à **748 Go** pour des modèles > 400B [^14].
+*   **Bande passante :** ~273 Go/s (LPDDR5x) — proche de l'AMD Gorgon Halo [^14].
+*   **Consommation :** ~**240 W** (DGX Spark) vs ~1 100 W pour une station 2× RTX 4090 [^14].
+*   **FP4 natif (Blackwell) :** contrairement à l'architecture Ada Lovelace (RTX 4090 — FP4 émulé), Blackwell implémente le FP4 dans le silicium — sans surcoût logiciel [^15].
+*   **Scale-out QSFP 200 Gbps :** un port dédié permet d'interconnecter plusieurs boîtiers DGX Spark en fabric mesh, sans switch externe supplémentaire [^14].
+*   **Logiciel NVIDIA Sync :** environnement CUDA complet pré-installé pour réduire la friction au démarrage.
+
+> [!tip] Positionnement DGX Spark
+> Le DGX Spark brille sur la **capacité** (128 Go LPDDR5x accessibles à CUDA sans friction) et sur le **FP4 natif** — utile pour charger des modèles 70B+ et entraîner avec LoRA sans compromis de précision. En revanche, pour l'inférence pure sur des modèles ≤ 34B, une station **2× RTX 4090 (~1 100 W, ~4 500 €)** reste nettement plus rapide grâce à sa GDDR6X dédiée à très haute bande passante. Le DGX Spark est le bon choix quand la **capacité mémoire et la simplicité CUDA** priment sur le débit brut.
 
 ---
 
@@ -109,20 +124,22 @@ sudo sysctl iogpu.wired_limit_mb=122880
 
 ## 📊 Arbitrage Économique et Performance (2026)
 
-*Comparaison de stations unifiées pour **Llama 3.1 70B Q4_K_M** (~40 Go de poids). Vitesses = **décodage** (génération), ordres de grandeur mesurés ou publiés — varient selon backend (MLX vs llama.cpp), contexte et build.*
+*Comparaison de stations unifiées pour **Llama 3.1 70B Q4_K_M** (~40 Go de poids). Vitesses = **décodage** (génération), ordres de grandeur mesurés ou publiés — varient selon backend (MLX vs llama.cpp vs CUDA), contexte et build.*
 
-| Critère | Mac Studio (M4 Max 128 Go) | Mac Studio (M3 Ultra 192 Go) | AMD Ryzen AI (Halo / PRO 400) |
-| :--- | :--- | :--- | :--- |
-| **Puce (config LLM)** | M4 Max 16c/40c GPU [^4] | M3 Ultra 32c/80c GPU [^4] | Ryzen AI Max+ PRO 495 [^1][^2] |
-| **RAM unifiée max** | 128 Go [^4] | 512 Go (192 Go courant) [^4] | 192 Go [^1][^2] |
-| **VRAM GPU max allouable** | ~120 Go (`sysctl`, 128 Go machine) [^12] | ~160–184 Go (selon RAM totale) [^12] | **160 Go** (BIOS max) — en pratique ~130–140 Go pour préserver le page cache OS [^1][^2] |
-| **Bande passante** | **546 Go/s** [^3][^4] | **819 Go/s** [^4] | **~273 Go/s** [^1][^2] |
-| **Débit 70B Q4 (decode)** | **~10–12 tok/s** (MLX) [^9][^10] | **~12–15 tok/s** (MLX) [^9][^10] | **~4,5–5 tok/s** (Strix Halo 395, profil PRO 400 similaire) [^6][^9] |
-| **OS** | macOS | macOS | **Linux / Windows** [^1][^2] |
-| **Tarif indicatif** | ~4 500–5 500 € (128 Go, CTO) [^4][^5] | ~5 000–7 500 € (192 Go+, CTO) [^4][^5] | **~3 700 €** (Ryzen AI Halo 128 Go, 3 999 $) [^7][^8] |
+| Critère | Mac Studio (M4 Max 128 Go) | Mac Studio (M3 Ultra 192 Go) | AMD Ryzen AI (Halo / PRO 400) | **NVIDIA DGX Spark** |
+| :--- | :--- | :--- | :--- | :--- |
+| **Puce (config LLM)** | M4 Max 16c/40c GPU [^4] | M3 Ultra 32c/80c GPU [^4] | Ryzen AI Max+ PRO 495 [^1][^2] | Grace Blackwell SoC [^14] |
+| **RAM unifiée max** | 128 Go [^4] | 512 Go (192 Go courant) [^4] | 192 Go [^1][^2] | **128 Go LPDDR5x** [^14] |
+| **VRAM GPU max allouable** | ~120 Go (`sysctl`, 128 Go machine) [^12] | ~160–184 Go (selon RAM totale) [^12] | **160 Go** (BIOS max) — en pratique ~130–140 Go [^1][^2] | ~128 Go (accès CUDA direct) [^14] |
+| **Bande passante** | **546 Go/s** [^3][^4] | **819 Go/s** [^4] | **~273 Go/s** [^1][^2] | **~273 Go/s** [^14] |
+| **Débit 70B Q4 (decode)** | **~10–12 tok/s** (MLX) [^9][^10] | **~12–15 tok/s** (MLX) [^9][^10] | **~4,5–5 tok/s** (Strix Halo 395) [^6][^9] | *non publié officiellement* |
+| **FP4 natif** | ❌ | ❌ | ❌ | ✅ Blackwell [^15] |
+| **Scale-out** | ❌ | ❌ | ❌ | ✅ QSFP 200 Gbps [^14] |
+| **OS** | macOS | macOS | **Linux / Windows** [^1][^2] | Linux (CUDA) [^14] |
+| **Tarif indicatif** | ~4 500–5 500 € (128 Go, CTO) [^4][^5] | ~5 000–7 500 € (192 Go+, CTO) [^4][^5] | **~3 700 €** (128 Go) [^7][^8] | **~3 999 $** (128 Go) [^14] |
 
 > [!note] Lecture des chiffres
-> Les vitesses Apple proviennent de benchmarks communautaires **MLX** ; **llama.cpp/Metal** est souvent légèrement plus lent en decode pur, mais plus flexible en long contexte [^9][^10]. La borne théorique memory-bound (~13–21 tok/s Apple vs ~7 tok/s AMD) est détaillée dans [[01-fondations/unified-memory-vs-ram-vs-vram|Mémoire unifiée vs RAM vs VRAM]].
+> Les vitesses Apple proviennent de benchmarks communautaires **MLX** ; **llama.cpp/Metal** est souvent légèrement plus lent en decode pur [^9][^10]. Les chiffres NVIDIA DGX Spark en inférence ne sont pas encore publiés officiellement au moment de la rédaction — les claims des sources communautaires ne sont pas repris ici. La borne théorique memory-bound (~13–21 tok/s Apple vs ~7 tok/s AMD) est détaillée dans [[01-fondations/unified-memory-vs-ram-vs-vram|Mémoire unifiée vs RAM vs VRAM]].
 
 ---
 
@@ -132,7 +149,8 @@ Pour un déploiement souverain on-premise :
 
 1.  **Souveraineté x86 + Docker (AMD Halo / PRO 400) :** si la stack repose sur **Linux, Docker et Python**, la plateforme AMD est la plus rationnelle : 160 Go VRAM allouables, écosystème ouvert, prix inférieur au Mac Studio équivalent en capacité [^1][^2][^7]. Acceptez un débit **~5 tok/s** sur un 70B dense — privilégiez les **MoE** (Qwen3.5-A3B, etc.) pour l'interactivité [^6].
 2.  **Vitesse et confort (Mac Studio) :** pour le meilleur ressenti sur un **70B dense** (~12–15 tok/s en MLX sur M3 Ultra), le **Mac Studio M3 Ultra 192 Go+** reste le roi de la bande passante unifiée en 2026 ; le **M4 Max 128 Go** est un excellent compromis si 128 Go suffisent [^4][^9][^10]. Budget macOS et conteneurs à anticiper.
-3.  **Dimensionnez dès l'achat :** la mémoire LPDDR5X est **soudée** — impossible d'upgrader après coup. Prévoyez marge pour **poids + KV cache + OS + page cache de chargement** (voir chapitres fondations). Sur un système 192 Go AMD, allouer 160 Go au GPU laisse 32 Go système — suffisant au repos, mais serré lors du premier chargement d'un modèle ≥ 100 Go.
+3.  **CUDA + FP4 + scale-out (NVIDIA DGX Spark) :** si votre équipe est déjà dans l'écosystème NVIDIA (CUDA, TensorRT, vLLM), le DGX Spark offre 128 Go LPDDR5x accessibles nativement via CUDA, le FP4 natif Blackwell, et la possibilité d'interconnecter plusieurs boîtiers via QSFP 200 Gbps sans reconfigurer l'infrastructure [^14]. Il n'est pas le meilleur choix pour l'inférence pure sur modèles ≤ 34B : une station 2× RTX 4090 reste plus rapide à ce cas d'usage.
+4.  **Dimensionnez dès l'achat :** la mémoire LPDDR5X est **soudée** — impossible d'upgrader après coup. Prévoyez marge pour **poids + KV cache + OS + page cache de chargement** (voir chapitres fondations). Sur un système 192 Go AMD, allouer 160 Go au GPU laisse 32 Go système — suffisant au repos, mais serré lors du premier chargement d'un modèle ≥ 100 Go.
 
 ---
 
@@ -151,3 +169,5 @@ Pour un déploiement souverain on-premise :
 [^11]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (goulots mémoire, quantification), novembre 2023. [https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/](https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/)
 [^12]: ggml-org/llama.cpp, *Issue #16646* (`iogpu.wired_limit_mb`), 2025. [https://github.com/ggml-org/llama.cpp/issues/16646](https://github.com/ggml-org/llama.cpp/issues/16646)
 [^13]: ivanopcode, *Override macOS Metal VRAM cap* (`iogpu.wired_limit_mb`, tableaux par RAM), 2025. [https://github.com/ivanopcode/devnote-override-macos-metal-vram-cap](https://github.com/ivanopcode/devnote-override-macos-metal-vram-cap)
+[^14]: NVIDIA, *Project DIGITS / DGX Spark* — page produit officielle (Grace Blackwell SoC, 128 Go LPDDR5x, ~273 Go/s, ~240 W TDP, QSFP 200 Gbps, 3 999 $, NVIDIA Sync). [https://www.nvidia.com/en-us/project-digits/](https://www.nvidia.com/en-us/project-digits/)
+[^15]: NVIDIA, *NVIDIA Blackwell Architecture Technical Brief* (FP4 Tensor Cores natifs vs FP4 émulé Ada Lovelace). [https://resources.nvidia.com/en-us-blackwell-architecture](https://resources.nvidia.com/en-us-blackwell-architecture)

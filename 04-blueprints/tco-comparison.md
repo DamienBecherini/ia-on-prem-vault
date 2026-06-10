@@ -7,7 +7,7 @@ prices_valid_as_of: "2026-06"
 last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
-last_modified: "2026-06-09"
+last_modified: "2026-06-10"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
@@ -206,6 +206,38 @@ Pour construire votre business case, collectez ces données :
 4. **Coût électricité :** puissance en kW × heures/jour × 30 × tarif kWh local
 5. **Coût ops :** temps administrateur × taux journalier
 6. **Point de rentabilité :** `(Coût matériel) / (Coût cloud mensuel - Coût on-prem mensuel)`
+
+---
+
+## Choisir le matériel selon la phase
+
+La comparaison TCO ci-dessus raisonne principalement sur l'**inférence** (modèle gelé, génération de texte). Le profil matériel requis change significativement selon la phase du cycle de vie du modèle.
+
+| Phase | Besoin mémoire | Profil matériel adapté | Exemple |
+| :-- | :-- | :-- | :-- |
+| **Inférence** (modèle gelé, génération) | Poids + KV cache | GPU rapide avec VRAM suffisante | RTX 4090 (24 Go), L40S (48 Go), APU 128 Go |
+| **Fine-tuning LoRA** (adaptateurs seulement) | Poids + gradients + optimizer states (~2–3× l'inférence) | Mémoire unifiée haute capacité ou multi-GPU | Mac Studio 192 Go, AMD Gorgon Halo, DGX Spark 128 Go |
+| **Fine-tuning full (SFT complet)** | Très élevé — souvent 2–4× les poids bruts en FP16 | Serveur multi-GPU ou datacenter | 2–4× A100 80 Go, ou DGX Station |
+| **Entraînement complet (pre-training)** | Plusieurs centaines de Go à plusieurs To | Clusters datacenter — hors portée on-prem PME | H100, systèmes HGX/DGX |
+
+> [!warning] Ne pas confondre les profils
+> Un GPU rapide en inférence (RTX 4090, 24 Go VRAM) peut crasher immédiatement sur du fine-tuning LoRA d'un modèle 70B en FP16 — les optimizer states alourdissent la mémoire requise à ~60–70 Go, bien au-delà de la VRAM disponible. À l'inverse, un système haute capacité mais lente bande passante (ex. AMD Gorgon Halo à ~273 Go/s) est sous-optimal pour servir 50 utilisateurs simultanés sur un modèle 7B.
+
+### Le KPI « tokens/s par k€ » pour comparer les options d'inférence
+
+Pour arbitrer entre deux options matérielles d'inférence, le ratio **tokens par seconde par millier d'euros investi** (tokens/s/k€) est plus parlant que la vitesse brute seule.
+
+Exemple de lecture :
+- RTX 4090 (24 Go, ~2 000 €) : si elle délivre ~60 tok/s sur un modèle 8B → **~30 tok/s/k€**
+- Mac Studio M4 Max 128 Go (~5 000 €) : si elle délivre ~10 tok/s sur un 70B Q4 → **~2 tok/s/k€**
+
+Ces deux chiffres sont cohérents : le Mac Studio sert des modèles beaucoup plus gros que la RTX 4090, donc la comparaison directe n'a de sens que pour le **même modèle et la même quantification**.
+
+> [!warning] Limites du ratio tokens/s/k€
+> Ce ratio dépend fortement du **modèle**, de la **quantification**, et du **batch size** :
+> - **Batch size = 1 (un seul utilisateur)** : favorise les GPU à haute bande passante GDDR (RTX 4090, L40S) — le décodage autorégressif est memory-bound, et la GDDR est plus rapide que la LPDDR5x.
+> - **Batch size élevé (10–50 requêtes simultanées)** : favorise les systèmes haute capacité mémoire et les moteurs optimisant le batching (vLLM avec PagedAttention) — la bande passante est moins limitante, la capacité prime.
+> - **Modèles > 70B** : seuls les systèmes avec 128 Go+ de mémoire peuvent s'exprimer — la comparaison RTX 4090 vs DGX Spark sur un 70B n'est pas possible sur la RTX 4090.
 
 ---
 
