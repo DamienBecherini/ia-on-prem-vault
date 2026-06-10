@@ -166,3 +166,7 @@ if (missingEn.length === 0) {
 
 console.log(`---\n`);
 console.log(`_Total FR files scanned: ${inSync.length + stale.length + missingEn.length}_`);
+
+if (missingEn.length > 0 || (STALE_DAYS === 0 && stale.length > 0)) {
+  process.exit(1);
+}

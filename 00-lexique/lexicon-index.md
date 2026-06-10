@@ -1,6 +1,7 @@
 ---
 title: Index du lexique
 description: Liste alphabétique de toutes les fiches du lexique IA on-premise.
+last_modified: "2026-06-10"
 ---
 
 Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-lexique/ai-glossary|Glossaire IA]].
@@ -60,6 +61,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [RDMA](/00-lexique/rdma/) | Accès mémoire distant direct sans copie CPU classique. |
 | [RoCE](/00-lexique/roce/) | Implémentation d'RDMA sur Ethernet convergé. |
 | [SmolAgents](/00-lexique/smolagents/) | Framework léger de Hugging Face pour l'orchestration agentique locale, alternative souveraine à LangChain. |
+| [Speculative Decoding](/00-lexique/speculative-decoding/) | Technique d'accélération d'inférence où un petit modèle rapide génère des tokens candidats que le grand modèle vérifie en un seul passage. Nécessite deux modèles chargés simultanément. |
 | [Tensor Parallelism](/00-lexique/tensor-parallelism/) | Stratégie de distribution d'un LLM par découpage des matrices mathématiques entre plusieurs GPU d'un même nœud. |
 | [TensorRT-LLM](/00-lexique/tensorrt-llm/) | SDK NVIDIA de compilation et d'inférence ultra-optimisée pour GPU datacenter. |
 | [TFLOPS](/00-lexique/tflops/) | Mesure de débit de calcul en opérations flottantes. |
