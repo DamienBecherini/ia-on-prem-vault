@@ -3,7 +3,7 @@ title: "LiteLLM"
 description: OpenAI-compatible gateway to route agents and applications to Ollama, vLLM, cloud providers, or internal models.
 sidebar:
   order: 4
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -16,7 +16,7 @@ LiteLLM is an open-source proxy/gateway that exposes an OpenAI-compatible interf
 
 ## 💡 Why this project interests us
 
-For a custodian agent, LiteLLM serves as the **model abstraction layer**. The agent speaks OpenAI-compatible; the operator decides whether the request goes to local Ollama, vLLM, or a cloud provider.
+For a custodian agent, LiteLLM serves as a **model abstraction layer**. The agent speaks OpenAI-compatible; the operator decides whether the request goes to local Ollama, vLLM, or a cloud provider.
 
 This avoids rewriting the agent on every model change.
 
@@ -36,7 +36,7 @@ This avoids rewriting the agent on every model change.
 
 ## 🔒 Sovereignty and privacy
 
-- **Data:** transits through the proxy; destination per backend.
+- **Data:** transit through the proxy; destination per backend.
 - **Model:** local if local Ollama/vLLM backend; cloud if cloud provider.
 - **Memory:** not application memory, except logs/observability.
 - **Telemetry/logging:** configurable; disable message logging for sensitive data[^3].
@@ -51,11 +51,18 @@ LiteLLM is the target layer between:
 - Ollama/vLLM;
 - routing policies;
 - local logs;
-- optional cloud failover.
+- optional cloud fallback.
 
 ## 📊 Project maturity
 
-Widely used as an LLM gateway in stacks. Its power comes with responsibility: configuration, secrets, logs, and routing rules must be versioned and audited.
+Very widely used in LLM stacks as a gateway. Its power comes with responsibility: configuration, secrets, logs, and routing rules must be versioned and audited.
+
+## 🔗 See also
+
+- [[00-lexique/litellm|LiteLLM]] · [[00-lexique/vllm|vLLM]] · [[00-lexique/ollama|Ollama]]
+- [[06-mise-en-oeuvre/local-inference-security|🔐 Inference security]] · [[06-mise-en-oeuvre/monitoring-inference-stack|📊 Monitoring]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] — full agent orchestration
+- [[04-blueprints/scenario-d-datacenter|Scenario D]]
 
 ## 📚 Sources
 

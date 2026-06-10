@@ -3,7 +3,7 @@ title: "🛠️ Scénario A : Le Labo Dev (PC GPU ou mémoire unifiée)"
 description: Le blueprint pour s'initier à l'IA locale à moindre coût. PC RTX avec CPU offloading, ou laptop/station à mémoire unifiée pour un meilleur confort solo.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -91,5 +91,5 @@ Pour un usage PME quotidien avec des modèles 70B sans subir cette lourde pénal
 
 ## 📚 Sources et Références
 
-[^1]: Particula Tech & Reddit Community Benchmarks (r/LocalLLaMA), *Hybrid Inference Llama 3 70B on RTX 4090 24GB + 64GB RAM* (Vitesse de décodage estimée à ~2-5 tokens/s selon configuration DDR5), 2024-2026.
-[^2]: Documentation locale Ollama, *Ollama System Requirements 2026: CPU-only and Partial GPU Offloading penalties* (Baisse de performance de 5x à 10x lors de l'offloading RAM), 2026.
+[^1]: CraftRigs, *llama.cpp 70B on 24 GB VRAM — n-gpu-layers hybrid inference* (RTX 4090 + 64 GB DDR5, ~8–12 tok/s selon configuration), 2026. [https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/](https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/)
+[^2]: Ollama Documentation, *FAQ — GPU layer offloading and partial CPU inference* (Pénalité de performance lors de l'offloading RAM), 2026. [https://docs.ollama.com/faq](https://docs.ollama.com/faq)

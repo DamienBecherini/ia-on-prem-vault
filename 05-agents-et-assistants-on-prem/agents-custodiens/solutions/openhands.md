@@ -3,7 +3,7 @@ title: "OpenHands"
 description: Plateforme agentique Docker-based pour développement logiciel, puissante mais plus lourde à opérer qu'un CLI simple.
 sidebar:
   order: 3
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -55,6 +55,13 @@ Pour la maintenance Markdown simple, Aider reste plus léger.
 ## 📊 Maturité du projet
 
 Projet très actif, large communauté, nombreux composants. Maturité élevée, mais complexité opérationnelle élevée aussi.
+
+## 🔗 Voir aussi
+
+- [[00-lexique/agent-custodian|Agent custodien]] · [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|Workflow HITL]]
+- [[00-lexique/appel-outils|Appel d'outils]] · [[00-lexique/vllm|vLLM]] · [[00-lexique/litellm|LiteLLM]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]] · [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli|Cursor CLI]]
+- [[06-mise-en-oeuvre/local-inference-security|🔐 Sécurité inférence]] · [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]]
 
 ## 📚 Sources
 

@@ -3,7 +3,7 @@ title: "OpenHands"
 description: Docker-based agentic platform for software development, powerful but heavier to operate than a simple CLI.
 sidebar:
   order: 3
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -16,7 +16,7 @@ OpenHands is a software development agent platform with CLI, local interface, SD
 
 ## 💡 Why this project interests us
 
-OpenHands is relevant when the custodian agent must go beyond simple file editing: running tests, isolated environment, long tasks, web UI, sandbox, and more structured orchestration.
+OpenHands is relevant when the custodian agent must go beyond simple file editing: test execution, isolated environment, long tasks, web interface, sandbox, and more structured orchestration.
 
 ## ✅ Strengths
 
@@ -30,14 +30,14 @@ OpenHands is relevant when the custodian agent must go beyond simple file editin
 - Heavier setup: Docker, volumes, images, LLM configuration.
 - Local models must be powerful for agentic tasks[^4].
 - Larger attack surface than Aider.
-- May be oversized for simple vault audits.
+- Can be oversized for simple vault audits.
 
 ## 🔒 Sovereignty and privacy
 
 - **Data:** local if instance and model are local.
 - **Model:** local possible via Ollama/vLLM/LM Studio; cloud possible per provider.
 - **Memory:** depends on session and Docker workspace.
-- **Telemetry:** audit per deployment.
+- **Telemetry:** to audit per deployment.
 - **100% offline mode:** possible but requires preloaded images/models.
 - **Verdict:** ⚠️ configurable — sovereign if self-host + local LLM, heavy to harden.
 
@@ -55,6 +55,13 @@ For simple Markdown maintenance, Aider remains lighter.
 ## 📊 Project maturity
 
 Very active project, large community, many components. High maturity, but also high operational complexity.
+
+## 🔗 See also
+
+- [[00-lexique/agent-custodian|Custodian agent]] · [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|HITL Workflow]]
+- [[00-lexique/appel-outils|Tool calling]] · [[00-lexique/vllm|vLLM]] · [[00-lexique/litellm|LiteLLM]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]] · [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli|Cursor CLI]]
+- [[06-mise-en-oeuvre/local-inference-security|🔐 Inference security]] · [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]]
 
 ## 📚 Sources
 

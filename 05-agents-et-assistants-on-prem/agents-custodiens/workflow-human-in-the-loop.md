@@ -3,7 +3,7 @@ title: "⚙️ Workflow : Human-in-the-loop de bout en bout"
 description: "Cycle d'exécution recommandé pour un agent custodien : déclencheur, branche, diff, rapport, revue humaine, merge et publication."
 sidebar:
   order: 3
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -44,7 +44,7 @@ Pour ce vault, le niveau raisonnable est **2 ou 3** : branche/PR, validation hum
 Avant chaque run :
 
 - **Vérifier que le repo est propre (`git status --porcelain`)** : si le repo est *dirty* (modifications non commitées), l'agent doit **avorter** et notifier l'opérateur. Il ne doit jamais embarquer un brouillon humain en cours dans son commit. Exception explicite uniquement : `git stash` avec un nom horodaté si l'opérateur a activé ce mode dans la configuration de l'agent.
-- vérifier que le plan actif est bien dans `.cursor/plans/` (pas un plan obsolète) ;
+- vérifier que le **plan de maintenance actif** est à jour (dans ce vault : répertoire `.cursor/plans/` du dépôt) ;
 - ignorer `_private/`, `build/`, `dist/`, `.git/` et les logs obsolètes ;
 - refuser les commandes destructrices ;
 - citer les sources pour tout changement factuel.

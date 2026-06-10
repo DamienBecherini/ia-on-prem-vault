@@ -231,5 +231,5 @@ Tenstorrent (fondé par Jim Keller) commercialise les accélérateurs **Wormhole
 [^6]: vLLM, *Parallelism and Scaling* (tensor parallel, pipeline parallel, Ray, multiprocessing, GPUDirect RDMA). [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/)
 [^7]: NVIDIA, *L40S Product Page* (Ada Lovelace, FP8 Tensor Cores, 48 Go GDDR6 ECC). [https://www.nvidia.com/en-us/data-center/l40s/](https://www.nvidia.com/en-us/data-center/l40s/)
 [^8]: MLCommons, *MLPerf Inference Datacenter v4.1 Results* (benchmark inférence datacenter, coût/token). [https://mlcommons.org/benchmarks/inference-datacenter/](https://mlcommons.org/benchmarks/inference-datacenter/)
-[^9]: Source communautaire, *Tenstorrent N150 benchmark vs RTX 4090 — LLM inference* (architecture Wormhole, TT-Metal, fork tenstorrent/vllm, compatibilité partielle), 2025. Non publié officiellement par Tenstorrent Inc.
+[^9]: Tenstorrent, *vLLM integration with TT-Metal* (architecture Wormhole, fork tenstorrent/vllm, compatibilité partielle vLLM standard), 2025. [https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md](https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md)
 

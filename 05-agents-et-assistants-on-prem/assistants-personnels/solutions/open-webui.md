@@ -3,7 +3,7 @@ title: "Open WebUI"
 description: Interface web self-hosted pour Ollama et backends OpenAI-compatibles, adaptée aux déploiements locaux multi-utilisateurs.
 sidebar:
   order: 2
-last_modified: "2026-06-07"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -60,6 +60,14 @@ Open WebUI est un bon compagnon des blueprints :
 ## 📊 Maturité du projet
 
 Projet très utilisé et activement maintenu, avec une large communauté GitHub et un écosystème de plugins. La maturité produit est bonne, mais le durcissement sécurité reste une responsabilité de l'opérateur.
+
+## 🔗 Voir aussi
+
+- [[00-lexique/ollama|Ollama]] · [[00-lexique/vllm|vLLM]] — backends inférence
+- [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] · [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'inférence]]
+- [[04-blueprints/scenario-b-sme-appliance|Scénario B]] · [[04-blueprints/scenario-d-datacenter|Scénario D]]
+- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm|AnythingLLM]] · [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj|Khoj]] — alternatives RAG/UI
+- [[06-mise-en-oeuvre/local-inference-security|🔐 Sécurité inférence]] · [[06-mise-en-oeuvre/evaluate-local-model|🧪 Évaluer un modèle]]
 
 ## 📚 Sources
 

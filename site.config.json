@@ -20,7 +20,8 @@
   "publish": {
     "exclude": [
       ".agents/**",
-      ".cursor/**"
+      ".cursor/**",
+      "docs/**"
     ]
   },
   "lexicon": {

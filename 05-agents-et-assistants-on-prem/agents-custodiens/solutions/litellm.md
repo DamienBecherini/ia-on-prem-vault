@@ -3,7 +3,7 @@ title: "LiteLLM"
 description: Gateway OpenAI-compatible pour router agents et applications vers Ollama, vLLM, cloud providers ou modèles internes.
 sidebar:
   order: 4
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -56,6 +56,13 @@ LiteLLM est la couche cible entre :
 ## 📊 Maturité du projet
 
 Très utilisé dans les stacks LLM comme gateway. Sa puissance vient avec une responsabilité : configuration, secrets, logs et règles de routage doivent être versionnés et audités.
+
+## 🔗 Voir aussi
+
+- [[00-lexique/litellm|LiteLLM]] · [[00-lexique/vllm|vLLM]] · [[00-lexique/ollama|Ollama]]
+- [[06-mise-en-oeuvre/local-inference-security|🔐 Sécurité inférence]] · [[06-mise-en-oeuvre/monitoring-inference-stack|📊 Monitoring]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] — orchestration agent complète
+- [[04-blueprints/scenario-d-datacenter|Scénario D]]
 
 ## 📚 Sources
 

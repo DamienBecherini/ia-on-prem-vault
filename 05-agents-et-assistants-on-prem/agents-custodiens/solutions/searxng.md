@@ -3,7 +3,7 @@ title: "SearXNG"
 description: Métamoteur de recherche auto-hébergé et privacy-first, utile pour donner un accès web contrôlé à un agent custodien.
 sidebar:
   order: 5
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -55,6 +55,13 @@ L'agent doit ensuite citer les URL sélectionnées dans son rapport.
 ## 📊 Maturité du projet
 
 Projet mature, actif, très utilisé dans l'auto-hébergement. À protéger par limiter, secret key, reverse proxy et politique d'accès.
+
+## 🔗 Voir aussi
+
+- [[00-lexique/rag|RAG]] · [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] — recherche web pour agents
+- [[06-mise-en-oeuvre/local-inference-security|🔐 Sécurité inférence]] · [[00-lexique/prompt-injection|Prompt injection]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] · [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|LiteLLM]]
+- [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté]]
 
 ## 📚 Sources
 
