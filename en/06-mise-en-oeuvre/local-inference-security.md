@@ -3,7 +3,7 @@ title: "🔒 Local inference security"
 description: Local API authentication, network isolation, encryption, OWASP LLM Top 10, and prompt injection protection for an on-premise inference stack.
 sidebar:
   order: 4
-last_modified: "2026-06-09"
+last_modified: "2026-06-10"
 last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -447,7 +447,75 @@ huggingface-cli download meta-llama/Llama-3.1-70B-Instruct \
 
 ---
 
-## 9. Logging and traceability
+## 9. Secure remote access — Zero Trust tunnels (no port forwarding)
+
+### The direct exposure problem
+
+Exposing vLLM port 8000 directly on the Internet (via a NAT rule on the router or a firewall opening) presents several risks:
+
+- **No native authentication** on vLLM: anyone reaching the port can query the model.
+- **Expanded attack surface**: the port becomes visible on Shodan and similar scans.
+- **No native TLS**: generated tokens travel in cleartext.
+
+Even with a Caddy reverse proxy in front of vLLM, opening an inbound port on a corporate or residential router implies permanent exposure to the Internet.
+
+### Recommended solution: Zero Trust mesh tunnels
+
+**Zero Trust mesh tunnels** create encrypted point-to-point access without opening an inbound port on the router. No port is publicly exposed: the connection is initiated *outbound* from the machine hosting vLLM, and traffic transits through the tunnel operator's private network.
+
+```
+vLLM machine (office)           Remote workstation (telework)
+  vLLM :8000                         Client (VS Code, app)
+      ↑                                       ↑
+  Tailscale agent                      Tailscale client
+      │                                       │
+      └──────── Tailscale network ────────────┘
+                (WireGuard encrypted, no open port)
+```
+
+The remote workstation accesses `http://100.x.y.z:8000` (Tailscale private IP) — or `http://machine-name:8000` with MagicDNS — as if on the same local network, without corporate VPN or firewall opening.
+
+### Available options
+
+| Tool | Model | Suitable use | Notes |
+| :-- | :-- | :-- | :-- |
+| **Tailscale** | Freemium, open-source friendly | Technical teams, on-prem lab | WireGuard-based, MagicDNS, granular ACLs [^9] |
+| **Cloudflare Tunnel** | Free (personal use) | Secure public HTTPS access | Traffic passes through Cloudflare servers — data outside perimeter [^10] |
+| **Twingate** | Enterprise | Granular zero trust access in enterprise | Commercial, fine-grained per-resource control [^11] |
+
+> [!warning] Cloudflare Tunnel and sovereignty
+> With Cloudflare Tunnel, traffic passes through Cloudflare servers (United States). For a sovereign stack processing sensitive data (trade secrets, GDPR personal data), prefer **Tailscale** (WireGuard-encrypted P2P mesh network; in optimal DERP configuration, data does not transit through Tailscale servers) or a self-hosted solution (Headscale, dedicated WireGuard server).
+
+> [!note] Tailscale Self-Hosted (Headscale)
+> For full control, **Headscale** is an open-source Tailscale coordination server hosted on your infrastructure. It eliminates dependency on Tailscale Inc.'s control plane — acceptable for strict sovereign environments. [https://github.com/juanfont/headscale](https://github.com/juanfont/headscale)
+
+### Tailscale setup (typical pattern)
+
+```bash
+# On the machine hosting vLLM (Linux)
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+
+# On the remote workstation (macOS, Windows, Linux)
+# Install Tailscale client from https://tailscale.com/download
+# Connect to the same Tailscale account
+
+# Access from the remote workstation
+curl http://vllm-machine-name:8000/v1/models
+# → lists available models
+```
+
+Combine with the Caddy reverse proxy (section 2) to add Bearer authentication on the tunnel:
+
+```
+Remote workstation → Tailscale → Caddy (TLS + auth) → vLLM :8000
+```
+
+This combination provides transit encryption (WireGuard), TLS encryption (Caddy), and Bearer token authentication — without exposing any port on the Internet.
+
+---
+
+## 10. Logging and traceability
 
 For GDPR/AI Act compliance, interactions with an LLM processing personal data must be traced.
 
@@ -475,6 +543,7 @@ For GDPR/AI Act compliance, interactions with an LLM processing personal data mu
 □ Reverse proxy with Bearer auth or LiteLLM gateway in place
 □ TLS enabled between clients and gateway (valid certificate)
 □ Backend errors (500/502) are intercepted and return a generic message to the client
+□ Remote access goes through a Zero Trust tunnel (Tailscale, WireGuard) — no open NAT port
 □ Inference logs do not contain personal data in cleartext
 □ Disk encryption enabled on partition for logs and session data
 □ Agents run as non-root with --cap-drop ALL
@@ -491,9 +560,13 @@ For GDPR/AI Act compliance, interactions with an LLM processing personal data mu
 ## References
 
 [^8]: HuggingFace, *huggingface_hub CLI — download with hash verification* (`--verify` flag, safetensors integrity). [https://huggingface.co/docs/huggingface_hub/guides/download](https://huggingface.co/docs/huggingface_hub/guides/download)
+[^9]: Tailscale, *How Tailscale Works* — official documentation (WireGuard, MagicDNS, DERP relays, ACLs). [https://tailscale.com/blog/how-tailscale-works](https://tailscale.com/blog/how-tailscale-works)
+[^10]: Cloudflare, *Cloudflare Tunnel documentation* (HTTP/HTTPS tunnels without open port, routing via Cloudflare network). [https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
+[^11]: Twingate, *How Twingate Works* — official documentation (Zero Trust Network Access, granular per-resource access). [https://www.twingate.com/docs/how-twingate-works](https://www.twingate.com/docs/how-twingate-works)
 
 - [OWASP Top 10 for LLM Applications v2025](https://genai.owasp.org/llm-top-10/) — official LLM01–LLM10:2025 grid
 - [Firecracker MicroVM](https://firecracker-microvm.github.io/) — lightweight isolation for untrusted code execution
 - [Podman Rootless Containers](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md)
+- [Headscale — self-hosted Tailscale server](https://github.com/juanfont/headscale)
 - [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|🔭 Vision: Custodian Agent]] — section on indirect prompt injection
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|🔒 Sovereignty & Privacy]] — GDPR/AI Act grid
