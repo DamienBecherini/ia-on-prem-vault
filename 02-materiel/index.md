@@ -1,6 +1,6 @@
 ---
 title: "🖥️ Index — Le Matériel"
-description: Point d'entrée du chapitre matériel : postes de travail, serveurs rack GPU et fabric réseau pour l'inférence on-premise.
+description: "Point d'entrée du chapitre matériel : postes de travail, serveurs rack GPU et fabric réseau pour l'inférence on-premise."
 sidebar:
   order: 0
 last_modified: "2026-06-10"
