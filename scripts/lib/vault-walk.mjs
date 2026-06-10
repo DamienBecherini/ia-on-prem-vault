@@ -1,0 +1,132 @@
+#!/usr/bin/env node
+/**
+ * Shared vault filesystem helpers for content audit scripts.
+ */
+import { readFileSync, readdirSync } from "node:fs";
+import { dirname, join, relative, resolve, sep } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+/** @type {string} */
+export const VAULT_ROOT = resolve(__dirname, "../..");
+
+/** @type {Set<string>} */
+export const EXCLUDED_DIRS = new Set([
+  "_private",
+  "build",
+  "docs",
+  "node_modules",
+  ".git",
+  ".obsidian",
+  ".agents",
+  ".cursor",
+  "_templates",
+  "scripts",
+  "references",
+]);
+
+/** @type {Set<string>} */
+export const EXCLUDED_FILES = new Set(["README.md"]);
+
+/**
+ * @typedef {'all' | 'fr'} VaultLocaleScope
+ */
+
+/**
+ * Walk published `.md` files under the vault.
+ * @param {string} [root]
+ * @param {{ locale?: VaultLocaleScope }} [options]
+ * @returns {Generator<string>}
+ */
+export function* walkMd(root = VAULT_ROOT, { locale = "all" } = {}) {
+  for (const entry of readdirSync(root, { withFileTypes: true })) {
+    const full = join(root, entry.name);
+    if (entry.isDirectory()) {
+      if (EXCLUDED_DIRS.has(entry.name)) continue;
+      if (locale === "fr" && entry.name === "en") continue;
+      yield* walkMd(full, { locale });
+    } else if (entry.isFile() && entry.name.endsWith(".md")) {
+      yield full;
+    }
+  }
+}
+
+/**
+ * @param {string} absPath
+ * @returns {string}
+ */
+export function toRelPath(absPath) {
+  return relative(VAULT_ROOT, absPath).replaceAll(sep, "/");
+}
+
+/**
+ * @param {string} relPath
+ * @returns {boolean}
+ */
+export function isExcludedRelPath(relPath) {
+  return EXCLUDED_FILES.has(relPath);
+}
+
+/**
+ * @param {string} text
+ * @returns {string | null}
+ */
+export function extractFrontmatterBlock(text) {
+  if (!text.startsWith("---")) return null;
+  const end = text.indexOf("\n---", 4);
+  if (end === -1) return null;
+  return text.slice(4, end);
+}
+
+/**
+ * @param {string | null | undefined} frontmatter
+ * @param {string} key
+ * @returns {string | null}
+ */
+export function readFrontmatterScalar(frontmatter, key) {
+  if (!frontmatter) return null;
+  const match = frontmatter.match(
+    new RegExp(`^${key}:\\s*(?:"([^"]*)"|'([^']*)'|(\\S+))`, "m"),
+  );
+  if (!match) return null;
+  const value = (match[1] ?? match[2] ?? match[3] ?? "").trim();
+  return value.length > 0 ? value : null;
+}
+
+/**
+ * Strip fenced code blocks before scanning prose.
+ * @param {string} text
+ * @returns {string}
+ */
+export function stripFencedCodeBlocks(text) {
+  return text.replace(/```[\s\S]*?```/g, "");
+}
+
+/**
+ * Load slug allowlist paths from a maintenance markdown file.
+ * @param {string} allowlistPath
+ * @returns {Set<string>}
+ */
+export function loadSlugAllowlist(allowlistPath) {
+  /** @type {Set<string>} */
+  const slugs = new Set();
+  try {
+    const raw = readFileSync(allowlistPath, "utf8");
+    let inSlugs = false;
+    for (const line of raw.split(/\r?\n/)) {
+      if (line.trim() === "## Slugs") {
+        inSlugs = true;
+        continue;
+      }
+      if (inSlugs && line.startsWith("## ")) break;
+      if (!inSlugs) continue;
+      const slug = line.trim();
+      if (!slug || slug.startsWith("*") || slug.startsWith("(")) continue;
+      slugs.add(slug.replace(/^\//, ""));
+    }
+  } catch {
+    // missing allowlist → empty set
+  }
+  return slugs;
+}

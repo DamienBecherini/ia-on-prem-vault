@@ -100,7 +100,23 @@ CI and multi-machine deploys stay in sync; only changed files are uploaded after
 
 Add `-- --yes` to skip the confirmation prompt (e.g. `npm run upload:full -- --yes`). Do **not** use `npm run upload --full` — npm silently consumes flags placed before `--` and they never reach the script.
 
-Run `npm run audit:links` in the engine to list unresolved wiki/MD links (lexicon backlog and [link audit allowlist](.agents/vault-maintenance/link-audit-allowlist.md)).
+Run `npm run audit:links` in the engine to list unresolved wiki/MD links (lexicon backlog and [link audit allowlist](.agents/vault-maintenance/link-audit-allowlist.md)). From this vault you can also run `npm run audit:links` (delegates to the engine via `ENGINE_PATH`).
+
+## Quality checks
+
+Automated, deterministic checks run on every PR (no LLM agent required). Full reference: [`docs/quality-checks.md`](docs/quality-checks.md).
+
+```bash
+npm test                  # CI gate: frontmatter + Mermaid + agent-leaks + i18n strict
+npm run audit:frontmatter
+npm run audit:mermaid
+npm run audit:agent-leaks
+npm run audit:i18n:strict
+npm run audit:ascii       # warn-only; use audit:ascii:strict to fail
+npm run audit:links       # requires ENGINE_PATH in .env
+```
+
+GitHub Actions workflow: [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ### FR/EN translation drift
 
