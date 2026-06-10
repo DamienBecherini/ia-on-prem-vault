@@ -3,7 +3,7 @@ title: "📊 Monitoring the inference stack"
 description: Setting up Prometheus + Grafana monitoring for a vLLM or Ollama stack — GPU metrics, KV Cache, throughput, and operational alerts.
 sidebar:
   order: 6
-last_modified: "2026-06-05"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -17,22 +17,15 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## Monitoring architecture
 
-```
-┌─────────────────────────────────────────────┐
-│  Metric sources                             │
-│                                             │
-│  vLLM /metrics ──────────────────────────┐  │
-│  nvidia-smi ──► nvidia-dcgm-exporter ────┤  │
-│  OS ──────────► node-exporter ───────────┤  │
-└───────────────────────────────────────── │ ─┘
-                                           │
-                                           ▼
-                                     Prometheus
-                                     (scrape + store)
-                                           │
-                                           ▼
-                                      Grafana
-                                   (dashboards + alerts)
+```mermaid
+flowchart TD
+    subgraph Sources["Metric sources"]
+        A["vLLM /metrics"]
+        B["nvidia-smi"] --> C["nvidia-dcgm-exporter"]
+        D["OS"] --> E["node-exporter"]
+    end
+    Sources --> P["Prometheus\n(scrape + store)"]
+    P --> G["Grafana\n(dashboards + alerts)"]
 ```
 
 ---

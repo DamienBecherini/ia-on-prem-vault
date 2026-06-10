@@ -151,20 +151,13 @@ iptables -A INPUT -p tcp --dport 8000 -j DROP
 
 ### Recommended network segmentation
 
-```
-Internet
-    │ (blocked)
-    ▼
- Perimeter firewall
-    │
-    ▼
- Corporate network (prod VLAN)
-    │          │
-    ▼          ▼
- Clients     Reverse proxy / LiteLLM gateway (HTTPS :443)
-               │ (localhost only)
-               ▼
-             Inference engine (Ollama :11434 / vLLM :8000)
+```mermaid
+flowchart TD
+    I["🌐 Internet"] -->|blocked| FW["Perimeter firewall"]
+    FW --> VLAN["Corporate network (prod VLAN)"]
+    VLAN --> CL["Clients"]
+    VLAN --> GW["Reverse proxy / LiteLLM gateway\n(HTTPS :443)"]
+    GW -->|"localhost only"| ENG["Inference engine\n(Ollama :11434 / vLLM :8000)"]
 ```
 
 The inference engine must never be directly reachable from the corporate network — only via the gateway.
@@ -357,10 +350,11 @@ For agents that run untrusted code (code sandbox, user file analysis), container
 
 [Firecracker](https://firecracker-microvm.github.io/) is the MicroVM engine used by AWS Lambda. It starts a lightweight VM in < 125 ms with a separate Linux kernel. Even on exploit, the attacker is confined to the MicroVM.
 
-```
-User request ──► Main agent ──► Firecracker MicroVM
-                                 (sandboxed execution)
-                                 ◄── Structured result
+```mermaid
+flowchart LR
+    U["User request"] --> A["Main agent"]
+    A --> VM["Firecracker MicroVM\n(sandboxed execution)"]
+    VM -->|"Structured result"| A
 ```
 
 > [!note] Operational cost

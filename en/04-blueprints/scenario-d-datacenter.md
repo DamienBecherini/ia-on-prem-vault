@@ -3,7 +3,7 @@ title: "🏭 Scenario D: Datacenter (RoCE & Multi-GPU)"
 description: The Enterprise AI blueprint. HGX 8-GPU nodes, RoCE/InfiniBand network, and Tensor Parallelism for very high-concurrency production.
 sidebar:
   order: 4
-last_modified: "2026-06-05"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -99,9 +99,10 @@ curl http://localhost:8000/metrics | grep vllm
 
 **Recommended stack:**
 
-```
-nvidia-smi (GPU) ──► node-exporter ──► Prometheus ──► Grafana
-vLLM /metrics ──────────────────────────────────────► Grafana
+```mermaid
+flowchart LR
+    A["nvidia-smi (GPU)"] --> B["node-exporter"] --> P["Prometheus"] --> G["Grafana"]
+    C["vLLM /metrics"] --> P
 ```
 
 Grafana dashboards for vLLM are available at [grafana.com/grafana/dashboards](https://grafana.com/grafana/dashboards) (search for "vLLM").

@@ -3,7 +3,7 @@ title: "🖼️ Multimodality: Hardware Impact (VRAM & KV Cache)"
 description: What changes in your infrastructure when processing images, scanned documents, or audio — visual encoders, VRAM cost, KV Cache interaction, and blueprint mapping.
 sidebar:
   order: 6
-last_modified: "2026-06-05"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -27,18 +27,12 @@ A **VLM (Vision Language Model)** adds an upstream component: a **visual encoder
 
 ### How it works
 
-```
-Image (pixels)
-    │
-    ▼
-Visual encoder (e.g. CLIP-ViT-L/14, SigLIP)
-    │  splits image into patches (e.g. 14×14 px)
-    │  encodes each patch as a vector
-    ▼
-Visual token sequence (e.g. 256 to 1,024 tokens)
-    │
-    ▼
-Projector (MLP bridge) ──► LLM backbone (Qwen, Mistral, LLaMA…)
+```mermaid
+flowchart TD
+    A["🖼️ Image (pixels)"] --> B["Visual encoder\n(e.g. CLIP-ViT-L/14, SigLIP)\nsplits into 14×14 px patches\nencodes each patch as a vector"]
+    B --> C["Visual token sequence\n(256 to 1,024 tokens)"]
+    C --> D["Projector (MLP bridge)"]
+    D --> E["LLM backbone\n(Qwen, Mistral, LLaMA…)"]
 ```
 
 The encoder and projector are additional weights loaded **on top of** the LLM backbone.
@@ -101,17 +95,11 @@ Audio transcription (meetings, dictation, client calls) is often mentioned along
 
 **Whisper is not a VLM.** It is an independent sequence-to-sequence model:
 
-```
-Audio (WAV/MP3)
-    │
-    ▼
-Whisper (separate model — 39 MB to 1.5 GB depending on size)
-    │  transcribes to text
-    ▼
-Text (normal tokens)
-    │
-    ▼
-LLM backbone (if transcript analysis is needed)
+```mermaid
+flowchart TD
+    A["🎵 Audio (WAV/MP3)"] --> B["Whisper\n(separate model — 39 MB to 1.5 GB)\ntranscribes to text"]
+    B --> C["Text (normal tokens)"]
+    C --> D["LLM backbone\n(if transcript analysis is needed)"]
 ```
 
 ### Whisper VRAM footprint
