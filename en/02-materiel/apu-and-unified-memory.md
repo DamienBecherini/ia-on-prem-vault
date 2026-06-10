@@ -1,9 +1,9 @@
 ---
 title: 🧠 APU & Unified Memory
-description: Comparative analysis of Apple Silicon M4 Max / M3 Ultra chips and AMD Ryzen AI Max PRO 400 APUs (Gorgon Halo) for large LLM inference.
+description: Comparative analysis of Apple Silicon M4 Max / M3 Ultra chips, AMD Ryzen AI Max PRO 400 APUs (Gorgon Halo), and the NVIDIA Grace Blackwell family (DGX Spark) for large LLM inference.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -11,7 +11,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] In brief
-> Apple Silicon and AMD Gorgon Halo let you allocate 120 to 160 GB of unified memory to an LLM on a desktop workstation. Apple delivers the best throughput; AMD offers native Linux and Docker. The right choice depends on your stack, not capacity alone.
+> Apple Silicon, AMD Gorgon Halo, and NVIDIA DGX Spark all offer 128 GB+ unified memory on a desktop workstation. Apple leads on bandwidth; AMD offers native Linux and Docker; NVIDIA DGX Spark brings native FP4, CUDA, and a QSFP 200 Gbps scale-out port. The right choice depends on your stack, not capacity alone.
 
 For sovereign enterprise AI deployment, **unified memory** is one of the most important hardware shifts of the decade.
 
@@ -43,6 +43,21 @@ Professional refresh of the **Strix Halo** platform (Zen 5 + RDNA 3.5), announce
 *   **GPU allocation:** up to **160 GB** reservable as iGPU VRAM, **32 GB** left for the system [^1][^2].
 *   **Strengths:** open x86 (native Linux / Windows / Docker), attractive capacity/price on the **Ryzen AI Halo** platform (~$3,999 for the current 128 GB configuration) [^7][^8].
 *   **Limits:** bandwidth roughly **2× lower** than M4 Max — decoding dense 70B models stays memory-bound (~5 tok/s measured on Strix Halo 395, similar profile expected on PRO 400) [^2][^6][^9].
+
+### 3. NVIDIA Grace Blackwell (DGX Spark / RTX Spark)
+
+Announced in 2025 and available from 2026, the **DGX Spark** (formerly Project Digits) is NVIDIA's first product combining an ARM SoC and a Blackwell GPU in a desktop form factor [^14].
+
+*   **Architecture:** **Grace Blackwell** SoC — 20-core ARM CPU (Grace) + Blackwell GPU, co-developed with MediaTek, TSMC 3nm process [^14].
+*   **Unified LPDDR5x memory:** **128 GB** on DGX Spark (~$3,999); DGX Station scales to **748 GB** for models > 400B [^14].
+*   **Bandwidth:** ~273 GB/s (LPDDR5x) — close to AMD Gorgon Halo [^14].
+*   **Power draw:** ~**240 W** (DGX Spark) vs ~1,100 W for a 2× RTX 4090 station [^14].
+*   **Native FP4 (Blackwell):** unlike the Ada Lovelace architecture (RTX 4090 — emulated FP4), Blackwell implements FP4 in silicon — without software overhead [^15].
+*   **QSFP 200 Gbps scale-out:** a dedicated port interconnects multiple DGX Spark enclosures in a mesh fabric, without an external switch [^14].
+*   **NVIDIA Sync software:** full CUDA environment pre-installed to reduce startup friction.
+
+> [!tip] DGX Spark positioning
+> DGX Spark shines on **capacity** (128 GB LPDDR5x accessible to CUDA without friction) and **native FP4** — useful for loading 70B+ models and training with LoRA without precision compromises. However, for pure inference on models ≤ 34B, a **2× RTX 4090 station (~1,100 W, ~€4,500)** remains significantly faster thanks to dedicated high-bandwidth GDDR6X. DGX Spark is the right choice when **memory capacity and CUDA simplicity** take priority over raw throughput.
 
 ---
 
@@ -111,18 +126,20 @@ sudo sysctl iogpu.wired_limit_mb=122880
 
 *Comparison of unified workstations for **Llama 3.1 70B Q4_K_M** (~40 GB of weights). Speeds = **decode** (generation), order-of-magnitude measured or published — vary by backend (MLX vs llama.cpp), context, and build.*
 
-| Criterion | Mac Studio (M4 Max 128 GB) | Mac Studio (M3 Ultra 192 GB) | AMD Ryzen AI (Halo / PRO 400) |
-| :--- | :--- | :--- | :--- |
-| **Chip (LLM config)** | M4 Max 16c/40c GPU [^4] | M3 Ultra 32c/80c GPU [^4] | Ryzen AI Max+ PRO 495 [^1][^2] |
-| **Max unified RAM** | 128 GB [^4] | 512 GB (192 GB common) [^4] | 192 GB [^1][^2] |
-| **Max allocatable GPU VRAM** | ~120 GB (`sysctl`, 128 GB machine) [^12] | ~160–184 GB (depends on total RAM) [^12] | **160 GB** (BIOS max) — in practice ~130–140 GB to preserve OS page cache [^1][^2] |
-| **Bandwidth** | **546 GB/s** [^3][^4] | **819 GB/s** [^4] | **~273 GB/s** [^1][^2] |
-| **70B Q4 throughput (decode)** | **~10–12 tok/s** (MLX) [^9][^10] | **~12–15 tok/s** (MLX) [^9][^10] | **~4.5–5 tok/s** (Strix Halo 395, similar PRO 400 profile) [^6][^9] |
-| **OS** | macOS | macOS | **Linux / Windows** [^1][^2] |
-| **Indicative price** | ~€4,500–5,500 (128 GB, CTO) [^4][^5] | ~€5,000–7,500 (192 GB+, CTO) [^4][^5] | **~€3,700** (Ryzen AI Halo 128 GB, $3,999) [^7][^8] |
+| Criterion | Mac Studio (M4 Max 128 GB) | Mac Studio (M3 Ultra 192 GB) | AMD Ryzen AI (Halo / PRO 400) | **NVIDIA DGX Spark** |
+| :--- | :--- | :--- | :--- | :--- |
+| **Chip (LLM config)** | M4 Max 16c/40c GPU [^4] | M3 Ultra 32c/80c GPU [^4] | Ryzen AI Max+ PRO 495 [^1][^2] | Grace Blackwell SoC [^14] |
+| **Max unified RAM** | 128 GB [^4] | 512 GB (192 GB common) [^4] | 192 GB [^1][^2] | **128 GB LPDDR5x** [^14] |
+| **Max allocatable GPU VRAM** | ~120 GB (`sysctl`, 128 GB machine) [^12] | ~160–184 GB (depends on total RAM) [^12] | **160 GB** (BIOS max) — in practice ~130–140 GB [^1][^2] | ~128 GB (direct CUDA access) [^14] |
+| **Bandwidth** | **546 GB/s** [^3][^4] | **819 GB/s** [^4] | **~273 GB/s** [^1][^2] | **~273 GB/s** [^14] |
+| **70B Q4 throughput (decode)** | **~10–12 tok/s** (MLX) [^9][^10] | **~12–15 tok/s** (MLX) [^9][^10] | **~4.5–5 tok/s** (Strix Halo 395) [^6][^9] | *not officially published* |
+| **Native FP4** | ❌ | ❌ | ❌ | ✅ Blackwell [^15] |
+| **Scale-out** | ❌ | ❌ | ❌ | ✅ QSFP 200 Gbps [^14] |
+| **OS** | macOS | macOS | **Linux / Windows** [^1][^2] | Linux (CUDA) [^14] |
+| **Indicative price** | ~€4,500–5,500 (128 GB, CTO) [^4][^5] | ~€5,000–7,500 (192 GB+, CTO) [^4][^5] | **~€3,700** (128 GB) [^7][^8] | **~$3,999** (128 GB) [^14] |
 
 > [!note] Reading the numbers
-> Apple speeds come from community **MLX** benchmarks; **llama.cpp/Metal** is often slightly slower on pure decode but more flexible at long context [^9][^10]. The theoretical memory-bound ceiling (~13–21 tok/s Apple vs ~7 tok/s AMD) is detailed in [[01-fondations/unified-memory-vs-ram-vs-vram|Unified memory vs RAM vs VRAM]].
+> Apple speeds come from community **MLX** benchmarks; **llama.cpp/Metal** is often slightly slower on pure decode [^9][^10]. NVIDIA DGX Spark inference figures are not yet officially published at time of writing — community source claims are not reproduced here. The theoretical memory-bound ceiling (~13–21 tok/s Apple vs ~7 tok/s AMD) is detailed in [[01-fondations/unified-memory-vs-ram-vs-vram|Unified memory vs RAM vs VRAM]].
 
 ---
 
@@ -132,7 +149,8 @@ For sovereign on-premise deployment:
 
 1.  **x86 sovereignty + Docker (AMD Halo / PRO 400):** if your stack relies on **Linux, Docker, and Python**, the AMD platform is the most rational: 160 GB allocatable VRAM, open ecosystem, lower price than an equivalent-capacity Mac Studio [^1][^2][^7]. Accept **~5 tok/s** on a dense 70B — favor **MoE** models (Qwen3.5-A3B, etc.) for interactivity [^6].
 2.  **Speed and comfort (Mac Studio):** for the best feel on a **dense 70B** (~12–15 tok/s in MLX on M3 Ultra), the **Mac Studio M3 Ultra 192 GB+** remains the unified-bandwidth king in 2026; the **M4 Max 128 GB** is an excellent compromise if 128 GB is enough [^4][^9][^10]. Budget for macOS and containers.
-3.  **Size at purchase time:** LPDDR5X is **soldered** — no post-purchase upgrade. Plan margin for **weights + KV cache + OS + load page cache** (see foundation chapters). On a 192 GB AMD system, allocating 160 GB to the GPU leaves 32 GB for the system — fine at idle, but tight on first load of a model ≥ 100 GB.
+3.  **CUDA + FP4 + scale-out (NVIDIA DGX Spark):** if your team is already in the NVIDIA ecosystem (CUDA, TensorRT, vLLM), DGX Spark offers 128 GB LPDDR5x natively accessible via CUDA, native Blackwell FP4, and the ability to interconnect multiple enclosures via QSFP 200 Gbps without reconfiguring infrastructure [^14]. It is not the best choice for pure inference on models ≤ 34B: a 2× RTX 4090 station remains faster for that use case.
+4.  **Size at purchase time:** LPDDR5X is **soldered** — no post-purchase upgrade. Plan margin for **weights + KV cache + OS + load page cache** (see foundation chapters). On a 192 GB AMD system, allocating 160 GB to the GPU leaves 32 GB for the system — sufficient at idle, but tight on first load of a model ≥ 100 GB.
 
 ---
 
@@ -151,3 +169,5 @@ For sovereign on-premise deployment:
 [^11]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (memory bottlenecks, quantization), November 2023. [https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/](https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/)
 [^12]: ggml-org/llama.cpp, *Issue #16646* (`iogpu.wired_limit_mb`), 2025. [https://github.com/ggml-org/llama.cpp/issues/16646](https://github.com/ggml-org/llama.cpp/issues/16646)
 [^13]: ivanopcode, *Override macOS Metal VRAM cap* (`iogpu.wired_limit_mb`, tables by RAM), 2025. [https://github.com/ivanopcode/devnote-override-macos-metal-vram-cap](https://github.com/ivanopcode/devnote-override-macos-metal-vram-cap)
+[^14]: NVIDIA, *Project DIGITS / DGX Spark* — official product page (Grace Blackwell SoC, 128 GB LPDDR5x, ~273 GB/s, ~240 W TDP, QSFP 200 Gbps, $3,999, NVIDIA Sync). [https://www.nvidia.com/en-us/project-digits/](https://www.nvidia.com/en-us/project-digits/)
+[^15]: NVIDIA, *NVIDIA Blackwell Architecture Technical Brief* (native FP4 Tensor Cores vs emulated FP4 Ada Lovelace). [https://resources.nvidia.com/en-us-blackwell-architecture](https://resources.nvidia.com/en-us-blackwell-architecture)

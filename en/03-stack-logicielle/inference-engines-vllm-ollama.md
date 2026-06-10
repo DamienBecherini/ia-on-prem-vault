@@ -3,7 +3,7 @@ title: "⚙️ Inference Engines: vLLM, Ollama, and TensorRT-LLM"
 description: Comparison of local deployment engines in 2026. When to use GGUF and llama.cpp on Mac, and when to switch to vLLM or TensorRT-LLM in production.
 sidebar:
   order: 1
-last_modified: "2026-06-09"
+last_modified: "2026-06-10"
 last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -90,6 +90,36 @@ Compiling a TensorRT engine is heavy (*Ahead-of-Time*), very strict about the ta
 
 ---
 
+## 🔧 Common vLLM startup troubleshooting
+
+The following issues are common during first vLLM installation. They occur before the server even responds to a request.
+
+| Symptom | Probable cause | Solution |
+| :-- | :-- | :-- |
+| `torch.cuda.is_available()` returns `False` | Mismatch between installed PyTorch version and system CUDA driver | Reinstall PyTorch with the matching CUDA variant: `pip install torch --index-url https://download.pytorch.org/whl/cu124` (adapt `cu124` to installed CUDA version) |
+| OOM on load — KV Cache too large | Maximum context length requested exceeds available VRAM after weight loading | Add `--max-model-len 4096` (or a lower value) to `vllm serve` startup to reduce pre-allocated KV Cache |
+| Two vLLM servers in conflict | Port 8000 already occupied by a previous instance | Add `--port 8001` for the second instance; `lsof -i :8000` / `netstat -tulpn` to identify the process occupying the port |
+| Quickly test the local API | — | Use the OpenAI Python client with `base_url="http://localhost:8000/v1/"` and `api_key="any"` (vLLM accepts any key value in unsecured mode) |
+
+**Quick test example from Python:**
+
+```python
+from openai import OpenAI
+
+client = OpenAI(base_url="http://localhost:8000/v1/", api_key="any")
+response = client.chat.completions.create(
+    model="meta-llama/Llama-3.1-8B-Instruct",
+    messages=[{"role": "user", "content": "Hello, are you working?"}],
+    max_tokens=64,
+)
+print(response.choices[0].message.content)
+```
+
+> [!warning] vLLM and Tenstorrent accelerators
+> Standard vLLM is **not compatible** with Tenstorrent accelerators (Wormhole N150/N300, Blackhole). To use these chips, you need the `tenstorrent/vllm` fork, compiled with the `tt-metal` (TT-Forge) environment assembled manually — a non-trivial procedure. This fork is not maintained by the main vLLM team. Community source [^10] — consider this before any Tenstorrent hardware purchase if vLLM is a prerequisite for your stack.
+
+---
+
 ## 📋 The Architect's Advice
 
 For an on-premise agent project deployed at customer sites, engine choice depends purely on the architecture scenario:
@@ -116,3 +146,4 @@ For an on-premise agent project deployed at customer sites, engine choice depend
 [^7]: SGLang Project, *SGLang — Fast Serving Framework for LLMs and VLMs* (RadixAttention, structured output). https://github.com/sgl-project/sglang
 [^8]: Lianmin Zheng et al., *Efficiently Programming Large Language Models using SGLang* (RadixAttention, prefix cache, TTFT reduction). https://lmsys.org/blog/2024-01-17-sglang/
 [^9]: SGLang Contributors, *SGLang vs vLLM — scaling benchmark under high concurrency* (throughput comparison). https://github.com/sgl-project/sglang/issues/21061
+[^10]: Community source, *Tenstorrent N150 vs RTX 4090 — LLM inference benchmark* (tenstorrent/vllm fork, tt-metal, standard vLLM incompatibility), 2025. Not published by Tenstorrent Inc. — verify before deployment.
