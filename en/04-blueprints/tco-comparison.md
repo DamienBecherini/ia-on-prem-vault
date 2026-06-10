@@ -7,7 +7,7 @@ prices_valid_as_of: "2026-06"
 last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
-last_modified: "2026-06-09"
+last_modified: "2026-06-10"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
@@ -206,6 +206,38 @@ To build your business case, collect this data:
 4. **Electricity cost:** power in kW × hours/day × 30 × local kWh rate
 5. **Ops cost:** administrator time × daily rate
 6. **Break-even point:** `(Hardware cost) / (Monthly cloud cost - Monthly on-prem cost)`
+
+---
+
+## Choosing hardware by phase
+
+The TCO comparison above focuses mainly on **inference** (frozen model, text generation). The required hardware profile changes significantly depending on the model lifecycle phase.
+
+| Phase | Memory need | Suitable hardware profile | Example |
+| :-- | :-- | :-- | :-- |
+| **Inference** (frozen model, generation) | Weights + KV cache | Fast GPU with sufficient VRAM | RTX 4090 (24 GB), L40S (48 GB), APU 128 GB |
+| **LoRA fine-tuning** (adapters only) | Weights + gradients + optimizer states (~2–3× inference) | High-capacity unified memory or multi-GPU | Mac Studio 192 GB, AMD Gorgon Halo, DGX Spark 128 GB |
+| **Full fine-tuning (complete SFT)** | Very high — often 2–4× raw weights in FP16 | Multi-GPU server or datacenter | 2–4× A100 80 GB, or DGX Station |
+| **Full training (pre-training)** | Several hundred GB to several TB | Datacenter clusters — beyond SMB on-prem scope | H100, HGX/DGX systems |
+
+> [!warning] Do not confuse profiles
+> A GPU fast at inference (RTX 4090, 24 GB VRAM) can crash immediately on LoRA fine-tuning of a 70B model in FP16 — optimizer states inflate required memory to ~60–70 GB, well beyond available VRAM. Conversely, a high-capacity but slow-bandwidth system (e.g. AMD Gorgon Halo at ~273 GB/s) is suboptimal for serving 50 simultaneous users on a 7B model.
+
+### The "tokens/s per k€" KPI for comparing inference options
+
+To arbitrate between two inference hardware options, the ratio **tokens per second per thousand euros invested** (tokens/s/k€) is more meaningful than raw speed alone.
+
+Example reading:
+- RTX 4090 (24 GB, ~€2,000): if it delivers ~60 tok/s on an 8B model → **~30 tok/s/k€**
+- Mac Studio M4 Max 128 GB (~€5,000): if it delivers ~10 tok/s on a 70B Q4 → **~2 tok/s/k€**
+
+These two figures are consistent: the Mac Studio serves much larger models than the RTX 4090, so direct comparison only makes sense for the **same model and same quantization**.
+
+> [!warning] Limits of the tokens/s/k€ ratio
+> This ratio depends strongly on **model**, **quantization**, and **batch size**:
+> - **Batch size = 1 (single user):** favors GPUs with high GDDR bandwidth (RTX 4090, L40S) — autoregressive decoding is memory-bound, and GDDR is faster than LPDDR5x.
+> - **High batch size (10–50 simultaneous requests):** favors high-memory-capacity systems and engines optimizing batching (vLLM with PagedAttention) — bandwidth is less limiting, capacity takes priority.
+> - **Models > 70B:** only systems with 128 GB+ memory can compete — RTX 4090 vs DGX Spark comparison on a 70B is not possible on RTX 4090.
 
 ---
 

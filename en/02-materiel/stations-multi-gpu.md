@@ -3,7 +3,7 @@ title: "🧩 Multi-GPU Workstations: NVIDIA, PCIe, and VRAM"
 description: "Understand when multiple discrete GPUs truly help on-premise AI inference, and why interconnect often matters more than card count."
 sidebar:
   order: 2
-last_modified: "2026-06-09"
+last_modified: "2026-06-10"
 last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -200,6 +200,27 @@ For sovereign on-premise deployment:
 
 ---
 
+## 🔭 Non-NVIDIA accelerators: status in 2026
+
+Beyond NVIDIA, several vendors position alternatives for on-premise inference and training. Market status in 2026 remains that of a forming ecosystem — interesting to watch, not yet recommended for strict B2B deployments.
+
+### Tenstorrent (Wormhole / Blackhole)
+
+Tenstorrent (founded by Jim Keller) sells **Wormhole** accelerators (N150, N300) and announces the **Blackhole** generation. The architecture is software-first, based on **RISC-V** cores with massive local SRAM and external **GDDR6**, and integrated **Ethernet** interconnection between chips [^9].
+
+**Claimed advantages:** purchase cost significantly lower than equivalent NVIDIA GPUs in TFLOPS, open-source **TT-Forge** software stack (TT-Metal + MLIR compiler), native Ethernet interconnection for scale-out without proprietary switch.
+
+**Real limits in 2026:**
+
+- **Standard vLLM incompatible:** you must use the `tenstorrent/vllm` fork with a manually compiled `tt-metal` environment — a non-trivial procedure, not maintained by the main vLLM team. Community source [^9] — see also the note in [[03-stack-logicielle/inference-engines-vllm-ollama|Inference Engines]].
+- **Partial model compatibility:** the TT-Forge compiler does not yet support all operators in recent architectures — "90% model compatibility" is insufficient for B2B deployments that must guarantee every model's behavior.
+- **Young software ecosystem:** no official HuggingFace, LangChain, or common monitoring tool support yet (Prometheus metrics, OpenTelemetry).
+
+> [!note] Advice for 2026–2027
+> Tenstorrent is **worth watching for 2026–2027**, especially if TT-Forge achieves standard vLLM compatibility and the software ecosystem matures. At this stage, **not recommended for an SMB without a dedicated AI DevOps team**: the hardware cost savings are real, but integration and maintenance overhead often erases the initial savings.
+
+---
+
 ## 📚 Sources and References
 
 [^1]: NVIDIA, *RTX 6000 Ada Generation Graphics Card* (48 GB GDDR6 ECC, PCIe Gen 4 x16, 300 W). [https://www.nvidia.com/en-us/products/workstations/rtx-6000/](https://www.nvidia.com/en-us/products/workstations/rtx-6000/)
@@ -210,3 +231,4 @@ For sovereign on-premise deployment:
 [^6]: vLLM, *Parallelism and Scaling* (tensor parallel, pipeline parallel, Ray, multiprocessing, GPUDirect RDMA). [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/)
 [^7]: NVIDIA, *L40S Product Page* (Ada Lovelace, FP8 Tensor Cores, 48 GB GDDR6 ECC). [https://www.nvidia.com/en-us/data-center/l40s/](https://www.nvidia.com/en-us/data-center/l40s/)
 [^8]: MLCommons, *MLPerf Inference Datacenter v4.1 Results* (datacenter inference benchmark, cost/token). [https://mlcommons.org/benchmarks/inference-datacenter/](https://mlcommons.org/benchmarks/inference-datacenter/)
+[^9]: Community source, *Tenstorrent N150 benchmark vs RTX 4090 — LLM inference* (Wormhole architecture, TT-Metal, tenstorrent/vllm fork, partial compatibility), 2025. Not officially published by Tenstorrent Inc.
