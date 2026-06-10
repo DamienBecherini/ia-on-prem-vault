@@ -151,20 +151,13 @@ iptables -A INPUT -p tcp --dport 8000 -j DROP
 
 ### Segmentation réseau recommandée
 
-```
-Internet
-    │ (bloqué)
-    ▼
- Firewall périmètre
-    │
-    ▼
- Réseau entreprise (VLAN prod)
-    │          │
-    ▼          ▼
- Clients     Reverse proxy / LiteLLM gateway (HTTPS :443)
-               │ (localhost uniquement)
-               ▼
-             Moteur d'inférence (Ollama :11434 / vLLM :8000)
+```mermaid
+flowchart TD
+    I["🌐 Internet"] -->|bloqué| FW["Firewall périmètre"]
+    FW --> VLAN["Réseau entreprise (VLAN prod)"]
+    VLAN --> CL["Clients"]
+    VLAN --> GW["Reverse proxy / LiteLLM gateway\n(HTTPS :443)"]
+    GW -->|"localhost uniquement"| ENG["Moteur d'inférence\n(Ollama :11434 / vLLM :8000)"]
 ```
 
 Le moteur d'inférence ne doit jamais être directement accessible depuis le réseau entreprise — uniquement via le gateway.
@@ -357,10 +350,11 @@ Pour les agents qui exécutent du code non fiable (sandbox de code, analyse de f
 
 [Firecracker](https://firecracker-microvm.github.io/) est le moteur de MicroVM utilisé par AWS Lambda. Il démarre une VM légère en < 125 ms avec un noyau Linux séparé. Même en cas d'exploit, l'attaquant est confiné dans la MicroVM.
 
-```
-Requête utilisateur ──► Agent principal ──► MicroVM Firecracker
-                                            (exécution sandboxée)
-                                            ◄── Résultat structuré
+```mermaid
+flowchart LR
+    U["Requête utilisateur"] --> A["Agent principal"]
+    A --> VM["MicroVM Firecracker\n(exécution sandboxée)"]
+    VM -->|"Résultat structuré"| A
 ```
 
 > [!note] Coût opérationnel

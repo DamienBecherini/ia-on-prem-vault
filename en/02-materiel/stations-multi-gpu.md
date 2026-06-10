@@ -122,10 +122,10 @@ In a standard workstation, GPU↔GPU traffic goes through the CPU: GPU 0 writes 
 
 The best AI workstations (and some dense workstation servers) use **PCIe switch chips** — mainly **Broadcom PLX PEX** series — on the motherboard or an expansion card. These enable direct **Peer-to-Peer (P2P DMA)** transfer:
 
-```
-GPU 0 VRAM ──► PCIe Switch (PLX) ──► GPU 1 VRAM
-                   (P2P DMA)
-                ← without CPU or system RAM in the path →
+```mermaid
+flowchart LR
+    A["GPU 0 VRAM"] -->|"P2P DMA\n(no CPU or system RAM)"| B["PCIe Switch (PLX)"]
+    B --> C["GPU 1 VRAM"]
 ```
 
 **Concrete benefits:**

@@ -5,7 +5,7 @@ description: >
   Tableau comparatif, exigences matérielles et relation entre les deux pistes.
 sidebar:
   order: 3
-last_modified: "2026-06-07"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -85,27 +85,13 @@ Toutes les applications IA locales ne font pas la même chose. Avant de choisir 
 
 Les deux pistes de cette section ne sont pas concurrentes — elles sont **complémentaires** et peuvent cohabiter dans la même infrastructure.
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  Votre machine (ou votre serveur on-premise)                    │
-│                                                                 │
-│  ┌──────────────────────┐     ┌──────────────────────────────┐  │
-│  │  Piste A             │     │  Piste B                     │  │
-│  │  Assistant Personnel │────▶│  Agent Custodien             │  │
-│  │                      │     │                              │  │
-│  │  • Vous connaît      │     │  • Maintient votre vault     │  │
-│  │  • Répond à vos      │     │  • Propose des corrections   │  │
-│  │    questions         │     │  • Crée des branches/PRs     │  │
-│  │  • Mémoire longue    │     │  • Vous notifie              │  │
-│  └──────────────────────┘     └──────────────────────────────┘  │
-│           │                              │                      │
-│           └──────────────┬───────────────┘                      │
-│                          ▼                                      │
-│              ┌─────────────────────┐                            │
-│              │  Moteur d'inférence │                            │
-│              │  (Ollama / vLLM)    │                            │
-│              └─────────────────────┘                            │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Machine["Votre machine (ou serveur on-premise)"]
+        A["**Piste A — Assistant Personnel**\n• Vous connaît\n• Répond à vos questions\n• Mémoire longue"] -->|"alimente"| B["**Piste B — Agent Custodien**\n• Maintient votre vault\n• Propose des corrections\n• Crée des branches/PRs\n• Vous notifie"]
+        A --> ENG["**Moteur d'inférence**\n(Ollama / vLLM)"]
+        B --> ENG
+    end
 ```
 
 **Comment ils s'alimentent mutuellement :**
