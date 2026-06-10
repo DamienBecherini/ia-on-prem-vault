@@ -1,7 +1,6 @@
 ---
 title: Lexicon index
 description: Alphabetical list of all on-premise AI lexicon entries.
-last_modified: "2026-06-10"
 ---
 
 Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI Glossary]].
@@ -27,6 +26,7 @@ Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI
 - [[00-lexique/human-in-the-loop|Human-in-the-loop]] — Governance mode where an important automated action waits for human validation before it is applied.
 - [[00-lexique/infiniband|InfiniBand]] — Dedicated high-performance network fabric for GPU clusters, HPC and AI datacenter standard.
 - [[00-lexique/kv-cache|KV Cache]] — Cache of attention keys/values used during generation.
+- [[00-lexique/langgraph|LangGraph]] — State-graph framework for orchestrating multi-step LLM agents with loops, memory, and flow control.
 - [[00-lexique/litellm|LiteLLM]] — OpenAI-compatible gateway routing LLM calls to local or cloud models through one interface.
 - [[00-lexique/llm|LLM]] — Large Language Model.
 - [[00-lexique/benchmark-llm|LLM benchmark]] — Standardized test suite to compare capabilities, limits, and risks of language models.
@@ -42,28 +42,33 @@ Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI
 - [[00-lexique/nvlink|NVLink]] — High-bandwidth interconnect between NVIDIA GPUs.
 - [[00-lexique/nvswitch|NVSwitch]] — NVIDIA switch that connects multiple GPUs into a fully non-blocking NVLink fabric inside a node.
 - [[00-lexique/offloading|Offloading]] — Technique that places part of the model in RAM or on SSD when VRAM is insufficient, at the cost of reduced throughput.
+- [[00-lexique/ollama|Ollama]] — Simplified local runtime to download and run LLMs via llama.cpp, with OpenAI-compatible API.
 - [[00-lexique/on-premise|On-Premise (AI)]] — AI infrastructure hosted and operated on the organization's own equipment, without delegating to a cloud provider.
 - [[00-lexique/pagedattention|PagedAttention]] — KV Cache management technique using virtual memory blocks, popularized by vLLM.
 - [[00-lexique/pcie|PCIe]] — High-bandwidth interconnect bus between components.
 - [[00-lexique/pfc|PFC]] — Priority Flow Control — Ethernet per-priority pause mechanism for a lossless network required by RoCE.
 - [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] — Strategy for distributing an LLM in layer slices across multiple machines.
 - [[00-lexique/prefill|Prefill]] — Inference phase that processes the initial prompt in parallel before word-by-word generation.
+- [[00-lexique/prompt-injection|Prompt injection]] — Attack where untrusted content in the LLM context hijacks system instructions to exfiltrate data or execute unauthorized actions.
 - [[00-lexique/quantification-q4|Q4 Quantization]] — The most widely used 4-bit quantization format for local inference — especially Q4_K_M in the GGUF/Ollama ecosystem.
 - [[00-lexique/quantification|Quantization]] — Reducing numerical precision of LLM weights to lower memory footprint and speed up inference.
-- [[00-lexique/rag|RAG]] — Architecture that combines document retrieval and LLM generation.
+- [[00-lexique/rag|RAG]] — Architecture that combines document retrieval and LLM generation to ground answers in internal sources.
 - [[00-lexique/ragas|RAGAS]] — Automatic evaluation framework for RAG pipelines.
 - [[00-lexique/ram|RAM]] — System main memory, second choice for LLM inference when VRAM is insufficient.
 - [[00-lexique/ray|Ray]] — Distributed computing framework for multi-node LLM orchestration in production.
 - [[00-lexique/rdma|RDMA]] — Remote direct memory access without classic CPU copying.
 - [[00-lexique/roce|RoCE]] — RDMA implementation on converged Ethernet.
 - [[00-lexique/smolagents|SmolAgents]] — Lightweight Hugging Face framework for local agentic orchestration—a sovereign alternative to LangChain.
+- [[00-lexique/speculative-decoding|Speculative Decoding]] — Inference acceleration technique where a small fast model generates candidate tokens that the large model verifies in a single pass. Requires two models loaded simultaneously.
 - [[00-lexique/tensor-parallelism|Tensor Parallelism]] — Strategy for distributing an LLM by splitting weight matrices across multiple GPUs on the same node.
 - [[00-lexique/tensorrt-llm|TensorRT-LLM]] — NVIDIA SDK for compiling and running ultra-optimized LLM inference on datacenter GPUs.
 - [[00-lexique/tflops|TFLOPS]] — Measure of floating-point compute throughput.
 - [[00-lexique/thunderbolt|Thunderbolt]] — High-throughput wired interface for workstations and desktop AI clusters.
 - [[00-lexique/tokenisation|Tokenization]] — Splitting text into numeric units (tokens) before an LLM processes it.
 - [[00-lexique/tokens-per-second|Tokens per second]] — Measure of a model's generation throughput.
+- [[00-lexique/appel-outils|Tool calling (Function / Tool Calling)]] — An LLM's ability to emit structured requests to external functions (API, SQL, code) rather than free-form text.
 - [[00-lexique/ttft|TTFT]] — Time To First Token.
 - [[00-lexique/unified-memory|Unified Memory]] — Memory architecture shared between CPU, GPU, and NPU.
 - [[00-lexique/vectordb|Vector database]] — Database specialized in storing and searching embedding vectors for RAG.
+- [[00-lexique/vllm|vLLM]] — Open-source high-throughput LLM inference engine for NVIDIA/AMD GPUs, multi-user production standard.
 - [[00-lexique/vram|VRAM]] — Video memory dedicated to the GPU.

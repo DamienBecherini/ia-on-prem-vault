@@ -10,7 +10,7 @@ tags:
   - sécurité
 sidebar:
   order: 39
-last_modified: "2026-06-09"
+last_modified: "2026-06-10"
 last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 ---
@@ -58,6 +58,6 @@ Qdrant permet de scoper les recherches vectorielles via des filtres sur le *payl
 - [[00-lexique/embedding|Embedding]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: OWASP, *Top 10 for Large Language Model Applications*. [https://owasp.org/www-project-top-10-for-large-language-model-applications/](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+[^1]: OWASP GenAI Security Project, *LLM Top 10 for LLM Applications (2025)*. [https://genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)
 [^2]: Crunchy Data, *Row Level Security for Tenants in Postgres*. [https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres](https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres)
 [^3]: Qdrant, *Multitenancy — multiple partitions guide*. [https://qdrant.tech/documentation/guides/multiple-partitions/](https://qdrant.tech/documentation/guides/multiple-partitions/)

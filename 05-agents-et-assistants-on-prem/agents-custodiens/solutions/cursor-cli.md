@@ -3,7 +3,7 @@ title: "Cursor CLI"
 description: Interface terminal de l'agent Cursor, très efficace pour prototyper un agent custodien, mais non souveraine au sens on-prem strict.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -57,6 +57,13 @@ Le dossier `.agents/` de ce vault est un exemple de structuration compatible ave
 ## 📊 Maturité du projet
 
 Produit intégré à Cursor, très pratique pour prototypage et usage personnel. Pour une organisation soumise à souveraineté stricte, il doit rester un outil de développement, pas la cible finale.
+
+## 🔗 Voir aussi
+
+- [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]] · [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]]
+- [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté]] — cloud IDE vs custodian on-prem
+- [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|Workflow HITL]]
+- [[04-blueprints/scenario-a-dev-lab|Scénario A]]
 
 ## 📚 Sources
 

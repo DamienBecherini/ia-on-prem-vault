@@ -1,8 +1,8 @@
 ---
 title: 📖 Glossaire IA
 description: Lexique des termes techniques et acronymes utilisés dans le vault.
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
+last_modified: "2026-06-10"
+last_verified: "2026-06-10"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -86,7 +86,12 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 
 | Terme | Définition rapide |
 | :-- | :-- |
-| [[00-lexique/pagedattention\|PagedAttention]] | Gestion du KV Cache par blocs virtuels ; clé de la production vLLM. |
+| [[00-lexique/ollama|Ollama]] | Runtime local llama.cpp + API OpenAI pour tests et labo. |
+| [[00-lexique/vllm|vLLM]] | Moteur production haut débit, PagedAttention, multi-utilisateurs. |
+| [[00-lexique/sglang|SGLang]] | Inférence agentique, RadixAttention, JSON structuré. |
+| [[00-lexique/radixattention|RadixAttention]] | KV Cache par arbre de préfixes (SGLang). |
+| [[00-lexique/speculative-decoding|Speculative Decoding]] | Petit modèle draft + grand modèle validateur pour accélérer le decoding. |
+| [[00-lexique/pagedattention|PagedAttention]] | Gestion du KV Cache par blocs virtuels ; clé de la production vLLM. |
 | [[00-lexique/gguf\|GGUF]] | Format portable pour l'inférence locale avec llama.cpp/Ollama. |
 | [[00-lexique/tensorrt-llm\|TensorRT-LLM]] | SDK NVIDIA de compilation ultra-optimisée pour GPU datacenter. |
 | [[00-lexique/exo\|Exo]] | Orchestrateur P2P pour cluster IA de bureau (Mac Mini + Thunderbolt). |
@@ -149,6 +154,11 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 | [[00-lexique/excessive-agency\|Excessive Agency]] | Vulnérabilité OWASP LLM06 : agent trop permissif en outils, droits ou autonomie. |
 | [[00-lexique/litellm\|LiteLLM]] | Gateway OpenAI-compatible pour router vers modèles locaux ou cloud. |
 | [[00-lexique/smolagents\|SmolAgents]] | Framework léger Hugging Face pour agents souverains sans télémétrie cloud. |
+| [[00-lexique/langgraph\|LangGraph]] | Graphe d'états pour agents et RAG agentique multi-étapes. |
+| [[00-lexique/appel-outils\|Appel d'outils]] | Function / tool calling — LLM vers fonctions externes structurées. |
+| [[00-lexique/prompt-injection\|Prompt injection]] | OWASP LLM01 — détournement via contenu non fiable (RAG, web). |
+| [[00-lexique/zero-data-retention\|Zero Data Retention]] | Clause ZDR : absence de persistance cloud des prompts. |
+| [[00-lexique/multi-tenant\|Multi-tenant]] | Isolation multi-organisations ; risque RAG inter-tenant. |
 | [[00-lexique/context-window\|Fenêtre de contexte]] | Nombre maximal de tokens que le modèle peut traiter en entrée active. |
 | [[00-lexique/quantification\|Quantification]] | Réduction de précision numérique pour diminuer mémoire et coût de calcul. |
 | [[00-lexique/moe\|MoE]] | Architecture avec experts spécialisés activés partiellement par token. |

@@ -3,7 +3,7 @@ title: "Jan.ai"
 description: Alternative open-source à ChatGPT qui fait tourner des modèles localement via llama.cpp, avec serveur API local OpenAI-compatible.
 sidebar:
   order: 4
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -63,9 +63,16 @@ Jan est idéal comme :
 
 Projet actif et populaire côté GitHub, construit sur Tauri et llama.cpp. Il faut distinguer Jan Desktop local de Jan Web / éventuelles offres cloud dans toute recommandation client.
 
+## 🔗 Voir aussi
+
+- [[00-lexique/ollama|Ollama]] · [[06-mise-en-oeuvre/getting-started-with-ollama|🚀 Démarrer avec Ollama]]
+- [[04-blueprints/scenario-a-dev-lab|Scénario A]] · [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|Open WebUI]]
+- [[02-materiel/apu-and-unified-memory|APU & mémoire unifiée]] — poste desktop
+- [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté]]
+
 ## 📚 Sources
 
-[^1]: Jan introduction — offline, privacy, no telemetry en usage local. [https://janhq-jan-19.mintlify.app/introduction](https://janhq-jan-19.mintlify.app/introduction)
-[^2]: Jan local models — llama.cpp, GGUF et fonctionnement offline. [https://janhq-jan-19.mintlify.app/features/local-models](https://janhq-jan-19.mintlify.app/features/local-models)
+[^1]: Jan GitHub README — offline, privacy, no telemetry en usage local. [https://github.com/janhq/jan](https://github.com/janhq/jan)
+[^2]: Jan — local models (llama.cpp, GGUF) dans la documentation du dépôt. [https://github.com/janhq/jan/tree/dev/docs](https://github.com/janhq/jan/tree/dev/docs)
 [^3]: Jan API server — serveur local OpenAI-compatible sur `localhost:1337`. [https://github.com/janhq/jan/blob/dev/docs/src/pages/docs/desktop/api-server.mdx](https://github.com/janhq/jan/blob/dev/docs/src/pages/docs/desktop/api-server.mdx)
 [^4]: Jan GitHub README — modèles locaux et intégrations cloud optionnelles. [https://github.com/janhq/jan](https://github.com/janhq/jan)

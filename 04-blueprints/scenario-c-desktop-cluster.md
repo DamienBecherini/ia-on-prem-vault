@@ -3,7 +3,7 @@ title: "🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)"
 description: Le blueprint de l'évolutivité. Relier plusieurs Mac Mini ou PC compacts via Thunderbolt pour exécuter des modèles massifs inaccessibles sur une seule machine.
 sidebar:
   order: 3
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -112,4 +112,4 @@ ollama logs
 
 ## 📚 Sources et Références
 
-[^1]: Particula Tech, *Running DeepSeek V3 671B on M4 Mac Mini Cluster* (Performances via Thunderbolt 5 et Exo, Pipeline Parallelism constraints), Mars 2026.
+[^1]: Exo Labs, *Running DeepSeek V3 671B on M4 Mac Mini Cluster* (Performances via Thunderbolt 5 et Exo, Pipeline Parallelism constraints, 3–5 tok/s), Mars 2026. [https://blog.exolabs.net/day-2](https://blog.exolabs.net/day-2)

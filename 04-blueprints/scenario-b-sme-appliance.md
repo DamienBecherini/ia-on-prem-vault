@@ -3,7 +3,7 @@ title: "🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)"
 description: Le blueprint idéal pour les PME. Comment servir une équipe de 10 à 50 personnes avec un modèle 70B en utilisant un Mac Studio ou un APU AMD.
 sidebar:
   order: 2
-last_modified: "2026-06-05"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -96,5 +96,5 @@ Pour dépasser cette contrainte de capacité fixe et rester sur du matériel de 
 
 ## 📚 Sources et Références
 
-[^1]: llmhardware.io, *Mac Studio M4 Max / M3 Ultra for LLMs* (Performances Llama 3 70B Q4_K_M avec MLX et allocation de mémoire Metal maximale), 2025-2026.
-[^2]: ServeTheHome & ignasivt (GitHub), *Strix Halo / Gorgon Halo 192GB Unified Memory Benchmarks* (Débit decoding attendu sur modèle dense 70B), Mai 2026.
+[^1]: llmhardware.io, *Mac Studio M4 Max / M3 Ultra for LLMs* (Performances Llama 3 70B Q4_K_M avec MLX et allocation de mémoire Metal maximale), 2025-2026. [https://llmhardware.io/guides/mac-studio-m4-max-llm-guide](https://llmhardware.io/guides/mac-studio-m4-max-llm-guide)
+[^2]: ServeTheHome & ignasivt (GitHub), *Strix Halo / Gorgon Halo 192GB Unified Memory Benchmarks* (Débit decoding attendu sur modèle dense 70B), Mai 2026. [https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/](https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/) · [https://github.com/ignasivt/strix-halo-guide](https://github.com/ignasivt/strix-halo-guide)

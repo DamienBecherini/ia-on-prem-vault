@@ -3,7 +3,7 @@ title: "Jan.ai"
 description: Open-source ChatGPT alternative that runs models locally via llama.cpp, with a local OpenAI-compatible API server.
 sidebar:
   order: 4
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -12,33 +12,33 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## 🔍 Quick overview
 
-Jan.ai is an open-source desktop application for downloading and running local models on your machine. The project emphasizes **100% offline** operation and a personal ChatGPT-like experience[^1][^2].
+Jan.ai is an open-source desktop application that lets you download and run local models on your machine. The project emphasizes **100% offline** operation and a personal ChatGPT-like experience[^1][^2].
 
-Jan also exposes a local OpenAI-compatible API server on `localhost:1337`, useful for connecting other tools to a local model without a cloud API[^3].
+Jan also exposes a local OpenAI-compatible API server on `localhost:1337`, useful for connecting other tools to a local model without going through a cloud API[^3].
 
 > [!tip] Sovereignty verdict
-> **✅ Native sovereign** for desktop use with local models. Cloud provider connections exist but are optional.
+> **✅ Native sovereign** for desktop use with local models. Connections to cloud providers exist, but they are optional.
 
 ## 💡 Why this project interests us
 
-Jan is probably the simplest entry for an individual who wants to try local AI without understanding Docker, vLLM, or web UI configuration.
+Jan is probably the simplest entry point for an individual user who wants to try local AI without understanding Docker, vLLM, or web UI configuration.
 
-It is less "enterprise RAG" oriented than Open WebUI or AnythingLLM, but excellent for the **sovereign personal workstation**: desktop install, GGUF models, Metal/CUDA/Vulkan acceleration, local API.
+It is less oriented toward "enterprise RAG" than Open WebUI or AnythingLLM, but excellent for the **sovereign personal workstation**: desktop install, GGUF models, Metal/CUDA/Vulkan acceleration, local API.
 
 ## ✅ Strengths
 
-- **Simple desktop:** macOS, Windows, Linux.
-- **Local models:** llama.cpp, GGUF, GPU offload per platform[^2].
-- **Offline:** works without Internet after model download[^1][^2].
-- **Local API:** OpenAI-compatible endpoint for local integrations[^3].
-- **Telemetry absent in announced local mode:** marketing docs indicate no collection or telemetry for local models[^1].
+- **Simple desktop**: macOS, Windows, Linux.
+- **Local models**: llama.cpp, GGUF, GPU offload per platform[^2].
+- **Offline**: works without Internet after model download[^1][^2].
+- **Local API**: OpenAI-compatible endpoint for local integrations[^3].
+- **No telemetry in announced local mode**: marketing docs indicate no collection or telemetry for local models[^1].
 
 ## ⚠️ Limitations and risks
 
-- **Limited document memory:** not primarily a RAG/knowledge base system.
-- **Optional cloud features:** the user can connect OpenAI/Anthropic/Mistral/Groq, which completely changes the sovereignty verdict[^4].
-- **Local API to secure:** if listening moves from `127.0.0.1` to `0.0.0.0`, manage network, key, and CORS[^3].
-- **Not the best multi-user choice:** prefer Open WebUI or AnythingLLM for a team.
+- **Limited document memory**: not primarily a RAG/knowledge base system.
+- **Optional cloud features**: user can connect OpenAI/Anthropic/Mistral/Groq, which completely changes the sovereignty verdict[^4].
+- **Local API to secure**: if listening moves from `127.0.0.1` to `0.0.0.0`, network, key, and CORS must be managed[^3].
+- **Not the best multi-user choice**: prefer Open WebUI or AnythingLLM for a team.
 
 ## 🔒 Sovereignty and privacy
 
@@ -57,15 +57,22 @@ Jan is ideal as:
 
 - a first tool to discover local models;
 - a personal local runtime behind an OpenAI API-compatible tool;
-- a simple desktop alternative to Ollama + terminal.
+- a simple desktop alternative to the Ollama + terminal duo.
 
 ## 📊 Project maturity
 
-Active, popular GitHub project built on Tauri and llama.cpp. Distinguish local Jan Desktop from Jan Web / any cloud offerings in any client recommendation.
+Active, popular project on GitHub, built on Tauri and llama.cpp. Distinguish Jan Desktop local from Jan Web / any cloud offerings in every client recommendation.
+
+## 🔗 See also
+
+- [[00-lexique/ollama|Ollama]] · [[06-mise-en-oeuvre/getting-started-with-ollama|🚀 Getting started with Ollama]]
+- [[04-blueprints/scenario-a-dev-lab|Scenario A]] · [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|Open WebUI]]
+- [[02-materiel/apu-and-unified-memory|APU & unified memory]] — desktop workstation
+- [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Sovereignty]]
 
 ## 📚 Sources
 
-[^1]: Jan introduction — offline, privacy, no telemetry in local use. [https://janhq-jan-19.mintlify.app/introduction](https://janhq-jan-19.mintlify.app/introduction)
-[^2]: Jan local models — llama.cpp, GGUF, and offline operation. [https://janhq-jan-19.mintlify.app/features/local-models](https://janhq-jan-19.mintlify.app/features/local-models)
+[^1]: Jan GitHub README — offline, privacy, no telemetry in local use. [https://github.com/janhq/jan](https://github.com/janhq/jan)
+[^2]: Jan — local models (llama.cpp, GGUF) in repository documentation. [https://github.com/janhq/jan/tree/dev/docs](https://github.com/janhq/jan/tree/dev/docs)
 [^3]: Jan API server — local OpenAI-compatible server on `localhost:1337`. [https://github.com/janhq/jan/blob/dev/docs/src/pages/docs/desktop/api-server.mdx](https://github.com/janhq/jan/blob/dev/docs/src/pages/docs/desktop/api-server.mdx)
 [^4]: Jan GitHub README — local models and optional cloud integrations. [https://github.com/janhq/jan](https://github.com/janhq/jan)

@@ -1,9 +1,9 @@
 ---
 title: "SearXNG"
-description: Self-hosted, privacy-first meta-search engine, useful for giving a custodian agent controlled web access.
+description: Self-hosted, privacy-first meta search engine, useful for giving a custodian agent controlled web access.
 sidebar:
   order: 5
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -12,11 +12,11 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## 🔍 Quick overview
 
-SearXNG is a free meta-search engine that aggregates results from many engines without profiling the user. It can be self-hosted and exposes a search API usable by an agent[^1][^2].
+SearXNG is a free meta search engine that aggregates results from many engines without profiling the user. It can be self-hosted and exposes a search API usable by an agent[^1][^2].
 
 ## 💡 Why this project interests us
 
-A custodian agent needs to verify sources. SearXNG provides a controlled web search tool without direct dependence on Google/Bing/Tavily.
+A custodian agent needs to verify sources. SearXNG gives it a controlled web search tool without depending directly on Google/Bing/Tavily.
 
 ## ✅ Strengths
 
@@ -35,11 +35,11 @@ A custodian agent needs to verify sources. SearXNG provides a controlled web sea
 
 ## 🔒 Sovereignty and privacy
 
-- **Data:** queries handled by your instance; remote engines see the instance.
+- **Data:** queries processed by your instance; remote engines see the instance.
 - **Model:** not applicable.
 - **Memory:** no application memory by default.
 - **Telemetry:** no user profiling announced.
-- **100% offline mode:** no, this is web access.
+- **100% offline mode:** no, it is web access.
 - **Verdict:** ✅ for privacy-preserving web search, not for strict air-gap.
 
 ## 🔗 Possible integration in this vault
@@ -54,7 +54,14 @@ The agent must then cite selected URLs in its report.
 
 ## 📊 Project maturity
 
-Mature, active project, widely used in self-hosting. Protect with rate limits, secret key, reverse proxy, and access policy.
+Mature, active project, widely used in self-hosting. Protect with rate limiting, secret key, reverse proxy, and access policy.
+
+## 🔗 See also
+
+- [[00-lexique/rag|RAG]] · [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] — web search for agents
+- [[06-mise-en-oeuvre/local-inference-security|🔐 Inference security]] · [[00-lexique/prompt-injection|Prompt injection]]
+- [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] · [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|LiteLLM]]
+- [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Sovereignty]]
 
 ## 📚 Sources
 

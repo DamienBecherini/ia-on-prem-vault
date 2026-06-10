@@ -1,7 +1,7 @@
 ---
 title: 🚀 Index Zero to Hero
 description: Le point d'entrée de votre formation sur l'IA On-Premise
-last_modified: "2026-06-05"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -45,8 +45,10 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 
 ### 📁 02 - Le Matériel (Le Fer)
 *Le catalogue des architectures.*
+- [[02-materiel/index|🖥️ Index Matériel]] — parcours par blueprint
 - [[02-materiel/apu-and-unified-memory|🧠 APU & Mémoire Unifiée]] (AMD Strix Halo & Mac)
 - [[02-materiel/stations-multi-gpu|🧩 Stations Multi-GPU]] (Nvidia, PCIe)
+- [[02-materiel/gpu-rack-servers|🏭 Serveurs rack GPU]] (1U–HGX, RTX vs datacenter)
 - [[02-materiel/network-roce-infiniband-thunderbolt|🌐 Réseau IA : RoCE, InfiniBand et Thunderbolt]]
 
 ### 📁 03 - La Stack Logicielle (Les Moteurs)

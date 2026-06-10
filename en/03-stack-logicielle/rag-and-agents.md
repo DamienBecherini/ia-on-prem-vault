@@ -37,7 +37,7 @@ As we saw in the hardware chapter, a huge context explodes the **[[01-fondations
 To avoid saturating memory with useless information, the market has shifted to **Agentic RAG**[^1][^3]. Instead of being a passive pipe, the LLM becomes the driver.
 
 ### The agent framework
-With libraries like [[00-lexique/smolagents|SmolAgents]] (Hugging Face) or LangGraph, developers give the LLM **Tools** (*Tool Calling* / *Function Calling*).
+With libraries like [[00-lexique/smolagents|SmolAgents]] (Hugging Face) or [[00-lexique/langgraph|LangGraph]], developers give the LLM **Tools** ([[00-lexique/appel-outils|Tool Calling / Function Calling]]).
 The flow becomes dynamic:
 1. The user asks a complex question.
 2. The agent reasons: *"Do I need to search the HR database or the source code?"*
@@ -216,23 +216,23 @@ curl http://localhost:11434/api/embeddings \
 
 To build a sovereign enterprise software stack in 2026:
 
-1.  **Dedicate a small model to routing:** Do not use your large 70B model to choose which tool to call. Use an ultra-fast model (e.g. Qwen 2.5 7B or Llama 3 8B) configured specifically for *Function Calling*. It will call the database.
+1.  **Dedicate a small model to routing:** Do not use your large 70B model to choose which tool to call. Use an ultra-fast model (e.g. Qwen 2.5 7B or Llama 3 8B) configured for [[00-lexique/appel-outils|tool calling]]. It will call the database.
 2.  **Keep large models for synthesis:** Once the small agent has retrieved the right text blocks, send everything to the heavy model (the "brain") to write the final answer.
 3.  **Avoid cloud dependencies:** If you use LangChain or LlamaIndex, audit telemetry. In pure on-premise setups, minimal frameworks like [[00-lexique/smolagents|SmolAgents]] ensure your prompts will not leak to an external API during orchestration[^4].
-4.  **Isolate embeddings per tenant from day one.** Multi-tenant RAG without isolation (pgvector RLS or Qdrant payload) is a guaranteed security flaw. Adding this isolation after the fact on a production database is costly.
+4.  **Isolate embeddings per tenant from day one.** A [[00-lexique/multi-tenant|multi-tenant]] RAG without isolation (pgvector RLS or Qdrant payload) is a guaranteed security flaw. Adding this isolation after the fact on a production database is costly.
 5.  **Route auxiliary tasks to CPU.** Embeddings and Whisper transcription consume no VRAM when using `faster-whisper` and `nomic-embed-text` on CPU. Freed VRAM multiplies concurrent inference capacity.
 
 ---
 
 ## 📚 Sources and References
 
-[^1]: Lyzr Blog, *What is Agentic RAG? Everything You Need to Know in 2026* (Evolution from static pipelines to intelligent adaptation), January 2026.
-[^2]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (Impact of long context on KV Cache), November 2023.
-[^3]: Vinod Rane (Medium), *Next-Generation Agentic RAG with LangGraph (2026 Edition)* (Graph orchestration, self-correcting RAG), March 2026.
-[^4]: Hugging Face, *Agentic RAG with SmolAgents* (RAG orchestration via Hugging Face light framework), 2025.
-[^5]: Neo4j Developer Blog, *What is agentic RAG? A developer's guide* (GraphRAG, ReAct, multi-agent RAG patterns), May 2026.
-[^6]: OpenHuman, *Memory Trees* (GitBook — local SQLite + Markdown pipeline, selective injection for VRAM savings), 2025. Note: OpenHuman uses a cloud backend by default for model routing. The Memory Tree *pattern* remains applicable in a 100% on-premise implementation independent of the project.
-[^7]: OWASP, *Top 10 for Large Language Model Applications 2025 — LLM08: Vector and Embedding Weaknesses*. https://owasp.org/www-project-top-10-for-large-language-model-applications/
-[^8]: Crunchy Data, *Row-Level Security for tenants in Postgres / pgvector*. https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres
-[^9]: Qdrant, *Multitenancy — Payload-based Partitioning*. https://qdrant.tech/documentation/guides/multiple-partitions/
-[^10]: SYSTRAN, *faster-whisper — High-throughput Whisper inference on CPU and GPU (CTranslate2)*. https://github.com/SYSTRAN/faster-whisper
+[^1]: Lyzr Blog, *What is Agentic RAG? Everything You Need to Know in 2026* (Evolution from static pipelines to intelligent adaptation), January 2026. [https://www.lyzr.ai/blog/agentic-rag/](https://www.lyzr.ai/blog/agentic-rag/)
+[^2]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (Impact of long context on KV Cache), November 2023. [https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/](https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/)
+[^3]: Vinod Rane (Medium), *Next-Generation Agentic RAG with LangGraph (2026 Edition)* (Graph orchestration, self-correcting RAG), March 2026. [https://medium.com/@vinodkrane/next-generation-agentic-rag-with-langgraph-2026-edition-d1c4c068d2b8](https://medium.com/@vinodkrane/next-generation-agentic-rag-with-langgraph-2026-edition-d1c4c068d2b8)
+[^4]: Hugging Face, *Agentic RAG with SmolAgents* (RAG orchestration via Hugging Face light framework), 2025. [https://huggingface.co/docs/smolagents/main/examples/rag](https://huggingface.co/docs/smolagents/main/examples/rag)
+[^5]: Neo4j Developer Blog, *What is agentic RAG? A developer's guide* (GraphRAG, ReAct, multi-agent RAG patterns), May 2026. [https://neo4j.com/blog/agentic-ai/what-is-agentic-rag/](https://neo4j.com/blog/agentic-ai/what-is-agentic-rag/)
+[^6]: OpenHuman, *Memory Trees* (GitBook — local SQLite + Markdown pipeline, selective injection for VRAM savings), 2025. Note: OpenHuman uses a cloud backend by default for model routing. The Memory Tree *pattern* remains applicable in a 100% on-premise implementation independent of the project. [https://tinyhumans.gitbook.io/openhuman/features/memory-tree](https://tinyhumans.gitbook.io/openhuman/features/memory-tree)
+[^7]: OWASP GenAI Security Project, *LLM08:2025 Vector and Embedding Weaknesses*. [https://genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)
+[^8]: Crunchy Data, *Row-Level Security for tenants in Postgres / pgvector*. [https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres](https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres)
+[^9]: Qdrant, *Multitenancy — Payload-based Partitioning*. [https://qdrant.tech/documentation/guides/multiple-partitions/](https://qdrant.tech/documentation/guides/multiple-partitions/)
+[^10]: SYSTRAN, *faster-whisper — High-throughput Whisper inference on CPU and GPU (CTranslate2)*. [https://github.com/SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper)

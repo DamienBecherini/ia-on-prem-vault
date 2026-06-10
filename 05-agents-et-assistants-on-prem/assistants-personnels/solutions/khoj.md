@@ -3,7 +3,7 @@ title: "Khoj"
 description: Assistant personnel self-hostable orienté second cerveau, documents, web, agents et automatisations, avec support de modèles locaux via Ollama.
 sidebar:
   order: 5
-last_modified: "2026-06-04"
+last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -60,6 +60,13 @@ Khoj est intéressant si le vault doit devenir une vraie mémoire personnelle :
 ## 📊 Maturité du projet
 
 Projet open-source ancien pour ce secteur (créé en 2021) et activement maintenu. Sa richesse fonctionnelle impose cependant de tester précisément le mode self-host avant recommandation dans un contexte réglementé.
+
+## 🔗 Voir aussi
+
+- [[00-lexique/memory-tree|Memory Tree]] · [[00-lexique/rag|RAG]] · [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]]
+- [[00-lexique/ollama|Ollama]] · [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai|Jan.ai]]
+- [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] — comparaison mémoire hiérarchique
+- [[04-blueprints/scenario-a-dev-lab|Scénario A]] · [[06-mise-en-oeuvre/evaluate-local-model|🧪 Évaluer un modèle]]
 
 ## 📚 Sources
 
