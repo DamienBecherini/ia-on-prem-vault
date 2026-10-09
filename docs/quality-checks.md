@@ -72,6 +72,19 @@ VAULT_PATH=<vault-checkout> FORCE_VAULT_PATH=1 npm run audit:links
 
 Unresolved wiki-links are suppressed when listed in `.agents/vault-maintenance/link-audit-allowlist.md`.
 
+### Branch protection (`main`)
+
+Since 2026-10-09 a GitHub ruleset named **Protection de main** enforces, with no bypass actor:
+
+| Rule | Effect |
+| :-- | :-- |
+| deletion | `main` cannot be deleted |
+| non_fast_forward | no force-push to `main` |
+| pull_request | every change reaches `main` through a PR (0 approvals required, squash or merge) |
+| required_status_checks | `Vault quality checks` and `Internal link audit (engine)` must pass on the PR head |
+
+`audit:sources` is deliberately **not** a required check: it depends on third-party hosts and must stay warn-only.
+
 ---
 
 ## Audit reference
