@@ -80,5 +80,5 @@ Report findings in chat. For read-only maintenance, a PR is usually not required
 4. **Push + PR** — read `.cursor/rules/git-workflow.mdc` for the PR body template and branch naming rules.
 5. **Report** — paste the PR URL in chat.
 
-Exception: if the user says "commit to main" or "push directly", skip branch and PR.
+No exception: `main` is protected by a GitHub ruleset (PR required, CI checks required, no bypass). See `.cursor/rules/git-workflow.mdc`.
 
