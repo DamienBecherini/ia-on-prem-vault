@@ -49,10 +49,19 @@ Until pages carry a `freshness` frontmatter field, the class is inferred from th
 
 Columns: **Page** (FR path) · **Claim** (short quote, ≤ 120 chars) · **Type** · **Value in page** (the number/version/name as written) · **Source** (footnote id or URL) · **Source date** · **Checked** (last check date) · **Status** · **Note** (what changed, proposed value, new source).
 
-| Page | Claim | Type | Value in page | Source | Source date | Checked | Status | Note |
-| :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+The table is split per chapter under `watchlist/` because the 2026-10-09 run seeded 585 rows:
 
-*(empty — seeded by the 2026-10 refresh run; see `.agents/skills/vault-refresh-outdated-content/SKILL.md`)*
+| File | Rows (2026-10-09) |
+| :-- | --: |
+| `watchlist/00-lexique.md` | 60 |
+| `watchlist/01-fondations.md` | 27 |
+| `watchlist/02-materiel.md` | 72 |
+| `watchlist/03-stack-logicielle.md` | 83 |
+| `watchlist/04-blueprints.md` | 91 |
+| `watchlist/05-agents-et-assistants-on-prem.md` | 140 |
+| `watchlist/06-mise-en-oeuvre.md` | 112 |
+
+Known debt: 102 rows written by the phase 3 agents have misaligned columns (a `|` inside a cell, or a missing cell). Normalise them when applying the 2026-10-09 findings; escape pipes inside cells as `\|`.
 
 ---
 
