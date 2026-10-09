@@ -1,0 +1,5002 @@
+{
+  "generated": "2026-10-09",
+  "locale": "fr",
+  "probed": true,
+  "pagesScanned": 117,
+  "citationsTotal": 538,
+  "uniqueUrls": 176,
+  "byStatus": {
+    "ok": 135,
+    "network-error": 1,
+    "redirected": 24,
+    "blocked": 5,
+    "dead": 10,
+    "timeout": 1
+  },
+  "byTier": {
+    "A": 154,
+    "B": 11,
+    "C": 11,
+    "unclassified": 0
+  },
+  "sources": [
+    {
+      "url": "https://aclanthology.org/2023.emnlp-main.741/",
+      "host": "aclanthology.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "3",
+          "line": 281
+        },
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "3",
+          "line": 281
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://aclanthology.org/2024.eacl-demo.16/",
+      "host": "aclanthology.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "4",
+          "line": 282
+        },
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "4",
+          "line": 282
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50",
+      "host": "ai-act-service-desk.ec.europa.eu",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy.md",
+          "footnote": "4",
+          "line": 234
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy.md",
+          "footnote": "4",
+          "line": 234
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://ai.meta.com/blog/llama-4-multimodal-intelligence/",
+      "host": "ai.meta.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "2",
+          "line": 195
+        },
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "2",
+          "line": 195
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://aider.chat/docs/llms/ollama.html",
+      "host": "aider.chat",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider.md",
+          "footnote": "2",
+          "line": 80
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider.md",
+          "footnote": "2",
+          "line": 80
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://aider.chat/docs/more/analytics.html",
+      "host": "aider.chat",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider.md",
+          "footnote": "4",
+          "line": 82
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider.md",
+          "footnote": "4",
+          "line": 82
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://aider.chat/docs/usage/tutorials.html",
+      "host": "aider.chat",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/possible-architectures.md",
+          "footnote": null,
+          "line": 140
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2005.11401",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/rag.md",
+          "footnote": "1",
+          "line": 57
+        },
+        {
+          "page": "00-lexique/rag.md",
+          "footnote": "1",
+          "line": 57
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2109.07958",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "2",
+          "line": 280
+        },
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "2",
+          "line": 280
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2210.17323",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "5",
+          "line": 121
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "5",
+          "line": 121
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2304.08485",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/multimodality-vram-impact.md",
+          "footnote": "1",
+          "line": 149
+        },
+        {
+          "page": "01-fondations/multimodality-vram-impact.md",
+          "footnote": "1",
+          "line": 149
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2306.00923",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "6",
+          "line": 122
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "6",
+          "line": 122
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2306.05685",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "6",
+          "line": 284
+        },
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "6",
+          "line": 284
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2309.06180",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/vllm.md",
+          "footnote": "2",
+          "line": 54
+        },
+        {
+          "page": "00-lexique/vllm.md",
+          "footnote": "2",
+          "line": 54
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "3",
+          "line": 132
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "3",
+          "line": 132
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2403.14123",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "1",
+          "line": 108
+        },
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "1",
+          "line": 108
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": "5",
+          "line": 97
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": "5",
+          "line": 97
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2509.23202",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "8",
+          "line": 124
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "8",
+          "line": 124
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2601.14277",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "4",
+          "line": 120
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "4",
+          "line": 120
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "2",
+          "line": 131
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "2",
+          "line": 131
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/abs/2603.08713",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "7",
+          "line": 123
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "7",
+          "line": 123
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://arxiv.org/html/2305.13245",
+      "host": "arxiv.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "5",
+          "line": 125
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "5",
+          "line": 125
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://blog.exolabs.net/day-2",
+      "host": "blog.exolabs.net",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/clustering-exo-and-ray.md",
+          "footnote": "2",
+          "line": 93
+        },
+        {
+          "page": "03-stack-logicielle/clustering-exo-and-ray.md",
+          "footnote": "2",
+          "line": 93
+        },
+        {
+          "page": "04-blueprints/scenario-c-desktop-cluster.md",
+          "footnote": "1",
+          "line": 103
+        },
+        {
+          "page": "04-blueprints/scenario-c-desktop-cluster.md",
+          "footnote": "1",
+          "line": 103
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://blogs.vmware.com/cloud-foundation/2024/09/25/llm-inference-sizing-and-performance-guidance/",
+      "host": "blogs.vmware.com",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "3",
+          "line": 123
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "3",
+          "line": 123
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://chat.lmsys.org/",
+      "host": "chat.lmsys.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "4",
+          "line": 197
+        },
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "4",
+          "line": 197
+        }
+      ],
+      "probe": {
+        "status": "network-error",
+        "code": null,
+        "finalUrl": null,
+        "error": "ENOTFOUND"
+      }
+    },
+    {
+      "url": "https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/",
+      "host": "craftrigs.com",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "04-blueprints/scenario-a-dev-lab.md",
+          "footnote": "1",
+          "line": 94
+        },
+        {
+          "page": "04-blueprints/scenario-a-dev-lab.md",
+          "footnote": "1",
+          "line": 94
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://craftrigs.com/guides/run-llama-70b-mac-128gb-ram/",
+      "host": "craftrigs.com",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "9",
+          "line": 151
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "9",
+          "line": 151
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://crfm.stanford.edu/helm/",
+      "host": "crfm.stanford.edu",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "1",
+          "line": 279
+        },
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "1",
+          "line": 279
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://cursor.com/docs/cli/headless.md",
+      "host": "cursor.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli.md",
+          "footnote": null,
+          "line": 71
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli.md",
+          "footnote": null,
+          "line": 71
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://cursor.com/docs/cli/overview.md",
+      "host": "cursor.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli.md",
+          "footnote": null,
+          "line": 70
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli.md",
+          "footnote": null,
+          "line": 70
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://cursor.com/docs/enterprise/deployment-patterns.md",
+      "host": "cursor.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli.md",
+          "footnote": null,
+          "line": 72
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli.md",
+          "footnote": null,
+          "line": 72
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://cursor.com/help/models-and-usage/api-keys.md",
+      "host": "cursor.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli.md",
+          "footnote": null,
+          "line": 73
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli.md",
+          "footnote": null,
+          "line": 73
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://damien.becherini.fr",
+      "host": "damien.becherini.fr",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "00-index.md",
+          "footnote": null,
+          "line": 8
+        },
+        {
+          "page": "00-lexique/agent-custodian.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/ai-glossary.md",
+          "footnote": null,
+          "line": 8
+        },
+        {
+          "page": "00-lexique/apu.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/attention.md",
+          "footnote": null,
+          "line": 16
+        },
+        {
+          "page": "00-lexique/autonomous-agent.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/benchmark-llm.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/context-window.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/decoding.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/ecn.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/embedding.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/excessive-agency.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/exo.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/gguf.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/gpudirect-rdma.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/graphrag.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/hbm.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/human-in-the-loop.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/inference.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/infiniband.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/kv-cache.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/litellm.md",
+          "footnote": null,
+          "line": 16
+        },
+        {
+          "page": "00-lexique/llm-as-a-judge.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/llm.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/memory-bandwidth.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/memory-tree.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/memory-wall.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/moe.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/multi-gpu.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/nccl.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/npu.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/nvlink.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/nvswitch.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/offloading.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/on-premise.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/pagedattention.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/pcie.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/pfc.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/pipeline-parallelism.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/prefill.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/quantification-q4.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/quantification.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/rag.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/ragas.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/ram.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/ray.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/rdma.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/roce.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/smolagents.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/speculative-decoding.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/tensor-parallelism.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/tensorrt-llm.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/tflops.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/thunderbolt.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/tokenisation.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/tokens-per-second.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "00-lexique/ttft.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/unified-memory.md",
+          "footnote": null,
+          "line": 13
+        },
+        {
+          "page": "00-lexique/vectordb.md",
+          "footnote": null,
+          "line": 15
+        },
+        {
+          "page": "00-lexique/vram.md",
+          "footnote": null,
+          "line": 14
+        },
+        {
+          "page": "01-fondations/journey-of-a-prompt.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "01-fondations/multimodality-vram-impact.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "02-materiel/gpu-rack-servers.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "02-materiel/index.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "03-stack-logicielle/clustering-exo-and-ray.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": null,
+          "line": 9
+        },
+        {
+          "page": "04-blueprints/scenario-a-dev-lab.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "04-blueprints/scenario-b-sme-appliance.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "04-blueprints/scenario-c-desktop-cluster.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "04-blueprints/scenario-d-datacenter.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "04-blueprints/tco-comparison.md",
+          "footnote": null,
+          "line": 11
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/github-branches-pr-notifications.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/index.md",
+          "footnote": null,
+          "line": 12
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/recherche-web-et-sources.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/recommandation-architecture-cible.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/index.md",
+          "footnote": null,
+          "line": 12
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/index.md",
+          "footnote": null,
+          "line": 12
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/possible-architectures.md",
+          "footnote": null,
+          "line": 12
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy.md",
+          "footnote": null,
+          "line": 12
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/index.md",
+          "footnote": null,
+          "line": 12
+        },
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "06-mise-en-oeuvre/getting-started-with-ollama.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "06-mise-en-oeuvre/index.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "06-mise-en-oeuvre/migrate-ollama-to-vllm.md",
+          "footnote": null,
+          "line": 10
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": null,
+          "line": 10
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/",
+      "host": "developer.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "1",
+          "line": 121
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "1",
+          "line": 121
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "2",
+          "line": 122
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "2",
+          "line": 122
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "1",
+          "line": 117
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "1",
+          "line": 117
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "2",
+          "line": 118
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "2",
+          "line": 118
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "11",
+          "line": 153
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "11",
+          "line": 153
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "2",
+          "line": 164
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "2",
+          "line": 164
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/nvidia-accelerated-mistral-3-open-models-deliver-efficiency-accuracy-at-any-scale/",
+      "host": "developer.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy.md",
+          "footnote": "5",
+          "line": 235
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy.md",
+          "footnote": "5",
+          "line": 235
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/nvidia-nvlink-and-nvidia-nvswitch-supercharge-large-language-model-inference/",
+      "host": "developer.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "3",
+          "line": 217
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "3",
+          "line": 217
+        },
+        {
+          "page": "04-blueprints/scenario-d-datacenter.md",
+          "footnote": "1",
+          "line": 157
+        },
+        {
+          "page": "04-blueprints/scenario-d-datacenter.md",
+          "footnote": "1",
+          "line": 157
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/",
+      "host": "developer.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "12",
+          "line": 132
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "12",
+          "line": 132
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "9",
+          "line": 125
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "9",
+          "line": 125
+        },
+        {
+          "page": "04-blueprints/scenario-d-datacenter.md",
+          "footnote": "3",
+          "line": 159
+        },
+        {
+          "page": "04-blueprints/scenario-d-datacenter.md",
+          "footnote": "3",
+          "line": 159
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://developer.nvidia.com/gpudirect-storage",
+      "host": "developer.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "04-blueprints/scenario-d-datacenter.md",
+          "footnote": "4",
+          "line": 160
+        },
+        {
+          "page": "04-blueprints/scenario-d-datacenter.md",
+          "footnote": "4",
+          "line": 160
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/",
+      "host": "developers.cloudflare.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": "10",
+          "line": 370
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": "10",
+          "line": 370
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://dl.acm.org/doi/10.1145/3600006.3613165",
+      "host": "dl.acm.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "7",
+          "line": 127
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "7",
+          "line": 127
+        }
+      ],
+      "probe": {
+        "status": "blocked",
+        "code": 403,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.arize.com/phoenix",
+      "host": "docs.arize.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "7",
+          "line": 239
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "7",
+          "line": 239
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://arize.com/docs/phoenix",
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.khoj.dev/advanced/ollama",
+      "host": "docs.khoj.dev",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj.md",
+          "footnote": "2",
+          "line": 74
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj.md",
+          "footnote": "2",
+          "line": 74
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.khoj.dev/clients/desktop/",
+      "host": "docs.khoj.dev",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/possible-architectures.md",
+          "footnote": null,
+          "line": 134
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.litellm.ai/docs/proxy_server",
+      "host": "docs.litellm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm.md",
+          "footnote": "2",
+          "line": 70
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm.md",
+          "footnote": "2",
+          "line": 70
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.litellm.ai/docs/proxy/logging",
+      "host": "docs.litellm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm.md",
+          "footnote": "3",
+          "line": 71
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm.md",
+          "footnote": "3",
+          "line": 71
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.litellm.ai/docs/proxy/quick_start",
+      "host": "docs.litellm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/possible-architectures.md",
+          "footnote": null,
+          "line": 142
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.nvidia.com/cuda/gpudirect-rdma/",
+      "host": "docs.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "4",
+          "line": 147
+        },
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "4",
+          "line": 147
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/26.3/gpu-operator-rdma.html",
+      "host": "docs.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "1",
+          "line": 144
+        },
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "1",
+          "line": 144
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.nvidia.com/doca/sdk/rdma-over-converged-ethernet.pdf",
+      "host": "docs.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "2",
+          "line": 145
+        },
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "2",
+          "line": 145
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.nvidia.com/networking-ethernet-software/cumulus-linux/Layer-1-and-Switch-Ports/Quality-of-Service/RDMA-over-Converged-Ethernet-RoCE/",
+      "host": "docs.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "3",
+          "line": 146
+        },
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "3",
+          "line": 146
+        },
+        {
+          "page": "04-blueprints/scenario-d-datacenter.md",
+          "footnote": "2",
+          "line": 158
+        },
+        {
+          "page": "04-blueprints/scenario-d-datacenter.md",
+          "footnote": "2",
+          "line": 158
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.ollama.com/faq",
+      "host": "docs.ollama.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "04-blueprints/scenario-a-dev-lab.md",
+          "footnote": "2",
+          "line": 95
+        },
+        {
+          "page": "04-blueprints/scenario-a-dev-lab.md",
+          "footnote": "2",
+          "line": 95
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.openhands.dev/openhands/usage/llms/local-llms",
+      "host": "docs.openhands.dev",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands.md",
+          "footnote": "4",
+          "line": 71
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands.md",
+          "footnote": "4",
+          "line": 71
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.openhands.dev/openhands/usage/run-openhands/local-setup",
+      "host": "docs.openhands.dev",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands.md",
+          "footnote": "2",
+          "line": 69
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands.md",
+          "footnote": "2",
+          "line": 69
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.openhands.dev/sdk/guides/agent-server/docker-sandbox",
+      "host": "docs.openhands.dev",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands.md",
+          "footnote": "3",
+          "line": 70
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands.md",
+          "footnote": "3",
+          "line": 70
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.openwebui.com/",
+      "host": "docs.openwebui.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui.md",
+          "footnote": "2",
+          "line": 75
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui.md",
+          "footnote": "2",
+          "line": 75
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/possible-architectures.md",
+          "footnote": null,
+          "line": 132
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.openwebui.com/getting-started/advanced-topics/",
+      "host": "docs.openwebui.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui.md",
+          "footnote": "3",
+          "line": 76
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui.md",
+          "footnote": "3",
+          "line": 76
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.searxng.org/",
+      "host": "docs.searxng.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng.md",
+          "footnote": "1",
+          "line": 66
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng.md",
+          "footnote": "1",
+          "line": 66
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.searxng.org/dev/search_api",
+      "host": "docs.searxng.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng.md",
+          "footnote": "3",
+          "line": 68
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng.md",
+          "footnote": "3",
+          "line": 68
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/gpu-rack-servers.md",
+          "footnote": "2",
+          "line": 84
+        },
+        {
+          "page": "02-materiel/gpu-rack-servers.md",
+          "footnote": "2",
+          "line": 84
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://docs.vllm.ai/en/latest/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/latest/features/quantization/quantized_kvcache.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "8",
+          "line": 128
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "8",
+          "line": 128
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://docs.vllm.ai/en/latest/features/quantization/quantized_kvcache/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/features/automatic_prefix_caching.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "7",
+          "line": 181
+        },
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "7",
+          "line": 181
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/features/disagg_prefill.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "5",
+          "line": 179
+        },
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "5",
+          "line": 179
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://docs.vllm.ai/en/stable/features/disagg_prefill/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/features/quantization/auto_awq.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/migrate-ollama-to-vllm.md",
+          "footnote": "3",
+          "line": 163
+        },
+        {
+          "page": "06-mise-en-oeuvre/migrate-ollama-to-vllm.md",
+          "footnote": "3",
+          "line": 163
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://docs.vllm.ai/en/stable/features/quantization/auto_awq/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/features/quantization/fp8_kv_cache.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "6",
+          "line": 180
+        },
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "6",
+          "line": 180
+        }
+      ],
+      "probe": {
+        "status": "dead",
+        "code": 404,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/features/spec_decode.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/speculative-decoding.md",
+          "footnote": "1",
+          "line": 81
+        },
+        {
+          "page": "00-lexique/speculative-decoding.md",
+          "footnote": "1",
+          "line": 81
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://docs.vllm.ai/en/stable/features/spec_decode/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/getting_started/installation.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": null,
+          "line": 17
+        },
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "1",
+          "line": 175
+        },
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "1",
+          "line": 175
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://docs.vllm.ai/en/stable/getting_started/installation/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/performance/benchmarks.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/migrate-ollama-to-vllm.md",
+          "footnote": "4",
+          "line": 164
+        },
+        {
+          "page": "06-mise-en-oeuvre/migrate-ollama-to-vllm.md",
+          "footnote": "4",
+          "line": 164
+        }
+      ],
+      "probe": {
+        "status": "dead",
+        "code": 404,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/serving/engine_args.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "2",
+          "line": 176
+        },
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "2",
+          "line": 176
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "2",
+          "line": 234
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "2",
+          "line": 234
+        }
+      ],
+      "probe": {
+        "status": "dead",
+        "code": 404,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/serving/metrics.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/multimodality-vram-impact.md",
+          "footnote": "4",
+          "line": 152
+        },
+        {
+          "page": "01-fondations/multimodality-vram-impact.md",
+          "footnote": "4",
+          "line": 152
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "1",
+          "line": 233
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "1",
+          "line": 233
+        }
+      ],
+      "probe": {
+        "status": "dead",
+        "code": 404,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/migrate-ollama-to-vllm.md",
+          "footnote": "2",
+          "line": 162
+        },
+        {
+          "page": "06-mise-en-oeuvre/migrate-ollama-to-vllm.md",
+          "footnote": "2",
+          "line": 162
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://docs.vllm.ai/en/stable/serving/openai_compatible_server/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://docs.vllm.ai/en/stable/serving/parallelism_scaling/",
+      "host": "docs.vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "7",
+          "line": 150
+        },
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "7",
+          "line": 150
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "6",
+          "line": 220
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "6",
+          "line": 220
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "5",
+          "line": 134
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "5",
+          "line": 134
+        },
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "3",
+          "line": 177
+        },
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "3",
+          "line": 177
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+      "host": "eur-lex.europa.eu",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy.md",
+          "footnote": "3",
+          "line": 233
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy.md",
+          "footnote": "3",
+          "line": 233
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 202,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://firecracker-microvm.github.io/",
+      "host": "firecracker-microvm.github.io",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": null,
+          "line": 236
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": null,
+          "line": 374
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://genai.owasp.org/llm-top-10/",
+      "host": "genai.owasp.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/multi-tenant.md",
+          "footnote": "1",
+          "line": 61
+        },
+        {
+          "page": "00-lexique/multi-tenant.md",
+          "footnote": "1",
+          "line": 61
+        },
+        {
+          "page": "00-lexique/prompt-injection.md",
+          "footnote": "1",
+          "line": 60
+        },
+        {
+          "page": "00-lexique/prompt-injection.md",
+          "footnote": "1",
+          "line": 60
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "7",
+          "line": 169
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "7",
+          "line": 169
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": null,
+          "line": 103
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": null,
+          "line": 106
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": null,
+          "line": 373
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/Aider-AI/aider",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider.md",
+          "footnote": "1",
+          "line": 79
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider.md",
+          "footnote": "1",
+          "line": 79
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/Aider-AI/aider/issues/3627",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider.md",
+          "footnote": "3",
+          "line": 81
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider.md",
+          "footnote": "3",
+          "line": 81
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/BerriAI/litellm",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm.md",
+          "footnote": "1",
+          "line": 69
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm.md",
+          "footnote": "1",
+          "line": 69
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/casper-hansen/AutoAWQ",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/migrate-ollama-to-vllm.md",
+          "footnote": null,
+          "line": 100
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/codereliant/ollama-prometheus-exporter",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": null,
+          "line": 37
+        }
+      ],
+      "probe": {
+        "status": "dead",
+        "code": 404,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": null,
+          "line": 375
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://github.com/podman-container-tools/podman/blob/main/docs/tutorials/rootless_tutorial.md",
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/Dao-AILab/flash-attention/pull/1236",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "11",
+          "line": 131
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "11",
+          "line": 131
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/exo-explore/exo",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/clustering-exo-and-ray.md",
+          "footnote": null,
+          "line": 26
+        },
+        {
+          "page": "03-stack-logicielle/clustering-exo-and-ray.md",
+          "footnote": "1",
+          "line": 92
+        },
+        {
+          "page": "03-stack-logicielle/clustering-exo-and-ray.md",
+          "footnote": "1",
+          "line": 92
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": null,
+          "line": 50
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "3",
+          "line": 119
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "3",
+          "line": 119
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/blob/master/tools/perplexity/README.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "10",
+          "line": 126
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "10",
+          "line": 126
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "9",
+          "line": 129
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "9",
+          "line": 129
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/issues/16646",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "12",
+          "line": 154
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "12",
+          "line": 154
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/huggingface/blog/blob/main/llama31.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "6",
+          "line": 126
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "6",
+          "line": 126
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/ignasivt/strix-halo-guide",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "6",
+          "line": 148
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "6",
+          "line": 148
+        },
+        {
+          "page": "04-blueprints/scenario-b-sme-appliance.md",
+          "footnote": "2",
+          "line": 100
+        },
+        {
+          "page": "04-blueprints/scenario-b-sme-appliance.md",
+          "footnote": "2",
+          "line": 100
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/ivanopcode/devnote-override-macos-metal-vram-cap",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "13",
+          "line": 155
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "13",
+          "line": 155
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/janhq/jan",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai.md",
+          "footnote": "1",
+          "line": 75
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai.md",
+          "footnote": "1",
+          "line": 75
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai.md",
+          "footnote": "4",
+          "line": 78
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai.md",
+          "footnote": "4",
+          "line": 78
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/janhq/jan/blob/dev/docs/src/pages/docs/desktop/api-server.mdx",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai.md",
+          "footnote": "3",
+          "line": 77
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai.md",
+          "footnote": "3",
+          "line": 77
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/janhq/jan/tree/dev/docs",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai.md",
+          "footnote": "2",
+          "line": 76
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai.md",
+          "footnote": "2",
+          "line": 76
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/juanfont/headscale",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": null,
+          "line": 325
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": null,
+          "line": 325
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": null,
+          "line": 376
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/khoj-ai/khoj",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj.md",
+          "footnote": "1",
+          "line": 73
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj.md",
+          "footnote": "1",
+          "line": 73
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/khoj-ai/khoj/blob/master/docker-compose.yml",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj.md",
+          "footnote": "3",
+          "line": 75
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj.md",
+          "footnote": "3",
+          "line": 75
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/marcboeker/go-ollama",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "04-blueprints/scenario-c-desktop-cluster.md",
+          "footnote": null,
+          "line": 88
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": null,
+          "line": 37
+        }
+      ],
+      "probe": {
+        "status": "dead",
+        "code": 404,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/journey-of-a-prompt.md",
+          "footnote": "1",
+          "line": 88
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "4",
+          "line": 124
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "4",
+          "line": 124
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/Mintplex-Labs/anything-llm",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/possible-architectures.md",
+          "footnote": null,
+          "line": 133
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/Mintplex-Labs/anything-llm/blob/master/docker/HOW_TO_USE_DOCKER.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm.md",
+          "footnote": "3",
+          "line": 72
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm.md",
+          "footnote": "3",
+          "line": 72
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/Mintplex-Labs/anything-llm/blob/master/README.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm.md",
+          "footnote": "1",
+          "line": 70
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm.md",
+          "footnote": "1",
+          "line": 70
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/Mintplex-Labs/anything-llm/blob/master/TERMS_SELF_HOSTED.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm.md",
+          "footnote": "2",
+          "line": 71
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm.md",
+          "footnote": "2",
+          "line": 71
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/NVIDIA/dcgm-exporter",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "3",
+          "line": 235
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "3",
+          "line": 235
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/open-webui/open-webui",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui.md",
+          "footnote": "1",
+          "line": 74
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui.md",
+          "footnote": "1",
+          "line": 74
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/openai/whisper",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/multimodality-vram-impact.md",
+          "footnote": "3",
+          "line": 151
+        },
+        {
+          "page": "01-fondations/multimodality-vram-impact.md",
+          "footnote": "3",
+          "line": 151
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/OpenHands/OpenHands",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands.md",
+          "footnote": "1",
+          "line": 68
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands.md",
+          "footnote": "1",
+          "line": 68
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/possible-architectures.md",
+          "footnote": null,
+          "line": 141
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/searxng/searxng",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng.md",
+          "footnote": "2",
+          "line": 67
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng.md",
+          "footnote": "2",
+          "line": 67
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/sgl-project/sglang",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/sglang.md",
+          "footnote": "1",
+          "line": 63
+        },
+        {
+          "page": "00-lexique/sglang.md",
+          "footnote": "1",
+          "line": 63
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": null,
+          "line": 66
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "7",
+          "line": 136
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "7",
+          "line": 136
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/sgl-project/sglang/issues/21061",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "9",
+          "line": 138
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "9",
+          "line": 138
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/SYSTRAN/faster-whisper",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "10",
+          "line": 172
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "10",
+          "line": 172
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "9",
+          "line": 223
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "9",
+          "line": 223
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "10",
+          "line": 139
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "10",
+          "line": 139
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/tinyhumansai/openhuman/blob/main/gitbooks/developing/architecture/README.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman.md",
+          "footnote": "1",
+          "line": 74
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman.md",
+          "footnote": "1",
+          "line": 74
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/tinyhumansai/openhuman/blob/main/README.md",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman.md",
+          "footnote": "3",
+          "line": 76
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman.md",
+          "footnote": "3",
+          "line": 76
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://github.com/vllm-project/vllm",
+      "host": "github.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/vllm.md",
+          "footnote": null,
+          "line": 22
+        },
+        {
+          "page": "00-lexique/vllm.md",
+          "footnote": "1",
+          "line": 53
+        },
+        {
+          "page": "00-lexique/vllm.md",
+          "footnote": "1",
+          "line": 53
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": null,
+          "line": 38
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://grafana.com/grafana/dashboards",
+      "host": "grafana.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "04-blueprints/scenario-d-datacenter.md",
+          "footnote": null,
+          "line": 93
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://grafana.com/grafana/dashboards/12239",
+      "host": "grafana.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "4",
+          "line": 236
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "4",
+          "line": 236
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://grafana.com/grafana/dashboards/12239-nvidia-dcgm-exporter-dashboard/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://grafana.com/grafana/dashboards/1860",
+      "host": "grafana.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "5",
+          "line": 237
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "5",
+          "line": 237
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://grafana.com/grafana/dashboards/1860-node-exporter-full/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://groq.com/pricing/",
+      "host": "groq.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "04-blueprints/tco-comparison.md",
+          "footnote": null,
+          "line": 28
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://groq.com/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://huggingface.co/docs/huggingface_hub/guides/download",
+      "host": "huggingface.co",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": "8",
+          "line": 368
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": "8",
+          "line": 368
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://huggingface.co/docs/smolagents/main/examples/rag",
+      "host": "huggingface.co",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "4",
+          "line": 166
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "4",
+          "line": 166
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://huggingface.co/docs/smolagents/tutorials/building_good_agents",
+      "host": "huggingface.co",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/possible-architectures.md",
+          "footnote": null,
+          "line": 143
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct",
+      "host": "huggingface.co",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/multimodality-vram-impact.md",
+          "footnote": "2",
+          "line": 150
+        },
+        {
+          "page": "01-fondations/multimodality-vram-impact.md",
+          "footnote": "2",
+          "line": 150
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard",
+      "host": "huggingface.co",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "5",
+          "line": 198
+        },
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "5",
+          "line": 198
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://langchain-ai.github.io/langgraph/",
+      "host": "langchain-ai.github.io",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/langgraph.md",
+          "footnote": "1",
+          "line": 51
+        },
+        {
+          "page": "00-lexique/langgraph.md",
+          "footnote": "1",
+          "line": 51
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://langchain-ai.github.io/langgraph/tutorials/introduction/",
+      "host": "langchain-ai.github.io",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "05-agents-et-assistants-on-prem/fondations-communes/possible-architectures.md",
+          "footnote": null,
+          "line": 144
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://langfuse.com/docs/deployment/self-host",
+      "host": "langfuse.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "6",
+          "line": 238
+        },
+        {
+          "page": "06-mise-en-oeuvre/monitoring-inference-stack.md",
+          "footnote": "6",
+          "line": 238
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://langfuse.com/self-hosting",
+        "error": null
+      }
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/openai/data-privacy",
+      "host": "learn.microsoft.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/zero-data-retention.md",
+          "footnote": "2",
+          "line": 53
+        },
+        {
+          "page": "00-lexique/zero-data-retention.md",
+          "footnote": "2",
+          "line": 53
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy",
+        "error": null
+      }
+    },
+    {
+      "url": "https://llmhardware.io/guides/deepseek-v3-hardware-requirements",
+      "host": "llmhardware.io",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "3",
+          "line": 196
+        },
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "3",
+          "line": 196
+        }
+      ],
+      "probe": {
+        "status": "dead",
+        "code": 410,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://llmhardware.io/guides/mac-studio-m4-max-llm-guide",
+      "host": "llmhardware.io",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "10",
+          "line": 152
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "10",
+          "line": 152
+        },
+        {
+          "page": "04-blueprints/scenario-b-sme-appliance.md",
+          "footnote": "1",
+          "line": 99
+        },
+        {
+          "page": "04-blueprints/scenario-b-sme-appliance.md",
+          "footnote": "1",
+          "line": 99
+        }
+      ],
+      "probe": {
+        "status": "dead",
+        "code": 410,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://lmsys.org/blog/2024-01-17-sglang/",
+      "host": "lmsys.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/radixattention.md",
+          "footnote": "1",
+          "line": 45
+        },
+        {
+          "page": "00-lexique/radixattention.md",
+          "footnote": "1",
+          "line": 45
+        },
+        {
+          "page": "00-lexique/sglang.md",
+          "footnote": "2",
+          "line": 64
+        },
+        {
+          "page": "00-lexique/sglang.md",
+          "footnote": "2",
+          "line": 64
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "8",
+          "line": 137
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "8",
+          "line": 137
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://medium.com/@vinodkrane/next-generation-agentic-rag-with-langgraph-2026-edition-d1c4c068d2b8",
+      "host": "medium.com",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "3",
+          "line": 165
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "3",
+          "line": 165
+        }
+      ],
+      "probe": {
+        "status": "blocked",
+        "code": 403,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://mistral.ai/technology/#pricing",
+      "host": "mistral.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "04-blueprints/tco-comparison.md",
+          "footnote": null,
+          "line": 28
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://mistral.ai/products/studio/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://mlcommons.org/benchmarks/inference-datacenter/",
+      "host": "mlcommons.org",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "8",
+          "line": 222
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "8",
+          "line": 222
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://neo4j.com/blog/agentic-ai/what-is-agentic-rag/",
+      "host": "neo4j.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "5",
+          "line": 167
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "5",
+          "line": 167
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://nvidia.github.io/TensorRT-LLM/",
+      "host": "nvidia.github.io",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/gpu-rack-servers.md",
+          "footnote": "1",
+          "line": 83
+        },
+        {
+          "page": "02-materiel/gpu-rack-servers.md",
+          "footnote": "1",
+          "line": 83
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": null,
+          "line": 52
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "6",
+          "line": 135
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "6",
+          "line": 135
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://nvidia.github.io/TensorRT-LLM/features/parallel-strategy.html",
+      "host": "nvidia.github.io",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "5",
+          "line": 219
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "5",
+          "line": 219
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://ollama.com/",
+      "host": "ollama.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/ollama.md",
+          "footnote": null,
+          "line": 22
+        },
+        {
+          "page": "00-lexique/ollama.md",
+          "footnote": "1",
+          "line": 51
+        },
+        {
+          "page": "00-lexique/ollama.md",
+          "footnote": "1",
+          "line": 51
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": null,
+          "line": 24
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://ollama.com/download",
+      "host": "ollama.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/getting-started-with-ollama.md",
+          "footnote": null,
+          "line": 44
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://ollama.com/library",
+      "host": "ollama.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/getting-started-with-ollama.md",
+          "footnote": null,
+          "line": 52
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://openai.com/pricing",
+      "host": "openai.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "04-blueprints/tco-comparison.md",
+          "footnote": null,
+          "line": 28
+        }
+      ],
+      "probe": {
+        "status": "blocked",
+        "code": 403,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://particula.tech/blog/ollama-vs-vllm-comparison",
+      "host": "particula.tech",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "00-lexique/ollama.md",
+          "footnote": "2",
+          "line": 52
+        },
+        {
+          "page": "00-lexique/ollama.md",
+          "footnote": "2",
+          "line": 52
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "1",
+          "line": 130
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "1",
+          "line": 130
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://pcisig.com/faq?field_category_value%5B%5D=pci_express_5.0",
+      "host": "pcisig.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "4",
+          "line": 218
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "4",
+          "line": 218
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://platform.openai.com/docs/guides/function-calling",
+      "host": "platform.openai.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/appel-outils.md",
+          "footnote": "1",
+          "line": 55
+        },
+        {
+          "page": "00-lexique/appel-outils.md",
+          "footnote": "1",
+          "line": 55
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://developers.openai.com/api/docs/guides/function-calling",
+        "error": null
+      }
+    },
+    {
+      "url": "https://platform.openai.com/docs/guides/your-data",
+      "host": "platform.openai.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/zero-data-retention.md",
+          "footnote": "1",
+          "line": 52
+        },
+        {
+          "page": "00-lexique/zero-data-retention.md",
+          "footnote": "1",
+          "line": 52
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://developers.openai.com/api/docs/guides/your-data",
+        "error": null
+      }
+    },
+    {
+      "url": "https://qdrant.tech/documentation/guides/multiple-partitions/",
+      "host": "qdrant.tech",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "00-lexique/multi-tenant.md",
+          "footnote": "3",
+          "line": 63
+        },
+        {
+          "page": "00-lexique/multi-tenant.md",
+          "footnote": "3",
+          "line": 63
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "9",
+          "line": 171
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "9",
+          "line": 171
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://qdrant.tech/documentation/manage-data/multitenancy/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://raw.githubusercontent.com/meta-llama/llama-models/main/models/llama4/MODEL_CARD.md",
+      "host": "raw.githubusercontent.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "2",
+          "line": 109
+        },
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "2",
+          "line": 109
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://resources.nvidia.com/en-us-blackwell-architecture",
+      "host": "resources.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "15",
+          "line": 157
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "15",
+          "line": 157
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://support.apple.com/en-us/122211",
+      "host": "support.apple.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "5",
+          "line": 147
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "5",
+          "line": 147
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://tailscale.com/blog/how-tailscale-works",
+      "host": "tailscale.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": "9",
+          "line": 369
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": "9",
+          "line": 369
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://tinyhumans.gitbook.io/openhuman/features/memory-tree",
+      "host": "tinyhumans.gitbook.io",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "14",
+          "line": 134
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "14",
+          "line": 134
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "6",
+          "line": 168
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "6",
+          "line": 168
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman.md",
+          "footnote": "2",
+          "line": 75
+        },
+        {
+          "page": "05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman.md",
+          "footnote": "2",
+          "line": 75
+        }
+      ],
+      "probe": {
+        "status": "dead",
+        "code": 404,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://videocardz.com/newz/amd-confirms-ryzen-ai-max-400-gorgon-halo-will-support-up-to-192gb-memory-and-160gb-vram",
+      "host": "videocardz.com",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "8",
+          "line": 150
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "8",
+          "line": 150
+        }
+      ],
+      "probe": {
+        "status": "blocked",
+        "code": 403,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://vllm.ai/blog/2023/06/20/vllm.html",
+      "host": "vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/migrate-ollama-to-vllm.md",
+          "footnote": "1",
+          "line": 161
+        },
+        {
+          "page": "06-mise-en-oeuvre/migrate-ollama-to-vllm.md",
+          "footnote": "1",
+          "line": 161
+        }
+      ],
+      "probe": {
+        "status": "dead",
+        "code": 404,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://vllm.ai/blog/2025-11-22-ray-symmetric-run",
+      "host": "vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/clustering-exo-and-ray.md",
+          "footnote": "3",
+          "line": 94
+        },
+        {
+          "page": "03-stack-logicielle/clustering-exo-and-ray.md",
+          "footnote": "3",
+          "line": 94
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://vllm.ai/blog/2026-04-22-fp8-kvcache",
+      "host": "vllm.ai",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "13",
+          "line": 133
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "13",
+          "line": 133
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.amd.com/en/blogs/2026/amd-powers-next-generation-agent-computers-with-new-ryzen-ai-hal.html",
+      "host": "www.amd.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "1",
+          "line": 143
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "1",
+          "line": 143
+        }
+      ],
+      "probe": {
+        "status": "timeout",
+        "code": null,
+        "finalUrl": null,
+        "error": "timeout"
+      }
+    },
+    {
+      "url": "https://www.anthropic.com/pricing",
+      "host": "www.anthropic.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "04-blueprints/tco-comparison.md",
+          "footnote": null,
+          "line": 28
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://claude.com/pricing",
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.anyscale.com/blog/ray-serve-llm-anyscale-apis-wide-ep-disaggregated-serving-vllm",
+      "host": "www.anyscale.com",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/clustering-exo-and-ray.md",
+          "footnote": "4",
+          "line": 95
+        },
+        {
+          "page": "03-stack-logicielle/clustering-exo-and-ray.md",
+          "footnote": "4",
+          "line": 95
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.anyscale.com/blog/streamlined-multi-node-serving",
+      "host": "www.anyscale.com",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "4",
+          "line": 178
+        },
+        {
+          "page": "06-mise-en-oeuvre/configure-vllm-multi-gpu.md",
+          "footnote": "4",
+          "line": 178
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://www.anyscale.com/blog",
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.apple.com/mac-studio/specs/",
+      "host": "www.apple.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "4",
+          "line": 111
+        },
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "4",
+          "line": 111
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": "3",
+          "line": 95
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": "3",
+          "line": 95
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "4",
+          "line": 146
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "4",
+          "line": 146
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.apple.com/newsroom/2024/10/apple-introduces-m4-pro-and-m4-max/",
+      "host": "www.apple.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "3",
+          "line": 145
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "3",
+          "line": 145
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.ayinedjimi-consultants.fr/ia-llm-local-ollama-lmstudio-vllm.html",
+      "host": "www.ayinedjimi-consultants.fr",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "4",
+          "line": 133
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "4",
+          "line": 133
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://ayinedjimi-consultants.fr/articles/ia-llm-local-ollama-lmstudio-vllm",
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres",
+      "host": "www.crunchydata.com",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "00-lexique/multi-tenant.md",
+          "footnote": "2",
+          "line": 62
+        },
+        {
+          "page": "00-lexique/multi-tenant.md",
+          "footnote": "2",
+          "line": 62
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "8",
+          "line": 170
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "8",
+          "line": 170
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.intel.com/content/www/us/en/gaming/resources/upgrade-gaming-accessories-thunderbolt-4.html",
+      "host": "www.intel.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "5",
+          "line": 148
+        },
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "5",
+          "line": 148
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.lyzr.ai/blog/agentic-rag/",
+      "host": "www.lyzr.ai",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "1",
+          "line": 163
+        },
+        {
+          "page": "03-stack-logicielle/rag-and-agents.md",
+          "footnote": "1",
+          "line": 163
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.nvidia.com/en-us/data-center/l40s/",
+      "host": "www.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "7",
+          "line": 221
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "7",
+          "line": 221
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/",
+      "host": "www.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "2",
+          "line": 216
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "2",
+          "line": 216
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.nvidia.com/en-us/products/workstations/rtx-6000/",
+      "host": "www.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "1",
+          "line": 215
+        },
+        {
+          "page": "02-materiel/stations-multi-gpu.md",
+          "footnote": "1",
+          "line": 215
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.nvidia.com/en-us/project-digits/",
+      "host": "www.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "14",
+          "line": 156
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "14",
+          "line": 156
+        }
+      ],
+      "probe": {
+        "status": "redirected",
+        "code": 200,
+        "finalUrl": "https://www.nvidia.com/en-us/products/workstations/dgx-spark/",
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/",
+      "host": "www.nvidia.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "5",
+          "line": 112
+        },
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "5",
+          "line": 112
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": "1",
+          "line": 93
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": "1",
+          "line": 93
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/",
+      "host": "www.servethehome.com",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "3",
+          "line": 110
+        },
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "3",
+          "line": 110
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": "4",
+          "line": 96
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": "4",
+          "line": 96
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "2",
+          "line": 144
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "2",
+          "line": 144
+        },
+        {
+          "page": "04-blueprints/scenario-b-sme-appliance.md",
+          "footnote": "2",
+          "line": 100
+        },
+        {
+          "page": "04-blueprints/scenario-b-sme-appliance.md",
+          "footnote": "2",
+          "line": 100
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.sitepoint.com/quantization-explained-consumer-gpu/",
+      "host": "www.sitepoint.com",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "1",
+          "line": 194
+        },
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "1",
+          "line": 194
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.spheron.network/blog/vllm-production-deployment-2026/",
+      "host": "www.spheron.network",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "5",
+          "line": 134
+        },
+        {
+          "page": "03-stack-logicielle/inference-engines-vllm-ollama.md",
+          "footnote": "5",
+          "line": 134
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.swebench.com/",
+      "host": "www.swebench.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "6",
+          "line": 199
+        },
+        {
+          "page": "03-stack-logicielle/choose-your-model.md",
+          "footnote": "6",
+          "line": 199
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.swebench.com/original.html",
+      "host": "www.swebench.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "5",
+          "line": 283
+        },
+        {
+          "page": "06-mise-en-oeuvre/evaluate-local-model.md",
+          "footnote": "5",
+          "line": 283
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.techpowerup.com/gpu-specs/geforce-rtx-5090.c4216",
+      "host": "www.techpowerup.com",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "6",
+          "line": 113
+        },
+        {
+          "page": "01-fondations/memory-bandwidth.md",
+          "footnote": "6",
+          "line": 113
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": "2",
+          "line": 94
+        },
+        {
+          "page": "01-fondations/unified-memory-vs-ram-vs-vram.md",
+          "footnote": "2",
+          "line": 94
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.thunderbolttechnology.net/sites/default/files/Thunderbolt_5_TechBrief_2023_09_12.pdf",
+      "host": "www.thunderbolttechnology.net",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "6",
+          "line": 149
+        },
+        {
+          "page": "02-materiel/network-roce-infiniband-thunderbolt.md",
+          "footnote": "6",
+          "line": 149
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.together.ai/blog/flash-decoding-for-long-context-inference",
+      "host": "www.together.ai",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "10",
+          "line": 130
+        },
+        {
+          "page": "01-fondations/kv-cache-and-context.md",
+          "footnote": "10",
+          "line": 130
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.tweaktown.com/news/111752/amd-launches-the-ryzen-ai-max-pro-400-series-of-cpus-up-to-16-cores-with-192gb-of-unified-memory/index.html",
+      "host": "www.tweaktown.com",
+      "tier": "B",
+      "citations": [
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "7",
+          "line": 149
+        },
+        {
+          "page": "02-materiel/apu-and-unified-memory.md",
+          "footnote": "7",
+          "line": 149
+        }
+      ],
+      "probe": {
+        "status": "blocked",
+        "code": 403,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.twingate.com/docs/how-twingate-works",
+      "host": "www.twingate.com",
+      "tier": "A",
+      "citations": [
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": "11",
+          "line": 371
+        },
+        {
+          "page": "06-mise-en-oeuvre/local-inference-security.md",
+          "footnote": "11",
+          "line": 371
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    },
+    {
+      "url": "https://www.xzh.me/2023/09/a-perplexity-benchmark-of-llamacpp.html",
+      "host": "www.xzh.me",
+      "tier": "C",
+      "citations": [
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "11",
+          "line": 127
+        },
+        {
+          "page": "01-fondations/quantization-4bit-8bit.md",
+          "footnote": "11",
+          "line": 127
+        }
+      ],
+      "probe": {
+        "status": "ok",
+        "code": 200,
+        "finalUrl": null,
+        "error": null
+      }
+    }
+  ]
+}
