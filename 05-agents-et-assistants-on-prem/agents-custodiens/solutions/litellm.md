@@ -3,9 +3,9 @@ title: "LiteLLM"
 description: Gateway OpenAI-compatible pour router agents et applications vers Ollama, vLLM, cloud providers ou modèles internes.
 sidebar:
   order: 4
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -32,7 +32,9 @@ Cela évite de réécrire l'agent à chaque changement de modèle.
 - N'est pas un modèle : il route vers des backends.
 - Mauvaise config = fuite vers cloud.
 - Logging/observabilité peuvent capturer prompts/réponses si activés sans précaution[^3].
-- Ajoute une couche critique à sécuriser.
+- Ajoute une couche critique à sécuriser : LiteLLM a connu en 2026 une série de failles exploitées, dont trois inscrites au catalogue KEV de la CISA (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822, toutes corrigées à partir de la 1.84.0) et une escalade de privilèges critique (GHSA-7hp6-4w63-5g45, CVSS 9.9, un `internal_user` devient `proxy_admin` puis exécute des commandes sur l'hôte ; corrigée en 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1). Au T4 2026, ne jamais déployer une version antérieure à 1.84.0, et viser 1.100.4 ou le dernier correctif de sa ligne[^4][^5].
+- Discipline de version : depuis le 2026-06-29, seules les quatre lignes mineures stables les plus récentes reçoivent des correctifs (une mineure par semaine, soit environ un mois de couverture par ligne) — prévoir une mise à jour mensuelle au minimum, une version figée est une version vulnérable[^6].
+- Chaîne d'approvisionnement : en mars 2026, deux versions PyPI (1.82.7 et 1.82.8) publiées par un attaquant volaient les secrets de la machine hôte ; l'image Docker officielle n'était pas concernée[^7]. Installer depuis l'image officielle épinglée ou avec des dépendances épinglées par hash, et faire tourner tous les secrets détenus par le proxy si une version compromise a été installée.
 
 ## 🔒 Souveraineté et confidentialité
 
@@ -69,3 +71,7 @@ Très utilisé dans les stacks LLM comme gateway. Sa puissance vient avec une re
 [^1]: LiteLLM GitHub README. [https://github.com/BerriAI/litellm](https://github.com/BerriAI/litellm)
 [^2]: LiteLLM Proxy docs — local proxy, Ollama, vLLM. [https://docs.litellm.ai/docs/proxy_server](https://docs.litellm.ai/docs/proxy_server)
 [^3]: LiteLLM Docs, *Logging* — callbacks, OpenTelemetry, `turn_off_message_logging`. [https://docs.litellm.ai/docs/proxy/logging](https://docs.litellm.ai/docs/proxy/logging)
+[^4]: CISA, *Known Exploited Vulnerabilities Catalog* (flux JSON ; entrées LiteLLM CVE-2026-42208 ajoutée le 2026-05-08, CVE-2026-42271 le 2026-06-08, CVE-2026-59822 le 2026-09-02), catalogue daté 2026-10-08. [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)
+[^5]: BerriAI, *GHSA-7hp6-4w63-5g45* (advisory LiteLLM, escalade `internal_user` → `proxy_admin` → exécution de commandes sur l'hôte, CVSS 9.9, versions 1.91.0 → < 1.100.4, corrigé 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45)
+[^6]: LiteLLM, *Version Support Policy* (blog : à partir du 2026-06-29, seules les quatre lignes mineures stables les plus récentes reçoivent des correctifs), 2026-06-20. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)
+[^7]: BerriAI, *Issue #24518* (versions PyPI 1.82.7 et 1.82.8 publiées hors CI par un attaquant, vol de secrets de l'hôte ; image Docker du proxy non concernée), 2026-03-24. [https://github.com/BerriAI/litellm/issues/24518](https://github.com/BerriAI/litellm/issues/24518)

@@ -1,18 +1,18 @@
 ---
 title: "💰 TCO Comparison: On-Premise vs Cloud API"
-description: Total cost of ownership (TCO) analysis of the four on-premise blueprints versus cloud AI APIs in 2026 — hardware, energy, maintenance, and break-even point.
+description: Total cost of ownership (TCO) analysis of the four on-premise blueprints versus cloud AI APIs — hardware, energy, maintenance, and break-even point.
 sidebar:
   order: 5
-prices_valid_as_of: "2026-06"
-last_verified: "2026-06-09"
-verified_by: "Sonnet 4.6"
+prices_valid_as_of: "2026-10"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
-last_modified: "2026-06-10"
+last_modified: "2026-10-09"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] In brief
-> Cloud AI costs little at startup but a lot at scale. On-premise requires a high initial investment but marginal cost tends toward zero. The break-even point generally falls between 6 and 18 months depending on usage and blueprint.
+> Cloud AI costs little at startup but a lot at scale. On-premise requires a high initial investment but marginal cost tends toward zero. At October 2026 prices, the break-even point of an SME appliance (Blueprint B) is about 13 months against GPT-5.5, 19 months against Claude Opus 5.5, and is never reached against the budget tiers billed under $1 per million tokens: in 2026, sovereignty, not cost, is the decisive argument for on-premise in an SME.
 
 ---
 
@@ -23,16 +23,24 @@ Before comparing, align the units. LLM usage is measured in **millions of tokens
 **Cloud side:** providers bill per token (input + output separately). In 2026, reference rates for 70B-class models:
 
 > [!warning] Prices — validity
-> Rates captured in **June 2026**. Cloud API prices change frequently (sometimes every 6–8 weeks).
+> Prices captured in **October 2026** (snapshot of 2026-10-09, USD excluding tax; indicative conversion $1 ≈ €0.92). Cloud API prices change frequently: OpenAI doubled GPT-5.5 in April 2026, Google has scheduled a doubling of Gemini Flash prices on 1 January 2027, Groq withdrew the public price of Llama 3.3 70B.
 > Verify official pricing pages before building a business case:
-> [OpenAI Pricing](https://openai.com/pricing) · [Anthropic Pricing](https://www.anthropic.com/pricing) · [Mistral Pricing](https://mistral.ai/technology/#pricing) · [Groq Pricing](https://groq.com/pricing/)
+> [OpenAI](https://developers.openai.com/api/docs/pricing) · [Anthropic](https://platform.claude.com/docs/en/about-claude/pricing) · [Mistral](https://mistral.ai/pricing) · [Google Gemini](https://ai.google.dev/gemini-api/docs/pricing) · [Groq](https://console.groq.com/docs/models) · [Together AI](https://www.together.ai/pricing)
 
-| API | Input rate | Output rate | Model |
+| API (prices captured 2026-10-09, USD excluding tax) | Input rate | Output rate | Model |
 | :-- | :-- | :-- | :-- |
-| OpenAI GPT-4o | ~$2.50/M tok | ~$10.00/M tok | Proprietary |
-| Anthropic Claude 3.5 Sonnet | ~$3.00/M tok | ~$15.00/M tok | Proprietary |
-| Mistral Large | ~$2.00/M tok | ~$6.00/M tok | Proprietary/open |
-| Groq (Llama 3.3 70B) | ~$0.59/M tok | ~$0.79/M tok | Open weights, cloud |
+| OpenAI GPT-5.5[^1] | $5.00/M tok | $30.00/M tok | Proprietary, frontier |
+| OpenAI GPT-5.6 Sol (promo at least until 2026-11-21)[^1] | $4.00/M tok | $20.00/M tok | Proprietary, high-end |
+| OpenAI GPT-6 Sol[^1] | $2.00/M tok | $10.00/M tok | Proprietary, mid-range |
+| OpenAI GPT-6 Luna[^1] | $0.10/M tok | $0.50/M tok | Proprietary, budget |
+| OpenAI GPT-4o (legacy)[^1] | $2.50/M tok | $10.00/M tok | Proprietary, previous generation |
+| Anthropic Claude Opus 5.5[^2] | $4.00/M tok | $20.00/M tok | Proprietary, high-end |
+| Anthropic Claude Sonnet 5.5[^2] | $2.00/M tok | $10.00/M tok | Proprietary, mid-range |
+| Anthropic Claude Haiku 5.5 (prompt ≤ 100k)[^2] | $0.10/M tok | $0.50/M tok | Proprietary, budget |
+| Mistral Large 3[^3] | $0.50/M tok | $1.50/M tok | Proprietary (open weights) |
+| Mistral Large 4 (API preview of 2026-10-06)[^3] | $1.36/M tok | $4.18/M tok | Preview; open weights announced for late October 2026 |
+| Groq (openai/gpt-oss-120b)[^4] | $0.15/M tok | $0.60/M tok | Open weights, cloud (Llama 3.3 70B: quote-based pricing since 2026) |
+| Together AI (Llama 3.3 70B)[^5] | $1.04/M tok | $1.04/M tok | Open weights, cloud |
 | Generic 70B cloud API | ~$1.00–3.00/M tok | ~$1.00–4.00/M tok | Range |
 
 *Note: prices change frequently. Verify current rates before building a business case.*
@@ -85,18 +93,23 @@ To make the comparison concrete, use a typical SME case:
 | Maintenance, backup, support | ~€50/month |
 | **Total monthly cost** | **~€155/month** |
 
-**Cloud equivalent (33.75 M tokens/month, API rate ~$1.50/M tok average):**
-- ~33.75 M × $1.50 = **~$50/month** (optimistic, open-weights cloud model)
-- ~33.75 M × $5.00 = **~$170/month** (proprietary model)
+**Cloud equivalent (22.5 M input tokens + 11.25 M output tokens per month, prices of 2026-10-09):**
+- Haiku 5.5 or GPT-6 Luna ($0.10 / $0.50): 2.25 + 5.6 = **~$8/month** (~€7, budget tier)
+- Sonnet 5.5 or GPT-6 Sol ($2 / $10): 45 + 112.5 = **~$158/month** (~€145, mid-range)
+- GPT-5.5 ($5 / $30): 112.5 + 337.5 = **~$450/month** (~€414, frontier model)
 
-| API choice | Cloud cost/month | Break-even |
+| API choice (prices of 2026-10-09, $1 ≈ €0.92) | Cloud cost/month | Break-even |
 | :-- | :-- | :-- |
-| Groq / open-weights cloud (~$1/M tok) | ~€34/month | ❌ Never amortized on cost alone |
-| Mistral / entry-level Claude (~$2/M tok) | ~€68/month | ~18 months |
-| GPT-4o / Claude 3.5 (~$6/M tok average) | ~€205/month | **< 4 months** |
+| Budget: Haiku 5.5, GPT-6 Luna, Mistral Large 3 ($0.10–0.50 / $0.50–1.50)[^1][^2][^3] | ~€7 – 26/month | ❌ Never amortized on cost alone |
+| Open-weights cloud (Together AI Llama 3.3 70B, $1.04/M)[^5] | ~€32/month | ❌ Never amortized on cost alone |
+| Mid-range: Sonnet 5.5, GPT-6 Sol ($2 / $10)[^1][^2] | ~€145/month | ~51 months (beyond the amortization period) |
+| High-end: Opus 5.5, GPT-5.6 Sol ($4 / $20)[^1][^2] | ~€290/month | ~19 months |
+| Frontier: GPT-5.5 ($5 / $30)[^1] | ~€414/month | **~13 months** |
+
+*Break-even = €4,500 of capital / (monthly cloud cost − €57/month of on-premise running cost excluding amortization), formula from the "Calculate your own TCO" section.*
 
 > [!tip] Sovereignty changes the calculation
-> For an SME subject to GDPR processing client data, "open-weights cloud is cheaper" is not enough — a third-party host remains a recipient under GDPR. The on-premise premium of €80/month can avoid much higher legal fees.
+> For an SME subject to GDPR processing client data, "open-weights cloud is cheaper" is not enough — a third-party host remains a recipient under GDPR. Against budget APIs (Haiku 5.5, Mistral Large 3, open-weights cloud), the on-premise premium is in the range of €120 to €150/month; against frontier models (GPT-5.5, Opus 5.5), on-premise is already cheaper. In the first case, that premium can avoid much higher legal fees.
 
 ---
 
@@ -115,7 +128,7 @@ To make the comparison concrete, use a typical SME case:
 
 **Cloud equivalent for models > 100B:**
 
-Models in this class (DeepSeek V3 671B, Llama 400B) are not available directly via a standard API in 2026 — or only via specialized services at high prices (Together AI, Fireworks AI):
+Open-weights models in this class (DeepSeek V4, GLM-5.3, Kimi K3) are available via OpenAI-compatible APIs from specialized hosts (Together AI, Groq) at rates often lower than proprietary models — but hosted outside your premises[^5]:
 
 | Service | Estimated 100B+ rate | Cost for 33 M tok/month |
 | :-- | :-- | :-- |
@@ -249,3 +262,13 @@ These two figures are consistent: the Mac Studio serves much larger models than 
 - [[04-blueprints/scenario-d-datacenter|🏭 Scenario D — Datacenter]]
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|🔒 Sovereignty & Privacy]]
 - [[06-mise-en-oeuvre/evaluate-local-model|🧪 Evaluate a local model]]
+
+---
+
+## 📚 Sources and References
+
+[^1]: OpenAI, *API pricing* (GPT-5.5 $5 / $30, GPT-5.6 Sol $4 / $20 on promotion at least until 2026-11-21, GPT-6 Sol $2 / $10, GPT-6 Luna $0.10 / $0.50, GPT-4o legacy $2.50 / $10 per million tokens), captured 2026-10-09. [https://developers.openai.com/api/docs/pricing](https://developers.openai.com/api/docs/pricing)
+[^2]: Anthropic, *Pricing* (Claude Opus 5.5 $4 / $20, Sonnet 5.5 $2 / $10, Haiku 5.5 $0.10 / $0.50 per million tokens; Claude 3.5 Sonnet removed from the page), captured 2026-10-09. [https://platform.claude.com/docs/en/about-claude/pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+[^3]: Mistral AI, *Pricing* (Mistral Large 3: $0.50 / $1.50 per million tokens), captured 2026-10-09. [https://mistral.ai/pricing](https://mistral.ai/pricing) · Mistral AI, *Mistral Large 4* (API preview $1.36 / $4.18, open weights announced for late October 2026), 2026-10-06. [https://mistral.ai/news/mistral-large-4](https://mistral.ai/news/mistral-large-4)
+[^4]: Groq, *GroqCloud — Models* (openai/gpt-oss-120b $0.15 / $0.60 per million tokens; Llama 3.3 70B and Llama 3.1 8B moved to "Enterprise / Contact sales", no public price), captured 2026-10-09. [https://console.groq.com/docs/models](https://console.groq.com/docs/models)
+[^5]: Together AI, *Pricing* (Llama 3.3 70B $1.04 / $1.04; DeepSeek V4 Pro $1.32 / $3.96, DeepSeek V4.1 Flash $0.30 / $1.20, GLM-5.3 and Kimi K3 via OpenAI-compatible API), captured 2026-10-09. [https://www.together.ai/pricing](https://www.together.ai/pricing)

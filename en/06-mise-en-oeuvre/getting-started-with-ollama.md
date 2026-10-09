@@ -3,9 +3,9 @@ title: "🚀 Getting started with Ollama"
 description: Installation, first model, API testing, and initial best practices for local inference in under 15 minutes.
 sidebar:
   order: 3
-last_modified: "2026-06-05"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -57,7 +57,10 @@ Download the installer from [ollama.com/download](https://ollama.com/download). 
 ## First model
 
 ```bash
-# Download and run an 8B model (~5 GB in Q4_K_M)
+# Download and run a small recent model (~6.5 GB in Q4_K_M)
+ollama run qwen3.5:9b
+
+# Or a very light 3B (~2 GB)
 ollama run llama3.2
 
 # Or a smaller model for a quick test (~1.3 GB)
@@ -67,7 +70,7 @@ ollama run phi4-mini
 ollama run qwen2.5-coder:14b
 ```
 
-The first run downloads the model from [ollama.com/library](https://ollama.com/library). Later runs use the local cache.
+The first run downloads the model from [ollama.com/library](https://ollama.com/library) (sizes read from the registry on 2026-10-09[^1]). Later runs use the local cache.
 
 To exit the interactive session: `/bye` or `Ctrl+D`.
 
@@ -91,9 +94,12 @@ ollama rm llama3.2
 # See running processes
 ollama ps
 
-# Service logs
-ollama logs
+# Service logs (Linux systemd) — there is no `ollama logs` subcommand
+journalctl -u ollama --no-pager --follow --pager-end
+# macOS: cat ~/.ollama/logs/server.log
 ```
+
+Per-platform log locations are described in Ollama's troubleshooting page[^2].
 
 ---
 
@@ -230,3 +236,10 @@ Expected indicators by hardware:
 - **Move to multi-user production** → [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ vLLM in production]]
 - **Evaluate quality** → [[06-mise-en-oeuvre/evaluate-local-model|🧪 Evaluate a local model]]
 - **Connect an agent or RAG** → [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]]
+
+---
+
+## Sources and references
+
+[^1]: Ollama, *Library* and `registry.ollama.ai` registry (manifests: `llama3.2` = 3B, 2.02 GB; `qwen3.5:9b` ≈ 6.5 GB), accessed 2026-10-09. [https://ollama.com/library](https://ollama.com/library) · [https://registry.ollama.ai](https://registry.ollama.ai)
+[^2]: Ollama, *Troubleshooting* (log locations: `journalctl -u ollama`, `~/.ollama/logs/server.log`), accessed 2026-10-09 · `ollama/ollama` repository, `cmd/cmd.go` (subcommand list, no `logs`). [https://docs.ollama.com/troubleshooting](https://docs.ollama.com/troubleshooting) · [https://github.com/ollama/ollama](https://github.com/ollama/ollama)

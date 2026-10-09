@@ -3,9 +3,9 @@ title: "🧩 RAG & Agents: The knowledge architecture"
 description: How to give a local LLM private memory and autonomy. From standard RAG to agentic workflows (SmolAgents, LangGraph) and the Memory Tree approach for VRAM savings.
 sidebar:
   order: 3
-last_modified: "2026-06-10"
-last_verified: "2026-06-09"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -50,14 +50,14 @@ Popularized by Microsoft research, **[[00-lexique/graphrag|GraphRAG]]** replaces
 
 ## 3. The [[00-lexique/memory-tree|Memory Tree]] approach
 
-Rather than using a heavy vector database, an alternative architecture relies on **hierarchical Markdown folders** and a local SQLite metadata store[^6]. The idea is to give the agent a *summarized* view of available knowledge, and load detail only when needed. This pattern is detailed in the [[00-lexique/memory-tree|Memory Tree]] entry.
+Rather than using a heavy vector database, an alternative architecture relies on **hierarchical Markdown folders** and a local metadata store (SQLite). The idea is to give the agent a *summarized* view of available knowledge, and load detail only when needed. This pattern, which this vault calls [[00-lexique/memory-tree|Memory Tree]], was popularized by the early versions of OpenHuman; as of 2026-10-09, the project has removed its local memory tree in favor of a CortexDB engine (hosted or self-hosted)[^6], so you must implement it yourself or with another tool.
 
 *   **Hierarchy:** The agent never loads a full document into memory. It uses the LLM to read the "title" and a "one-line summary" of the file tree.
 *   **Selective injection:** If it judges a file relevant, the agent calls a function to "unfold" that specific tree node and read its exact content.
 *   **Architectural advantage:** Context stays tiny (a few hundred tokens for summaries), keeping [[00-lexique/ttft|TTFT]] (time to first token) under one second and preserving hardware resources, even with a heavy dense model.
 
 > [!tip] Go further
-> This approach is implemented by several local personal assistants — with varying degrees of sovereignty depending on the project. See the comparison [[05-agents-et-assistants-on-prem/assistants-personnels/index|On-Premise Personal Assistants]] and the [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] entry for a documented Memory Tree example.
+> This pattern is no longer implemented as such by OpenHuman (memory moved out to CortexDB since 2026 — see the [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] entry). See the comparison [[05-agents-et-assistants-on-prem/assistants-personnels/index|On-Premise Personal Assistants]] for alternatives and their degree of sovereignty.
 
 ---
 
@@ -231,7 +231,7 @@ To build a sovereign enterprise software stack in 2026:
 [^3]: Vinod Rane (Medium), *Next-Generation Agentic RAG with LangGraph (2026 Edition)* (Graph orchestration, self-correcting RAG), March 2026. [https://medium.com/@vinodkrane/next-generation-agentic-rag-with-langgraph-2026-edition-d1c4c068d2b8](https://medium.com/@vinodkrane/next-generation-agentic-rag-with-langgraph-2026-edition-d1c4c068d2b8)
 [^4]: Hugging Face, *Agentic RAG with SmolAgents* (RAG orchestration via Hugging Face light framework), 2025. [https://huggingface.co/docs/smolagents/main/examples/rag](https://huggingface.co/docs/smolagents/main/examples/rag)
 [^5]: Neo4j Developer Blog, *What is agentic RAG? A developer's guide* (GraphRAG, ReAct, multi-agent RAG patterns), May 2026. [https://neo4j.com/blog/agentic-ai/what-is-agentic-rag/](https://neo4j.com/blog/agentic-ai/what-is-agentic-rag/)
-[^6]: OpenHuman, *Memory Trees* (GitBook — local SQLite + Markdown pipeline, selective injection for VRAM savings), 2025. Note: OpenHuman uses a cloud backend by default for model routing. The Memory Tree *pattern* remains applicable in a 100% on-premise implementation independent of the project. [https://tinyhumans.gitbook.io/openhuman/features/memory-tree](https://tinyhumans.gitbook.io/openhuman/features/memory-tree)
+[^6]: OpenHuman, *How memory works* ("The current memory has no memory tree … or Obsidian vault"; TinyHumans Hosted / CortexDB engines), docs read on 2026-10-09. The Memory Tree *pattern* remains applicable in a 100% on-premise implementation independent of the project. [https://tinyhumans.gitbook.io/openhuman/features/memory](https://tinyhumans.gitbook.io/openhuman/features/memory)
 [^7]: OWASP GenAI Security Project, *LLM08:2025 Vector and Embedding Weaknesses*. [https://genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)
 [^8]: Crunchy Data, *Row-Level Security for tenants in Postgres / pgvector*. [https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres](https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres)
 [^9]: Qdrant, *Multitenancy — Payload-based Partitioning*. [https://qdrant.tech/documentation/guides/multiple-partitions/](https://qdrant.tech/documentation/guides/multiple-partitions/)
