@@ -21,3 +21,6 @@ _templates/*
 
 # Refresh working copies (dated snapshots are committed)
 .agents/vault-maintenance/reports/*-latest.*
+
+# AIContextCraft export config (personal tooling, kept locally)
+config-concat*

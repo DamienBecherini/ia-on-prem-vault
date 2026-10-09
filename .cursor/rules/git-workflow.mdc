@@ -30,7 +30,7 @@ Examples: `feat/owasp-2025-alignment`, `chore/vault-refresh-2026-06`, `fix/broke
 
 ## Exception
 
-The user may say explicitly: *"commit to main"* or *"push directly"*. Only then bypass the PR step.
+None since 2026-10-09. A GitHub ruleset ("Protection de main") enforces this server-side: `main` cannot be deleted or force-pushed, every change must come through a pull request, and the CI jobs `Vault quality checks` and `Internal link audit (engine)` must pass before merge. No bypass actor is configured, so a request to "commit to main" or "push directly" cannot be honoured — open a PR instead and merge it once checks are green.
 
 ## PR body template
 
