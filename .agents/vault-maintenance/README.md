@@ -36,6 +36,37 @@ Lists wikilink slugs that intentionally point to pages not yet published. Used b
 
 ---
 
+### `freshness-watchlist.md`
+
+Claim-level registry of time-sensitive statements (prices, versions, availability, specs, benchmarks, market stats, regulation dates). Defines the volatility classes (`volatile` 90 d · `evolving` 180 d · `stable` 365 d) that decide when a page is due for review.
+
+| Section | Purpose | Who writes |
+| :-- | :-- | :-- |
+| `## Volatility classes` | folder → class → cadence mapping | humans, `vault-refresh-outdated-content` |
+| `## Watchlist` | one row per claim: page, quote, type, value, source, dates, status | `vault-refresh-outdated-content`, `vault-generate-content`, `vault-verify-content` |
+
+A refresh run diffs this table against the web instead of re-reading every page.
+
+---
+
+### `source-tiers.md`
+
+Domain → evidence tier (A/B/C) used by `npm run audit:sources` to classify every cited URL. Unclassified hosts are reported by the script; agents add them here after judging them.
+
+---
+
+### `reports/` folder
+
+Dated outputs of maintenance and refresh runs:
+
+- `sources-<date>.md` / `.json` — inventory and HTTP status of every cited URL (`npm run audit:sources:report`, then copied to a dated file)
+- `ecosystem-<date>.md` — what changed online since the previous refresh, per domain
+- `refresh-<date>.md` — target list, page findings, proposed edits, residual risk
+
+Format: `.agents/references/refresh-report-format.md`. `*-latest.*` files are gitignored working copies; dated snapshots are committed.
+
+---
+
 ## `archives/` folder
 
 Created on first archiving run. Contains:

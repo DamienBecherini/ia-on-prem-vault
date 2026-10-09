@@ -152,6 +152,31 @@ Not part of `npm test` by default (legacy ASCII still present on a few pages).
 
 ---
 
+### `audit:sources` / `audit:sources:offline` / `audit:sources:report`
+
+**Scope:** FR published notes by default (`--locale=all` adds `en/`). Fenced and inline code are ignored, so `localhost` examples never count as sources.
+
+Extracts every external URL, deduplicates it, records the citing pages, classifies the host by evidence tier from `.agents/vault-maintenance/source-tiers.md`, and (unless `--no-fetch`) probes it over HTTP (HEAD, then GET).
+
+| Status | Meaning |
+| :-- | :-- |
+| `ok` | 2xx at the cited URL |
+| `redirected` | 2xx after a redirect to a different URL (check the target still says the same thing) |
+| `blocked` | 401 / 403 / 429 — bot protection, not proof of a dead link; verify manually |
+| `dead` | other 4xx |
+| `server-error`, `network-error`, `timeout` | unreachable during the run |
+
+| Mode | Behaviour |
+| :-- | :-- |
+| `audit:sources` | probe, Markdown report on stdout, exit `0` |
+| `audit:sources:offline` | inventory + tiers only, no network |
+| `audit:sources:report` | probe, write `.agents/vault-maintenance/reports/sources-latest.md` + `.json` |
+| `--strict` | exit `1` when any URL is dead / erroring |
+
+Not part of `npm test` (network-dependent). Intended for the refresh workflow (`vault-refresh-outdated-content`, phase 0) and for a scheduled weekly CI job in warn-only mode.
+
+---
+
 ### `audit:links` (engine)
 
 Delegated to `starlight-obsidian-engine`. Validates Obsidian wiki-links and internal Markdown links resolve to published pages.
@@ -191,3 +216,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | Date | Change |
 | :-- | :-- |
 | 2026-06-10 | Initial vault CI: frontmatter, Mermaid, agent-leaks, i18n strict, link audit workflow |
+| 2026-10-09 | `audit:sources` (URL inventory, HTTP probe, evidence tiers) for the refresh workflow; not in `npm test` |
