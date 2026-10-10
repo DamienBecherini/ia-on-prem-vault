@@ -203,7 +203,7 @@ Assigns each page a volatility class — from its `freshness:` frontmatter field
 | `due-soon` | due within 30 days |
 | `ok` | up to date |
 
-Each row also shows the June 2026 baseline flag (bulk-stamped dates, see `frontmatter-schema.md`) and, from the watchlist, the number of open claims (not `current`) and of claims flagged "à revérifier".
+Each row also shows the June 2026 baseline flag (bulk-stamped dates, see `frontmatter-schema.md`) and, from the watchlist, the number of open claims (not `current`) and of claims flagged "à revérifier". Two extra sections list the individual watchlist claims whose **Recheck by** date has passed or falls within 14 days.
 
 | Mode | Behaviour |
 | :-- | :-- |
@@ -213,6 +213,16 @@ Each row also shows the June 2026 baseline flag (bulk-stamped dates, see `frontm
 | `--json=path` | also write a JSON report |
 
 Not part of `npm test`: the result depends on the calendar, not on the PR. It runs weekly in `.github/workflows/freshness.yml` (warn-only, with `audit:sources`) and is phase 0 of `vault-refresh-outdated-content`.
+
+---
+
+### `watch:feeds`
+
+**Scope:** the sources of `.agents/vault-maintenance/feeds.json` — GitHub releases, tags and security advisories of the tools the vault covers, Hugging Face model listings of the main open-weight publishers, vendor and regulator RSS feeds, and the Vision IA YouTube channel as tier C signal.
+
+Lists every item published in the last N days (default 8, `--days`, `--since`, `--only=<domains>`, `--json`). Stateless and deterministic: no LLM, no judgement. `GITHUB_TOKEN` / `GH_TOKEN` is needed for advisories.
+
+Runs weekly in `.github/workflows/watch.yml` (Mondays 06:30 UTC, warn-only), which opens a GitHub issue labelled `veille` with the list. The `vault-watch` skill turns that issue into verified events, an impact map and a PR.
 
 ---
 
@@ -257,3 +267,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | 2026-06-10 | Initial vault CI: frontmatter, Mermaid, agent-leaks, i18n strict, link audit workflow |
 | 2026-10-09 | `audit:sources` (URL inventory, HTTP probe, evidence tiers) for the refresh workflow; not in `npm test` |
 | 2026-10-10 | `audit:freshness` (volatility classes, due pages, baseline flag, watchlist counters) and the weekly warn-only `freshness.yml` workflow |
+| 2026-10-10 | Claim-level **Recheck by** column in the watchlist; `watch:feeds` and the weekly `watch.yml` workflow opening a `veille` issue; `vault-watch` skill |

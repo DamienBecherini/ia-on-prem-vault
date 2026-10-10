@@ -30,6 +30,10 @@ jobs:
           if [ "$overdue" -gt 0 ]; then
             echo "::warning title=Freshness::$overdue page(s) overdue for review — see the job summary"
           fi
+          claims=$(node -e "console.log(require(process.env.RUNNER_TEMP+'/freshness.json').claimsDue.length)")
+          if [ "$claims" -gt 0 ]; then
+            echo "::warning title=Watchlist::$claims claim(s) past their Recheck by date — see the job summary"
+          fi
 
       - name: Cited sources health
         continue-on-error: true
