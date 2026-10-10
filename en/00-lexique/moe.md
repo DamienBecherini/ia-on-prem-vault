@@ -40,7 +40,7 @@ Small active-parameter MoEs (Qwen3-30B-A3B, Nemotron 3.5 Lightning, gpt-oss-20b[
 
 Giant MoEs (DeepSeek V4.1: > 750 GB in FP8; Kimi K3: > 1.4 TB even in native 4-bit; the 2024 DeepSeek V3 already weighed 404 GB in Q4_K_M) need an 8-GPU node or a multi-node cluster — Scenarios C or D[^1][^2].
 
-Watch the licenses: several open frontier MoEs of 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.4T-A95B) ship under custom licenses to read before any commercial use. The rule is not absolute: since September 2026, Xiaomi's MiMo-V2.6-Pro (1.02T parameters, 42B active) is published under MIT[^8], and most small to mid-sized MoEs (Qwen3-30B-A3B, GLM-5.3-Flash, DeepSeek V4 / V4.1, Nemotron 3.5) remain under Apache 2.0, MIT or OpenMDW. On Ollama, `kimi-k3:cloud` or `glm-5.2:cloud` are **hosted** tags, not downloadable weights (see [[03-stack-logicielle/choose-your-model|🗺️ Choose your model]]).
+Watch the licenses: several open frontier MoEs of 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.4T-A95B) ship under custom licenses to read before any commercial use. The rule is not absolute: datacenter-sized MoEs also ship under MIT, such as DeepSeek V4 / V4.1 (552B + 196B of Engram memory for V4.1-Flash)[^1] and, since September 2026, Xiaomi's MiMo-V2.6-Pro (1.02T parameters, 42B active)[^8]. Most small to mid-sized MoEs (Qwen3-30B-A3B, GLM-5.3-Flash, Nemotron 3.5) remain under Apache 2.0, MIT or OpenMDW. On Ollama, `kimi-k3:cloud` or `glm-5.2:cloud` are **hosted** tags, not downloadable weights (see [[03-stack-logicielle/choose-your-model|🗺️ Choose your model]]).
 
 ## ⚠️ Common pitfalls
 
