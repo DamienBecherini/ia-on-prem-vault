@@ -54,7 +54,7 @@ See the full grid: [[05-agents-et-assistants-on-prem/fondations-communes/soverei
 
 OpenHuman is relevant as:
 
-- inspiration for Markdown/SQLite memory;
+- a reminder that an assistant's memory can leave the machine even with a local model (local Memory Tree dropped in favor of CortexDB);
 - a comparison page to explain the "local-first ≠ sovereign by default" trap;
 - an example of a hybrid solution not to present as strict on-prem without caveat.
 

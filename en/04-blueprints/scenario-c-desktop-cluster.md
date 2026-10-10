@@ -20,13 +20,13 @@ Before 2025, the only solution was to rent a cloud server or buy a prohibitively
 
 The idea is to create a compute "farm" sitting on a shelf.
 *   **Nodes:** 4 to 8 compact machines. The standard in 2026 for this scenario is the **Mac mini M5 Pro** (64 GB unified memory, 307 GB/s, Thunderbolt 5, from €1,999 incl. VAT at 24 GB; it replaced the Mac mini M4 Pro on 2026-08-25) — or, pricier but faster, the Mac Studio M5 Max 64 GB (€3,659 incl. VAT) — and recent AMD Ryzen AI Max mini-PCs[^3].
-*   **Network:** This is the heart of the system. To prevent data transfer from killing performance, machines are connected in a daisy chain or via a hub with **[[00-lexique/thunderbolt|Thunderbolt 4 or 5]]** cables, offering bidirectional throughput up to 80 Gb/s.
+*   **Network:** This is the heart of the system. To prevent data transfer from killing performance, machines are connected in a daisy chain or via a hub with **[[00-lexique/thunderbolt|Thunderbolt 5]]** cables (80 Gb/s symmetric, up to 120 Gb/s in asymmetric mode), the only ones that allow the RDMA over Thunderbolt introduced by macOS 26.2 — Thunderbolt 4 remains limited to classic IP at 40 Gb/s[^2][^4].
 *   **Total capacity:** With 6 Mac Minis at 64 GB, you get a silent cluster with **384 GB aggregated unified memory**.
 
 > [!note] The "one big machine" alternative
 > Since August 2026, a Mac Studio M5 Ultra can be configured up to 512 GB (1.2 TB/s, 512 GB configuration shipping late October): a 671B in 4-bit fits on a single machine, with no Thunderbolt or pipeline parallelism. Beyond that, Apple documents RDMA clustering over Thunderbolt 5 directly in MLX (four Mac Studios "up to 3×" faster than one, Apple's measurement)[^2][^5]. On the CUDA side, NVIDIA documents pairing two DGX Sparks (64 or 128 GB) via their 200 Gbps ConnectX-7 port, at $4,999 (64 GB, OEMs from 2026-10-23) or ≈ $6,950 (128 GB) per unit[^6]. The Mac mini cluster remains the cheapest option per GB, but no longer the only one.
 
-**Estimated budget (2026):** ~€10,000 to €15,000 (for a cluster of 4 to 6 machines). About 10 times cheaper than an equivalent NVIDIA DGX server in VRAM. 64 GB machines follow the DRAM increase (TrendForce: +10 to 15% per quarter in Q4 2026): prices captured in October 2026 must be re-checked at purchase time[^7].
+**Estimated budget (Q4 2026):** ~€10,000 to €22,000 for 4 to 6 machines (Mac mini M5 Pro 64 GB or Mac Studio M5 Max 64 GB at €3,659 incl. VAT)[^3]. About 10 times cheaper than an equivalent NVIDIA DGX server in VRAM. 64 GB machines follow the DRAM increase (TrendForce: +10 to 15% per quarter in Q4 2026): prices captured in October 2026 must be re-checked at purchase time[^7].
 
 ---
 
@@ -36,12 +36,12 @@ This hardware miracle is made possible by **MLX** distributed inference (`mlx.la
 
 1.  The distributed runtime (MLX, or Exo) installs on all Mac Minis.
 2.  They discover each other via the Thunderbolt network (IP-over-Thunderbolt on Thunderbolt 4; RDMA on Thunderbolt 5 under macOS 26.2).
-3.  The massive LLM (e.g. DeepSeek V3 671B) is split into slices according to **[[00-lexique/pipeline-parallelism|Pipeline Parallelism]]**.
+3.  The massive LLM (e.g. DeepSeek V4-Flash 284B, or V3 671B in 4-bit)[^9] is split into slices according to **[[00-lexique/pipeline-parallelism|Pipeline Parallelism]]**.
 4.  Mac #1 computes the first 10 layers of the neural network, sends its raw result via Thunderbolt to Mac #2, which computes the next 10 layers, and so on.
 
 ### Expected performance
 The gain is purely capacity-based: **you do not gain speed, you gain the right to run the model**.
-Network latency, even over Thunderbolt, is infinitely slower than internal RAM speed. On a cluster of 8 Mac Minis running a 600B+ quantized model, available community benchmarks indicate generation speed on the order of **3 to 5 [[00-lexique/tokens-per-second|tokens/s]]**[^1]. On the model side, DeepSeek V4.1 Flash (September 2026) introduces an FP4 KV cache of about 890 bytes per token, which relieves precisely the memory and TTFT constraint of this scenario[^8].
+Network latency, even over Thunderbolt, is infinitely slower than internal RAM speed. On a cluster of 8 Mac Minis running a 600B+ quantized model, available community benchmarks indicate generation speed on the order of **3 to 5 [[00-lexique/tokens-per-second|tokens/s]]** over Thunderbolt 4 (Exo measurement, late 2024)[^1]; Apple announces up to 3× better with four Mac Studio M5 linked via RDMA over Thunderbolt 5[^2]. On the model side, DeepSeek V4.1 Flash (September 2026) introduces an FP4 KV cache of about 890 bytes per token, which relieves precisely the memory and TTFT constraint of this scenario[^8].
 
 ---
 
@@ -56,7 +56,7 @@ Network latency, even over Thunderbolt, is infinitely slower than internal RAM s
 ## 📋 The architect's verdict
 
 ### ✅ When to use this blueprint?
-*   **Frontier model prototyping:** For research or engineering teams that must absolutely test monumental LLMs (Grok, DeepSeek, Llama 400B) without data leaving the company.
+*   **Frontier model prototyping:** For research or engineering teams that must absolutely test monumental LLMs (DeepSeek V4, GLM-5.3, Kimi K3, Qwen3.8-2.4T) without data leaving the company.
 *   **Background processing:** Perfect for asynchronous document analysis (where latency does not matter).
 *   **Budget scalability:** You can start with 2 machines and add a 3rd the following year to increase your VRAM capacity.
 
@@ -123,3 +123,4 @@ ollama logs
 [^6]: NVIDIA, *DGX Spark* — product page (GB10, ConnectX-7 200 Gbps, multi-system cluster, 64 GB variant from OEMs), re-read on 2026-10-09. [https://www.nvidia.com/en-us/products/workstations/dgx-spark/](https://www.nvidia.com/en-us/products/workstations/dgx-spark/) · ServeTheHome, *NVIDIA DGX Spark 64GB Launched and Big 128GB GB10 Price Increases* (128 GB ≈ $6,950, 64 GB $4,999 OEM from 2026-10-23), 2026-10-03. [https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/](https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/)
 [^7]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
 [^8]: DeepSeek AI, *DeepSeek-V4.1-Flash* (MIT, 8–16B active, FP4 KV cache 890 bytes/token), September 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash)
+[^9]: DeepSeek AI — Hugging Face organization (V4 family: DeepSeek-V4-Flash 284B-A13B, DeepSeek-V4.1-Flash, DeepSeek-V4-Pro 1.6T; V3 671B retained), captured 2026-10-09. [https://huggingface.co/deepseek-ai](https://huggingface.co/deepseek-ai)

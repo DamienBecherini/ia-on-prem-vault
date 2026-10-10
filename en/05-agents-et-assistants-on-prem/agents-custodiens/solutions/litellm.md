@@ -12,7 +12,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## 🔍 Quick overview
 
-LiteLLM is an open-source proxy/gateway that exposes an OpenAI-compatible interface to 100+ providers: Ollama, vLLM, OpenAI, Anthropic, Azure, Bedrock, Vertex AI, Hugging Face, and others[^1].
+LiteLLM is an open-source proxy/gateway (MIT-licensed core, `enterprise/` features under a commercial license) that exposes an OpenAI-compatible interface to 100+ providers in Q4 2026: Ollama, vLLM, OpenAI, Anthropic, Azure, Bedrock, Vertex AI, Hugging Face, and others[^1].
 
 ## 💡 Why this project interests us
 
@@ -69,7 +69,7 @@ Very widely used as a gateway (over 60,000 GitHub stars as of Q4 2026[^1]), Lite
 
 ## 📚 Sources
 
-[^1]: LiteLLM GitHub README. [https://github.com/BerriAI/litellm](https://github.com/BerriAI/litellm)
+[^1]: LiteLLM GitHub README ("100+ LLM providers") and LICENSE (MIT, except `enterprise/` under `enterprise/LICENSE`), read on 2026-10-09. [https://github.com/BerriAI/litellm](https://github.com/BerriAI/litellm)
 [^2]: LiteLLM Proxy docs — local proxy, Ollama, vLLM. [https://docs.litellm.ai/docs/proxy_server](https://docs.litellm.ai/docs/proxy_server)
 [^3]: LiteLLM Docs, *Logging* — callbacks, OpenTelemetry, `turn_off_message_logging`. [https://docs.litellm.ai/docs/proxy/logging](https://docs.litellm.ai/docs/proxy/logging)
 [^4]: CISA, *Known Exploited Vulnerabilities Catalog* (JSON feed; LiteLLM entries CVE-2026-42208 added 2026-05-08, CVE-2026-42271 on 2026-06-08, CVE-2026-59822 on 2026-09-02), catalog dated 2026-10-08. [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)

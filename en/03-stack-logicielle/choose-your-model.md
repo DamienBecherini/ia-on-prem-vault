@@ -25,7 +25,7 @@ Before looking at a leaderboard, answer these three questions in order:
 | :-- | :-- |
 | Chat / general assistant | Generalist instruction-tuned model |
 | Document RAG (in French) | Strong instruction-following model, good long context |
-| Custodian agent / code editing | Specialized coder model, 14B minimum |
+| Custodian agent / code editing | 27–30B agentic generalist (Qwen3.8-27B, Muse Glimmer 30B, Granite 4.2) — see "Specializations" below |
 | Summarization, extraction, classification | Compact fast model, 7–8B often sufficient |
 | Reasoning / complex calculation | "Thinking" model (built-in chain-of-thought) |
 
@@ -50,7 +50,7 @@ The more users, the smaller the model must be to leave VRAM for concurrent [[00-
 
 ---
 
-## The 2026 open-weights landscape
+## The open-weights landscape (Q4 2026)
 
 The market has stabilized around a few dominant families. Here is how to read them.
 
@@ -58,7 +58,7 @@ The market has stabilized around a few dominant families. Here is how to read th
 
 The generalist reference of previous generations. Llama 3.1/3.3 models are available in 8B, 70B, and 405B. Well documented, supported by all engines (Ollama, vLLM, TensorRT-LLM), with a permissive commercial license.
 
-- **Llama 3.3 70B**: best quality/size ratio for most SME use cases. Strong instruction following, reasoning, and multilingual (including French).
+- **Llama 3.3 70B**: long the best quality/size ratio for SME use cases; in Q4 2026, it remains a safe and very well-supported choice, but it is outperformed at equal size by 27–30B generalists (Qwen3.8-27B, Muse Glimmer 30B). Strong instruction following, reasoning, and multilingual (including French).
 - **Llama 3.1 8B**: good for constrained workstations or simple tasks. Visible limits on complex reasoning tasks.
 - **Llama 3.1 405B**: requires a multi-GPU cluster (Scenario D). Performance close to frontier models on general tasks.
 
@@ -80,7 +80,7 @@ Natively multimodal (text + image), MoE architecture.
 The most versatile family in the open-weights landscape, with excellent multilingual coverage (including French). As of Q4 2026:
 
 - **Qwen3.8-27B** (dense, Apache 2.0, vision + video, 262k tokens): ~18 GB in Q4 via Ollama, the default choice for a 24 GB GPU and for code agents (SWE-bench Pro 61.7)[^7].
-- **Qwen3-30B-A3B** (MoE, Apache 2.0): 3B active, ~18 GB in Q4, excellent throughput on APUs.
+- **Qwen3-30B-A3B** (MoE, Apache 2.0): 3B active, ~18 GB in Q4, excellent throughput on APUs; same class as **Nemotron 3.5 Lightning 30B-A3B** (NVIDIA, official NVFP4 ≈ 22 GB, commercial OpenMDW 1.1 license)[^13].
 - **Qwen3.8-Flash-Next** and **Qwen3.8-2.4T-A95B** ("Qwen3.8-Max"): flagships under **custom** licenses (qwen-community-1.0, qwen3.8-max), to be read before any commercial use; datacenter size.
 
 ### DeepSeek (DeepSeek AI)
@@ -117,7 +117,7 @@ Compact models (3.8B–14B) with high reasoning quality for their size. Interest
 
 ## Specializations: when to choose a coder model?
 
-Generalist models (Llama, general Qwen) can write code, but they are not built to **reliably modify an existing repository**. A custodian agent that must perform precise search-and-replace in Markdown or code needs a coder model.
+Generalist models (Llama, general Qwen) can write code, but they are not built to **reliably modify an existing repository**. A custodian agent that must perform precise search-and-replace in Markdown or code needs a model trained for agentic code editing.
 
 Since 2026, 27–30B generalist models trained for agentic use (Qwen3.8-27B, Muse Glimmer 30B, Granite 4.2) have replaced the dedicated "Coder" variants: they outperform the 2024 Coder models on SWE-bench, and the coder / generalist distinction has blurred.
 
@@ -136,7 +136,7 @@ Practical rule (Q4 2026):
 
 ## Reasoning models: when do you need them?
 
-"Thinking" models (DeepSeek-R1, Qwen3 in thinking mode, Llama with chain-of-thought prompting) generate internal reasoning before the response. They are useful for:
+"Thinking" models (Qwen3.8[^7], Granite 4.2[^9], DeepSeek V4.1[^10] — all with a switchable reasoning mode or an adjustable effort level) generate internal reasoning before the response. They are useful for:
 
 - mathematical or logical problems;
 - multi-step analyses (due diligence, audit);
@@ -157,7 +157,7 @@ In exchange:
 Public rankings (Arena, Artificial Analysis, SWE-bench Pro, HELM) are useful for **initial orientation**, but do not replace your own tests.
 
 > [!warning] Benchmark contamination
-> Large static benchmarks (MMLU, HumanEval, MATH) are saturated in 2026 — their test data has partially leaked into training corpora. A high MMLU score does not predict performance on your internal documents. See [[06-mise-en-oeuvre/evaluate-local-model|Evaluating a local model]] for the full protocol.
+> Large static benchmarks (MMLU, HumanEval, MATH) and, since summer 2026, SWE-bench Verified[^6] are saturated — their test data has partially leaked into training corpora. A high MMLU score does not predict performance on your internal documents. See [[06-mise-en-oeuvre/evaluate-local-model|Evaluating a local model]] for the full protocol.
 
 What leaderboards still tell you usefully:
 
@@ -173,12 +173,13 @@ What leaderboards still tell you usefully:
 
 Before downloading a model:
 
-- [ ] Does the license allow commercial use? (Apache 2.0, MIT, Llama Community License)
+- [ ] Does the license allow your use? Apache 2.0 / MIT / OpenMDW 1.1: yes. Llama Community, Kimi K3 License, glm-5.3, qwen3.8-max, qwen-community-1.0: read the thresholds (MAU, MaaS revenue) before deploying[^14][^15].
+- [ ] Are the weights actually downloadable? An Ollama `:cloud` tag (Kimi K3, GLM-5.3) means hosted inference, not on-premise[^18].
 - [ ] Does the model fit in your VRAM with the target quantization + KV Cache headroom?
 - [ ] Does the target inference engine support it? (GGUF for Ollama, safetensors for vLLM)
 - [ ] Do community evaluations exist for your language? (French is less covered than English)
 - [ ] Do you have a golden dataset to test on your real data?
-- [ ] For an agent: do you have a 14B+ coder, not a 7B generalist?
+- [ ] For an agent: do you have a 27–30B agentic model (Qwen3.8-27B, Muse Glimmer 30B, Granite 4.2 30B), not a 7B generalist?
 
 ---
 
@@ -211,3 +212,4 @@ Before downloading a model:
 [^15]: Moonshot AI, *Kimi K3* (native MXFP4; Kimi K3 License: separate agreement above $20M of MaaS revenue over 12 months). [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3)
 [^16]: Google, *Gemma 4 31B IT* (Apache 2.0; E2B / E4B / 26B-A4B / 31B family), April 2026. [https://huggingface.co/google/gemma-4-31b-it](https://huggingface.co/google/gemma-4-31b-it)
 [^17]: Artificial Analysis, *Intelligence Index — model ranking* (Claude Opus 5.5 58, Claude Fable 5.1 53, GPT-6 Astra 53, MiMo-V2.6-Pro 46, GLM-5.3 45, Kimi K3 44; index v4.3 or revision 4.3.x), captured 2026-10-10. [https://artificialanalysis.ai/leaderboards/models](https://artificialanalysis.ai/leaderboards/models); Artificial Analysis, *Claude Opus 5.5* (58, "the highest score we have measured by several points"), 2026-09-22. [https://artificialanalysis.ai/articles/claude-opus-5-5](https://artificialanalysis.ai/articles/claude-opus-5-5)
+[^18]: Ollama, *Library — kimi-k3* (only tag `kimi-k3:cloud`, 2.81T parameters: hosted inference) and *glm-5.3* (`:cloud` tag), accessed 2026-10-10. [https://ollama.com/library/kimi-k3](https://ollama.com/library/kimi-k3) · [https://ollama.com/library/glm-5.3](https://ollama.com/library/glm-5.3)

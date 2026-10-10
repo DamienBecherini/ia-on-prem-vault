@@ -40,7 +40,7 @@ L'erreur classique est de déployer Ollama pour servir une application PME avec 
 ### 🌟 Les forces
 *   **[[00-lexique/pagedattention|PagedAttention]] :** vLLM a popularisé cette technique qui gère la mémoire du KV Cache par blocs (comme la mémoire virtuelle d'un OS). Cela réduit la fragmentation mémoire de ~60% à moins de 4% et permet de grouper massivement les requêtes (*Continuous Batching*)[^3].
 *   **Haut débit concurrent :** Sur des architectures multi-utilisateurs, vLLM peut délivrer un débit global nettement supérieur à Ollama en charge concurrente ; l'écart dépend fortement du matériel, du modèle et de la quantification — mesurez-le avec `vllm bench serve` sur vos propres prompts plutôt que de vous fier à un facteur générique[^4].
-*   **Support des formats de pointe :** Il gère la quantification de production (FP8, AWQ) via des kernels nativement optimisés pour les architectures NVIDIA Hopper et Blackwell, et gère nativement le [[00-lexique/tensor-parallelism|Tensor Parallelism]] en [[00-lexique/multi-gpu|multi-GPU]][^5].
+*   **Support des formats de pointe :** Il gère la quantification de production (FP8 — raccourci `fp8_per_tensor` depuis vLLM 0.31, l'ancien nom `fp8` redirige[^16] —, AWQ, GPTQ) via des kernels nativement optimisés pour les architectures NVIDIA Hopper et Blackwell, et gère nativement le [[00-lexique/tensor-parallelism|Tensor Parallelism]] en [[00-lexique/multi-gpu|multi-GPU]][^5].
 
 ### ⚠️ Les limites
 vLLM n'est pas conçu pour faire de l'offloading sur RAM CPU classique, ni pour le silicium Apple. Il requiert un environnement matériel robuste (GPU dédiés) et une configuration plus fine des paramètres serveurs. 
@@ -81,7 +81,7 @@ La contrainte n'est plus la compilation mais le rythme de publication : au T4 20
 | :-- | :-- | :-- |
 | Débit brut, requêtes indépendantes | ✅ Référence | Comparable |
 | Boucles agentiques, préfixes partagés | ✅ Automatic Prefix Caching (actif par défaut, par blocs hachés)[^11] | ✅ RadixAttention (arbre de préfixes, partage plus fin) |
-| Génération JSON contrainte | ⚠️ Possible, plus lent | ✅ Natif, sans pénalité |
+| Génération JSON contrainte | ✅ Natif (xgrammar / guidance, actif par défaut)[^18] | ✅ Natif |
 | Compatibilité matérielle (AMD, Mac) | ✅ Large | ✅ Large (NVIDIA CUDA 13, AMD Instinct, Intel, TPU, Apple)[^14] |
 | Maturité écosystème | ✅ Très large | ✅ Mature depuis 2025 |
 
@@ -96,7 +96,7 @@ Les problèmes suivants sont fréquents lors de la première installation de vLL
 
 | Symptôme | Cause probable | Solution |
 | :-- | :-- | :-- |
-| `torch.cuda.is_available()` retourne `False` | Mismatch entre la version PyTorch installée et le driver CUDA du système | Réinstaller PyTorch avec la variante CUDA correspondante : `pip install torch --index-url https://download.pytorch.org/whl/cu124` (adapter `cu124` à la version CUDA installée) |
+| `torch.cuda.is_available()` retourne `False` | Mismatch entre la version PyTorch installée et le driver CUDA du système | Réinstaller PyTorch avec la variante CUDA correspondante : `pip install torch --index-url https://download.pytorch.org/whl/cu130` (ou `cu129` ; depuis vLLM 0.28 la roue par défaut cible CUDA 13.0[^16] — adapter à la version CUDA installée) |
 | OOM au chargement — KV Cache trop grand | La longueur de contexte maximale demandée dépasse la VRAM disponible après chargement des poids | Ajouter `--max-model-len 4096` (ou une valeur inférieure) au démarrage de `vllm serve` pour réduire le KV Cache pré-alloué |
 | Deux serveurs vLLM en conflit | Le port 8000 est déjà occupé par une instance précédente | Ajouter `--port 8001` pour la deuxième instance ; `lsof -i :8000` / `netstat -tulpn` pour identifier le processus occupant le port |
 | Tester rapidement l'API locale | — | Utiliser le client Python OpenAI avec `base_url="http://localhost:8000/v1/"` et `api_key="any"` (sans `--api-key`, vLLM accepte n'importe quelle valeur ; et même avec `--api-key`, seuls `/v1`, `/v2` et `/inference` sont protégés — `/tokenize` et `/metrics` restent ouverts, d'où le reverse proxy en production)[^15] |
@@ -129,7 +129,7 @@ Pour un projet d'agent on-premise déployé chez des clients, le choix du moteur
 2.  **Cas d'usage "Appliance PME" (10-50 utilisateurs, serveur GPU) :** 
     Basculez **impérativement sur vLLM**. PagedAttention et le continuous batching garantissent que l'IA ne s'effondrera pas lorsque cinq collaborateurs lanceront des requêtes RAG en même temps. Utilisez des poids en précision **AWQ ou FP8**.
 3.  **Cas d'usage "Datacenter Souverain" (Gros volume, multi-nœuds) :**
-    Utilisez **TensorRT-LLM** derrière le serveur Triton de NVIDIA. C'est le moyen le plus efficace d'amortir le coût des accélérateurs professionnels.
+    Utilisez **TensorRT-LLM** via `trtllm-serve` (API compatible OpenAI) ou, si vous avez déjà Triton, via son backend TensorRT-LLM[^17]. C'est le moyen le plus efficace d'amortir le coût des accélérateurs professionnels.
 4.  **Cas d'usage "Agents et intégration backend" (tool calling, JSON structuré) :**
     Préférez **[[00-lexique/sglang|SGLang]]**. Sa gestion native du cache de préfixe ([[00-lexique/radixattention|RadixAttention]]) réduit la latence dans les boucles agentiques, et sa génération JSON contrainte garantit la fiabilité des interfaces avec tout backend applicatif.
 
@@ -152,3 +152,6 @@ Pour un projet d'agent on-premise déployé chez des clients, le choix du moteur
 [^13]: Ollama, *Release v0.40.0* (« Models run on MLX on Apple Silicon by default »), 25 septembre 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
 [^14]: SGLang Project, *Release v0.5.20* (retrait de CUDA 12, CUDA 13 obligatoire ; image ROCm `gfx1151`), 18 septembre 2026. [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20)
 [^15]: vLLM Project, *CLI Reference — `vllm serve`* (`--api-key` : chemins protégés `/v1`, `/v2`, `/inference`), consulté le 2026-10-09 · vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`/tokenize` non couvert par `--api-key`), 6 octobre 2026. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
+[^16]: vLLM Project, *Release v0.28.0* (roue PyPI et image Docker par défaut en CUDA 13.0, variantes `-cu129`), 2026-08-26 · *Release v0.31.0* (`quantization="fp8"` renommé `fp8_per_tensor`, ancien nom redirigé), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.28.0](https://github.com/vllm-project/vllm/releases/tag/v0.28.0) · [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
+[^17]: NVIDIA, *TensorRT-LLM — Quick Start* (`trtllm-serve`, API compatible OpenAI), consulté le 2026-10-09 · Triton Inference Server, dépôt `tensorrtllm_backend` (backend Triton pour TensorRT-LLM, mode « PyTorch Backend (LLM API) »), consulté le 2026-10-09. [https://nvidia.github.io/TensorRT-LLM/](https://nvidia.github.io/TensorRT-LLM/) · [https://github.com/triton-inference-server/tensorrtllm_backend](https://github.com/triton-inference-server/tensorrtllm_backend)
+[^18]: vLLM Project, *Structured Outputs* (backends `xgrammar` / `guidance`, sélection `auto` via `--structured-outputs-config`), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/structured_outputs/](https://docs.vllm.ai/en/stable/features/structured_outputs/)

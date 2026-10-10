@@ -107,7 +107,7 @@ Thunderbolt est séduisant pour l'on-premise : un câble compact, des docks, du 
 
 Depuis macOS 26.2, Apple supporte le **RDMA over Thunderbolt 5** entre Mac ; MLX (backend JACCL, latence « d'un ordre de grandeur » inférieure au ring TCP) et Exo s'en servent pour le parallélisme entre deux à quatre machines, et Apple annonce « jusqu'à 3× » le débit d'inférence d'un seul Mac Studio M5 avec quatre nœuds. Conditions : Thunderbolt 5 sur chaque machine et câbles TB5, `rdma_ctl enable` à exécuter une fois en mode Recovery, topologie entièrement maillée pour JACCL, même build macOS partout — Thunderbolt 4 ne fournit qu'un lien IP [^8][^9].
 
-Intel décrit Thunderbolt 4 comme un lien à **40 Gb/s** bidirectionnel avec 32 Gb/s de données PCIe minimales [^5]. Thunderbolt 5 monte à **80 Gb/s** bidirectionnels, avec un mode *Bandwidth Boost* pouvant réallouer le lien jusqu'à **120 Gb/s en émission et 40 Gb/s en réception**, principalement pour les usages vidéo [^6].
+Intel décrit Thunderbolt 4 comme un lien à **40 Gb/s** bidirectionnel avec 32 Gb/s de données PCIe minimales [^5]. Thunderbolt 5 monte à **80 Gb/s** bidirectionnels, avec un mode *Bandwidth Boost* pouvant réallouer le lien jusqu'à **120 Gb/s en émission et 40 Gb/s en réception**, principalement pour les usages vidéo [^6]. Apple annonce « Thunderbolt 5 (120 Gb/s) » pour le Mac Studio M5 : c'est ce mode asymétrique, pas un débit symétrique [^9].
 
 Même Thunderbolt 5 reste très loin d'un fabric NVLink/NVSwitch de serveur GPU. Il peut être utile pour :
 
@@ -138,6 +138,7 @@ Pour un mini-cluster de bureau, Thunderbolt peut aider à prototyper. Pour de la
 | Multi-nœuds avec pipeline parallel | RoCE ou InfiniBand recommandé | Les activations traversent le réseau |
 | Tensor parallel multi-nœuds | InfiniBand ou RoCE très bien configuré | Communications fréquentes, réseau critique |
 | Prototype homelab | Ethernet / Thunderbolt | Utile pour apprendre, pas pour promettre des gains linéaires |
+| Cluster Mac 2–4 nœuds (MLX / Exo) | Thunderbolt 5 + RDMA (macOS 26.2+) | Gains sub-linéaires (Apple : ≤ 3× pour 4 nœuds) ; Thunderbolt 4 = IP seulement [^8][^9] |
 
 vLLM recommande de raisonner sur la topologie : tensor parallel dans un nœud quand le modèle tient sur les GPU du nœud, puis pipeline parallel entre nœuds quand il faut dépasser cette limite. La documentation mentionne aussi GPUDirect RDMA pour les communications réseau GPU efficaces dans les déploiements compatibles [^7].
 
@@ -151,7 +152,7 @@ Pour un déploiement souverain on-premise :
 2. **Ne pas confondre débit marketing et débit utile.** Un lien réseau annoncé en Gb/s ne dit rien de la latence, de la congestion, du CPU bypass ou du comportement NCCL.
 3. **Réserver RoCE aux environnements maîtrisés.** RoCE est pertinent si vous contrôlez les NIC, switches, QoS, PFC/ECN et monitoring.
 4. **Choisir InfiniBand pour le multi-nœuds sérieux.** Si l'objectif est un cluster IA à faible latence, InfiniBand évite beaucoup de bricolage.
-5. **Utiliser Thunderbolt comme outil de station, pas comme promesse cluster.** Très pratique pour le stockage et les docks ; trop limité pour remplacer un fabric GPU.
+5. **Utiliser Thunderbolt comme outil de station — et, sur Mac, comme lien de cluster RDMA à petite échelle.** Très pratique pour le stockage et les docks ; en Thunderbolt 5 + macOS 26.2 il porte un cluster MLX/Exo de 2 à 4 Mac ; il ne remplace pas un fabric GPU [^8].
 
 Le réseau IA on-premise n'est donc pas “plus de câbles”. C'est une décision d'architecture : quelle part du modèle, du cache et des requêtes accepte-t-on de faire traverser entre machines ?
 

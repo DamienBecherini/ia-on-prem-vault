@@ -20,7 +20,7 @@ Test standardisé qui mesure une ou plusieurs capacités d'un [[00-lexique/llm|L
 
 ## 📖 Définition détaillée
 
-Un benchmark LLM est utile pour comparer rapidement des modèles, mais il mesure toujours un **protocole précis**. MMLU ne teste pas la même chose que SWE-bench ; TruthfulQA ne teste pas la même chose que les tokens/s.
+Un benchmark LLM est utile pour comparer rapidement des modèles, mais il mesure toujours un **protocole précis**. MMLU ne teste pas la même chose que SWE-bench Pro ; TruthfulQA ne teste pas la même chose que les tokens/s.
 
 Les benchmarks publics sont donc un point de départ, pas une décision finale.
 

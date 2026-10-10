@@ -69,13 +69,13 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --port 8000 \
   --dtype bfloat16 \                    # bf16 natif sur Ampere+, plus stable que fp16
   --max-model-len 8192 \               # fenêtre de contexte max (limite le KV Cache)
-  --gpu-memory-utilization 0.90 \      # % VRAM alloué au KV Cache (0.85-0.95)
+  --gpu-memory-utilization 0.92 \      # fraction de VRAM allouée à vLLM (défaut 0.92 ; 0.85-0.95)
   --max-num-seqs 256 \                 # requêtes concurrentes max en continuous batching
   --served-model-name llama-70b        # alias dans l'API (évite d'exposer le chemin HF)
 ```
 
 **Paramètre critique — `gpu-memory-utilization` :**
-vLLM réserve au démarrage la fraction indiquée de VRAM pour le KV Cache. Si vos prompts sont longs ou si vous avez beaucoup de requêtes concurrentes, montez à 0.95. Si des OOM apparaissent, descendez à 0.85[^2].
+vLLM réserve au démarrage la fraction indiquée de VRAM pour l'ensemble du moteur (poids, activations et KV Cache) ; le défaut documenté au T4 2026 est 0.92. Si vos prompts sont longs ou si vous avez beaucoup de requêtes concurrentes, montez à 0.95. Si des OOM apparaissent, descendez à 0.85[^2].
 
 > [!warning] Dépassement de `max-model-len` → HTTP 400, pas de troncature silencieuse
 > Si un client envoie un prompt + historique qui dépasse `--max-model-len`, vLLM **rejette la requête** avec `HTTP 400 Bad Request: prompt is too long (X tokens > Y max)`. Il ne tronque **pas** le texte automatiquement.
@@ -85,7 +85,7 @@ vLLM réserve au démarrage la fraction indiquée de VRAM pour le KV Cache. Si v
 > - **Côté client** : compter les tokens avant envoi (`tiktoken` ou `transformers.AutoTokenizer`) et afficher un message métier explicite ("Document trop long — limite : ~6 000 mots").
 > - **Prompt engineering** : imposer un `max_tokens` raisonnable dans le system prompt pour éviter que des réponses longues saturent progressivement l'historique.
 
-### Modèles quantifiés (AWQ / GPTQ)
+### Modèles quantifiés (AWQ / GPTQ / FP8)
 
 ```bash
 # Modèle AWQ (meilleure qualité à iso-mémoire vs GGUF Q4)
@@ -97,6 +97,11 @@ vllm serve TheBloke/Llama-2-70B-Chat-AWQ \
 vllm serve TheBloke/Llama-2-70B-GPTQ \
   --quantization gptq \
   --dtype float16
+
+# FP8 en ligne, sans checkpoint pré-quantifié (Hopper / Blackwell)
+# vLLM ≥ 0.31 : la méthode s'appelle fp8_per_tensor ; l'ancien nom "fp8" redirige[^13]
+vllm serve meta-llama/Llama-3.1-70B-Instruct \
+  --quantization fp8_per_tensor
 ```
 
 > [!warning] GGUF : expérimental seulement
@@ -117,7 +122,7 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
 # 4 GPU — modèle 70B avec marges confortables
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --tensor-parallel-size 4 \
-  --gpu-memory-utilization 0.90
+  --gpu-memory-utilization 0.92
 
 # 8 GPU — modèle 405B ou MoE massif
 vllm serve meta-llama/Llama-3.1-405B-Instruct \
@@ -127,7 +132,7 @@ vllm serve meta-llama/Llama-3.1-405B-Instruct \
 ```
 
 **Règle de dimensionnement :**
-- `tensor-parallel-size` doit être une puissance de 2 (1, 2, 4, 8)
+- `tensor-parallel-size` doit diviser le nombre de têtes d'attention du modèle (en pratique 1, 2, 4 ou 8 pour les modèles courants)[^3]
 - Chaque GPU doit avoir accès à `taille_modèle / tensor_parallel_size` de VRAM
 - L'interconnexion décide de l'efficacité : NVLink >> PCIe (voir [[02-materiel/stations-multi-gpu|Stations Multi-GPU]])
 
@@ -149,7 +154,7 @@ Pour dépasser la capacité d'un seul serveur, vLLM s'appuie sur **Ray** pour di
 
 ### Prérequis réseau
 
-Les nœuds doivent se voir sur un réseau à faible latence. Idéalement RoCE/InfiniBand — en pratique, 25 Gb Ethernet suffit pour du Pipeline Parallelism[^4].
+Les nœuds doivent se voir sur un réseau à faible latence. Idéalement RoCE/InfiniBand : la doc vLLM recommande d'activer InfiniBand (`--privileged -e NCCL_IB_HCA=mlx5` dans `run_cluster.sh`) et de vérifier avec `NCCL_DEBUG=TRACE` que NCCL utilise `NET/IB/GDRDMA` et non `NET/Socket`[^4]. Un Ethernet 25 Gb reste exploitable pour du Pipeline Parallelism (moins exigeant en bande passante que le Tensor Parallelism), au prix d'un TTFT plus élevé — la doc vLLM ne donne pas de seuil chiffré, mesurez sur votre charge.
 
 ### Configuration du cluster Ray
 
@@ -185,9 +190,9 @@ vllm serve meta-llama/Llama-3.1-405B-Instruct \
 
 vLLM et Ray gèrent automatiquement la répartition : les 4 premiers GPU (nœud 0) traitent les premières couches, les 4 suivants (nœud 1) les suivantes[^4]. La doc officielle fournit `examples/ray_serving/run_cluster.sh` pour démarrer head et workers dans l'image `vllm/vllm-openai` (une `VLLM_HOST_IP` par nœud) ; sans Ray, lancez `vllm serve … --nnodes 2 --node-rank 0 --master-addr HEAD_IP` sur le head et `--node-rank 1 --headless` sur le worker[^4].
 
-### Désagrégation Prefill / Decode (2026)
+### Désagrégation Prefill / Decode
 
-Architecture avancée disponible depuis vLLM v0.6+ : des nœuds dédiés au **Prefill** (lecture du prompt, CPU-bound) et d'autres au **Decode** (génération, memory-bandwidth-bound)[^5]. Réduit le TTFT de 30 à 50% sur des prompts longs.
+Architecture avancée (expérimentale) qui isole des nœuds dédiés au **Prefill** (lecture du prompt, compute-bound) et d'autres au **Decode** (génération, memory-bandwidth-bound)[^5]. Le gain de TTFT dépend du connecteur KV et de la longueur des prompts — la doc vLLM ne publie pas de chiffre : mesurez-le avec `vllm bench serve`[^5].
 
 ```bash
 # Désagrégation P/D — même flag sur les deux rôles, connecteur NIXL
@@ -225,8 +230,8 @@ Les clients doivent envoyer `Authorization: Bearer VOTRE-TOKEN-A-REMPLACER`. Att
 ```bash
 vllm serve ... \
   --max-num-seqs 512 \              # séquences traitées par itération (batch continu)
-  --max-num-queued-reqs 1024 \      # requêtes en vol max ; au-delà : HTTP 503 (vLLM ≥ 0.29)
-  --disable-log-requests            # désactiver les logs de requêtes en production
+  --max-num-queued-reqs 1024        # requêtes en vol max ; au-delà : HTTP 503 (vLLM ≥ 0.29)
+# Les logs de requêtes sont désactivés par défaut (--enable-log-requests pour déboguer)[^8]
 ```
 
 `--max-num-seqs` borne le nombre de séquences traitées par itération, pas la file d'attente (illimitée par défaut) : c'est `--max-num-queued-reqs` (vLLM 0.29) qui produit le 503, à dimensionner autour de `data_parallel_size × max_num_seqs` plus la profondeur de file souhaitée[^2][^8]. vLLM n'a pas de timeout par requête côté moteur : fixez-le dans le reverse proxy (Caddy `reverse_proxy … { transport http { response_header_timeout 120s } }`, Nginx `proxy_read_timeout 120s`) ou côté client[^8].
@@ -249,12 +254,12 @@ En environnement multi-utilisateurs ou multi-agents, plusieurs requêtes partage
 ```bash
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --max-model-len 8192 \
-  --gpu-memory-utilization 0.90
+  --gpu-memory-utilization 0.92
 # L'APC est actif par défaut ; --no-enable-prefix-caching pour le couper,
 # --prefix-caching-hash-algo xxhash pour un hachage plus rapide (sha256 par défaut)
 ```
 
-**Fonctionnement :** vLLM hache chaque bloc de 16 tokens. Si une nouvelle requête commence par la même séquence de blocs qu'une requête précédente encore en cache GPU, les vecteurs Key/Value sont réutilisés directement — sans recalcul du Prefill[^7].
+**Fonctionnement :** vLLM hache chaque bloc de KV Cache (taille `--block-size`, choisie par défaut selon le backend d'attention)[^2]. Si une nouvelle requête commence par la même séquence de blocs qu'une requête précédente encore en cache GPU, les vecteurs Key/Value sont réutilisés directement — sans recalcul du Prefill[^7].
 
 **Impact mesuré :**
 
@@ -285,13 +290,15 @@ ExecStart=/usr/local/bin/vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --tensor-parallel-size 4 \
   --host 127.0.0.1 \
   --port 8000 \
-  --gpu-memory-utilization 0.90
+  --gpu-memory-utilization 0.92
 Restart=always
 RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
 ```
+
+Sur ROCm, `CUDA_VISIBLE_DEVICES` est déprécié depuis vLLM 0.24 (le moteur ne positionne plus lui-même cette variable) ; utilisez l'argument `device_ids`. Rien ne change pour NVIDIA[^12].
 
 ```bash
 sudo systemctl daemon-reload
@@ -342,8 +349,10 @@ curl http://localhost:8000/metrics | grep vllm
 [^4]: vLLM Project, *Parallelism and Scaling — Multi-node deployment* (`run_cluster.sh`, `--distributed-executor-backend ray`, `--nnodes` / `--node-rank` / `--headless`, InfiniBand et NCCL), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/)
 [^5]: vLLM Project, *Disaggregated Prefill and Decode* (`--kv-transfer-config`, connecteurs NIXL / LMCache / Mooncake / Offloading, statut expérimental), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/disagg_prefill/](https://docs.vllm.ai/en/stable/features/disagg_prefill/)
 [^6]: vLLM Project, *Quantized KV Cache* (`--kv-cache-dtype fp8` / `fp8_e5m2`, CUDA 11.8+ et ROCm, calibration `llm-compressor`, `--kv-cache-dtype-skip-layers`), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/quantized_kvcache/](https://docs.vllm.ai/en/stable/features/quantization/quantized_kvcache/)
-[^7]: vLLM Project, *Automatic Prefix Caching* (fonctionnement par blocs de 16 tokens, impact TTFT, compatibilité tensor parallelism). [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching.html](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching.html)
+[^7]: vLLM Project, *Automatic Prefix Caching* (hachage par blocs de KV Cache, impact TTFT, compatibilité tensor parallelism), consulté le 2026-10-10. [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/)
 [^8]: vLLM Project, *CLI Reference — `vllm serve`* (liste exhaustive des flags : absence de `--role`, `--request-timeout`, `--calculate-kv-cache-size` ; `--speculative-config`), consulté le 2026-10-09 · vLLM Project, *Release v0.29.0* (ajout de `--max-num-queued-reqs`), 2026-09-09. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/releases/tag/v0.29.0](https://github.com/vllm-project/vllm/releases/tag/v0.29.0)
 [^9]: vLLM Project, *Release v0.28.0* (roue PyPI et image Docker par défaut en CUDA 13.0, variantes `-cu129`), 2026-08-26. [https://github.com/vllm-project/vllm/releases/tag/v0.28.0](https://github.com/vllm-project/vllm/releases/tag/v0.28.0)
 [^10]: vLLM Project, *GGUF* (plugin `vllm-gguf-plugin`, support « highly experimental and under-optimized », tokenizer du modèle de base), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/gguf/](https://docs.vllm.ai/en/stable/features/quantization/gguf/)
 [^11]: vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`--api-key` limité à `/v1`, `/v2`, `/inference` ; `/tokenize` non authentifié), 2026-10-06. [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
+[^12]: vLLM Project, *Release v0.24.0* (vLLM ne positionne plus `CUDA_VISIBLE_DEVICES` ; argument `device_ids` ; variable dépréciée sur ROCm), 2026-06-29. [https://github.com/vllm-project/vllm/releases/tag/v0.24.0](https://github.com/vllm-project/vllm/releases/tag/v0.24.0)
+[^13]: vLLM Project, *Release v0.31.0* (`quantization="fp8"` renommé `fp8_per_tensor`, ancien nom redirigé), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)

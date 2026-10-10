@@ -10,7 +10,7 @@ tags:
   - security
 sidebar:
   order: 39
-last_modified: "2026-06-10"
+last_modified: "2026-10-10"
 last_verified: "2026-06-09"
 verified_by: "Sonnet 4.6"
 ---
@@ -60,4 +60,4 @@ Qdrant allows scoping vector searches via *payload* filters (tenant-specific acc
 
 [^1]: OWASP GenAI Security Project, *LLM Top 10 for LLM Applications (2025)*. [https://genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)
 [^2]: Crunchy Data, *Row Level Security for Tenants in Postgres*. [https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres](https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres)
-[^3]: Qdrant, *Multitenancy — multiple partitions guide*. [https://qdrant.tech/documentation/guides/multiple-partitions/](https://qdrant.tech/documentation/guides/multiple-partitions/)
+[^3]: Qdrant, *Multitenancy*. [https://qdrant.tech/documentation/manage-data/multitenancy/](https://qdrant.tech/documentation/manage-data/multitenancy/)

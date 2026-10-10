@@ -3,14 +3,14 @@ title: "🏭 Scenario D: Datacenter (RoCE & Multi-GPU)"
 description: The Enterprise AI blueprint. HGX 8-GPU nodes, RoCE/InfiniBand network, and Tensor Parallelism for very high-concurrency production.
 sidebar:
   order: 4
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
-Your client is a large enterprise, a sovereign cloud host, or a public institution. The requirements are uncompromising: host a 70B-class model or a 400B+ giant, and above all, **serve dozens or even hundreds of users at the same time** with instant response time.
+Your client is a large enterprise, a sovereign cloud host, or a public institution. The requirements are uncompromising: host a 70B-class model or an MoE giant of 300B to over 1T parameters, and above all, **serve dozens or even hundreds of users at the same time** with instant response time.
 
 [[04-blueprints/scenario-b-sme-appliance|Scenario B]] (the Appliance) would choke under concurrent load, and [[04-blueprints/scenario-c-desktop-cluster|Scenario C]] (Exo Cluster) has a TTFT that is far too slow. For massive production, there is no secret: you must switch to the standard AI datacenter architecture.
 
@@ -20,17 +20,17 @@ Your client is a large enterprise, a sovereign cloud host, or a public instituti
 
 Here, the basic unit is no longer the graphics card, but the **Server Node** and the **Fabric Network**.
 
-*   **The Node (Scale-Up):** A rack-format server (e.g. NVIDIA HGX architecture) containing **8 datacenter-class GPUs** (NVIDIA H200 or B200). Unlike a classic PC, these 8 chips do not communicate over PCIe, but via **[[00-lexique/nvlink|NVLink]]** and **[[00-lexique/nvswitch|NVSwitch]]**. This bus lets chips exchange data at **1,800 GB/s** (on Blackwell)[^1].
+*   **The Node (Scale-Up):** A rack-format server (e.g. NVIDIA HGX architecture) containing **8 datacenter-class GPUs** (NVIDIA H200, B200, or B300; AMD Instinct MI350X/MI455X)[^5]. Unlike a classic PC, these 8 chips do not communicate over PCIe, but via **[[00-lexique/nvlink|NVLink]]** and **[[00-lexique/nvswitch|NVSwitch]]**. This bus lets chips exchange data at **1,800 GB/s** (on Blackwell)[^1].
 *   **The Network (Scale-Out):** To connect several nodes together, very high-throughput network cards (400 Gbps or 800 Gbps) compatible with **[[00-lexique/rdma|RDMA]]** are used. The standard is **InfiniBand** or **[[00-lexique/roce|RoCEv2]]** (RDMA over Converged Ethernet)[^2].
 *   **Storage:** Distributed NVMe flash storage accessible via *GPUDirect Storage*, to load terabytes of model weights in seconds at startup.
 
-**Estimated budget (2026):** From €300,000 to over €1 million per node, excluding network infrastructure, energy, and cooling costs.
+**Estimated budget (Q4 2026):** from €250,000 (8× RTX PRO 6000 server, OEM list price $266k) to over €1 million per node (GB300 on quote)[^6], excluding network infrastructure, energy, and cooling costs.
 
 ---
 
 ## ⚙️ Software Stack and Mechanism
 
-This hardware extravagance demands inference engines that can exploit it to the millisecond: **[[00-lexique/pagedattention|vLLM]]** or the official **[[00-lexique/tensorrt-llm|TensorRT-LLM]]** SDK behind a Triton server. Multi-node orchestration is handled by **[[00-lexique/ray|Ray]]**.
+This hardware extravagance demands inference engines that can exploit it to the millisecond: **[[00-lexique/vllm|vLLM]]** (≥ 0.29, `vllm serve`) or the official **[[00-lexique/tensorrt-llm|TensorRT-LLM]]** SDK (`trtllm-serve`; beware, 1.3 has remained a release candidate since July 2026: pin 1.2.1 in production)[^7]. Multi-node orchestration is handled by **[[00-lexique/ray|Ray]]** (Ray Serve LLM, GA since 2.59 with KV-cache-aware routing)[^8].
 
 ### The Magic of Tensor Parallelism
 On the Mac Cluster (Scenario C), we saw *Pipeline Parallelism* (layer-by-layer splitting), which increases latency.
@@ -38,7 +38,7 @@ In an HGX node, the incredible speed of NVLink enables **[[00-lexique/tensor-par
 *   **Result:** The 8 cards act as one giant GPU. Generation latency collapses, and [[00-lexique/tokens-per-second|tokens/s]] explode, even on a massive model.
 
 ### Extreme Formats (FP4)
-If you deploy NVIDIA Blackwell (B200) chips, the software will natively use **FP4** or **FP8** quantization. This lets gigantic models fit in a single 8-GPU node, avoiding having to cross the RoCE network for every computation[^3].
+If you deploy NVIDIA Blackwell (B200) chips, the software will natively use **FP4** or **FP8** quantization. This lets gigantic models fit in a single 8-GPU node — DeepSeek V4.1 Flash or GLM-5.3 (~760 GB in FP8) in 8× H200, Kimi K3 (~1.5 TB in MXFP4) in 8× B300 or 16× H200[^9] — avoiding having to cross the RoCE network for every computation[^3].
 
 ---
 
@@ -81,15 +81,15 @@ memory.used,memory.free,temperature.gpu,power.draw \
 
 **vLLM — native Prometheus metrics:**
 
-vLLM exposes a `/metrics` endpoint compatible with Prometheus. Key metrics:
+vLLM exposes a `/metrics` endpoint compatible with Prometheus. Key metrics (V1 engine names, re-read in the documentation on 2026-10-10; deprecated metrics are hidden one version later)[^10]:
 
 | vLLM metric | Description |
 | :-- | :-- |
 | `vllm:prompt_tokens_total` | Prompt tokens processed |
 | `vllm:generation_tokens_total` | Tokens generated |
 | `vllm:request_success_total` | Completed requests |
-| `vllm:avg_generation_throughput_toks_per_s` | Average generation throughput |
-| `vllm:gpu_cache_usage_perc` | KV Cache occupancy rate |
+| `rate(vllm:generation_tokens_total[1m])` | Generation throughput (the V0 engine's `avg_generation_throughput` gauge no longer exists) |
+| `vllm:kv_cache_usage_perc` | KV Cache occupancy rate (formerly `gpu_cache_usage_perc`) |
 | `vllm:num_requests_running` | Requests in progress (continuous batching) |
 
 ```bash
@@ -188,3 +188,9 @@ rsync -az /backup/ nas-secondary:/ia-on-prem-backup/
 [^2]: NVIDIA, *RDMA over Converged Ethernet - RoCE | Cumulus Linux* (Critical importance of PFC/ECN to avoid LLM performance collapse), 2026. [https://docs.nvidia.com/networking-ethernet-software/cumulus-linux/Layer-1-and-Switch-Ports/Quality-of-Service/RDMA-over-Converged-Ethernet-RoCE/](https://docs.nvidia.com/networking-ethernet-software/cumulus-linux/Layer-1-and-Switch-Ports/Quality-of-Service/RDMA-over-Converged-Ethernet-RoCE/)
 [^3]: NVIDIA Technical Blog, *Optimizing Inference for Long Context and Large Batch Sizes with NVFP4 KV Cache* (Blackwell, native TensorRT-LLM), December 2025. [https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/](https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/)
 [^4]: NVIDIA, *GPUDirect Storage Overview* (direct NVMe→VRAM transfer, no CPU copy, Magnum IO). [https://developer.nvidia.com/gpudirect-storage](https://developer.nvidia.com/gpudirect-storage)
+[^5]: NVIDIA Newsroom, *NVIDIA Announces Financial Results for Second Quarter Fiscal 2027* (Blackwell Ultra B300 / GB300 shipping; Vera Rubin "in full production", allocated first to the large clouds), 26 August 2026. [https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027) · AMD, *AAI 2026: AMD Delivers Full-Stack Compute for the Agentic AI Era* (MI350X available, Helios / MI455X rack "in production", first racks 2H 2026), 23 July 2026. [https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era](https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era)
+[^6]: AMD, *AAI 2026* — note 8 (8× RTX PRO 6000 server at an OEM list price of $265,928 as of 2026-07-16; MI350P server estimated at $327,238), 23 July 2026. [https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era](https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era) · NVIDIA HGX H200 and DGX B300: no public list price, third-party estimates of $300–420k (H200) and ≈ US$400k (B300), on quote.
+[^7]: PyPI, *tensorrt-llm* (latest stable release 1.2.1 of 2026-04-20; 1.3.0 in release candidates rc22 → rc29 up to 2026-09-29), captured 2026-10-09. [https://pypi.org/project/tensorrt-llm/](https://pypi.org/project/tensorrt-llm/) · NVIDIA, *TensorRT-LLM Release Notes* (TensorRT backend removed in 1.2, PyTorch by default, `trtllm-serve`). [https://nvidia.github.io/TensorRT-LLM/release-notes.html](https://nvidia.github.io/TensorRT-LLM/release-notes.html) · vLLM Project, *Release v0.29.0*, 9 September 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.29.0](https://github.com/vllm-project/vllm/releases/tag/v0.29.0)
+[^8]: Ray Project, *Release ray-2.59.0* (Ray Serve LLM GA: KV-aware routing, prefill/decode disaggregation, vLLM pinned at 0.27.0), 2 October 2026. [https://github.com/ray-project/ray/releases/tag/ray-2.59.0](https://github.com/ray-project/ray/releases/tag/ray-2.59.0)
+[^9]: DeepSeek AI, *DeepSeek-V4.1-Flash* (≈ 763 GB in FP8, MIT), September 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) · Moonshot AI, *Kimi K3* (native MXFP4 weights, ≈ 1.4–1.56 TB), July 2026. [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3)
+[^10]: vLLM, *Metrics* (list of V1 engine Prometheus metrics: `vllm:prompt_tokens`, `vllm:generation_tokens`, `vllm:request_success`, `vllm:kv_cache_usage_perc`, `vllm:num_requests_running`, `vllm:time_to_first_token_seconds`…; deprecation policy "hidden in X.Y+1, removed in X.Y+2"), consulted 2026-10-10. [https://docs.vllm.ai/en/latest/usage/metrics/](https://docs.vllm.ai/en/latest/usage/metrics/)

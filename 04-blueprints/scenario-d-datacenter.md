@@ -3,14 +3,14 @@ title: "🏭 Scénario D : Datacenter (RoCE & Multi-GPU)"
 description: Le blueprint de l'Enterprise IA. Nœuds HGX 8-GPU, réseau RoCE/InfiniBand et Tensor Parallelism pour une production à très haute concurrence.
 sidebar:
   order: 4
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
-Votre client est un grand compte, un hébergeur cloud souverain ou une institution publique. Le cahier des charges est implacable : il faut héberger un modèle de la classe 70B ou un géant de 400B+, et surtout, pouvoir **servir des dizaines, voire des centaines d'utilisateurs en même temps** avec un temps de réponse instantané.
+Votre client est un grand compte, un hébergeur cloud souverain ou une institution publique. Le cahier des charges est implacable : il faut héberger un modèle de la classe 70B ou un géant MoE de 300B à plus de 1T de paramètres, et surtout, pouvoir **servir des dizaines, voire des centaines d'utilisateurs en même temps** avec un temps de réponse instantané.
 
 Le [[04-blueprints/scenario-b-sme-appliance|Scénario B]] (l'Appliance) s'étoufferait sous la charge concurrente, et le [[04-blueprints/scenario-c-desktop-cluster|Scénario C]] (Cluster Exo) a un TTFT beaucoup trop lent. Pour la production massive, il n'y a pas de secret : il faut basculer sur l'architecture standard des Datacenters IA.
 
@@ -20,17 +20,17 @@ Le [[04-blueprints/scenario-b-sme-appliance|Scénario B]] (l'Appliance) s'étouf
 
 Ici, l'unité de base n'est plus la carte graphique, mais le **Nœud Serveur** (Node) et le **Réseau Fabric**.
 
-*   **Le Nœud (Scale-Up) :** Un serveur format rack (ex: architecture NVIDIA HGX) contenant **8 GPU** de classe Datacenter (NVIDIA H200 ou B200). Contrairement à un PC classique, ces 8 puces ne communiquent pas via PCIe, mais via un **[[00-lexique/nvlink|NVLink]]** et un **[[00-lexique/nvswitch|NVSwitch]]**. Ce bus permet aux puces de s'échanger des données à **1 800 Go/s** (sur Blackwell)[^1].
+*   **Le Nœud (Scale-Up) :** Un serveur format rack (ex: architecture NVIDIA HGX) contenant **8 GPU** de classe Datacenter (NVIDIA H200, B200 ou B300 ; AMD Instinct MI350X/MI455X)[^5]. Contrairement à un PC classique, ces 8 puces ne communiquent pas via PCIe, mais via un **[[00-lexique/nvlink|NVLink]]** et un **[[00-lexique/nvswitch|NVSwitch]]**. Ce bus permet aux puces de s'échanger des données à **1 800 Go/s** (sur Blackwell)[^1].
 *   **Le Réseau (Scale-Out) :** Pour relier plusieurs nœuds entre eux, on utilise des cartes réseau à très haut débit (400 Gbps ou 800 Gbps) compatibles **[[00-lexique/rdma|RDMA]]**. Le standard est **InfiniBand** ou **[[00-lexique/roce|RoCEv2]]** (RDMA over Converged Ethernet)[^2].
 *   **Le Stockage :** Un stockage flash NVMe distribué accessible en *GPUDirect Storage*, pour charger les To de poids du modèle en quelques secondes au démarrage.
 
-**Budget estimé (2026) :** De 300 000 € à plus d'1 million d'euros par nœud, hors coûts d'infrastructure réseau, d'énergie et de refroidissement.
+**Budget estimé (T4 2026) :** de 250 000 € (serveur 8× RTX PRO 6000, prix public OEM 266 k$) à plus d'1 million d'euros par nœud (GB300 sur devis)[^6], hors coûts d'infrastructure réseau, d'énergie et de refroidissement.
 
 ---
 
 ## ⚙️ La Stack Logicielle et le Mécanisme
 
-Cette débauche de matériel exige des moteurs d'inférence capables de l'exploiter à la milliseconde près : **[[00-lexique/pagedattention|vLLM]]** ou le SDK officiel **[[00-lexique/tensorrt-llm|TensorRT-LLM]]** derrière un serveur Triton. L'orchestration multi-nœuds est gérée par **[[00-lexique/ray|Ray]]**.
+Cette débauche de matériel exige des moteurs d'inférence capables de l'exploiter à la milliseconde près : **[[00-lexique/vllm|vLLM]]** (≥ 0.29, `vllm serve`) ou le SDK officiel **[[00-lexique/tensorrt-llm|TensorRT-LLM]]** (`trtllm-serve` ; attention, la 1.3 est restée en release candidate depuis juillet 2026 : figer la 1.2.1 en production)[^7]. L'orchestration multi-nœuds est gérée par **[[00-lexique/ray|Ray]]** (Ray Serve LLM, GA depuis la 2.59 avec routage sensible au KV cache)[^8].
 
 ### La Magie du Tensor Parallelism
 Sur le Cluster Mac (Scénario C), nous avions vu le *Pipeline Parallelism* (découpage couche par couche), qui augmente la latence. 
@@ -38,7 +38,7 @@ Dans un nœud HGX, l'incroyable vitesse du NVLink permet d'utiliser le **[[00-le
 *   **Résultat :** Les 8 cartes agissent comme un seul GPU géant. La latence de génération s'effondre, et les [[00-lexique/tokens-per-second|tokens/s]] explosent, même sur un modèle massif.
 
 ### Formats Extrêmes (FP4)
-Si vous déployez des puces NVIDIA Blackwell (B200), le logiciel utilisera nativement la quantification **FP4** ou **FP8**. Cela permet de faire tenir des modèles gigantesques dans un seul nœud de 8 GPU, évitant ainsi de devoir traverser le réseau RoCE pour chaque calcul[^3].
+Si vous déployez des puces NVIDIA Blackwell (B200), le logiciel utilisera nativement la quantification **FP4** ou **FP8**. Cela permet de faire tenir des modèles gigantesques dans un seul nœud de 8 GPU — DeepSeek V4.1 Flash ou GLM-5.3 (~760 Go en FP8) dans 8× H200, Kimi K3 (~1,5 To en MXFP4) dans 8× B300 ou 16× H200[^9] — évitant ainsi de devoir traverser le réseau RoCE pour chaque calcul[^3].
 
 ---
 
@@ -81,15 +81,15 @@ memory.used,memory.free,temperature.gpu,power.draw \
 
 **vLLM — métriques Prometheus natives :**
 
-vLLM expose un endpoint `/metrics` compatible Prometheus. Métriques clés :
+vLLM expose un endpoint `/metrics` compatible Prometheus. Métriques clés (noms du moteur V1, relus dans la documentation le 2026-10-10 ; les métriques dépréciées sont masquées une version plus tard)[^10] :
 
 | Métrique vLLM | Description |
 | :-- | :-- |
 | `vllm:prompt_tokens_total` | Tokens de prompt traités |
 | `vllm:generation_tokens_total` | Tokens générés |
 | `vllm:request_success_total` | Requêtes terminées |
-| `vllm:avg_generation_throughput_toks_per_s` | Débit moyen en génération |
-| `vllm:gpu_cache_usage_perc` | Taux d'occupation du KV Cache |
+| `rate(vllm:generation_tokens_total[1m])` | Débit de génération (le gauge `avg_generation_throughput` du moteur V0 n'existe plus) |
+| `vllm:kv_cache_usage_perc` | Taux d'occupation du KV Cache (ex-`gpu_cache_usage_perc`) |
 | `vllm:num_requests_running` | Requêtes en cours (continuous batching) |
 
 ```bash
@@ -188,3 +188,9 @@ rsync -az /backup/ nas-secondary:/ia-on-prem-backup/
 [^2]: NVIDIA, *RDMA over Converged Ethernet - RoCE | Cumulus Linux* (Importance critique du PFC/ECN pour éviter l'effondrement des performances LLM), 2026. [https://docs.nvidia.com/networking-ethernet-software/cumulus-linux/Layer-1-and-Switch-Ports/Quality-of-Service/RDMA-over-Converged-Ethernet-RoCE/](https://docs.nvidia.com/networking-ethernet-software/cumulus-linux/Layer-1-and-Switch-Ports/Quality-of-Service/RDMA-over-Converged-Ethernet-RoCE/)
 [^3]: NVIDIA Technical Blog, *Optimizing Inference for Long Context and Large Batch Sizes with NVFP4 KV Cache* (Blackwell, TensorRT-LLM natif), Décembre 2025. [https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/](https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/)
 [^4]: NVIDIA, *GPUDirect Storage Overview* (transfert direct NVMe→VRAM, sans copie CPU, Magnum IO). [https://developer.nvidia.com/gpudirect-storage](https://developer.nvidia.com/gpudirect-storage)
+[^5]: NVIDIA Newsroom, *NVIDIA Announces Financial Results for Second Quarter Fiscal 2027* (Blackwell Ultra B300 / GB300 expédiés ; Vera Rubin « en pleine production », alloué d'abord aux grands clouds), 26 août 2026. [https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027) · AMD, *AAI 2026: AMD Delivers Full-Stack Compute for the Agentic AI Era* (MI350X disponible, rack Helios / MI455X « en production », premiers racks 2H 2026), 23 juillet 2026. [https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era](https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era)
+[^6]: AMD, *AAI 2026* — note 8 (serveur 8× RTX PRO 6000 au prix public OEM de 265 928 $ au 2026-07-16 ; serveur MI350P estimé 327 238 $), 23 juillet 2026. [https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era](https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era) · NVIDIA HGX H200 et DGX B300 : pas de prix catalogue public, estimations tierces 300–420 k$ (H200) et ≈ 400 k$ US (B300), sur devis.
+[^7]: PyPI, *tensorrt-llm* (dernière version stable 1.2.1 du 2026-04-20 ; 1.3.0 en release candidates rc22 → rc29 jusqu'au 2026-09-29), relevé le 2026-10-09. [https://pypi.org/project/tensorrt-llm/](https://pypi.org/project/tensorrt-llm/) · NVIDIA, *TensorRT-LLM Release Notes* (backend TensorRT retiré en 1.2, PyTorch par défaut, `trtllm-serve`). [https://nvidia.github.io/TensorRT-LLM/release-notes.html](https://nvidia.github.io/TensorRT-LLM/release-notes.html) · vLLM Project, *Release v0.29.0*, 9 septembre 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.29.0](https://github.com/vllm-project/vllm/releases/tag/v0.29.0)
+[^8]: Ray Project, *Release ray-2.59.0* (Ray Serve LLM GA : routage KV-aware, désagrégation prefill/decode, vLLM figé en 0.27.0), 2 octobre 2026. [https://github.com/ray-project/ray/releases/tag/ray-2.59.0](https://github.com/ray-project/ray/releases/tag/ray-2.59.0)
+[^9]: DeepSeek AI, *DeepSeek-V4.1-Flash* (≈ 763 Go en FP8, MIT), septembre 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) · Moonshot AI, *Kimi K3* (poids MXFP4 natifs, ≈ 1,4–1,56 To), juillet 2026. [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3)
+[^10]: vLLM, *Metrics* (liste des métriques Prometheus du moteur V1 : `vllm:prompt_tokens`, `vllm:generation_tokens`, `vllm:request_success`, `vllm:kv_cache_usage_perc`, `vllm:num_requests_running`, `vllm:time_to_first_token_seconds`… ; politique de dépréciation « masquée en X.Y+1, retirée en X.Y+2 »), consulté le 2026-10-10. [https://docs.vllm.ai/en/latest/usage/metrics/](https://docs.vllm.ai/en/latest/usage/metrics/)

@@ -31,7 +31,7 @@ The challenge: many tools present a local interface while silently routing reque
 | Multi-channel agent with hosted memory and a local-only mode | Accept memory living off-machine, or operate your own CortexDB | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] | ⚠️ configurable |
 
 > [!tip] Quick read
-> If you want to start without accidental cloud use, begin with Jan.ai. For a team interface, look at Open WebUI. For RAG + workflows, compare AnythingLLM and Khoj. OpenHuman has dropped its local [[00-lexique/memory-tree|Memory Tree]] in favor of hosted memory (CortexDB); it remains interesting for its local-only Privacy mode enforced in code, but its memory stays on-site only if you operate your own CortexDB.
+> If you want to start without accidental cloud use, begin with Jan.ai (Apple Silicon, Windows, or Linux; Intel Macs no longer load local models since v0.8.5)[^4]. For a team interface, look at Open WebUI — accepting its license with a branding clause beyond 50 users and a stream of security fixes to follow closely[^5]. For RAG + workflows, compare AnythingLLM and Khoj. OpenHuman has dropped its local [[00-lexique/memory-tree|Memory Tree]] in favor of hosted memory (CortexDB); it remains interesting for its local-only Privacy mode enforced in code, but its memory stays on-site only if you operate your own CortexDB.
 
 ---
 
@@ -73,3 +73,5 @@ Two tools that appeared in 2026 do not (yet) have a solution sheet: **LM Studio 
 [^1]: khoj-ai, *khoj* — Releases (latest version 2.0.0-beta.28 of 2026-03-26) and commit history (last commit on 2026-08-02), accessed 2026-10-10. [https://github.com/khoj-ai/khoj/releases](https://github.com/khoj-ai/khoj/releases) · [https://github.com/khoj-ai/khoj/commits/master](https://github.com/khoj-ai/khoj/commits/master)
 [^2]: LM Studio, *Introducing LM Studio Bionic* (agent for open models, local models via the LM Studio runtime, cloud models with account and billing, Zero Data Retention commitment), 2026-07-16. [https://lmstudio.ai/blog/introducing-lm-studio-bionic](https://lmstudio.ai/blog/introducing-lm-studio-bionic)
 [^3]: khoj-ai, *pipali* (GitHub repository: Apache-2.0, release 0.10.0 of 2026-09-14, cloud models via the Pipali platform, MCP integrations), accessed 2026-10-10. [https://github.com/khoj-ai/pipali](https://github.com/khoj-ai/pipali)
+[^4]: janhq, *Jan v0.8.5* — release notes (Intel Macs without local models), 2026-10-08. [https://github.com/janhq/jan/releases/tag/v0.8.5](https://github.com/janhq/jan/releases/tag/v0.8.5)
+[^5]: Open WebUI — *License* (branding clause beyond 50 users over 30 days, not OSI-approved) and *Security advisories* (88 advisories between 2026-06-11 and 2026-09-28), accessed 2026-10-10. [https://docs.openwebui.com/license/](https://docs.openwebui.com/license/) · [https://github.com/open-webui/open-webui/security/advisories](https://github.com/open-webui/open-webui/security/advisories)

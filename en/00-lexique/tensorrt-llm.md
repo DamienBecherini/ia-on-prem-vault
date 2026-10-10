@@ -30,7 +30,7 @@ Essential to amortize professional accelerators in the datacenter. The reference
 
 ## ⚠️ Common pitfalls
 - Confusing the stable version (1.2.x) with the 1.3.0rcN *release candidates*: as of Q4 2026, the latest stable is 1.2.1 (April 2026); the RCs bring new models and kernels but change API from one RC to the next (e.g. CLI > YAML precedence since rc18). Pin the version in production[^1][^2].
-- Not suited to workstations or Macs.
+- Not suited to Macs; on workstations, support is limited to DGX Spark (single-node beta since 1.2) and to RTX PRO 6000 / RTX 50 with known issues in Q3 2026[^1][^3].
 
 ## 📚 Go deeper
 1. [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Inference Engines]] *(llama.cpp / vLLM / TensorRT-LLM comparison)*

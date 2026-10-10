@@ -28,7 +28,7 @@ Toutes les applications IA locales ne font pas la même chose. Avant de choisir 
 - Déclencheur : l'humain pose une question
 - Autonomie : basse — il répond, il ne *fait* pas
 
-**Exemples :** Open WebUI, Jan.ai, Khoj, AnythingLLM, OpenHuman
+**Exemples :** Open WebUI, Jan.ai, Khoj, AnythingLLM (OpenHuman, devenu un harness d'agents, relève désormais de l'hybride)
 
 **Analogie :** un collègue très bien informé sur vos dossiers, disponible 24h/24, mais qui attend qu'on lui parle.
 
@@ -59,7 +59,7 @@ Toutes les applications IA locales ne font pas la même chose. Avant de choisir 
 - Nécessite une gestion fine des permissions et des niveaux d'autonomie
 - Complexité plus élevée, risque de "side effects" non voulus si mal configuré
 
-**Exemples :** Khoj (mode agent activé), Open WebUI avec tools, OpenHands en mode interactif
+**Exemples :** Open WebUI avec tools et sous-agents (v0.11, juillet 2026)[^4], OpenHuman, Khoj (mode agent activé), conversations interactives dans OpenHands Agent Canvas
 
 **Avertissement :** la complexité de l'hybride est réelle. Une implémentation mal pensée peut donner à l'IA la capacité de modifier des fichiers, envoyer des emails ou passer des commandes sans garde-fous suffisants. Préférez une architecture explicite (assistant ou custodien) pour commencer.
 
@@ -141,16 +141,16 @@ Ce guide couvre la théorie des architectures. Pour passer à la pratique, voici
 | :-- | :-- |
 | **Open WebUI** | [Documentation officielle](https://docs.openwebui.com/) — installation Docker en 5 minutes, connexion à Ollama |
 | **AnythingLLM** | [GitHub AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) — RAG local complet, interface multi-modèles |
-| **Khoj** | [Khoj self-hosted guide](https://docs.khoj.dev/clients/desktop/) — mémoire personnelle + accès fichiers locaux |
+| **Khoj** | [Khoj self-hosting setup](https://docs.khoj.dev/get-started/setup) — mémoire personnelle + accès fichiers locaux (maintenance ralentie depuis mars 2026)[^5] |
 
 ### Piste B — Agent Custodien
 
 | Outil | Point de départ |
 | :-- | :-- |
 | **Aider** | [Aider quickstart](https://aider.chat/docs/usage/tutorials.html) — agent de code local, compatible Ollama ; **projet sans release depuis août 2025 ni commit depuis mai 2026**, à n'utiliser qu'en connaissance de cause[^1] |
-| **OpenHands** | [OpenHands Docker setup](https://github.com/OpenHands/OpenHands) — agent d'exécution de tâches autonomes |
+| **OpenHands Agent Canvas** | [Agent Canvas (README, Docker)](https://github.com/OpenHands/OpenHands) — centre de contrôle self-hosted pour conversations et automatisations d'agents de code (OpenHands, ou Claude Code / Codex / Gemini CLI via ACP) ; le SDK et l'agent vivent dans `software-agent-sdk`[^1] |
 | **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — routage unifié vers un modèle local ; **exigez une version ≥ 1.100.4 (ou le dernier correctif de sa ligne)** : trois failles LiteLLM figurent au catalogue KEV de la CISA en 2026 et une escalade critique (CVSS 9.9) a été corrigée le 2026-09-30[^2] |
-| **SmolAgents** | [SmolAgents cookbook](https://huggingface.co/docs/smolagents/tutorials/building_good_agents) — framework agent minimaliste, HuggingFace |
+| **SmolAgents** | [SmolAgents cookbook](https://huggingface.co/docs/smolagents/tutorials/building_good_agents) — framework agent minimaliste, HuggingFace (activité réduite depuis mai 2026)[^6] |
 | **LangGraph** | [LangGraph "local agent" tutorial](https://langchain-ai.github.io/langgraph/tutorials/introduction/) — orchestration d'agents avec graphes d'état |
 
 > [!note] Pas de code inline dans ce vault
@@ -170,3 +170,6 @@ Ce guide couvre la théorie des architectures. Pour passer à la pratique, voici
 [^1]: Aider-AI, *aider* (dépôt GitHub : dernier commit le 2026-05-22, dernière release v0.86.0 du 2025-08-09), consulté le 2026-10-10 ; OpenHands, *Introducing Agent Canvas* (2026-06-16) et *Use any coding agent in OpenHands with ACP* (2026-06-18). [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider) · [https://www.openhands.dev/blog/introducing-agent-canvas](https://www.openhands.dev/blog/introducing-agent-canvas) · [https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp](https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp)
 [^2]: BerriAI, *GHSA-7hp6-4w63-5g45* (escalade `internal_user` → `proxy_admin` → exécution sur l'hôte, CVSS 9.9, corrigée en 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30 ; CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822), catalogue daté 2026-10-08. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45) · [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)
 [^3]: Model Context Protocol, *Specification 2026-07-28 — Key Changes* (suppression de `Mcp-Session-Id` et du handshake `initialize`, `server/discover`, dépréciation de Roots, Sampling, Logging et de l'enregistrement dynamique OAuth, fenêtre de dépréciation de douze mois minimum). [https://modelcontextprotocol.io/specification/2026-07-28/changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog)
+[^4]: Open WebUI, *Release v0.11.0* (sous-agents, synchronisation des groupes LDAP), 2026-07-27. [https://github.com/open-webui/open-webui/releases/tag/v0.11.0](https://github.com/open-webui/open-webui/releases/tag/v0.11.0)
+[^5]: Khoj, *Self-Host* (installation Docker / pip), lu le 2026-10-10 ; khoj-ai, *khoj* — Releases (dernière version 2.0.0-beta.28 du 2026-03-26). [https://docs.khoj.dev/get-started/setup](https://docs.khoj.dev/get-started/setup) · [https://github.com/khoj-ai/khoj/releases](https://github.com/khoj-ai/khoj/releases)
+[^6]: Hugging Face, *smolagents* — Releases (dernière version v1.26.0 du 2026-05-29, dépôt non archivé), consulté le 2026-10-10. [https://github.com/huggingface/smolagents/releases](https://github.com/huggingface/smolagents/releases)

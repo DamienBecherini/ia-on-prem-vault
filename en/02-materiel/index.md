@@ -3,7 +3,7 @@ title: "🖥️ Index — Hardware"
 description: Entry point for the hardware chapter — workstations, GPU rack servers, and AI networking fabric for on-premise inference.
 sidebar:
   order: 0
-last_modified: "2026-06-10"
+last_modified: "2026-10-10"
 last_verified: "2026-06-10"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -23,14 +23,14 @@ Hardware dictates what you can load in [[00-lexique/vram|VRAM]], what memory thr
 | :-- | :-- |
 | [[04-blueprints/scenario-a-dev-lab|A — Dev Lab]] | [[02-materiel/apu-and-unified-memory|APU & unified memory]], [[02-materiel/stations-multi-gpu|Multi-GPU workstations]] (offloading) |
 | [[04-blueprints/scenario-b-sme-appliance|B — SMB Appliance]] | [[02-materiel/apu-and-unified-memory|APU & unified memory]], [[02-materiel/gpu-rack-servers|GPU rack servers]] (1–2 GPU) |
-| [[04-blueprints/scenario-c-desktop-cluster|C — Office cluster]] | [[02-materiel/stations-multi-gpu|Multi-GPU workstations]], [[02-materiel/network-roce-infiniband-thunderbolt|AI networking]] (Thunderbolt) |
+| [[04-blueprints/scenario-c-desktop-cluster|C — Office cluster]] | [[02-materiel/stations-multi-gpu|Multi-GPU workstations]], [[02-materiel/network-roce-infiniband-thunderbolt|AI networking]] (Thunderbolt 5 + RDMA) |
 | [[04-blueprints/scenario-d-datacenter|D — Datacenter]] | [[02-materiel/gpu-rack-servers|GPU rack servers]], [[02-materiel/network-roce-infiniband-thunderbolt|RoCE / InfiniBand]] |
 
 ---
 
 ## Chapter pages
 
-1. [[02-materiel/apu-and-unified-memory|🧠 APU & Unified Memory]] — Apple M-series, AMD Ryzen AI, DGX Spark
+1. [[02-materiel/apu-and-unified-memory|🧠 APU & Unified Memory]] — Apple M5, AMD Ryzen AI Max PRO 400, NVIDIA DGX Spark 64/128 GB
 2. [[02-materiel/stations-multi-gpu|🧩 Multi-GPU Workstations]] — PCIe workstations, consumer NVLink
 3. [[02-materiel/gpu-rack-servers|🏭 GPU rack servers]] — 1U/2U/4U, HGX, RTX vs datacenter choice
 4. [[02-materiel/network-roce-infiniband-thunderbolt|🌐 AI networking]] — RoCE, InfiniBand, Thunderbolt

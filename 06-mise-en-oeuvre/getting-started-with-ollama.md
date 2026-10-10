@@ -41,7 +41,7 @@ Vérification :
 
 ```bash
 ollama --version
-# ollama version is 0.x.x
+# ollama version is 0.40.x (0.40.2 au 2026-10-08)
 
 # Le service tourne ?
 curl http://localhost:11434/
@@ -69,8 +69,9 @@ ollama run llama3.2
 # Ou un modèle plus compact pour tester rapidement (~2,5 Go)
 ollama run phi4-mini
 
-# Ou un modèle coder
-ollama run qwen2.5-coder:14b
+# Ou un modèle coder (~18,6 Go)
+ollama run qwen3-coder:30b
+# qwen2.5-coder:14b (~9 Go) reste disponible mais est signalé comme ancien par Ollama ≥ 0.32
 ```
 
 La première exécution télécharge le modèle depuis [ollama.com/library](https://ollama.com/library) (tailles relevées sur le registre au 2026-10-09[^1]). Les suivantes utilisent le cache local.
@@ -89,7 +90,7 @@ ollama list
 # → https://ollama.com/library
 
 # Télécharger sans lancer
-ollama pull qwen2.5:72b
+ollama pull qwen3.6:35b   # ~22,6 Go
 
 # Supprimer un modèle du cache
 ollama rm llama3.2
@@ -256,7 +257,7 @@ Ordres de grandeur indicatifs (mesures communautaires sur llama.cpp, mi-2026, no
 
 ## Sources et Références
 
-[^1]: Ollama, *Library* et registre `registry.ollama.ai` (manifestes : `llama3.2` = 3B, 2,02 Go ; `qwen3.5:9b` ≈ 6,5 Go), consultés le 2026-10-09. [https://ollama.com/library](https://ollama.com/library) · [https://registry.ollama.ai](https://registry.ollama.ai)
+[^1]: Ollama, *Library* et registre `registry.ollama.ai` (manifestes : `llama3.2` = 3B, 2,02 Go ; `qwen3.5:9b` ≈ 6,5 Go ; `qwen3-coder:30b` ≈ 18,6 Go ; `qwen3.6:35b` ≈ 22,6 Go ; `qwen2.5-coder:14b` ≈ 9 Go), consultés le 2026-10-09. [https://ollama.com/library](https://ollama.com/library) · [https://registry.ollama.ai](https://registry.ollama.ai)
 [^2]: Ollama, *Troubleshooting* (emplacement des logs : `journalctl -u ollama`, `~/.ollama/logs/server.log`), consulté le 2026-10-09 · dépôt `ollama/ollama`, `cmd/cmd.go` (liste des sous-commandes, sans `logs`). [https://docs.ollama.com/troubleshooting](https://docs.ollama.com/troubleshooting) · [https://github.com/ollama/ollama](https://github.com/ollama/ollama)
 [^3]: Ollama, *Release v0.40.0* (« Models run on MLX on Apple Silicon by default »), 25 septembre 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
 [^4]: Ollama, *Release v0.32.0* (`ollama` sans argument lance un agent, entrée par défaut `glm-5.2:cloud` ; avertissement de dépréciation des anciens modèles agent), 11 juillet 2026 · Ollama, *Release v0.34.2* (« first-run setup … with options to sign in or continue locally »), 15 septembre 2026. [https://github.com/ollama/ollama/releases/tag/v0.32.0](https://github.com/ollama/ollama/releases/tag/v0.32.0) · [https://github.com/ollama/ollama/releases/tag/v0.34.2](https://github.com/ollama/ollama/releases/tag/v0.34.2)
