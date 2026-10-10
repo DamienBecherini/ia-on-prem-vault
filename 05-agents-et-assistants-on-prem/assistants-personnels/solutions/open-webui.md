@@ -37,7 +37,7 @@ Dans ce vault, c'est la solution de référence pour le scénario **multi-utilis
 - **Pas un moteur d'inférence** : il faut dimensionner Ollama/vLLM séparément.
 - **Surface d'administration** : comptes, plugins, CORS, secrets et exposition réseau doivent être durcis.
 - **Provider cloud possible** : s'il est connecté à OpenAI/Anthropic, les données suivent le provider choisi.
-- **Télémétrie/analytics à vérifier** : les variables `SCARF_NO_ANALYTICS`, `DO_NOT_TRACK`, `ANONYMIZED_TELEMETRY` doivent être fixées dans un contexte strict[^3].
+- **Télémétrie/analytics à vérifier** : l'image Docker officielle fixe par défaut `SCARF_NO_ANALYTICS=true`, `DO_NOT_TRACK=true` et `ANONYMIZED_TELEMETRY=false` ; en installation pip ou image reconstruite, fixez-les explicitement et activez `OFFLINE_MODE=true` dans un contexte strict[^3][^7].
 
 ## 🔒 Souveraineté et confidentialité
 
@@ -45,7 +45,7 @@ Dans ce vault, c'est la solution de référence pour le scénario **multi-utilis
 - **Modèle :** local si `OLLAMA_BASE_URL` / vLLM local ; cloud si provider externe configuré.
 - **Mémoire :** historique et RAG dans l'instance.
 - **Télémétrie :** désactivation recommandée via variables d'environnement[^3].
-- **Mode 100% offline :** oui si images, modèles et dépendances sont préchargés.
+- **Mode 100% offline :** oui si images, modèles et dépendances sont préchargés ; `OFFLINE_MODE=true` et `HF_HUB_OFFLINE=1` coupent les téléchargements et vérifications réseau[^3].
 - **Verdict :** ⚠️ configurable — excellent on-prem si durci, mais multi-provider par nature.
 
 Voir la grille complète : [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté & Confidentialité]].
@@ -74,7 +74,8 @@ Projet très utilisé et activement maintenu (environ 154 000 étoiles GitHub, v
 
 [^1]: Open WebUI GitHub — plateforme self-hosted offline, support Ollama et images Docker/Kubernetes. [https://github.com/open-webui/open-webui](https://github.com/open-webui/open-webui)
 [^2]: Open WebUI Docs — home, providers et fonctionnalités. [https://docs.openwebui.com/](https://docs.openwebui.com/)
-[^3]: Open WebUI Configuration — `OLLAMA_BASE_URL`, télémétrie, secrets, OpenTelemetry. [https://docs.openwebui.com/getting-started/advanced-topics/](https://docs.openwebui.com/getting-started/advanced-topics/)
+[^3]: Open WebUI — *Environment Variable Configuration* : `OLLAMA_BASE_URL`, `OFFLINE_MODE`, `HF_HUB_OFFLINE`, `ENABLE_OTEL*`, `OTEL_EXPORTER_OTLP_ENDPOINT`, lu le 2026-10-09. [https://docs.openwebui.com/reference/env-configuration/](https://docs.openwebui.com/reference/env-configuration/)
 [^4]: Open WebUI — *Security advisories* (88 avis publiés entre le 2026-06-11 et le 2026-09-28 : 30 high, 53 medium, 5 low ; décompte API GitHub du 2026-10-10) et guide *Hardening*. [https://github.com/open-webui/open-webui/security/advisories](https://github.com/open-webui/open-webui/security/advisories) · [https://docs.openwebui.com/getting-started/advanced-topics/hardening](https://docs.openwebui.com/getting-started/advanced-topics/hardening)
 [^5]: Open WebUI — *License* (BSD-3 jusqu'à la v0.6.5 ; clause de marque depuis la v0.6.6 du 2025-04-19, exemption « 50 utilisateurs ou moins sur 30 jours », non approuvée OSI), consultée le 2026-10-10. [https://docs.openwebui.com/license/](https://docs.openwebui.com/license/)
 [^6]: Open WebUI — *Releases* v0.10.0 (2026-06-29 : dossiers partagés, bases de connaissances externes, compaction du contexte) et v0.11.0 (2026-07-27 : sous-agents, synchronisation des groupes LDAP). [https://github.com/open-webui/open-webui/releases/tag/v0.10.0](https://github.com/open-webui/open-webui/releases/tag/v0.10.0) · [https://github.com/open-webui/open-webui/releases/tag/v0.11.0](https://github.com/open-webui/open-webui/releases/tag/v0.11.0)
+[^7]: Open WebUI — *Dockerfile* (`SCARF_NO_ANALYTICS=true`, `DO_NOT_TRACK=true`, `ANONYMIZED_TELEMETRY=false` par défaut), lu le 2026-10-09. [https://github.com/open-webui/open-webui/blob/main/Dockerfile](https://github.com/open-webui/open-webui/blob/main/Dockerfile)

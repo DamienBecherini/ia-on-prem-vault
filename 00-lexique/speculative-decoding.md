@@ -8,7 +8,7 @@ tags:
   - lexique
   - fondations
   - inférence
-last_modified: "2026-06-10"
+last_modified: "2026-10-10"
 last_verified: "2026-06-10"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -87,4 +87,4 @@ Il est particulièrement attractif sur les blueprints haute capacité ([[02-mate
 
 ## 📚 Sources
 
-[^1]: vLLM Project, *Speculative Decoding* — documentation officielle (`--speculative-model`, `--num-speculative-tokens`, variantes Eagle). [https://docs.vllm.ai/en/stable/features/spec_decode.html](https://docs.vllm.ai/en/stable/features/spec_decode.html)
+[^1]: vLLM Project, *Speculative Decoding* — documentation officielle (`--speculative-model`, `--num-speculative-tokens`, variantes Eagle). [https://docs.vllm.ai/en/stable/features/spec_decode/](https://docs.vllm.ai/en/stable/features/spec_decode/)

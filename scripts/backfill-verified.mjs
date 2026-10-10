@@ -6,8 +6,16 @@
  *   last_verified, verified_by, verified_hitl, verified_hitl_url
  *
  * Usage:
- *   node scripts/backfill-verified.mjs            # dry-run
- *   node scripts/backfill-verified.mjs --write    # apply
+ *   node scripts/backfill-verified.mjs                                       # dry-run, whole vault
+ *   node scripts/backfill-verified.mjs --write --paths=a.md,b.md             # stamp last_verified + verified_by on the listed pages
+ *   node scripts/backfill-verified.mjs --write --paths=... --hitl-approved   # also stamp verified_hitl* (after explicit human sign-off)
+ *   node scripts/backfill-verified.mjs --write --all --baseline              # deliberate whole-vault bulk stamp (a baseline, never a per-page audit)
+ *
+ * Guards (added 2026-10-10, after the 2026-06-05 bulk stamp turned out to be
+ * indistinguishable from real per-page verifications):
+ *   - --write without --paths requires --all --baseline
+ *   - verified_hitl / verified_hitl_url are only written with --hitl-approved;
+ *     the human sign-off is the PR merge, not this script
  */
 
 import { readFileSync, writeFileSync, readdirSync } from 'fs';
@@ -21,7 +29,20 @@ const EXCLUDED_DIRS = new Set([
   '.agents', '.cursor', '_templates', 'scripts',
 ]);
 
-const DRY_RUN = !process.argv.includes('--write');
+const ARGS = process.argv.slice(2);
+const DRY_RUN = !ARGS.includes('--write');
+const HITL_APPROVED = ARGS.includes('--hitl-approved');
+const ALL = ARGS.includes('--all');
+const BASELINE = ARGS.includes('--baseline');
+const PATHS_ARG = ARGS.find((a) => a.startsWith('--paths='));
+const ONLY_PATHS = PATHS_ARG
+  ? new Set(PATHS_ARG.slice('--paths='.length).split(',').map((p) => p.trim().split(String.fromCharCode(92)).join('/')).filter(Boolean))
+  : null;
+
+if (!DRY_RUN && !ONLY_PATHS && !(ALL && BASELINE)) {
+  console.error('Refusing to write the whole vault: pass --paths=<a.md,b.md> for audited pages, or --all --baseline for a deliberate bulk stamp.');
+  process.exit(2);
+}
 
 const { hitl, defaultAgent } = loadEditorialConfig();
 const today = new Date().toISOString().slice(0, 10);
@@ -29,8 +50,7 @@ const today = new Date().toISOString().slice(0, 10);
 const VERIFICATION_FIELDS = {
   last_verified: today,
   verified_by: defaultAgent,
-  verified_hitl: hitl.name,
-  verified_hitl_url: hitl.url,
+  ...(HITL_APPROVED ? { verified_hitl: hitl.name, verified_hitl_url: hitl.url } : {}),
 };
 
 function* walkMd(dir) {
@@ -95,6 +115,10 @@ for (const filePath of walkMd(VAULT_ROOT)) {
   }
 
   const rel = relative(VAULT_ROOT, filePath).replaceAll('\\', '/');
+  if (ONLY_PATHS && !ONLY_PATHS.has(rel)) {
+    skipped++;
+    continue;
+  }
   if (!DRY_RUN) {
     writeFileSync(filePath, newText, 'utf8');
   }

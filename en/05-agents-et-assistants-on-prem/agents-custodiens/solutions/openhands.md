@@ -23,7 +23,7 @@ Since June 2026, it is also an orchestration layer: via ACP, the same Agent Canv
 ## ✅ Strengths
 
 - Docker sandbox to isolate execution[^3].
-- Local/self-hosted model support via LM Studio, Ollama, vLLM, or SGLang[^4].
+- Local/self-hosted model support via LM Studio (proprietary, freemium), Ollama, vLLM, or SGLang; in Q2 2026 the docs recommend Qwen3.6-35B-A3B with at least 24 GB of VRAM when quantized and a 32k-token context[^4][^8].
 - More complete architecture than a CLI.
 - Can serve as a base for a more ambitious custodian agent.
 
@@ -39,7 +39,7 @@ Since June 2026, it is also an orchestration layer: via ACP, the same Agent Canv
 - **Data:** local if instance and model are local.
 - **Model:** local possible via Ollama/vLLM/LM Studio; cloud possible per provider.
 - **Memory:** depends on session and Docker workspace.
-- **Telemetry:** to audit per deployment.
+- **Telemetry:** to audit per deployment; in Agent Canvas, select only local/Docker/internal VM backends, never "OpenHands Cloud"[^5].
 - **100% offline mode:** possible but requires preloaded images/models.
 - **Verdict:** ⚠️ configurable — sovereign if self-host + local LLM, heavy to harden.
 
@@ -58,7 +58,7 @@ For simple Markdown maintenance, Aider remains lighter, but its development has 
 
 ## 📊 Project maturity
 
-Very active project, large community, many components. High maturity, but also high operational complexity.
+Very active project (MIT, about 90,000 stars and several releases per week in Q4 2026), large community, many components; Agent Canvas is still labeled "beta". High maturity, but also high operational complexity[^1].
 
 ## 🔗 See also
 
@@ -72,7 +72,8 @@ Very active project, large community, many components. High maturity, but also h
 [^1]: OpenHands GitHub README (repository presented as "Agent Canvas (beta)", MIT, v1.26.0 of 2026-10-08), accessed 2026-10-10. [https://github.com/OpenHands/OpenHands](https://github.com/OpenHands/OpenHands)
 [^2]: OpenHands Docs, *Local setup*. [https://docs.openhands.dev/openhands/usage/run-openhands/local-setup](https://docs.openhands.dev/openhands/usage/run-openhands/local-setup)
 [^3]: OpenHands Docs, *Docker Sandbox*. [https://docs.openhands.dev/sdk/guides/agent-server/docker-sandbox](https://docs.openhands.dev/sdk/guides/agent-server/docker-sandbox)
-[^4]: OpenHands Docs, *Local LLMs*. [https://docs.openhands.dev/openhands/usage/llms/local-llms](https://docs.openhands.dev/openhands/usage/llms/local-llms)
+[^4]: OpenHands Docs, *Local LLMs* (LM Studio, Ollama, vLLM, SGLang; Qwen3.6-35B-A3B recommended, ≥ 24 GB of VRAM when quantized, 32k context), updated 2026-05-21. [https://docs.openhands.dev/openhands/usage/llms/local-llms](https://docs.openhands.dev/openhands/usage/llms/local-llms)
 [^5]: OpenHands, *Introducing Agent Canvas* (scheduled and event-driven Slack/GitHub/Linear workflows, LLM profiles, local/Docker/VM/Kubernetes/OpenHands Cloud backends, MIT license), 2026-06-16. [https://www.openhands.dev/blog/introducing-agent-canvas](https://www.openhands.dev/blog/introducing-agent-canvas)
 [^6]: OpenHands, *Use any coding agent in OpenHands with ACP* (Agent Client Protocol: Claude Code, Codex, Gemini CLI, or any compatible agent; `ACPAgent` in the SDK), 2026-06-18. [https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp](https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp)
 [^7]: Aider-AI, *aider* (GitHub repository: last commit on 2026-05-22, latest release v0.86.0 of 2025-08-09), accessed 2026-10-10. [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider)
+[^8]: LM Studio, *Introducing LM Studio Bionic* (proprietary application, local models via the LM Studio runtime, paid "Secure Cloud" offering), 2026-07-16. [https://lmstudio.ai/blog/introducing-lm-studio-bionic](https://lmstudio.ai/blog/introducing-lm-studio-bionic)

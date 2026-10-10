@@ -68,9 +68,9 @@ Ray est très complexe à administrer. Il exige une infrastructure de classe ent
 | **Réseau recommandé** | Thunderbolt 5 + RDMA (macOS 26.2+) ; TB4 / Ethernet pour tester | RoCE v2 ou InfiniBand (200/400 Gb) |
 | **Matériel cible** | Mac Apple Silicon (Mac mini M5 Pro, Mac Studio M5 Max / Ultra) ; Linux CPU-only | Serveurs rack NVIDIA (H100/H200/B200/B300), AMD MI300X/MI355X via vLLM/SGLang |
 | **Parallelisme** | Pipeline + Tensor (choix automatique selon la topologie ; TP annoncé jusqu'à 1,8× sur 2 nœuds, 3,2× sur 4)[^1] | TP + PP + désagrégation Prefill/Decode |
-| **Monitoring** | Logs texte, pas d'observabilité native | Prometheus, Grafana, traces Ray |
+| **Monitoring** | Tableau de bord web et API sur `localhost:52415` ; pas de métriques Prometheus[^1] | Prometheus, Grafana (dashboards vLLM / SGLang), traces Ray |
 | **Tolérance aux pannes** | Faible (perte d'un nœud = crash) | Forte (Ray redémarre les workers) |
-| **Seuil de budget** | < 15 000 € (cluster de bureau) | > 100 000 € (serveur GPU + réseau) |
+| **Seuil de budget** | < 15 000–25 000 € (2–4 Mac Studio M5 selon la mémoire) | > 100 000 € (serveur GPU + réseau) |
 | **Complexité opérationnelle** | ⭐ (très simple) | ⭐⭐⭐⭐⭐ (expertise HPC requise) |
 
 ## 4. Démarrage rapide — Exo sur deux Mac
@@ -88,11 +88,12 @@ uv run exo
 # Vérifier que les nœuds se voient
 # Exo affiche dans les logs : "Discovered peer: <hostname>"
 
-# Envoyer une requête au cluster (API compatible OpenAI)
+# Envoyer une requête au cluster (API compatible OpenAI) — "model" = identifiant Hugging Face
+# tel qu'affiché dans le tableau de bord (http://localhost:52415) ; exemple du README Exo
 curl http://localhost:52415/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "llama-3.3-70b",
+    "model": "mlx-community/Llama-3.2-1B-Instruct-4bit",
     "messages": [{"role": "user", "content": "Combien de nœuds dans ce cluster ?"}]
   }'
 ```
@@ -112,7 +113,7 @@ Pour déployer des agents autonomes on-premise chez des clients :
 ---
 
 ## 📚 Sources et Références
-[^1]: Exo Labs, *GitHub - exo-explore/exo: Run frontier AI locally* (README : backend MLX uniquement, Linux CPU-only, RDMA Thunderbolt 5 + macOS 26.2, `rdma_ctl enable`, pipeline et tensor parallelism à choix automatique — TP « jusqu'à 1,8× sur 2 appareils, 3,2× sur 4 » —, installation `brew` / `uv sync --extra mlx`), relu le 2026-10-09. [https://github.com/exo-explore/exo](https://github.com/exo-explore/exo)
+[^1]: Exo Labs, *GitHub - exo-explore/exo: Run frontier AI locally* (README : API et tableau de bord sur `localhost:52415`, exemples d'API avec `mlx-community/Llama-3.2-1B-Instruct-4bit`, backend MLX uniquement, Linux CPU-only, RDMA Thunderbolt 5 + macOS 26.2, `rdma_ctl enable`, pipeline et tensor parallelism à choix automatique — TP « jusqu'à 1,8× sur 2 appareils, 3,2× sur 4 » —, installation `brew` / `uv sync --extra mlx`), relu le 2026-10-09. [https://github.com/exo-explore/exo](https://github.com/exo-explore/exo)
 [^2]: Exo Labs, *Running DeepSeek V3 671B on M4 Mac Mini Cluster — 12 days of EXO* (8 × Mac mini M4 Pro 64 Go, 4-bit, 5,37 tok/s, TTFT 2,91 s ; page non datée, série de décembre 2024), relu le 2026-10-09. [https://blog.exolabs.net/day-2](https://blog.exolabs.net/day-2)
 [^3]: Anyscale & vLLM Blog, *Streamlined multi-node serving with Ray symmetric-run* (Lancement vLLM multi-nœuds), Novembre 2025. [https://vllm.ai/blog/2025-11-22-ray-symmetric-run](https://vllm.ai/blog/2025-11-22-ray-symmetric-run)
 [^4]: Anyscale, *Ray Serve LLM — Wide-EP disaggregated serving with vLLM* (Désagrégation Prefill/Decode, MoE), 2025. [https://www.anyscale.com/blog/ray-serve-llm-anyscale-apis-wide-ep-disaggregated-serving-vllm](https://www.anyscale.com/blog/ray-serve-llm-anyscale-apis-wide-ep-disaggregated-serving-vllm)

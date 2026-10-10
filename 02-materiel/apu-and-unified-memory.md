@@ -11,7 +11,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] En bref
-> Apple Silicon, AMD Gorgon Halo et NVIDIA DGX Spark offrent tous 128 Go+ de mémoire unifiée sur une station de bureau. Apple domine la bande passante ; AMD offre Linux natif et Docker ; NVIDIA DGX Spark apporte le FP4 natif, CUDA et un port scale-out QSFP 200 Gbps. Le bon choix dépend de votre stack, pas seulement de la capacité.
+> Apple Silicon, AMD Gorgon Halo et NVIDIA DGX Spark offrent tous 128 Go+ de mémoire unifiée sur une station de bureau. Apple domine la bande passante ; AMD offre Linux natif et Docker ; NVIDIA DGX Spark apporte le FP4 natif, CUDA et un scale-out ConnectX-7 200 Gbps (jusqu'à 4 nœuds). Le bon choix dépend de votre stack, pas seulement de la capacité.
 
 Pour un déploiement souverain d'IA en entreprise, la **mémoire unifiée** est l'une des ruptures matérielles les plus importantes de la décennie.
 
@@ -22,9 +22,9 @@ En supprimant la copie RAM → VRAM via PCIe, les SoC **APU** (CPU + GPU + NPU s
 
 ---
 
-## ⚔️ Le Paysage Matériel : Apple Silicon vs AMD Gorgon Halo
+## ⚔️ Le Paysage Matériel : Apple Silicon, AMD Gorgon Halo et NVIDIA DGX Spark
 
-Deux écosystèmes dominent la mémoire unifiée hautes performances en 2026 :
+Trois écosystèmes se partagent la mémoire unifiée hautes performances au T4 2026 :
 
 ### 1. Apple Silicon (Mac Studio M5, août 2026)
 Apple intègre CPU, GPU et NPU sur un même package, avec des barrettes **LPDDR5X** soudées à proximité immédiate du silicium [^3][^4]. Le Mac Studio M5 (annoncé le 2026-08-25) remplace la génération M4 Max / M3 Ultra de 2025 [^17].
@@ -51,9 +51,9 @@ Annoncé en 2025 et disponible à partir de 2026, le **DGX Spark** (anciennement
 *   **Architecture :** SoC **Grace Blackwell** — CPU ARM 20 cœurs (Grace) + GPU Blackwell, co-développé avec MediaTek, gravé TSMC 3nm [^14].
 *   **Mémoire unifiée LPDDR5x :** **128 Go** sur le DGX Spark (≈ 6 950 $ au 2026-10-02, contre 3 999 $ au lancement d'octobre 2025) ; une déclinaison **64 Go** à 4 999 $ est annoncée chez les OEM (Acer, ASUS, Dell, Gigabyte, HP, MSI) à partir du 2026-10-23 [^14][^16]. La DGX Station monte à **748 Go** pour des modèles > 400B [^14].
 *   **Bande passante :** ~273 Go/s (LPDDR5x) — proche de l'AMD Gorgon Halo [^14].
-*   **Consommation :** ~**240 W** (DGX Spark) vs ~1 100 W pour une station 2× RTX 4090 [^14].
+*   **Consommation :** alimentation 240 W, TDP GB10 ~140 W (DGX Spark) — contre > 1 000 W pour une station bi-GPU discrète [^14].
 *   **FP4 natif (Blackwell) :** contrairement à l'architecture Ada Lovelace (RTX 4090 — FP4 émulé), Blackwell implémente le FP4 dans le silicium — sans surcoût logiciel [^15].
-*   **Scale-out QSFP 200 Gbps :** un port dédié permet d'interconnecter plusieurs boîtiers DGX Spark en fabric mesh, sans switch externe supplémentaire [^14].
+*   **Scale-out ConnectX-7 200 Gbps :** deux ports QSFP permettent de relier jusqu'à **quatre** DGX Spark (512 Go agrégés, modèles jusqu'à ~700B selon NVIDIA) sans switch externe [^14].
 *   **Logiciel NVIDIA Sync :** environnement CUDA complet pré-installé pour réduire la friction au démarrage.
 
 NVIDIA annonce aussi un **RTX Spark** (PC Windows sur base GB10, précommandes ouvertes), distinct du DGX Spark, dont les spécifications publiques restent incomplètes au T4 2026 [^14].
@@ -124,7 +124,7 @@ sudo sysctl iogpu.wired_limit_mb=122880
 
 ---
 
-## 📊 Arbitrage Économique et Performance (2026)
+## 📊 Arbitrage Économique et Performance
 
 *Comparaison de stations unifiées pour **Llama 3.1 70B Q4_K_M** (~40 Go de poids). Vitesses = **décodage** (génération), ordres de grandeur mesurés ou publiés — varient selon backend (MLX vs llama.cpp vs CUDA), contexte et build.*
 
@@ -141,7 +141,7 @@ sudo sysctl iogpu.wired_limit_mb=122880
 | **Tarif indicatif** | à partir de 2 499 $ US (base 48 Go) ; config 128 Go : prix CTO à relever [^17] | à partir de 5 499 $ US (96 Go) ; 256 / 512 Go : prix CTO à relever [^17] | **~3 900 €** (128 Go, rupture au 2026-10) · **~6 800–7 450 $** (192 Go, précommande, livraison nov. 2026) [^18][^20][^23] | **≈ 6 950 $** (128 Go, au 2026-10-02) · 4 999 $ (64 Go, OEM, dès le 2026-10-23) [^14][^16] |
 
 > [!note] Lecture des chiffres
-> Les débits Apple sont des **bornes théoriques memory-bound** (bande passante ÷ poids du modèle), pas des mesures : au 2026-10-09, aucun benchmark MLX du M5 Max / M5 Ultra avec méthodologie publiée n'était disponible, et **llama.cpp/Metal** est généralement un peu plus lent que MLX en decode pur. Les chiffres NVIDIA DGX Spark en inférence ne sont pas publiés officiellement — les claims des sources communautaires ne sont pas repris ici. La méthode de calcul de la borne memory-bound est détaillée dans [[01-fondations/unified-memory-vs-ram-vs-vram|Mémoire unifiée vs RAM vs VRAM]].
+> Les débits Apple sont des **bornes théoriques memory-bound** (bande passante ÷ poids du modèle), pas des mesures : au 2026-10-09, aucun benchmark MLX du M5 Max / M5 Ultra avec méthodologie publiée n'était disponible, et **llama.cpp/Metal** est généralement un peu plus lent que MLX en decode pur. Les chiffres NVIDIA DGX Spark en inférence ne sont pas publiés officiellement — les claims des sources communautaires ne sont pas repris ici. NVIDIA publie en revanche un tableau de capacité (1 × 128 Go ≈ 200 B paramètres, 2 × ≈ 400 B, 4 × ≈ 700 B) sans débit associé [^14]. La méthode de calcul de la borne memory-bound est détaillée dans [[01-fondations/unified-memory-vs-ram-vs-vram|Mémoire unifiée vs RAM vs VRAM]].
 
 > [!warning] Prix mémoire en hausse (T4 2026)
 > Les prix de la DRAM contractuelle progressent encore de 10–15 % par trimestre au T4 2026 (TrendForce, 30 septembre 2026) et Framework prévient que « le prix de la mémoire pour toutes les capacités continuera d'augmenter sur les six prochains mois » [^18][^24]. Les tarifs de ce tableau sont donc à relire à chaque achat ; la mémoire soudée se paie désormais au prix fort.
@@ -154,7 +154,7 @@ Pour un déploiement souverain on-premise :
 
 1.  **Souveraineté x86 + Docker (AMD Halo / PRO 400) :** si la stack repose sur **Linux, Docker et Python**, la plateforme AMD est la plus rationnelle : 160 Go VRAM allouables, écosystème ouvert, prix inférieur au Mac Studio équivalent en capacité [^1][^2][^7]. Acceptez un débit **~5 tok/s** sur un 70B dense — privilégiez les **MoE** (Qwen3.5-A3B, etc.) pour l'interactivité [^6].
 2.  **Vitesse et confort (Mac Studio) :** pour le meilleur ressenti sur un **70B dense** (borne memory-bound ~30 tok/s sur M5 Ultra, mesures non publiées), le **Mac Studio M5 Ultra 256–512 Go** (1,2 To/s) reste la référence de bande passante unifiée au T4 2026 ; le **M5 Max 128 Go** (614 Go/s) est un excellent compromis si 128 Go suffisent [^4][^17]. Budget macOS et conteneurs à anticiper.
-3.  **CUDA + FP4 + scale-out (NVIDIA DGX Spark) :** si votre équipe est déjà dans l'écosystème NVIDIA (CUDA, TensorRT, vLLM), le DGX Spark offre 128 Go LPDDR5x accessibles nativement via CUDA, le FP4 natif Blackwell, et la possibilité d'interconnecter plusieurs boîtiers via QSFP 200 Gbps sans reconfigurer l'infrastructure [^14]. Il n'est pas le meilleur choix pour l'inférence pure sur modèles ≤ 34B : une station à GPU discret (RTX 5090, RTX PRO 6000) reste plus rapide à ce cas d'usage — à un prix désormais comparable ou supérieur au T4 2026 (voir l'encadré « Positionnement DGX Spark ») [^21][^22].
+3.  **CUDA + FP4 + scale-out (NVIDIA DGX Spark) :** si votre équipe est déjà dans l'écosystème NVIDIA (CUDA, TensorRT, vLLM), le DGX Spark offre 128 Go LPDDR5x accessibles nativement via CUDA, le FP4 natif Blackwell, et la possibilité d'interconnecter jusqu'à quatre boîtiers via ConnectX-7 200 Gbps sans reconfigurer l'infrastructure [^14]. Il n'est pas le meilleur choix pour l'inférence pure sur modèles ≤ 34B : une station à GPU discret (RTX 5090, RTX PRO 6000) reste plus rapide à ce cas d'usage — à un prix désormais comparable ou supérieur au T4 2026 (voir l'encadré « Positionnement DGX Spark ») [^21][^22].
 4.  **Dimensionnez dès l'achat :** la mémoire LPDDR5X est **soudée** — impossible d'upgrader après coup. Prévoyez marge pour **poids + KV cache + OS + page cache de chargement** (voir chapitres fondations). Sur un système 192 Go AMD, allouer 160 Go au GPU laisse 32 Go système — suffisant au repos, mais serré lors du premier chargement d'un modèle ≥ 100 Go.
 
 ---

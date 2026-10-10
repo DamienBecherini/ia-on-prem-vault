@@ -9,7 +9,7 @@ tags:
   - stack
 sidebar:
   order: 67
-last_modified: "2026-06-10"
+last_modified: "2026-10-10"
 last_verified: "2026-06-10"
 verified_by: "Sonnet 4.6"
 ---
@@ -31,14 +31,14 @@ On-premise, the risk is **identical** to the cloud: data sovereignty does not im
 ## 💡 Why it matters for on-prem AI
 
 - Any multi-source [[00-lexique/rag|RAG]] stack (SharePoint, tickets, wikis) is an attack surface.
-- Combined with [[00-lexique/excessive-agency|Excessive Agency]] (LLM06), can lead to exfiltration via tools (send email, API query).
-- Covered in depth in [[06-mise-en-oeuvre/local-inference-security|🔐 Local inference security]] (LLM01–LLM10 OWASP 2025).
+- Combined with [[00-lexique/excessive-agency|Excessive Agency]] (LLM06:2025, LLM03:2026), can lead to exfiltration via tools (send email, API query).
+- Covered in depth in [[06-mise-en-oeuvre/local-inference-security|🔐 Local inference security]] (LLM01–LLM10, OWASP 2025 numbering with its 2026 mapping).
 
 ## ⚠️ Common pitfalls
 
 - Believing a "secret system prompt" is enough: bypassable via indirect injection.
 - Indexing unsanitized documents without privilege separation between retrieval and tool execution.
-- Forgetting **outbound channels** (LLM07 System Prompt Leakage) during red team tests.
+- Forgetting **outbound channels** (LLM07:2025 System Prompt Leakage, broadened into LLM08:2026 *Hidden Context Exposure*: the system prompt, but also tool definitions and memory) during red team tests[^1].
 
 ## Mitigations (summary)
 
@@ -57,4 +57,4 @@ On-premise, the risk is **identical** to the cloud: data sovereignty does not im
 - [[06-mise-en-oeuvre/local-inference-security|🔐 Local inference security]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
-[^1]: OWASP GenAI Security Project, *LLM01:2025 Prompt Injection*. [https://genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)
+[^1]: OWASP GenAI Security Project, *LLM01:2025 Prompt Injection* ([genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)); kept at the top of the 2026 edition (published 2026-08-03) with a scope extended to image/audio inputs and persistent memory, LLM07 *System Prompt Leakage* becoming LLM08:2026 *Hidden Context Exposure* there. [https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)

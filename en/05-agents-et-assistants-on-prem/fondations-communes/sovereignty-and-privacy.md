@@ -135,7 +135,7 @@ The AI Act distinguishes limited-risk systems (general assistants) from high-ris
 
 ### EU AI Act — Transparency obligations (Article 50)
 
-From August 2026, Article 50 of Regulation (EU) 2024/1689 (EU AI Act) imposes transparency obligations on deployers of AI systems that interact with humans[^3][^4]:
+Since 2 August 2026, Article 50 of Regulation (EU) 2024/1689 (EU AI Act) has imposed transparency obligations on providers and deployers of AI systems that interact with humans[^3][^4]; generative AI systems already on the market at that date have until 2 December 2026 for the machine-readable marking of Art. 50(2)[^6]:
 
 1. **Marking and labeling of generated content:** the *provider* of a system generating text, image, audio, or video must mark its outputs in a machine-readable way (Art. 50(2)); the *deployer* must label deepfakes and generated texts published to inform the public on matters of public interest without human review (Art. 50(4)). The Commission's guidelines of 20 July 2026 exclude source code and short strings from marking, and refer to the code of practice of 10 June 2026 as a recognized means of compliance[^4][^7].
 
@@ -145,7 +145,7 @@ From August 2026, Article 50 of Regulation (EU) 2024/1689 (EU AI Act) imposes tr
 
 **Practical implication for [[00-lexique/on-premise|on-premise]] deployments:** any conversational interface must announce that it is an AI from the first interaction; for LLM-generated suggestions (summaries, classifications, translations, pre-filled fields), the "suggested by AI" indicator is not always a legal obligation, but it is the good practice that prepares for the audit and avoids the inadvertent publication of unreviewed text. Automated write actions must remain subject to [[00-lexique/human-in-the-loop|human-in-the-loop]] validation until confidence reaches the defined threshold.
 
-**Penalty for non-compliance:** fines of up to €15 million or 3% of worldwide annual turnover (Article 99).
+**Penalty for non-compliance:** fines of up to €15 million or, for an undertaking, 3% of worldwide annual turnover, whichever is higher (Article 99(4))[^17].
 
 ### Sector-specific constraints
 
@@ -256,3 +256,4 @@ The model and the entire inference stack run **at the end customer**, on their o
 [^14]: Z.ai, *Pricing* (GLM-5.3: $1.40 input / $4.40 output per million tokens; GLM-5.3-Flash: $0.15 / $0.50), recorded on 2026-10-10. [https://docs.z.ai/guides/overview/pricing](https://docs.z.ai/guides/overview/pricing)
 [^15]: DeepSeek, *Privacy Policy* ("store your Personal Data in People's Republic of China", updated 2026-02-10); European Commission, *Adequacy decisions* (list of recognized countries: China is not on it), read on 2026-10-10. [https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html) · [https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en)
 [^16]: Hugging Face, model cards *deepseek-ai/DeepSeek-V4.1-Flash* (MIT license, 763B parameters in safetensors), *moonshotai/Kimi-K3* ("Kimi K3" license, 2.8T parameters including 104B active) and *zai-org/GLM-5.3* ("glm-5.3" license, 753B parameters), read on 2026-10-10. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) · [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3) · [https://huggingface.co/zai-org/GLM-5.3](https://huggingface.co/zai-org/GLM-5.3)
+[^17]: EU AI Act Service Desk, *Article 99 — Penalties* (§ 4 (g): non-compliance with Art. 50, "whichever is higher"), read on 2026-10-09. [https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-99](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-99)

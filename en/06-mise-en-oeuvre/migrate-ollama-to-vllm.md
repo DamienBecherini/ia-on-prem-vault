@@ -63,9 +63,11 @@ response = client.chat.completions.create(
 | Model format | GGUF (native) | HuggingFace safetensors, AWQ, GPTQ |
 | Pull model endpoint | `POST /api/pull` | Not supported (pre-load) |
 | Generate endpoint (legacy) | `POST /api/generate` | Not supported (use `/v1/`) |
-| Stream | Supported | Supported |
-| Embeddings | `POST /api/embeddings` | `POST /v1/embeddings` |
+| Stream | Supported (OpenAI wire format since 0.32.6)[^15] | Supported |
+| Embeddings | `POST /api/embed` (native, `input` field)[^14] or `POST /v1/embeddings` | `POST /v1/embeddings` |
 | Responses API | `POST /v1/responses` (since 0.13.3, stateless variant) | `POST /v1/responses` |
+
+If your clients were written before August 2026 against Ollama's streaming, revalidate them in phase 2: 0.32.6 (August 4, 2026) aligned the chunk format with OpenAI (`role` on the first chunk only, `finish_reason` on its own chunk, usage via `stream_options.include_usage`) and truncated responses now return `finish_reason: "length"`[^15].
 
 > [!warning] Clients using `/api/generate` or `/api/pull`
 > If your scripts call native Ollama endpoints (`/api/generate`, `/api/pull`, `/api/tags`), they must be adapted. Endpoints `/v1/chat/completions`, `/v1/completions`, and `/v1/embeddings` are compatible without changes[^2].
@@ -286,3 +288,5 @@ The minimum version is not a detail: between August and October 2026, vLLM fixed
 [^11]: *ShadowPickle: Evading Machine Learning Model Scanners via Stealthy Pickle Deserialization Attacks* (arXiv:2607.17503; ten model scanners bypassed), July 2026. [https://arxiv.org/abs/2607.17503](https://arxiv.org/abs/2607.17503)
 [^12]: Ollama, *Release v0.40.2* (models "upgraded in the background the first time you run them", backups kept, re-pull required when rolling back to < 0.40), 8 October 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.2](https://github.com/ollama/ollama/releases/tag/v0.40.2)
 [^13]: vLLM Project, *Release v0.31.0* (per-request `mm_processor_kwargs` rejected unless `--trust-request-mm-kwargs`, `fp8` → `fp8_per_tensor`), 5 October 2026 · advisory GHSA-h3rc-6mm3-gc2m, 6 October 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
+[^14]: Ollama, *API — Generate embeddings* (`POST /api/embed`, `input` field string or array; no `/api/embeddings` endpoint documented), accessed 2026-10-10. [https://docs.ollama.com/api/embed](https://docs.ollama.com/api/embed)
+[^15]: Ollama, *Release v0.32.6* ("`/v1/chat/completions` streaming now matches OpenAI's wire format"; `finish_reason: "length"` for truncated responses), August 4, 2026. [https://github.com/ollama/ollama/releases/tag/v0.32.6](https://github.com/ollama/ollama/releases/tag/v0.32.6)

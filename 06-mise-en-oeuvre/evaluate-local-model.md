@@ -24,13 +24,13 @@ Choisir un modèle local ne consiste pas à prendre le premier nom en haut d'un 
 Les benchmarks publics donnent une première orientation, mais leur valeur prédictive pour un usage en entreprise est **sévèrement limitée en 2026**.
 
 > [!warning] Le problème de la contamination
-> Les grands benchmarks statiques — MMLU, HumanEval, MATH — sont aujourd'hui considérés comme **saturés et potentiellement contaminés** : leurs données de test ont, pour partie, fuité dans les corpus d'entraînement des modèles récents. Comparer Qwen 2.5 et Llama 3.x sur MMLU ne dit presque rien sur leur comportement réel dans votre contexte métier. Un modèle peut atteindre 90 % sur MMLU et produire des hallucinations dangereuses sur vos documents internes.
+> Les grands benchmarks statiques — MMLU, HumanEval, MATH — sont aujourd'hui considérés comme **saturés et potentiellement contaminés** : leurs données de test ont, pour partie, fuité dans les corpus d'entraînement des modèles récents. Comparer Qwen3.8 et Muse Glimmer sur MMLU ne dit presque rien sur leur comportement réel dans votre contexte métier. Un modèle peut atteindre 90 % sur MMLU et produire des hallucinations dangereuses sur vos documents internes.
 
 Les benchmarks restent utiles pour **trier grossièrement** les familles de modèles, ou pour vérifier des capacités très ciblées (raisonnement formel, code syntaxiquement correct). Pour cela, préférez les tests à **domaine spécifique** et les évaluations sur données réelles (SWE-bench pour le code, par exemple, car il mesure sur de vraies issues GitHub, pas sur des exercices mémorisables).
 
 | Famille | Exemples | Utilité réelle | Limites |
 | :-- | :-- | :-- | :-- |
-| Connaissances générales | MMLU, MMLU-Pro, GPQA | tri grossier entre familles | saturé, contaminé, ne prédit pas le métier |
+| Connaissances générales | MMLU, MMLU-Pro, GPQA Diamond | tri grossier entre familles | MMLU saturé et contaminé ; MMLU-Pro et GPQA discriminent encore (T4 2026) mais ne prédisent pas le métier |
 | Calcul / raisonnement | GSM8K, MATH | vérifier la logique formelle | peu représentatif des tâches prose |
 | Instruction following | IFEval, MT-Bench | qualité conversationnelle | résultats variables selon langue |
 | Factualité | TruthfulQA, FActScore, HaluEval | résistance aux fausses croyances | mesure la factualité générale, pas votre domaine |
@@ -237,7 +237,7 @@ Le meilleur modèle est rarement le plus gros. Le bon modèle est celui qui pass
 
 | Besoin | Métrique prioritaire | Benchmark public utile | Test local indispensable |
 | :-- | :-- | :-- | :-- |
-| Chat général | préférence humaine, instruction following | MT-Bench, Chatbot Arena, IFEval | conversations métier anonymisées |
+| Chat général | préférence humaine, instruction following | MT-Bench, Arena (ex-Chatbot Arena), IFEval/IFBench | conversations métier anonymisées |
 | RAG documentaire | faithfulness, context recall | RAGAS | questions sourcées sur vos documents |
 | Agent code | patch correct, tests passés | SWE-bench Pro V2, Terminal-Bench | PRs simulées sur votre dépôt |
 | Résumé juridique / médical | factualité, omissions critiques | FActScore, TruthfulQA | revue humaine experte |

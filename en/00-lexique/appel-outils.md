@@ -10,7 +10,7 @@ tags:
   - stack
 sidebar:
   order: 66
-last_modified: "2026-06-10"
+last_modified: "2026-10-10"
 last_verified: "2026-06-10"
 verified_by: "Sonnet 4.6"
 ---
@@ -52,4 +52,4 @@ Typical pattern: a fast small model for tool routing, a large model for the fina
 - [[00-lexique/sglang|SGLang]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
-[^1]: OpenAI API — Function calling (de facto pattern adopted by vLLM/Ollama). [https://platform.openai.com/docs/guides/function-calling](https://platform.openai.com/docs/guides/function-calling)
+[^1]: OpenAI API — Function calling (de facto pattern adopted by vLLM/Ollama). [https://developers.openai.com/api/docs/guides/function-calling](https://developers.openai.com/api/docs/guides/function-calling)

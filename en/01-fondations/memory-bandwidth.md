@@ -69,7 +69,7 @@ A dense 70B model quantized to 4-bit uses about **40 GB** of weight memory (orde
 1.  **On a classic PC (DDR5 dual channel):**
     *   Real bandwidth: $\sim 100 \text{ GB/s}$
     *   Calculation: $\frac{100 \text{ GB/s}}{40 \text{ GB}} = \mathbf{2.5 \text{ tokens/s}}$ (theoretical bound).
-2.  **On AMD Ryzen AI Max PRO 495 (Strix Halo):**
+2.  **On AMD Ryzen AI Max+ PRO 495 (Gorgon Halo, e.g. Framework Desktop 192 GB)[^3][^11]:**
     *   Real bandwidth: $\sim 273 \text{ GB/s}$
     *   Calculation: $\frac{273 \text{ GB/s}}{40 \text{ GB}} = \mathbf{6.8 \text{ tokens/s}}$ (theoretical bound).
 3.  **On Mac Studio M5 Max (high-end unified memory):**
@@ -78,17 +78,18 @@ A dense 70B model quantized to 4-bit uses about **40 GB** of weight memory (orde
 4.  **On Nvidia RTX 5090 (dedicated GDDR7 VRAM — Blackwell):**
     *   Real bandwidth: $1{,}792 \text{ GB/s}$
     *   Calculation: $\frac{1792 \text{ GB/s}}{40 \text{ GB}} = \mathbf{44.8 \text{ tokens/s}}$ (theoretical bound).
+    *   *Bandwidth example only: in Q3 2026 the RTX 5090 sells for ≥ $5,000 and is scarce — the RTX PRO 6000 Blackwell offers the same bandwidth (1,792 GB/s) with 96 GB [^12].*
 
 ---
 
-## 📊 Storage technology comparison (2026)
+## 📊 Storage technology comparison
 
 Values below are order-of-magnitude guides for architecture (real performance varies by software stack and workload).
 
 | Technology | Bandwidth (order of magnitude) | Source | Impact on inference |
 | :-- | :-- | :-- | :-- |
 | **10 GbE Ethernet** | $\sim 1.25 \text{ GB/s}$ | 10 Gbit/s conversion | too low to "extend" a model online without heavy penalty |
-| **PCIe 5.0 x16** | $\sim 64 \text{ GB/s}$ (aggregate) | bus spec | becomes a bottleneck for frequent CPU↔GPU transfers |
+| **PCIe 5.0 x16** | $\sim 64 \text{ GB/s}$ (per direction) | bus spec | becomes a bottleneck for frequent CPU↔GPU transfers |
 | **DDR5 desktop RAM** | $\sim 80$ to $100 \text{ GB/s}$ | typical dual-channel platforms | high capacity, limited throughput for large LLMs |
 | **AMD Ryzen AI Max PRO 400 unified memory** | up to $\sim 273 \text{ GB/s}$ | [^3] | interesting capacity/bandwidth trade-off on x86 |
 | **NVIDIA DGX Spark unified memory (LPDDR5x)** | $\sim 273 \text{ GB/s}$ | [^7] | same class as the AMD APU; native CUDA and FP4 |
@@ -124,3 +125,5 @@ Two dated remarks (Q4 2026). Intel is preparing a "capacity-first" inference GPU
 [^8]: ServeTheHome, *Intel Crescent Island 160GB to 480GB LPDDR5X AI GPU at Hot Chips 2026* (350 W air-cooled PCIe, bandwidth not disclosed), 24 August 2026. [https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/](https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/)
 [^9]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
 [^10]: Apple MLX, *Distributed Communication* ("Starting from macOS 26.2, RDMA over thunderbolt is available"; JACCL backend), consulted 2026-10-10. [https://ml-explore.github.io/mlx/build/html/usage/distributed.html](https://ml-explore.github.io/mlx/build/html/usage/distributed.html)
+[^11]: AMD, *AMD Ryzen AI Max+ PRO 495* — product page (192 GB LPDDR5X-8533, 256-bit bus), consulted 2026-10-09. [https://www.amd.com/en/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html](https://www.amd.com/en/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html) · Framework, *The 192GB Framework Desktop is open for pre-order* (pre-orders from 2026-09-30, shipping November 2026), 30 September 2026. [https://frame.work/blog/192gb-framework-desktop-open-for-pre-order](https://frame.work/blog/192gb-framework-desktop-open-for-pre-order)
+[^12]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500* (MSRP $1,999), 14 September 2026. [https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu](https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu) · NVIDIA, *RTX PRO 6000 Blackwell Workstation Edition* (96 GB GDDR7 ECC, 1,792 GB/s). [https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/](https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/)

@@ -69,7 +69,7 @@ Un modèle dense de 70B quantifié en 4-bit occupe environ **40 Go** en mémoire
 1.  **Sur un PC classique (RAM DDR5 Dual Channel) :**
     *   Bande passante réelle : $\sim 100 \text{ Go/s}$
     *   Calcul : $\frac{100 \text{ Go/s}}{40 \text{ Go}} = \mathbf{2,5 \text{ tokens/s}}$ (borne théorique).
-2.  **Sur un système AMD Ryzen AI Max PRO 495 (Gorgon Halo) :**
+2.  **Sur un système AMD Ryzen AI Max+ PRO 495 (Gorgon Halo, ex. Framework Desktop 192 Go)[^3][^11] :**
     *   Bande passante réelle : $\sim 273 \text{ Go/s}$
     *   Calcul : $\frac{273 \text{ Go/s}}{40 \text{ Go}} = \mathbf{6,8 \text{ tokens/s}}$ (borne théorique).
 3.  **Sur un Mac Studio M5 Max (mémoire unifiée haut de gamme) :**
@@ -78,17 +78,18 @@ Un modèle dense de 70B quantifié en 4-bit occupe environ **40 Go** en mémoire
 4.  **Sur une carte Nvidia RTX 5090 (VRAM GDDR7 dédiée - Blackwell) :**
     *   Bande passante réelle : $1\ 792 \text{ Go/s}$
     *   Calcul : $\frac{1792 \text{ Go/s}}{40 \text{ Go}} = \mathbf{44,8 \text{ tokens/s}}$ (borne théorique).
+    *   *Exemple de bande passante seulement : au T3 2026 la RTX 5090 se négocie ≥ 5 000 $ et est peu disponible — la RTX PRO 6000 Blackwell offre la même bande passante (1 792 Go/s) avec 96 Go [^12].*
 
 ---
 
-## 📊 Le Grand Comparatif des Technologies de Stockage (2026)
+## 📊 Le Grand Comparatif des Technologies de Stockage
 
 Valeurs ci-dessous : ordres de grandeur utiles pour l'architecture (les performances réelles varient selon le stack logiciel et la charge).
 
 | Technologie | Bande passante (ordre de grandeur) | Source | Impact pour l'inférence |
 | :-- | :-- | :-- | :-- |
 | **Ethernet 10 GbE** | $\sim 1,25 \text{ Go/s}$ | conversion 10 Gbit/s | trop faible pour "étendre" un modèle en ligne sans forte pénalité |
-| **PCIe 5.0 x16** | $\sim 64 \text{ Go/s}$ (agrégé) | spécification bus | devient un goulot lors des transferts fréquents CPU↔GPU |
+| **PCIe 5.0 x16** | $\sim 64 \text{ Go/s}$ (par direction) | spécification bus | devient un goulot lors des transferts fréquents CPU↔GPU |
 | **RAM DDR5 desktop** | $\sim 80$ à $100 \text{ Go/s}$ | plateformes dual-channel typiques | capacité élevée, débit limité pour grands LLM |
 | **Mémoire unifiée AMD Ryzen AI Max PRO 400** | jusqu'à $\sim 273 \text{ Go/s}$ | [^3] | compromis capacité/débit intéressant en x86 |
 | **Mémoire unifiée NVIDIA DGX Spark (LPDDR5x)** | $\sim 273 \text{ Go/s}$ | [^7] | même classe que l'APU AMD ; CUDA et FP4 natifs |
@@ -124,3 +125,5 @@ Deux remarques datées (T4 2026). Intel prépare un GPU d'inférence « capacit�
 [^8]: ServeTheHome, *Intel Crescent Island 160GB to 480GB LPDDR5X AI GPU at Hot Chips 2026* (PCIe 350 W refroidi par air, bande passante non communiquée), 24 août 2026. [https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/](https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/)
 [^9]: TrendForce, communiqué du 30 septembre 2026 (prix contractuels DRAM en hausse de 10–15 % au T4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
 [^10]: Apple MLX, *Distributed Communication* (« Starting from macOS 26.2, RDMA over thunderbolt is available » ; backend JACCL), consulté le 2026-10-10. [https://ml-explore.github.io/mlx/build/html/usage/distributed.html](https://ml-explore.github.io/mlx/build/html/usage/distributed.html)
+[^11]: AMD, *AMD Ryzen AI Max+ PRO 495* — fiche produit (192 Go LPDDR5X-8533, bus 256-bit), consultée le 2026-10-09. [https://www.amd.com/en/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html](https://www.amd.com/en/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html) · Framework, *The 192GB Framework Desktop is open for pre-order* (précommandes du 2026-09-30, livraisons novembre 2026), 30 septembre 2026. [https://frame.work/blog/192gb-framework-desktop-open-for-pre-order](https://frame.work/blog/192gb-framework-desktop-open-for-pre-order)
+[^12]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500* (MSRP 1 999 $), 14 septembre 2026. [https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu](https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu) · NVIDIA, *RTX PRO 6000 Blackwell Workstation Edition* (96 Go GDDR7 ECC, 1 792 Go/s). [https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/](https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/)

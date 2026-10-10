@@ -62,7 +62,7 @@ To make the comparison concrete, use a typical SME case:
 
 ---
 
-## Blueprint A — Dev Lab (RTX 4090 or 64 GB unified memory)
+## Blueprint A — Dev Lab (used 24 GB GPU or 64 GB unified memory)
 
 **Suitable usage:** solo developer or team of 2–3 people, 8B–14B models.
 
@@ -70,7 +70,7 @@ To make the comparison concrete, use a typical SME case:
 | :-- | :-- |
 | Hardware (used RTX 3090/4090 PC, or Mac Studio M5 Max 64 GB at €3,659 incl. VAT, or Framework Desktop 64 GB at €2,209 incl. VAT — French prices captured 2026-10-09)[^7][^8] | €2,200 – €3,700 (4-year amortization) |
 | Monthly amortization | ~€45 – €75/month |
-| Electricity (150W × 8h/day × 30 days × €0.20/kWh) | ~€7/month |
+| Electricity (150 W × 8 h/day × 30 days × €0.20/kWh, regulated tariff August 2026)[^12] | ~€7/month |
 | **Total monthly cost** | **~€55 – €85/month** |
 
 **Cloud equivalent (5 M input tokens + 2.5 M output tokens per month, October 2026 prices):**
@@ -92,7 +92,7 @@ To make the comparison concrete, use a typical SME case:
 | :-- | :-- |
 | 128 GB appliance (Framework Desktop 128 GB at €3,889 incl. VAT, out of stock · Mac Studio M5 Max 128 GB, price on Apple's configurator · DGX Spark 128 GB ≈ $6,950 ≈ €6,400 — captured 2026-10-09)[^7][^8][^9] | €3,900 – €6,400, €4,500 retained (4-year amortization) |
 | Monthly amortization | ~€95/month |
-| Electricity (100W × 12h/day × 30 days × €0.20/kWh) | ~€7/month |
+| Electricity (100 W × 12 h/day × 30 days × €0.20/kWh, regulated tariff August 2026)[^12] | ~€7/month |
 | Maintenance, backup, support | ~€50/month |
 | **Total monthly cost** | **~€155/month** |
 
@@ -129,7 +129,7 @@ To make the comparison concrete, use a typical SME case:
 | 4× Mac mini M5 Pro 64 GB (base 24 GB at €1,999 incl. VAT, 64 GB option on Apple's configurator) or 4× Mac Studio M5 Max 64 GB at €3,659 incl. VAT — French prices captured 2026-10-09[^7] | ~€9,000 – €14,600 (4-year amortization) |
 | Thunderbolt hub + cables | ~€300 |
 | Monthly amortization | ~€195 – €310/month |
-| Electricity (4 × 30W × 16h/day × 30 days × €0.20) | ~€12/month |
+| Electricity (4 × 30 W × 16 h/day × 30 days × €0.20/kWh, regulated tariff August 2026)[^12] | ~€12/month |
 | Maintenance and administration | ~€80/month |
 | **Total monthly cost** | **~€285 – €400/month** |
 
@@ -156,25 +156,25 @@ Open-weights models in this class (DeepSeek V4, GLM-5.3, Kimi K3) are available 
 
 | Item | Amount |
 | :-- | :-- |
-| HGX H200 node (8× GPU) | ~€400,000 (5-year amortization) |
-| Infrastructure (network, cooling, power) | ~€20,000/year |
+| 8-GPU node (HGX H200; 8× RTX PRO 6000 server: $266k OEM list price; B300 node: on quote, ≈ $400k)[^13] | ~€300,000 – €450,000, €400,000 used (5-year amortization) |
+| Infrastructure (network, cooling) + electricity (~10 kW × 8,760 h × €0.15–0.20/kWh ≈ €13,000 – €17,500/year)[^12] | ~€30,000 – €40,000/year, €35,000 used |
 | Monthly hardware amortization | ~€6,700/month |
-| Infrastructure + ops | ~€1,700/month |
+| Infrastructure + ops | ~€2,900/month |
 | Dedicated infrastructure engineer (0.5 FTE) | ~€4,000/month |
-| **Total monthly cost** | **~€12,400/month** |
+| **Total monthly cost** | **~€13,600/month** |
 
 **Cloud equivalent for SaaS production 50+ users:**
 
 | Service | Estimated cost | Comment |
 | :-- | :-- | :-- |
 | Cloud API (500 M tok/month, 2/3 input, prices of 2026-10-09)[^1][^2] | ~$120 (Haiku 5.5) to ~$6,700/month (GPT-5.5); ~$11,700 (Fable 5.1) | No custom SLA guarantee; the HGX node only becomes cheaper beyond ~1 G tokens/month against GPT-5.5 (~0.6 G against Fable 5.1) |
-| Dedicated GPU cloud (A100 × 8, on-demand) | ~$15,000–20,000/month | Strong SLA, but high cost |
-| Reserved GPU cloud (1 year, H100 × 8) | ~$8,000–12,000/month | 1-year commitment |
+| Dedicated GPU cloud (8× A100 80 GB on-demand, $2.79/GPU-h)[^6] | ~$16,000/month (8× H100: ~$23,000) | Strong SLA, but high cost |
+| Reserved GPU cloud (1 year, H100 × 8)[^6] | ~$11,000/month ($1.9/GPU-h) to ~$32,000/month depending on the provider | 1-year commitment; request a quote |
 
 > [!note] Break-even point D
-> The HGX node becomes competitive after 25 to 43 months versus on-demand dedicated GPU cloud (Lambda prices of 2026-10-09)[^6], and only beyond about 1 billion tokens per month against a frontier API. Its real value is not purely economic: **full control** (data, models, SLA, model evolution), **5-year cost control**, and maximum regulatory compliance.
+> The HGX node becomes competitive after 28 to 49 months versus on-demand dedicated GPU cloud (Lambda prices of 2026-10-09)[^6], and only beyond about 1 billion tokens per month against a frontier API. Its real value is not purely economic: **full control** (data, models, SLA, model evolution), **5-year cost control**, and maximum regulatory compliance.
 
-*Calculation: €400,000 / (€15,000/month of 8× A100 on-demand − €5,700/month of ops and infrastructure) ≈ 43 months; €400,000 / (€21,400/month of 8× H100 on-demand − €5,700) ≈ 25 months. API threshold: €12,400 ≈ $13,500/month ÷ $13.3/M weighted (GPT-5.5) ≈ 1 G tokens/month.*
+*Calculation: €400,000 / (€15,000/month of 8× A100 on-demand − €6,900/month of ops and infrastructure) ≈ 49 months; €400,000 / (€21,400/month of 8× H100 on-demand − €6,900) ≈ 28 months. API threshold: €13,600 ≈ $14,800/month ÷ $13.3/M weighted (GPT-5.5) ≈ 1.1 G tokens/month.*
 
 ---
 
@@ -199,14 +199,15 @@ Monthly token volume          Sovereignty constraint   → Recommended blueprint
 | A (dev lab, 5 M in + 2.5 M out/month) | ~€55 – €85 | ~€2,000 – €3,100 | ~€60 (Haiku 5.5) / ~€1,160 (Sonnet 5.5, GPT-6 Sol) / ~€3,300 (GPT-5.5) / ~€5,800 (Fable 5.1) |
 | B (SME, 34 M tok/month) | ~€155 | ~€5,580 | ~€260 (Haiku 5.5) / ~€670 (DeepSeek V4.1 Flash) / ~€1,160 (Together AI Llama 3.3 70B) / ~€5,200 (Sonnet 5.5) / ~€10,400 (Opus 5.5) / ~€14,900 (GPT-5.5) / ~€26,100 (Fable 5.1) |
 | C (cluster, 34 M tok/month, 100B+ models) | ~€285 – €400 | ~€10,300 – €14,400 | ~€670 (DeepSeek V4.1 Flash) / ~€2,460 (DeepSeek V4 Pro, Together AI) / ~€270,000 (4× A100 on-demand 24/7) |
-| D (datacenter, 500 M tok/month) | ~€12,400 | ~€446,400 | ~€77,000 (Sonnet 5.5) / ~€221,000 (GPT-5.5) / ~€386,000 (Fable 5.1) / ~€265,000 – €540,000 (8 GPUs, from 1-year reserved H100 to on-demand A100) |
+| D (datacenter, 500 M tok/month) | ~€13,600 | ~€489,600 | ~€77,000 (Sonnet 5.5) / ~€221,000 (GPT-5.5) / ~€386,000 (Fable 5.1) / ~€365,000 – €540,000 (8 GPUs, from 1-year reserved H100 at $1.9/GPU-h to on-demand A100) |
 
-*Calculation: monthly cloud cost from sections A to D × 36 months (Fable 5.1 and DeepSeek captured 2026-10-10); GPU cloud: $8,000 to $12,000/month reserved (table D) and 8× A100 on-demand ≈ $16,300/month (Lambda, 2026-10-09)[^6].*
+*Calculation: monthly cloud cost from sections A to D × 36 months (Fable 5.1 and DeepSeek captured 2026-10-10); GPU cloud: ~$11,000/month reserved for 1 year at $1.9/GPU-h (table D) and 8× A100 on-demand ≈ $16,300/month (Lambda, 2026-10-09)[^6].*
 
 > [!warning] Hidden costs not to forget
 > - **Training and onboarding** of the team on the on-premise stack
 > - **Administration time** (updates, monitoring, backups) — often underestimated
 > - **Hardware obsolescence:** 2024–2025 GPUs may not optimally support 2027 models
+> - **Memory prices:** contract DRAM +10–15% per quarter in Q4 2026 and increases expected every quarter through 2027 (TrendForce); DGX Spark 128 GB went from $3,999 to ≈ $6,950, RTX PRO 6000 from under $8,000 to $16,000 in one year. A hardware quote is only valid for a few weeks[^9][^14][^15].
 > - **Cooling and space costs** for blueprints C and D
 
 ---
@@ -242,13 +243,13 @@ The TCO comparison above focuses mainly on **inference** (frozen model, text gen
 
 | Phase | Memory need | Suitable hardware profile | Example |
 | :-- | :-- | :-- | :-- |
-| **Inference** (frozen model, generation) | Weights + KV cache | Fast GPU with sufficient VRAM | RTX 4090 (24 GB), L40S (48 GB), APU 128 GB |
-| **LoRA fine-tuning** (adapters only) | Weights + gradients + optimizer states (~2–3× inference) | High-capacity unified memory or multi-GPU | Mac Studio 192 GB, AMD Gorgon Halo, DGX Spark 128 GB |
+| **Inference** (frozen model, generation) | Weights + KV cache | Fast GPU with sufficient VRAM | RTX 5090 (32 GB), L40S (48 GB), APU 128 GB |
+| **LoRA fine-tuning** (adapters only) | Weights + gradients + optimizer states (~2–3× inference) | High-capacity unified memory or multi-GPU | Mac Studio M5 Ultra 256–512 GB, AMD Gorgon Halo 192 GB, DGX Spark 128 GB |
 | **Full fine-tuning (complete SFT)** | Very high — often 2–4× raw weights in FP16 | Multi-GPU server or datacenter | 2–4× A100 80 GB, or DGX Station |
 | **Full training (pre-training)** | Several hundred GB to several TB | Datacenter clusters — beyond SMB on-prem scope | H100, HGX/DGX systems |
 
 > [!warning] Do not confuse profiles
-> A GPU fast at inference (RTX 4090, 24 GB VRAM) can crash immediately on LoRA fine-tuning of a 70B model in FP16 — optimizer states inflate required memory to ~60–70 GB, well beyond available VRAM. Conversely, a high-capacity but slow-bandwidth system (e.g. AMD Gorgon Halo at ~273 GB/s) is suboptimal for serving 50 simultaneous users on a 7B model.
+> A GPU fast at inference (RTX 5090, 32 GB VRAM) can crash immediately on LoRA fine-tuning of a 70B model in FP16 — optimizer states inflate required memory to ~60–70 GB, well beyond available VRAM. Conversely, a high-capacity but slow-bandwidth system (e.g. AMD Gorgon Halo at ~273 GB/s) is suboptimal for serving 50 simultaneous users on a 7B model.
 
 ### The "tokens/s per k€" KPI for comparing inference options
 
@@ -256,15 +257,15 @@ To arbitrate between two inference hardware options, the ratio **tokens per seco
 
 Example reading:
 - RTX 5090 (32 GB, MSRP $1,999, but ≥ $5,000 ≈ €4,600 in stores in September 2026)[^10]: at ~60 tok/s on an 8B model → **~13 tok/s/k€** at the observed price, ~30 at MSRP — the ratio now depends as much on the shortage as on the silicon
-- Mac Studio M4 Max 128 GB (~€5,000): if it delivers ~10 tok/s on a 70B Q4 → **~2 tok/s/k€**
+- Mac Studio M5 Max 128 GB (~€5,000, 614 GB/s): if it delivers ~12–15 tok/s on a 70B Q4 → **~2.5–3 tok/s/k€**[^7]
 
-These two figures are consistent: the Mac Studio serves much larger models than the RTX 4090, so direct comparison only makes sense for the **same model and same quantization**.
+These two figures are consistent: the Mac Studio serves much larger models than the RTX 5090 (32 GB), so direct comparison only makes sense for the **same model and same quantization**.
 
 > [!warning] Limits of the tokens/s/k€ ratio
 > This ratio depends strongly on **model**, **quantization**, and **batch size**:
-> - **Batch size = 1 (single user):** favors GPUs with high GDDR bandwidth (RTX 4090, L40S) — autoregressive decoding is memory-bound, and GDDR is faster than LPDDR5x.
+> - **Batch size = 1 (single user):** favors GPUs with high GDDR bandwidth (RTX 5090, L40S) — autoregressive decoding is memory-bound, and GDDR is faster than LPDDR5x.
 > - **High batch size (10–50 simultaneous requests):** favors high-memory-capacity systems and engines optimizing batching (vLLM with PagedAttention) — bandwidth is less limiting, capacity takes priority.
-> - **Models > 70B:** only systems with 128 GB+ memory can compete — RTX 4090 vs DGX Spark comparison on a 70B is not possible on RTX 4090.
+> - **Models > 70B:** only systems with 128 GB+ memory can compete — RTX 5090 vs DGX Spark comparison on a 70B is not possible on the RTX 5090 (32 GB); the DGX Spark 64 GB announced at $4,999 for 23 October 2026 does not change this rule: 64 GB remains tight for a 70B Q4 with context[^9].
 
 ---
 
@@ -292,3 +293,7 @@ These two figures are consistent: the Mac Studio serves much larger models than 
 [^9]: ServeTheHome, *NVIDIA DGX Spark 64GB Launched and Big 128GB GB10 Price Increases* (DGX Spark 128 GB ≈ $6,950, launched at $3,999; 64 GB version at $4,999 via OEMs), 2026-10-03. [https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/](https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/)
 [^10]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US* (up to $9,500 from third-party sellers for an MSRP of $1,999), 2026-09-14. [https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu](https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu)
 [^11]: DeepSeek, *Models & Pricing* (`deepseek-flash`, served by DeepSeek-V4.1-Flash: $0.30 / $1.20 per million tokens at peak hours — 01:00–04:00 and 06:00–10:00 UTC, Monday to Friday excluding Chinese public holidays — and half price the rest of the time; `deepseek-v4-pro` $1.32 / $3.96), captured 2026-10-10. [https://api-docs.deepseek.com/quick_start/pricing](https://api-docs.deepseek.com/quick_start/pricing) · DeepSeek, *Privacy Policy* ("we directly collect, process and store your Personal Data in People's Republic of China"), 2026-02-10. [https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)
+[^12]: EDF, *Tarif Bleu — offre d'électricité au tarif réglementé* (Base option: €0.2001 incl. VAT/kWh since 2026-08-01), captured 2026-10-09. [https://particulier.edf.fr/fr/accueil/electricite-gaz/offres-electricite/tarif-bleu.html](https://particulier.edf.fr/fr/accueil/electricite-gaz/offres-electricite/tarif-bleu.html)
+[^13]: AMD, *AAI 2026: AMD Delivers Full-Stack Compute for the Agentic AI Era* (note 8: 8× RTX PRO 6000 server at an OEM list price of $265,928 as of 2026-07-16; MI350P server estimated at $327,238), 23 July 2026. [https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era](https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era)
+[^14]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026, increases expected over the following quarters). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
+[^15]: Tom's Hardware, *Nvidia doubles RTX PRO 6000 Blackwell's MSRP to a staggering $16,000* (96 GB, pre-orders below $8,000 in 2025), August 2026. [https://www.tomshardware.com/pc-components/gpus/nvidia-doubles-rtx-pro-6000-blackwells-msrp-to-a-staggering-usd16-000-96gb-card-started-pre-orders-below-usd8-000-last-year](https://www.tomshardware.com/pc-components/gpus/nvidia-doubles-rtx-pro-6000-blackwells-msrp-to-a-staggering-usd16-000-96gb-card-started-pre-orders-below-usd8-000-last-year)

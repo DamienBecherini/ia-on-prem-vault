@@ -32,7 +32,7 @@ AnythingLLM is interesting when the need goes beyond simple local chat: document
 
 - **Opt-out telemetry**: it exists; must be explicitly disabled in a strict context[^1].
 - **External providers possible**: OpenAI, Anthropic, Pinecone, or others can break sovereignty if configured[^2].
-- **Useful outbound connections**: models, CDN, GitHub, or external services per configuration[^1].
+- **Useful outbound connections**: models, CDN, GitHub, or external services per configuration[^1]; since September 2026, web search (chat and agents) uses You.com by default, with no API key, unless a provider is already configured or search is disabled by the administrator: disable or replace this provider (local SearXNG) before any use in a strict context[^5].
 - **Application complexity**: simpler than a home-built assembly, but broader than a minimal Ollama UI.
 
 ## 🔒 Sovereignty and privacy
@@ -71,3 +71,4 @@ Mature project, very followed on GitHub (about 67,000 stars, v1.17.0 as of 2026-
 [^2]: AnythingLLM Self-Hosted Terms — local-first, air-gap, on-prem storage. [https://github.com/Mintplex-Labs/anything-llm/blob/master/TERMS_SELF_HOSTED.md](https://github.com/Mintplex-Labs/anything-llm/blob/master/TERMS_SELF_HOSTED.md)
 [^3]: AnythingLLM Docker guide — Ollama as LLM and embedding provider. [https://github.com/Mintplex-Labs/anything-llm/blob/master/docker/HOW_TO_USE_DOCKER.md](https://github.com/Mintplex-Labs/anything-llm/blob/master/docker/HOW_TO_USE_DOCKER.md)
 [^4]: Mintplex Labs — *Release v1.15.0* (2026-06-25, "Pro removes the daily limits", "Pro is purely additive"), *AnythingLLM Pro overview* ("only available on AnythingLLM Desktop v1.15.0 and later", "Whatever is free today stays free — forever"), and *LICENSE* (MIT), accessed 2026-10-10. [https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.15.0](https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.15.0) · [https://docs.anythingllm.com/pro/overview](https://docs.anythingllm.com/pro/overview) · [https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE](https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE)
+[^5]: Mintplex Labs, *AnythingLLM and You.com bring real-time web search to everyone* ("Web search is on from your first chat, with no API key and nothing to setup"; You.com by default unless a provider is already configured, DuckDuckGo fallback), September 2026, read on 2026-10-10. [https://anythingllm.com/blog/you-com-search](https://anythingllm.com/blog/you-com-search)

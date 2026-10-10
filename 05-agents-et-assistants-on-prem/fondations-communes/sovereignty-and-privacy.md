@@ -135,7 +135,7 @@ L'AI Act distingue les systèmes à risque limité (assistants généraux) des s
 
 ### EU AI Act — Obligations de transparence (Article 50)
 
-À compter d'août 2026, l'article 50 du Règlement (UE) 2024/1689 (EU AI Act) impose des obligations de transparence aux déployeurs de systèmes d'IA qui interagissent avec des humains[^3][^4] :
+Depuis le 2 août 2026, l'article 50 du Règlement (UE) 2024/1689 (EU AI Act) impose des obligations de transparence aux fournisseurs et déployeurs de systèmes d'IA qui interagissent avec des humains[^3][^4] ; les systèmes d'IA générative déjà sur le marché à cette date disposent jusqu'au 2 décembre 2026 pour le marquage lisible par machine de l'art. 50(2)[^6] :
 
 1. **Marquage et étiquetage du contenu généré** : le *fournisseur* d'un système générateur de texte, image, audio ou vidéo doit marquer ses sorties de façon lisible par machine (art. 50(2)) ; le *déployeur* doit étiqueter les deepfakes et les textes générés publiés pour informer le public sur des sujets d'intérêt général sans revue humaine (art. 50(4)). Les lignes directrices de la Commission du 20 juillet 2026 excluent du marquage le code source et les chaînes courtes, et renvoient au code de bonne pratique du 10 juin 2026 comme moyen reconnu de conformité[^4][^7].
 
@@ -145,7 +145,7 @@ L'AI Act distingue les systèmes à risque limité (assistants généraux) des s
 
 **Implication pratique pour les déploiements [[00-lexique/on-premise|on-premise]]** : toute interface conversationnelle doit annoncer qu'il s'agit d'une IA dès la première interaction ; pour les suggestions générées par LLM (résumés, classifications, traductions, champs pré-remplis), l'indicateur « suggéré par l'IA » n'est pas toujours une obligation légale, mais c'est la bonne pratique qui prépare l'audit et qui évite la publication par inadvertance d'un texte non revu. Les actions d'écriture automatisées doivent rester soumises à une validation [[00-lexique/human-in-the-loop|human-in-the-loop]] tant que la confiance n'atteint pas le seuil défini.
 
-**Sanction en cas de non-conformité** : amendes pouvant atteindre 15 millions d'euros ou 3 % du chiffre d'affaires annuel mondial (article 99).
+**Sanction en cas de non-conformité** : amendes pouvant atteindre 15 millions d'euros ou, pour une entreprise, 3 % du chiffre d'affaires annuel mondial, le montant le plus élevé étant retenu (article 99, § 4)[^17].
 
 ### Secteurs spécifiques
 
@@ -256,3 +256,4 @@ Le modèle et toute la stack d'inférence tournent **chez le client final**, sur
 [^14]: Z.ai, *Pricing* (GLM-5.3 : 1,40 $ entrée / 4,40 $ sortie par million de tokens ; GLM-5.3-Flash : 0,15 $ / 0,50 $), relevé le 2026-10-10. [https://docs.z.ai/guides/overview/pricing](https://docs.z.ai/guides/overview/pricing)
 [^15]: DeepSeek, *Privacy Policy* (« store your Personal Data in People's Republic of China », mise à jour du 2026-02-10) ; Commission européenne, *Adequacy decisions* (liste des pays reconnus : la Chine n'y figure pas), lus le 2026-10-10. [https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html) · [https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en)
 [^16]: Hugging Face, fiches modèles *deepseek-ai/DeepSeek-V4.1-Flash* (licence MIT, 763 B paramètres en safetensors), *moonshotai/Kimi-K3* (licence « Kimi K3 », 2,8 T paramètres dont 104 B actifs) et *zai-org/GLM-5.3* (licence « glm-5.3 », 753 B paramètres), lues le 2026-10-10. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) · [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3) · [https://huggingface.co/zai-org/GLM-5.3](https://huggingface.co/zai-org/GLM-5.3)
+[^17]: EU AI Act Service Desk, *Article 99 — Penalties* (§ 4 (g) : non-respect de l'art. 50, « whichever is higher »), lu le 2026-10-09. [https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-99](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-99)

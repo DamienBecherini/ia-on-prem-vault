@@ -20,7 +20,7 @@ Standardized test measuring one or more capabilities of an [[00-lexique/llm|LLM]
 
 ## 📖 Detailed definition
 
-An LLM benchmark helps compare models quickly, but it always measures a **specific protocol**. MMLU is not the same as SWE-bench; TruthfulQA is not the same as tokens/s.
+An LLM benchmark helps compare models quickly, but it always measures a **specific protocol**. MMLU is not the same as SWE-bench Pro; TruthfulQA is not the same as tokens/s.
 
 Public benchmarks are a starting point, not a final decision.
 

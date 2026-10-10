@@ -28,7 +28,7 @@ Not all local AI applications do the same thing. Before choosing a tool, it help
 - Trigger: a human asks a question
 - Autonomy: low — it responds, it does not *act*
 
-**Examples:** Open WebUI, Jan.ai, Khoj, AnythingLLM, OpenHuman
+**Examples:** Open WebUI, Jan.ai, Khoj, AnythingLLM (OpenHuman, now an agent harness, belongs to the hybrid category)
 
 **Analogy:** a colleague very well informed on your cases, available 24/7, but who waits for you to speak.
 
@@ -59,7 +59,7 @@ Not all local AI applications do the same thing. Before choosing a tool, it help
 - Requires fine-grained permission and autonomy level management
 - Higher complexity; risk of unwanted side effects if misconfigured
 
-**Examples:** Khoj (agent mode enabled), Open WebUI with tools, OpenHands in interactive mode
+**Examples:** Open WebUI with tools and sub-agents (v0.11, July 2026)[^4], OpenHuman, Khoj (agent mode enabled), interactive conversations in OpenHands Agent Canvas
 
 **Warning:** hybrid complexity is real. A poorly designed implementation can give the AI the ability to modify files, send email, or run commands without sufficient guardrails. Prefer an explicit architecture (assistant or custodian) to start.
 
@@ -141,16 +141,16 @@ This guide covers architecture theory. To move to practice, here are the recomme
 | :-- | :-- |
 | **Open WebUI** | [Official documentation](https://docs.openwebui.com/) — Docker install in 5 minutes, Ollama connection |
 | **AnythingLLM** | [AnythingLLM GitHub](https://github.com/Mintplex-Labs/anything-llm) — full local RAG, multi-model interface |
-| **Khoj** | [Khoj self-hosted guide](https://docs.khoj.dev/clients/desktop/) — personal memory + local file access |
+| **Khoj** | [Khoj self-hosting setup](https://docs.khoj.dev/get-started/setup) — personal memory + local file access (maintenance slowed since March 2026)[^5] |
 
 ### Track B — Custodian Agent
 
 | Tool | Starting point |
 | :-- | :-- |
 | **Aider** | [Aider quickstart](https://aider.chat/docs/usage/tutorials.html) — local coding agent, Ollama-compatible; **project with no release since August 2025 and no commit since May 2026**, to be used only with full awareness[^1] |
-| **OpenHands** | [OpenHands Docker setup](https://github.com/OpenHands/OpenHands) — autonomous task-execution agent |
+| **OpenHands Agent Canvas** | [Agent Canvas (README, Docker)](https://github.com/OpenHands/OpenHands) — self-hosted control center for conversations and automations of coding agents (OpenHands, or Claude Code / Codex / Gemini CLI via ACP); the SDK and the agent live in `software-agent-sdk`[^1] |
 | **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — unified routing to a local model; **require version ≥ 1.100.4 (or the latest fix in its line)**: three LiteLLM vulnerabilities appear in CISA's KEV catalog in 2026 and a critical escalation (CVSS 9.9) was fixed on 2026-09-30[^2] |
-| **SmolAgents** | [SmolAgents cookbook](https://huggingface.co/docs/smolagents/tutorials/building_good_agents) — minimal agent framework, HuggingFace |
+| **SmolAgents** | [SmolAgents cookbook](https://huggingface.co/docs/smolagents/tutorials/building_good_agents) — minimal agent framework, HuggingFace (reduced activity since May 2026)[^6] |
 | **LangGraph** | [LangGraph "local agent" tutorial](https://langchain-ai.github.io/langgraph/tutorials/introduction/) — agent orchestration with state graphs |
 
 > [!note] No inline code in this vault
@@ -170,3 +170,6 @@ This guide covers architecture theory. To move to practice, here are the recomme
 [^1]: Aider-AI, *aider* (GitHub repository: last commit on 2026-05-22, latest release v0.86.0 of 2025-08-09), accessed 2026-10-10; OpenHands, *Introducing Agent Canvas* (2026-06-16) and *Use any coding agent in OpenHands with ACP* (2026-06-18). [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider) · [https://www.openhands.dev/blog/introducing-agent-canvas](https://www.openhands.dev/blog/introducing-agent-canvas) · [https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp](https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp)
 [^2]: BerriAI, *GHSA-7hp6-4w63-5g45* (`internal_user` → `proxy_admin` → host execution escalation, CVSS 9.9, fixed in 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30; CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822), catalog dated 2026-10-08. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45) · [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)
 [^3]: Model Context Protocol, *Specification 2026-07-28 — Key Changes* (removal of `Mcp-Session-Id` and of the `initialize` handshake, `server/discover`, deprecation of Roots, Sampling, Logging, and OAuth dynamic client registration, deprecation window of at least twelve months). [https://modelcontextprotocol.io/specification/2026-07-28/changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog)
+[^4]: Open WebUI, *Release v0.11.0* (sub-agents, LDAP group synchronization), 2026-07-27. [https://github.com/open-webui/open-webui/releases/tag/v0.11.0](https://github.com/open-webui/open-webui/releases/tag/v0.11.0)
+[^5]: Khoj, *Self-Host* (Docker / pip installation), read on 2026-10-10; khoj-ai, *khoj* — Releases (latest version 2.0.0-beta.28 of 2026-03-26). [https://docs.khoj.dev/get-started/setup](https://docs.khoj.dev/get-started/setup) · [https://github.com/khoj-ai/khoj/releases](https://github.com/khoj-ai/khoj/releases)
+[^6]: Hugging Face, *smolagents* — Releases (latest version v1.26.0 of 2026-05-29, repository not archived), accessed 2026-10-10. [https://github.com/huggingface/smolagents/releases](https://github.com/huggingface/smolagents/releases)

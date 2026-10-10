@@ -130,6 +130,8 @@ scrape_configs:
       - targets: ['host.docker.internal:2019']  # reverse proxy /metrics endpoint
 ```
 
+vLLM's `/metrics` endpoint is not protected by `--api-key`: expose it only to the Prometheus network. Versions < 0.30 were also vulnerable to a denial of service through HTTP label cardinality explosion (GHSA-5fj9-pfhr-6j48, fixed in 0.30.0)[^13].
+
 > [!note] Ollama vs vLLM
 > vLLM natively exposes a Prometheus-compatible `/metrics` endpoint[^1]. Ollama exposes no documented Prometheus `/metrics` as of Q4 2026[^10]: instrument at the reverse proxy level (Caddy natively exposes Prometheus metrics on its admin endpoint `:2019/metrics`; Nginx via `nginx-prometheus-exporter`) or use the `eval_count`, `eval_duration` and `prompt_eval_duration` fields of `/api/generate` and `/api/chat` responses (section 7). The community exporters cited in earlier versions of this guide are no longer available (repositories deleted as of 2026-10-09).
 
@@ -148,6 +150,8 @@ vLLM exposes metrics on `GET /metrics`[^1]. Priority metrics to watch:
 | `rate(vllm:generation_tokens_total[1m])` | Generation throughput in tokens/s (derived from the counter; the V0 gauge `avg_generation_throughput_toks_per_s` is gone)[^1] | < threshold defined by use case |
 | `vllm:prompt_tokens_total` | Prompt tokens processed (cumulative) | — (trend) |
 | `vllm:generation_tokens_total` | Generated tokens (cumulative) | — (trend) |
+
+The vLLM documentation names counters without a suffix (`vllm:generation_tokens`, `vllm:num_preemptions`); the Prometheus exposition adds `_total` to them, hence `vllm:generation_tokens_total` in the queries above[^1].
 
 ### KV Cache
 
@@ -184,7 +188,9 @@ NVIDIA DCGM Exporter exposes detailed GPU metrics[^3]:
 | `DCGM_FI_DEV_FB_USED` | VRAM used (MiB) | > 95% of total VRAM |
 | `DCGM_FI_DEV_GPU_TEMP` | GPU temperature (°C) | > 83°C (likely throttling) |
 | `DCGM_FI_DEV_POWER_USAGE` | Power draw (W) | > declared TDP |
-| `DCGM_FI_DEV_NVLINK_BANDWIDTH_TOTAL` | NVLink throughput (GB/s) | — (trend on clusters) |
+| `DCGM_FI_DEV_NVLINK_BANDWIDTH_TOTAL` | Aggregate NVLink throughput (MB/s) | — (trend on clusters) |
+
+`DCGM_FI_DEV_FB_TOTAL` is not exported by default: add `DCGM_FI_DEV_FB_TOTAL, gauge, Framebuffer total (MiB)` to the counters file (`etc/default-counters.csv`, mounted in the container) or use `DCGM_FI_DEV_FB_FREE` in the `VRAMAlmostFull` alert[^3].
 
 ### Prometheus query — VRAM used per GPU
 
@@ -207,7 +213,7 @@ DCGM_FI_DEV_FB_USED{gpu=~".*"}
 | Node Exporter Full | **1860** | Host CPU, RAM, network, disk[^5] |
 
 > [!note] vLLM dashboard
-> There is no official vLLM dashboard on Grafana.com in 2026. Build it manually from section 3 metrics, or search grafana.com for community "vLLM" dashboards (variable quality).
+> There is no vLLM dashboard published on Grafana.com (as of 2026-10-10), but the project provides an official *Prometheus and Grafana* example in its repository (`examples/observability/prometheus_grafana/`: `docker-compose.yaml`, `prometheus.yaml`, `grafana.json`) and two complementary dashboards (`examples/observability/dashboards/grafana/`)[^14]: import that `grafana.json` rather than starting from scratch, then complete it with the panels from section 3.
 
 ### Essential panels to build manually
 
@@ -269,6 +275,8 @@ groups:
           description: "GPU temperature at {{ $value }}°C — likely throttling."
 
       - alert: VRAMAlmostFull
+        # DCGM_FI_DEV_FB_TOTAL must be added to the counters file (section 4);
+        # otherwise: DCGM_FI_DEV_FB_USED / (DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE)
         expr: (DCGM_FI_DEV_FB_USED / DCGM_FI_DEV_FB_TOTAL) > 0.95
         for: 2m
         labels:
@@ -346,6 +354,7 @@ LiteLLM and vLLM support OpenTelemetry natively[^11]:
 # vLLM — enable OTEL (export to local collector)
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --otlp-traces-endpoint http://localhost:4317
+# --collect-detailed-traces model for detailed traces (costly; all|model|worker)[^11]
 
 # LiteLLM — litellm_config.yaml
 litellm_settings:
@@ -458,13 +467,15 @@ cp /qdrant/snapshots/my_collection/*.snapshot /mnt/backup/qdrant/
 
 [^1]: vLLM Project, *Metrics* (`/metrics` endpoint, full list of exposed Prometheus metrics — `vllm:kv_cache_usage_perc`, `vllm:num_preemptions`, `vllm:simple_kv_offload_*` — metric deprecation policy), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/usage/metrics/](https://docs.vllm.ai/en/stable/usage/metrics/)
 [^2]: vLLM Project, *Engine Arguments* (`--gpu-memory-utilization`, `--max-model-len`, `--max-num-seqs`), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)
-[^3]: NVIDIA, *DCGM Exporter — Metrics Reference* (list of DCGM_FI_DEV_* metrics, GPU utilization, memory, temperature, NVLink). [https://github.com/NVIDIA/dcgm-exporter](https://github.com/NVIDIA/dcgm-exporter)
-[^4]: Grafana Labs, *NVIDIA DCGM Exporter Dashboard* (ID 12239, GPU metrics visualization). [https://grafana.com/grafana/dashboards/12239](https://grafana.com/grafana/dashboards/12239)
-[^5]: Grafana Labs, *Node Exporter Full Dashboard* (ID 1860, system metrics — CPU, memory, disk, network). [https://grafana.com/grafana/dashboards/1860](https://grafana.com/grafana/dashboards/1860)
+[^3]: NVIDIA, *DCGM Exporter* (`etc/default-counters.csv`: GPU_UTIL, MEM_COPY_UTIL, FB_USED, FB_FREE, GPU_TEMP, POWER_USAGE, NVLINK_BANDWIDTH_TOTAL in MB/s; FB_TOTAL absent from default counters), accessed 2026-10-09. [https://github.com/NVIDIA/dcgm-exporter](https://github.com/NVIDIA/dcgm-exporter)
+[^4]: Grafana Labs, *NVIDIA DCGM Exporter Dashboard* (ID 12239, GPU metrics visualization). [https://grafana.com/grafana/dashboards/12239-nvidia-dcgm-exporter-dashboard/](https://grafana.com/grafana/dashboards/12239-nvidia-dcgm-exporter-dashboard/)
+[^5]: Grafana Labs, *Node Exporter Full Dashboard* (ID 1860, system metrics — CPU, memory, disk, network). [https://grafana.com/grafana/dashboards/1860-node-exporter-full/](https://grafana.com/grafana/dashboards/1860-node-exporter-full/)
 [^6]: Langfuse, *Self-Hosting* (v4: PostgreSQL + ClickHouse + Redis/Valkey + S3 storage; Docker Compose for local use, Helm for production), accessed 2026-10-09. [https://langfuse.com/self-hosting](https://langfuse.com/self-hosting)
 [^7]: Arize AI, *Arize Phoenix — LLM Observability* (agent traces, RAG debugging, OTEL-compatible), accessed 2026-10-09. [https://arize.com/docs/phoenix](https://arize.com/docs/phoenix)
 [^8]: vLLM Project, *Disaggregated Prefill and Decode* (`--kv-transfer-config`, `OffloadingConnector` for KV Cache CPU offload), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/disagg_prefill/](https://docs.vllm.ai/en/stable/features/disagg_prefill/)
 [^9]: Ollama, *Troubleshooting* (log locations: `journalctl -u ollama`, `~/.ollama/logs/server.log`, `docker logs`), accessed 2026-10-09 · `ollama/ollama` repository, `cmd/cmd.go` (subcommand list, no `logs`). [https://docs.ollama.com/troubleshooting](https://docs.ollama.com/troubleshooting) · [https://github.com/ollama/ollama](https://github.com/ollama/ollama)
 [^10]: Ollama, *API Reference* (`/api/generate`, `/api/chat` endpoints and `eval_count` / `eval_duration` / `prompt_eval_duration` fields; no `/metrics` endpoint), accessed 2026-10-09. [https://docs.ollama.com/api](https://docs.ollama.com/api)
-[^11]: LiteLLM, *OpenTelemetry Integration* (`litellm_settings.callbacks: ["otel"]`, `OTEL_EXPORTER` / `OTEL_ENDPOINT` variables), accessed 2026-10-09 · vLLM Project, *CLI Reference — `vllm serve`* (`--otlp-traces-endpoint`), accessed 2026-10-09. [https://docs.litellm.ai/docs/observability/opentelemetry_integration](https://docs.litellm.ai/docs/observability/opentelemetry_integration) · [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/)
+[^11]: LiteLLM, *OpenTelemetry Integration* (`litellm_settings.callbacks: ["otel"]`, `OTEL_EXPORTER` / `OTEL_ENDPOINT` variables), accessed 2026-10-09 · vLLM Project, *CLI Reference — `vllm serve`* (`--otlp-traces-endpoint`, `--collect-detailed-traces all|model|worker`), accessed 2026-10-09. [https://docs.litellm.ai/docs/observability/opentelemetry_integration](https://docs.litellm.ai/docs/observability/opentelemetry_integration) · [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/)
 [^12]: Arize AI, `Arize-ai/phoenix` repository, `LICENSE` file (Elastic License 2.0) and *Release arize-phoenix-v20.0.0*, 2026-08-11. [https://github.com/Arize-ai/phoenix/blob/main/LICENSE](https://github.com/Arize-ai/phoenix/blob/main/LICENSE) · [https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.0.0](https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.0.0)
+[^13]: vLLM Project, *Release v0.30.0* (normalization of frontend HTTP label cardinality; advisory GHSA-5fj9-pfhr-6j48), 2026-09-22. [https://github.com/vllm-project/vllm/releases/tag/v0.30.0](https://github.com/vllm-project/vllm/releases/tag/v0.30.0) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-5fj9-pfhr-6j48](https://github.com/vllm-project/vllm/security/advisories/GHSA-5fj9-pfhr-6j48)
+[^14]: vLLM Project, `vllm-project/vllm` repository, `examples/observability/prometheus_grafana/` (README, `docker-compose.yaml`, `prometheus.yaml`, `grafana.json`) and `examples/observability/dashboards/grafana/` (`performance_statistics.json`, `query_statistics.json`), `main` tree accessed 2026-10-10. [https://github.com/vllm-project/vllm/tree/main/examples/observability/prometheus_grafana](https://github.com/vllm-project/vllm/tree/main/examples/observability/prometheus_grafana)

@@ -427,7 +427,7 @@ Delimiting is not enough against **data injection** (*agent data injection*): in
 
 ## 8. Model supply chain
 
-`ollama pull model:tag` and `huggingface-cli download` pull gigabytes of opaque data from the Internet. Although `.safetensors` and `.gguf` formats are not executable in the traditional sense (unlike legacy `.pt` / PyTorch pickle), a **backdoored** model may be published on HuggingFace or Ollama Hub: it behaves normally 99% of the time but runs malicious behavior when a specific keyword is injected in the prompt.
+`ollama pull model:tag` and `hf download` pull gigabytes of opaque data from the Internet. Although `.safetensors` and `.gguf` formats are not executable in the traditional sense (unlike legacy `.pt` / PyTorch pickle), a **backdoored** model may be published on HuggingFace or Ollama Hub: it behaves normally 99% of the time but runs malicious behavior when a specific keyword is injected in the prompt.
 
 > [!warning] Supply chain risk
 > In a sovereign or air-gapped infrastructure, **download models only from official publisher repos** (`meta-llama`, `Qwen`, `mistralai`, `microsoft`) and **verify the SHA-256 hash** before promoting to production.
@@ -440,7 +440,7 @@ Delimiting is not enough against **data injection** (*agent data injection*): in
 EXPECTED_HASH="abc123def456..."   # example
 
 # 2. Download model
-huggingface-cli download bartowski/Llama-3.1-70B-Instruct-GGUF \
+hf download bartowski/Llama-3.1-70B-Instruct-GGUF \
   --include "Llama-3.1-70B-Instruct-Q4_K_M.gguf" \
   --local-dir ./models/
 
@@ -540,7 +540,7 @@ This combination provides transit encryption (WireGuard), TLS encryption (Caddy)
 
 ## 10. Logging and traceability
 
-For GDPR/AI Act compliance, interactions with an LLM processing personal data must be traced.
+Interaction traceability is a security and accountability requirement (GDPR, Art. 5 and 32) for any LLM processing personal data; the AI Act adds a logging obligation (Art. 12 and 26) for high-risk systems only, applicable from 2 December 2027 (Annex III) or 2 August 2028 (Annex I) since Regulation (EU) 2026/1744[^20].
 
 **Minimal recommended level:**
 - Timestamp of each request
@@ -587,7 +587,7 @@ For GDPR/AI Act compliance, interactions with an LLM processing personal data mu
 
 [^8]: Hugging Face, *Download files from the Hub* (`huggingface_hub` v2.2.0 guide: `hf download` CLI, `--include` / `--exclude` / `--revision` / `--dry-run` options, no hash verification option; SHA-256 of LFS files available on the Hub), read on 2026-10-09. [https://huggingface.co/docs/huggingface_hub/guides/download](https://huggingface.co/docs/huggingface_hub/guides/download)
 [^9]: Tailscale, *How Tailscale Works* — official documentation (WireGuard, MagicDNS, DERP relays, ACLs). [https://tailscale.com/blog/how-tailscale-works](https://tailscale.com/blog/how-tailscale-works)
-[^10]: Cloudflare, *Cloudflare Tunnel documentation* (HTTP/HTTPS tunnels without open port, routing via Cloudflare network). [https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
+[^10]: Cloudflare, *Cloudflare Tunnel* — official documentation (HTTP/HTTPS tunnels without open port, routing via Cloudflare network). [https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 [^11]: Twingate, *How Twingate Works* — official documentation (Zero Trust Network Access, granular per-resource access). [https://www.twingate.com/docs/how-twingate-works](https://www.twingate.com/docs/how-twingate-works)
 [^12]: OWASP GenAI Security Project, *OWASP GenAI LLM Top 10 — 2026 Edition* (published 2026-08-03) and announcement of 2026-09-01 ("Excessive Agency now number three", Agent Control Standard). [https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) · [https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/)
 [^13]: vLLM, *Security* (page dated 2026-09-26: `--api-key` only covers `/v1`, `/v2`, `/inference`, `/cohere`; reverse proxy recommended) and *vllm serve* (CLI). [https://docs.vllm.ai/en/stable/usage/security/](https://docs.vllm.ai/en/stable/usage/security/) · [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/)
@@ -597,11 +597,12 @@ For GDPR/AI Act compliance, interactions with an LLM processing personal data mu
 [^17]: arXiv 2607.05120, *Agent Data Injection* (corruption of data the agent treats as reliable, without any instruction; demonstrated on several coding and browsing agents), 2026-07-06. [https://arxiv.org/abs/2607.05120](https://arxiv.org/abs/2607.05120)
 [^18]: MITRE CVE, *CVE-2026-102697* (Ollama: the Bash tool approval parser in agent mode ignored shell control operators; fixed 0.31.2), 2026-09-29. [https://cveawg.mitre.org/api/cve/CVE-2026-102697](https://cveawg.mitre.org/api/cve/CVE-2026-102697)
 [^19]: GitHub Advisory Database, *GHSA-4v28-j6q3-5m4r* (Open WebUI, CVE-2026-87996, SSRF via DNS rebinding in the Playwright loader, CVSS 7.7, versions 0.9.6 → < 0.11.1, fixed 0.11.1, 2026-08-31); CERT/CC, *VU#518910* (Ollama, CVE-2026-5757, out-of-bounds read/write when quantizing an imported GGUF, "patch not yet available", 2026-04-22), read on 2026-10-10. [https://github.com/advisories/GHSA-4v28-j6q3-5m4r](https://github.com/advisories/GHSA-4v28-j6q3-5m4r) · [https://kb.cert.org/vuls/id/518910](https://kb.cert.org/vuls/id/518910)
+[^20]: Regulation (EU) 2026/1744 of 24 July 2026 amending Regulation (EU) 2024/689 (AI Act): postponement of the application of high-risk system obligations to 2 December 2027 (Annex III) and 2 August 2028 (Annex I); logging under Art. 12 and 26, OJ 2026-07-24. [https://eur-lex.europa.eu/eli/reg/2026/1744/oj](https://eur-lex.europa.eu/eli/reg/2026/1744/oj); Regulation (EU) 2016/679 (GDPR), Art. 5 and 32. [https://eur-lex.europa.eu/eli/reg/2016/679/oj](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
 
 - [OWASP Top 10 for LLM Applications v2025](https://genai.owasp.org/llm-top-10/) — official LLM01–LLM10:2025 grid
 - [OWASP GenAI LLM Top 10 — 2026 Edition](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) — 2026 edition, mapping in section 5
 - [Firecracker MicroVM](https://firecracker-microvm.github.io/) — lightweight isolation for untrusted code execution
-- [Podman Rootless Containers](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md)
+- [Podman Rootless Containers](https://github.com/podman-container-tools/podman/blob/main/docs/tutorials/rootless_tutorial.md)
 - [Headscale — self-hosted Tailscale server](https://github.com/juanfont/headscale)
 - [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|🔭 Vision: Custodian Agent]] — section on indirect prompt injection
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|🔒 Sovereignty & Privacy]] — GDPR/AI Act grid
