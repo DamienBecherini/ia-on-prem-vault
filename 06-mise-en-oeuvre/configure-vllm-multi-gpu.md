@@ -3,8 +3,8 @@ title: "⚙️ Configurer vLLM en production multi-GPU"
 description: Installation, configuration tensor parallel, déploiement multi-nœuds avec Ray, et bonnes pratiques de production pour vLLM sur GPU NVIDIA.
 sidebar:
   order: 5
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -14,7 +14,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 > vLLM transforme un serveur GPU en API d'inférence haute performance. Ce guide couvre l'installation, la configuration mono et multi-GPU, le déploiement multi-nœuds via Ray, et les paramètres critiques pour la production.
 
 > [!info] Prérequis
-> Ce guide suppose des GPU NVIDIA avec CUDA 12.x et Python 3.10+. Pour Apple Silicon ou AMD ROCm, les instructions d'installation diffèrent — voir la [documentation officielle vLLM](https://docs.vllm.ai/en/stable/getting_started/installation.html).
+> Ce guide suppose des GPU NVIDIA (capacité de calcul ≥ 7.5) avec un pilote compatible **CUDA 13.0** — la cible par défaut des roues et images vLLM depuis la 0.28 (août 2026 ; des variantes CUDA 12.9 restent publiées, tag `-cu129`) — et **Python 3.11 à 3.14**[^1][^9]. Pour Apple Silicon ou AMD ROCm, les instructions d'installation diffèrent — voir la [documentation officielle vLLM](https://docs.vllm.ai/en/stable/getting_started/installation/gpu/).
 
 ---
 
@@ -23,7 +23,8 @@ verified_hitl_url: "https://damien.becherini.fr"
 ### Via pip (recommandé)
 
 ```bash
-# Python 3.10-3.12, CUDA 12.1+
+# Python 3.11-3.14 ; roue par défaut CUDA 13.0
+# (variante CUDA 12.9 : pip install vllm --extra-index-url https://download.pytorch.org/whl/cu129)
 pip install vllm
 
 # Vérification
@@ -98,8 +99,8 @@ vllm serve TheBloke/Llama-2-70B-GPTQ \
   --dtype float16
 ```
 
-> [!warning] GGUF non supporté nativement
-> vLLM ne lit pas les fichiers GGUF (format Ollama/llama.cpp). Utilisez des poids HuggingFace natifs (safetensors) ou des quantifications AWQ/GPTQ. Pour convertir un modèle, voir [[06-mise-en-oeuvre/migrate-ollama-to-vllm|Migration Ollama → vLLM]].
+> [!warning] GGUF : expérimental seulement
+> vLLM peut charger un GGUF via le plugin `vllm-gguf-plugin` (ex. `vllm serve unsloth/Qwen3-0.6B-GGUF:Q4_K_M --tokenizer Qwen/Qwen3-0.6B`), mais le projet qualifie ce support de « hautement expérimental et peu optimisé »[^10]. En production, utilisez des poids HuggingFace natifs (safetensors) ou des quantifications AWQ/GPTQ/FP8. Pour convertir un modèle, voir [[06-mise-en-oeuvre/migrate-ollama-to-vllm|Migration Ollama → vLLM]].
 
 ---
 
@@ -177,11 +178,12 @@ ray status
 vllm serve meta-llama/Llama-3.1-405B-Instruct \
   --tensor-parallel-size 4 \        # 4 GPU par nœud
   --pipeline-parallel-size 2 \      # 2 nœuds
+  --distributed-executor-backend ray \
   --host 0.0.0.0 \
   --port 8000
 ```
 
-vLLM et Ray gèrent automatiquement la répartition : les 4 premiers GPU (nœud 0) traitent les premières couches, les 4 suivants (nœud 1) les suivantes[^4].
+vLLM et Ray gèrent automatiquement la répartition : les 4 premiers GPU (nœud 0) traitent les premières couches, les 4 suivants (nœud 1) les suivantes[^4]. La doc officielle fournit `examples/ray_serving/run_cluster.sh` pour démarrer head et workers dans l'image `vllm/vllm-openai` (une `VLLM_HOST_IP` par nœud) ; sans Ray, lancez `vllm serve … --nnodes 2 --node-rank 0 --master-addr HEAD_IP` sur le head et `--node-rank 1 --headless` sur le worker[^4].
 
 ### Désagrégation Prefill / Decode (2026)
 
@@ -216,7 +218,7 @@ export VLLM_API_KEY="VOTRE-TOKEN-A-REMPLACER"
 vllm serve ...
 ```
 
-Les clients doivent envoyer `Authorization: Bearer VOTRE-TOKEN-A-REMPLACER`.
+Les clients doivent envoyer `Authorization: Bearer VOTRE-TOKEN-A-REMPLACER`. Attention : `--api-key` ne protège que les chemins `/v1`, `/v2` et `/inference` — `/tokenize`, `/metrics` ou `/invocations` restent accessibles sans clé[^8][^11]. En production, placez un reverse proxy authentifiant devant *tous* les chemins (voir [[06-mise-en-oeuvre/local-inference-security|Sécurité]]).
 
 ### Limites et timeouts
 
@@ -231,7 +233,7 @@ vllm serve ... \
 
 ### Optimisation KV Cache — quantification FP8
 
-Sur GPU NVIDIA Hopper (H100, H200), la quantification du KV Cache en FP8 réduit son empreinte de ~50% sans perte de qualité notable[^6] :
+Sur GPU NVIDIA (CUDA 11.8+) et AMD ROCm, la quantification du KV Cache en FP8 divise par deux son empreinte par rapport au BF16 ; sans calibration, toutes les échelles valent 1.0 — la doc recommande de calibrer avec `llm-compressor` et d'exclure les couches à fenêtre glissante (`--kv-cache-dtype-skip-layers sliding_window`)[^6] :
 
 ```bash
 vllm serve ... \
@@ -242,13 +244,14 @@ La taille du KV Cache effectivement allouée est écrite dans les logs de démar
 
 ### Automatic Prefix Caching (APC) — indispensable pour RAG et agents
 
-En environnement multi-utilisateurs ou multi-agents, plusieurs requêtes partagent souvent le même **System Prompt** (500-2000 tokens) ou le même document RAG en contexte. Sans APC, vLLM calcule et stocke le KV Cache de ce préfixe **N fois** — une fois par requête — gaspillant VRAM et temps de calcul.
+En environnement multi-utilisateurs ou multi-agents, plusieurs requêtes partagent souvent le même **System Prompt** (500-2000 tokens) ou le même document RAG en contexte. Sans APC, vLLM calcule et stocke le KV Cache de ce préfixe **N fois** — une fois par requête — gaspillant VRAM et temps de calcul. Depuis l'architecture V1, l'APC est activé par défaut : il n'y a rien à faire pour en bénéficier[^7].
 
 ```bash
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
-  --enable-prefix-caching \            # active le hachage de blocs de prompt
   --max-model-len 8192 \
   --gpu-memory-utilization 0.90
+# L'APC est actif par défaut ; --no-enable-prefix-caching pour le couper,
+# --prefix-caching-hash-algo xxhash pour un hachage plus rapide (sha256 par défaut)
 ```
 
 **Fonctionnement :** vLLM hache chaque bloc de 16 tokens. Si une nouvelle requête commence par la même séquence de blocs qu'une requête précédente encore en cache GPU, les vecteurs Key/Value sont réutilisés directement — sans recalcul du Prefill[^7].
@@ -261,7 +264,7 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
 | Pipeline RAG : même contexte document partagé | recalcul intégral × N | hit cache : ~96% VRAM économisée sur le préfixe |
 
 > [!note] Compatibilité
-> L'APC est **incompatible** avec la désagrégation Prefill/Decode (`--kv-transfer-config`). Ne pas activer les deux simultanément. Compatible avec le Tensor Parallelism et la quantification FP8 du KV Cache[^7].
+> Vérifiez la matrice de compatibilité du connecteur KV choisi (NIXL, LMCache) avant de combiner APC et désagrégation Prefill/Decode (`--kv-transfer-config`) ; la documentation vLLM ne pose pas d'incompatibilité générale[^5]. L'APC est compatible avec le Tensor Parallelism et la quantification FP8 du KV Cache[^7].
 
 ### Systemd service (Linux)
 
@@ -276,8 +279,9 @@ Type=simple
 User=vllm
 Environment="HF_HOME=/data/models"
 Environment="CUDA_VISIBLE_DEVICES=0,1,2,3"
-ExecStart=/usr/bin/python -m vllm.entrypoints.openai.api_server \
-  --model meta-llama/Llama-3.1-70B-Instruct \
+# `python -m vllm.entrypoints.openai.api_server` est déprécié depuis vLLM 0.29 : utiliser `vllm serve`
+# (adapter le chemin de `vllm` à l'environnement virtuel ; le modèle est l'argument positionnel)
+ExecStart=/usr/local/bin/vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --tensor-parallel-size 4 \
   --host 127.0.0.1 \
   --port 8000 \
@@ -332,11 +336,14 @@ curl http://localhost:8000/metrics | grep vllm
 
 ## Sources et Références
 
-[^1]: vLLM Project, *Installation — Docker* (image officielle `vllm/vllm-openai`, CUDA 12.x, dépendances). [https://docs.vllm.ai/en/stable/getting_started/installation.html](https://docs.vllm.ai/en/stable/getting_started/installation.html)
+[^1]: vLLM Project, *Installation — GPU* (image officielle `vllm/vllm-openai`, Python 3.11–3.14, capacité de calcul ≥ 7.5, roue par défaut CUDA 13.0 et variante `cu129`), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/getting_started/installation/gpu/](https://docs.vllm.ai/en/stable/getting_started/installation/gpu/)
 [^2]: vLLM Project, *Engine Arguments* (`--gpu-memory-utilization`, `--max-model-len`, `--max-num-seqs`, `--max-num-queued-reqs`, comportement KV Cache), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)
 [^3]: vLLM Project, *Parallelism and Scaling — Tensor Parallelism* (`--tensor-parallel-size`, sharding des poids, recommandations NVLink). [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/)
-[^4]: Anyscale & vLLM Blog, *Streamlined multi-node serving with Ray symmetric-run* (configuration Ray cluster, pipeline parallelism inter-nœuds). [https://www.anyscale.com/blog/streamlined-multi-node-serving](https://www.anyscale.com/blog/streamlined-multi-node-serving), Novembre 2025.
+[^4]: vLLM Project, *Parallelism and Scaling — Multi-node deployment* (`run_cluster.sh`, `--distributed-executor-backend ray`, `--nnodes` / `--node-rank` / `--headless`, InfiniBand et NCCL), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/)
 [^5]: vLLM Project, *Disaggregated Prefill and Decode* (`--kv-transfer-config`, connecteurs NIXL / LMCache / Mooncake / Offloading, statut expérimental), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/disagg_prefill/](https://docs.vllm.ai/en/stable/features/disagg_prefill/)
-[^6]: vLLM Project, *KV Cache Quantization* (FP8 KV cache, prise en charge NVIDIA Hopper, impact mémoire). [https://docs.vllm.ai/en/stable/features/quantization/fp8_kv_cache.html](https://docs.vllm.ai/en/stable/features/quantization/fp8_kv_cache.html)
+[^6]: vLLM Project, *Quantized KV Cache* (`--kv-cache-dtype fp8` / `fp8_e5m2`, CUDA 11.8+ et ROCm, calibration `llm-compressor`, `--kv-cache-dtype-skip-layers`), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/quantized_kvcache/](https://docs.vllm.ai/en/stable/features/quantization/quantized_kvcache/)
 [^7]: vLLM Project, *Automatic Prefix Caching* (fonctionnement par blocs de 16 tokens, impact TTFT, compatibilité tensor parallelism). [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching.html](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching.html)
 [^8]: vLLM Project, *CLI Reference — `vllm serve`* (liste exhaustive des flags : absence de `--role`, `--request-timeout`, `--calculate-kv-cache-size` ; `--speculative-config`), consulté le 2026-10-09 · vLLM Project, *Release v0.29.0* (ajout de `--max-num-queued-reqs`), 2026-09-09. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/releases/tag/v0.29.0](https://github.com/vllm-project/vllm/releases/tag/v0.29.0)
+[^9]: vLLM Project, *Release v0.28.0* (roue PyPI et image Docker par défaut en CUDA 13.0, variantes `-cu129`), 2026-08-26. [https://github.com/vllm-project/vllm/releases/tag/v0.28.0](https://github.com/vllm-project/vllm/releases/tag/v0.28.0)
+[^10]: vLLM Project, *GGUF* (plugin `vllm-gguf-plugin`, support « highly experimental and under-optimized », tokenizer du modèle de base), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/gguf/](https://docs.vllm.ai/en/stable/features/quantization/gguf/)
+[^11]: vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`--api-key` limité à `/v1`, `/v2`, `/inference` ; `/tokenize` non authentifié), 2026-10-06. [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)

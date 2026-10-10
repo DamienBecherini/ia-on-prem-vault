@@ -4,15 +4,15 @@ description: Total cost of ownership (TCO) analysis of the four on-premise bluep
 sidebar:
   order: 5
 prices_valid_as_of: "2026-10"
-last_verified: "2026-10-09"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
-last_modified: "2026-10-09"
+last_modified: "2026-10-10"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] In brief
-> Cloud AI costs little at startup but a lot at scale. On-premise requires a high initial investment but marginal cost tends toward zero. At October 2026 prices, the break-even point of an SME appliance (Blueprint B) is about 13 months against GPT-5.5, 19 months against Claude Opus 5.5, and is never reached against the budget tiers billed under $1 per million tokens: in 2026, sovereignty, not cost, is the decisive argument for on-premise in an SME.
+> Cloud AI costs little at startup but a lot at scale. On-premise requires a high initial investment but marginal cost tends toward zero. At October 2026 prices, the break-even point of an SME appliance (Blueprint B) is about 7 months against Claude Fable 5.1, 13 months against GPT-5.5, 19 months against Claude Opus 5.5, and is never reached against the budget tiers billed under $1 per million tokens — including Chinese APIs such as DeepSeek, whose data is processed outside the EU: in 2026, sovereignty, not cost, is the decisive argument for on-premise in an SME.
 
 ---
 
@@ -20,7 +20,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 Before comparing, align the units. LLM usage is measured in **millions of tokens processed per month** — that is the cloud billing unit, and it is also the right denominator for calculating on-premise cost.
 
-**Cloud side:** providers bill per token (input + output separately). In 2026, reference rates for 70B-class models:
+**Cloud side:** providers bill per token (input + output separately). Reference rates captured in October 2026, from budget model to frontier model:
 
 > [!warning] Prices — validity
 > Prices captured in **October 2026** (snapshot of 2026-10-09, USD excluding tax; indicative conversion $1 ≈ €0.92). Cloud API prices change frequently: OpenAI doubled GPT-5.5 in April 2026, Google has scheduled a doubling of Gemini Flash prices on 1 January 2027, Groq withdrew the public price of Llama 3.3 70B.
@@ -34,6 +34,7 @@ Before comparing, align the units. LLM usage is measured in **millions of tokens
 | OpenAI GPT-6 Sol[^1] | $2.00/M tok | $10.00/M tok | Proprietary, mid-range |
 | OpenAI GPT-6 Luna[^1] | $0.10/M tok | $0.50/M tok | Proprietary, budget |
 | OpenAI GPT-4o (legacy)[^1] | $2.50/M tok | $10.00/M tok | Proprietary, previous generation |
+| Anthropic Claude Fable 5.1 / Mythos 5.1 (captured 2026-10-10)[^2] | $10.00/M tok | $50.00/M tok | Proprietary, frontier + (Mythos 5.1 in limited availability) |
 | Anthropic Claude Opus 5.5[^2] | $4.00/M tok | $20.00/M tok | Proprietary, high-end |
 | Anthropic Claude Sonnet 5.5[^2] | $2.00/M tok | $10.00/M tok | Proprietary, mid-range |
 | Anthropic Claude Haiku 5.5 (prompt ≤ 100k)[^2] | $0.10/M tok | $0.50/M tok | Proprietary, budget |
@@ -41,7 +42,8 @@ Before comparing, align the units. LLM usage is measured in **millions of tokens
 | Mistral Large 4 (API preview of 2026-10-06)[^3] | $1.36/M tok | $4.18/M tok | Preview; open weights announced for late October 2026 |
 | Groq (openai/gpt-oss-120b)[^4] | $0.15/M tok | $0.60/M tok | Open weights, cloud (Llama 3.3 70B: quote-based pricing since 2026) |
 | Together AI (Llama 3.3 70B)[^5] | $1.04/M tok | $1.04/M tok | Open weights, cloud |
-| Generic 70B cloud API | ~$1.00–3.00/M tok | ~$1.00–4.00/M tok | Range |
+| DeepSeek V4.1 Flash (DeepSeek API, `deepseek-flash` model, peak hours; captured 2026-10-10)[^11] | $0.30/M tok | $1.20/M tok | Open weights, Chinese cloud — half price off-peak; **data processed in China, outside the EU and the United States** |
+| Open-weights cloud API (70B–300B MoE)[^4][^5] | ~$0.15–1.40/M tok | ~$0.30–4.40/M tok | Together AI / Groq range, October 2026 |
 
 *Note: prices change frequently. Verify current rates before building a business case.*
 
@@ -66,18 +68,19 @@ To make the comparison concrete, use a typical SME case:
 
 | Item | Amount |
 | :-- | :-- |
-| Hardware (RTX 4090 PC or Mac Pro 64 GB) | €2,500 – €3,500 (4-year amortization) |
-| Monthly amortization | ~€55 – €75/month |
+| Hardware (used RTX 3090/4090 PC, or Mac Studio M5 Max 64 GB at €3,659 incl. VAT, or Framework Desktop 64 GB at €2,209 incl. VAT — French prices captured 2026-10-09)[^7][^8] | €2,200 – €3,700 (4-year amortization) |
+| Monthly amortization | ~€45 – €75/month |
 | Electricity (150W × 8h/day × 30 days × €0.20/kWh) | ~€7/month |
-| **Total monthly cost** | **~€65 – €85/month** |
+| **Total monthly cost** | **~€55 – €85/month** |
 
-**Cloud equivalent (GPT-4o-class API, ~5 M tokens/month):**
-- Input: 5 M × $2.50 = $12.50/month
-- Output: 2.5 M × $10.00 = $25.00/month
-- **Cloud total ≈ $37/month (~€35)**
+**Cloud equivalent (5 M input tokens + 2.5 M output tokens per month, October 2026 prices):**
+- Haiku 5.5 or GPT-6 Luna ($0.10 / $0.50): 0.5 + 1.25 = **~$1.75/month (~€2)**
+- Sonnet 5.5 or GPT-6 Sol ($2 / $10): 10 + 25 = **$35/month (~€32)**
+- GPT-5.5 ($5 / $30): 25 + 75 = **$100/month (~€92)**
+- Claude Fable 5.1 ($10 / $50): 50 + 125 = **$175/month (~€161)**
 
 > [!note] Break-even point A
-> At low volume (< 5 M tokens/month), cloud is often cheaper than a dedicated workstation — unless **data sovereignty** is non-negotiable. On-premise is justified from the first token if your data cannot leave your premises.
+> At low volume (< 5 M tokens/month), cloud is often cheaper than a dedicated workstation — except against the most expensive frontier models (Fable 5.1: ~€161/month versus €55 to €85 on-premise) or if **data sovereignty** is non-negotiable. On-premise is justified from the first token if your data cannot leave your premises.
 
 ---
 
@@ -87,29 +90,33 @@ To make the comparison concrete, use a typical SME case:
 
 | Item | Amount |
 | :-- | :-- |
-| Mac Studio M4 Max 128 GB | €4,500 (4-year amortization) |
+| 128 GB appliance (Framework Desktop 128 GB at €3,889 incl. VAT, out of stock · Mac Studio M5 Max 128 GB, price on Apple's configurator · DGX Spark 128 GB ≈ $6,950 ≈ €6,400 — captured 2026-10-09)[^7][^8][^9] | €3,900 – €6,400, €4,500 retained (4-year amortization) |
 | Monthly amortization | ~€95/month |
 | Electricity (100W × 12h/day × 30 days × €0.20/kWh) | ~€7/month |
 | Maintenance, backup, support | ~€50/month |
 | **Total monthly cost** | **~€155/month** |
 
-**Cloud equivalent (22.5 M input tokens + 11.25 M output tokens per month, prices of 2026-10-09):**
+**Cloud equivalent (22.5 M input tokens + 11.25 M output tokens per month, prices of 2026-10-09; Fable 5.1 and DeepSeek captured 2026-10-10):**
 - Haiku 5.5 or GPT-6 Luna ($0.10 / $0.50): 2.25 + 5.6 = **~$8/month** (~€7, budget tier)
+- DeepSeek V4.1 Flash, DeepSeek API at peak hours ($0.30 / $1.20): 6.75 + 13.5 = **~$20/month** (~€19, ~€9 off-peak — data processed in China)
 - Sonnet 5.5 or GPT-6 Sol ($2 / $10): 45 + 112.5 = **~$158/month** (~€145, mid-range)
 - GPT-5.5 ($5 / $30): 112.5 + 337.5 = **~$450/month** (~€414, frontier model)
+- Claude Fable 5.1 ($10 / $50): 225 + 562.5 = **~$787/month** (~€724, frontier +)
 
 | API choice (prices of 2026-10-09, $1 ≈ €0.92) | Cloud cost/month | Break-even |
 | :-- | :-- | :-- |
 | Budget: Haiku 5.5, GPT-6 Luna, Mistral Large 3 ($0.10–0.50 / $0.50–1.50)[^1][^2][^3] | ~€7 – 26/month | ❌ Never amortized on cost alone |
+| Chinese budget: DeepSeek V4.1 Flash, DeepSeek API ($0.30 / $1.20 at peak hours, half off-peak)[^11] | ~€9 – 19/month | ❌ Never amortized on cost alone — and data processed in China, outside the EU |
 | Open-weights cloud (Together AI Llama 3.3 70B, $1.04/M)[^5] | ~€32/month | ❌ Never amortized on cost alone |
 | Mid-range: Sonnet 5.5, GPT-6 Sol ($2 / $10)[^1][^2] | ~€145/month | ~51 months (beyond the amortization period) |
 | High-end: Opus 5.5, GPT-5.6 Sol ($4 / $20)[^1][^2] | ~€290/month | ~19 months |
 | Frontier: GPT-5.5 ($5 / $30)[^1] | ~€414/month | **~13 months** |
+| Frontier +: Claude Fable 5.1 ($10 / $50)[^2] | ~€724/month | **~7 months** |
 
-*Break-even = €4,500 of capital / (monthly cloud cost − €57/month of on-premise running cost excluding amortization), formula from the "Calculate your own TCO" section.*
+*Break-even = €4,500 of capital / (monthly cloud cost − €57/month of on-premise running cost excluding amortization), formula from the "Calculate your own TCO" section: 4,500 / (724 − 57) ≈ 6.7 months against Fable 5.1; 4,500 / (414 − 57) ≈ 12.6 months against GPT-5.5.*
 
 > [!tip] Sovereignty changes the calculation
-> For an SME subject to GDPR processing client data, "open-weights cloud is cheaper" is not enough — a third-party host remains a recipient under GDPR. Against budget APIs (Haiku 5.5, Mistral Large 3, open-weights cloud), the on-premise premium is in the range of €120 to €150/month; against frontier models (GPT-5.5, Opus 5.5), on-premise is already cheaper. In the first case, that premium can avoid much higher legal fees.
+> For an SME subject to GDPR processing client data, "open-weights cloud is cheaper" is not enough — a third-party host remains a recipient under GDPR, and an API operated from China (DeepSeek) adds a transfer outside the EU. Against budget APIs (Haiku 5.5, Mistral Large 3, DeepSeek, open-weights cloud), the on-premise premium is in the range of €120 to €150/month; against frontier models (GPT-5.5, Opus 5.5, Fable 5.1), on-premise is already cheaper. In the first case, that premium can avoid much higher legal fees.
 
 ---
 
@@ -119,24 +126,27 @@ To make the comparison concrete, use a typical SME case:
 
 | Item | Amount |
 | :-- | :-- |
-| 4× Mac Mini M4 Pro 64 GB | 4 × €1,800 = €7,200 (4-year amortization) |
+| 4× Mac mini M5 Pro 64 GB (base 24 GB at €1,999 incl. VAT, 64 GB option on Apple's configurator) or 4× Mac Studio M5 Max 64 GB at €3,659 incl. VAT — French prices captured 2026-10-09[^7] | ~€9,000 – €14,600 (4-year amortization) |
 | Thunderbolt hub + cables | ~€300 |
-| Monthly amortization | ~€190/month |
+| Monthly amortization | ~€195 – €310/month |
 | Electricity (4 × 30W × 16h/day × 30 days × €0.20) | ~€12/month |
 | Maintenance and administration | ~€80/month |
-| **Total monthly cost** | **~€280/month** |
+| **Total monthly cost** | **~€285 – €400/month** |
 
 **Cloud equivalent for models > 100B:**
 
 Open-weights models in this class (DeepSeek V4, GLM-5.3, Kimi K3) are available via OpenAI-compatible APIs from specialized hosts (Together AI, Groq) at rates often lower than proprietary models — but hosted outside your premises[^5]:
 
-| Service | Estimated 100B+ rate | Cost for 33 M tok/month |
+| Service (prices of 2026-10-09, USD excluding tax) | 100B+ rate | Cost for 33.75 M tok/month (2/3 input) |
 | :-- | :-- | :-- |
-| Together AI (DeepSeek V3) | ~$2.7/M tok | ~€90/month |
-| Self-hosted GPU cloud (A100 × 4, spot) | ~$3–6/GPU-hour | ~€500–€1,500/month |
+| Together AI (DeepSeek V4 Pro)[^5] | $1.32 / $3.96/M tok | ~$74 ≈ €68/month |
+| Together AI (DeepSeek V4.1 Flash)[^5] | $0.30 / $1.20/M tok | ~$20 ≈ €18/month |
+| On-demand GPU cloud (4× A100 80 GB at $2.79/h, or 4× H100 at $3.99/h, 24/7)[^6] | ~$8,150 – 11,650/month | ~€7,500 – €10,700/month (≈ €2,500 – €3,500 at 8 h/day) |
 
 > [!note] Break-even point C
-> For frontier models (100B+), the desktop cluster is competitive from 3–6 months versus on-demand GPU cloud. Its main advantage remains permanent, predictable access, without quota risk or API deprecation.
+> Against 24/7 GPU cloud rental (€7,500 to €10,700/month), the desktop cluster is amortized in one to two months. Against serverless APIs serving the same open-weights models (DeepSeek V4 at Together AI: €18 to €68/month for 33.75 M tokens), it is never amortized on cost alone: its advantage is confidentiality, permanent access, and the absence of quotas.
+
+*Calculation: €9,300 to €14,900 of capital / (€7,500/month of GPU cloud − €92/month of cluster running cost excluding amortization) ≈ 1.3 to 2 months.*
 
 ---
 
@@ -157,12 +167,14 @@ Open-weights models in this class (DeepSeek V4, GLM-5.3, Kimi K3) are available 
 
 | Service | Estimated cost | Comment |
 | :-- | :-- | :-- |
-| GPT-4o API (500 M tok/month) | ~$3,000–5,000/month | No custom SLA guarantee |
+| Cloud API (500 M tok/month, 2/3 input, prices of 2026-10-09)[^1][^2] | ~$120 (Haiku 5.5) to ~$6,700/month (GPT-5.5); ~$11,700 (Fable 5.1) | No custom SLA guarantee; the HGX node only becomes cheaper beyond ~1 G tokens/month against GPT-5.5 (~0.6 G against Fable 5.1) |
 | Dedicated GPU cloud (A100 × 8, on-demand) | ~$15,000–20,000/month | Strong SLA, but high cost |
 | Reserved GPU cloud (1 year, H100 × 8) | ~$8,000–12,000/month | 1-year commitment |
 
 > [!note] Break-even point D
-> The HGX node becomes competitive after 24–36 months versus dedicated GPU cloud. Its real value is not purely economic: **full control** (data, models, SLA, model evolution), **5-year cost control**, and maximum regulatory compliance.
+> The HGX node becomes competitive after 25 to 43 months versus on-demand dedicated GPU cloud (Lambda prices of 2026-10-09)[^6], and only beyond about 1 billion tokens per month against a frontier API. Its real value is not purely economic: **full control** (data, models, SLA, model evolution), **5-year cost control**, and maximum regulatory compliance.
+
+*Calculation: €400,000 / (€15,000/month of 8× A100 on-demand − €5,700/month of ops and infrastructure) ≈ 43 months; €400,000 / (€21,400/month of 8× H100 on-demand − €5,700) ≈ 25 months. API threshold: €12,400 ≈ $13,500/month ÷ $13.3/M weighted (GPT-5.5) ≈ 1 G tokens/month.*
 
 ---
 
@@ -173,7 +185,7 @@ Monthly token volume          Sovereignty constraint   → Recommended blueprint
 ─────────────────────────────────────────────────────────────────────────────
 < 5 M tokens/month            Low                      → Cloud API (cost < on-prem)
 < 5 M tokens/month            Strong (GDPR, trade secret) → Blueprint A or B
-5–50 M tokens/month           Moderate                 → Blueprint B (TCO < GPT-4o cloud)
+5–50 M tokens/month           Moderate                 → Blueprint B if the comparator is a frontier model (GPT-5.5, Opus 5.5, Fable 5.1); otherwise API
 5–50 M tokens/month           Strong                   → Blueprint B mandatory
 > 50 M tokens/month           Any                      → Blueprint B or D
 100B+ models                  Any                      → Blueprint C (prototyping) or D (prod)
@@ -182,12 +194,14 @@ Monthly token volume          Sovereignty constraint   → Recommended blueprint
 
 ### 3-year TCO — visual recap
 
-| Blueprint | Cost/month | 3-year total | Equivalent cloud API 3 years |
+| Blueprint | Cost/month | 3-year total | Equivalent cloud API 3 years (October 2026 prices, $1 ≈ €0.92) |
 | :-- | :-- | :-- | :-- |
-| A (dev lab, 5 M tok/month) | ~€75 | ~€2,700 | ~€1,260 (Groq) / ~€7,400 (GPT-4o) |
-| B (SME, 34 M tok/month) | ~€155 | ~€5,580 | ~€1,200 (Groq) / ~€7,400 (GPT-4o) |
-| C (cluster, 34 M tok/month) | ~€280 | ~€10,080 | ~€3,200 (Together AI) |
-| D (datacenter, 500 M tok/month) | ~€12,400 | ~€446,400 | ~€108,000–720,000 (GPU cloud) |
+| A (dev lab, 5 M in + 2.5 M out/month) | ~€55 – €85 | ~€2,000 – €3,100 | ~€60 (Haiku 5.5) / ~€1,160 (Sonnet 5.5, GPT-6 Sol) / ~€3,300 (GPT-5.5) / ~€5,800 (Fable 5.1) |
+| B (SME, 34 M tok/month) | ~€155 | ~€5,580 | ~€260 (Haiku 5.5) / ~€670 (DeepSeek V4.1 Flash) / ~€1,160 (Together AI Llama 3.3 70B) / ~€5,200 (Sonnet 5.5) / ~€10,400 (Opus 5.5) / ~€14,900 (GPT-5.5) / ~€26,100 (Fable 5.1) |
+| C (cluster, 34 M tok/month, 100B+ models) | ~€285 – €400 | ~€10,300 – €14,400 | ~€670 (DeepSeek V4.1 Flash) / ~€2,460 (DeepSeek V4 Pro, Together AI) / ~€270,000 (4× A100 on-demand 24/7) |
+| D (datacenter, 500 M tok/month) | ~€12,400 | ~€446,400 | ~€77,000 (Sonnet 5.5) / ~€221,000 (GPT-5.5) / ~€386,000 (Fable 5.1) / ~€265,000 – €540,000 (8 GPUs, from 1-year reserved H100 to on-demand A100) |
+
+*Calculation: monthly cloud cost from sections A to D × 36 months (Fable 5.1 and DeepSeek captured 2026-10-10); GPU cloud: $8,000 to $12,000/month reserved (table D) and 8× A100 on-demand ≈ $16,300/month (Lambda, 2026-10-09)[^6].*
 
 > [!warning] Hidden costs not to forget
 > - **Training and onboarding** of the team on the on-premise stack
@@ -241,7 +255,7 @@ The TCO comparison above focuses mainly on **inference** (frozen model, text gen
 To arbitrate between two inference hardware options, the ratio **tokens per second per thousand euros invested** (tokens/s/k€) is more meaningful than raw speed alone.
 
 Example reading:
-- RTX 4090 (24 GB, ~€2,000): if it delivers ~60 tok/s on an 8B model → **~30 tok/s/k€**
+- RTX 5090 (32 GB, MSRP $1,999, but ≥ $5,000 ≈ €4,600 in stores in September 2026)[^10]: at ~60 tok/s on an 8B model → **~13 tok/s/k€** at the observed price, ~30 at MSRP — the ratio now depends as much on the shortage as on the silicon
 - Mac Studio M4 Max 128 GB (~€5,000): if it delivers ~10 tok/s on a 70B Q4 → **~2 tok/s/k€**
 
 These two figures are consistent: the Mac Studio serves much larger models than the RTX 4090, so direct comparison only makes sense for the **same model and same quantization**.
@@ -268,7 +282,13 @@ These two figures are consistent: the Mac Studio serves much larger models than 
 ## 📚 Sources and References
 
 [^1]: OpenAI, *API pricing* (GPT-5.5 $5 / $30, GPT-5.6 Sol $4 / $20 on promotion at least until 2026-11-21, GPT-6 Sol $2 / $10, GPT-6 Luna $0.10 / $0.50, GPT-4o legacy $2.50 / $10 per million tokens), captured 2026-10-09. [https://developers.openai.com/api/docs/pricing](https://developers.openai.com/api/docs/pricing)
-[^2]: Anthropic, *Pricing* (Claude Opus 5.5 $4 / $20, Sonnet 5.5 $2 / $10, Haiku 5.5 $0.10 / $0.50 per million tokens; Claude 3.5 Sonnet removed from the page), captured 2026-10-09. [https://platform.claude.com/docs/en/about-claude/pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+[^2]: Anthropic, *Pricing* (Claude Opus 5.5 $4 / $20, Sonnet 5.5 $2 / $10, Haiku 5.5 $0.10 / $0.50 per million tokens, captured 2026-10-09; Claude Fable 5.1 and Claude Mythos 5.1 $10 / $50, captured 2026-10-10, Mythos 5.1 in limited availability; Claude 3.5 Sonnet removed from the page). [https://platform.claude.com/docs/en/about-claude/pricing](https://platform.claude.com/docs/en/about-claude/pricing)
 [^3]: Mistral AI, *Pricing* (Mistral Large 3: $0.50 / $1.50 per million tokens), captured 2026-10-09. [https://mistral.ai/pricing](https://mistral.ai/pricing) · Mistral AI, *Mistral Large 4* (API preview $1.36 / $4.18, open weights announced for late October 2026), 2026-10-06. [https://mistral.ai/news/mistral-large-4](https://mistral.ai/news/mistral-large-4)
 [^4]: Groq, *GroqCloud — Models* (openai/gpt-oss-120b $0.15 / $0.60 per million tokens; Llama 3.3 70B and Llama 3.1 8B moved to "Enterprise / Contact sales", no public price), captured 2026-10-09. [https://console.groq.com/docs/models](https://console.groq.com/docs/models)
-[^5]: Together AI, *Pricing* (Llama 3.3 70B $1.04 / $1.04; DeepSeek V4 Pro $1.32 / $3.96, DeepSeek V4.1 Flash $0.30 / $1.20, GLM-5.3 and Kimi K3 via OpenAI-compatible API), captured 2026-10-09. [https://www.together.ai/pricing](https://www.together.ai/pricing)
+[^5]: Together AI, *Pricing* (Llama 3.3 70B $1.04 / $1.04; DeepSeek V4 Pro $1.32 / $3.96, DeepSeek V4.1 Flash $0.30 / $1.20, GLM-5.3 $1.40 / $4.40 and Kimi K3 $3 / $15 via OpenAI-compatible API), captured 2026-10-09. [https://www.together.ai/pricing](https://www.together.ai/pricing)
+[^6]: Lambda, *GPU Cloud Pricing* (on-demand: H100 SXM $3.99, A100 80 GB $2.79 per GPU-hour; H100 reserved 2 weeks to 1 year: $5.54 – 6.16), captured 2026-10-09. [https://lambda.ai/pricing](https://lambda.ai/pricing)
+[^7]: Apple, *Mac Studio* and *Mac mini* — Apple Store France (Mac Studio M5 Max 64 GB €3,659 incl. VAT; Mac mini M5 Pro 24 GB €1,999 incl. VAT; 128 GB and 64 GB options on the configurator only), captured 2026-10-09. [https://www.apple.com/fr/shop/buy-mac/mac-studio](https://www.apple.com/fr/shop/buy-mac/mac-studio) · [https://www.apple.com/fr/shop/buy-mac/mac-mini](https://www.apple.com/fr/shop/buy-mac/mac-mini)
+[^8]: Framework, *Framework Desktop — AMD Ryzen AI Max+ 395* (64 GB €2,209 incl. VAT, 128 GB €3,889 incl. VAT, out of stock), captured 2026-10-09. [https://frame.work/fr/fr/products/desktop-diy-amd-aimax300](https://frame.work/fr/fr/products/desktop-diy-amd-aimax300)
+[^9]: ServeTheHome, *NVIDIA DGX Spark 64GB Launched and Big 128GB GB10 Price Increases* (DGX Spark 128 GB ≈ $6,950, launched at $3,999; 64 GB version at $4,999 via OEMs), 2026-10-03. [https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/](https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/)
+[^10]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US* (up to $9,500 from third-party sellers for an MSRP of $1,999), 2026-09-14. [https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu](https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu)
+[^11]: DeepSeek, *Models & Pricing* (`deepseek-flash`, served by DeepSeek-V4.1-Flash: $0.30 / $1.20 per million tokens at peak hours — 01:00–04:00 and 06:00–10:00 UTC, Monday to Friday excluding Chinese public holidays — and half price the rest of the time; `deepseek-v4-pro` $1.32 / $3.96), captured 2026-10-10. [https://api-docs.deepseek.com/quick_start/pricing](https://api-docs.deepseek.com/quick_start/pricing) · DeepSeek, *Privacy Policy* ("we directly collect, process and store your Personal Data in People's Republic of China"), 2026-02-10. [https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)

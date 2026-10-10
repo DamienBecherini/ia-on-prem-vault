@@ -3,8 +3,8 @@ title: "OpenHuman"
 description: Harness d'agent open source (Rust + Tauri) avec mémoire hébergée par défaut, abonnement managé optionnel et mode Privacy local-only ; à configurer volontairement pour une posture on-premise.
 sidebar:
   order: 1
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -14,7 +14,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 OpenHuman est un agent open source (GPL-3.0) basé sur **Tauri + Rust**, livré en application de bureau, en terminal ou en serveur headless. Au 2026-10-09, sa mémoire n'est plus le [[00-lexique/memory-tree|Memory Tree]] local des premières versions : les documents, conversations et « learnings » sont stockés dans **CortexDB**, soit hébergé par TinyHumans (connexion requise), soit sur un endpoint CortexDB que vous opérez ; avant chaque tour, un « memory pack » borné en tokens est rappelé avec citations[^1][^2].
 
-Ce n'est cependant pas un outil 100% on-premise par défaut. Le README est explicite : l'expérience managée utilise encore des services OpenHuman pour la connexion au compte, le routage des modèles, la recherche web proxyfiée et certains flux OAuth via Composio[^3].
+Ce n'est cependant pas un outil 100% on-premise par défaut. La documentation est explicite : par défaut, le backend OpenHuman relaie les appels LLM, les jetons OAuth (119 applications via Composio), la recherche web et la mémoire hébergée ; même avec des modèles locaux, la connexion, la facturation et la gestion des intégrations passent par ce backend[^5][^7].
 
 > [!warning] Verdict souveraineté
 > **⚠️ Configurable** — intéressant pour son mode Privacy local-only, mais une posture on-premise stricte demande une configuration volontaire : modèle local, CortexDB que vous opérez, recherche auto-hébergée, intégrations directes et désactivation des chemins managés.
@@ -36,7 +36,7 @@ Pour ce vault, il a servi de référence au pattern [[00-lexique/memory-tree|Mem
 
 - **Cloud par défaut pour plusieurs fonctions critiques** : routage LLM, web search proxy, OAuth/intégrations managées[^3].
 - **Souveraineté non triviale** : il faut remplacer les chemins managés un par un.
-- **Projet jeune** : intéressant mais à auditer avant usage entreprise sensible.
+- **Produit en mutation rapide** : toujours « early beta » selon ses auteurs malgré une forte adoption (GPL-3.0, releases quasi quotidiennes, 674 PRs pour la v0.64.0 de septembre 2026) ; un abonnement managé (Free, Basic 19,99 $/mois, Pro 199,99 $/mois) finance le routage de modèles hébergé[^6].
 - **Surface d'intégration large** : Gmail, Slack, GitHub, Notion, etc. impliquent une gouvernance stricte des permissions.
 
 ## 🔒 Souveraineté et confidentialité
@@ -60,7 +60,7 @@ OpenHuman est pertinent comme :
 
 ## 📊 Maturité du projet
 
-Projet open-source en évolution rapide. À auditer avant déploiement client : fréquence des releases, dépendances réseau, modèle d'authentification, politique de conservation des tokens OAuth et options réelles de self-host.
+Projet open-source (GPL-3.0) en évolution très rapide (v0.57.5 en juin 2026, v0.64.15 au 2026-10-09), repositionné en harness d'agents (desktop, terminal, serveur headless, bibliothèque Rust). À auditer avant déploiement client : conservation des tokens OAuth côté backend, dépendance au backend pour la connexion, la facturation et les intégrations même en mode local-only, et options de self-host (CortexDB propre, cœur headless en Docker)[^5][^6].
 
 ## 🔗 Voir aussi
 
@@ -76,3 +76,5 @@ Projet open-source en évolution rapide. À auditer avant déploiement client : 
 [^3]: OpenHuman README — "Local + managed services, upfront", Ollama/LM Studio, Composio et backend managé. [https://github.com/tinyhumansai/openhuman/blob/main/README.md](https://github.com/tinyhumansai/openhuman/blob/main/README.md)
 [^4]: OpenHuman, *Privacy mode* (`local_only`, appliqué dans le cœur Rust ; runtimes locaux autorisés), docs lues le 2026-10-09. [https://tinyhumans.gitbook.io/openhuman/features/privacy-mode](https://tinyhumans.gitbook.io/openhuman/features/privacy-mode)
 [^5]: OpenHuman, *Privacy and security* (où vit la mémoire, ce que le backend relaie), docs lues le 2026-10-09. [https://tinyhumans.gitbook.io/openhuman/features/privacy-and-security](https://tinyhumans.gitbook.io/openhuman/features/privacy-and-security)
+[^6]: OpenHuman, *Releases* (v0.64.15 au 2026-10-09, 674 PRs pour la v0.64.0 « Intelligence Upgrade » du 2026-09-25) et *Billing and usage* (plans Free, Basic 19,99 $/mois, Pro 199,99 $/mois), lus le 2026-10-09. [https://github.com/tinyhumansai/openhuman/releases](https://github.com/tinyhumansai/openhuman/releases) · [https://tinyhumans.gitbook.io/openhuman/features/billing-and-usage](https://tinyhumans.gitbook.io/openhuman/features/billing-and-usage)
+[^7]: OpenHuman, *Local and BYOK models* (routage des modèles : connexion, facturation et intégrations via le backend même avec des modèles locaux), docs lues le 2026-10-09. [https://tinyhumans.gitbook.io/openhuman/features/model-routing/local-and-byok-models](https://tinyhumans.gitbook.io/openhuman/features/model-routing/local-and-byok-models)
