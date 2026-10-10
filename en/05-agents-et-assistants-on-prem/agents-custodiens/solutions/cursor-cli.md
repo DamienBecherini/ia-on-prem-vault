@@ -12,7 +12,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## 🔍 Quick overview
 
-Cursor CLI lets you use the Cursor agent from the terminal, interactively or in headless mode (`--print`) for scripts and CI[^1][^2]. It can read a repository, modify files, use rules, resume sessions, and produce text/JSON output.
+Cursor CLI (`agent` command) lets you use the Cursor agent from the terminal, interactively or in headless mode (`agent -p` / `--print`) for scripts and CI[^1][^2]. It can read a repository, modify files, use rules, resume sessions, and produce text/JSON output.
 
 ## 💡 Why this project interests us
 
@@ -29,7 +29,7 @@ For this vault, Cursor CLI is an **excellent MVP**: it quickly validates the "au
 
 - Requires access to Cursor services[^3].
 - Prompts/code may transit to configured LLMs.
-- BYOK does not mean local execution: the final prompt still passes through Cursor per documentation[^4].
+- BYOK does not mean local execution: the final prompt still passes through Cursor's servers, and Cursor's Zero Data Retention policy no longer applies under BYOK (the chosen provider's policy is what counts)[^4].
 - No documented support for 100% local on-prem inference. The "self-hosted machines" introduced on 2026-09-02 keep **tool execution** (shell, browser) inside your network, but prompts and the model remain on Cursor's side[^6].
 
 ## 🔒 Sovereignty and privacy
@@ -70,6 +70,6 @@ Product integrated with Cursor — a company acquired by SpaceX on 2026-08-14, w
 [^1]: Cursor Docs, *CLI Overview*. [https://cursor.com/docs/cli/overview.md](https://cursor.com/docs/cli/overview.md)
 [^2]: Cursor Docs, *Headless mode*. [https://cursor.com/docs/cli/headless.md](https://cursor.com/docs/cli/headless.md)
 [^3]: Cursor Docs, *Enterprise deployment patterns*. [https://cursor.com/docs/enterprise/deployment-patterns.md](https://cursor.com/docs/enterprise/deployment-patterns.md)
-[^4]: Cursor Help, *API keys / BYOK*. [https://cursor.com/help/models-and-usage/api-keys.md](https://cursor.com/help/models-and-usage/api-keys.md)
+[^4]: Cursor Help, *API keys / BYOK* ("all requests are routed through Cursor's servers for final prompt building"; Zero Data Retention not applicable under BYOK), read on 2026-10-09. [https://cursor.com/help/models-and-usage/api-keys.md](https://cursor.com/help/models-and-usage/api-keys.md)
 [^5]: Cursor, *Cursor is now a part of SpaceX* (acquisition "officially" closed, process started in April; Grok 4.6 cited as the first shared model), 2026-08-14. [https://cursor.com/blog/joining-spacex](https://cursor.com/blog/joining-spacex)
 [^6]: Cursor, *Changelog* — 2026-09-02 entry "self-hosted machines" (cloud agent tool execution inside your network, team pools, hibernation), accessed 2026-10-10. [https://cursor.com/changelog](https://cursor.com/changelog)

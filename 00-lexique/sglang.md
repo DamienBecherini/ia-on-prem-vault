@@ -15,7 +15,7 @@ verified_by: "Fable 5.1"
 
 ## 📝 Définition courte
 
-Framework open-source d'inférence et de serving LLM, développé à UC Berkeley / LMSys et publié en 2024[^1]. En 2026, il constitue une alternative crédible à vLLM pour les charges agentiques et les applications exigeant des sorties structurées fiables.
+Framework open-source d'inférence et de serving LLM, issu de UC Berkeley et hébergé par LMSYS (organisation open-source à but non lucratif), publié en 2024[^1]. En 2026, il constitue une alternative crédible à vLLM pour les charges agentiques et les applications exigeant des sorties structurées fiables.
 
 ## 📖 Définition détaillée
 
@@ -27,7 +27,7 @@ SGLang (*Structured Generation Language*) est un moteur d'inférence conçu pour
 
 ### Génération JSON structurée
 
-SGLang peut contraindre le modèle à produire du JSON conforme à un schéma donné, à vitesse de génération pleine, sans la dégradation de qualité ou de débit typique du *constrained decoding* naïf (rejets token par token, backtracking). C'est un atout pour les APIs backend et les intégrations où le parseur aval exige un format strict.
+SGLang peut contraindre le modèle à produire du JSON conforme à un schéma donné, à vitesse de génération pleine, sans la dégradation de qualité ou de débit typique du *constrained decoding* naïf (rejets token par token, backtracking). C'est un atout pour les APIs backend et les intégrations où le parseur aval exige un format strict. vLLM propose le même type de décodage contraint (backends xgrammar / guidance) ; la différence tient à l'intégration avec le cache de préfixes et au langage frontend de SGLang, pas à l'existence de la fonctionnalité[^4].
 
 ## 💡 Quand préférer SGLang à vLLM
 
@@ -63,3 +63,4 @@ vLLM reste la référence pour le débit maximal et conserve des variantes CUDA 
 [^1]: SGLang — dépôt officiel GitHub. [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang)
 [^2]: LMSys, *Fast and Expressive LLM Inference with RadixAttention*, janvier 2024. [https://lmsys.org/blog/2024-01-17-sglang/](https://lmsys.org/blog/2024-01-17-sglang/)
 [^3]: SGLang Project, README (« SGLang supports a wide range of GPUs, TPUs, NPUs, CPUs, and Apple Silicon platforms » : NVIDIA B200 → A100 et RTX 30/40/50, AMD Instinct MI300X → MI355X, TPU v6e/v7, Intel Arc et Xeon, Apple Silicon via Metal/MLX, Ascend, Moore Threads), consulté le 2026-10-10 · *Release v0.5.20* (« The CUDA 12 lane is retired »), 18 septembre 2026. [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang) · [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20)
+[^4]: vLLM Project, *Structured Outputs* (backends `xgrammar` et `guidance`, schémas JSON, regex, grammaires), consulté le 2026-10-10. [https://docs.vllm.ai/en/stable/features/structured_outputs/](https://docs.vllm.ai/en/stable/features/structured_outputs/)

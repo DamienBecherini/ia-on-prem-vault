@@ -19,9 +19,9 @@ Neural network architecture splitting the model into specialized “experts.” 
 
 ## 📖 Detailed definition
 
-In a classic dense model (Llama, Mistral…), **all parameters** activate for every token. In MoE, only **top-k experts** (typically 2–8 of 64+) participate per step.
+In a classic dense model (Llama, Mistral…), **all parameters** activate for every token. In MoE, only **top-k experts** (from 2 of 8 for Mixtral to 16 of 896 for Kimi K3[^2]) participate per step.
 
-Concrete examples in 2026:
+Concrete examples (as of Q4 2026):
 
 | Model | Total parameters | Active parameters/token | VRAM required (Q4) |
 | :-- | :-- | :-- | :-- |
@@ -36,7 +36,7 @@ MoE offers **large-model quality** with **smaller-model compute cost** — but r
 
 ## 💡 Why it matters for on-prem AI
 
-Small active-parameter MoEs (Qwen3-A3B, Phi-MoE) suit APUs well: good answer quality, acceptable VRAM, good generation throughput.
+Small active-parameter MoEs (Qwen3-30B-A3B, Nemotron 3.5 Lightning, gpt-oss-20b[^3][^4][^6]) suit APUs well: good answer quality, acceptable VRAM, good generation throughput.
 
 Giant MoEs (DeepSeek V4.1: > 750 GB in FP8; Kimi K3: > 1.4 TB even in native 4-bit; the 2024 DeepSeek V3 already weighed 404 GB in Q4_K_M) need an 8-GPU node or a multi-node cluster — Scenarios C or D[^1][^2].
 
@@ -45,7 +45,7 @@ Watch the licenses: the open frontier MoEs of 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.
 ## ⚠️ Common pitfalls
 
 - Comparing a “671B” MoE to a “70B” dense assuming dense is always faster: throughput depends on **active** parameters, not total.
-- Partial MoE loading: if experts do not fit in VRAM, swap is catastrophic because missing experts are invoked unpredictably.
+- Partial MoE loading: if experts do not fit in VRAM, swap is catastrophic because missing experts are invoked unpredictably. Notable exception: the n-gram embeddings of Qwen3.8-Flash-Next (51 B) are designed to be offloaded to RAM without that cost, unlike the experts[^7].
 - Underestimating VRAM: all weights must load even if only 2/64 experts activate per token.
 
 ## 📚 Go deeper
@@ -65,3 +65,5 @@ Watch the licenses: the open frontier MoEs of 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.
 [^3]: Qwen, *Qwen3-30B-A3B* (30.5 B total, 3.3 B activated, 8 of 128 experts, Apache 2.0), 2025. [https://huggingface.co/Qwen/Qwen3-30B-A3B](https://huggingface.co/Qwen/Qwen3-30B-A3B)
 [^4]: NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B* (hybrid Mamba-2 + MoE + attention, 30 B / 3 B active, OpenMDW 1.1; NVFP4 checkpoint ≈ 21.6 GB recommended for deployment), August 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16) · [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4)
 [^5]: Z.ai, *GLM-5.3-Flash* (320 B total, 18 B active, hybrid sparse + linear attention, MIT), 2026. [https://huggingface.co/zai-org/GLM-5.3-Flash](https://huggingface.co/zai-org/GLM-5.3-Flash)
+[^6]: OpenAI, *gpt-oss-120b / gpt-oss-20b* (gpt-oss-20b: 21 B total, 3.6 B active, MoE post-trained in MXFP4, fits in 16 GB), August 2025. [https://huggingface.co/openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b)
+[^7]: Qwen, *Qwen3.8-Flash-Next* (10 routed experts + 1 shared of 512; 51 B of n-gram embeddings "easier to offload than MoE experts"), August 2026. [https://huggingface.co/Qwen/Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next)

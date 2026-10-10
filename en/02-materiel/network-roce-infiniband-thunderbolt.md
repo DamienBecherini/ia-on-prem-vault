@@ -107,7 +107,7 @@ Thunderbolt is attractive for on-premise: a compact cable, docks, fast storage, 
 
 Since macOS 26.2, Apple supports **RDMA over Thunderbolt 5** between Macs; MLX (JACCL backend, latency "an order of magnitude" lower than the TCP ring) and Exo use it for parallelism across two to four machines, and Apple claims "up to 3×" the inference throughput of a single Mac Studio M5 with four nodes. Conditions: Thunderbolt 5 on every machine and TB5 cables, `rdma_ctl enable` run once in Recovery mode, fully meshed topology for JACCL, same macOS build everywhere — Thunderbolt 4 only provides an IP link [^8][^9].
 
-Intel describes Thunderbolt 4 as a **40 Gb/s** bidirectional link with at least **32 Gb/s** of PCIe data bandwidth [^5]. Thunderbolt 5 rises to **80 Gb/s** bidirectional, with a *Bandwidth Boost* mode that can reallocate the link up to **120 Gb/s transmit and 40 Gb/s receive**, mainly for video use cases [^6].
+Intel describes Thunderbolt 4 as a **40 Gb/s** bidirectional link with at least **32 Gb/s** of PCIe data bandwidth [^5]. Thunderbolt 5 rises to **80 Gb/s** bidirectional, with a *Bandwidth Boost* mode that can reallocate the link up to **120 Gb/s transmit and 40 Gb/s receive**, mainly for video use cases [^6]. Apple advertises "Thunderbolt 5 (120 Gb/s)" for the Mac Studio M5: this is that asymmetric mode, not a symmetric throughput [^9].
 
 Even Thunderbolt 5 remains far from a server GPU NVLink/NVSwitch fabric. It can help for:
 
@@ -138,6 +138,7 @@ For a small desktop cluster, Thunderbolt can help prototyping. For distributed m
 | Multi-node pipeline parallel | RoCE or InfiniBand recommended | Activations cross the network |
 | Multi-node tensor parallel | InfiniBand or very well configured RoCE | Frequent communication, network critical |
 | Homelab prototype | Ethernet / Thunderbolt | Good for learning, not for linear speedup promises |
+| 2–4 node Mac cluster (MLX / Exo) | Thunderbolt 5 + RDMA (macOS 26.2+) | Sub-linear gains (Apple: ≤ 3× for 4 nodes); Thunderbolt 4 = IP only [^8][^9] |
 
 vLLM recommends reasoning about topology: tensor parallel within a node when the model fits on the node’s GPUs, then pipeline parallel across nodes when you must exceed that limit. The documentation also mentions GPUDirect RDMA for efficient GPU network communication in compatible deployments [^7].
 
@@ -151,7 +152,7 @@ For sovereign on-premise deployment:
 2. **Do not confuse marketed bitrate with useful bitrate.** A link advertised in Gb/s says nothing about latency, congestion, CPU bypass, or NCCL behavior.
 3. **Reserve RoCE for controlled environments.** RoCE is relevant if you control NICs, switches, QoS, PFC/ECN, and monitoring.
 4. **Choose InfiniBand for serious multi-node.** If the goal is a low-latency AI cluster, InfiniBand avoids a lot of ad-hoc work.
-5. **Use Thunderbolt as a workstation tool, not a cluster promise.** Very practical for storage and docks; too limited to replace a GPU fabric.
+5. **Use Thunderbolt as a workstation tool — and, on Mac, as a small-scale RDMA cluster link.** Very practical for storage and docks; with Thunderbolt 5 + macOS 26.2 it carries a 2-to-4-Mac MLX/Exo cluster; it does not replace a GPU fabric [^8].
 
 On-premise AI networking is therefore not “more cables”. It is an architecture decision: how much of the model, cache, and requests are we willing to move between machines?
 

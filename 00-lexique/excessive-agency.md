@@ -1,14 +1,15 @@
 ---
 title: Excessive Agency
-description: Vulnérabilité OWASP LLM06 (2025) — un agent IA dispose de trop de fonctionnalités, permissions ou autonomie, permettant des actions réelles non souhaitées.
+description: Vulnérabilité du Top 10 OWASP pour les applications LLM — un agent IA dispose de trop de fonctionnalités, permissions ou autonomie, permettant des actions réelles non souhaitées.
 aliases:
   - Agence excessive
   - LLM06
+  - LLM03
 tags:
   - lexique
   - sécurité
 niveau: intermédiaire
-last_modified: "2026-06-06"
+last_modified: "2026-10-10"
 last_verified: "2026-06-06"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -17,7 +18,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## Définition courte
 
-Vulnérabilité **LLM06 (OWASP 2025)** : un agent reçoit plus de fonctionnalités, de permissions ou d'autonomie qu'il n'en a besoin, rendant possible des actions dommageables même en l'absence d'attaque délibérée.
+Vulnérabilité **LLM06:2025, devenue LLM03:2026** dans l'édition 2026 du Top 10 OWASP pour les applications LLM — remontée au 3e rang parce que les incidents réels impliquant des agents outillés se multiplient[^1] : un agent reçoit plus de fonctionnalités, de permissions ou d'autonomie qu'il n'en a besoin, rendant possible des actions dommageables même en l'absence d'attaque délibérée.
 
 ## Définition détaillée
 
@@ -42,7 +43,9 @@ Les agents on-premise ont souvent un accès direct à des ressources critiques :
 
 ## Voir aussi
 
-- [[06-mise-en-oeuvre/local-inference-security|🔒 Sécurité de l'inférence locale]] — §5.4 (Excessive Agency) et §6 (isolation des agents)
+- [[06-mise-en-oeuvre/local-inference-security|🔒 Sécurité de l'inférence locale]] — §5 (LLM06:2025 Excessive Agency, LLM03:2026) et §6 (isolation des agents)
 - [[00-lexique/human-in-the-loop|Human-in-the-loop]] — validation humaine des actions critiques
 - [[00-lexique/autonomous-agent|Agent autonome]] — architecture et risques
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
+
+[^1]: OWASP GenAI Security Project, *OWASP GenAI LLM Top 10 — 2026 Edition* (publiée le 2026-08-03) et annonce du 2026-09-01 (« Excessive Agency, now number three »). [https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) · [https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/)

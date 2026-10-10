@@ -1,6 +1,6 @@
 ---
 title: "🔐 Zero Data Retention (ZDR)"
-description: "Clause contractuelle d'API cloud LLM garantissant l'absence de persistance, de réutilisation et de revue humaine des prompts et réponses."
+description: "Clause contractuelle d'API cloud LLM : pour les modèles et endpoints couverts, aucune persistance, réutilisation ni revue humaine des prompts et réponses — une couverture désormais négociée modèle par modèle."
 aliases:
   - ZDR
   - Zero Retention Policy
@@ -23,7 +23,7 @@ Clause contractuelle (*Zero Data Retention*, ZDR) dans les accords d'API entrepr
 
 Sous une clause ZDR, le fournisseur s'engage à :
 
-- traiter prompts et réponses **en mémoire uniquement**, sans écriture sur disque ni dans les logs applicatifs ;
+- **ne pas conserver** prompts et réponses au-delà du traitement de la requête : pas de stockage durable ni de journalisation du contenu (hors surveillance des abus, voir ci-dessous) ;
 - **ne jamais utiliser** ces données pour l'entraînement ou le fine-tuning des modèles ;
 - **exclure toute revue humaine** du contenu des requêtes.
 
@@ -56,7 +56,7 @@ Pour les équipes qui ne peuvent pas encore migrer vers l'[[00-lexique/on-premis
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté & Confidentialité]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: OpenAI, *Enterprise Privacy — Zero Data Retention*. [https://platform.openai.com/docs/guides/your-data](https://platform.openai.com/docs/guides/your-data)
-[^2]: Microsoft, *Azure OpenAI Service — Data privacy*. [https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/openai/data-privacy](https://learn.microsoft.com/en-us/azure/ai-foundry/responsible-ai/openai/data-privacy)
+[^1]: OpenAI, *Your data — data controls in the OpenAI platform* (Zero Data Retention, Modified Abuse Monitoring, Private Safety Processing), lu le 2026-10-09. [https://developers.openai.com/api/docs/guides/your-data](https://developers.openai.com/api/docs/guides/your-data)
+[^2]: Microsoft, *Data, privacy, and security for Foundry Models sold by Azure in Microsoft Foundry* (abuse monitoring modifié, pas d'entraînement sur les prompts), mis à jour le 2026-06-05. [https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy](https://learn.microsoft.com/en-us/azure/foundry/responsible-ai/openai/data-privacy)
 [^3]: Anthropic, *Covered Models* (Claude Fable 5 / 5.1 et Mythos 5 / 5.1 : rétention d'au moins 30 jours sur toutes les plateformes, ZDR indisponible ; désignations du 2026-06-09 et du 2026-08-31), *API and data retention* et annonce *Enterprise Frontier Safeguards* (2026-09-01), lus le 2026-10-10. [https://support.claude.com/en/articles/15425695-covered-models](https://support.claude.com/en/articles/15425695-covered-models) · [https://platform.claude.com/docs/en/manage-claude/api-and-data-retention](https://platform.claude.com/docs/en/manage-claude/api-and-data-retention) · [https://www.anthropic.com/news/enterprise-frontier-safeguards](https://www.anthropic.com/news/enterprise-frontier-safeguards)
 [^4]: Mistral AI, *Commercial Terms of Service* (en vigueur 2026-09-25 : modèles Labs/Preview exclus de ZDR et de l'opt-out d'entraînement) et *Can I activate Zero Data Retention (ZDR)?* (plans payants, sur demande, appels stateless seulement ; agents, conversations, libraries, batch et `/v1/files` exclus), lus le 2026-10-09. [https://legal.mistral.ai/terms/commercial-terms-of-service](https://legal.mistral.ai/terms/commercial-terms-of-service) · [https://help.mistral.ai/en/articles/347612-can-i-activate-zero-data-retention-zdr](https://help.mistral.ai/en/articles/347612-can-i-activate-zero-data-retention-zdr)

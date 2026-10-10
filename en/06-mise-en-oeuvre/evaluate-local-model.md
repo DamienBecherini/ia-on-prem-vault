@@ -24,13 +24,13 @@ Choosing a local model is not about picking the first name at the top of a leade
 Public benchmarks give a first orientation, but their predictive value for enterprise use is **severely limited in 2026**.
 
 > [!warning] The contamination problem
-> Large static benchmarks — MMLU, HumanEval, MATH — are now considered **saturated and potentially contaminated**: part of their test data has leaked into training corpora of recent models. Comparing Qwen 2.5 and Llama 3.x on MMLU says almost nothing about real behavior in your business context. A model can score 90% on MMLU and produce dangerous hallucinations on your internal documents.
+> Large static benchmarks — MMLU, HumanEval, MATH — are now considered **saturated and potentially contaminated**: part of their test data has leaked into training corpora of recent models. Comparing Qwen3.8 and Muse Glimmer on MMLU says almost nothing about real behavior in your business context. A model can score 90% on MMLU and produce dangerous hallucinations on your internal documents.
 
 Benchmarks remain useful for **roughly sorting** model families, or for checking very targeted capabilities (formal reasoning, syntactically correct code). For that, prefer **domain-specific** tests and evaluations on real data (SWE-bench for code, for example, because it measures on real GitHub issues, not memorizable exercises).
 
 | Family | Examples | Real utility | Limits |
 | :-- | :-- | :-- | :-- |
-| General knowledge | MMLU, MMLU-Pro, GPQA | rough sort between families | saturated, contaminated, does not predict domain work |
+| General knowledge | MMLU, MMLU-Pro, GPQA Diamond | rough sort between families | MMLU saturated and contaminated; MMLU-Pro and GPQA still discriminate (Q4 2026) but do not predict domain work |
 | Math / reasoning | GSM8K, MATH | check formal logic | not representative of prose tasks |
 | Instruction following | IFEval, MT-Bench | conversational quality | results vary by language |
 | Factuality | TruthfulQA, FActScore, HaluEval | resistance to false beliefs | measures general factuality, not your domain |
@@ -237,7 +237,7 @@ The best model is rarely the largest. The right model is the one that meets thre
 
 | Need | Priority metric | Useful public benchmark | Essential local test |
 | :-- | :-- | :-- | :-- |
-| General chat | human preference, instruction following | MT-Bench, Chatbot Arena, IFEval | anonymized domain conversations |
+| General chat | human preference, instruction following | MT-Bench, Arena (formerly Chatbot Arena), IFEval/IFBench | anonymized domain conversations |
 | Document RAG | faithfulness, context recall | RAGAS | sourced questions on your documents |
 | Code agent | correct patch, tests pass | SWE-bench Pro V2, Terminal-Bench | simulated PRs on your repo |
 | Legal / medical summary | factuality, critical omissions | FActScore, TruthfulQA | expert human review |

@@ -427,7 +427,7 @@ Le délimitage ne suffit pas contre l'**injection de données** (*agent data inj
 
 ## 8. Chaîne d'approvisionnement des modèles (Model Supply Chain)
 
-`ollama pull model:tag` et `huggingface-cli download` téléchargent des gigaoctets de données opaques depuis Internet. Bien que les formats `.safetensors` et `.gguf` ne soient pas exécutables au sens traditionnel (contrairement aux anciens `.pt` / pickle PyTorch), un modèle **empoisonné** (*backdoored*) peut avoir été publié sur HuggingFace ou Ollama Hub par un attaquant : il se comportera normalement 99 % du temps, mais exécutera des comportements malveillants si un mot-clé précis est injecté dans le prompt.
+`ollama pull model:tag` et `hf download` téléchargent des gigaoctets de données opaques depuis Internet. Bien que les formats `.safetensors` et `.gguf` ne soient pas exécutables au sens traditionnel (contrairement aux anciens `.pt` / pickle PyTorch), un modèle **empoisonné** (*backdoored*) peut avoir été publié sur HuggingFace ou Ollama Hub par un attaquant : il se comportera normalement 99 % du temps, mais exécutera des comportements malveillants si un mot-clé précis est injecté dans le prompt.
 
 > [!warning] Risque supply chain
 > Dans une infrastructure souveraine ou air-gapped, **ne télécharger des modèles que depuis les dépôts officiels** des éditeurs (`meta-llama`, `Qwen`, `mistralai`, `microsoft`) et **vérifier le hash SHA-256** avant de promouvoir en production.
@@ -440,7 +440,7 @@ Le délimitage ne suffit pas contre l'**injection de données** (*agent data inj
 EXPECTED_HASH="abc123def456..."   # exemple
 
 # 2. Télécharger le modèle
-huggingface-cli download bartowski/Llama-3.1-70B-Instruct-GGUF \
+hf download bartowski/Llama-3.1-70B-Instruct-GGUF \
   --include "Llama-3.1-70B-Instruct-Q4_K_M.gguf" \
   --local-dir ./models/
 
@@ -540,7 +540,7 @@ Cette combinaison offre chiffrement de transit (WireGuard), chiffrement TLS (Cad
 
 ## 10. Logging et traçabilité
 
-En conformité RGPD/AI Act, les interactions avec un LLM traitant des données personnelles doivent être tracées.
+La traçabilité des interactions est une exigence de sécurité et de responsabilité (RGPD, art. 5 et 32) pour tout LLM traitant des données personnelles ; l'AI Act y ajoute une obligation de journalisation (art. 12 et 26) pour les seuls systèmes à haut risque, applicable à partir du 2 décembre 2027 (annexe III) ou du 2 août 2028 (annexe I) depuis le règlement (UE) 2026/1744[^20].
 
 **Niveau minimal recommandé :**
 - Timestamp de chaque requête
@@ -587,7 +587,7 @@ En conformité RGPD/AI Act, les interactions avec un LLM traitant des données p
 
 [^8]: Hugging Face, *Download files from the Hub* (guide `huggingface_hub` v2.2.0 : CLI `hf download`, options `--include` / `--exclude` / `--revision` / `--dry-run`, aucune option de vérification de hash ; SHA-256 des fichiers LFS consultable sur le Hub), lu le 2026-10-09. [https://huggingface.co/docs/huggingface_hub/guides/download](https://huggingface.co/docs/huggingface_hub/guides/download)
 [^9]: Tailscale, *How Tailscale Works* — documentation officielle (WireGuard, MagicDNS, DERP relays, ACLs). [https://tailscale.com/blog/how-tailscale-works](https://tailscale.com/blog/how-tailscale-works)
-[^10]: Cloudflare, *Cloudflare Tunnel documentation* (tunnels HTTP/HTTPS sans port ouvert, routage via réseau Cloudflare). [https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
+[^10]: Cloudflare, *Cloudflare Tunnel* — documentation officielle (tunnels HTTP/HTTPS sans port ouvert, routage via réseau Cloudflare). [https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 [^11]: Twingate, *How Twingate Works* — documentation officielle (Zero Trust Network Access, accès granulaire par ressource). [https://www.twingate.com/docs/how-twingate-works](https://www.twingate.com/docs/how-twingate-works)
 [^12]: OWASP GenAI Security Project, *OWASP GenAI LLM Top 10 — 2026 Edition* (publiée le 2026-08-03) et annonce du 2026-09-01 (« Excessive Agency now number three », Agent Control Standard). [https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) · [https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/)
 [^13]: vLLM, *Security* (page datée 2026-09-26 : `--api-key` ne couvre que `/v1`, `/v2`, `/inference`, `/cohere` ; reverse proxy recommandé) et *vllm serve* (CLI). [https://docs.vllm.ai/en/stable/usage/security/](https://docs.vllm.ai/en/stable/usage/security/) · [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/)
@@ -597,11 +597,12 @@ En conformité RGPD/AI Act, les interactions avec un LLM traitant des données p
 [^17]: arXiv 2607.05120, *Agent Data Injection* (corruption de données tenues pour fiables par l'agent, sans instruction ; démontré sur plusieurs agents de code et de navigation), 2026-07-06. [https://arxiv.org/abs/2607.05120](https://arxiv.org/abs/2607.05120)
 [^18]: MITRE CVE, *CVE-2026-102697* (Ollama : le parseur d'approbation du tool Bash en mode agent ignorait les opérateurs de contrôle shell ; corrigé 0.31.2), 2026-09-29. [https://cveawg.mitre.org/api/cve/CVE-2026-102697](https://cveawg.mitre.org/api/cve/CVE-2026-102697)
 [^19]: GitHub Advisory Database, *GHSA-4v28-j6q3-5m4r* (Open WebUI, CVE-2026-87996, SSRF par DNS rebinding dans le chargeur Playwright, CVSS 7.7, versions 0.9.6 → < 0.11.1, corrigé 0.11.1, 2026-08-31) ; CERT/CC, *VU#518910* (Ollama, CVE-2026-5757, lecture/écriture hors limites lors de la quantification d'un GGUF importé, « patch not yet available », 2026-04-22), lus le 2026-10-10. [https://github.com/advisories/GHSA-4v28-j6q3-5m4r](https://github.com/advisories/GHSA-4v28-j6q3-5m4r) · [https://kb.cert.org/vuls/id/518910](https://kb.cert.org/vuls/id/518910)
+[^20]: Règlement (UE) 2026/1744 du 24 juillet 2026 modifiant le règlement (UE) 2024/689 (AI Act) : report de l'application des obligations des systèmes à haut risque au 2 décembre 2027 (annexe III) et au 2 août 2028 (annexe I) ; journalisation art. 12 et 26, JO 2026-07-24. [https://eur-lex.europa.eu/eli/reg/2026/1744/oj](https://eur-lex.europa.eu/eli/reg/2026/1744/oj) ; Règlement (UE) 2016/679 (RGPD), art. 5 et 32. [https://eur-lex.europa.eu/eli/reg/2016/679/oj](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
 
 - [OWASP Top 10 for LLM Applications v2025](https://genai.owasp.org/llm-top-10/) — grille officielle LLM01–LLM10:2025
 - [OWASP GenAI LLM Top 10 — 2026 Edition](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) — édition 2026, correspondance dans la section 5
 - [Firecracker MicroVM](https://firecracker-microvm.github.io/) — isolation légère pour exécution de code non fiable
-- [Podman Rootless Containers](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md)
+- [Podman Rootless Containers](https://github.com/podman-container-tools/podman/blob/main/docs/tutorials/rootless_tutorial.md)
 - [Headscale — serveur Tailscale self-hosted](https://github.com/juanfont/headscale)
 - [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|🔭 Vision : Agent Custodien]] — section sur l'injection de prompt indirecte
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|🔒 Souveraineté & Confidentialité]] — grille RGPD/AI Act

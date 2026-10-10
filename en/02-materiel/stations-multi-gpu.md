@@ -56,6 +56,8 @@ These cards are very attractive for on-premise because they offer **fast local V
 > It is therefore **impossible to buy two RTX PRO 6000 cards and link them via NVLink**: the connector simply does not exist on these cards [^1][^2].
 > NVLink today is **exclusively for server GPUs** in SXM form factor (A100, H100, H200, B200, B300) and HGX/DGX/NVL72 systems — including the Vera Rubin generation, in full production since August 2026 for the large clouds [^12] — a different machine category starting above €100,000.
 
+vLLM 0.30 (September 2026) offers an optimized PCIe all-reduce (FlashInfer, opt-in) for multi-GPU workstations without NVLink; this reduces the TP penalty over PCIe without eliminating it [^17].
+
 ### 2. SaaS Inference Servers (L40S, A100)
 
 Between PCIe workstation towers and HGX datacenter nodes, there is a category often overlooked but central for sovereign deployments at team or SaaS scale: the **rack inference server**, optimized to serve 10 to 200 simultaneous users at a controlled cost per token.
@@ -67,7 +69,7 @@ Between PCIe workstation towers and HGX datacenter nodes, there is a category of
 | **NVIDIA A100 (40 GB)** | 40 GB HBM2e | 1,555 GB/s | ❌ No | Capacity/cost compromise for 13–34B models |
 | RTX 6000 Ada / RTX 5090 | 48 / 32 GB | 960 / 1,792 GB/s | ⚠️ Partial / ✅ (Blackwell) | On-prem client air-gapped (client-supplied hardware); RTX 5090 ≥ $5,000 and scarce in Q3 2026 [^11] |
 
-#### The NVIDIA L40S — the "hidden gem" of 2026 inference
+#### The NVIDIA L40S — the "hidden gem" of inference as of Q4 2026
 
 The L40S (Ada Lovelace architecture) is often underestimated because it lacks HBM bandwidth like an H100. It compensates with two decisive advantages for production inference[^7]:
 
@@ -81,6 +83,8 @@ A bare-metal server with two L40S cards (96 GB total VRAM) is the reference topo
 The A100 remains the most available datacenter GPU from French sovereign hosts (OVHcloud, Scaleway, Outscale). Its immense HBM2e bandwidth compensates for the lack of native FP8 for FP16 or BF16 models. It remains relevant for:
 - Models not yet available with optimized FP8.
 - Deployments at HDS/SecNumCloud-certified hosts where the L40S is not yet offered.
+
+NVIDIA has not retired any of these cards from AI Enterprise support (Infra 8.1, May 2026); only V100, RTX 4000 SFF Ada, RTX A4000, and the Quadro RTX cards are dropped [^16].
 
 #### RTX Workstation for On-Prem Client (Tier Air-Gapped)
 
@@ -202,9 +206,9 @@ For sovereign on-premise deployment:
 
 ---
 
-## 🔭 Non-NVIDIA accelerators: status in 2026
+## 🔭 Non-NVIDIA accelerators: status as of Q4 2026
 
-Beyond NVIDIA, several vendors position alternatives for on-premise inference and training. Market status in 2026 remains that of a forming ecosystem — interesting to watch, not yet recommended for strict B2B deployments.
+Beyond NVIDIA, several vendors position alternatives for on-premise inference and training. Market status as of Q4 2026 remains that of a forming ecosystem — interesting to watch, not yet recommended for strict B2B deployments.
 
 ### Tenstorrent (Wormhole / Blackhole)
 
@@ -244,3 +248,5 @@ At Hot Chips (2026-08-24), Intel detailed **Crescent Island**, a 350 W air-coole
 [^13]: ServeTheHome, *Intel Crescent Island 160GB to 480GB LPDDR5X AI GPU at Hot Chips 2026* (350 W air-cooled PCIe, Xe3p, vLLM / SGLang, bandwidth not disclosed), 24 August 2026. [https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/](https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/)
 [^14]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
 [^15]: Tenstorrent, *Blackhole* — product page (p100a $999, p150a / p150b $1,399, "In stock"), captured 2026-10-10. [https://tenstorrent.com/hardware/blackhole](https://tenstorrent.com/hardware/blackhole)
+[^16]: NVIDIA, *NVIDIA AI Enterprise — End-of-Life Notices* (GPUs retired from Infra 8.0 onward: Tesla V100, RTX 4000 SFF Ada, RTX A4000, Quadro RTX; A100, H100/H200, L40/L40S, and RTX 6000 Ada still supported), re-read on 2026-10-10. [https://docs.nvidia.com/ai-enterprise/lifecycle/latest/eol-notices.html](https://docs.nvidia.com/ai-enterprise/lifecycle/latest/eol-notices.html)
+[^17]: vLLM Project, *Release v0.30.0* (opt-in FlashInfer PCIe all-reduce for multi-GPU configurations without NVLink), 22 September 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.30.0](https://github.com/vllm-project/vllm/releases/tag/v0.30.0)

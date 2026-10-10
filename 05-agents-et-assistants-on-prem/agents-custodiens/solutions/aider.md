@@ -29,7 +29,7 @@ Pour un vault Markdown, il peut relire des pages, appliquer des corrections, cr�
 - Fonctionne avec modèles cloud ou locaux.
 - Support Ollama documenté[^2].
 - Pas de serveur Aider intermédiaire : les requêtes vont au provider configuré[^3].
-- Analytics opt-in / désactivables, sans code ni prompts selon docs[^4].
+- Analytics opt-in (Aider demande l'accord à un sous-ensemble aléatoire d'utilisateurs), désactivables définitivement par `aider --analytics-disable`, sans code, prompts ni clés selon la doc[^4].
 
 ## ⚠️ Limites et risques
 
@@ -37,7 +37,7 @@ Pour un vault Markdown, il peut relire des pages, appliquer des corrections, cr�
 - Les modèles locaux faibles peuvent casser le format d'édition, rater les remplacements précis ou boucler sur une correction.
 - Un modèle 7B/8B généraliste est acceptable pour des suggestions simples, mais trop fragile pour un agent custodien qui modifie réellement des fichiers.
 - Pour travailler sérieusement en local, viser au minimum un modèle **coder** de classe 14B pour petites corrections contrôlées, et plutôt 32B ou plus pour audits multi-fichiers, refactoring ou édition fiable de Markdown complexe.
-- Ollama doit être configuré avec une fenêtre de contexte suffisante : son contexte par défaut peut être trop petit pour Aider et provoquer des réponses fondées sur un contexte tronqué[^2].
+- Ollama tronque silencieusement au-delà de sa fenêtre (2k par défaut) ; Aider fixe `num_ctx` lui-même, mais la doc recommande de lancer `OLLAMA_CONTEXT_LENGTH=8192 ollama serve` ou de fixer `num_ctx` dans `.aider.model.settings.yml`[^2].
 - Si un provider cloud est utilisé, le code part chez ce provider.
 - Nécessite de bien contrôler les commandes et les fichiers autorisés.
 
@@ -78,9 +78,9 @@ Pour une cible durable, préférer un agent maintenu et model-agnostic comme [[0
 ## 📚 Sources
 
 [^1]: Aider GitHub README. [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider)
-[^2]: Aider Docs, *Ollama*. [https://aider.chat/docs/llms/ollama.html](https://aider.chat/docs/llms/ollama.html)
+[^2]: Aider Docs, *Ollama* (`num_ctx` fixé par Aider, `OLLAMA_CONTEXT_LENGTH=8192` recommandé), lu le 2026-10-09. [https://aider.chat/docs/llms/ollama.html](https://aider.chat/docs/llms/ollama.html)
 [^3]: Aider GitHub issue #3627 — clarifications sur données/code et absence de serveur Aider. [https://github.com/Aider-AI/aider/issues/3627](https://github.com/Aider-AI/aider/issues/3627)
-[^4]: Aider Docs, *Analytics*. [https://aider.chat/docs/more/analytics.html](https://aider.chat/docs/more/analytics.html)
+[^4]: Aider Docs, *Analytics* (opt-in proposé à un sous-ensemble aléatoire d'utilisateurs, `--analytics-disable` définitif), lu le 2026-10-09. [https://aider.chat/docs/more/analytics.html](https://aider.chat/docs/more/analytics.html)
 [^5]: PyPI, *aider-chat* (dernière publication 0.86.2 du 2026-02-12), consulté le 2026-10-09. [https://pypi.org/project/aider-chat/](https://pypi.org/project/aider-chat/)
 [^6]: OpenHands Docs, *Local LLMs* (LM Studio, Ollama, vLLM, SGLang), mis à jour le 2026-05-21. [https://docs.openhands.dev/openhands/usage/llms/local-llms](https://docs.openhands.dev/openhands/usage/llms/local-llms)
 [^7]: Block, *Goose Releases* (v1.54.0 du 2026-10-08, Apache-2.0) et Cline, *Cline Releases* (releases du 2026-10-08, Apache-2.0), consultés le 2026-10-09. [https://github.com/block/goose/releases](https://github.com/block/goose/releases) · [https://github.com/cline/cline/releases](https://github.com/cline/cline/releases)

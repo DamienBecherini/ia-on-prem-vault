@@ -58,7 +58,7 @@ This is **indirect prompt injection**: the attack vector is not the user's promp
 
 The OWASP Top 10 for LLM applications 2026 (2026-08-03, where "Excessive Agency" climbs to third place per the OWASP announcement of 2026-09-01) and the CNIL / CIANUM note on agentic AI (2026-07-20) converge: autonomy and multi-actor chains widen the attack surface and dilute responsibility; the custodian agent must remain as least-privileged as possible[^2][^3].
 
-The future security chapter (`06-mise-en-oeuvre/local-inference-security.md`) will detail technical solutions: Firecracker, rootless Podman, network namespaces.
+The [[06-mise-en-oeuvre/local-inference-security|🔒 Local inference security]] guide details technical solutions: Firecracker, rootless Podman, network namespaces.
 
 ## [[00-lexique/human-in-the-loop|Human-in-the-loop]] vs human-on-the-loop
 
@@ -71,7 +71,7 @@ The simple rule: **every irreversible change stays human-in-the-loop**.
 
 ## Cursor CLI: excellent MVP, not a sovereign target
 
-Cursor CLI is very useful for prototyping this workflow: it can read a repo, modify files, work headless, and produce JSON/text output. But it is not a strict on-premise target: Cursor docs indicate the CLI requires access to Cursor services and that context/code is sent to LLMs according to the configured model.
+Cursor CLI is very useful for prototyping this workflow: it can read a repo, modify files, work headless, and produce JSON/text output. But it is not a strict on-premise target: Cursor docs indicate the CLI requires access to Cursor services — a company acquired by SpaceX in August 2026 — and that context/code is sent to LLMs according to the configured model[^6].
 
 Distinguish:
 
@@ -98,3 +98,4 @@ Distinguish:
 [^3]: CNIL and Conseil de l'IA et du Numérique, *IA agentique et données personnelles : note exploratoire*, 2026-07-20. [https://www.cnil.fr/fr/ia-agentique-cnil-cianum-note](https://www.cnil.fr/fr/ia-agentique-cnil-cianum-note)
 [^4]: Aider-AI, *aider* (GitHub repository: last commit on 2026-05-22, latest release v0.86.0 of 2025-08-09) and OpenHands, *Introducing Agent Canvas* (2026-06-16), accessed 2026-10-10. [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider) · [https://www.openhands.dev/blog/introducing-agent-canvas](https://www.openhands.dev/blog/introducing-agent-canvas)
 [^5]: CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822 LiteLLM), catalog dated 2026-10-08; BerriAI, *GHSA-7hp6-4w63-5g45* (CVSS 9.9, fixed in 1.100.4), 2026-09-30. [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json) · [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45)
+[^6]: Cursor Help, *API keys / BYOK* ("all requests are routed through Cursor's servers for final prompt building"), read on 2026-10-09; Cursor, *Cursor is now a part of SpaceX*, 2026-08-14. [https://cursor.com/help/models-and-usage/api-keys.md](https://cursor.com/help/models-and-usage/api-keys.md) · [https://cursor.com/blog/joining-spacex](https://cursor.com/blog/joining-spacex)

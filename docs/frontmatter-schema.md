@@ -34,7 +34,7 @@ These fields track content freshness and the editorial verification chain.
 ```yaml
 last_modified: YYYY-MM-DD      # optional — date of last substantive content change (git-tracked)
 last_verified: YYYY-MM-DD      # optional — date of last human-approved verification run
-verified_by: Sonnet 4.6        # optional — from site.config.json → editorial.defaultAgent
+verified_by: Fable 5.1        # optional — from site.config.json → editorial.defaultAgent
 verified_hitl: Damien BECHERINI # optional — from site.config.json → editorial.hitl.name
 verified_hitl_url: https://damien.becherini.fr  # optional — from site.config.json → editorial.hitl.url
 ```
@@ -49,7 +49,7 @@ HITL name, HITL URL, and default agent slug are defined in **`site.config.json`*
 | :-- | :-- | :-- |
 | `last_modified` | Agent or author | On every substantive content edit |
 | `last_verified` | `vault-verify-content` skill | After a verification run completes |
-| `verified_by` | `vault-verify-content` skill | Same run — value read from `site.config.json → editorial.defaultAgent` (e.g. `Sonnet 4.6`) |
+| `verified_by` | `vault-verify-content` skill | Same run — value read from `site.config.json → editorial.defaultAgent` (e.g. `Fable 5.1`) |
 | `verified_hitl` | Agent (`vault-log-run`) or PR/plan approval | After explicit human sign-off on the verification result |
 
 ### Behaviour
@@ -59,6 +59,12 @@ HITL name, HITL URL, and default agent slug are defined in **`site.config.json`*
 - `last_modified` should match the date of the last git commit that changed the file's content meaningfully (not just frontmatter updates).
 - `last_verified` is independent from `last_modified`. A page can be verified without being modified (no content changes needed = content is still accurate).
 - `verified_hitl` is set only after a human has reviewed and approved the verification findings. It must not be set by an agent autonomously.
+
+### Baseline dates (read this before trusting `last_verified`)
+
+- Pages whose `last_verified` is **2026-06-05** (and a few at 2026-06-09 / 2026-06-10) received that value from a **bulk stamp** (`scripts/backfill-verified.mjs --write`, commit 44abeab), not from a per-page verification. The human review behind it was a batch review of the June 2026 audit corrections. Treat these as a *baseline*, not as proof that every claim on the page was checked.
+- Pages whose `last_verified` is **2026-10-09 or later** were audited claim by claim during the 2026-10 refresh run (`.agents/vault-maintenance/reports/refresh-2026-10-09.md`) and corrected in PRs #17, #20, #21 and the Minor PR that followed. Their claims are tracked in `.agents/vault-maintenance/watchlist/`.
+- The baseline is overwritten progressively: each page gets its real date when a refresh run audits it. Since 2026-10-10 the backfill script refuses whole-vault writes unless `--all --baseline` is passed explicitly, and never writes `verified_hitl*` without `--hitl-approved`.
 
 ---
 
@@ -90,7 +96,7 @@ sidebar:
   order: 3
 last_modified: 2026-06-05
 last_verified: 2026-06-05
-verified_by: Sonnet 4.6
+verified_by: Fable 5.1
 verified_hitl: Damien BECHERINI
 verified_hitl_url: https://damien.becherini.fr
 ---
