@@ -1,6 +1,6 @@
 ---
 title: Inférence (LLM)
-description: Utilisation d'un modèle entraîné pour générer du texte à la demande.
+description: "Phase où un LLM déjà entraîné produit une réponse token par token, en deux temps (prefill puis decoding) ; c'est elle qui dimensionne le matériel on-premise."
 aliases:
   - Inférence LLM
   - Inference

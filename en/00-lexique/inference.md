@@ -1,6 +1,6 @@
 ---
 title: LLM inference
-description: Using a trained model to generate text on demand.
+description: "Phase where an already trained LLM produces a response token by token, in two steps (prefill then decoding); it is what sizes on-premise hardware."
 aliases:
   - LLM inference
   - Inference

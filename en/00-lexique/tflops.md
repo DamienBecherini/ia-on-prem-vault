@@ -1,6 +1,6 @@
 ---
 title: TFLOPS
-description: Measure of floating-point compute throughput.
+description: "Unit measuring floating-point compute capacity per second; useful to compare raw compute, but not enough on its own to predict LLM performance."
 aliases:
   - TeraFLOPS
   - Tera Floating Point Operations Per Second

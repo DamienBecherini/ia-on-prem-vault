@@ -1,6 +1,6 @@
 ---
 title: "🖼️ Multimodalité : Impact Matériel (VRAM & KV Cache)"
-description: Ce qui change dans votre infrastructure quand vous traitez des images, des documents scannés ou de l'audio — encodeurs visuels, coût VRAM, interaction avec le KV Cache, et carte des blueprints concernés.
+description: "Ce que changent images, documents scannés et audio pour l'infrastructure : encodeurs visuels, coût en VRAM, lien avec le KV Cache et blueprints concernés."
 sidebar:
   order: 6
 last_modified: "2026-10-10"

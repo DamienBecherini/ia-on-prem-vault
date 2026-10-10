@@ -1,6 +1,6 @@
 ---
 title: "🧩 RAG & Agents : L'architecture de la connaissance"
-description: Comment donner une mémoire privée et de l'autonomie à un LLM local. Du RAG standard aux workflows agentiques (SmolAgents, LangGraph) et l'approche Memory Tree pour l'économie de VRAM.
+description: "Comment donner une mémoire privée et de l'autonomie à un LLM local : du RAG standard aux workflows agentiques (SmolAgents, LangGraph) et au Memory Tree."
 sidebar:
   order: 3
 last_modified: "2026-10-10"

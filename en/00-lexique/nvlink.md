@@ -1,6 +1,6 @@
 ---
 title: NVLink
-description: High-bandwidth interconnect between NVIDIA GPUs.
+description: "Dedicated hardware link that connects NVIDIA GPUs at very high speed, bypassing the PCIe bus; it is gone from recent workstation and consumer cards."
 aliases:
   - NVIDIA NVLink
 tags:
