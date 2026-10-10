@@ -9,8 +9,8 @@ tags:
   - fondations
   - inférence
 last_modified: "2026-10-10"
-last_verified: "2026-06-10"
-verified_by: "Sonnet 4.6"
+last_verified: "2026-10-10"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -45,15 +45,14 @@ Le gain réel dépend du **taux d'acceptation** des tokens candidats. Quand le d
 
 ## ⚙️ Support dans vLLM
 
-[[03-stack-logicielle/inference-engines-vllm-ollama|vLLM]] supporte le speculative decoding via le paramètre `--speculative-model` au démarrage du serveur [^1] :
+[[03-stack-logicielle/inference-engines-vllm-ollama|vLLM]] supporte le speculative decoding via le paramètre `--speculative-config` (objet JSON) au démarrage du serveur ; l'ancien flag `--speculative-model` n'apparaît plus dans la documentation au 2026-10-10 [^1] :
 
 ```bash
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
-  --speculative-model meta-llama/Llama-3.2-1B-Instruct \
-  --num-speculative-tokens 5
+  --speculative-config '{"method": "draft_model", "model": "meta-llama/Llama-3.2-1B-Instruct", "num_speculative_tokens": 5}'
 ```
 
-Le paramètre `--num-speculative-tokens` (γ) contrôle le nombre de tokens générés par le draft model à chaque étape. Une valeur entre 3 et 8 est généralement recommandée selon les docs vLLM.
+La clé `num_speculative_tokens` (γ) contrôle le nombre de tokens générés par le draft model à chaque étape. Une valeur entre 3 et 8 est généralement recommandée selon les docs vLLM.
 
 > [!note] Variante Eagle / Eagle-2
 > vLLM supporte aussi des variantes avancées comme **Eagle** (draft model entraîné spécifiquement pour s'aligner sur le target), qui peuvent atteindre un taux d'acceptation plus élevé qu'un draft model générique. Consulter la documentation vLLM pour les modèles Eagle disponibles.
@@ -73,7 +72,7 @@ Il est particulièrement attractif sur les blueprints haute capacité ([[02-mate
 
 ## 📚 Pour comprendre en profondeur
 
-1. [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence — vLLM]] *(paramètre `--speculative-model`, configuration)*
+1. [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence — vLLM]] *(paramètre `--speculative-config`, configuration)*
 2. [[02-materiel/apu-and-unified-memory|🧠 APU & Mémoire Unifiée]] *(prérequis matériel : 128 Go+)*
 3. [[01-fondations/kv-cache-and-context|💾 KV Cache & Contexte]] *(comprendre pourquoi l'autorégressivité est le goulot)*
 
@@ -87,4 +86,4 @@ Il est particulièrement attractif sur les blueprints haute capacité ([[02-mate
 
 ## 📚 Sources
 
-[^1]: vLLM Project, *Speculative Decoding* — documentation officielle (`--speculative-model`, `--num-speculative-tokens`, variantes Eagle). [https://docs.vllm.ai/en/stable/features/spec_decode/](https://docs.vllm.ai/en/stable/features/spec_decode/)
+[^1]: vLLM Project, *Speculative Decoding* — documentation officielle (`--speculative-config` avec les clés `method`, `model`, `num_speculative_tokens` ; variantes draft model, EAGLE, MTP, n-gram), consulté le 2026-10-10. [https://docs.vllm.ai/en/stable/features/speculative_decoding/](https://docs.vllm.ai/en/stable/features/speculative_decoding/)

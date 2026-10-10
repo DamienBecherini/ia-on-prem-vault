@@ -7,7 +7,7 @@ sidebar:
   order: 2
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -215,7 +215,7 @@ The AI vendor is no longer an American cloud but the **vendor itself**, hosting 
 
 Since the order of 12 August 2026 (JORF of 14 August), issued for Decree No. 2026-272 of 14 April 2026 pursuant to Article 31 of the SREN law, version 3.2 of the SecNumCloud standard is the official reference: State administrations, their operators, and GIPs must host their data "of particular sensitivity" on a cloud qualified by ANSSI (or certified at an equivalent European or national level). For a vendor targeting the public sector, Tier 2 is no longer a commercial advantage but a condition of access[^9].
 
-European open-weights models (Mistral 3 family, quantized Llama) served on dedicated GPU cover most common B2B use cases (RAG, classification, translation) while remaining within the French legal perimeter; measure it on your corpus before committing (see [[06-mise-en-oeuvre/evaluate-local-model|Evaluate a local model]])[^5].
+European open-weights models (Mistral 3 family from Mistral AI, Kolibri from Aleph Alpha) served on dedicated GPU cover most common B2B use cases (RAG, classification, translation) while remaining within the French legal perimeter; measure it on your corpus before committing (see [[06-mise-en-oeuvre/evaluate-local-model|Evaluate a local model]])[^5]. Since 3 October 2026, Aleph Alpha's **Kolibri 1** (Germany, Apache 2.0, ~78 GB in FP8) joins this European open-weights offering; however, it targets only German and English, which restricts it to English-language or bilingual corpora for a French SME[^18].
 
 ---
 
@@ -257,3 +257,4 @@ The model and the entire inference stack run **at the end customer**, on their o
 [^15]: DeepSeek, *Privacy Policy* ("store your Personal Data in People's Republic of China", updated 2026-02-10); European Commission, *Adequacy decisions* (list of recognized countries: China is not on it), read on 2026-10-10. [https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html) · [https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en)
 [^16]: Hugging Face, model cards *deepseek-ai/DeepSeek-V4.1-Flash* (MIT license, 763B parameters in safetensors), *moonshotai/Kimi-K3* ("Kimi K3" license, 2.8T parameters including 104B active) and *zai-org/GLM-5.3* ("glm-5.3" license, 753B parameters), read on 2026-10-10. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) · [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3) · [https://huggingface.co/zai-org/GLM-5.3](https://huggingface.co/zai-org/GLM-5.3)
 [^17]: EU AI Act Service Desk, *Article 99 — Penalties* (§ 4 (g): non-compliance with Art. 50, "whichever is higher"), read on 2026-10-09. [https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-99](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-99)
+[^18]: Aleph Alpha, *Kolibri-1* (78B MoE, 3.46B active, Apache 2.0, German and English, FP8 weights ≈ 78 GB, signatory of the EU GPAI code of practice), 2026-10-03. [https://huggingface.co/Aleph-Alpha/Kolibri-1](https://huggingface.co/Aleph-Alpha/Kolibri-1)

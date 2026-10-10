@@ -5,7 +5,7 @@ sidebar:
   order: 4
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -95,6 +95,11 @@ La famille la plus polyvalente du paysage open weights, avec une excellente couv
 
 - **Mistral Small 4 (119B)** et **Mistral Medium 3.5 (128B)** : la ligne ouverte actuelle, avec des checkpoints NVFP4 officiels pour Small 4[^11]. Mistral 7B et Mixtral 8x7B restent utilisables mais datent de 2023-2024.
 - **Mistral Large 4** (~1T MoE, 52B actifs) : annoncé le 6 octobre 2026 en API preview ; poids ouverts promis pour fin octobre, licence non publiée au moment de la rédaction — à vérifier avant de planifier un déploiement[^12].
+
+### Kolibri (Aleph Alpha)
+
+- **Kolibri 1** (Aleph Alpha, Allemagne, 3 octobre 2026) : MoE de raisonnement de 78B paramètres dont 3,46B actifs par token, sous Apache 2.0, avec appel d'outils et un contexte natif de 262k tokens (validé jusqu'à 1M). Les poids sont publiés en FP8 (~78 Go) : l'éditeur indique au minimum un H200, un B200 ou deux GPU 80 Go (A100 / H100), donc un serveur de type [[04-blueprints/scenario-d-datacenter|scénario D]] ; avec si peu de paramètres actifs, le débit reste celui d'un petit modèle[^19].
+- Deux limites à peser avant de le retenir : il ne vise que **l'allemand et l'anglais** (le français n'est pas une langue cible), et il se sert via un plugin vLLM de l'éditeur (`aleph-alpha-inference`), sans build Ollama ni GGUF annoncé. Son intérêt est surtout la provenance : éditeur européen, signataire du code de bonne pratique GPAI de l'UE ; les scores publiés sont ceux de l'éditeur, à confirmer sur votre corpus (voir [[06-mise-en-oeuvre/evaluate-local-model|Évaluer un modèle local]])[^19].
 
 ### Phi-4 / Phi-3 (Microsoft)
 
@@ -213,3 +218,4 @@ Avant de télécharger un modèle :
 [^16]: Google, *Gemma 4 31B IT* (Apache 2.0 ; famille E2B / E4B / 26B-A4B / 31B), avril 2026. [https://huggingface.co/google/gemma-4-31b-it](https://huggingface.co/google/gemma-4-31b-it)
 [^17]: Artificial Analysis, *Intelligence Index — classement des modèles* (Claude Opus 5.5 58, Claude Fable 5.1 53, GPT-6 Astra 53, MiMo-V2.6-Pro 46, GLM-5.3 45, Kimi K3 44 ; indice v4.3 ou révision 4.3.x), relevé le 2026-10-10. [https://artificialanalysis.ai/leaderboards/models](https://artificialanalysis.ai/leaderboards/models) ; Artificial Analysis, *Claude Opus 5.5* (58, « the highest score we have measured by several points »), 2026-09-22. [https://artificialanalysis.ai/articles/claude-opus-5-5](https://artificialanalysis.ai/articles/claude-opus-5-5)
 [^18]: Ollama, *Library — kimi-k3* (seul tag `kimi-k3:cloud`, 2,81T paramètres : inférence hébergée) et *glm-5.3* (tag `:cloud`), consultés le 2026-10-10. [https://ollama.com/library/kimi-k3](https://ollama.com/library/kimi-k3) · [https://ollama.com/library/glm-5.3](https://ollama.com/library/glm-5.3)
+[^19]: Aleph Alpha, *Kolibri-1* (MoE 78B, 3,46B actifs, Apache 2.0, allemand et anglais, contexte natif 262 144 tokens validé jusqu'à 1 048 576, poids FP8 ≈ 78 Go ; minimum 2× A100 80 Go, 2× H100 SXM5, 1× H200, 1× B200 ou 1× B300 ; plugin vLLM `aleph-alpha-inference`), 2026-10-03. [https://huggingface.co/Aleph-Alpha/Kolibri-1](https://huggingface.co/Aleph-Alpha/Kolibri-1) ; Aleph Alpha, *Kolibri has landed: a sovereign open-weight model*, 2026-10-03. [https://aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model/](https://aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model/)

@@ -51,17 +51,17 @@ Columns: **Page** (FR path) · **Claim** (short quote, ≤ 120 chars) · **Type*
 
 Page classes (90 / 180 / 365 days) are the safety net; **Recheck by** handles the facts that move faster than their page. `npm run audit:freshness` lists claims past or within 14 days of their date, and the weekly `vault-watch` skill re-checks them claim by claim instead of re-auditing the whole page. Leave the cell empty when the claim has no known deadline.
 
-The table is split per chapter under `watchlist/` because the 2026-10-09 run seeded 585 rows (598 after the Critical PR of the same day, 641 after the first Major PR, 708 after the second Major PR, 739 after the Minor PR of 2026-10-10):
+The table is split per chapter under `watchlist/` because the 2026-10-09 run seeded 585 rows (598 after the Critical PR of the same day, 641 after the first Major PR, 708 after the second Major PR, 739 after the Minor PR of 2026-10-10, 752 after the watch of 2026-10-10):
 
 | File | Rows (2026-10-10) |
 | :-- | --: |
-| `watchlist/00-lexique.md` | 78 |
+| `watchlist/00-lexique.md` | 80 |
 | `watchlist/01-fondations.md` | 37 |
-| `watchlist/02-materiel.md` | 96 |
-| `watchlist/03-stack-logicielle.md` | 106 |
-| `watchlist/04-blueprints.md` | 117 |
-| `watchlist/05-agents-et-assistants-on-prem.md` | 174 |
-| `watchlist/06-mise-en-oeuvre.md` | 131 |
+| `watchlist/02-materiel.md` | 98 |
+| `watchlist/03-stack-logicielle.md` | 110 |
+| `watchlist/04-blueprints.md` | 118 |
+| `watchlist/05-agents-et-assistants-on-prem.md` | 176 |
+| `watchlist/06-mise-en-oeuvre.md` | 133 |
 
 Rows normalised on 2026-10-09 (PR `fix/refresh-2026-10-critical`): every row has exactly 9 cells, a backticked **Page**, and a valid **Status**; the claims corrected by that PR are marked `current` with a `corrigé PR critical 2026-10-09 : ancien → nouveau` note (598 rows after 13 additions). Rule: a literal `|` inside a cell is always escaped as `\|`; when checking with `node -e "…"`, write the protecting regex as `/\\\\\|/g` under bash (double-quote processing) but `/\\\|/g` under PowerShell, otherwise every `\|` is counted as a separator and the escaped rows are reported as malformed.
 
