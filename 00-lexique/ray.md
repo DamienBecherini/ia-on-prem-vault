@@ -7,9 +7,9 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -28,6 +28,7 @@ Standard de facto pour les datacenters souverains. La seule architecture qui gar
 
 ## ⚠️ Pièges fréquents
 - Complexe à administrer : nécessite réseau IA configuré (RoCE/InfiniBand), stockage partagé, compétences HPC.
+- Laisser un cluster multi-nœuds sans authentification : depuis Ray 2.59 (2 octobre 2026), l'authentification par jeton n'est active par défaut que sur les clusters locaux ; un cluster distant ou multi-nœuds reste ouvert jusqu'à Ray 2.61, sauf si `RAY_AUTH_MODE=token` est posé sur chaque nœud[^1].
 - Inutile et surdimensionné pour les scénarios bureau ou PME.
 
 ## 📚 Pour comprendre en profondeur
@@ -41,3 +42,5 @@ Standard de facto pour les datacenters souverains. La seule architecture qui gar
 - [[00-lexique/rdma|RDMA]]
 - [[00-lexique/roce|RoCE]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
+
+[^1]: Ray Project, *Release ray-2.59.0* (« token authentication by default for local clusters … Remote and multi-node clusters are unchanged »), 2026-10-02 · Ray Docs, *Token authentication* (« Ray 2.61 extends the default to all clusters »), consulté le 2026-10-10. [https://github.com/ray-project/ray/releases/tag/ray-2.59.0](https://github.com/ray-project/ray/releases/tag/ray-2.59.0) · [https://docs.ray.io/en/latest/ray-security/token-auth.html](https://docs.ray.io/en/latest/ray-security/token-auth.html)

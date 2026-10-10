@@ -5,7 +5,7 @@ sidebar:
   order: 2
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -60,7 +60,7 @@ Open WebUI is a good companion to the blueprints:
 
 ## 📊 Project maturity
 
-Very widely used and actively maintained project (about 154,000 GitHub stars, v0.11.4 as of 2026-09-21), with a large GitHub community and plugin ecosystem. Product maturity is good, but the attack surface follows: 88 security advisories published between June and September 2026, including about thirty of high severity (account takeover via OAuth, SSRF toward internal services, cross-user tool execution) and three exploitable without an account. Fixes ship only in current releases: an SME must follow the release train without ever staying below 0.11.1 (SSRF CVE-2026-87996), must not pin a version, and must apply the official hardening guide[^4].
+Very widely used and actively maintained project (about 154,000 GitHub stars, v0.11.4 as of 2026-09-21), with a large GitHub community and plugin ecosystem. Product maturity is good, but the attack surface follows: 88 security advisories published between June and September 2026, including about thirty of high severity (account takeover via OAuth, SSRF toward internal services, cross-user tool execution) and three exploitable without an account. Fixes ship only in current releases: an SME must follow the release train without ever staying below 0.11.4 (2026-09-21), which fixes the 15 advisories published in late September 2026, including a session token theft that can be triggered from any website as long as community sharing (on by default) stays open. It must not pin a version and must apply the official hardening guide[^4].
 
 ## 🔗 See also
 
