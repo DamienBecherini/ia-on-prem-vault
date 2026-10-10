@@ -1,0 +1,69 @@
+# Git Workflow
+
+All agent-produced changes to vault content go through a **branch + PR**, never directly to `main`.
+
+## Branch naming
+
+```
+<type>/<kebab-slug>
+```
+
+| Type | When to use |
+|---|---|
+| `feat` | New content (chapter, lexicon entry, new section) |
+| `fix` | Corrections to existing content (broken links, wrong facts, typos) |
+| `chore` | Maintenance, refresh runs, backlog updates, agent-only files |
+| `docs` | Changes to meta files only (rules, skills, plans) |
+
+Examples: `feat/owasp-2025-alignment`, `chore/vault-refresh-2026-06`, `fix/broken-links-audit`
+
+## PR required before merge
+
+- Always push to the named branch, not to `main`.
+- Always open a PR so the human can review the diff before merging.
+- Never force-push to `main`.
+
+## Exception
+
+None since 2026-10-09. A GitHub ruleset ("Protection de main") enforces this server-side: `main` cannot be deleted or force-pushed, every change must come through a pull request, and the CI jobs `Vault quality checks` and `Internal link audit (engine)` must pass before merge. No bypass actor is configured, so a request to "commit to main" or "push directly" cannot be honoured — open a PR instead and merge it once checks are green.
+
+## PR body template
+
+Use this structure for vault content PRs:
+
+```markdown
+## Summary
+- <bullet: what changed and why>
+
+## Files changed
+- `path/to/file.md` — description
+
+## Test plan
+- [ ] Wikilinks resolve in Obsidian
+- [ ] No agent-only content left in public articles
+- [ ] `last_modified` updated on changed FR pages
+- [ ] FR source updated (EN translation deferred unless this PR includes it)
+- [ ] If EN sync is deferred: `npm run audit:i18n:strict` run and stale files noted in PR body
+- [ ] Sources cited where claims are made
+```
+
+## Commit message format
+
+```
+<type>(<scope>): <short imperative description>
+```
+
+Examples:
+- `feat(security): add LLM08 vector embedding weaknesses section`
+- `chore(lexique): refresh quantification entry with 2026 benchmarks`
+- `fix(links): repair broken wikilinks in rag-and-agents`
+
+## One PR at a time, always from `main`
+
+- Create every branch from an up-to-date `main` (`git checkout main && git pull`).
+- Never stack a PR on another PR branch: with squash merges, a stacked PR merged right after its base lands on the base branch instead of `main` (happened with #18 on 2026-10-10 and had to be replayed in #20). Wait for the previous PR to merge, then branch again from `main`.
+- Merge with **squash and merge**.
+
+## Attribution
+
+Commit messages and PR descriptions carry **no AI attribution** (no `Co-Authored-By` trailer, no "Generated with …" footer).

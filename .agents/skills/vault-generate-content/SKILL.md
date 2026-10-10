@@ -61,7 +61,7 @@ Respect explicit user overrides. If the user asks not to use this skill or the p
 - [[00-lexique/existing-term]] - point de coherence a verifier
 ```
 
-Do not leave this working section in a published chapter article. Put it in the active plan (`.cursor/plans/`) and, for durable follow-up, update `.agents/vault-maintenance/lexicon-backlog.md`.
+Do not leave this working section in a published chapter article. Put it in the active plan (`.agents/plans/`) and, for durable follow-up, update `.agents/vault-maintenance/lexicon-backlog.md`.
 
 When adding items to `lexicon-backlog.md`, use the appropriate section:
 - `## To Create` for new entries not yet written.
@@ -112,7 +112,7 @@ Never mix agent maintenance notes with reader-facing content. In chapter article
 
 - Do not publish sections named `Lexique - actions`, `Nouvelles fiches a creer`, or `Fiches a verifier`.
 - Link existing lexicon entries directly in the prose where useful for readers.
-- Move agent-only follow-up to the active plan (`.cursor/plans/`) and `.agents/vault-maintenance/lexicon-backlog.md`.
+- Move agent-only follow-up to the active plan (`.agents/plans/`) and `.agents/vault-maintenance/lexicon-backlog.md`.
 - If the backlog does not exist, create it before finishing the task.
 
 ## Delivery
@@ -122,8 +122,8 @@ After content is written, validated, and (when requested) pushed:
 1. **Branch** — create `feat/vault-<kebab-title>` before any file change (or reuse the active plan branch if one exists).
 2. **Stage** — only the files created or modified by this task.
 3. **Commit** — `feat(content): <short imperative description>`.
-4. **Push + PR** — read `.cursor/rules/git-workflow.mdc` for the PR body template and branch naming rules. The PR description is the default audit trail (files changed, sources, lexicon follow-up, validation).
+4. **Push + PR** — read `.agents/rules/git-workflow.md` for the PR body template and branch naming rules. The PR description is the default audit trail (files changed, sources, lexicon follow-up, validation).
 5. **Report** — paste the PR URL in chat.
 
-No exception: `main` is protected by a GitHub ruleset (PR required, CI checks required, no bypass). See `.cursor/rules/git-workflow.mdc`.
+No exception: `main` is protected by a GitHub ruleset (PR required, CI checks required, no bypass). See `.agents/rules/git-workflow.md`.
 

@@ -56,7 +56,7 @@ For each file in the backlog:
 1. **Branch** — `feat/i18n-sync-<YYYY-MM-DD>` or `feat/i18n-<kebab-topic>`.
 2. **Stage** — only `en/**` files changed by this task (and the skill if new).
 3. **Commit** — `feat(i18n): sync EN mirrors for <short scope>`.
-4. **Push + PR** — read `.cursor/rules/git-workflow.mdc`. List translated paths in PR body.
+4. **Push + PR** — read `.agents/rules/git-workflow.md`. List translated paths in PR body.
 5. **Validate** — `npm run audit:i18n:strict` should show fewer (or zero) stale entries for translated paths.
 
 ## Output report

@@ -125,7 +125,7 @@ For each target page (FR version only):
    - for every edited FR page set `last_modified: <RUN_DATE>`; for every audited page (edited or confirmed current) set `last_verified: <RUN_DATE>` and `verified_by: <editorial.defaultAgent>`, for example with `node scripts/backfill-verified.mjs --write --paths=<fr.md,en/fr.md,…>` (never a whole-vault stamp); never set `verified_hitl` autonomously;
    - update the watchlist rows to `current` with the new values;
    - run `npm test` and `npm run audit:sources:offline`;
-   - commit `chore(refresh): <scope>`, push, open a PR using the template in `.cursor/rules/git-workflow.mdc`, with the report path and the `audit:i18n:strict` stale count in the body. EN sync is deferred to `vault-translate-content` unless the user asked for it.
+   - commit `chore(refresh): <scope>`, push, open a PR using the template in `.agents/rules/git-workflow.md`, with the report path and the `audit:i18n:strict` stale count in the body. EN sync is deferred to `vault-translate-content` unless the user asked for it.
 4. Merging the PR is the HITL sign-off. After merge, the human (or a script run on their request) stamps `verified_hitl` / `verified_hitl_url` from `site.config.json` on the pages the PR audited.
 
 ---
