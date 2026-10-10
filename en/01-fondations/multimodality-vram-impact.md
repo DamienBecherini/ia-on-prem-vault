@@ -164,4 +164,4 @@ flowchart TD
 [^1]: Liu et al., *Visual Instruction Tuning (LLaVA)* (architecture: CLIP-ViT-L/14 encoder + MLP projector + LLM backbone; encoder VRAM derived from published parameter count). [https://arxiv.org/abs/2304.08485](https://arxiv.org/abs/2304.08485)
 [^2]: Alibaba Cloud, *Qwen2-VL model documentation* (dynamic visual tokens by resolution, SigLIP architecture). [https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct)
 [^3]: OpenAI, *Whisper model card* (tiny to large-v3 sizes, parameters and indicative memory footprint). [https://github.com/openai/whisper](https://github.com/openai/whisper)
-[^4]: vLLM Project, *Production Metrics — KV cache usage* (KV Cache behaviour under continuous batching). [https://docs.vllm.ai/en/stable/serving/metrics.html](https://docs.vllm.ai/en/stable/serving/metrics.html)
+[^4]: vLLM Project, *Production Metrics — KV cache usage* (KV Cache behaviour under continuous batching). [https://docs.vllm.ai/en/stable/usage/metrics/](https://docs.vllm.ai/en/stable/usage/metrics/)
