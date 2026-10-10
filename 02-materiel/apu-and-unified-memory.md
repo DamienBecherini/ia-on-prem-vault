@@ -3,8 +3,8 @@ title: 🧠 APU & Mémoire Unifiée
 description: Analyse comparative des puces Apple Silicon M5 Max / M5 Ultra, des APU AMD Ryzen AI Max PRO 400 (Gorgon Halo) et de la famille NVIDIA Grace Blackwell (DGX Spark) pour l'inférence de grands LLM.
 sidebar:
   order: 1
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -15,7 +15,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 Pour un déploiement souverain d'IA en entreprise, la **mémoire unifiée** est l'une des ruptures matérielles les plus importantes de la décennie.
 
-En supprimant la copie RAM → VRAM via PCIe, les SoC **APU** (CPU + GPU + NPU sur la même puce) accèdent à un pool de **LPDDR5X** partagé — jusqu'à **192 Go** sur les plateformes AMD Ryzen AI Max PRO 400, et jusqu'à **512 Go** sur le Mac Studio M5 Ultra (1,2 To/s, configuration 512 Go livrée fin octobre 2026) [^1][^2][^4][^17]. C'est l'architecture de référence pour exécuter des modèles **70B+ quantifiés** (ex. Llama 3.1 70B en Q4_K_M, ~40 Go de poids) sur une station de bureau silencieuse, sans serveur GPU datacenter [^3][^9].
+En supprimant la copie RAM → VRAM via PCIe, les SoC **APU** (CPU + GPU + NPU sur la même puce) accèdent à un pool de **LPDDR5X** partagé — jusqu'à **192 Go** sur les plateformes AMD Ryzen AI Max PRO 400, et jusqu'à **512 Go** sur le Mac Studio M5 Ultra (1,2 To/s, configuration 512 Go livrée fin octobre 2026) [^1][^2][^4][^17]. C'est l'architecture de référence pour exécuter des modèles **70B+ quantifiés** (ex. Llama 3.1 70B en Q4_K_M, ~40 Go de poids) sur une station de bureau silencieuse, sans serveur GPU datacenter [^3][^4].
 
 > [!note] Lien connexe
 > Pour le dimensionnement mémoire (poids + KV cache), voir [[01-fondations/quantization-4bit-8bit|Quantification]] et [[01-fondations/kv-cache-and-context|KV Cache]].
@@ -31,20 +31,20 @@ Apple intègre CPU, GPU et NPU sur un même package, avec des barrettes **LPDDR5
 
 *   **Mac Studio M5 Max** (18c CPU / 40c GPU) : jusqu'à **128 Go** unifiés, **614 Go/s** de bande passante (460 Go/s avec le GPU 32 cœurs), à partir de 2 499 $ US [^4][^17].
 *   **Mac Studio M5 Ultra** (jusqu'à 36c CPU / 80c GPU) : **96, 256 ou 512 Go** unifiés, **1,2 To/s**, à partir de 5 499 $ US ; la version 512 Go est livrée fin octobre 2026 [^4][^17]. (Apple a sauté la génération M4 Ultra : le M5 Ultra succède directement au M3 Ultra de 2025 [^5].)
-*   **Forces :** bande passante très élevée, écosystèmes **MLX** et **Metal** matures, silence et faible consommation [^3][^10].
+*   **Forces :** bande passante très élevée, écosystèmes **MLX** et **Metal** matures, silence et faible consommation [^3][^17].
 *   **Limites :** macOS, mémoire non évolutive (soudée), tarif élevé en configuration 128 Go+ [^4].
 
 ### 2. AMD Ryzen AI Max PRO 400 (« Gorgon Halo »)
-Refresh professionnel de la plateforme **Strix Halo** (Zen 5 + RDNA 3.5), annoncé mai 2026 pour des systèmes OEM au **T3 2026** [^1][^2].
+Refresh professionnel de la plateforme **Strix Halo** (Zen 5 + RDNA 3.5), annoncé en mai 2026 ; au T4 2026 le flagship Max+ PRO 495 est référencé chez AMD et expédié dans le Framework Desktop 192 Go (précommandes ouvertes le 2026-09-30, livraisons à partir de novembre 2026) [^1][^2][^18].
 
 *   **Architecture :** jusqu'à **16 cœurs Zen 5**, iGPU **Radeon 8065S** (40 CU sur le SKU flagship **Max+ PRO 495**), bus mémoire **256-bit** LPDDR5X-8533 [^1][^2].
 *   **Capacité :** jusqu'à **192 Go** unifiés (+50 % vs la série 300 à 128 Go) [^1][^2].
 *   **Bande passante :** **~273 Go/s** (contre ~256 Go/s théoriques sur Strix Halo 128 Go — gain ~7 % lié au clock mémoire) [^1][^2].
 *   **Allocation GPU :** jusqu'à **160 Go** réservables comme VRAM iGPU, **32 Go** laissés au système [^1][^2].
-*   **Forces :** x86 ouvert (Linux / Windows / Docker natif), rapport capacité/prix attractif sur la plateforme **Ryzen AI Halo** (~3 999 $ pour la config 128 Go actuelle) [^7][^8].
-*   **Limites :** bande passante ~**2× inférieure** au M4 Max — le décodage des modèles denses 70B reste memory-bound (~5 tok/s mesurés sur Strix Halo 395, profil similaire attendu sur PRO 400) [^2][^6][^9].
+*   **Forces :** x86 ouvert (Linux / Windows / Docker natif), rapport capacité/prix encore attractif mais en dégradation rapide : la plateforme de développement **Ryzen AI Halo** 128 Go s'est vendue 3 999 $ US (juillet 2026) et le Framework Desktop 128 Go est affiché 3 889 € TTC et en rupture au 2026-10-09, contre 1 999 $ au lancement — la flambée de la LPDDR5X se répercute sur toutes les capacités [^18][^20][^25].
+*   **Limites :** bande passante ~**2,2× inférieure** au M5 Max (614 Go/s) et ~4,4× au M5 Ultra (1,2 To/s) — le décodage des modèles denses 70B reste memory-bound (~5 tok/s mesurés sur Strix Halo 395, profil similaire attendu sur PRO 400) [^2][^4][^6].
 
-### 3. NVIDIA Grace Blackwell (DGX Spark / RTX Spark)
+### 3. NVIDIA Grace Blackwell (DGX Spark)
 
 Annoncé en 2025 et disponible à partir de 2026, le **DGX Spark** (anciennement Project Digits) est le premier produit NVIDIA combinant un SoC ARM et un GPU Blackwell sur un boîtier de bureau [^14].
 
@@ -56,8 +56,10 @@ Annoncé en 2025 et disponible à partir de 2026, le **DGX Spark** (anciennement
 *   **Scale-out QSFP 200 Gbps :** un port dédié permet d'interconnecter plusieurs boîtiers DGX Spark en fabric mesh, sans switch externe supplémentaire [^14].
 *   **Logiciel NVIDIA Sync :** environnement CUDA complet pré-installé pour réduire la friction au démarrage.
 
+NVIDIA annonce aussi un **RTX Spark** (PC Windows sur base GB10, précommandes ouvertes), distinct du DGX Spark, dont les spécifications publiques restent incomplètes au T4 2026 [^14].
+
 > [!tip] Positionnement DGX Spark
-> Le DGX Spark brille sur la **capacité** (128 Go LPDDR5x accessibles à CUDA sans friction) et sur le **FP4 natif** — utile pour charger des modèles 70B+ et entraîner avec LoRA sans compromis de précision. En revanche, pour l'inférence pure sur des modèles ≤ 34B, une station **2× RTX 4090 (~1 100 W, ~4 500 €)** reste nettement plus rapide grâce à sa GDDR6X dédiée à très haute bande passante. Le DGX Spark est le bon choix quand la **capacité mémoire et la simplicité CUDA** priment sur le débit brut.
+> Le DGX Spark brille sur la **capacité** (128 Go LPDDR5x accessibles à CUDA sans friction) et sur le **FP4 natif** — utile pour charger des modèles 70B+ et entraîner avec LoRA sans compromis de précision. En revanche, pour l'inférence pure sur des modèles ≤ 34B, une station à GPU discret (RTX 5090 32 Go ou RTX PRO 6000 96 Go) reste nettement plus rapide grâce à sa GDDR7 dédiée à très haute bande passante — mais au T4 2026 une RTX 5090 se négocie ≥ 5 000 $ et une RTX PRO 6000 ~16 000 $, ce qui efface l'écart de prix avec les stations unifiées [^21][^22]. Le DGX Spark est le bon choix quand la **capacité mémoire et la simplicité CUDA** priment sur le débit brut.
 
 ---
 
@@ -78,7 +80,7 @@ graph TD
 graph TD
     subgraph "Mémoire Unifiée (Apple / AMD)"
         E[SSD / NVMe] -->|Lecture| F[LPDDR5X unifiée]
-        F -->|Bus direct 273-819 Go/s| G[Cœurs CPU et GPU]
+        F -->|Bus direct 273-1200 Go/s| G[Cœurs CPU et GPU]
     end
 ```
 
@@ -100,7 +102,7 @@ Sur Strix Halo et Gorgon Halo, l'allocation se fait surtout via **BIOS/firmware 
 > [!warning] Piège : le page cache lors du chargement
 > Si le modèle est stocké sur SSD et qu'il fait **140 Go** (ex. Llama 3.1 70B en Q8), l'OS va remplir son **page cache** dans les 32 Go système lors de la lecture du fichier GGUF — avant même que l'inférence ne commence. Résultat : OOM ou swap massif sur les 32 Go restants. Bonne pratique : laisser **au moins 10–15 % de la RAM totale** hors allocation GPU, soit ~20–28 Go libres sur un système 192 Go, pour couvrir OS + page cache + buffers de chargement.
 
-Les systèmes **PRO 400** arrivent en **T3 2026** (HP, Lenovo, ASUS…) ; les guides Strix Halo 395 restent pertinents pour llama.cpp/Vulkan/ROCm en attendant [^6][^8].
+Les premiers systèmes **PRO 400** sont en précommande depuis le T4 2026 (Framework Desktop 192 Go ; HP, Lenovo et ASUS annoncés) ; les guides Strix Halo 395 restent la référence pratique pour llama.cpp/Vulkan/ROCm, et SGLang publie depuis la v0.5.20 une image ROCm pour `gfx1151` (Strix Halo) [^6][^18][^19].
 
 ### 2. Côté Apple Silicon (macOS)
 Par défaut, macOS plafonne la **working set Metal** du GPU à environ **75 %** de la RAM unifiée (via `recommendedMaxWorkingSetSize`) — sur 128 Go, seuls ~96 Go sont exploitables sans tweak [^12][^13].
@@ -126,20 +128,23 @@ sudo sysctl iogpu.wired_limit_mb=122880
 
 *Comparaison de stations unifiées pour **Llama 3.1 70B Q4_K_M** (~40 Go de poids). Vitesses = **décodage** (génération), ordres de grandeur mesurés ou publiés — varient selon backend (MLX vs llama.cpp vs CUDA), contexte et build.*
 
-| Critère | Mac Studio (M4 Max 128 Go) | Mac Studio (M3 Ultra 192 Go) | AMD Ryzen AI (Halo / PRO 400) | **NVIDIA DGX Spark** |
+| Critère | Mac Studio (M5 Max 128 Go) | Mac Studio (M5 Ultra 256–512 Go) | AMD Ryzen AI (Halo / PRO 400) | **NVIDIA DGX Spark (64 / 128 Go)** |
 | :--- | :--- | :--- | :--- | :--- |
-| **Puce (config LLM)** | M4 Max 16c/40c GPU [^4] | M3 Ultra 32c/80c GPU [^4] | Ryzen AI Max+ PRO 495 [^1][^2] | Grace Blackwell SoC [^14] |
-| **RAM unifiée max** | 128 Go [^4] | 512 Go (192 Go courant) [^4] | 192 Go [^1][^2] | **128 Go LPDDR5x** [^14] |
-| **VRAM GPU max allouable** | ~120 Go (`sysctl`, 128 Go machine) [^12] | ~160–184 Go (selon RAM totale) [^12] | **160 Go** (BIOS max) — en pratique ~130–140 Go [^1][^2] | ~128 Go (accès CUDA direct) [^14] |
-| **Bande passante** | **546 Go/s** [^3][^4] | **819 Go/s** [^4] | **~273 Go/s** [^1][^2] | **~273 Go/s** [^14] |
-| **Débit 70B Q4 (decode)** | **~10–12 tok/s** (MLX) [^9][^10] | **~12–15 tok/s** (MLX) [^9][^10] | **~4,5–5 tok/s** (Strix Halo 395) [^6][^9] | *non publié officiellement* |
+| **Puce (config LLM)** | M5 Max 18c/40c GPU [^4] | M5 Ultra 36c/80c GPU [^4] | Ryzen AI Max+ PRO 495 [^1][^2] | Grace Blackwell SoC (GB10) [^14] |
+| **RAM unifiée max** | 128 Go [^4] | 512 Go (paliers 96 / 256 / 512 Go) [^4][^17] | 192 Go [^1][^2] | **64 ou 128 Go LPDDR5x** [^14][^16] |
+| **VRAM GPU max allouable** | ~120 Go (`sysctl`, 128 Go machine) [^12] | ~75 % par défaut ; jusqu'à RAM − 8–16 Go via `sysctl` (~240 Go sur 256 Go, ~496 Go sur 512 Go) [^12][^13] | **160 Go** (BIOS max) — en pratique ~130–140 Go [^1][^2] | ~64 / ~128 Go (accès CUDA direct) [^14] |
+| **Bande passante** | **614 Go/s** (460 Go/s avec le GPU 32 cœurs) [^4][^17] | **1,2 To/s** [^4][^17] | **~273 Go/s** [^1][^2] | **~273 Go/s** [^14] |
+| **Débit 70B Q4 (decode)** | **≤ ~15 tok/s** (borne 614 Go/s ÷ 40 Go ; mesures MLX M5 Max non publiées) [^4] | **≤ ~30 tok/s** (borne 1,2 To/s ÷ 40 Go ; mesures MLX M5 Ultra non publiées) [^4] | **~4,5–5 tok/s** (Strix Halo 395) [^6] | *non publié officiellement* [^14] |
 | **FP4 natif** | ❌ | ❌ | ❌ | ✅ Blackwell [^15] |
-| **Scale-out** | ❌ | ❌ | ❌ | ✅ QSFP 200 Gbps [^14] |
+| **Scale-out** | ✅ Thunderbolt 5 RDMA (macOS 26.2+, jusqu'à 4 Mac Studio) [^17] | ✅ Thunderbolt 5 RDMA (macOS 26.2+, jusqu'à 4 Mac Studio) [^17] | ❌ | ✅ ConnectX-7 200 Gbps, jusqu'à 4 nœuds [^14] |
 | **OS** | macOS | macOS | **Linux / Windows** [^1][^2] | Linux (CUDA) [^14] |
-| **Tarif indicatif** | ~4 500–5 500 € (128 Go, CTO) [^4][^5] | ~5 000–7 500 € (192 Go+, CTO) [^4][^5] | **~3 700 €** (128 Go) [^7][^8] | **≈ 6 950 $** (128 Go, au 2026-10-02) · 4 999 $ (64 Go, OEM, dès le 2026-10-23) [^14][^16] |
+| **Tarif indicatif** | à partir de 2 499 $ US (base 48 Go) ; config 128 Go : prix CTO à relever [^17] | à partir de 5 499 $ US (96 Go) ; 256 / 512 Go : prix CTO à relever [^17] | **~3 900 €** (128 Go, rupture au 2026-10) · **~6 800–7 450 $** (192 Go, précommande, livraison nov. 2026) [^18][^20][^23] | **≈ 6 950 $** (128 Go, au 2026-10-02) · 4 999 $ (64 Go, OEM, dès le 2026-10-23) [^14][^16] |
 
 > [!note] Lecture des chiffres
-> Les vitesses Apple proviennent de benchmarks communautaires **MLX** ; **llama.cpp/Metal** est souvent légèrement plus lent en decode pur [^9][^10]. Les chiffres NVIDIA DGX Spark en inférence ne sont pas encore publiés officiellement au moment de la rédaction — les claims des sources communautaires ne sont pas repris ici. La borne théorique memory-bound (~13–21 tok/s Apple vs ~7 tok/s AMD) est détaillée dans [[01-fondations/unified-memory-vs-ram-vs-vram|Mémoire unifiée vs RAM vs VRAM]].
+> Les débits Apple sont des **bornes théoriques memory-bound** (bande passante ÷ poids du modèle), pas des mesures : au 2026-10-09, aucun benchmark MLX du M5 Max / M5 Ultra avec méthodologie publiée n'était disponible, et **llama.cpp/Metal** est généralement un peu plus lent que MLX en decode pur. Les chiffres NVIDIA DGX Spark en inférence ne sont pas publiés officiellement — les claims des sources communautaires ne sont pas repris ici. La méthode de calcul de la borne memory-bound est détaillée dans [[01-fondations/unified-memory-vs-ram-vs-vram|Mémoire unifiée vs RAM vs VRAM]].
+
+> [!warning] Prix mémoire en hausse (T4 2026)
+> Les prix de la DRAM contractuelle progressent encore de 10–15 % par trimestre au T4 2026 (TrendForce, 30 septembre 2026) et Framework prévient que « le prix de la mémoire pour toutes les capacités continuera d'augmenter sur les six prochains mois » [^18][^24]. Les tarifs de ce tableau sont donc à relire à chaque achat ; la mémoire soudée se paie désormais au prix fort.
 
 ---
 
@@ -148,28 +153,33 @@ sudo sysctl iogpu.wired_limit_mb=122880
 Pour un déploiement souverain on-premise :
 
 1.  **Souveraineté x86 + Docker (AMD Halo / PRO 400) :** si la stack repose sur **Linux, Docker et Python**, la plateforme AMD est la plus rationnelle : 160 Go VRAM allouables, écosystème ouvert, prix inférieur au Mac Studio équivalent en capacité [^1][^2][^7]. Acceptez un débit **~5 tok/s** sur un 70B dense — privilégiez les **MoE** (Qwen3.5-A3B, etc.) pour l'interactivité [^6].
-2.  **Vitesse et confort (Mac Studio) :** pour le meilleur ressenti sur un **70B dense** (~12–15 tok/s en MLX sur M3 Ultra), le **Mac Studio M3 Ultra 192 Go+** reste le roi de la bande passante unifiée en 2026 ; le **M4 Max 128 Go** est un excellent compromis si 128 Go suffisent [^4][^9][^10]. Budget macOS et conteneurs à anticiper.
-3.  **CUDA + FP4 + scale-out (NVIDIA DGX Spark) :** si votre équipe est déjà dans l'écosystème NVIDIA (CUDA, TensorRT, vLLM), le DGX Spark offre 128 Go LPDDR5x accessibles nativement via CUDA, le FP4 natif Blackwell, et la possibilité d'interconnecter plusieurs boîtiers via QSFP 200 Gbps sans reconfigurer l'infrastructure [^14]. Il n'est pas le meilleur choix pour l'inférence pure sur modèles ≤ 34B : une station 2× RTX 4090 reste plus rapide à ce cas d'usage.
+2.  **Vitesse et confort (Mac Studio) :** pour le meilleur ressenti sur un **70B dense** (borne memory-bound ~30 tok/s sur M5 Ultra, mesures non publiées), le **Mac Studio M5 Ultra 256–512 Go** (1,2 To/s) reste la référence de bande passante unifiée au T4 2026 ; le **M5 Max 128 Go** (614 Go/s) est un excellent compromis si 128 Go suffisent [^4][^17]. Budget macOS et conteneurs à anticiper.
+3.  **CUDA + FP4 + scale-out (NVIDIA DGX Spark) :** si votre équipe est déjà dans l'écosystème NVIDIA (CUDA, TensorRT, vLLM), le DGX Spark offre 128 Go LPDDR5x accessibles nativement via CUDA, le FP4 natif Blackwell, et la possibilité d'interconnecter plusieurs boîtiers via QSFP 200 Gbps sans reconfigurer l'infrastructure [^14]. Il n'est pas le meilleur choix pour l'inférence pure sur modèles ≤ 34B : une station à GPU discret (RTX 5090, RTX PRO 6000) reste plus rapide à ce cas d'usage — à un prix désormais comparable ou supérieur au T4 2026 (voir l'encadré « Positionnement DGX Spark ») [^21][^22].
 4.  **Dimensionnez dès l'achat :** la mémoire LPDDR5X est **soudée** — impossible d'upgrader après coup. Prévoyez marge pour **poids + KV cache + OS + page cache de chargement** (voir chapitres fondations). Sur un système 192 Go AMD, allouer 160 Go au GPU laisse 32 Go système — suffisant au repos, mais serré lors du premier chargement d'un modèle ≥ 100 Go.
 
 ---
 
 ## 📚 Sources et Références
 
-[^1]: AMD, *AMD Powers Next-Generation Agent Computers — Ryzen AI Max PRO 400 Series*, mai 2026. [https://www.amd.com/en/blogs/2026/amd-powers-next-generation-agent-computers-with-new-ryzen-ai-hal.html](https://www.amd.com/en/blogs/2026/amd-powers-next-generation-agent-computers-with-new-ryzen-ai-hal.html)
+[^1]: AMD, *AMD Ryzen AI Max+ PRO 495* — fiche produit (16 cœurs Zen 5, Radeon 8065S 40 CU, 192 Go LPDDR5X-8533, bus 256-bit, cTDP 45–120 W), consultée le 2026-10-09 · AMD, *AAI 2026: AMD Delivers Full-Stack Compute for the Agentic AI Era* (plateformes Halo PRO 400 « plus tard cette année »), 2026-07-23. [https://www.amd.com/en/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html](https://www.amd.com/en/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html) · [https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era](https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era)
 [^2]: ServeTheHome, *AMD Ups Ante With 192GB Ryzen AI Max PRO 400 Chips for AI Systems*, mai 2026. [https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/](https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/)
 [^3]: Apple Newsroom, *Apple introduces M4 Pro and M4 Max*, octobre 2024 (546 Go/s, 128 Go max M4 Max). [https://www.apple.com/newsroom/2024/10/apple-introduces-m4-pro-and-m4-max/](https://www.apple.com/newsroom/2024/10/apple-introduces-m4-pro-and-m4-max/)
 [^4]: Apple, *Mac Studio — Technical Specifications* (M5 Max 614 Go/s / M5 Ultra 1,2 To/s, paliers RAM 96 / 256 / 512 Go), relu le 2026-10-09. [https://www.apple.com/mac-studio/specs/](https://www.apple.com/mac-studio/specs/)
 [^5]: Apple Support, *Mac Studio (2025) — Tech Specs* (configurations CTO, RAM). [https://support.apple.com/en-us/122211](https://support.apple.com/en-us/122211)
 [^6]: ignasivt, *Strix Halo Guide* (benchmarks llama.cpp Llama 3.1 70B Q4 ~4,7–4,9 tok/s), 2026. [https://github.com/ignasivt/strix-halo-guide](https://github.com/ignasivt/strix-halo-guide)
 [^7]: TweakTown, *AMD launches Ryzen AI Max PRO 400 — up to 192GB unified memory*, mai 2026. [https://www.tweaktown.com/news/111752/amd-launches-the-ryzen-ai-max-pro-400-series-of-cpus-up-to-16-cores-with-192gb-of-unified-memory/index.html](https://www.tweaktown.com/news/111752/amd-launches-the-ryzen-ai-max-pro-400-series-of-cpus-up-to-16-cores-with-192gb-of-unified-memory/index.html)
-[^8]: VideoCardz, *AMD confirms Ryzen AI MAX 400 Gorgon Halo — 192GB / 160GB VRAM*, mai 2026. [https://videocardz.com/newz/amd-confirms-ryzen-ai-max-400-gorgon-halo-will-support-up-to-192gb-memory-and-160gb-vram](https://videocardz.com/newz/amd-confirms-ryzen-ai-max-400-gorgon-halo-will-support-up-to-192gb-memory-and-160gb-vram)
-[^9]: CraftRigs, *How to Run Llama 3 70B on a Mac with 128 GB RAM* (vitesses MLX M3 Ultra / M4 Max), 2025. [https://craftrigs.com/guides/run-llama-70b-mac-128gb-ram/](https://craftrigs.com/guides/run-llama-70b-mac-128gb-ram/)
-[^10]: llmhardware.io, *Mac Studio M4 Max for LLMs* (Llama 3.3 70B Q4 ~14–20 tok/s MLX), 2025. [https://llmhardware.io/guides/mac-studio-m4-max-llm-guide](https://llmhardware.io/guides/mac-studio-m4-max-llm-guide)
 [^11]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (goulots mémoire, quantification), novembre 2023. [https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/](https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/)
 [^12]: ggml-org/llama.cpp, *Issue #16646* (`iogpu.wired_limit_mb`), 2025. [https://github.com/ggml-org/llama.cpp/issues/16646](https://github.com/ggml-org/llama.cpp/issues/16646)
 [^13]: ivanopcode, *Override macOS Metal VRAM cap* (`iogpu.wired_limit_mb`, tableaux par RAM), 2025. [https://github.com/ivanopcode/devnote-override-macos-metal-vram-cap](https://github.com/ivanopcode/devnote-override-macos-metal-vram-cap)
-[^14]: NVIDIA, *DGX Spark* — page produit officielle (Grace Blackwell SoC, 128 Go LPDDR5x, ~273 Go/s, QSFP 200 Gbps, déclinaison 64 Go « Coming Soon » chez les OEM), relue le 2026-10-09. [https://www.nvidia.com/en-us/products/workstations/dgx-spark/](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)
+[^14]: NVIDIA, *DGX Spark* — page produit officielle (Grace Blackwell SoC GB10, 128 Go LPDDR5x, ~273 Go/s, ConnectX-7 200 Gbps et cluster jusqu'à 4 systèmes, déclinaison 64 Go « Coming Soon » chez les OEM, lien de précommande « RTX Spark »), relue le 2026-10-09. [https://www.nvidia.com/en-us/products/workstations/dgx-spark/](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)
 [^15]: NVIDIA, *NVIDIA Blackwell Architecture Technical Brief* (FP4 Tensor Cores natifs vs FP4 émulé Ada Lovelace). [https://resources.nvidia.com/en-us-blackwell-architecture](https://resources.nvidia.com/en-us-blackwell-architecture)
 [^16]: ServeTheHome, *NVIDIA DGX Spark 64GB Launched and Big 128GB GB10 Price Increases* (128 Go ≈ 6 950 $, 64 Go 4 999 $ OEM dès le 2026-10-23), 2 octobre 2026. [https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/](https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/)
-[^17]: Apple Newsroom, *Apple introduces new Mac Studio with M5 Max and M5 Ultra* (M5 Max 614 Go/s, M5 Ultra 1,2 To/s, 96 / 256 / 512 Go, prix de départ US, 512 Go livré fin octobre 2026), 25 août 2026. [https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/](https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/)
+[^17]: Apple Newsroom, *Apple introduces new Mac Studio with M5 Max and M5 Ultra* (M5 Max 614 Go/s, M5 Ultra 1,2 To/s, 96 / 256 / 512 Go, prix de départ US, 512 Go livré fin octobre 2026, clustering Thunderbolt 5 + RDMA sous macOS 26.2 jusqu'à 4 Mac Studio), 25 août 2026. [https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/](https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/)
+[^18]: Framework, *The 192GB Framework Desktop is open for pre-order* (Ryzen AI Max+ PRO 495, 192 Go, précommandes du 2026-09-30, livraisons novembre 2026, avertissement sur la hausse des prix mémoire), 30 septembre 2026. [https://frame.work/blog/192gb-framework-desktop-open-for-pre-order](https://frame.work/blog/192gb-framework-desktop-open-for-pre-order)
+[^19]: SGLang Project, *Release v0.5.20* (image ROCm pour `gfx1151` Strix Halo ; CUDA 13 obligatoire côté NVIDIA), 18 septembre 2026. [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20)
+[^20]: Framework, *Framework Desktop (AMD Ryzen AI Max 300)* — page produit (128 Go : 3 889 € TTC, « En rupture de stock »), consultée le 2026-10-09. [https://frame.work/products/desktop-diy-amd-aimax300](https://frame.work/products/desktop-diy-amd-aimax300)
+[^21]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500*, 14 septembre 2026. [https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu](https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu)
+[^22]: Tom's Hardware, *Nvidia doubles RTX PRO 6000 Blackwell's MSRP to a staggering $16,000*, août 2026. [https://www.tomshardware.com/pc-components/gpus/nvidia-doubles-rtx-pro-6000-blackwells-msrp-to-a-staggering-usd16-000-96gb-card-started-pre-orders-below-usd8-000-last-year](https://www.tomshardware.com/pc-components/gpus/nvidia-doubles-rtx-pro-6000-blackwells-msrp-to-a-staggering-usd16-000-96gb-card-started-pre-orders-below-usd8-000-last-year)
+[^23]: Phoronix, *Framework Desktop With AMD Ryzen AI Max+ PRO 495 "Gorgon Halo" Now Available For Pre-Order* (192 Go : 6 799 $ DIY / 7 449 $ monté), 30 septembre 2026. [https://www.phoronix.com/news/Framework-Desktop-Gorgon-Halo](https://www.phoronix.com/news/Framework-Desktop-Gorgon-Halo)
+[^24]: TrendForce, communiqué du 30 septembre 2026 (prix contractuels DRAM en hausse de 10–15 % au T4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
+[^25]: Tom's Hardware, *AMD challenges Nvidia's DGX Spark with $3,999 Ryzen AI Halo* (plateforme de développement Ryzen AI Max+ 395, 128 Go, Micro Center, disponibilité 10 juillet 2026), juillet 2026. [https://www.tomshardware.com/desktops/mini-pcs/amd-challenges-nvidias-dgx-spark-with-usd3-999-ryzen-ai-halo-with-windows-11-support-strix-halo-desktop-undercuts-nvidia-by-usd700-packs-128gb-of-unified-memory](https://www.tomshardware.com/desktops/mini-pcs/amd-challenges-nvidias-dgx-spark-with-usd3-999-ryzen-ai-halo-with-windows-11-support-strix-halo-desktop-undercuts-nvidia-by-usd700-packs-128gb-of-unified-memory)

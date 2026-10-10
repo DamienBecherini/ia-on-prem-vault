@@ -3,8 +3,8 @@ title: "🔒 Sécurité de l'inférence locale"
 description: Authentification de l'API locale, isolation réseau, chiffrement, OWASP LLM Top 10 et protection contre l'injection de prompt pour une stack d'inférence on-premise.
 sidebar:
   order: 4
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -28,9 +28,15 @@ Après une installation standard :
 | vLLM | 8000 | **toutes interfaces** ⚠️ |
 | Open WebUI | 3000 | **toutes interfaces** ⚠️ |
 | LiteLLM | 4000 | **toutes interfaces** ⚠️ |
+| llama-server (llama.cpp) | 9931 (8080 avant le build d'octobre 2026 et dans l'image Docker) | **localhost seulement** ✅ |
 
 > [!warning] vLLM en production
 > vLLM écoute sur `0.0.0.0:8000` par défaut. Si votre machine est accessible depuis le réseau de l'entreprise, toute personne pouvant atteindre ce port peut interroger le modèle **sans authentification**. Appliquez le binding localhost ou le reverse proxy avant toute ouverture réseau.
+>
+> Un port vLLM exposé n'est pas qu'un risque de fuite : en 2026, une seule requête non authentifiée suffisait à faire tomber le moteur (CVE-2026-93592, corrigée en 0.28.0) et un paramètre de requête permettait d'exécuter du code côté serveur lorsque `--trust-remote-code` est actif (GHSA-h3rc-6mm3-gc2m, corrigée en 0.31.0). Au T4 2026, déployez vLLM ≥ 0.31.0 et n'activez `--trust-remote-code` que pour des dépôts que vous contrôlez[^14].
+
+> [!note] llama-server change de port
+> Le port par défaut de `llama-server` passe de 8080 à 9931 (bascule fusionnée le 9 octobre 2026 ; l'image Docker reste sur 8080). Fixez toujours `--port` explicitement dans vos scripts. Évitez `--sleep-idle-seconds` sur un serveur exposé tant que les use-after-free CVE-2026-43631 et CVE-2026-43632 ne sont pas corrigés dans votre build[^16].
 
 ---
 
@@ -83,6 +89,9 @@ server {
 ### Option B — LiteLLM Gateway (multi-modèles, quotas par clé)
 
 [[00-lexique/litellm|LiteLLM]] supporte nativement l'authentification par clé API, les quotas par utilisateur, la rotation de clés, et le routing vers plusieurs backends (Ollama, vLLM, API cloud en fallback).
+
+> [!warning] LiteLLM est une cible
+> Le gateway concentre clés, routes et outils MCP : trois vulnérabilités critiques ou activement exploitées ont été publiées entre juin et septembre 2026 (CVE-2026-42271 et CVE-2026-59822, toutes deux au catalogue KEV de la CISA ; GHSA-7hp6-4w63-5g45, CVSS 9.9, escalade `internal_user` → admin → exécution sur l'hôte). Au T4 2026 : version ≥ 1.100.4 (ou le dernier correctif de votre ligne 1.101–1.104), endpoints MCP désactivés s'ils ne servent pas, et suivi des quatre lignes maintenues seulement — une version figée est une version vulnérable[^15].
 
 ```yaml
 # litellm_config.yaml
@@ -164,14 +173,29 @@ Le moteur d'inférence ne doit jamais être directement accessible depuis le ré
 
 ---
 
-## 5. OWASP LLM Top 10 v2025 — les vulnérabilités propres aux LLM
+## 5. OWASP LLM Top 10 (v2025, correspondance 2026) — les vulnérabilités propres aux LLM
 
-L'[OWASP Top 10 for LLM Applications v2025](https://genai.owasp.org/llm-top-10/) (publiée en novembre 2024) identifie les dix risques les plus critiques des applications LLM. Voici les plus pertinents pour une stack on-premise, couvrant les dix entrées de la grille officielle.
+L'OWASP Top 10 for LLM Applications existe en deux éditions récentes : la [v2025](https://genai.owasp.org/llm-top-10/) (novembre 2024) et l'[édition 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) (3 août 2026), qui remplace la précédente avec un classement révisé fondé sur des incidents réels[^12]. Ce chapitre conserve la numérotation v2025, encore utilisée par la plupart des outils et grilles d'audit, et indique entre parenthèses l'identifiant 2026 ; les contre-mesures ne changent pas. Voici les dix entrées, lues sous l'angle d'une stack on-premise.
 
 > [!note] Version de référence
-> Ce chapitre utilise la numérotation **v2025** (LLM01:2025 → LLM10:2025), qui diffère de la v1.1 (2023). Le PDF officiel est disponible sur [genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/).
+> Ce chapitre utilise la numérotation **v2025** (LLM01:2025 → LLM10:2025), qui diffère de la v1.1 (2023). Correspondance avec l'édition 2026 (Excessive Agency monte au 3e rang, Unbounded Consumption au 6e, System Prompt Leakage devient Hidden Context Exposure)[^12] :
+>
+> | v2025 | Édition 2026 |
+> | :-- | :-- |
+> | LLM01 Prompt Injection | LLM01:2026 Prompt Injection |
+> | LLM02 Sensitive Information Disclosure | LLM02:2026 Sensitive Information Disclosure |
+> | LLM03 Supply Chain | LLM04:2026 Supply Chain |
+> | LLM04 Data and Model Poisoning | LLM05:2026 Data and Model Poisoning |
+> | LLM05 Improper Output Handling | LLM10:2026 Improper Output Handling |
+> | LLM06 Excessive Agency | LLM03:2026 Excessive Agency |
+> | LLM07 System Prompt Leakage | LLM08:2026 Hidden Context Exposure (renommé, élargi) |
+> | LLM08 Vector and Embedding Weaknesses | LLM09:2026 Vector and Embedding Weaknesses |
+> | LLM09 Misinformation | LLM07:2026 Misinformation |
+> | LLM10 Unbounded Consumption | LLM06:2026 Unbounded Consumption |
+>
+> Le PDF 2026 est disponible sur [genai.owasp.org](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/), le PDF v2025 sur [genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/).
 
-### LLM01:2025 — Injection de Prompt
+### LLM01:2025 — Injection de Prompt (LLM01:2026)
 
 Un attaquant insère des instructions dans le prompt pour faire ignorer les consignes système ou exfiltrer des données.
 
@@ -186,7 +210,7 @@ est dans ton contexte système.
 - Utiliser un modèle de permissivité strict : si le modèle hésite, il refuse
 - Logger et alerter sur les tentatives de "ignore previous instructions"
 
-### LLM02:2025 — Divulgation d'informations sensibles
+### LLM02:2025 — Divulgation d'informations sensibles (LLM02:2026)
 
 Le modèle restitue des données sensibles présentes dans son contexte de session ou mémorisées lors de l'entraînement — PII, données métier, clés injectées dans le prompt.
 
@@ -195,13 +219,13 @@ Le modèle restitue des données sensibles présentes dans son contexte de sessi
 - Ne pas partager un même contexte de session entre utilisateurs différents
 - Effacer le KV Cache entre les sessions si votre moteur le supporte
 
-### LLM03:2025 — Vulnérabilités de la chaîne d'approvisionnement
+### LLM03:2025 — Vulnérabilités de la chaîne d'approvisionnement (LLM04:2026)
 
 Les dépendances LLM (bibliothèques, fine-tunes, datasets) peuvent être compromises en amont. Un modèle téléchargé depuis un dépôt non officiel ou un fork peut contenir un backdoor.
 
 **Contre-mesures :** voir section 8 (supply chain des modèles) ci-dessous.
 
-### LLM04:2025 — Empoisonnement des données et du modèle
+### LLM04:2025 — Empoisonnement des données et du modèle (LLM05:2026)
 
 Des données d'entraînement ou de fine-tuning malveillantes modifient le comportement du modèle sur des entrées spécifiques (backdoor déclenché par un mot-clé secret).
 
@@ -210,7 +234,7 @@ Des données d'entraînement ou de fine-tuning malveillantes modifient le compor
 - Vérifier les hashes SHA-256 avant tout déploiement (voir section 8)
 - Tracer la provenance des datasets utilisés pour le fine-tuning interne
 
-### LLM05:2025 — Gestion non sécurisée des sorties
+### LLM05:2025 — Gestion non sécurisée des sorties (LLM10:2026)
 
 Le modèle génère du code, du HTML ou du JSON que l'application exécute sans validation.
 
@@ -219,13 +243,13 @@ Le modèle génère du code, du HTML ou du JSON que l'application exécute sans 
 - Passer les sorties dans un validateur avant exécution (JSON Schema, AST parser pour le code)
 - Désactiver `eval()` dans les couches d'exécution
 
-### LLM06:2025 — Agentivité excessive (Excessive Agency)
+### LLM06:2025 — Agentivité excessive (Excessive Agency ; LLM03:2026)
 
 Un agent LLM dispose de trop de permissions ou agit sans validation humaine. En cas de manipulation (injection indirecte, modèle halluciné), il peut déclencher des actions destructrices sur vos systèmes.
 
 **Contre-mesures :** voir section 6 (isolation des agents) et section 7 (injection indirecte) ci-dessous.
 
-### LLM07:2025 — Fuite du System Prompt
+### LLM07:2025 — Fuite du System Prompt (LLM08:2026 Hidden Context Exposure)
 
 Des exploits réels ont montré que le contenu du system prompt peut être exfiltré via des attaques spécifiques — inférence multi-tours, manipulation de la mémoire, erreurs backend qui propagent le contexte complet.
 
@@ -264,7 +288,7 @@ location = /generic_error.json {
 > [!note] Debug vs Production
 > En environnement de développement, les traces complètes sont utiles. En production, activez ce filtrage systématiquement — et loggez les erreurs détaillées **côté serveur uniquement**, dans vos fichiers de log, jamais dans la réponse HTTP.
 
-### LLM08:2025 — Faiblesses des vecteurs et embeddings
+### LLM08:2025 — Faiblesses des vecteurs et embeddings (LLM09:2026)
 
 Dans une stack RAG on-premise, la base vectorielle est une surface d'attaque : injection de documents malveillants, empoisonnement du corpus, extraction des embeddings pour inférer les données d'origine.
 
@@ -276,7 +300,7 @@ Dans une stack RAG on-premise, la base vectorielle est une surface d'attaque : i
 > [!tip] Cloisonnement RAG multi-locataire
 > En contexte SaaS, isoler les embeddings par tenant au niveau de la base vectorielle est non négociable. Les patterns RLS (pgvector) et payload partitioning (Qdrant) sont documentés dans [[03-stack-logicielle/rag-and-agents|RAG & Agents — section multi-locataire]].
 
-### LLM09:2025 — Désinformation (Misinformation)
+### LLM09:2025 — Désinformation (Misinformation ; LLM07:2026)
 
 Un LLM peut produire des réponses plausibles mais fausses sur des sujets factuels, réglementaires ou techniques — avec confiance et sans signal d'incertitude apparent.
 
@@ -285,7 +309,7 @@ Un LLM peut produire des réponses plausibles mais fausses sur des sujets factue
 - Mettre en place une validation humaine sur les sorties à enjeu (décisions médicales, juridiques, financières)
 - Mesurer le taux d'hallucination sur votre domaine avant déploiement (voir [[06-mise-en-oeuvre/evaluate-local-model|Évaluer un modèle local]])
 
-### LLM10:2025 — Consommation non bornée (Unbounded Consumption)
+### LLM10:2025 — Consommation non bornée (Unbounded Consumption ; LLM06:2026)
 
 Un LLM sans limitation de ressources peut être épuisé par des requêtes abusives : prompts gigantesques, génération infinie, requêtes parallèles saturant la VRAM. Dans une stack on-premise, cela coupe le service pour tous les utilisateurs.
 
@@ -311,7 +335,7 @@ router_settings:
 
 ## 6. Isolation des agents
 
-Les [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|agents custodiens]] et les agents avec accès à des outils (code execution, web browsing, file system) représentent une surface d'attaque supplémentaire liée à **LLM06:2025 (Excessive Agency)**. Deux principes fondamentaux :
+Les [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|agents custodiens]] et les agents avec accès à des outils (code execution, web browsing, file system) représentent une surface d'attaque supplémentaire liée à **LLM06:2025 (Excessive Agency)** — remontée au 3e rang de l'édition 2026 (LLM03:2026), signe que les incidents réels liés aux agents outillés se multiplient[^12]. Deux principes fondamentaux :
 
 ### Principe du moindre privilège
 
@@ -391,9 +415,11 @@ Analyse les données ci-dessus et liste les liens cassés.
 """
 ```
 
+Le délimitage ne suffit pas contre l'**injection de données** (*agent data injection*) : au lieu d'instructions, l'attaquant falsifie des données que l'agent croit fiables — un identifiant de fichier, une métadonnée d'auteur, un faux résultat d'outil — et l'agent agit dessus sans jamais « désobéir ». Les défenses par séparation instructions/données n'y voient rien[^17]. La parade est structurelle : sources autorisées (règle 2), validation humaine des actions (règle 3) et sandbox (règle 4).
+
 2. **Sources autorisées uniquement.** L'agent ne lit que les sources listées dans sa configuration — pas d'URL arbitraires passées dans le prompt.
 
-3. **Validation avant action.** Toute action destructrice (delete, push, commit) requiert validation humaine, peu importe le contenu du prompt.
+3. **Validation avant action.** Toute action destructrice (delete, push, commit) requiert validation humaine, peu importe le contenu du prompt. La validation doit porter sur la commande *réellement exécutée* : en 2026, le mode agent d'Ollama approuvait une commande Bash sans voir ce qu'un `;` ou `&&` ajoutait derrière (CVE-2026-102697, corrigée en 0.31.2)[^18].
 
 4. **Sandboxer l'exécution.** L'agent tourne dans un container sans accès à Internet et avec les droits minimaux — même si manipulé, ses actions sont limitées par les capabilities du container.
 
@@ -450,7 +476,7 @@ Le fichier `model.safetensors.index.json` sert au chargeur (carte tenseur → sh
 
 Exposer directement le port 8000 de vLLM sur Internet (via une règle NAT sur le routeur ou une ouverture firewall) présente plusieurs risques :
 
-- **Pas d'authentification native** sur vLLM : n'importe qui atteignant le port peut interroger le modèle.
+- **Authentification partielle** sur vLLM : `--api-key` n'authentifie que les routes `/v1`, `/v2`, `/inference` et `/cohere` ; `/tokenize`, `/detokenize`, `/health`, `/load`, `/pooling`, `/pause` ou `/update_weights` restent ouverts sur le même port, et la documentation vLLM recommande elle-même un reverse proxy qui n'expose que les routes voulues[^13].
 - **Surface d'attaque élargie** : le port devient visible sur les scans Shodan et similaires.
 - **Pas de TLS natif** : les tokens générés circulent en clair.
 
@@ -535,6 +561,9 @@ En conformité RGPD/AI Act, les interactions avec un LLM traitant des données p
 
 ## Checklist de déploiement sécurisé
 
+> [!warning] Planchers de version au T4 2026
+> vLLM ≥ 0.31.0 (RCE via `code_revision`, DoS `/v1/embeddings`) · LiteLLM ≥ 1.100.4 ou dernier correctif de votre ligne (escalade admin 9.9, deux CVE au KEV CISA) · Ollama ≥ 0.31.2 (approbation Bash contournable en mode agent, durcissement GGUF ; CVE-2026-5757, lecture mémoire via import GGUF, sans correctif confirmé par le CERT/CC au 2026-04-22) · Open WebUI ≥ 0.11.1 (SSRF vers les services internes, CVE-2026-87996 ; nombreux avis entre juin et septembre 2026, tous authentifiés mais plusieurs High) · llama-server : build à jour et pas de `--sleep-idle-seconds` sur un port exposé. Ces planchers vieillissent en semaines : abonnez-vous aux advisories GitHub de chaque projet[^14][^15][^16][^18][^19].
+
 ```
 □ Le moteur d'inférence n'écoute pas sur 0.0.0.0 (ou le pare-feu bloque l'accès externe)
 □ Un reverse proxy avec auth Bearer ou LiteLLM gateway est en place
@@ -546,7 +575,7 @@ En conformité RGPD/AI Act, les interactions avec un LLM traitant des données p
 □ Les agents tournent avec un utilisateur non-root et --cap-drop ALL
 □ Les entrées externes (fichiers, issues, web) sont isolées dans le prompt agent
 □ Une procédure de révocation de clé API existe et a été testée
-□ Les risques OWASP LLM01–LLM10:2025 ont été évalués pour chaque composant de la stack
+□ Les risques OWASP LLM01–LLM10:2025 (et leurs équivalents 2026) ont été évalués pour chaque composant de la stack
 □ Les mises à jour du moteur d'inférence sont planifiées (CVE tracking)
 □ Les poids des modèles sont vérifiés par hash SHA-256 avant déploiement en production
 □ Seuls les modèles des dépôts officiels (meta-llama, Qwen, mistralai...) sont autorisés
@@ -560,8 +589,17 @@ En conformité RGPD/AI Act, les interactions avec un LLM traitant des données p
 [^9]: Tailscale, *How Tailscale Works* — documentation officielle (WireGuard, MagicDNS, DERP relays, ACLs). [https://tailscale.com/blog/how-tailscale-works](https://tailscale.com/blog/how-tailscale-works)
 [^10]: Cloudflare, *Cloudflare Tunnel documentation* (tunnels HTTP/HTTPS sans port ouvert, routage via réseau Cloudflare). [https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
 [^11]: Twingate, *How Twingate Works* — documentation officielle (Zero Trust Network Access, accès granulaire par ressource). [https://www.twingate.com/docs/how-twingate-works](https://www.twingate.com/docs/how-twingate-works)
+[^12]: OWASP GenAI Security Project, *OWASP GenAI LLM Top 10 — 2026 Edition* (publiée le 2026-08-03) et annonce du 2026-09-01 (« Excessive Agency now number three », Agent Control Standard). [https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) · [https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/)
+[^13]: vLLM, *Security* (page datée 2026-09-26 : `--api-key` ne couvre que `/v1`, `/v2`, `/inference`, `/cohere` ; reverse proxy recommandé) et *vllm serve* (CLI). [https://docs.vllm.ai/en/stable/usage/security/](https://docs.vllm.ai/en/stable/usage/security/) · [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/)
+[^14]: vLLM, advisories *GHSA-25q3-v2hm-8vpf* (CVE-2026-93592, DoS non authentifié via id de token négatif sur `/v1/embeddings` et `/pooling`, corrigé 0.28.0, 2026-09-03), *GHSA-h3rc-6mm3-gc2m* (RCE via `mm_processor_kwargs.code_revision` avec `--trust-remote-code`, corrigé 0.31.0, 2026-10-06) et *GHSA-3c86-2m5g-59q7* (CVE-2026-90553, `trust_remote_code=False` ignoré par le chargeur LlavaOnevision2, CVSS 7.8, corrigé 0.28.0, 2026-08-28). [https://github.com/vllm-project/vllm/security/advisories/GHSA-25q3-v2hm-8vpf](https://github.com/vllm-project/vllm/security/advisories/GHSA-25q3-v2hm-8vpf) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-3c86-2m5g-59q7](https://github.com/vllm-project/vllm/security/advisories/GHSA-3c86-2m5g-59q7)
+[^15]: BerriAI, *GHSA-7hp6-4w63-5g45* (escalade `internal_user` → `proxy_admin` → exécution sur l'hôte, CVSS 9.9, corrigé 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1, 2026-09-30) ; CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42271 ajoutée le 2026-06-08, CVE-2026-59822 le 2026-09-02 ; catalogue daté 2026-10-08) ; LiteLLM, *Version Support Policy* (quatre lignes mineures maintenues depuis le 2026-06-29). [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45) · [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json) · [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)
+[^16]: ggml-org, *llama.cpp PR #30159* (port par défaut de `llama-server` 8080 → 9931, fusionné le 2026-10-09) et *tools/server/README.md* (« default: 9931 ») ; Cyera Research, *Breaking local AI runtimes: 10 vulnerabilities in the engine behind your open-source models* (CVE-2026-43631 et CVE-2026-43632, use-after-free en mode `--sleep-idle-seconds`, statut « non corrigé » au 2026-06-01, source secondaire, 2026-08-07). [https://github.com/ggml-org/llama.cpp/pull/30159](https://github.com/ggml-org/llama.cpp/pull/30159) · [https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md) · [https://www.cyera.com/research/breaking-local-ai-runtimes-10-vulnerabilities-in-the-engine-behind-your-open-source-models](https://www.cyera.com/research/breaking-local-ai-runtimes-10-vulnerabilities-in-the-engine-behind-your-open-source-models)
+[^17]: arXiv 2607.05120, *Agent Data Injection* (corruption de données tenues pour fiables par l'agent, sans instruction ; démontré sur plusieurs agents de code et de navigation), 2026-07-06. [https://arxiv.org/abs/2607.05120](https://arxiv.org/abs/2607.05120)
+[^18]: MITRE CVE, *CVE-2026-102697* (Ollama : le parseur d'approbation du tool Bash en mode agent ignorait les opérateurs de contrôle shell ; corrigé 0.31.2), 2026-09-29. [https://cveawg.mitre.org/api/cve/CVE-2026-102697](https://cveawg.mitre.org/api/cve/CVE-2026-102697)
+[^19]: GitHub Advisory Database, *GHSA-4v28-j6q3-5m4r* (Open WebUI, CVE-2026-87996, SSRF par DNS rebinding dans le chargeur Playwright, CVSS 7.7, versions 0.9.6 → < 0.11.1, corrigé 0.11.1, 2026-08-31) ; CERT/CC, *VU#518910* (Ollama, CVE-2026-5757, lecture/écriture hors limites lors de la quantification d'un GGUF importé, « patch not yet available », 2026-04-22), lus le 2026-10-10. [https://github.com/advisories/GHSA-4v28-j6q3-5m4r](https://github.com/advisories/GHSA-4v28-j6q3-5m4r) · [https://kb.cert.org/vuls/id/518910](https://kb.cert.org/vuls/id/518910)
 
 - [OWASP Top 10 for LLM Applications v2025](https://genai.owasp.org/llm-top-10/) — grille officielle LLM01–LLM10:2025
+- [OWASP GenAI LLM Top 10 — 2026 Edition](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) — édition 2026, correspondance dans la section 5
 - [Firecracker MicroVM](https://firecracker-microvm.github.io/) — isolation légère pour exécution de code non fiable
 - [Podman Rootless Containers](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md)
 - [Headscale — serveur Tailscale self-hosted](https://github.com/juanfont/headscale)
