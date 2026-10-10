@@ -4,7 +4,7 @@ Run logs are optional operational traces. **Default audit trail:** PR descriptio
 
 **Exception — non-interactive runners** (scheduled automation, CI job, Aider on-prem): always create a run log, even when a PR is also created. The run log is the primary audit trail when no human is watching the chat.
 
-They complement Git and active plans in `.cursor/plans/`.
+They complement Git and active plans in `.agents/plans/`.
 
 ## What Git Provides
 

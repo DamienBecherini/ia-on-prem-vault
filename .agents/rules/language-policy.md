@@ -1,0 +1,36 @@
+# Language Policy
+
+## Code and comments
+
+Write all source code, inline comments, scripts, tests, agent skills, agent rules, plans, and repository documentation in **English**.
+
+## Vault note content (fiches)
+
+**Generation and substantial rewrites** (chapter articles, lexicon entries, public notes outside `en/`):
+
+- Write in **French** by default.
+- Do **not** create or update files under `en/` unless the user explicitly requests an English translation pass.
+
+**English locale** (`en/` mirror paths):
+
+- Use only for dedicated translation tasks.
+- Prefer a separate, cheaper model run focused on faithful translation — not a full editorial rewrite.
+
+**Editing existing notes:**
+
+- Match the language of the file being edited (French at vault root, English under `en/`).
+- Do not anglicize French source pages or francize English mirrors unless the user asks.
+
+## Plans and agent follow-up
+
+Active implementation plans live in `.agents/plans/` (gitignored except its README; Cursor may still create plans in `.cursor/plans/`, move them there). Agent-only follow-up (lexicon backlog, residual risks) goes to `.agents/vault-maintenance/`, not into public articles.
+
+## FR/EN translation drift
+
+After FR content changes, detect stale EN mirrors with:
+
+```bash
+npm run audit:i18n:strict
+```
+
+Update `last_modified` on every substantive FR edit so the audit stays reliable. EN translation is a separate task; use the `vault-translate-content` skill for EN batches. After translating, set `last_modified` on the EN mirror to match or exceed the FR date.

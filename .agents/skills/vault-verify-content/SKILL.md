@@ -69,7 +69,7 @@ For reader-facing pages, flag agent-only maintenance content:
 - internal TODOs meant for agents
 - maintenance reports embedded in article prose
 
-Move those items to the active plan (`.cursor/plans/`), `.agents/vault-maintenance/lexicon-backlog.md`, or (only if explicitly requested) `.agents/vault-maintenance/runs/`.
+Move those items to the active plan (`.agents/plans/`), `.agents/vault-maintenance/lexicon-backlog.md`, or (only if explicitly requested) `.agents/vault-maintenance/runs/`.
 
 ## Report Format
 

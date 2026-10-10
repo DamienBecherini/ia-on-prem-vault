@@ -14,7 +14,7 @@ Git est le garde-fou naturel d'un agent custodien. Il transforme une action risq
 
 ## Convention de branche
 
-Format recommandé — conforme à `.cursor/rules/git-workflow.mdc` :
+Format recommandé — conforme à `.agents/rules/git-workflow.md` :
 
 ```text
 <type>/<objectif-court>
