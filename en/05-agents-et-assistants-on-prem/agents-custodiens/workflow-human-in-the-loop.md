@@ -44,7 +44,7 @@ For this vault, the reasonable level is **2 or 3**: branch/PR, human validation,
 Before each run:
 
 - **Verify the repo is clean (`git status --porcelain`)**: if the repo is *dirty* (uncommitted changes), the agent must **abort** and notify the operator. It must never bundle a human draft in progress into its commit. Explicit exception only: `git stash` with a timestamped name if the operator enabled this mode in the agent configuration.
-- verify that the **active maintenance plan** is up to date (in this vault: `.cursor/plans/` directory in the repository);
+- verify that the **active maintenance plan** is up to date (in this vault: `.agents/plans/` directory in the repository);
 - ignore `_private/`, `build/`, `dist/`, `.git/`, and obsolete logs;
 - refuse destructive commands;
 - cite sources for any factual change.

@@ -32,6 +32,7 @@ const EXCLUDED_DIRS = new Set([
   ".obsidian",
   ".agents",
   ".cursor",
+  ".claude",
   "_templates",
   "scripts",
   "en",        // EN tree is the target; we walk FR tree only
@@ -39,7 +40,7 @@ const EXCLUDED_DIRS = new Set([
 ]);
 
 /** FR paths that intentionally have no EN mirror (repo docs, not published notes) */
-const EXCLUDED_FILES = new Set(["README.md"]);
+const EXCLUDED_FILES = new Set(["README.md", "CLAUDE.md"]);
 
 const STALE_DAYS = (() => {
   const arg = process.argv.find((a) => a.startsWith("--stale-days="));

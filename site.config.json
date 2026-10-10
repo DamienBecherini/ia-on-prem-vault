@@ -21,6 +21,8 @@
     "exclude": [
       ".agents/**",
       ".cursor/**",
+      ".claude/**",
+      "CLAUDE.md",
       "docs/**"
     ]
   },

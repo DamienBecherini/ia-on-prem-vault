@@ -55,9 +55,10 @@ en/                     English locale root (mirrors FR chapters under en/)
 scripts/                vault-local maintenance scripts (audit, backfill, delegate)
 _templates/             Obsidian templates (_Terme Lexique.md, _Nouveau Chapitre.md)
 _private/               confidential notes (gitignored, never published)
-.cursor/plans/          Cursor agent plans (gitignored except rules; excluded from publish)
+.agents/plans/          active agent plans (gitignored except README; excluded from publish)
 .agents/                agent skills and maintenance (excluded from publish)
-.cursor/rules/          Cursor AI rules (tracked; rest of .cursor/ is gitignored)
+.agents/rules/          canonical agent rules (git workflow, language, editorial); .cursor/rules/ only points to them
+CLAUDE.md               entry point for Claude Code (rules, skills, commands); .claude/skills/ exposes the vault skills
 ```
 
 ### Lexicon (this vault)
@@ -129,7 +130,7 @@ npm run audit:i18n:strict   # any FR newer than EN (translation backlog)
 
 Relies on `last_modified` frontmatter on FR and EN pairs. Backfill missing dates with `npm run backfill:dates:write`.
 
-Agent implementation plans live in `.cursor/plans/` (Cursor default, not published). Skills and maintenance notes live under `.agents/`.
+Agent implementation plans live in `.agents/plans/` (Cursor default, not published). Skills and maintenance notes live under `.agents/`.
 
 To make the site **private** (Apache Basic Auth), fill in `AUTH_*` in `.env`, then:
 

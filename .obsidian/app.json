@@ -1,6 +1,8 @@
 {
   "userIgnoreFilters": [
     ".agents/",
-    ".cursor/"
+    ".cursor/",
+    ".claude/",
+    "CLAUDE.md"
   ]
 }

@@ -44,7 +44,7 @@ This keeps the backlog file small so agents do not waste tokens re-reading stale
 
 ## Plan hygiene
 
-Active implementation plans live in `.cursor/plans/` (Cursor default, excluded from publish). Do not infer active tasks from superseded or archived plans elsewhere in the repo.
+Active implementation plans live in `.agents/plans/` (gitignored except its README, excluded from publish). Do not infer active tasks from superseded or archived plans elsewhere in the repo.
 
 ## Report Format
 
@@ -77,8 +77,8 @@ Report findings in chat. For read-only maintenance, a PR is usually not required
 1. **Branch** — create `chore/vault-maintenance-<YYYY-MM-DD>`.
 2. **Stage** — only the files modified by the implementation (not unrelated files).
 3. **Commit** — `chore(maintenance): <short description>`.
-4. **Push + PR** — read `.cursor/rules/git-workflow.mdc` for the PR body template and branch naming rules.
+4. **Push + PR** — read `.agents/rules/git-workflow.md` for the PR body template and branch naming rules.
 5. **Report** — paste the PR URL in chat.
 
-No exception: `main` is protected by a GitHub ruleset (PR required, CI checks required, no bypass). See `.cursor/rules/git-workflow.mdc`.
+No exception: `main` is protected by a GitHub ruleset (PR required, CI checks required, no bypass). See `.agents/rules/git-workflow.md`.
 
