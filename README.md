@@ -11,7 +11,8 @@
 [![Obsidian](https://img.shields.io/badge/Obsidian-vault-7C3AED?logo=obsidian&logoColor=white)](https://obsidian.md)
 [![Lang](https://img.shields.io/badge/lang-FR%20%2F%20EN-0A7EA4)](#content)
 [![Digital garden](https://img.shields.io/badge/type-digital%20garden-2EA043)](https://ia-on-prem.damien.becherini.fr)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Content: CC0 1.0](https://img.shields.io/badge/content-CC0%201.0-lightgrey.svg)](LICENSE)
+[![Code: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE-CODE)
 
 </div>
 
@@ -36,6 +37,42 @@ to which this vault is attached via a junction. Only the **notes** live here —
 
 Site content is **French and English** (`en/` locale folder). This README is **English only** (repository documentation).
 
+### How the content is written
+
+The content is written **with AI assistance, under human direction**: the author sets the plan and the editorial line, every
+numeric or time-sensitive claim must cite a primary source (tier A/B, dated), and every change goes through a pull request
+reviewed and merged by the author. Pages carry `last_verified` / `verified_by` when they were actually audited, and
+`verified_hitl*` only after human sign-off (see [`docs/frontmatter-schema.md`](docs/frontmatter-schema.md)).
+Errors remain possible: check the cited sources before acting on a figure, and open an issue if one is wrong.
+
+## Keeping it up to date
+
+The ecosystem moves weekly, so the vault is maintained by deterministic scripts plus agent skills, with a human merge at the end.
+
+| What | How |
+| :-- | :-- |
+| Freshness | `freshness.yml` (Mondays): pages due for review, and claims of the [watchlist](.agents/vault-maintenance/watchlist/) past their **Recheck by** date |
+| Sources | `npm run audit:sources`: inventory and HTTP probe of every cited URL, tiers in [`source-tiers.md`](.agents/vault-maintenance/source-tiers.md) |
+| Ecosystem watch | `watch.yml` (every other Monday): releases, advisories, models and news from [`feeds.json`](.agents/vault-maintenance/feeds.json), pre-triaged into a `veille` issue; an `urgent` issue when a High / Critical advisory is not covered by the [version floors](.agents/vault-maintenance/version-floors.json) |
+| Processing | agent skill `vault-watch` ("traite la veille #N"): verify on primary sources, report, then one PR with FR + EN edits after the author's go-ahead |
+
+```bash
+npm run audit:freshness:due                          # pages due + watchlist claims past "Recheck by"
+npm run audit:sources                                # cited URLs (network)
+GITHUB_TOKEN=$(gh auth token) npm run watch:feeds    # what changed recently
+node scripts/backfill-verified.mjs --write --paths=<fr.md,en/fr.md>   # stamp audited pages only
+```
+
+Agent skills (canonical in `.agents/skills/`, entry points in `.claude/skills/`): `vault-watch`, `vault-refresh-outdated-content`,
+`vault-verify-content`, `vault-generate-content`, `vault-translate-content`, `vault-maintenance-report`, `vault-log-run`.
+Rules for agents and contributors: [`CLAUDE.md`](CLAUDE.md) and [`.agents/rules/`](.agents/rules/).
+
+## Contributing
+
+`main` is protected: every change goes through a pull request from a branch off `main`, with the checks
+`Vault quality checks` and `Internal link audit (engine)` required, and is squash-merged. A substantive French edit
+updates `last_modified` and its English mirror in the same PR. Corrections with a source are welcome as issues or PRs.
+
 ## Vault layout
 
 ```
@@ -52,13 +89,17 @@ index.mdx               home page (hero)
 05-agents-et-assistants-on-prem/  ch. 05 — agents & assistants (FR + en/ mirror)
 06-mise-en-oeuvre/      ch. 06 — practical implementation (FR + en/ mirror)
 en/                     English locale root (mirrors FR chapters under en/)
-scripts/                vault-local maintenance scripts (audit, backfill, delegate)
+scripts/                vault-local scripts (audits, freshness, sources, watch feeds, backfill, delegate)
+docs/                   repository docs (frontmatter schema, quality checks; not published)
+.github/workflows/      CI (ci.yml), freshness report (freshness.yml), ecosystem watch (watch.yml)
 _templates/             Obsidian templates (_Terme Lexique.md, _Nouveau Chapitre.md)
 _private/               confidential notes (gitignored, never published)
-.agents/plans/          active agent plans (gitignored except README; excluded from publish)
-.agents/                agent skills and maintenance (excluded from publish)
+.agents/                agent skills, rules and maintenance (excluded from publish)
 .agents/rules/          canonical agent rules (git workflow, language, editorial); .cursor/rules/ only points to them
+.agents/vault-maintenance/  watchlist, source tiers, feeds, version floors, watch reports, lexicon backlog
+.agents/plans/          working plans (gitignored except README)
 CLAUDE.md               entry point for Claude Code (rules, skills, commands); .claude/skills/ exposes the vault skills
+LICENSE, LICENSE-CODE   CC0 1.0 for the content, MIT for the code
 ```
 
 ### Lexicon (this vault)
@@ -117,7 +158,7 @@ npm run audit:ascii       # warn-only; use audit:ascii:strict to fail
 npm run audit:links       # requires ENGINE_PATH in .env
 ```
 
-GitHub Actions workflow: [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+GitHub Actions workflows: [`ci.yml`](.github/workflows/ci.yml) (every PR), [`freshness.yml`](.github/workflows/freshness.yml) and [`watch.yml`](.github/workflows/watch.yml) (scheduled, see [Keeping it up to date](#keeping-it-up-to-date)).
 
 ### FR/EN translation drift
 
@@ -130,7 +171,7 @@ npm run audit:i18n:strict   # any FR newer than EN (translation backlog)
 
 Relies on `last_modified` frontmatter on FR and EN pairs. Backfill missing dates with `npm run backfill:dates:write`.
 
-Agent implementation plans live in `.agents/plans/` (Cursor default, not published). Skills and maintenance notes live under `.agents/`.
+Agent working plans live in `.agents/plans/` (not published). Skills and maintenance notes live under `.agents/`.
 
 To make the site **private** (Apache Basic Auth), fill in `AUTH_*` in `.env`, then:
 
@@ -143,12 +184,12 @@ Full docs: engine [Publishing](https://github.com/DamienBecherini/starlight-obsi
 
 ## License
 
-Content in this vault is released under the
-[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license.  
-You are free to share and adapt the material for any purpose, including commercially, provided you give
-appropriate credit to **Damien Becherini** and link back to the original source.
+- **Content** (notes, lexicon, diagrams, documentation): [CC0 1.0 Universal](LICENSE), dedicated to the public domain.
+  You may copy, adapt and reuse it for any purpose, including commercially, without asking or giving credit.
+  A link back to the [site](https://ia-on-prem.damien.becherini.fr) is appreciated, not required, and helps readers find the latest verified version.
+- **Code** (`scripts/`, `.github/`, `.agents/skills/`, `.claude/skills/`): [MIT](LICENSE-CODE).
 
-Third-party content (vendor documentation excerpts, logos, trademarks) remains subject to the respective owners' terms.
+Third-party content quoted or referenced (vendor documentation excerpts, logos, trademarks, model cards) remains subject to the respective owners' terms.
 
 ---
 
