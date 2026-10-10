@@ -3,8 +3,8 @@ title: "LiteLLM"
 description: OpenAI-compatible gateway to route agents and applications to Ollama, vLLM, cloud providers, or internal models.
 sidebar:
   order: 4
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -35,6 +35,7 @@ This avoids rewriting the agent on every model change.
 - Adds a critical layer to secure: in 2026 LiteLLM suffered a series of exploited vulnerabilities, including three listed in CISA's KEV catalog (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822, all fixed from 1.84.0 onwards) and a critical privilege escalation (GHSA-7hp6-4w63-5g45, CVSS 9.9, an `internal_user` becomes `proxy_admin` and then executes commands on the host; fixed in 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1). As of Q4 2026, never deploy a version earlier than 1.84.0, and target 1.100.4 or the latest patch of your line[^4][^5].
 - Version discipline: since 2026-06-29, only the four most recent stable minor lines receive patches (one minor per week, so roughly one month of coverage per line) — plan at least a monthly update; a frozen version is a vulnerable version[^6].
 - Supply chain: in March 2026, two PyPI releases (1.82.7 and 1.82.8) published by an attacker stole the host machine's secrets; the official Docker image was not affected[^7]. Install from the pinned official image or with hash-pinned dependencies, and rotate every secret held by the proxy if a compromised version was installed.
+- MCP surface: the proxy also embeds an MCP gateway; two of its vulnerabilities were exploited in 2026 (CVE-2026-42271, CVE-2026-59822). If the custodian agent does not use MCP through LiteLLM, do not expose these endpoints[^4].
 
 ## 🔒 Sovereignty and privacy
 
@@ -49,7 +50,7 @@ This avoids rewriting the agent on every model change.
 
 LiteLLM is the target layer between:
 
-- Aider/OpenHands;
+- OpenHands / Agent Canvas (or Aider, whose development has been frozen since May 2026, see its sheet);
 - Ollama/vLLM;
 - routing policies;
 - local logs;
@@ -57,7 +58,7 @@ LiteLLM is the target layer between:
 
 ## 📊 Project maturity
 
-Very widely used in LLM stacks as a gateway. Its power comes with responsibility: configuration, secrets, logs, and routing rules must be versioned and audited.
+Very widely used as a gateway (over 60,000 GitHub stars as of Q4 2026[^1]), LiteLLM publishes one minor line per week (1.104.2 on 2026-10-08[^8]) and, since 2026-06-29, only patches the four most recent stable minor lines: each line receives roughly one month of fixes[^6]. Freezing a version is therefore not a viable strategy: plan at least a monthly update, follow the GitHub advisories feed, and version/audit configuration, secrets, logs, and routing rules.
 
 ## 🔗 See also
 
@@ -75,3 +76,4 @@ Very widely used in LLM stacks as a gateway. Its power comes with responsibility
 [^5]: BerriAI, *GHSA-7hp6-4w63-5g45* (LiteLLM advisory, `internal_user` → `proxy_admin` → command execution on the host, CVSS 9.9, versions 1.91.0 → < 1.100.4, fixed in 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45)
 [^6]: LiteLLM, *Version Support Policy* (blog: from 2026-06-29, only the four most recent stable minor lines receive patches), 2026-06-20. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)
 [^7]: BerriAI, *Issue #24518* (PyPI releases 1.82.7 and 1.82.8 published outside CI by an attacker, host secret theft; proxy Docker image not affected), 2026-03-24. [https://github.com/BerriAI/litellm/issues/24518](https://github.com/BerriAI/litellm/issues/24518)
+[^8]: BerriAI, *LiteLLM Releases* (v1.104.2 published on 2026-10-08, cadence of one minor line per week), accessed 2026-10-09. [https://github.com/BerriAI/litellm/releases](https://github.com/BerriAI/litellm/releases)

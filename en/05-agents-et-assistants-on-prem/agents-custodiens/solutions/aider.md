@@ -3,8 +3,8 @@ title: "Aider"
 description: Terminal-first, open-source, model-agnostic code agent capable of working directly with Ollama.
 sidebar:
   order: 2
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -15,7 +15,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 Aider is a command-line programming agent. It modifies local files, understands a repository via a repo map, uses Git, and can connect to many LLMs, including local models via Ollama[^1][^2].
 
 > [!tip] Sovereignty verdict
-> **✅ Strong sovereign candidate** if Aider is configured with local Ollama/vLLM, analytics disabled, and a sufficiently capable code model.
+> **✅ Sovereign, but frozen**: a strong candidate if Aider is configured with local Ollama/vLLM, analytics disabled, and a sufficiently capable code model — bearing in mind that the project has had no commit since May 2026 (see Maturity).
 
 ## 💡 Why this project interests us
 
@@ -52,10 +52,9 @@ For a Markdown vault, it can reread pages, apply fixes, create commits on a bran
 
 ## 🔗 Possible integration in this vault
 
-Aider is the best candidate for the first sovereign target:
+Aider remains the simplest candidate for a first sovereign trial, provided you accept a tool frozen since May 2026; for a durable target, prefer a maintained, model-agnostic agent such as [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] (CLI or Agent Canvas, MIT) connected to Ollama/vLLM[^6]:
 
-- `aider --model ollama_chat/qwen2.5-coder:14b` for controlled trials;
-- `aider --model ollama_chat/qwen2.5-coder:32b` or equivalent strong coder for regular maintenance;
+- `aider --model ollama_chat/<recent coder model>`: for example a Qwen3.6-35B-A3B (MoE, ~24 GB of VRAM quantized, recommended by OpenHands for agentic use as of Q2 2026) or a dense 14B for controlled trials, 32B+ for regular maintenance; since Aider no longer knows the models released after May 2026, ignore its "model warnings" after manually checking the context window[^2][^6];
 - dedicated branch;
 - vault plan/rules in context;
 - final Markdown report.
@@ -67,7 +66,7 @@ Aider is the best candidate for the first sovereign target:
 
 Mature project (Apache-2.0, about 49,000 GitHub stars) specialized in code editing, but **effectively frozen as of Q4 2026**: no commit since 2026-05-22, last release v0.86.0 (2025-08-09) and last PyPI publication 0.86.2 (2026-02-12), with no announcement from the maintainers[^1][^5]. It remains narrower than OpenHands and much simpler to operate, but new models are no longer referenced and no security fix is to be expected: use it knowingly, with a replacement plan.
 
-For a durable target, prefer a maintained, model-agnostic agent such as [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] (CLI, SDK or Agent Canvas, MIT license), whose documentation covers local models via Ollama, vLLM or SGLang[^6].
+For a durable target, prefer a maintained, model-agnostic agent such as [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] (CLI, SDK or Agent Canvas, MIT license), whose documentation covers local models via Ollama, vLLM or SGLang[^6]. If Aider does not resume, the other maintained model-agnostic candidates as of Q4 2026 are, to be evaluated, Goose (Block, Apache-2.0) and Cline (Apache-2.0, CLI 3.x), both on weekly releases; their support for local models has not been verified in this vault[^7].
 
 ## 🔗 See also
 
@@ -84,3 +83,4 @@ For a durable target, prefer a maintained, model-agnostic agent such as [[05-age
 [^4]: Aider Docs, *Analytics*. [https://aider.chat/docs/more/analytics.html](https://aider.chat/docs/more/analytics.html)
 [^5]: PyPI, *aider-chat* (last publication 0.86.2 on 2026-02-12), accessed 2026-10-09. [https://pypi.org/project/aider-chat/](https://pypi.org/project/aider-chat/)
 [^6]: OpenHands Docs, *Local LLMs* (LM Studio, Ollama, vLLM, SGLang), updated 2026-05-21. [https://docs.openhands.dev/openhands/usage/llms/local-llms](https://docs.openhands.dev/openhands/usage/llms/local-llms)
+[^7]: Block, *Goose Releases* (v1.54.0 of 2026-10-08, Apache-2.0) and Cline, *Cline Releases* (releases of 2026-10-08, Apache-2.0), accessed 2026-10-09. [https://github.com/block/goose/releases](https://github.com/block/goose/releases) · [https://github.com/cline/cline/releases](https://github.com/cline/cline/releases)

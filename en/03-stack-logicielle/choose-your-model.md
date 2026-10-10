@@ -3,8 +3,8 @@ title: "🗺️ Choosing your local model"
 description: Practical guide to navigating the open-weights LLM landscape — families, sizes, specializations, and on-premise scenario mapping.
 sidebar:
   order: 4
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -73,29 +73,28 @@ Natively multimodal (text + image), MoE architecture.
 - **Llama 4 Maverick (400B total / 17B active, 128 experts)**: 1M token context. Requires a full DGX host in FP8 or BF16. Performance comparable to frontier models on STEM benchmarks.
 
 > [!warning] Llama 4 ≠ replacement for Llama 3.x for SMEs
-> Unlike Llama 3.1 8B or 3.3 70B, there is no Llama 4 variant usable on a desktop or APU. For Scenarios A, B, and C, **Llama 3.3 70B or Qwen 2.5 72B remain the references**.
+> There is still no Llama 4 usable on a desktop machine, and Meta has not released any Llama since April 2025: its open line is now called **Muse Glimmer 30B** (Apache 2.0, text + image, ~24 GB in 4-bit)[^8]. For Scenarios A, B, and C, the Q4 2026 references are **Qwen3.8-27B**[^7] and **Muse Glimmer 30B**[^8]; Llama 3.3 70B remains a safe choice but is outclassed at equal size.
 
-### Qwen 2.5 / Qwen3 (Alibaba)
+### Qwen3.8 / Qwen3 (Alibaba)
 
-The most versatile family in the 2026 open-weights landscape, with excellent multilingual coverage (including French) and specialized variants.
+The most versatile family in the open-weights landscape, with excellent multilingual coverage (including French). As of Q4 2026:
 
-- **Qwen 2.5 72B**: direct competitor to Llama 3.3 70B, often slightly better on code and reasoning tasks.
-- **Qwen 2.5 Coder 32B**: best candidate for custodian agents — specialized in code editing, search-and-replace, patch generation. 32B fits on a 48 GB VRAM workstation.
-- **Qwen3-A3B (MoE)**: 3B active parameters, ~18 GB in Q4. Excellent throughput, surprising quality for its active size, ideal on constrained APUs.
+- **Qwen3.8-27B** (dense, Apache 2.0, vision + video, 262k tokens): ~18 GB in Q4 via Ollama, the default choice for a 24 GB GPU and for code agents (SWE-bench Pro 61.7)[^7].
+- **Qwen3-30B-A3B** (MoE, Apache 2.0): 3B active, ~18 GB in Q4, excellent throughput on APUs.
+- **Qwen3.8-Flash-Next** and **Qwen3.8-2.4T-A95B** ("Qwen3.8-Max"): flagships under **custom** licenses (qwen-community-1.0, qwen3.8-max), to be read before any commercial use; datacenter size.
 
 ### DeepSeek (DeepSeek AI)
 
-- **DeepSeek-R1**: reasoning model with built-in chain-of-thought. Excellent performance on mathematical and logical tasks. Available in 7B to 70B distillations and full 671B version (MoE).
-- **DeepSeek V3 (MoE, 671B)**: very high total parameters but ~37B active per token. Quality close to GPT-4o on many benchmarks. Requires a cluster (Scenario C or D).
+- **DeepSeek V4 / V4.1 (MIT)**: the current generation. **V4-Flash** (~300B, 1M tokens) and **V4.1-Flash** (552B + 196B of conditional memory, 8 to 16B active, FP4 KV cache) replace V3 and R1; reasoning is built in (adjustable effort), no more separate "R" model. Datacenter size (8× 80 GB GPU node minimum)[^10].
+- **DeepSeek-R1 / V3 (2025)**: still available and well supported, but outclassed at equal cost.
 
 > [!warning] MoE: do not confuse total and active
-> A 671B MoE model requires **loading all experts in VRAM** even if only 2/64 are active per token. DeepSeek V3 requires ~390 GB total VRAM[^3]. See [[00-lexique/moe|MoE]] for details.
+> A 671B MoE model requires **loading all experts in VRAM** even if only 8 experts out of 256 are active per token. DeepSeek V3 in Q4_K_M weighs ~404 GB of weights[^3]. See [[00-lexique/moe|MoE]] for details.
 
 ### Mistral / Mixtral (Mistral AI)
 
-- **Mistral 7B**: compact, performant model, Apache 2.0 license. Good starting point for testing.
-- **Mixtral 8x7B (MoE)**: 47B total parameters, ~13B active. 26 GB in Q4 — fits on a 32 GB workstation. Good throughput on synthesis and RAG tasks.
-- **Mistral Large 2 (123B)**: performance comparable to Llama 3.1 405B on some benchmarks, but less used on-premise due to size.
+- **Mistral Small 4 (119B)** and **Mistral Medium 3.5 (128B)**: the current open line, with official NVFP4 checkpoints for Small 4[^11]. Mistral 7B and Mixtral 8x7B remain usable but date from 2023-2024.
+- **Mistral Large 4** (~1T MoE, 52B active): announced on 6 October 2026 in API preview; open weights promised for late October, license not published at the time of writing — verify before planning a deployment[^12].
 
 ### Phi-4 / Phi-3 (Microsoft)
 
@@ -109,10 +108,10 @@ Compact models (3.8B–14B) with high reasoning quality for their size. Interest
 
 | Scenario | Typical hardware | Recommended model | Use case |
 | :-- | :-- | :-- | :-- |
-| [[04-blueprints/scenario-a-dev-lab|A — Dev Lab]] | PC 16 GB VRAM + offloading | Llama 3.1 8B / Phi-4 14B | Solo dev, testing, prototyping |
-| [[04-blueprints/scenario-b-sme-appliance\|B — SME Appliance]] | APU 128 GB unified memory | Qwen 2.5 72B Q4 or Llama 3.3 70B Q4 | Team assistant, document RAG |
-| [[04-blueprints/scenario-c-desktop-cluster\|C — Desktop Cluster]] | 2–4 Thunderbolt machines | DeepSeek V3 (MoE) or Llama 405B | Advanced SME, highly capable model |
-| [[04-blueprints/scenario-d-datacenter\|D — Datacenter]] | Multi-H100 / MI300X | Llama 3.1 405B BF16, DeepSeek V3, Llama 4 Scout/Maverick | Production 50+ users, SLA, multimodal |
+| [[04-blueprints/scenario-a-dev-lab|A — Dev Lab]] | PC 16 GB VRAM + offloading | Qwen3.8-27B Q4 (~18 GB)[^7], Granite 4.2 8B[^9] or Gemma 4 E4B[^16] | Solo dev, testing, prototyping |
+| [[04-blueprints/scenario-b-sme-appliance\|B — SME Appliance]] | APU 128 GB unified memory | Qwen3.8-27B[^7] or Muse Glimmer 30B[^8] (Q8 possible); Nemotron 3.5 Lightning 30B-A3B NVFP4 (~22 GB, 256k) for throughput[^13] | Team assistant, document RAG |
+| [[04-blueprints/scenario-c-desktop-cluster\|C — Desktop Cluster]] | 2–4 Thunderbolt machines | GLM-5.3-Flash (320B / 18B active, MIT)[^14] or DeepSeek V4-Flash (MIT)[^10] | Advanced SME, highly capable model |
+| [[04-blueprints/scenario-d-datacenter\|D — Datacenter]] | Multi-H100 / MI300X | DeepSeek V4.1-Flash / V4-Pro (MIT)[^10], GLM-5.3 (custom license)[^14], Kimi K3 (native MXFP4, custom license)[^15], Qwen3.8-2.4T-A95B (custom license); Llama 4 Scout / Maverick remain valid[^2] | Production 50+ users, SLA, multimodal |
 
 ---
 
@@ -120,12 +119,14 @@ Compact models (3.8B–14B) with high reasoning quality for their size. Interest
 
 Generalist models (Llama, general Qwen) can write code, but they are not built to **reliably modify an existing repository**. A custodian agent that must perform precise search-and-replace in Markdown or code needs a coder model.
 
-Practical rule:
+Since 2026, 27–30B generalist models trained for agentic use (Qwen3.8-27B, Muse Glimmer 30B, Granite 4.2) have replaced the dedicated "Coder" variants: they outperform the 2024 Coder models on SWE-bench, and the coder / generalist distinction has blurred.
+
+Practical rule (Q4 2026):
 
 | Use | Minimum model | Recommended model |
 | :-- | :-- | :-- |
-| Code completion in an IDE | Qwen 2.5 Coder 7B | Qwen 2.5 Coder 14B |
-| Custodian agent (controlled corrections) | Qwen 2.5 Coder 14B | Qwen 2.5 Coder 32B |
+| Code completion in an IDE | Granite 4.2 8B[^9] | Qwen3.8-27B[^7] |
+| Custodian agent (controlled corrections) | Qwen3.8-27B[^7] | Muse Glimmer 30B[^8] |
 | Autonomous agent (regular maintenance) | Qwen3.8-27B (Apache 2.0, 262k)[^7] | Muse Glimmer 30B (Apache 2.0, SWE-bench Verified 76.0)[^8] or Granite 4.2 30B (Apache 2.0)[^9] |
 
 > [!warning] The 7B generalist trap for agents
@@ -153,16 +154,18 @@ In exchange:
 
 ## How to read a leaderboard without getting it wrong
 
-Public rankings (Chatbot Arena, Open LLM Leaderboard, HELM) are useful for **initial orientation**, but do not replace your own tests.
+Public rankings (Arena, Artificial Analysis, SWE-bench Pro, HELM) are useful for **initial orientation**, but do not replace your own tests.
 
 > [!warning] Benchmark contamination
 > Large static benchmarks (MMLU, HumanEval, MATH) are saturated in 2026 — their test data has partially leaked into training corpora. A high MMLU score does not predict performance on your internal documents. See [[06-mise-en-oeuvre/evaluate-local-model|Evaluating a local model]] for the full protocol.
 
 What leaderboards still tell you usefully:
 
-- **Chatbot Arena (LMSYS)**[^4]: human preference comparison, multi-turn — good indicator of general conversational quality.
-- **Open LLM Leaderboard (HuggingFace)**[^5]: tracking open-weights models, versions, and available quantizations.
-- **SWE-bench**[^6]: the only truly representative leaderboard for code agents — measured on real GitHub issues.
+- **Arena (formerly LMSYS Chatbot Arena)**[^4]: human preference comparison, multi-turn. Useful for conversational quality, but as of Q4 2026 no open-weights model appears in the top 15: read it to position open families against each other, not against the APIs.
+- **Hugging Face**: the Open LLM Leaderboard has been archived since 2025; use the Hub to check license, file sizes, and available quantizations, and Artificial Analysis (checking the index version) for a composite view[^5].
+- **SWE-bench Pro V2 (Scale)**[^6]: the most representative for code agents (real GitHub issues, protocol frozen since September 2026). SWE-bench Verified has been saturated since summer 2026 (scores > 96%) and no longer discriminates.
+
+**Where do open weights stand against closed models (October 2026)?** On Artificial Analysis' Intelligence Index v4.3, Claude Opus 5.5 scores 58, Claude Fable 5.1 and GPT-6 Astra 53; the best open-weights models follow at 46 (MiMo-V2.6-Pro, MIT), 45 (GLM-5.3) and 44 (Kimi K3)[^17]. On arena.ai, no open model appears in the top 15 as of 2026-10-08; the first, kimi-k3-max, ranks 16th[^4]. The gap is real, but it closes within a few quarters with each new open generation. For an on-premise reader, the question is therefore not the podium but the **level sufficient for the task**, measured on your own data: a Qwen3.8-27B that passes your golden dataset is worth more than a frontier model you can neither host nor audit.
 
 ---
 
@@ -191,12 +194,20 @@ Before downloading a model:
 
 ## 📚 Sources and references
 
-[^1]: SitePoint, *Quantization Explained: Run 70B Models on Consumer GPUs* (Q4_K_M footprint rule ≈ 0.5 byte/parameter + KV Cache headroom), 2026. [https://www.sitepoint.com/quantization-explained-consumer-gpu/](https://www.sitepoint.com/quantization-explained-consumer-gpu/)
+[^1]: J. Wang et al., *Which Quantization Should I Use? A Unified Evaluation of llama.cpp Quantization on Llama-3.1-8B-Instruct* (Q4_K_M size reduction ≈ 69%, i.e. ≈ 0.5 byte/parameter + KV Cache headroom), arXiv:2601.14277, January 2026. [https://arxiv.org/abs/2601.14277](https://arxiv.org/abs/2601.14277)
 [^2]: Meta AI, *The Llama 4 herd: natively multimodal AI innovation* (Scout 109B/17B active, Maverick 400B/17B active, MoE architecture), April 2025. [https://ai.meta.com/blog/llama-4-multimodal-intelligence/](https://ai.meta.com/blog/llama-4-multimodal-intelligence/)
 [^3]: DeepSeek AI, *DeepSeek-V3* (671B, 37B active, native FP8 weights). [https://huggingface.co/deepseek-ai/DeepSeek-V3](https://huggingface.co/deepseek-ai/DeepSeek-V3); unsloth, *DeepSeek-V3-GGUF* (Q4_K_M: 9 files, ≈ 404 GB — all experts resident in VRAM), January 2025. [https://huggingface.co/unsloth/DeepSeek-V3-GGUF](https://huggingface.co/unsloth/DeepSeek-V3-GGUF)
-[^4]: LMSYS, *Chatbot Arena* (multi-turn human preference ranking). [https://chat.lmsys.org/](https://chat.lmsys.org/)
-[^5]: Hugging Face, *Open LLM Leaderboard* (open-weights model benchmarks). [https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard)
-[^6]: SWE-bench, *Software Engineering Benchmark* (code agent evaluation on real GitHub issues). [https://www.swebench.com/](https://www.swebench.com/)
+[^4]: Arena, *Text Leaderboard* (multi-turn human preference ranking; snapshot of 2026-10-08: no open-weights model in the top 15, kimi-k3-max at rank 16). [https://arena.ai/leaderboard/text](https://arena.ai/leaderboard/text)
+[^5]: Hugging Face, *Open LLM Leaderboard — archive*. [https://huggingface.co/docs/leaderboards/en/open_llm_leaderboard/archive](https://huggingface.co/docs/leaderboards/en/open_llm_leaderboard/archive); Artificial Analysis, *Intelligence Index v4.3* (2026-09-07). [https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3](https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3)
+[^6]: Scale AI, *SWE-Bench Pro V2* (642 tasks, 11 repositories, 2026-09-22). [https://labs.scale.com/leaderboard/swe_bench_pro_public_v2](https://labs.scale.com/leaderboard/swe_bench_pro_public_v2); Vals AI, *SWE-bench Verified* (runs stopped on 2026-09-01, top > 96%). [https://www.vals.ai/benchmarks/swebench](https://www.vals.ai/benchmarks/swebench)
 [^7]: Qwen, *Qwen3.8-27B* (dense, Apache 2.0, 262k context; BF16 ≈ 56 GB, Q4 via Ollama ≈ 18 GB — i.e. ~2 bytes/parameter in BF16 and ~0.6 in Q4), August 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B)
 [^8]: Meta, *Muse Glimmer 30B* (Apache 2.0, text + image, SWE-bench Verified 76.0), August 2026. [https://huggingface.co/meta-models/Muse-Glimmer-30B](https://huggingface.co/meta-models/Muse-Glimmer-30B)
 [^9]: IBM, *Granite 4.2 30B* (Apache 2.0, OpenAI-format tool calling), 2026-08-25. [https://huggingface.co/ibm-granite/granite-4.2-30b](https://huggingface.co/ibm-granite/granite-4.2-30b)
+[^10]: DeepSeek AI, *DeepSeek-V4.1-Flash* (MIT, 552B + 196B of Engram conditional memory, 8–16B active, FP4 KV cache 890 bytes/token), September 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash); DeepSeek AI, *DeepSeek-V4-Flash-0731* (MIT, ~304B, 1M tokens), 2026-07-31. [https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731)
+[^11]: Mistral AI, Hugging Face repositories (Mistral-Small-4-119B-2603 and its NVFP4 variant, Mistral-Medium-3.5-128B), captured 2026-10-09. [https://huggingface.co/mistralai](https://huggingface.co/mistralai)
+[^12]: Mistral AI, *Mistral Large 4* (API preview, open weights announced for late October 2026, license not published), 2026-10-06. [https://mistral.ai/news/mistral-large-4](https://mistral.ai/news/mistral-large-4)
+[^13]: NVIDIA, *Nemotron-3.5-Lightning-30B-A3B* (BF16 / NVFP4 ≈ 22 GB / GGUF, OpenMDW 1.1 license, 256k context on an 80 GB GPU), August 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16)
+[^14]: Z.ai, *GLM-5.3-Flash* (320B MoE, 18B active, MIT), 2026-08-26. [https://huggingface.co/zai-org/GLM-5.3-Flash](https://huggingface.co/zai-org/GLM-5.3-Flash); Z.ai, *GLM-5.3* (`glm-5.3` license). [https://huggingface.co/zai-org/GLM-5.3](https://huggingface.co/zai-org/GLM-5.3)
+[^15]: Moonshot AI, *Kimi K3* (native MXFP4; Kimi K3 License: separate agreement above $20M of MaaS revenue over 12 months). [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3)
+[^16]: Google, *Gemma 4 31B IT* (Apache 2.0; E2B / E4B / 26B-A4B / 31B family), April 2026. [https://huggingface.co/google/gemma-4-31b-it](https://huggingface.co/google/gemma-4-31b-it)
+[^17]: Artificial Analysis, *Intelligence Index — model ranking* (Claude Opus 5.5 58, Claude Fable 5.1 53, GPT-6 Astra 53, MiMo-V2.6-Pro 46, GLM-5.3 45, Kimi K3 44; index v4.3 or revision 4.3.x), captured 2026-10-10. [https://artificialanalysis.ai/leaderboards/models](https://artificialanalysis.ai/leaderboards/models); Artificial Analysis, *Claude Opus 5.5* (58, "the highest score we have measured by several points"), 2026-09-22. [https://artificialanalysis.ai/articles/claude-opus-5-5](https://artificialanalysis.ai/articles/claude-opus-5-5)
