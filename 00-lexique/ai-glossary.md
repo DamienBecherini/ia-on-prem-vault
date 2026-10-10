@@ -1,6 +1,6 @@
 ---
 title: 📖 Glossaire IA
-description: Lexique des termes techniques et acronymes utilisés dans le vault.
+description: "Glossaire central de l'IA on-premise : notions clés, parcours de lecture pour débutants et par thème, et accès aux fiches détaillées du lexique."
 last_modified: "2026-06-10"
 last_verified: "2026-06-10"
 verified_by: "Sonnet 4.6"

@@ -1,6 +1,6 @@
 ---
 title: Index du lexique
-description: Liste alphabétique de toutes les fiches du lexique IA on-premise.
+description: "Index alphabétique de toutes les fiches du lexique de l'IA on-premise : LLM, VRAM, KV Cache, quantification, interconnexions et autres notions du vault."
 ---
 
 Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-lexique/ai-glossary|Glossaire IA]].

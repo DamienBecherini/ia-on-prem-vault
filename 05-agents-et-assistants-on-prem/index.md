@@ -1,8 +1,6 @@
 ---
 title: "🤖 Agents & Assistants On-Premise"
-description: >
-  Vue d'ensemble de la couche applicative de l'IA locale : assistants personnels qui apprennent de vos données,
-  et agents custodiens qui agissent pour vous — évalués sous le prisme de la souveraineté.
+description: "Couche applicative de l'IA locale : assistants personnels qui apprennent de vos données et agents custodiens qui agissent, vus sous l'angle de la souveraineté."
 sidebar:
   order: 1
 last_modified: "2026-06-04"

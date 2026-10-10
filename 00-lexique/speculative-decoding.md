@@ -1,6 +1,6 @@
 ---
 title: Speculative Decoding
-description: Technique d'accélération d'inférence où un petit modèle rapide génère des tokens candidats que le grand modèle vérifie en un seul passage. Nécessite deux modèles chargés simultanément.
+description: "Technique d'accélération de l'inférence où un petit modèle rapide propose des tokens que le grand modèle vérifie en un passage ; deux modèles sont à charger."
 aliases:
   - Décodage Spéculatif
   - speculative sampling

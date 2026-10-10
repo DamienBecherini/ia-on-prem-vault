@@ -1,6 +1,6 @@
 ---
 title: HBM
-description: Stacked high-bandwidth memory used on professional AI accelerators.
+description: "Stacked memory with very high bandwidth, used on professional AI accelerators."
 aliases:
   - High Bandwidth Memory
 tags:

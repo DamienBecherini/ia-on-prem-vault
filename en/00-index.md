@@ -1,6 +1,6 @@
 ---
 title: 🚀 Zero to Hero Index
-description: Your entry point for On-Premise AI training
+description: "Entry point of the Zero to Hero on-premise AI course: why run AI locally, and a table of contents of the vault by chapter, from foundations to implementation."
 last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"

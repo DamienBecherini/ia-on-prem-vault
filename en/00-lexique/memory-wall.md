@@ -1,6 +1,6 @@
 ---
 title: Memory Wall
-description: Performance limit caused by memory rather than compute.
+description: "Situation where memory throughput limits performance more than raw compute power, especially in autoregressive generation; not to be judged on TFLOPS alone."
 aliases:
   - Memory wall
 tags:

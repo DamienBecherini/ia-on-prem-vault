@@ -1,6 +1,6 @@
 ---
 title: Decoding
-description: Autoregressive token-by-token generation phase.
+description: "Generation phase where the model predicts one token at a time by rereading the KV Cache; it governs tokens per second and runs into the Memory Wall."
 aliases:
   - Autoregressive generation
 tags:
