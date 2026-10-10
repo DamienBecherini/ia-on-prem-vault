@@ -3,9 +3,9 @@ title: "📊 Monitoring the inference stack"
 description: Setting up Prometheus + Grafana monitoring for a vLLM or Ollama stack — GPU metrics, KV Cache, throughput, and operational alerts.
 sidebar:
   order: 6
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -152,12 +152,14 @@ vLLM exposes metrics on `GET /metrics`[^1]. Priority metrics to watch:
 
 | Metric | Description | Alert threshold |
 | :-- | :-- | :-- |
-| `vllm:gpu_cache_usage_perc` | % KV Cache used | > 90% |
-| `vllm:cpu_cache_usage_perc` | % KV Cache swapped to CPU | > 0 (indicates swap) |
+| `vllm:kv_cache_usage_perc` | Fraction of KV Cache used (1 = 100%) | > 0.90 |
 | `vllm:num_preemptions_total` | Preempted requests (KV Cache full) | > 0 regularly |
 
-> [!warning] KV Cache swap
-> If `cpu_cache_usage_perc > 0`, vLLM swaps KV Cache from VRAM to CPU RAM — a sign that VRAM is insufficient for current load. Performance collapses once swap starts[^2]. Reduce `--max-model-len` or `--max-num-seqs`, or increase `--gpu-memory-utilization`.
+> [!note] Renamed metric
+> `vllm:gpu_cache_usage_perc` and `vllm:cpu_cache_usage_perc` (V0 engine) have disappeared from the reference: the current gauge is `vllm:kv_cache_usage_perc`. Deprecated metrics are hidden one version later and removed two versions later (`--show-hidden-metrics-for-version=X.Y` to show them again temporarily)[^1].
+
+> [!warning] Preemptions
+> When the KV Cache is full, the V1 engine no longer swaps to RAM: it **preempts** requests and recomputes their prefix. A steadily growing `vllm:num_preemptions_total` means VRAM is insufficient for the load: reduce `--max-model-len` or `--max-num-seqs`[^2], or add explicit CPU offload (`--kv-transfer-config '{"kv_connector":"OffloadingConnector",…}'`, `vllm:simple_kv_offload_*` metrics)[^1][^8].
 
 ### Latencies
 
@@ -214,7 +216,7 @@ rate(vllm:generation_tokens_total[1m])
 
 **Panel "KV Cache %":**
 ```text
-vllm:gpu_cache_usage_perc * 100
+vllm:kv_cache_usage_perc * 100
 ```
 
 **Panel "Queue":**
@@ -238,13 +240,13 @@ groups:
     rules:
 
       - alert: VLLMKVCacheHigh
-        expr: vllm:gpu_cache_usage_perc > 0.90
+        expr: vllm:kv_cache_usage_perc > 0.90
         for: 2m
         labels:
           severity: warning
         annotations:
           summary: "vLLM KV Cache > 90%"
-          description: "KV Cache is at {{ $value | humanizePercentage }}. Risk of swap or preemption."
+          description: "KV Cache is at {{ $value | humanizePercentage }}. Risk of preemption."
 
       - alert: VLLMRequestQueueBacklog
         expr: vllm:num_requests_waiting > 0
@@ -291,14 +293,16 @@ alerting:
 
 ## 7. Monitoring Ollama (without native Prometheus)
 
-If you use Ollama, a few immediate monitoring commands:
+If you use Ollama, a few immediate monitoring commands[^9]:
 
 ```bash
 # Loaded models and VRAM used
 ollama ps
 
-# Real-time logs (include generation durations)
-ollama logs -f
+# Real-time logs (include generation durations) — there is no `ollama logs` subcommand
+# Linux (systemd)
+journalctl -u ollama --no-pager --follow --pager-end
+# macOS: cat ~/.ollama/logs/server.log — Docker: docker logs <container>
 
 # Metrics in API response (durations in nanoseconds)
 curl -s http://localhost:11434/api/generate \
@@ -451,10 +455,12 @@ cp /qdrant/snapshots/my_collection/*.snapshot /mnt/backup/qdrant/
 
 ## Sources and references
 
-[^1]: vLLM Project, *Production Metrics* (`/metrics` endpoint, full list of exposed Prometheus metrics, latency histograms). [https://docs.vllm.ai/en/stable/serving/metrics.html](https://docs.vllm.ai/en/stable/serving/metrics.html)
-[^2]: vLLM Project, *Engine Arguments — `gpu-memory-utilization`* (CPU KV Cache swap behavior, performance impact). [https://docs.vllm.ai/en/stable/serving/engine_args.html](https://docs.vllm.ai/en/stable/serving/engine_args.html)
+[^1]: vLLM Project, *Metrics* (`/metrics` endpoint, full list of exposed Prometheus metrics — `vllm:kv_cache_usage_perc`, `vllm:num_preemptions`, `vllm:simple_kv_offload_*` — metric deprecation policy), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/usage/metrics/](https://docs.vllm.ai/en/stable/usage/metrics/)
+[^2]: vLLM Project, *Engine Arguments* (`--gpu-memory-utilization`, `--max-model-len`, `--max-num-seqs`), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)
 [^3]: NVIDIA, *DCGM Exporter — Metrics Reference* (list of DCGM_FI_DEV_* metrics, GPU utilization, memory, temperature, NVLink). [https://github.com/NVIDIA/dcgm-exporter](https://github.com/NVIDIA/dcgm-exporter)
 [^4]: Grafana Labs, *NVIDIA DCGM Exporter Dashboard* (ID 12239, GPU metrics visualization). [https://grafana.com/grafana/dashboards/12239](https://grafana.com/grafana/dashboards/12239)
 [^5]: Grafana Labs, *Node Exporter Full Dashboard* (ID 1860, system metrics — CPU, memory, disk, network). [https://grafana.com/grafana/dashboards/1860](https://grafana.com/grafana/dashboards/1860)
 [^6]: Langfuse, *Self-Hosting Guide & LiteLLM Integration* (Docker Compose, OTEL ingestion, LLM observability). [https://langfuse.com/docs/deployment/self-host](https://langfuse.com/docs/deployment/self-host)
 [^7]: Arize AI, *Arize Phoenix — Open-source LLM Observability* (agent traces, RAG debugging, OTEL-compatible). [https://docs.arize.com/phoenix](https://docs.arize.com/phoenix)
+[^8]: vLLM Project, *Disaggregated Prefill and Decode* (`--kv-transfer-config`, `OffloadingConnector` for KV Cache CPU offload), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/disagg_prefill/](https://docs.vllm.ai/en/stable/features/disagg_prefill/)
+[^9]: Ollama, *Troubleshooting* (log locations: `journalctl -u ollama`, `~/.ollama/logs/server.log`, `docker logs`), accessed 2026-10-09 · `ollama/ollama` repository, `cmd/cmd.go` (subcommand list, no `logs`). [https://docs.ollama.com/troubleshooting](https://docs.ollama.com/troubleshooting) · [https://github.com/ollama/ollama](https://github.com/ollama/ollama)

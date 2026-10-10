@@ -3,9 +3,9 @@ title: "Aider"
 description: Agent de code terminal-first, open-source, model-agnostic, capable de travailler directement avec Ollama.
 sidebar:
   order: 2
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -65,7 +65,9 @@ Aider est le meilleur candidat pour la première cible souveraine :
 
 ## 📊 Maturité du projet
 
-Projet mature et très actif, spécialisé dans l'édition de code. Plus étroit qu'OpenHands, mais beaucoup plus simple à opérer.
+Projet mature (Apache-2.0, environ 49 000 étoiles GitHub) spécialisé dans l'édition de code, mais **gelé de fait au T4 2026** : aucun commit depuis le 2026-05-22, dernière release v0.86.0 (2025-08-09) et dernière publication PyPI 0.86.2 (2026-02-12), sans annonce des mainteneurs[^1][^5]. Il reste plus étroit qu'OpenHands et beaucoup plus simple à opérer, mais les nouveaux modèles ne sont plus référencés et aucun correctif de sécurité n'est à attendre : à utiliser en connaissance de cause, avec un plan de remplacement.
+
+Pour une cible durable, préférer un agent maintenu et model-agnostic comme [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] (CLI, SDK ou Agent Canvas, licence MIT), dont la documentation couvre les modèles locaux via Ollama, vLLM ou SGLang[^6].
 
 ## 🔗 Voir aussi
 
@@ -80,3 +82,5 @@ Projet mature et très actif, spécialisé dans l'édition de code. Plus étroit
 [^2]: Aider Docs, *Ollama*. [https://aider.chat/docs/llms/ollama.html](https://aider.chat/docs/llms/ollama.html)
 [^3]: Aider GitHub issue #3627 — clarifications sur données/code et absence de serveur Aider. [https://github.com/Aider-AI/aider/issues/3627](https://github.com/Aider-AI/aider/issues/3627)
 [^4]: Aider Docs, *Analytics*. [https://aider.chat/docs/more/analytics.html](https://aider.chat/docs/more/analytics.html)
+[^5]: PyPI, *aider-chat* (dernière publication 0.86.2 du 2026-02-12), consulté le 2026-10-09. [https://pypi.org/project/aider-chat/](https://pypi.org/project/aider-chat/)
+[^6]: OpenHands Docs, *Local LLMs* (LM Studio, Ollama, vLLM, SGLang), mis à jour le 2026-05-21. [https://docs.openhands.dev/openhands/usage/llms/local-llms](https://docs.openhands.dev/openhands/usage/llms/local-llms)

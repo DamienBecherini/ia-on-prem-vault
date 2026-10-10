@@ -3,9 +3,9 @@ title: "🏢 Scenario B: SME Appliance (Unified Memory)"
 description: The ideal blueprint for SMEs. How to serve a team of 10 to 50 people with a 70B model using a Mac Studio or AMD APU.
 sidebar:
   order: 2
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -38,7 +38,7 @@ Here, the software stack differs depending on hardware chosen:
 
 ### Expected performance
 Since the 40 GB model fits entirely in [[00-lexique/unified-memory|unified memory]] (which here acts as a huge [[00-lexique/vram|VRAM]]), generation speeds are excellent and stable:
-*   **Mac Studio (M4 Max, ~546 GB/s):** Between 10 and 15 [[00-lexique/tokens-per-second|tokens/s]] during [[00-lexique/decoding|Decoding]][^1] — consistent with the theoretical bound of ~13.6 t/s calculated in [[01-fondations/memory-bandwidth|the memory bandwidth chapter]].
+*   **Mac Studio (M5 Max, ~614 GB/s):** theoretical bound of about 15 [[00-lexique/tokens-per-second|tokens/s]] during [[00-lexique/decoding|Decoding]] on a 70B Q4 (~40 GB), calculated with the formula from [[01-fondations/memory-bandwidth|the memory bandwidth chapter]] based on the bandwidth announced by Apple in August 2026[^1] — i.e. 10 to 15 t/s expected in practice, to be confirmed by a published benchmark.
 *   **AMD Ryzen AI Max PRO 400 (~273 GB/s):** On the order of 5 to 7 tokens/s according to available benchmarks[^2] — also consistent with the formula (theoretical bound ~6.8 t/s).
 
 ---
@@ -96,5 +96,5 @@ To overcome this fixed capacity constraint while staying on affordable desktop h
 
 ## 📚 Sources and references
 
-[^1]: llmhardware.io, *Mac Studio M4 Max / M3 Ultra for LLMs* (Llama 3 70B Q4_K_M performance with MLX and maximum Metal memory allocation), 2025-2026. [https://llmhardware.io/guides/mac-studio-m4-max-llm-guide](https://llmhardware.io/guides/mac-studio-m4-max-llm-guide)
+[^1]: Apple Newsroom, *Apple introduces new Mac Studio with M5 Max and M5 Ultra* (M5 Max memory bandwidth 614 GB/s and M5 Ultra 1.2 TB/s, capacities up to 128 GB and 512 GB, Thunderbolt 5 clustering), 2026-08-25. [https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/](https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/)
 [^2]: ServeTheHome & ignasivt (GitHub), *Strix Halo / Gorgon Halo 192GB Unified Memory Benchmarks* (Expected decoding throughput on dense 70B model), May 2026. [https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/](https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/) · [https://github.com/ignasivt/strix-halo-guide](https://github.com/ignasivt/strix-halo-guide)

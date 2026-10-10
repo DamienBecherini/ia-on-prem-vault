@@ -7,9 +7,9 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -30,7 +30,7 @@ De facto standard for workstations, Macs, and homelabs. Most models on HuggingFa
 
 ## ⚠️ Common pitfalls
 
-- GGUF is not ideal for multi-user production: llama.cpp lacks Continuous Batching like vLLM.
+- GGUF/llama.cpp can serve multiple users (continuous batching enabled by default in `llama-server`, parallel slots via `-np`), but without vLLM/SGLang's paged memory management or multi-GPU parallelism: beyond a handful of concurrent users on a heavy model, per-user throughput collapses faster than with a production GPU engine[^1].
 - Quantization variants (Q2 through Q8) differ sharply — Q2 can heavily hurt answer quality.
 
 ## 📚 Go deeper
@@ -44,3 +44,5 @@ De facto standard for workstations, Macs, and homelabs. Most models on HuggingFa
 - [[00-lexique/quantification-q4|Q4 quantization]]
 - [[00-lexique/offloading|Offloading]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
+
+[^1]: ggml-org, *llama.cpp — llama-server README* ("Continuous batching", "Parallel decoding with multi-user support", `-cb` enabled by default, `-np N`), read on 2026-10-09. [https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)

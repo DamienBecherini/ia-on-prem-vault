@@ -1,11 +1,11 @@
 ---
 title: 🧠 APU & Mémoire Unifiée
-description: Analyse comparative des puces Apple Silicon M4 Max / M3 Ultra, des APU AMD Ryzen AI Max PRO 400 (Gorgon Halo) et de la famille NVIDIA Grace Blackwell (DGX Spark) pour l'inférence de grands LLM.
+description: Analyse comparative des puces Apple Silicon M5 Max / M5 Ultra, des APU AMD Ryzen AI Max PRO 400 (Gorgon Halo) et de la famille NVIDIA Grace Blackwell (DGX Spark) pour l'inférence de grands LLM.
 sidebar:
   order: 1
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -15,7 +15,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 Pour un déploiement souverain d'IA en entreprise, la **mémoire unifiée** est l'une des ruptures matérielles les plus importantes de la décennie.
 
-En supprimant la copie RAM → VRAM via PCIe, les SoC **APU** (CPU + GPU + NPU sur la même puce) accèdent à un pool de **LPDDR5X** partagé — jusqu'à **192 Go** sur les plateformes AMD Ryzen AI Max PRO 400, et jusqu'à **512 Go** sur le Mac Studio M3 Ultra [^1][^2][^4]. C'est l'architecture de référence pour exécuter des modèles **70B+ quantifiés** (ex. Llama 3.1 70B en Q4_K_M, ~40 Go de poids) sur une station de bureau silencieuse, sans serveur GPU datacenter [^3][^9].
+En supprimant la copie RAM → VRAM via PCIe, les SoC **APU** (CPU + GPU + NPU sur la même puce) accèdent à un pool de **LPDDR5X** partagé — jusqu'à **192 Go** sur les plateformes AMD Ryzen AI Max PRO 400, et jusqu'à **512 Go** sur le Mac Studio M5 Ultra (1,2 To/s, configuration 512 Go livrée fin octobre 2026) [^1][^2][^4][^17]. C'est l'architecture de référence pour exécuter des modèles **70B+ quantifiés** (ex. Llama 3.1 70B en Q4_K_M, ~40 Go de poids) sur une station de bureau silencieuse, sans serveur GPU datacenter [^3][^9].
 
 > [!note] Lien connexe
 > Pour le dimensionnement mémoire (poids + KV cache), voir [[01-fondations/quantization-4bit-8bit|Quantification]] et [[01-fondations/kv-cache-and-context|KV Cache]].
@@ -26,11 +26,11 @@ En supprimant la copie RAM → VRAM via PCIe, les SoC **APU** (CPU + GPU + NPU s
 
 Deux écosystèmes dominent la mémoire unifiée hautes performances en 2026 :
 
-### 1. Apple Silicon (Mac Studio 2025)
-Apple intègre CPU, GPU et NPU sur un même package, avec des barrettes **LPDDR5X** soudées à proximité immédiate du silicium [^3][^4].
+### 1. Apple Silicon (Mac Studio M5, août 2026)
+Apple intègre CPU, GPU et NPU sur un même package, avec des barrettes **LPDDR5X** soudées à proximité immédiate du silicium [^3][^4]. Le Mac Studio M5 (annoncé le 2026-08-25) remplace la génération M4 Max / M3 Ultra de 2025 [^17].
 
-*   **Mac Studio M4 Max** (CTO 16c CPU / 40c GPU) : jusqu'à **128 Go** unifiés, **546 Go/s** de bande passante [^3][^4].
-*   **Mac Studio M3 Ultra** (CTO 32c CPU / 80c GPU) : jusqu'à **512 Go** unifiés (192 Go est une config courante pour le local LLM), **819 Go/s** [^4][^5]. Apple n'a pas publié de M4 Ultra en 2025 : l'UltraFusion reste réservé à la génération M3 [^5].
+*   **Mac Studio M5 Max** (18c CPU / 40c GPU) : jusqu'à **128 Go** unifiés, **614 Go/s** de bande passante (460 Go/s avec le GPU 32 cœurs), à partir de 2 499 $ US [^4][^17].
+*   **Mac Studio M5 Ultra** (jusqu'à 36c CPU / 80c GPU) : **96, 256 ou 512 Go** unifiés, **1,2 To/s**, à partir de 5 499 $ US ; la version 512 Go est livrée fin octobre 2026 [^4][^17]. (Apple a sauté la génération M4 Ultra : le M5 Ultra succède directement au M3 Ultra de 2025 [^5].)
 *   **Forces :** bande passante très élevée, écosystèmes **MLX** et **Metal** matures, silence et faible consommation [^3][^10].
 *   **Limites :** macOS, mémoire non évolutive (soudée), tarif élevé en configuration 128 Go+ [^4].
 
@@ -49,7 +49,7 @@ Refresh professionnel de la plateforme **Strix Halo** (Zen 5 + RDNA 3.5), annonc
 Annoncé en 2025 et disponible à partir de 2026, le **DGX Spark** (anciennement Project Digits) est le premier produit NVIDIA combinant un SoC ARM et un GPU Blackwell sur un boîtier de bureau [^14].
 
 *   **Architecture :** SoC **Grace Blackwell** — CPU ARM 20 cœurs (Grace) + GPU Blackwell, co-développé avec MediaTek, gravé TSMC 3nm [^14].
-*   **Mémoire unifiée LPDDR5x :** **128 Go** sur le DGX Spark (~3 999 $) ; la DGX Station monte à **748 Go** pour des modèles > 400B [^14].
+*   **Mémoire unifiée LPDDR5x :** **128 Go** sur le DGX Spark (≈ 6 950 $ au 2026-10-02, contre 3 999 $ au lancement d'octobre 2025) ; une déclinaison **64 Go** à 4 999 $ est annoncée chez les OEM (Acer, ASUS, Dell, Gigabyte, HP, MSI) à partir du 2026-10-23 [^14][^16]. La DGX Station monte à **748 Go** pour des modèles > 400B [^14].
 *   **Bande passante :** ~273 Go/s (LPDDR5x) — proche de l'AMD Gorgon Halo [^14].
 *   **Consommation :** ~**240 W** (DGX Spark) vs ~1 100 W pour une station 2× RTX 4090 [^14].
 *   **FP4 natif (Blackwell) :** contrairement à l'architecture Ada Lovelace (RTX 4090 — FP4 émulé), Blackwell implémente le FP4 dans le silicium — sans surcoût logiciel [^15].
@@ -136,7 +136,7 @@ sudo sysctl iogpu.wired_limit_mb=122880
 | **FP4 natif** | ❌ | ❌ | ❌ | ✅ Blackwell [^15] |
 | **Scale-out** | ❌ | ❌ | ❌ | ✅ QSFP 200 Gbps [^14] |
 | **OS** | macOS | macOS | **Linux / Windows** [^1][^2] | Linux (CUDA) [^14] |
-| **Tarif indicatif** | ~4 500–5 500 € (128 Go, CTO) [^4][^5] | ~5 000–7 500 € (192 Go+, CTO) [^4][^5] | **~3 700 €** (128 Go) [^7][^8] | **~3 999 $** (128 Go) [^14] |
+| **Tarif indicatif** | ~4 500–5 500 € (128 Go, CTO) [^4][^5] | ~5 000–7 500 € (192 Go+, CTO) [^4][^5] | **~3 700 €** (128 Go) [^7][^8] | **≈ 6 950 $** (128 Go, au 2026-10-02) · 4 999 $ (64 Go, OEM, dès le 2026-10-23) [^14][^16] |
 
 > [!note] Lecture des chiffres
 > Les vitesses Apple proviennent de benchmarks communautaires **MLX** ; **llama.cpp/Metal** est souvent légèrement plus lent en decode pur [^9][^10]. Les chiffres NVIDIA DGX Spark en inférence ne sont pas encore publiés officiellement au moment de la rédaction — les claims des sources communautaires ne sont pas repris ici. La borne théorique memory-bound (~13–21 tok/s Apple vs ~7 tok/s AMD) est détaillée dans [[01-fondations/unified-memory-vs-ram-vs-vram|Mémoire unifiée vs RAM vs VRAM]].
@@ -159,7 +159,7 @@ Pour un déploiement souverain on-premise :
 [^1]: AMD, *AMD Powers Next-Generation Agent Computers — Ryzen AI Max PRO 400 Series*, mai 2026. [https://www.amd.com/en/blogs/2026/amd-powers-next-generation-agent-computers-with-new-ryzen-ai-hal.html](https://www.amd.com/en/blogs/2026/amd-powers-next-generation-agent-computers-with-new-ryzen-ai-hal.html)
 [^2]: ServeTheHome, *AMD Ups Ante With 192GB Ryzen AI Max PRO 400 Chips for AI Systems*, mai 2026. [https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/](https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/)
 [^3]: Apple Newsroom, *Apple introduces M4 Pro and M4 Max*, octobre 2024 (546 Go/s, 128 Go max M4 Max). [https://www.apple.com/newsroom/2024/10/apple-introduces-m4-pro-and-m4-max/](https://www.apple.com/newsroom/2024/10/apple-introduces-m4-pro-and-m4-max/)
-[^4]: Apple, *Mac Studio — Technical Specifications* (M4 Max / M3 Ultra, RAM, bande passante), 2025. [https://www.apple.com/mac-studio/specs/](https://www.apple.com/mac-studio/specs/)
+[^4]: Apple, *Mac Studio — Technical Specifications* (M5 Max 614 Go/s / M5 Ultra 1,2 To/s, paliers RAM 96 / 256 / 512 Go), relu le 2026-10-09. [https://www.apple.com/mac-studio/specs/](https://www.apple.com/mac-studio/specs/)
 [^5]: Apple Support, *Mac Studio (2025) — Tech Specs* (configurations CTO, RAM). [https://support.apple.com/en-us/122211](https://support.apple.com/en-us/122211)
 [^6]: ignasivt, *Strix Halo Guide* (benchmarks llama.cpp Llama 3.1 70B Q4 ~4,7–4,9 tok/s), 2026. [https://github.com/ignasivt/strix-halo-guide](https://github.com/ignasivt/strix-halo-guide)
 [^7]: TweakTown, *AMD launches Ryzen AI Max PRO 400 — up to 192GB unified memory*, mai 2026. [https://www.tweaktown.com/news/111752/amd-launches-the-ryzen-ai-max-pro-400-series-of-cpus-up-to-16-cores-with-192gb-of-unified-memory/index.html](https://www.tweaktown.com/news/111752/amd-launches-the-ryzen-ai-max-pro-400-series-of-cpus-up-to-16-cores-with-192gb-of-unified-memory/index.html)
@@ -169,5 +169,7 @@ Pour un déploiement souverain on-premise :
 [^11]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (goulots mémoire, quantification), novembre 2023. [https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/](https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/)
 [^12]: ggml-org/llama.cpp, *Issue #16646* (`iogpu.wired_limit_mb`), 2025. [https://github.com/ggml-org/llama.cpp/issues/16646](https://github.com/ggml-org/llama.cpp/issues/16646)
 [^13]: ivanopcode, *Override macOS Metal VRAM cap* (`iogpu.wired_limit_mb`, tableaux par RAM), 2025. [https://github.com/ivanopcode/devnote-override-macos-metal-vram-cap](https://github.com/ivanopcode/devnote-override-macos-metal-vram-cap)
-[^14]: NVIDIA, *Project DIGITS / DGX Spark* — page produit officielle (Grace Blackwell SoC, 128 Go LPDDR5x, ~273 Go/s, ~240 W TDP, QSFP 200 Gbps, 3 999 $, NVIDIA Sync). [https://www.nvidia.com/en-us/project-digits/](https://www.nvidia.com/en-us/project-digits/)
+[^14]: NVIDIA, *DGX Spark* — page produit officielle (Grace Blackwell SoC, 128 Go LPDDR5x, ~273 Go/s, QSFP 200 Gbps, déclinaison 64 Go « Coming Soon » chez les OEM), relue le 2026-10-09. [https://www.nvidia.com/en-us/products/workstations/dgx-spark/](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)
 [^15]: NVIDIA, *NVIDIA Blackwell Architecture Technical Brief* (FP4 Tensor Cores natifs vs FP4 émulé Ada Lovelace). [https://resources.nvidia.com/en-us-blackwell-architecture](https://resources.nvidia.com/en-us-blackwell-architecture)
+[^16]: ServeTheHome, *NVIDIA DGX Spark 64GB Launched and Big 128GB GB10 Price Increases* (128 Go ≈ 6 950 $, 64 Go 4 999 $ OEM dès le 2026-10-23), 2 octobre 2026. [https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/](https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/)
+[^17]: Apple Newsroom, *Apple introduces new Mac Studio with M5 Max and M5 Ultra* (M5 Max 614 Go/s, M5 Ultra 1,2 To/s, 96 / 256 / 512 Go, prix de départ US, 512 Go livré fin octobre 2026), 25 août 2026. [https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/](https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/)

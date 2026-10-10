@@ -5,9 +5,9 @@ description: >
   le contrôle du modèle et la persistance de la mémoire.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -28,7 +28,7 @@ Le défi : beaucoup de logiciels présentent une interface locale tout en routan
 | Mémoire longue sur documents personnels | Vault Markdown / notes, pas seulement des fichiers | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj|Khoj]] | ⚠️ configurable |
 | Interface web multi-modèles | Plusieurs utilisateurs, plusieurs moteurs | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|Open WebUI]] | ⚠️ configurable |
 | Connaissance d'entreprise + agents | RAG structuré + workflows | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm|AnythingLLM]] | ⚠️ configurable |
-| Mémoire + [[00-lexique/memory-tree|Memory Tree]] hybride | Approche doc-first, acceptable si configuré souverain | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] | ⚠️ configurable |
+| Agent multi-canaux avec mémoire hébergée et mode local-only | Accepter une mémoire hors machine, ou opérer son propre CortexDB | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] | ⚠️ configurable |
 
 > [!tip] Lecture rapide
 > Si vous voulez démarrer sans risque de cloud involontaire, commencez par Jan.ai. Si vous voulez une interface d'équipe, regardez Open WebUI. Si vous voulez RAG + workflows, comparez AnythingLLM et Khoj. OpenHuman est surtout intéressant pour son architecture [[00-lexique/memory-tree|Memory Tree]], mais doit être configuré explicitement pour une posture souveraine.

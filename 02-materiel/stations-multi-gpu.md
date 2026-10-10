@@ -3,9 +3,9 @@ title: "🧩 Stations Multi-GPU : NVIDIA, PCIe et VRAM"
 description: "Comprendre quand plusieurs GPU discrets aident vraiment l'inférence IA on-premise, et pourquoi l'interconnexion décide souvent plus que le nombre de cartes."
 sidebar:
   order: 2
-last_modified: "2026-06-10"
-last_verified: "2026-06-09"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -69,7 +69,7 @@ Entre les stations workstation PCIe et les nœuds HGX datacenter, il existe une 
 
 Le L40S (architecture Ada Lovelace) est souvent sous-estimé car il n'a pas la bande passante HBM d'un H100. Il compense par deux avantages décisifs pour l'inférence de production[^7] :
 
-1.  **Tensor Cores 4ᵉ génération avec FP8 natif :** la quantification FP8 du modèle et du [[00-lexique/kv-cache|KV Cache]] est native, sans contournement logiciel. Sur les architectures Hopper (H100), vLLM doit passer par des émulations FP8 logicielles ; sur Ada, c'est du silicium[^8].
+1.  **Tensor Cores 4ᵉ génération avec FP8 natif :** la quantification FP8 du modèle et du [[00-lexique/kv-cache|KV Cache]] est native, sans contournement logiciel. Les Tensor Cores de 4ᵉ génération (Ada comme Hopper) exécutent le FP8 nativement ; l'avantage du L40S sur le H100 n'est pas le format, mais le **coût d'acquisition et la consommation (350 W, PCIe)** pour des modèles ≤ 70B quantifiés[^7].
 2.  **Meilleur coût/token en inférence :** les benchmarks MLPerf Inference Datacenter 2024 placent le L40S comme le GPU offrant le plus faible coût par token généré pour les modèles de la classe 70B en production — devant l'A100 et à égalité approximative avec l'H100 sur ce ratio spécifique[^8].
 
 Un serveur bare-metal équipé de deux L40S (96 Go de VRAM totale) constitue la topologie de référence pour héberger un modèle 70B en quantification FP8 et servir 20 à 80 utilisateurs simultanés avec un [[00-lexique/ttft|TTFT]] < 2 s.
@@ -229,7 +229,7 @@ Tenstorrent (fondé par Jim Keller) commercialise les accélérateurs **Wormhole
 [^4]: PCI-SIG, *PCI Express 5.0 FAQ* (32 GT/s par lane, double PCIe 4.0). [https://pcisig.com/faq?field_category_value%5B%5D=pci_express_5.0](https://pcisig.com/faq?field_category_value%5B%5D=pci_express_5.0)
 [^5]: NVIDIA TensorRT-LLM, *Parallelism in TensorRT LLM* (TP, PP, DP, EP, CP). [https://nvidia.github.io/TensorRT-LLM/features/parallel-strategy.html](https://nvidia.github.io/TensorRT-LLM/features/parallel-strategy.html)
 [^6]: vLLM, *Parallelism and Scaling* (tensor parallel, pipeline parallel, Ray, multiprocessing, GPUDirect RDMA). [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/)
-[^7]: NVIDIA, *L40S Product Page* (Ada Lovelace, FP8 Tensor Cores, 48 Go GDDR6 ECC). [https://www.nvidia.com/en-us/data-center/l40s/](https://www.nvidia.com/en-us/data-center/l40s/)
+[^7]: NVIDIA, *L40S Product Page* (Ada Lovelace, Tensor Cores 4ᵉ génération avec Transformer Engine FP8, 48 Go GDDR6 ECC, 350 W, PCIe Gen4), relue le 2026-10-09. [https://www.nvidia.com/en-us/data-center/l40s/](https://www.nvidia.com/en-us/data-center/l40s/)
 [^8]: MLCommons, *MLPerf Inference Datacenter v4.1 Results* (benchmark inférence datacenter, coût/token). [https://mlcommons.org/benchmarks/inference-datacenter/](https://mlcommons.org/benchmarks/inference-datacenter/)
 [^9]: Tenstorrent, *vLLM integration with TT-Metal* (architecture Wormhole, fork tenstorrent/vllm, compatibilité partielle vLLM standard), 2025. [https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md](https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md)
 

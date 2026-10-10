@@ -1,11 +1,11 @@
 ---
 title: "🗺️ Choosing your local model"
-description: Practical guide to navigating the 2026 open-weights LLM landscape — families, sizes, specializations, and on-premise scenario mapping.
+description: Practical guide to navigating the open-weights LLM landscape — families, sizes, specializations, and on-premise scenario mapping.
 sidebar:
   order: 4
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -38,7 +38,7 @@ See [[01-fondations/quantization-4bit-8bit|Quantization]] to calculate exact foo
 | 8–12 GB | 7–8B |
 | 16–24 GB | 14B — 24B with Q4 |
 | 48 GB | 32–34B comfortably |
-| 80 GB (H100) | 70B in BF16 or 140B in Q4 |
+| 80 GB (H100) | 70B in FP8/Q8 (~70 GB) or ~120–140B in Q4[^7] |
 | 128–160 GB (APU) | 70B Q8 or 120B Q4 |
 
 **3. How many concurrent users?**
@@ -126,7 +126,7 @@ Practical rule:
 | :-- | :-- | :-- |
 | Code completion in an IDE | Qwen 2.5 Coder 7B | Qwen 2.5 Coder 14B |
 | Custodian agent (controlled corrections) | Qwen 2.5 Coder 14B | Qwen 2.5 Coder 32B |
-| Autonomous agent (regular maintenance) | Qwen 2.5 Coder 32B | DeepSeek Coder V2 (16B active) |
+| Autonomous agent (regular maintenance) | Qwen3.8-27B (Apache 2.0, 262k)[^7] | Muse Glimmer 30B (Apache 2.0, SWE-bench Verified 76.0)[^8] or Granite 4.2 30B (Apache 2.0)[^9] |
 
 > [!warning] The 7B generalist trap for agents
 > A 7B/8B generalist can answer a code question, but it often misses search-and-replace, corrupts YAML frontmatter, or loops on partial corrections. Infrastructure sovereignty does not compensate for a model too weak for the task. See [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]] and [[05-agents-et-assistants-on-prem/agents-custodiens/recommandation-architecture-cible|Target architecture]].
@@ -193,7 +193,10 @@ Before downloading a model:
 
 [^1]: SitePoint, *Quantization Explained: Run 70B Models on Consumer GPUs* (Q4_K_M footprint rule ≈ 0.5 byte/parameter + KV Cache headroom), 2026. [https://www.sitepoint.com/quantization-explained-consumer-gpu/](https://www.sitepoint.com/quantization-explained-consumer-gpu/)
 [^2]: Meta AI, *The Llama 4 herd: natively multimodal AI innovation* (Scout 109B/17B active, Maverick 400B/17B active, MoE architecture), April 2025. [https://ai.meta.com/blog/llama-4-multimodal-intelligence/](https://ai.meta.com/blog/llama-4-multimodal-intelligence/)
-[^3]: LLMHardware.io, *DeepSeek V3 Hardware Requirements* (MoE 671B — all experts resident in VRAM, ~390 GB in Q4_K_M), 2026. [https://llmhardware.io/guides/deepseek-v3-hardware-requirements](https://llmhardware.io/guides/deepseek-v3-hardware-requirements)
+[^3]: DeepSeek AI, *DeepSeek-V3* (671B, 37B active, native FP8 weights). [https://huggingface.co/deepseek-ai/DeepSeek-V3](https://huggingface.co/deepseek-ai/DeepSeek-V3); unsloth, *DeepSeek-V3-GGUF* (Q4_K_M: 9 files, ≈ 404 GB — all experts resident in VRAM), January 2025. [https://huggingface.co/unsloth/DeepSeek-V3-GGUF](https://huggingface.co/unsloth/DeepSeek-V3-GGUF)
 [^4]: LMSYS, *Chatbot Arena* (multi-turn human preference ranking). [https://chat.lmsys.org/](https://chat.lmsys.org/)
 [^5]: Hugging Face, *Open LLM Leaderboard* (open-weights model benchmarks). [https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard)
 [^6]: SWE-bench, *Software Engineering Benchmark* (code agent evaluation on real GitHub issues). [https://www.swebench.com/](https://www.swebench.com/)
+[^7]: Qwen, *Qwen3.8-27B* (dense, Apache 2.0, 262k context; BF16 ≈ 56 GB, Q4 via Ollama ≈ 18 GB — i.e. ~2 bytes/parameter in BF16 and ~0.6 in Q4), August 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B)
+[^8]: Meta, *Muse Glimmer 30B* (Apache 2.0, text + image, SWE-bench Verified 76.0), August 2026. [https://huggingface.co/meta-models/Muse-Glimmer-30B](https://huggingface.co/meta-models/Muse-Glimmer-30B)
+[^9]: IBM, *Granite 4.2 30B* (Apache 2.0, OpenAI-format tool calling), 2026-08-25. [https://huggingface.co/ibm-granite/granite-4.2-30b](https://huggingface.co/ibm-granite/granite-4.2-30b)
