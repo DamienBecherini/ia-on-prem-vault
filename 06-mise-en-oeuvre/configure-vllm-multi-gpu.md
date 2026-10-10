@@ -207,16 +207,16 @@ Les connecteurs disponibles au T4 2026 sont `NixlConnector`, `LMCacheConnectorV1
 
 ```bash
 vllm serve ... \
-  --api-key "sk-votre-token-secret"
+  --api-key "VOTRE-TOKEN-A-REMPLACER"
 ```
 
 Ou via variable d'environnement :
 ```bash
-export VLLM_API_KEY="sk-votre-token-secret"
+export VLLM_API_KEY="VOTRE-TOKEN-A-REMPLACER"
 vllm serve ...
 ```
 
-Les clients doivent envoyer `Authorization: Bearer sk-votre-token-secret`.
+Les clients doivent envoyer `Authorization: Bearer VOTRE-TOKEN-A-REMPLACER`.
 
 ### Limites et timeouts
 
@@ -309,7 +309,7 @@ curl http://localhost:8000/v1/models | python3 -m json.tool
 # Test de génération
 curl http://localhost:8000/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer sk-votre-token" \
+  -H "Authorization: Bearer VOTRE-TOKEN-A-REMPLACER" \
   -d '{
     "model": "llama-70b",
     "messages": [{"role": "user", "content": "Bonjour, tu fonctionnes ?"}],

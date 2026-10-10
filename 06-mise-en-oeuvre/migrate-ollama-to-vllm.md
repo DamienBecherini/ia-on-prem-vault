@@ -43,7 +43,7 @@ Les deux services exposent une API compatible OpenAI sur `/v1/`. Dans la majorit
 client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
 # Après (vLLM)
-client = OpenAI(base_url="http://localhost:8000/v1", api_key="sk-votre-token")
+client = OpenAI(base_url="http://localhost:8000/v1", api_key="VOTRE-TOKEN-A-REMPLACER")
 
 # Le code qui suit est identique dans les deux cas
 response = client.chat.completions.create(

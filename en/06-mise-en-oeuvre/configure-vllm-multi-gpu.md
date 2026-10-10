@@ -207,16 +207,16 @@ The connectors available as of Q4 2026 are `NixlConnector`, `LMCacheConnectorV1`
 
 ```bash
 vllm serve ... \
-  --api-key "sk-your-secret-token"
+  --api-key "YOUR-TOKEN-TO-REPLACE"
 ```
 
 Or via environment variable:
 ```bash
-export VLLM_API_KEY="sk-your-secret-token"
+export VLLM_API_KEY="YOUR-TOKEN-TO-REPLACE"
 vllm serve ...
 ```
 
-Clients must send `Authorization: Bearer sk-your-secret-token`.
+Clients must send `Authorization: Bearer YOUR-TOKEN-TO-REPLACE`.
 
 ### Limits and timeouts
 
@@ -309,7 +309,7 @@ curl http://localhost:8000/v1/models | python3 -m json.tool
 # Generation test
 curl http://localhost:8000/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer sk-your-token" \
+  -H "Authorization: Bearer YOUR-TOKEN-TO-REPLACE" \
   -d '{
     "model": "llama-70b",
     "messages": [{"role": "user", "content": "Hello, are you working?"}],
