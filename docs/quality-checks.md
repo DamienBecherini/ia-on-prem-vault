@@ -190,6 +190,32 @@ Not part of `npm test` (network-dependent). Intended for the refresh workflow (`
 
 ---
 
+### `audit:freshness` / `audit:freshness:due` / `audit:freshness:strict`
+
+**Scope:** FR published notes (EN mirrors follow their FR page), excluding `00-index.md`, the glossary hub and the generated lexicon index.
+
+Assigns each page a volatility class — from its `freshness:` frontmatter field when present (`volatile`, `evolving` or `stable`), otherwise from the folder rules in `.agents/vault-maintenance/freshness-watchlist.md` — and compares `last_verified` + cadence (90 / 180 / 365 days) with today (or `--as-of=YYYY-MM-DD`).
+
+| Status | Meaning |
+| :-- | :-- |
+| `never-verified` | no valid `last_verified` |
+| `overdue` | due date passed |
+| `due-soon` | due within 30 days |
+| `ok` | up to date |
+
+Each row also shows the June 2026 baseline flag (bulk-stamped dates, see `frontmatter-schema.md`) and, from the watchlist, the number of open claims (not `current`) and of claims flagged "à revérifier".
+
+| Mode | Behaviour |
+| :-- | :-- |
+| `audit:freshness` | full Markdown report, exit `0` |
+| `audit:freshness:due` | only never-verified / overdue / due-soon pages |
+| `audit:freshness:strict` | exit `1` when a page is overdue or never verified |
+| `--json=path` | also write a JSON report |
+
+Not part of `npm test`: the result depends on the calendar, not on the PR. It runs weekly in `.github/workflows/freshness.yml` (warn-only, with `audit:sources`) and is phase 0 of `vault-refresh-outdated-content`.
+
+---
+
 ### `audit:links` (engine)
 
 Delegated to `starlight-obsidian-engine`. Validates Obsidian wiki-links and internal Markdown links resolve to published pages.
@@ -230,3 +256,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | :-- | :-- |
 | 2026-06-10 | Initial vault CI: frontmatter, Mermaid, agent-leaks, i18n strict, link audit workflow |
 | 2026-10-09 | `audit:sources` (URL inventory, HTTP probe, evidence tiers) for the refresh workflow; not in `npm test` |
+| 2026-10-10 | `audit:freshness` (volatility classes, due pages, baseline flag, watchlist counters) and the weekly warn-only `freshness.yml` workflow |
