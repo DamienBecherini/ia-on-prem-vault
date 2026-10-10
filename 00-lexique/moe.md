@@ -6,9 +6,9 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -26,9 +26,11 @@ Exemples concrets en 2026 :
 | Modèle | Paramètres totaux | Paramètres actifs/token | VRAM requise (Q4) |
 | :-- | :-- | :-- | :-- |
 | Llama 3.1 70B (dense) | 70 B | 70 B | ~40 Go |
-| DeepSeek V3 (MoE) | 671 B | ~37 B actifs | ~390 Go (poids complets) |
-| Qwen3-A3B (MoE) | ~30 B | ~3 B actifs | ~18 Go |
-| Mixtral 8x7B | 47 B | ~13 B actifs | ~26 Go en Q4 |
+| DeepSeek-V4.1-Flash (MoE, MIT) | 552 B + 196 B de mémoire Engram | 8 B (prefill) / 16 B (decode) | ~750 Go en FP8 (nœud 8 GPU)[^1] |
+| Kimi K3 (MoE, licence custom) | 2 800 B | 104 B (16 experts sur 896) | ~1,4 To en MXFP4 natif[^2] |
+| Qwen3-30B-A3B (MoE, Apache 2.0) | ~30 B | ~3 B actifs (8 experts sur 128) | ~18 Go en Q4[^3] |
+| Nemotron 3.5 Lightning 30B-A3B (hybride Mamba-2 + MoE, OpenMDW) | ~30 B | ~3 B actifs | ~22 Go en NVFP4 officiel[^4] |
+| GLM-5.3-Flash (MoE, MIT) | 320 B | 18 B actifs | ~320 Go en FP8 (nœud 8 GPU)[^5] |
 
 Le MoE offre donc la **qualité d'un grand modèle** avec le **coût de calcul d'un modèle plus petit** — mais exige de charger **tous les experts en VRAM** même si la plupart sont inactifs.
 
@@ -36,7 +38,9 @@ Le MoE offre donc la **qualité d'un grand modèle** avec le **coût de calcul d
 
 Les MoE de petite taille active (comme Qwen3-A3B ou Phi-MoE) sont particulièrement intéressants sur les APU : ils offrent une bonne qualité de réponse avec des besoins VRAM acceptables et un bon débit de génération.
 
-Pour les MoE géants (DeepSeek V3 : 390 Go), il faut un cluster multi-GPU ou multi-nœuds — les scénarios C ou D.
+Pour les MoE géants (DeepSeek V4.1 : > 750 Go en FP8 ; Kimi K3 : > 1,4 To même en 4-bit natif ; le DeepSeek V3 de 2024 pesait déjà 404 Go en Q4_K_M), il faut un nœud 8 GPU ou un cluster multi-nœuds — les scénarios C ou D[^1][^2].
+
+Attention aux licences : les MoE frontière ouverts de 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.4T-A95B) sortent sous des licences custom à lire avant tout usage commercial ; seuls les MoE de taille petite à intermédiaire (Qwen3-30B-A3B, GLM-5.3-Flash, DeepSeek V4 / V4.1, Nemotron 3.5) restent en Apache 2.0, MIT ou OpenMDW. Sur Ollama, `kimi-k3:cloud` ou `glm-5.2:cloud` sont des tags **hébergés**, pas des poids téléchargeables (voir [[03-stack-logicielle/choose-your-model|🗺️ Choisir son modèle]]).
 
 ## ⚠️ Pièges fréquents
 
@@ -55,3 +59,9 @@ Pour les MoE géants (DeepSeek V3 : 390 Go), il faut un cluster multi-GPU ou mul
 - [[00-lexique/quantification|Quantification]]
 - [[00-lexique/tokens-per-second|Tokens par seconde]]
 - [[00-lexique/vram|VRAM]]
+
+[^1]: DeepSeek AI, *DeepSeek-V4.1-Flash* (MIT ; 552 B + 196 B de mémoire conditionnelle Engram, 8 B actifs en prefill / 16 B en decode, KV cache FP4), 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) ; unsloth, *DeepSeek-V3-GGUF* (Q4_K_M ≈ 404 Go), janvier 2025. [https://huggingface.co/unsloth/DeepSeek-V3-GGUF](https://huggingface.co/unsloth/DeepSeek-V3-GGUF)
+[^2]: Moonshot AI, *Kimi K3* (2,8 T de paramètres, 104 B actifs, 16 experts routés sur 896 + 2 partagés, MXFP4 natif par QAT, Kimi K3 License), juillet 2026. [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3)
+[^3]: Qwen, *Qwen3-30B-A3B* (30,5 B au total, 3,3 B activés, 8 experts sur 128, Apache 2.0), 2025. [https://huggingface.co/Qwen/Qwen3-30B-A3B](https://huggingface.co/Qwen/Qwen3-30B-A3B)
+[^4]: NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B* (hybride Mamba-2 + MoE + attention, 30 B / 3 B actifs, OpenMDW 1.1 ; checkpoint NVFP4 ≈ 21,6 Go recommandé pour le déploiement), août 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16) · [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4)
+[^5]: Z.ai, *GLM-5.3-Flash* (320 B au total, 18 B actifs, attention hybride sparse + linéaire, MIT), 2026. [https://huggingface.co/zai-org/GLM-5.3-Flash](https://huggingface.co/zai-org/GLM-5.3-Flash)

@@ -3,9 +3,9 @@ title: "🌐 Réseau IA : RoCE, InfiniBand et Thunderbolt"
 description: "Comprendre quand le réseau devient le goulot d'étranglement d'une architecture IA on-premise, et pourquoi RoCE, InfiniBand et Thunderbolt ne répondent pas au même problème."
 sidebar:
   order: 3
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -74,6 +74,8 @@ InfiniBand est historiquement le choix des clusters HPC et IA quand la latence e
 
 Pour un particulier ou une petite PME, InfiniBand peut être trop coûteux ou trop spécialisé. Pour un cluster IA sérieux avec parallélisme multi-nœuds, il reste une référence parce qu'il réduit les surprises réseau et s'intègre bien avec les bibliothèques de communication GPU.
 
+NVIDIA pousse désormais Spectrum-X Ethernet (switches Spectrum-6, optique enfichable ou co-packagée, livrés avec la plateforme Vera Rubin depuis août 2026) au même rang qu'InfiniBand pour les fabrics IA ; pour un datacenter souverain neuf, comparer les deux offres plutôt que de considérer InfiniBand comme seule référence [^10].
+
 ---
 
 ## 🚀 GPUDirect RDMA : éviter le détour par la RAM
@@ -103,6 +105,8 @@ NVIDIA recommande désormais DMA-BUF comme approche moderne pour certains déplo
 
 Thunderbolt est séduisant pour l'on-premise : un câble compact, des docks, du stockage rapide, parfois du réseau point-à-point. Mais il faut garder les ordres de grandeur.
 
+Depuis macOS 26.2, Apple supporte le **RDMA over Thunderbolt 5** entre Mac ; MLX (backend JACCL, latence « d'un ordre de grandeur » inférieure au ring TCP) et Exo s'en servent pour le parallélisme entre deux à quatre machines, et Apple annonce « jusqu'à 3× » le débit d'inférence d'un seul Mac Studio M5 avec quatre nœuds. Conditions : Thunderbolt 5 sur chaque machine et câbles TB5, `rdma_ctl enable` à exécuter une fois en mode Recovery, topologie entièrement maillée pour JACCL, même build macOS partout — Thunderbolt 4 ne fournit qu'un lien IP [^8][^9].
+
 Intel décrit Thunderbolt 4 comme un lien à **40 Gb/s** bidirectionnel avec 32 Gb/s de données PCIe minimales [^5]. Thunderbolt 5 monte à **80 Gb/s** bidirectionnels, avec un mode *Bandwidth Boost* pouvant réallouer le lien jusqu'à **120 Gb/s en émission et 40 Gb/s en réception**, principalement pour les usages vidéo [^6].
 
 Même Thunderbolt 5 reste très loin d'un fabric NVLink/NVSwitch de serveur GPU. Il peut être utile pour :
@@ -117,7 +121,7 @@ Il ne faut pas le vendre comme :
 
 - une extension transparente de VRAM
 - un NVLink externe
-- une solution robuste pour tensor parallel multi-nœuds
+- une solution robuste pour le tensor parallel multi-nœuds **GPU** (hors du cas Mac-à-Mac en RDMA Thunderbolt 5, limité à quatre machines et à l'écosystème MLX)
 - un réseau datacenter IA
 
 Pour un mini-cluster de bureau, Thunderbolt peut aider à prototyper. Pour de la production multi-GPU distribuée, RoCE ou InfiniBand deviennent beaucoup plus crédibles.
@@ -162,4 +166,7 @@ Le réseau IA on-premise n'est donc pas “plus de câbles”. C'est une décisi
 [^5]: Intel, *What Is Thunderbolt 4?* (40 Gb/s bidirectionnel, PCIe 32 Gb/s). [https://www.intel.com/content/www/us/en/gaming/resources/upgrade-gaming-accessories-thunderbolt-4.html](https://www.intel.com/content/www/us/en/gaming/resources/upgrade-gaming-accessories-thunderbolt-4.html)
 [^6]: Thunderbolt Technology, *Thunderbolt 5 Technology Brief* (80 Gb/s bidirectionnel, 120/40 Gb/s Bandwidth Boost, PCIe 64 Gb/s). [https://www.thunderbolttechnology.net/sites/default/files/Thunderbolt_5_TechBrief_2023_09_12.pdf](https://www.thunderbolttechnology.net/sites/default/files/Thunderbolt_5_TechBrief_2023_09_12.pdf)
 [^7]: vLLM, *Parallelism and Scaling* (tensor parallel, pipeline parallel, multi-nœuds, GPUDirect RDMA). [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/)
+[^8]: Apple MLX, *Distributed Communication* (« Starting from macOS 26.2, RDMA over thunderbolt is available » ; backend JACCL, topologie entièrement maillée, latence d'un ordre de grandeur inférieure au ring ; `rdma_ctl enable` en Recovery ; `mlx.launch` et hostfile), consulté le 2026-10-10. [https://ml-explore.github.io/mlx/build/html/usage/distributed.html](https://ml-explore.github.io/mlx/build/html/usage/distributed.html) · Exo Labs, *GitHub - exo-explore/exo* (README : RDMA Thunderbolt 5 + macOS 26.2, même build macOS sur chaque nœud), relu le 2026-10-09. [https://github.com/exo-explore/exo](https://github.com/exo-explore/exo)
+[^9]: Apple Newsroom, *Apple introduces new Mac Studio with M5 Max and M5 Ultra* (clustering « using the built-in support for Thunderbolt 5 and RDMA » ; « A cluster of four Mac Studio systems delivers up to a remarkable 3x faster AI inference than a single system »), 25 août 2026. [https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/](https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/)
+[^10]: NVIDIA Newsroom, *NVIDIA Announces Financial Results for Second Quarter Fiscal 2027* (Spectrum-6 « supporting both pluggable and co-packaged optics as part of the NVIDIA Vera Rubin platform » ; Vera Rubin en pleine production), 26 août 2026. [https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)
 

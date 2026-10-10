@@ -9,9 +9,9 @@ tags:
   - lexique
   - stack-logicielle
   - agents
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -35,6 +35,7 @@ In a sovereign setup, LiteLLM can enforce **local-only** routing to Ollama or vL
 - Assuming LiteLLM makes a stack sovereign automatically: everything depends on configured backends.
 - Enabling prompt/response logs without a retention policy.
 - Leaving a silent cloud fallback in a supposed on-prem configuration.
+- Deploying the proxy and then forgetting it: since June 2026, LiteLLM only maintains its last four minor lines (about one month of fixes each)[^1], and several of its 2026 flaws are actively exploited (CISA KEV catalog). A gateway exposed to users must keep up with releases — see the [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|solution sheet]].
 
 ## 📚 Go deeper
 
@@ -46,3 +47,5 @@ In a sovereign setup, LiteLLM can enforce **local-only** routing to Ollama or vL
 - [[00-lexique/on-premise|On-Premise]]
 - [[00-lexique/agent-custodian|Custodian agent]]
 - [[03-stack-logicielle/inference-engines-vllm-ollama|Inference engines]]
+
+[^1]: LiteLLM, *Version Support Policy* (four stable minor lines maintained, rolling window of about one month per line, effective 2026-06-29), 2026-06-20. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)

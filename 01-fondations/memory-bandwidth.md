@@ -3,9 +3,9 @@ title: 🏎️ La Bande Passante Mémoire & Le "Memory Wall"
 description: Analyse mathématique et matérielle du véritable goulot d'étranglement de l'inférence locale.
 sidebar:
   order: 1
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -72,9 +72,9 @@ Un modèle dense de 70B quantifié en 4-bit occupe environ **40 Go** en mémoire
 2.  **Sur un système AMD Ryzen AI Max PRO 495 (Gorgon Halo) :**
     *   Bande passante réelle : $\sim 273 \text{ Go/s}$
     *   Calcul : $\frac{273 \text{ Go/s}}{40 \text{ Go}} = \mathbf{6,8 \text{ tokens/s}}$ (borne théorique).
-3.  **Sur un Mac Studio M4 Max (Mémoire Unifiée haut de gamme) :**
-    *   Bande passante réelle : $546 \text{ Go/s}$
-    *   Calcul : $\frac{546 \text{ Go/s}}{40 \text{ Go}} = \mathbf{13,6 \text{ tokens/s}}$ (borne théorique).
+3.  **Sur un Mac Studio M5 Max (mémoire unifiée haut de gamme) :**
+    *   Bande passante : $614 \text{ Go/s}$ (annoncée par Apple en août 2026)[^4]
+    *   Calcul : $\frac{614 \text{ Go/s}}{40 \text{ Go}} = \mathbf{15,4 \text{ tokens/s}}$ (borne théorique) ; un M5 Ultra ($1\ 200 \text{ Go/s}$) double cette borne à $\mathbf{30 \text{ tokens/s}}$[^4].
 4.  **Sur une carte Nvidia RTX 5090 (VRAM GDDR7 dédiée - Blackwell) :**
     *   Bande passante réelle : $1\ 792 \text{ Go/s}$
     *   Calcul : $\frac{1792 \text{ Go/s}}{40 \text{ Go}} = \mathbf{44,8 \text{ tokens/s}}$ (borne théorique).
@@ -91,8 +91,11 @@ Valeurs ci-dessous : ordres de grandeur utiles pour l'architecture (les performa
 | **PCIe 5.0 x16** | $\sim 64 \text{ Go/s}$ (agrégé) | spécification bus | devient un goulot lors des transferts fréquents CPU↔GPU |
 | **RAM DDR5 desktop** | $\sim 80$ à $100 \text{ Go/s}$ | plateformes dual-channel typiques | capacité élevée, débit limité pour grands LLM |
 | **Mémoire unifiée AMD Ryzen AI Max PRO 400** | jusqu'à $\sim 273 \text{ Go/s}$ | [^3] | compromis capacité/débit intéressant en x86 |
-| **Mémoire unifiée Apple M4 Max / M3 Ultra** | $546$ à $819 \text{ Go/s}$ | [^4] | excellent débit local sans offload PCIe |
+| **Mémoire unifiée NVIDIA DGX Spark (LPDDR5x)** | $\sim 273 \text{ Go/s}$ | [^7] | même classe que l'APU AMD ; CUDA et FP4 natifs |
+| **Mémoire unifiée Apple M5 Max / M5 Ultra** | $614$ à $1\ 200 \text{ Go/s}$ | [^4] | excellent débit local sans offload PCIe |
 | **VRAM RTX 5090 (GDDR7)** | $\sim 1{,}79 \text{ To/s}$ | [^5][^6] | très haut débit pour decoding rapide |
+
+Deux remarques datées (T4 2026). Intel prépare un GPU d'inférence « capacité d'abord » (Crescent Island, 160 Go de LPDDR5X, 350 W, attendu en 2027) dont la bande passante n'est pas publiée : la formule ci-dessus dit déjà qu'il sera limité en decode mono-requête et pertinent en batch[^8]. Et la RAM n'est plus l'option bon marché du tableau : la DRAM contractuelle augmente encore de 10–15 % par trimestre au T4 2026 (TrendForce), si bien que l'arbitrage « capacité vs bande passante » se fait désormais aussi en euros par Go[^9].
 
 ---
 
@@ -102,7 +105,7 @@ Valeurs ci-dessous : ordres de grandeur utiles pour l'architecture (les performa
 > Dès qu'on cumule la mémoire de plusieurs machines, l'interconnexion devient le point de rupture :
 >
 > 1.  **Le câble peut dominer toute la chaîne :** une liaison 10 GbE plafonne autour de 1,25 Go/s, très loin des centaines de Go/s des mémoires locales.
-> 2.  **[[00-lexique/rdma|RDMA]] est clé en environnement pro :** RoCE/InfiniBand réduit le coût CPU des transferts et améliore la latence inter-nœuds.
+> 2.  **[[00-lexique/rdma|RDMA]] est clé en environnement pro :** RoCE/InfiniBand réduit le coût CPU des transferts et améliore la latence inter-nœuds. Entre Mac, le RDMA est aussi disponible sur Thunderbolt 5 depuis macOS 26.2 (backend JACCL de MLX)[^10].
 
 > [!tip] Conseil de l'Architecte
 > Dans tout déploiement on-premise, la méthode [[03-stack-logicielle/rag-and-agents|RAG]] est une alliée clé de la bande passante. En n'injectant dans le contexte que les passages pertinents (plutôt que des documents entiers), on évite de saturer la mémoire avec des données inutiles et on maintient le [[00-lexique/ttft|TTFT]] sous contrôle.
@@ -114,6 +117,10 @@ Valeurs ci-dessous : ordres de grandeur utiles pour l'architecture (les performa
 [^1]: Amir Gholami et al., *AI and Memory Wall* (arXiv:2403.14123), 2024. [https://arxiv.org/abs/2403.14123](https://arxiv.org/abs/2403.14123)
 [^2]: Meta, *Llama 4 Model Card* (Scout/Maverick, MoE, pas de variante "70B" dense), 2025. [https://raw.githubusercontent.com/meta-llama/llama-models/main/models/llama4/MODEL_CARD.md](https://raw.githubusercontent.com/meta-llama/llama-models/main/models/llama4/MODEL_CARD.md)
 [^3]: ServeTheHome, *AMD Ups Ante With 192GB Ryzen AI Max PRO 400 Chips for AI Systems*, 2026. [https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/](https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/)
-[^4]: Apple, *Mac Studio - Technical Specifications*, 2026. [https://www.apple.com/mac-studio/specs/](https://www.apple.com/mac-studio/specs/)
+[^4]: Apple, *Mac Studio — Technical Specifications* (M5 Max 614 Go/s, M5 Ultra 1,2 To/s ; la page décrit la génération M5 depuis le 2026-08-25, les valeurs M4 Max 546 Go/s / M3 Ultra 819 Go/s restent sur la fiche « Mac Studio (2025) »), relue le 2026-10-09. [https://www.apple.com/mac-studio/specs/](https://www.apple.com/mac-studio/specs/) · Apple Support, *Mac Studio (2025) — Tech Specs*. [https://support.apple.com/en-us/122211](https://support.apple.com/en-us/122211)
 [^5]: NVIDIA, *GeForce RTX 5090 product page* (32 GB GDDR7, bus 512-bit, TGP 575 W). [https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/](https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/)
 [^6]: TechPowerUp, *NVIDIA GeForce RTX 5090 Specs* (bandwidth mémoire 1.79 TB/s), 2026. [https://www.techpowerup.com/gpu-specs/geforce-rtx-5090.c4216](https://www.techpowerup.com/gpu-specs/geforce-rtx-5090.c4216)
+[^7]: NVIDIA, *DGX Spark* — page produit (Grace Blackwell GB10, 128 Go LPDDR5x, ~273 Go/s, FP4 natif), relue le 2026-10-09. [https://www.nvidia.com/en-us/products/workstations/dgx-spark/](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)
+[^8]: ServeTheHome, *Intel Crescent Island 160GB to 480GB LPDDR5X AI GPU at Hot Chips 2026* (PCIe 350 W refroidi par air, bande passante non communiquée), 24 août 2026. [https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/](https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/)
+[^9]: TrendForce, communiqué du 30 septembre 2026 (prix contractuels DRAM en hausse de 10–15 % au T4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
+[^10]: Apple MLX, *Distributed Communication* (« Starting from macOS 26.2, RDMA over thunderbolt is available » ; backend JACCL), consulté le 2026-10-10. [https://ml-explore.github.io/mlx/build/html/usage/distributed.html](https://ml-explore.github.io/mlx/build/html/usage/distributed.html)

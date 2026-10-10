@@ -3,8 +3,8 @@ title: "🔄 Migrate from Ollama to vLLM"
 description: When and how to move from Ollama to vLLM without breaking existing clients — API compatibility, model conversion, cutover strategy, and rollback plan.
 sidebar:
   order: 7
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -21,7 +21,7 @@ Ollama remains the best choice for solo development and small teams. Migration t
 
 | Signal | Indicative threshold |
 | :-- | :-- |
-| Simultaneous users | > 5–10 (visible queue) |
+| Simultaneous users | several concurrent requests on the same model (Ollama handles only one at a time by default, `OLLAMA_NUM_PARALLEL=1`)[^7] |
 | p95 latency | > 10 s for an 8B model |
 | Target throughput | > 50 tok/s aggregate |
 | Concurrent requests | > 20/min at peak |
@@ -59,12 +59,13 @@ response = client.chat.completions.create(
 | Feature | Ollama | vLLM |
 | :-- | :-- | :-- |
 | Default port | 11434 | 8000 |
-| Authentication | None | Bearer token required in prod |
+| Authentication | None (key ignored) | `--api-key` (only covers `/v1`, `/v2` and `/inference`; reverse proxy for the rest)[^8] |
 | Model format | GGUF (native) | HuggingFace safetensors, AWQ, GPTQ |
 | Pull model endpoint | `POST /api/pull` | Not supported (pre-load) |
 | Generate endpoint (legacy) | `POST /api/generate` | Not supported (use `/v1/`) |
 | Stream | Supported | Supported |
 | Embeddings | `POST /api/embeddings` | `POST /v1/embeddings` |
+| Responses API | `POST /v1/responses` (since 0.13.3, stateless variant) | `POST /v1/responses` |
 
 > [!warning] Clients using `/api/generate` or `/api/pull`
 > If your scripts call native Ollama endpoints (`/api/generate`, `/api/pull`, `/api/tags`), they must be adapted. Endpoints `/v1/chat/completions`, `/v1/completions`, and `/v1/embeddings` are compatible without changes[^2].
@@ -101,14 +102,18 @@ Most Ollama models have an official HuggingFace equivalent:
 | `phi4` | `microsoft/phi-4` |
 | `deepseek-r1:70b` | `deepseek-ai/DeepSeek-R1-Distill-Llama-70B` |
 
-```bash
-# Download via Hugging Face CLI
-pip install huggingface_hub
-huggingface-cli login  # HF token required for gated models (Llama)
+These equivalences remain valid, but these models belong to the generation that Ollama ≥ 0.32 (July 2026) flags as "legacy" at `ollama launch` (CodeLlama, Qwen2.5, Llama 3.x, Mistral, base DeepSeek-R1); the current library as of Q4 2026 is `qwen3.5` / `qwen3.6`, `gemma4`, `qwen3-coder`, whose Hugging Face weights are found the same way[^9].
 
-huggingface-cli download meta-llama/Llama-3.1-8B-Instruct \
+```bash
+# Download via Hugging Face CLI (`hf` command, which replaces `huggingface-cli`)
+pip install huggingface_hub
+hf auth login  # HF token required for gated models (Llama)
+
+hf download meta-llama/Llama-3.1-8B-Instruct \
   --local-dir /data/models/llama3.1-8b
 ```
+
+Target **safetensors** repositories exclusively: never accept `.bin` / pickle weights, even "scanned" ones — malicious pickle loads evade model scanners (ShadowPickle, July 2026)[^11]. The `hf` command is the documented form of the Hugging Face CLI as of Q4 2026[^10].
 
 ### Option B — Use a pre-quantized AWQ version
 
@@ -146,7 +151,7 @@ PY
 The loader dequantizes Llama, Mistral, Qwen2, Phi3, etc.; check the list of supported architectures in the Transformers documentation[^6].
 
 > [!warning] Quantization loss
-> GGUF → safetensors conversion dequantizes the model (back to bf16). To re-quantize to AWQ, use [AutoAWQ](https://github.com/casper-hansen/AutoAWQ). This process needs VRAM and time (several hours on a 70B).
+> GGUF → safetensors conversion dequantizes the model (back to bf16). To re-quantize to AWQ, use [llm-compressor](https://github.com/vllm-project/llm-compressor) — the vLLM project took over AutoAWQ, archived in May 2025[^3]. This process needs VRAM and time (several hours on a 70B).
 
 ---
 
@@ -165,7 +170,7 @@ vllm serve meta-llama/Llama-3.1-8B-Instruct \
 
 ### Phase 2 — Qualification
 
-Compare results on your real prompts[^4]:
+Compare results on your real prompts[^4]; `vllm bench serve --model … --dataset-name sharegpt` additionally measures throughput and TTFT under load.
 
 ```bash
 # A/B comparison script
@@ -232,11 +237,15 @@ curl http://localhost/v1/models
 
 Full rollback takes < 2 minutes if Ollama was only stopped (not uninstalled).
 
+> [!note] Ollama ≥ 0.40
+> If you updated Ollama during the migration, its models may have been rewritten to the new format on first launch (Ollama 0.40.2, October 2026; backups kept on disk); rolling back to a version < 0.40 forces you to re-pull the models[^12]. Pin the Ollama version during the cutover window.
+
 ---
 
 ## Migration checklist
 
 ```
+□ vLLM ≥ 0.31.0 installed, trust_remote_code disabled
 □ HuggingFace equivalent identified for each Ollama model in use
 □ Models downloaded and loaded in vLLM (/health test OK)
 □ --served-model-name configured for name compatibility
@@ -248,6 +257,8 @@ Full rollback takes < 2 minutes if Ollama was only stopped (not uninstalled).
 □ 48h monitoring period post-cutover
 □ Rollback procedure documented and tested
 ```
+
+The minimum version is not a detail: between August and October 2026, vLLM fixed several remote code executions and denials of service (including GHSA-h3rc-6mm3-gc2m, closed in 0.31.0)[^13]; full hardening is described in [[06-mise-en-oeuvre/configure-vllm-multi-gpu|Configure vLLM multi-GPU]] and [[06-mise-en-oeuvre/local-inference-security|Local inference security]].
 
 ---
 
@@ -262,9 +273,16 @@ Full rollback takes < 2 minutes if Ollama was only stopped (not uninstalled).
 
 ## Sources and references
 
-[^1]: vLLM Project, *PagedAttention — Continuous Batching* (dynamic KV Cache management, comparison with Ollama under concurrency). [https://vllm.ai/blog/2023/06/20/vllm.html](https://vllm.ai/blog/2023/06/20/vllm.html)
-[^2]: vLLM Project, *OpenAI-Compatible Server* (supported endpoints `/v1/chat/completions`, `/v1/completions`, `/v1/embeddings`, `--served-model-name`). [https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html](https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html)
-[^3]: vLLM Project, *Quantization — AWQ* (AWQ Marlin kernel, performance vs GPTQ, compatible HuggingFace models). [https://docs.vllm.ai/en/stable/features/quantization/auto_awq.html](https://docs.vllm.ai/en/stable/features/quantization/auto_awq.html)
-[^4]: vLLM Project, *Benchmarks* (comparative benchmarking scripts, latency and throughput). [https://docs.vllm.ai/en/stable/performance/benchmarks.html](https://docs.vllm.ai/en/stable/performance/benchmarks.html)
+[^1]: vLLM Project, *vLLM: Easy, Fast, and Cheap LLM Serving with PagedAttention* (continuous batching, dynamic KV Cache management), 20 June 2023, verified 2026-10-10. [https://vllm.ai/blog/2023-06-20-vllm](https://vllm.ai/blog/2023-06-20-vllm)
+[^2]: vLLM Project, *Online Serving — OpenAI-Compatible Server* (supported endpoints `/v1/chat/completions`, `/v1/completions`, `/v1/embeddings`, `/v1/responses`), accessed 2026-10-10 · Ollama, *OpenAI compatibility* (`/v1/responses` since 0.13.3, API key "required but ignored"), accessed 2026-10-10. [https://docs.vllm.ai/en/stable/serving/online_serving/](https://docs.vllm.ai/en/stable/serving/online_serving/) · [https://docs.ollama.com/api/openai-compatibility](https://docs.ollama.com/api/openai-compatibility)
+[^3]: vLLM Project, *Quantization — AWQ* ("The AutoAWQ library is deprecated", workflow taken over by `llm-compressor`, Marlin kernels), accessed 2026-10-10 · casper-hansen, *AutoAWQ* (repository archived on 2025-05-11, "officially deprecated"). [https://docs.vllm.ai/en/stable/features/quantization/auto_awq/](https://docs.vllm.ai/en/stable/features/quantization/auto_awq/) · [https://github.com/casper-hansen/AutoAWQ](https://github.com/casper-hansen/AutoAWQ)
+[^4]: vLLM Project, *Benchmarking* (`vllm bench serve`, `latency`, `throughput`), accessed 2026-10-10. [https://docs.vllm.ai/en/stable/benchmarking/](https://docs.vllm.ai/en/stable/benchmarking/)
 [^5]: vLLM Project, *Quantization — GGUF* (`vllm-gguf-plugin` plugin, "highly experimental and under-optimized" support, base model tokenizer recommended), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/gguf/](https://docs.vllm.ai/en/stable/features/quantization/gguf/)
 [^6]: Hugging Face, *Transformers — GGUF* (`from_pretrained(gguf_file=…)`, `GgufConfig(dequantize=True)`, supported architectures, export via `save_pretrained`), accessed 2026-10-09. [https://huggingface.co/docs/transformers/gguf](https://huggingface.co/docs/transformers/gguf)
+[^7]: Ollama, *FAQ — How does Ollama handle concurrent requests?* (`OLLAMA_NUM_PARALLEL` defaults to 1, queueing), accessed 2026-10-10. [https://docs.ollama.com/faq](https://docs.ollama.com/faq)
+[^8]: vLLM Project, *CLI Reference — `vllm serve`* (`--api-key`: protected paths `/v1`, `/v2`, `/inference`), accessed 2026-10-10 · vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`/tokenize` not covered by `--api-key`), 6 October 2026. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
+[^9]: Ollama, *Release v0.32.0* (deprecation warning for CodeLlama, Qwen2.5(-coder), Llama 3.x, Mistral, StarCoder and base DeepSeek-R1), 11 July 2026 · Ollama, *Library* (`qwen3.5`, `qwen3.6`, `gemma4`, `qwen3-coder`), accessed 2026-10-10. [https://github.com/ollama/ollama/releases/tag/v0.32.0](https://github.com/ollama/ollama/releases/tag/v0.32.0) · [https://ollama.com/library](https://ollama.com/library)
+[^10]: Hugging Face, *Command Line Interface (CLI)* (`hf auth login`, `hf download … --local-dir`), accessed 2026-10-10. [https://huggingface.co/docs/huggingface_hub/guides/cli](https://huggingface.co/docs/huggingface_hub/guides/cli)
+[^11]: *ShadowPickle: Evading Machine Learning Model Scanners via Stealthy Pickle Deserialization Attacks* (arXiv:2607.17503; ten model scanners bypassed), July 2026. [https://arxiv.org/abs/2607.17503](https://arxiv.org/abs/2607.17503)
+[^12]: Ollama, *Release v0.40.2* (models "upgraded in the background the first time you run them", backups kept, re-pull required when rolling back to < 0.40), 8 October 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.2](https://github.com/ollama/ollama/releases/tag/v0.40.2)
+[^13]: vLLM Project, *Release v0.31.0* (per-request `mm_processor_kwargs` rejected unless `--trust-request-mm-kwargs`, `fp8` → `fp8_per_tensor`), 5 October 2026 · advisory GHSA-h3rc-6mm3-gc2m, 6 October 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)

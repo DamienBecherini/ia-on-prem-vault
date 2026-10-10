@@ -3,14 +3,14 @@ title: "🏢 Scenario B: SME Appliance (Unified Memory)"
 description: The ideal blueprint for SMEs. How to serve a team of 10 to 50 people with a 70B model using a Mac Studio or AMD APU.
 sidebar:
   order: 2
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
-Your client (a law firm, medical practice, SME) needs a local assistant capable of processing confidential documents. The chosen model is a heavy LLM (70B quantized class, ~40 GB of weights).
+Your client (a law firm, medical practice, SME) needs a local assistant capable of processing confidential documents. The chosen model is a heavy LLM: either a quantized dense 70B (~40 GB of weights, the capacity benchmark of this blueprint), or — faster on this hardware — a light MoE such as gpt-oss-120b (~70 GB, 34–38 t/s measured on a 128 GB APU) or a 27–30B dense model such as Qwen3.8-27B (~18 GB in Q4)[^6].
 
 As seen in [[04-blueprints/scenario-a-dev-lab|Scenario A]], a standard PC collapses due to [[00-lexique/offloading|CPU Offloading]]. Buying a multi-GPU server is very expensive, sounds like a jet taking off, and consumes a lot of electricity. The most elegant solution in 2026 is the **Unified Memory Appliance**.
 
@@ -19,12 +19,16 @@ As seen in [[04-blueprints/scenario-a-dev-lab|Scenario A]], a standard PC collap
 ## 🏗️ Hardware architecture
 
 The goal is to have a single chip (SoC) where the CPU and GPU draw from the same large memory reserve.
-Two choices are available:
+Three choices are available:
 
-*   **Apple option (The silent standard):** A Mac Studio M4 Max (128 GB) or M3 Ultra (192 GB).
-*   **x86 PC option (Docker sovereignty):** A workstation based on the AMD Ryzen AI Max PRO 400 APU ("Gorgon Halo") with 192 GB RAM.
+*   **Apple option (The silent standard):** A Mac Studio M5 Max (up to 128 GB, 614 GB/s, from €2,999 incl. VAT) or M5 Ultra (up to 512 GB, 1.2 TB/s, from €6,599 incl. VAT) — the M4 Max / M3 Ultra generation has no longer been sold since 2026-08-25[^1][^3].
+*   **x86 PC option (Docker sovereignty):** A workstation based on the AMD Ryzen AI Max PRO 400 APU ("Gorgon Halo") with 192 GB RAM — on pre-order at Framework for $6,799 with delivery in November 2026; the previous 128 GB generation (Ryzen AI Max+ 395) is listed at €3,889 incl. VAT but out of stock as of 2026-10-09[^4].
+*   **NVIDIA option (CUDA without friction):** A DGX Spark 128 GB (≈ $6,950 as of 2026-10-02, launched at $3,999) or its 64 GB variant at $4,999 from OEMs starting 2026-10-23 — same 273 GB/s bus as Gorgon Halo, native CUDA and FP4[^8].
 
-**Estimated budget (2026):** Between €3,700 and €7,500 (depending on chip and soldered memory quantity).
+> [!note] Beyond 128 GB
+> The Mac Studio M5 Ultra can be configured up to 512 GB of unified memory (1.2 TB/s, from €6,599 incl. VAT at 96 GB, 512 GB configuration shipping late October 2026) and chains into an RDMA cluster over Thunderbolt 5 (up to four machines). For an SMB, it is the option that pushes the "soldered memory" limit of the verdict below the furthest[^1][^3].
+
+**Estimated budget (Q4 2026):** between €3,900 and more than €8,000 incl. VAT depending on chip and soldered memory — and rising: TrendForce still records +10 to 15% per quarter on contract DRAM in Q4 2026 and Framework announces memory price increases across all capacities for six months[^4][^5]. The prices quoted here are those of October 2026: re-check at purchase time.
 **Physical advantages:** Very low power consumption (often under 150W at full load), compact form factor, no excessive fan noise.
 
 ---
@@ -88,7 +92,7 @@ To overcome this fixed capacity constraint while staying on affordable desktop h
 1. Start a temporary instance (another Mac, sovereign cloud VM) with Ollama
 2. Restore the vector database from the latest snapshot
 3. Restore the SQLite history
-4. Point clients (Open WebUI, LiteLLM) to the new IP
+4. Point clients (Open WebUI, LiteLLM) to the new IP — on up-to-date versions: LiteLLM ≥ 1.100.4 or the latest patch of its line (two LiteLLM CVEs are in CISA's KEV catalog), and Open WebUI tracked release by release, the project having published a series of High-severity security advisories in September 2026; never pin a version[^7]
 
 **Indicative RTO for Blueprint B: < 45 minutes** with an up-to-date daily backup.
 
@@ -98,3 +102,9 @@ To overcome this fixed capacity constraint while staying on affordable desktop h
 
 [^1]: Apple Newsroom, *Apple introduces new Mac Studio with M5 Max and M5 Ultra* (M5 Max memory bandwidth 614 GB/s and M5 Ultra 1.2 TB/s, capacities up to 128 GB and 512 GB, Thunderbolt 5 clustering), 2026-08-25. [https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/](https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/)
 [^2]: ServeTheHome & ignasivt (GitHub), *Strix Halo / Gorgon Halo 192GB Unified Memory Benchmarks* (Expected decoding throughput on dense 70B model), May 2026. [https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/](https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/) · [https://github.com/ignasivt/strix-halo-guide](https://github.com/ignasivt/strix-halo-guide)
+[^3]: Apple, *Mac Studio* — Apple Store France (M5 Max 36 GB from €2,999 incl. VAT, M5 Max 64 GB €3,659 incl. VAT, M5 Ultra 96 GB from €6,599 incl. VAT, 512 GB option "late October"), captured 2026-10-09. [https://www.apple.com/fr/shop/buy-mac/mac-studio](https://www.apple.com/fr/shop/buy-mac/mac-studio)
+[^4]: Framework, *The 192GB Framework Desktop is open for pre-order* (Ryzen AI Max+ PRO 495, 192 GB at $6,799, pre-orders from 2026-09-30, deliveries November 2026, warning about memory price increases), 30 September 2026. [https://frame.work/blog/192gb-framework-desktop-open-for-pre-order](https://frame.work/blog/192gb-framework-desktop-open-for-pre-order) · Framework, *Framework Desktop — AMD Ryzen AI Max+ 395* (128 GB €3,889 incl. VAT, out of stock), captured 2026-10-09. [https://frame.work/fr/fr/products/desktop-diy-amd-aimax300](https://frame.work/fr/fr/products/desktop-diy-amd-aimax300)
+[^5]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
+[^6]: Qwen, *Qwen3.8-27B* (dense, Apache 2.0, 262k context; Q4 via Ollama ≈ 18 GB), August 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B) · Ollama, *qwen3.8*. [https://ollama.com/library/qwen3.8](https://ollama.com/library/qwen3.8) · ignasivt, *Strix Halo Guide* (gpt-oss-120b ≈ 70 GB, 34–38 tok/s; Llama 3.1 70B Q4_K_M 4.7–4.9 tok/s on Ryzen AI Max+ 395 128 GB), re-read on 2026-10-10. [https://github.com/ignasivt/strix-halo-guide](https://github.com/ignasivt/strix-halo-guide)
+[^7]: BerriAI, *GHSA-7hp6-4w63-5g45* (`internal_user` → `proxy_admin` escalation → execution on the host, CVSS 9.9, fixed in 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45) · LiteLLM, *Version Support Policy*. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support) · Open WebUI, *Security Advisories* (series of High advisories published 27–28 September 2026), consulted 2026-10-10. [https://github.com/open-webui/open-webui/security/advisories](https://github.com/open-webui/open-webui/security/advisories)
+[^8]: ServeTheHome, *NVIDIA DGX Spark 64GB Launched and Big 128GB GB10 Price Increases* (DGX Spark 128 GB ≈ $6,950, launched at $3,999; 64 GB version at $4,999 via OEMs from 2026-10-23), 2026-10-03. [https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/](https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/) · NVIDIA, *DGX Spark* — product page (GB10, 128 GB LPDDR5x, ~273 GB/s), re-read on 2026-10-09. [https://www.nvidia.com/en-us/products/workstations/dgx-spark/](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)

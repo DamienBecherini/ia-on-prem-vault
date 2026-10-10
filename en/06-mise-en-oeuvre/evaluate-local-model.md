@@ -3,9 +3,9 @@ title: "🧪 Evaluate a local model"
 description: Practical protocol to compare local LLMs on quality, factuality, hallucinations, RAG, code editing, and performance.
 sidebar:
   order: 2
-last_modified: "2026-06-09"
-last_verified: "2026-06-09"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -34,10 +34,12 @@ Benchmarks remain useful for **roughly sorting** model families, or for checking
 | Math / reasoning | GSM8K, MATH | check formal logic | not representative of prose tasks |
 | Instruction following | IFEval, MT-Bench | conversational quality | results vary by language |
 | Factuality | TruthfulQA, FActScore, HaluEval | resistance to false beliefs | measures general factuality, not your domain |
-| Code | HumanEval, MBPP, SWE-bench | generation/editing ability | SWE-bench is most representative for agents |
+| Code | HumanEval, MBPP, SWE-bench Pro, Terminal-Bench | generation/editing ability | SWE-bench Verified has been saturated since 2026; prefer SWE-bench Pro V2[^7] |
 | Holistic evaluation | HELM | multi-metric profile | useful as complement, not replacement for domain tests |
 
 HELM reminds us that a model is not simply "good" or "bad": it has a profile — accuracy, robustness, calibration, bias, toxicity, efficiency[^1]. But even a favorable HELM profile guarantees nothing on your data.
+
+Composite indices change methodology without renaming the site: Artificial Analysis's Intelligence Index moved to v4.3 on 7 September 2026 (Terminal-Bench 2.1 → 4.0, τ³-Banking replaced by AutomationBench-AA, 45% private tasks); two scores taken before and after are not comparable. Always note the index version next to the score[^8].
 
 > [!note] What a leaderboard really tells you
 > It tells you how the model performs on questions chosen by its authors, often in English, with a normalized answer format. It says nothing about your internal documents, target language, citation requirements, output format, or VRAM budget.
@@ -110,7 +112,7 @@ RAGAS proposes evaluating faithfulness of the answer to context, answer relevanc
 
 ### Code and agents
 
-For a custodian agent or a tool like Aider, completion benchmarks are not enough. Test real editing:
+For a custodian agent or a command-line coding tool (Aider — no commits since May 2026 —, OpenHands or an ACP harness), completion benchmarks are not enough. Test real editing:
 
 - does the patch compile?
 - do tests pass?
@@ -119,7 +121,7 @@ For a custodian agent or a tool like Aider, completion benchmarks are not enough
 - does it break Markdown, YAML frontmatter, or wikilinks?
 - does it loop on the same fix?
 
-SWE-bench measures this capability from real GitHub issues: the model must produce a patch and the repo tests serve as arbiter[^5]. That is much closer to a maintenance agent than a simple function-generation benchmark.
+SWE-bench measures this capability from real GitHub issues: the model must produce a patch and the repo tests serve as arbiter[^5]. Use the **Pro V2** variant (Scale, September 2026): the Verified variant is saturated (97% at the top), not merely contaminated, and is no longer run by independent evaluators[^7]. That is much closer to a maintenance agent than a simple function-generation benchmark.
 
 ### Local performance
 
@@ -237,7 +239,7 @@ The best model is rarely the largest. The right model is the one that meets thre
 | :-- | :-- | :-- | :-- |
 | General chat | human preference, instruction following | MT-Bench, Chatbot Arena, IFEval | anonymized domain conversations |
 | Document RAG | faithfulness, context recall | RAGAS | sourced questions on your documents |
-| Code agent | correct patch, tests pass | SWE-bench | simulated PRs on your repo |
+| Code agent | correct patch, tests pass | SWE-bench Pro V2, Terminal-Bench | simulated PRs on your repo |
 | Legal / medical summary | factuality, critical omissions | FActScore, TruthfulQA | expert human review |
 | SMB deployment | TTFT, tokens/s, stability | engine benchmarks | concurrent load on target hardware |
 
@@ -293,3 +295,5 @@ flowchart LR
 [^4]: Es et al., *RAGAS: Automated Evaluation of Retrieval Augmented Generation*, EACL 2024. [https://aclanthology.org/2024.eacl-demo.16/](https://aclanthology.org/2024.eacl-demo.16/)
 [^5]: Jimenez et al., *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?*, ICLR 2024. [https://www.swebench.com/original.html](https://www.swebench.com/original.html)
 [^6]: Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, NeurIPS 2023. [https://arxiv.org/abs/2306.05685](https://arxiv.org/abs/2306.05685)
+[^7]: Vals AI, *SWE-bench Verified* ("performance on this benchmark has saturated, we no longer run this benchmark on new model releases", top 97.0%), updated 2026-09-01. [https://www.vals.ai/benchmarks/swebench](https://www.vals.ai/benchmarks/swebench); Scale AI, *SWE-Bench Pro V2* (642 tasks, 11 repositories), 2026-09-22. [https://labs.scale.com/leaderboard/swe_bench_pro_public_v2](https://labs.scale.com/leaderboard/swe_bench_pro_public_v2); Aider-AI, `aider` repository (last commit on 2026-05-22), accessed 2026-10-10. [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider)
+[^8]: Artificial Analysis, *Intelligence Index v4.3* (Terminal-Bench 4.0, AutomationBench-AA, 45% private tasks), 2026-09-07. [https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3](https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3)
