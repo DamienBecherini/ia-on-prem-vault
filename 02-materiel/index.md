@@ -4,8 +4,8 @@ description: "Point d'entrée du chapitre matériel : postes de travail, serveur
 sidebar:
   order: 0
 last_modified: "2026-10-10"
-last_verified: "2026-06-10"
-verified_by: "Sonnet 4.6"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---

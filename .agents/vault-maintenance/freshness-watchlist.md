@@ -10,7 +10,7 @@ A refresh run **diffs this table against the web** instead of re-reading every p
 
 ## Volatility classes
 
-Until pages carry a `freshness` frontmatter field, the class is inferred from the folder. The class sets the review cadence; a page is **due** when `last_verified` + cadence < today.
+A page can declare its class with a `freshness: volatile | evolving | stable` frontmatter field; otherwise the class is inferred from the folder. The class sets the review cadence; a page is **due** when `last_verified` + cadence < today. `npm run audit:freshness` computes this for every FR page (see `docs/quality-checks.md`).
 
 | Class | Cadence | Default folders / pages | Typical claims |
 | :-- | :-- | :-- | :-- |
