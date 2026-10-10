@@ -3,9 +3,9 @@ title: 🗜️ La Quantification (4-bit & 8-bit)
 description: Comprendre la physique mathématique de la compression de modèles (GGUF, AWQ, MXFP4) et l'arbitrage Perplexité vs VRAM.
 sidebar:
   order: 4
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -18,7 +18,7 @@ La **quantification** (*quantization*) réduit la précision numérique des **po
 En passant de la précision native **FP16/BF16** (2 octets par paramètre) à des formats compressés en **8-bit** (1 octet), **4-bit** (~0,5 octet effectif) ou plus bas, on divise l'empreinte [[00-lexique/vram|VRAM]] d'un modèle par 2 à 4, ce qui permet d'exécuter localement des modèles autrement hors de portée matérielle [^1].
 
 > [!note] Lien connexe
-> La quantification réduit les **poids fixes** ; le [[01-fondations/kv-cache-and-context|KV Cache]] reste un second poste VRAM dynamique, lui aussi quantifiable séparément.
+> La quantification réduit les **poids fixes** ; le [[01-fondations/kv-cache-and-context|KV Cache]] reste un second poste VRAM dynamique, lui aussi quantifiable séparément. Depuis 2026, cette quantification du cache peut être une propriété du modèle : DeepSeek-V4.1-Flash est livré avec un KV cache **FP4 natif** (E2M1 + une échelle E4M3 par 16 canaux, 890 octets par token, ≈ ¼ de V4-Flash), et vLLM 0.31 l'active par défaut sur Blackwell [^13].
 
 ---
 
@@ -109,7 +109,7 @@ La **perplexité (PPL)** sur WikiText-2 mesure la capacité prédictive du modè
 Une erreur classique : préférer un **petit modèle non quantifié** à un **grand modèle quantifié**. Sous contrainte mémoire fixe, **le nombre de paramètres domine souvent le niveau de bits** [^10][^11].
 
 > [!tip] Règle d'or
-> Un grand modèle quantifié (ex. **Llama 3.1 70B en Q4_K_M**, ~40 Go) reste généralement bien plus capable qu'un petit modèle en BF16 (ex. **Llama 3.1 8B**, ~16 Go), même si la compression est agressive [^11].
+> Un grand modèle quantifié (ex. **Llama 3.1 70B en Q4_K_M**, ~40 Go, ou **Muse Glimmer 30B en K-Quant 24 Go**, −1,0 % de qualité mesurée par Meta sur 15 benchmarks) reste généralement bien plus capable qu'un petit modèle en BF16 (ex. **Llama 3.1 8B**, ~16 Go), même si la compression est agressive [^11].
 
 ---
 
@@ -120,7 +120,7 @@ Pour un déploiement souverain d'agents locaux on-premise :
 1.  **Standard PME (CPU / Mac / hybride) :** **Q4_K_S ou Q4_K_M en GGUF** via llama.cpp — meilleur compromis taille/qualité/vitesse documenté pour Llama 3.1-8B ; monter en **Q5_0** si la marge qualité prime [^4].
 2.  **Inférence GPU partagée (vLLM / TensorRT-LLM) :** **FP8** sur les poids (Hopper/Blackwell/RTX récentes) ou **AWQ INT4** selon le moteur ; le FP8 réduit la VRAM ~×2 avec une dégradation faible si bien calibré, sans être strictement identique au BF16 [^1][^6].
 3.  **Éviter Q2 et Q3 agressif en production :** `Q3_K_S` et `Q2_K` dégradent nettement le raisonnement (GSM8K) et la perplexité ; réserver aux contraintes extrêmes de RAM [^4][^10].
-4.  **FP4 (NVFP4/MXFP4) :** pertinent sur **Blackwell** ou stacks TensorRT-LLM récentes ; valider sur vos benchmarks métier avant généralisation [^8][^9].
+4.  **FP4 (NVFP4/MXFP4) :** accéléré nativement sur **Blackwell** (B200, RTX 50, RTX PRO 6000, DGX Spark) ; depuis 2026 c'est aussi un **format de livraison** : Kimi K3 est entraîné en MXFP4 natif (QAT), gpt-oss et Nemotron 3.5 Lightning sont publiés en MXFP4 / NVFP4 officiels (≈ 22 Go pour Lightning), Mistral Small 4 a son dépôt NVFP4 [^12]. Quand l'éditeur fournit ce checkpoint, préférez-le à une requantification communautaire ; sur GPU pré-Blackwell, le moteur retombe sur un chemin W4A16 plus lent. Validez toujours sur vos benchmarks métier [^8][^9].
 
 ---
 
@@ -136,4 +136,6 @@ Pour un déploiement souverain d'agents locaux on-premise :
 [^8]: S. Egiazarian et al., *Bridging the Gap Between Promise and Performance for Microscaling FP4 Quantization* (MR-GPTQ, ICLR 2026), arXiv:2509.23202. [https://arxiv.org/abs/2509.23202](https://arxiv.org/abs/2509.23202)
 [^9]: NVIDIA Technical Blog, *Optimizing Inference for Long Context and Large Batch Sizes with NVFP4 KV Cache* (format NVFP4), décembre 2025. [https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/](https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/)
 [^10]: ggml-org, *llama.cpp perplexity scoreboard* (WikiText-2, Llama 3 8B, formats K-quant), 2026. [https://github.com/ggml-org/llama.cpp/blob/master/tools/perplexity/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/perplexity/README.md)
-[^11]: X. Zhang, *A Perplexity Benchmark of llama.cpp* (taille vs perplexité, modèles 7B–30B), septembre 2023. [https://www.xzh.me/2023/09/a-perplexity-benchmark-of-llamacpp.html](https://www.xzh.me/2023/09/a-perplexity-benchmark-of-llamacpp.html)
+[^11]: T. Dettmers, L. Zettlemoyer, *The case for 4-bit precision: k-bit Inference Scaling Laws* (arXiv:2212.09720 ; « 4-bit precision is almost universally optimal for total model bits and zero-shot accuracy », plus de 35 000 expériences), 2023. [https://arxiv.org/abs/2212.09720](https://arxiv.org/abs/2212.09720) ; Meta, *Muse Glimmer 30B* (paliers BF16 64 Go / K-Quant-Dynamic 32 Go, −0,2 % / K-Quant 24 Go, −1,0 % en moyenne sur 15 benchmarks), août 2026. [https://huggingface.co/meta-models/Muse-Glimmer-30B](https://huggingface.co/meta-models/Muse-Glimmer-30B)
+[^12]: Moonshot AI, *Kimi K3* (« MXFP4 weights / MXFP8 activations (quantization-aware training) »), juillet 2026. [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3) ; NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4* (≈ 21,6 Go de safetensors, « the NVFP4 release is the recommended path » pour le déploiement), août 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4) ; OpenAI, *gpt-oss-120b* (« post-trained with MXFP4 quantization of the MoE weights », Apache 2.0), août 2025. [https://huggingface.co/openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b) ; Mistral AI, dépôts Hugging Face (Mistral-Small-4-119B-2603 et sa variante NVFP4), relevé le 2026-10-09. [https://huggingface.co/mistralai](https://huggingface.co/mistralai)
+[^13]: DeepSeek AI, *DeepSeek-V4.1-Flash* (« FP4 main KV caching », E2M1 + une échelle E4M3 par 16 canaux, 890 octets par token, MIT), 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) ; vLLM Project, *Release v0.31.0* (FlashMLA + KV cache NVFP4 compressé par défaut sur SM100 pour DeepSeek-V4.1-Flash), 5 octobre 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)

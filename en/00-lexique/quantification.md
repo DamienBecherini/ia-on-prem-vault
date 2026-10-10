@@ -6,9 +6,9 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -30,9 +30,11 @@ An LLM stores its parameters as floating-point values. Native training precision
 
 Three main families of methods:
 
-- **GGUF / llama.cpp**: portable format for Ollama and workstations. Includes Q2 through Q8 variants, with "K" (K-means) variants that preserve quality better.
+- **GGUF / llama.cpp**: portable format for Ollama and workstations. Includes Q2 through Q8 variants; the "K" variants (K-quants) split weights into 256-value super-blocks with several scales and keep sensitive tensors at higher precision, which preserves quality better at equal size[^1].
 - **AWQ / GPTQ**: activation-aware quantization, optimized for vLLM on production GPUs. Better quality preservation than GGUF Q4 at equal footprint.
-- **FP8 / FP4**: low-resolution floating precisions natively supported on NVIDIA Hopper (H100) and Blackwell (H200, B200) GPUs — mainly relevant in datacenter.
+- **FP8 / FP4**: low-resolution floating precisions. FP8 is native on Hopper (H100, H200) and Blackwell; FP4 (NVFP4, MXFP4) is native on Blackwell only (B200, RTX 50, RTX PRO 6000, DGX Spark). Since 2026, vendors ship FP4 weights directly (gpt-oss and Kimi K3 in MXFP4; Nemotron 3.5 Lightning in NVFP4, ≈ 22 GB), including for workstation GPUs[^2].
+
+Fourth trend in 2026: **quantization-aware training** (QAT). Kimi K3 is trained in MXFP4 from the SFT phase onward, and NVIDIA publishes Nemotron 3.5 Lightning in NVFP4 as the "recommended path for deployment", with BF16 weights reserved for post-training. The vendor's 4-bit checkpoint then becomes the canonical version, and re-quantizing it yourself brings nothing[^2].
 
 ## 💡 Why it matters for on-prem AI
 
@@ -53,3 +55,6 @@ Quantization is the number one lever for fitting a large model on your hardware.
 - [[00-lexique/quantification-q4|Q4_K_M Quantization]] — the most common practical format, uses and limits
 - [[00-lexique/vram|VRAM]]
 - [[00-lexique/gguf|GGUF]]
+
+[^1]: J. Wang et al., *Which Quantization Should I Use? A Unified Evaluation of llama.cpp Quantization on Llama-3.1-8B-Instruct* (arXiv:2601.14277; description of K-quants by super-blocks), January 2026. [https://arxiv.org/abs/2601.14277](https://arxiv.org/abs/2601.14277)
+[^2]: OpenAI, *gpt-oss-120b* ("post-trained with MXFP4 quantization of the MoE weights", 20b in 16 GB, Apache 2.0), August 2025. [https://huggingface.co/openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b); Moonshot AI, *Kimi K3* ("MXFP4 weights / MXFP8 activations (quantization-aware training)" from SFT onward), July 2026. [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3); NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4* (≈ 21.6 GB of safetensors; "the NVFP4 release is the recommended path" for deployment), August 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4)

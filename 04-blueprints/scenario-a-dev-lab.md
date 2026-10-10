@@ -3,9 +3,9 @@ title: "🛠️ Scénario A : Le Labo Dev (PC GPU ou mémoire unifiée)"
 description: Le blueprint pour s'initier à l'IA locale à moindre coût. PC RTX avec CPU offloading, ou laptop/station à mémoire unifiée pour un meilleur confort solo.
 sidebar:
   order: 1
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -26,18 +26,18 @@ Ce premier blueprint couvre deux réalités du labo IA solo :
 *   **Machine :** Une tour PC standard.
 *   **Processeur (CPU) :** Un processeur moderne (AMD Ryzen 9 ou Intel Core i9).
 *   **Mémoire Système ([[00-lexique/ram|RAM]]) :** 64 Go de RAM DDR5 (très important, la DDR4 étoufferait totalement les performances).
-*   **Carte Graphique (GPU) :** Une seule carte NVIDIA grand public avec 24 Go de [[00-lexique/vram|VRAM]] (ex: une RTX 3090 d'occasion, une RTX 4090 ou la RTX 5090).
+*   **Carte Graphique (GPU) :** Une seule carte NVIDIA grand public avec 24 Go de [[00-lexique/vram|VRAM]] ou plus (ex : une RTX 3090 ou 4090 d'occasion ; la RTX 5090 32 Go, introuvable au prix public et vendue 5 000 $ et plus depuis septembre 2026, sort de l'enveloppe d'un labo — l'offre GeForce 24 Go+ neuve est rare au T4 2026)[^3].
 
-**Budget estimé (2026) :** Entre 1 500 € et 3 500 € (selon le choix du GPU).
+**Budget estimé (T4 2026) :** entre 1 500 € et 2 500 € avec une RTX 3090/4090 d'occasion ; au-delà de 6 000 € avec une RTX 5090 neuve au prix constaté — et des barrettes DDR5 dont le prix monte chaque trimestre (TrendForce : +10 à 15 % par trimestre sur la DRAM au T4 2026)[^3][^4]. Les 64 Go de DDR5 et le GPU 24 Go d'occasion sont les deux postes qui bougent : achetez-les tôt.
 
 ### Option A2 — Laptop / station à mémoire unifiée 64-128 Go
 
-*   **Machine :** MacBook Pro Max, Mac Studio d'entrée de gamme, ou mini-station APU à grande mémoire unifiée.
+*   **Machine :** MacBook Pro Max, Mac Studio d'entrée de gamme, ou mini-station APU à grande mémoire unifiée. Options nommées au T4 2026 : Mac mini M5 Pro 64 Go (307 Go/s, Thunderbolt 5) en entrée de gamme, Mac Studio M5 Max 64 Go (460 à 614 Go/s selon le GPU, 3 659 € TTC), Framework Desktop 64 Go (2 209 € TTC, souvent en rupture) ou DGX Spark 64 Go (4 999 $ chez les OEM à partir du 2026-10-23, CUDA natif)[^8][^9][^10].
 *   **Mémoire :** 64 à 128 Go de [[00-lexique/unified-memory|mémoire unifiée]].
 *   **Moteur :** MLX / llama.cpp / Ollama selon la plateforme.
 *   **Cas idéal :** développeur solo qui veut tester des modèles 30B-70B quantifiés avec un confort interactif supérieur au CPU offloading DDR5.
 
-**Budget estimé (2026) :** souvent entre 3 000 € et 6 000 € selon la configuration. Plus cher qu'un PC gamer d'occasion, mais beaucoup plus cohérent si votre objectif est de manipuler régulièrement de gros modèles en local.
+**Budget estimé (2026) :** souvent entre 3 000 € et 6 000 € selon la configuration. Plus cher qu'un PC gamer d'occasion, mais beaucoup plus cohérent si votre objectif est de manipuler régulièrement de gros modèles en local. La mémoire soudée suit la hausse de la DRAM : les prix relevés en octobre 2026 sont à revérifier à l'achat[^4].
 
 ---
 
@@ -46,7 +46,7 @@ Ce premier blueprint couvre deux réalités du labo IA solo :
 *   **Moteur d'inférence :** **Ollama** ou **llama.cpp** compilé avec le support CUDA.
 *   **Format du modèle :** [[00-lexique/gguf|GGUF]] en [[00-lexique/quantification-q4|Quantification Q4_K_M]].
 
-Sur cette machine, un modèle de la classe **8B à 14B** (ex: *Llama 3.1 8B* ou *Qwen 2.5 14B*) tiendra entièrement dans les 24 Go de VRAM de la carte graphique. Vous obtiendrez des performances élevées — typiquement **50 à 100 [[00-lexique/tokens-per-second|tokens/s]]** selon le modèle, la quantification et le moteur utilisé.
+Sur cette machine, un modèle de la classe **8B à 30B** (ex : *Qwen3.8-27B* ≈ 18 Go en Q4, *Granite 4.2 8B*, ou un MoE léger comme *Nemotron 3.5 Lightning 30B-A3B* ≈ 22 Go en NVFP4) tiendra entièrement dans les 24 Go de VRAM de la carte graphique[^5][^6]. Qwen3.8-27B (Apache 2.0, 262k de contexte, vision et outils) est le modèle de référence 24 Go depuis août 2026 ; Meta publie *Muse Glimmer 30B* (Apache 2.0) avec des paliers VRAM explicites — 64 Go en pleine précision, 32 Go et 24 Go en K-Quant[^7]. Vous obtiendrez des performances élevées — typiquement **50 à 100 [[00-lexique/tokens-per-second|tokens/s]]** selon le modèle, la quantification et le moteur utilisé.
 
 Mais que se passe-t-il si vous voulez tester un modèle intelligent lourd, classe GPT-4, comme **Llama 3.1 70B** ? 
 
@@ -64,7 +64,7 @@ Plutôt que d'abandonner en affichant une erreur *Out Of Memory (OOM)*, le moteu
 Lors de la génération de la réponse ([[00-lexique/decoding|Decoding]]), les données doivent faire des allers-retours constants entre la RAM, le processeur et la carte graphique via le bus PCIe. 
 
 Comme expliqué dans le chapitre sur [[01-fondations/unified-memory-vs-ram-vs-vram|la VRAM vs RAM]], la RAM classique est physiquement bridée à environ 80-100 Go/s. Le résultat est immédiat : la vitesse de génération s'effondre.
-Sur une RTX 4090 couplée à 64 Go de DDR5, un modèle 70B en CPU Offloading génèrera généralement **entre 2 et 5 tokens par seconde**[^1][^2] — ordre de grandeur cohérent avec l'analyse de [[01-fondations/memory-bandwidth|la bande passante mémoire]] : DDR5 ≈ 100 Go/s pour un modèle de ~40 Go donne une borne théorique de ~2,5 t/s. C'est lisible (légèrement inférieur à la vitesse de lecture humaine), mais inadapté pour servir une application réactive ou plusieurs utilisateurs simultanés.
+Sur une RTX 4090 couplée à 64 Go de DDR5, un modèle 70B Q4 en CPU Offloading génèrera **entre 4 et 12 tokens par seconde** selon la part de couches déchargées et la RAM : borne théorique de ~4–5 t/s si la moitié des poids transite par la DDR5 (~100 Go/s, voir [[01-fondations/memory-bandwidth|la bande passante mémoire]] — la borne de ~2,5 t/s suppose que tout le modèle passe par la RAM), 8–12 t/s rapportés par des guides communautaires non vérifiés[^1][^2]. C'est lisible (légèrement inférieur à la vitesse de lecture humaine), mais inadapté pour servir une application réactive ou plusieurs utilisateurs simultanés.
 
 ### Pourquoi l'option mémoire unifiée change l'expérience
 
@@ -91,5 +91,13 @@ Pour un usage PME quotidien avec des modèles 70B sans subir cette lourde pénal
 
 ## 📚 Sources et Références
 
-[^1]: CraftRigs, *llama.cpp 70B on 24 GB VRAM — n-gpu-layers hybrid inference* (RTX 4090 + 64 GB DDR5, ~8–12 tok/s selon configuration), 2026. [https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/](https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/)
+[^1]: CraftRigs (guide communautaire, non vérifié), *llama.cpp 70B on 24 GB VRAM — n-gpu-layers hybrid inference* (RTX 3090/4090 + 64 Go DDR5, 8–13 tok/s revendiqués à 40–45 couches GPU), 2026-04-17. [https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/](https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/)
 [^2]: Ollama Documentation, *FAQ — GPU layer offloading and partial CPU inference* (Pénalité de performance lors de l'offloading RAM), 2026. [https://docs.ollama.com/faq](https://docs.ollama.com/faq)
+[^3]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500* (MSRP 1 999 $), 14 septembre 2026. [https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu](https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu)
+[^4]: TrendForce, communiqué du 30 septembre 2026 (prix contractuels DRAM en hausse de 10–15 % au T4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
+[^5]: Qwen, *Qwen3.8-27B* (dense, Apache 2.0, contexte 262k, vision et outils ; BF16 ≈ 56 Go, Q4 via Ollama ≈ 18 Go), août 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B) · Ollama, *qwen3.8*. [https://ollama.com/library/qwen3.8](https://ollama.com/library/qwen3.8)
+[^6]: NVIDIA, *Nemotron-3.5-Lightning-30B-A3B* (BF16 / NVFP4 ≈ 22 Go / GGUF, licence OpenMDW 1.1), août 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16)
+[^7]: Meta, *Muse Glimmer 30B* (Apache 2.0, 29,6B dont encodeur vision ; paliers 64 Go pleine précision, 32 Go K-Quant-Dynamic, 24 Go K-Quant-17GB ; 74,9 tok/s sans spéculation et 233,4 tok/s avec DFlash sur RTX 5090, chiffres constructeur), août 2026, relu le 2026-10-10. [https://huggingface.co/meta-models/Muse-Glimmer-30B](https://huggingface.co/meta-models/Muse-Glimmer-30B)
+[^8]: Apple, *Mac Studio* — Apple Store France (Mac Studio M5 Max 64 Go 3 659 € TTC), relevé le 2026-10-09. [https://www.apple.com/fr/shop/buy-mac/mac-studio](https://www.apple.com/fr/shop/buy-mac/mac-studio) · Apple Newsroom, *Apple unveils a more powerful Mac mini featuring the all-new M6 and M5 Pro* (Mac mini M5 Pro : jusqu'à 64 Go, 307 Go/s, Thunderbolt 5), août 2026. [https://www.apple.com/newsroom/2026/08/apple-unveils-a-more-powerful-mac-mini-featuring-the-all-new-m6-and-m5-pro/](https://www.apple.com/newsroom/2026/08/apple-unveils-a-more-powerful-mac-mini-featuring-the-all-new-m6-and-m5-pro/)
+[^9]: Framework, *Framework Desktop — AMD Ryzen AI Max+ 395* (64 Go 2 209 € TTC, 128 Go 3 889 € TTC, en rupture), relevé le 2026-10-09. [https://frame.work/fr/fr/products/desktop-diy-amd-aimax300](https://frame.work/fr/fr/products/desktop-diy-amd-aimax300)
+[^10]: ServeTheHome, *NVIDIA DGX Spark 64GB Launched and Big 128GB GB10 Price Increases* (DGX Spark 128 Go ≈ 6 950 $, lancé à 3 999 $ ; version 64 Go à 4 999 $ via OEM dès le 2026-10-23), 2026-10-03. [https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/](https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/) · NVIDIA, *DGX Spark* — page produit, relue le 2026-10-09. [https://www.nvidia.com/en-us/products/workstations/dgx-spark/](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)

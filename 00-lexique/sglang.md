@@ -8,9 +8,9 @@ tags:
   - stack
 sidebar:
   order: 62
-last_modified: "2026-06-09"
-last_verified: "2026-06-09"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 ---
 
 ## 📝 Définition courte
@@ -36,9 +36,9 @@ SGLang peut contraindre le modèle à produire du JSON conforme à un schéma do
 | Workloads agentiques avec nombreux appels d'outils et préfixes partagés | **SGLang** |
 | Applications exigeant des sorties JSON fiables (APIs, intégrations backend) | **SGLang** |
 | Benchmarks de débit pur sous forte concurrence | **vLLM** |
-| Compatibilité matérielle la plus large (AMD ROCm, écosystème mature) | **vLLM** |
+| Compatibilité matérielle (NVIDIA CUDA 12 encore pris en charge, ROCm, CPU) | **vLLM** (SGLang exige CUDA 13 depuis la 0.5.20, septembre 2026) |
 
-vLLM reste la référence pour le débit maximal et la compatibilité hardware la plus étendue. SGLang excelle là où la latence de première réponse et la fiabilité des sorties structurées priment sur le throughput brut.
+vLLM reste la référence pour le débit maximal et conserve des variantes CUDA 12.9 ; SGLang couvre désormais officiellement NVIDIA (B200 → A100, RTX 30/40/50), AMD Instinct (MI300X → MI355X), Google TPU, Intel et Apple Silicon (Metal/MLX), avec une maturité variable selon la plateforme[^3]. SGLang excelle là où la latence de première réponse et la fiabilité des sorties structurées priment sur le throughput brut.
 
 ## ⚠️ Pièges fréquents
 
@@ -62,3 +62,4 @@ vLLM reste la référence pour le débit maximal et la compatibilité hardware l
 
 [^1]: SGLang — dépôt officiel GitHub. [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang)
 [^2]: LMSys, *Fast and Expressive LLM Inference with RadixAttention*, janvier 2024. [https://lmsys.org/blog/2024-01-17-sglang/](https://lmsys.org/blog/2024-01-17-sglang/)
+[^3]: SGLang Project, README (« SGLang supports a wide range of GPUs, TPUs, NPUs, CPUs, and Apple Silicon platforms » : NVIDIA B200 → A100 et RTX 30/40/50, AMD Instinct MI300X → MI355X, TPU v6e/v7, Intel Arc et Xeon, Apple Silicon via Metal/MLX, Ascend, Moore Threads), consulté le 2026-10-10 · *Release v0.5.20* (« The CUDA 12 lane is retired »), 18 septembre 2026. [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang) · [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20)

@@ -3,8 +3,8 @@ title: 💾 Le KV Cache & La Gestion du Contexte
 description: Analyse mathématique de la consommation mémoire dynamique et techniques d'optimisation (GQA, Quantification, PagedAttention).
 sidebar:
   order: 3
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -67,6 +67,8 @@ Où :
 Dans l'ancienne architecture MHA (Multi-Head Attention), chaque tête de Query avait sa propre tête Key-Value ($H_{kv} = H_{query}$).
 Avec **Grouped-Query Attention (GQA)**, plusieurs têtes de Query partagent la même tête Key/Value (sur Llama 3.1 70B : $64$ têtes Query pour $8$ têtes KV, soit un ratio de 8:1) [^5]. Cela **divise par 8 la taille du KV Cache** en mémoire, avec une perte de qualité généralement faible — proche du MHA sur les benchmarks courants, bien qu'elle ne soit pas nulle [^5].
 
+Les architectures hybrides de 2026 (Mamba-2 + MoE + attention dans Nemotron 3.5 Lightning, attention sparse + linéaire dans GLM-5.3-Flash) ne stockent un KV cache que pour une fraction des couches : la formule ci-dessus surestime alors fortement leur empreinte [^16].
+
 ---
 
 ## 📊 Cas Pratiques : Sizing de la VRAM (Llama 3.1 70B)
@@ -89,6 +91,8 @@ Calculons la VRAM nécessaire pour **une seule requête ($B=1$)** à différente
 
 > [!note] Extrapolation 300K
 > La ligne **300K** est une **extrapolation mathématique** (RoPE scaling ou contexte étendu par le moteur), pas la fenêtre native du modèle. Les chiffres BF16 à 128K recoupent les estimations publiées par Meta et Hugging Face (~39–42 Go) [^6].
+
+Les modèles de 2026 rendent la ligne 300K banale : Qwen3.8-27B et Muse Glimmer 30B ont 262k / 131k tokens natifs, Nemotron 3.5 Lightning et DeepSeek V4.1 jusqu'à 1M. DeepSeek-V4.1-Flash livre d'ailleurs son KV cache **en FP4 natif** (E2M1 + une échelle E4M3 par 16 canaux, 890 octets par token, ≈ ¼ de V4-Flash) : la compression du cache devient une propriété du modèle, pas seulement un réglage du moteur [^15].
 
 ### Le Piège de l'OOM (Out Of Memory) en contexte long
 
@@ -137,11 +141,13 @@ Pour tout déploiement d'assistant on-premise, la gestion du KV cache dicte votr
 [^4]: Meta, *Llama 3.1 Model Card* (architecture, GQA, contexte 128K), juillet 2024. [https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md](https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md)
 [^5]: Joshua Ainslie et al., *GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints* (arXiv:2305.13245), 2023. [https://arxiv.org/html/2305.13245](https://arxiv.org/html/2305.13245)
 [^6]: Hugging Face Blog, *Llama 3.1* (tableau empreinte KV cache FP16 par taille de modèle), juillet 2024. [https://github.com/huggingface/blog/blob/main/llama31.md](https://github.com/huggingface/blog/blob/main/llama31.md)
-[^7]: Woosuk Kwon et al., *Efficient Memory Management for Large Language Model Serving with PagedAttention* (SOSP 2023). [https://dl.acm.org/doi/10.1145/3600006.3613165](https://dl.acm.org/doi/10.1145/3600006.3613165)
-[^8]: vLLM Documentation, *Quantized KV Cache* (FP8, calibration), 2026. [https://docs.vllm.ai/en/latest/features/quantization/quantized_kvcache.html](https://docs.vllm.ai/en/latest/features/quantization/quantized_kvcache.html)
+[^7]: W. Kwon et al., *Efficient Memory Management for Large Language Model Serving with PagedAttention* (SOSP 2023, arXiv:2309.06180). [https://arxiv.org/abs/2309.06180](https://arxiv.org/abs/2309.06180)
+[^8]: vLLM Documentation, *Quantized KV Cache* (FP8, calibration), 2026. [https://docs.vllm.ai/en/latest/features/quantization/quantized_kvcache/](https://docs.vllm.ai/en/latest/features/quantization/quantized_kvcache/)
 [^9]: llama.cpp, *Server README* (`--cache-type-k`, `--cache-type-v`), 2026. [https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)
 [^10]: Together AI, *Flash-Decoding for long-context inference*, octobre 2023. [https://www.together.ai/blog/flash-decoding-for-long-context-inference](https://www.together.ai/blog/flash-decoding-for-long-context-inference)
 [^11]: Dao-AILab, *FA3 kvcache + split kv + gqa parallelization* (PR #1236), septembre 2024. [https://github.com/Dao-AILab/flash-attention/pull/1236](https://github.com/Dao-AILab/flash-attention/pull/1236)
 [^12]: NVIDIA Technical Blog, *Optimizing Inference for Long Context and Large Batch Sizes with NVFP4 KV Cache*, décembre 2025. [https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/](https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/)
 [^13]: vLLM Blog, *The State of FP8 KV-Cache and Attention Quantization in vLLM*, avril 2026. [https://vllm.ai/blog/2026-04-22-fp8-kvcache](https://vllm.ai/blog/2026-04-22-fp8-kvcache)
 [^14]: OpenHuman, *Memory* (GitBook — la mémoire est désormais servie par CortexDB, hébergé ou auto-hébergé ; l'ancien Memory Tree local SQLite + Markdown a été retiré), relu le 2026-10-09. [https://tinyhumans.gitbook.io/openhuman/features/memory](https://tinyhumans.gitbook.io/openhuman/features/memory)
+[^15]: DeepSeek AI, *DeepSeek-V4.1-Flash* (« FP4 main KV caching », E2M1 + une échelle E4M3 par 16 canaux, 890 octets par token ≈ ¼ de V4-Flash, MIT), 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) ; Qwen, *Qwen3.8-27B* (contexte 262k), août 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B) ; Meta, *Muse Glimmer 30B* (131 072+ tokens), août 2026. [https://huggingface.co/meta-models/Muse-Glimmer-30B](https://huggingface.co/meta-models/Muse-Glimmer-30B)
+[^16]: NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16* (« Mamba-2 + MoE + Attention hybrid », jusqu'à 1M tokens), août 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16) ; Z.ai, *GLM-5.3-Flash* (« hybrid architecture combining sparse and linear attention »), 2026. [https://huggingface.co/zai-org/GLM-5.3-Flash](https://huggingface.co/zai-org/GLM-5.3-Flash)

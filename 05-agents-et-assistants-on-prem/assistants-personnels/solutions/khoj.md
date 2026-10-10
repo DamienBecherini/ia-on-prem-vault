@@ -3,9 +3,9 @@ title: "Khoj"
 description: Assistant personnel self-hostable orienté second cerveau, documents, web, agents et automatisations, avec support de modèles locaux via Ollama.
 sidebar:
   order: 5
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -24,7 +24,7 @@ Dans ce vault, il sert de pont entre la Piste A (assistant qui vous connaît) et
 
 ## ✅ Points forts
 
-- **Self-hostable** : installation locale ou serveur privé possible[^1].
+- **Self-hostable** : installation locale ou serveur privé possible[^1] — mais ne l'exposez pas au-delà d'un réseau de confiance : un avis de juin 2026 (traversée de chemin non authentifiée sur `/home/`) n'indique aucune version corrigée au 2026-10-10[^5].
 - **Documents variés** : PDF, Markdown, org-mode, Word, Notion, images selon configuration[^1].
 - **Local LLM possible** : intégration Ollama via serveur OpenAI-compatible local[^2].
 - **Agents et automatisations** : custom agents, schedules, deep research[^1].
@@ -59,7 +59,9 @@ Khoj est intéressant si le vault doit devenir une vraie mémoire personnelle :
 
 ## 📊 Maturité du projet
 
-Projet open-source ancien pour ce secteur (créé en 2021) et activement maintenu. Sa richesse fonctionnelle impose cependant de tester précisément le mode self-host avant recommandation dans un contexte réglementé.
+Projet open-source ancien pour ce secteur (créé en 2021, AGPL-3.0), mais en **stagnation depuis le printemps 2026** : dernière version 2.0.0-beta.28 en mars 2026, une douzaine de commits sur l'été (dernier le 2026-08-02), et l'équipe concentre son effort sur Pipali, son nouveau « co-worker IA » local[^4]. Rien n'indique un abandon, mais une recommandation en contexte réglementé suppose de vérifier qu'un correctif de sécurité serait publié ; testez précisément le mode self-host avant de l'engager.
+
+L'équipe Khoj publie depuis 2026 **Pipali** (Apache-2.0, 0.10.0 le 2026-09-14), un agent de bureau « co-worker » qui lit et écrit des fichiers, navigue sur le web et s'intègre à Jira, Linear ou Slack via MCP. Sa fiche GitHub met en avant des modèles cloud (Claude, GPT, Kimi, DeepSeek, Gemini…) servis par la plateforme Pipali ; le support de modèles locaux n'a pas été vérifié dans ce vault. C'est un candidat Piste B plus que Piste A, et il explique la baisse d'activité de Khoj[^4].
 
 ## 🔗 Voir aussi
 
@@ -73,3 +75,5 @@ Projet open-source ancien pour ce secteur (créé en 2021) et activement mainten
 [^1]: Khoj GitHub — second brain, self-hostable, documents, agents et automatisations. [https://github.com/khoj-ai/khoj](https://github.com/khoj-ai/khoj)
 [^2]: Khoj docs — intégration Ollama et `OPENAI_BASE_URL`. [https://docs.khoj.dev/advanced/ollama](https://docs.khoj.dev/advanced/ollama)
 [^3]: Khoj Docker Compose — `KHOJ_TELEMETRY_DISABLE=True` et config Ollama. [https://github.com/khoj-ai/khoj/blob/master/docker-compose.yml](https://github.com/khoj-ai/khoj/blob/master/docker-compose.yml)
+[^4]: khoj-ai — *khoj* Releases (2.0.0-beta.28 du 2026-03-26), commits (dernier le 2026-08-02) et README (mention de Pipali) ; *pipali* (Apache-2.0, release 0.10.0 du 2026-09-14), consultés le 2026-10-10. [https://github.com/khoj-ai/khoj/releases](https://github.com/khoj-ai/khoj/releases) · [https://github.com/khoj-ai/khoj/commits/master](https://github.com/khoj-ai/khoj/commits/master) · [https://github.com/khoj-ai/pipali](https://github.com/khoj-ai/pipali)
+[^5]: khoj-ai, *GHSA-62mm-xwmv-crhg* — « Unauthenticated path traversal in /home/ endpoint allows file read from server filesystem » (versions affectées « <= latest », aucune version corrigée indiquée), 2026-06-24. [https://github.com/khoj-ai/khoj/security/advisories/GHSA-62mm-xwmv-crhg](https://github.com/khoj-ai/khoj/security/advisories/GHSA-62mm-xwmv-crhg)

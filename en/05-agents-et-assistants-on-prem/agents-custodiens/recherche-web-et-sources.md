@@ -3,9 +3,9 @@ title: "🔍 Web Search & Sources"
 description: How to give a custodian agent controlled web access without depending on a cloud search service.
 sidebar:
   order: 5
-last_modified: "2026-06-05"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -14,7 +14,7 @@ A custodian agent that maintains a technical vault must verify source freshness.
 
 ## Principle
 
-The agent must not "browse freely." It must use an explicit, logged, controlled search tool.
+The agent must not "browse freely." It must use an explicit, logged, controlled search tool — and treat every result (title, snippet, URL, metadata) as untrusted data: forged-data attacks, with no explicit instruction, were demonstrated in 2026 against coding and browsing agents[^1].
 
 For a sovereign stack, the recommended pair is:
 
@@ -67,3 +67,7 @@ SearXNG is a free meta-search engine that aggregates results from many services 
 
 - [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng|SearXNG]]
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Sovereignty & Privacy]]
+
+## 📚 Sources and References
+
+[^1]: Choi, Kim, Kang, Jeong, Xing, Lee, *Agent Data Injection Attacks are Realistic Threats to AI Agents* (arXiv 2607.05120: malicious data disguised as trusted data — identifiers, origin, tool-call formats; demonstrated on web agents and coding agents), 2026-07-06. [https://arxiv.org/abs/2607.05120](https://arxiv.org/abs/2607.05120)

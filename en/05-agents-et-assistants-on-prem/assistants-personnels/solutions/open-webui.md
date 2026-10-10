@@ -3,9 +3,9 @@ title: "Open WebUI"
 description: Self-hosted web interface for Ollama and OpenAI-compatible backends, suited to local multi-user deployments.
 sidebar:
   order: 2
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -15,7 +15,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 Open WebUI is a self-hosted web platform for exposing local models via Ollama, vLLM, or any OpenAI-compatible API. The project presents itself as extensible, feature-rich, and capable of running entirely offline[^1][^2].
 
 > [!tip] The right use case
-> Open WebUI is often the best first choice for an SME or lab that wants to turn an Ollama server into a shared interface: user accounts, history, files, RAG, multiple models, and centralized administration.
+> Open WebUI is often the best first choice for an SME or lab that wants to turn an Ollama server into a shared interface: user accounts, history, files, RAG, multiple models, and centralized administration. Mind the legal framework: since v0.6.6 (April 2025), the "Open WebUI License" (BSD-3 with a branding clause, not recognized by the OSI) forbids removing or hiding the Open WebUI branding beyond 50 users over 30 days, unless you hold an enterprise license[^5].
 
 ## 💡 Why this project interests us
 
@@ -30,6 +30,7 @@ In this vault, it is the reference solution for the **simple multi-user** scenar
 - **Mature user experience**: history, files, RAG, plugins, multiple models.
 - **Credible local deployment**: can be linked to Ollama via `OLLAMA_BASE_URL`[^3].
 - **Controllable observability**: OpenTelemetry available for your own traces/logs in production[^3].
+- **Recent team features**: versions 0.10 (June 2026) and 0.11 (July 2026) add shared folders with per-group permissions, external knowledge bases, automatic context compaction, **sub-agents**, and LDAP group synchronization: features that bring Open WebUI closer to an enterprise portal, and just as many surfaces to administer[^6].
 
 ## ⚠️ Limitations and risks
 
@@ -59,7 +60,7 @@ Open WebUI is a good companion to the blueprints:
 
 ## 📊 Project maturity
 
-Very widely used and actively maintained project, with a large GitHub community and plugin ecosystem. Product maturity is good, but security hardening remains the operator's responsibility.
+Very widely used and actively maintained project (about 154,000 GitHub stars, v0.11.4 as of 2026-09-21), with a large GitHub community and plugin ecosystem. Product maturity is good, but the attack surface follows: 88 security advisories published between June and September 2026, including about thirty of high severity (account takeover via OAuth, SSRF toward internal services, cross-user tool execution) and three exploitable without an account. Fixes ship only in current releases: an SME must follow the release train without ever staying below 0.11.1 (SSRF CVE-2026-87996), must not pin a version, and must apply the official hardening guide[^4].
 
 ## 🔗 See also
 
@@ -74,3 +75,6 @@ Very widely used and actively maintained project, with a large GitHub community 
 [^1]: Open WebUI GitHub — self-hosted offline platform, Ollama support, and Docker/Kubernetes images. [https://github.com/open-webui/open-webui](https://github.com/open-webui/open-webui)
 [^2]: Open WebUI Docs — home, providers, and features. [https://docs.openwebui.com/](https://docs.openwebui.com/)
 [^3]: Open WebUI Configuration — `OLLAMA_BASE_URL`, telemetry, secrets, OpenTelemetry. [https://docs.openwebui.com/getting-started/advanced-topics/](https://docs.openwebui.com/getting-started/advanced-topics/)
+[^4]: Open WebUI — *Security advisories* (88 advisories published between 2026-06-11 and 2026-09-28: 30 high, 53 medium, 5 low; GitHub API count of 2026-10-10) and *Hardening* guide. [https://github.com/open-webui/open-webui/security/advisories](https://github.com/open-webui/open-webui/security/advisories) · [https://docs.openwebui.com/getting-started/advanced-topics/hardening](https://docs.openwebui.com/getting-started/advanced-topics/hardening)
+[^5]: Open WebUI — *License* (BSD-3 up to v0.6.5; branding clause since v0.6.6 of 2025-04-19, "50 users or fewer over 30 days" exemption, not OSI-approved), accessed 2026-10-10. [https://docs.openwebui.com/license/](https://docs.openwebui.com/license/)
+[^6]: Open WebUI — *Releases* v0.10.0 (2026-06-29: shared folders, external knowledge bases, context compaction) and v0.11.0 (2026-07-27: sub-agents, LDAP group synchronization). [https://github.com/open-webui/open-webui/releases/tag/v0.10.0](https://github.com/open-webui/open-webui/releases/tag/v0.10.0) · [https://github.com/open-webui/open-webui/releases/tag/v0.11.0](https://github.com/open-webui/open-webui/releases/tag/v0.11.0)

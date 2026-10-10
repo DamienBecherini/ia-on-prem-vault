@@ -1,11 +1,11 @@
 ---
 title: "🏗️ Recommandation d'architecture cible"
-description: Trajectoire réaliste pour passer d'un MVP Cursor CLI à une stack custodienne souveraine basée sur Aider, Ollama/vLLM, LiteLLM et SearXNG.
+description: Trajectoire réaliste pour passer d'un MVP Cursor CLI à une stack custodienne souveraine basée sur OpenHands ou Aider, Ollama/vLLM, LiteLLM et SearXNG.
 sidebar:
   order: 6
-last_modified: "2026-06-09"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -40,11 +40,11 @@ Stack recommandée :
 
 | Couche | Choix recommandé | Rôle |
 | :-- | :-- | :-- |
-| Agent code | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]] | Modifie fichiers et travaille avec Git |
+| Agent code | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] (CLI/SDK) — ou [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]], gelé depuis mai 2026, pour les essais[^1] | Modifie fichiers et travaille avec Git |
 | Modèle local | Ollama ou vLLM + modèle coder spécialisé | Inférence on-prem, avec niveau de raisonnement suffisant |
-| Gateway | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|LiteLLM]] ([[00-lexique/litellm|lexique]]) | API OpenAI-compatible, routage, logs |
+| Gateway | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|LiteLLM]] ([[00-lexique/litellm|lexique]]) — **mise à jour mensuelle obligatoire** (failles exploitées en 2026, support d'un mois par ligne mineure)[^4][^5] | API OpenAI-compatible, routage, logs |
 | Recherche | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng|SearXNG]] | Recherche web auto-hébergée |
-| Sandbox avancée | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] | Agent Docker plus lourd |
+| Runner et sandbox | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] / Agent Canvas[^2][^3] | Agent Docker, automatisations planifiées, pilotage d'agents tiers via ACP |
 | MVP rapide | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli|Cursor CLI]] | Productivité initiale |
 
 > [!warning] Piège fréquent
@@ -66,8 +66,8 @@ Le point clé : l'agent qui **agit** sur les fichiers a besoin de plus de raison
 ## Recommandation concrète pour ce vault
 
 1. **Court terme** : continuer avec Cursor/Aider en validation humaine.
-2. **Moyen terme** : Aider + Ollama + modèle coder 14B/32B + SearXNG + scripts de maintenance.
-3. **Long terme** : [[00-lexique/litellm|LiteLLM]] comme gateway, vLLM si besoin de débit, OpenHands pour tâches complexes sandboxées.
+2. **Moyen terme** : OpenHands (CLI, ou Agent Canvas avec automatisations planifiées et profil LLM local) ou Aider tant qu'il fonctionne, + Ollama + modèle coder récent (dense 14B/32B, ou MoE type Qwen3.6-35B-A3B recommandé par OpenHands au T2 2026) + SearXNG + scripts de maintenance[^2][^6].
+3. **Long terme** : [[00-lexique/litellm|LiteLLM]] comme gateway (ligne mineure maintenue, patchée dans le mois)[^5], vLLM si besoin de débit, OpenHands/Agent Canvas pour les automatisations et les tâches complexes sandboxées[^2][^3].
 
 > [!warning] Ne pas confondre
 > Un outil qui tourne sur votre machine n'est pas automatiquement souverain. Le critère décisif est : où partent les prompts, les fichiers, les clés et les résultats intermédiaires ?
@@ -76,3 +76,12 @@ Le point clé : l'agent qui **agit** sur les fichiers a besoin de plus de raison
 
 - [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|Workflow Human-in-the-loop]]
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté & Confidentialité]]
+
+## 📚 Sources
+
+[^1]: Aider-AI, *aider* (dépôt GitHub : dernier commit le 2026-05-22, dernière release v0.86.0 du 2025-08-09), consulté le 2026-10-10. [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider)
+[^2]: OpenHands, *Introducing Agent Canvas* (centre de contrôle auto-hébergé, automatisations planifiées ou événementielles, profils LLM, backends locaux/Docker/VM/Kubernetes, licence MIT), 2026-06-16. [https://www.openhands.dev/blog/introducing-agent-canvas](https://www.openhands.dev/blog/introducing-agent-canvas)
+[^3]: OpenHands, *Use any coding agent in OpenHands with ACP* (Agent Client Protocol : Claude Code, Codex, Gemini CLI ; `ACPAgent` dans le SDK), 2026-06-18. [https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp](https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp)
+[^4]: BerriAI, *GHSA-7hp6-4w63-5g45* (escalade `internal_user` → `proxy_admin` → exécution sur l'hôte, CVSS 9.9, corrigée en 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30 ; CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822), catalogue daté 2026-10-08. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45) · [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)
+[^5]: LiteLLM, *Version Support Policy* (depuis le 2026-06-29, seules les quatre lignes mineures stables les plus récentes reçoivent des correctifs), 2026-06-20. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)
+[^6]: OpenHands Docs, *Local LLMs* (Ollama, vLLM, SGLang, LM Studio ; Qwen3.6-35B-A3B recommandé, ≥ 24 Go de VRAM en quantifié, contexte 32k), mis à jour le 2026-05-21. [https://docs.openhands.dev/openhands/usage/llms/local-llms](https://docs.openhands.dev/openhands/usage/llms/local-llms)

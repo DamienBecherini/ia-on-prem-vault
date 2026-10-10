@@ -3,9 +3,9 @@ title: "🔍 Recherche Web & Sources"
 description: Comment donner un accès web contrôlé à un agent custodien sans dépendre d'un service de recherche cloud.
 sidebar:
   order: 5
-last_modified: "2026-06-05"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -14,7 +14,7 @@ Un agent custodien qui maintient un vault technique doit vérifier l'actualité 
 
 ## Principe
 
-L'agent ne doit pas "surfer librement". Il doit utiliser un outil de recherche explicite, journalisé et contrôlé.
+L'agent ne doit pas "surfer librement". Il doit utiliser un outil de recherche explicite, journalisé et contrôlé — et traiter chaque résultat (titre, extrait, URL, métadonnées) comme une donnée non fiable : des attaques par données forgées, sans instruction explicite, ont été démontrées en 2026 contre des agents de code et de navigation[^1].
 
 Pour une stack souveraine, le couple recommandé est :
 
@@ -67,3 +67,7 @@ SearXNG est un métamoteur libre qui agrège les résultats de nombreux services
 
 - [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng|SearXNG]]
 - [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy|Souveraineté & Confidentialité]]
+
+## 📚 Sources
+
+[^1]: Choi, Kim, Kang, Jeong, Xing, Lee, *Agent Data Injection Attacks are Realistic Threats to AI Agents* (arXiv 2607.05120 : données malveillantes déguisées en données de confiance — identifiants, origine, formats d'appels d'outils ; démontré sur des agents web et des agents de code), 2026-07-06. [https://arxiv.org/abs/2607.05120](https://arxiv.org/abs/2607.05120)
