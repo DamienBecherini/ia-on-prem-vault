@@ -51,13 +51,13 @@
     "sortLocale": "fr",
     "index": {
       "title": "Index du lexique",
-      "description": "Liste alphabétique de toutes les fiches du lexique IA on-premise.",
+      "description": "Index alphabétique de toutes les fiches du lexique de l'IA on-premise : LLM, VRAM, KV Cache, quantification, interconnexions et autres notions du vault.",
       "intro": "Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-lexique/ai-glossary|Glossaire IA]].",
       "hubLink": { "path": "ai-glossary", "label": "Glossaire IA" },
       "translations": {
         "en": {
           "title": "Lexicon index",
-          "description": "Alphabetical list of all on-premise AI lexicon entries.",
+          "description": "Alphabetical index of all on-premise AI lexicon entries: LLM, VRAM, KV Cache, quantization, interconnects and the other notions covered in the vault.",
           "intro": "Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI Glossary]].",
           "hubLink": { "path": "ai-glossary", "label": "AI Glossary" }
         }
