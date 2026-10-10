@@ -32,7 +32,7 @@
  */
 
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import {
   VAULT_ROOT,
   extractFrontmatterBlock,
@@ -278,7 +278,7 @@ md.push(
 console.log(md.join("\n"));
 
 if (OUT_JSON) {
-  const target = join(VAULT_ROOT, OUT_JSON);
+  const target = resolve(VAULT_ROOT, OUT_JSON);
   mkdirSync(dirname(target), { recursive: true });
   writeFileSync(
     target,

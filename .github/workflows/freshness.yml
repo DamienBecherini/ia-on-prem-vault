@@ -23,9 +23,10 @@ jobs:
 
       - name: Pages due for review
         run: |
-          node scripts/audit-freshness.mjs --due-only --json=freshness.json > freshness.md
-          cat freshness.md >> "$GITHUB_STEP_SUMMARY"
-          overdue=$(node -e "const r=require('./freshness.json');console.log(r.byStatus.overdue+r.byStatus['never-verified'])")
+          # Reports go to $RUNNER_TEMP: a file written at the repo root would be scanned as a page.
+          node scripts/audit-freshness.mjs --due-only --json="$RUNNER_TEMP/freshness.json" > "$RUNNER_TEMP/freshness.md"
+          cat "$RUNNER_TEMP/freshness.md" >> "$GITHUB_STEP_SUMMARY"
+          overdue=$(node -e "const r=require(process.env.RUNNER_TEMP+'/freshness.json');console.log(r.byStatus.overdue+r.byStatus['never-verified'])")
           if [ "$overdue" -gt 0 ]; then
             echo "::warning title=Freshness::$overdue page(s) overdue for review — see the job summary"
           fi
@@ -33,16 +34,16 @@ jobs:
       - name: Cited sources health
         continue-on-error: true
         run: |
-          node scripts/audit-sources.mjs --concurrency=6 --timeout=20000 --json=sources.json > sources.md
+          node scripts/audit-sources.mjs --concurrency=6 --timeout=20000 --json="$RUNNER_TEMP/sources.json" > "$RUNNER_TEMP/sources.md"
           {
             echo ""
             echo "<details><summary>Source audit</summary>"
             echo ""
-            cat sources.md
+            cat "$RUNNER_TEMP/sources.md"
             echo ""
             echo "</details>"
           } >> "$GITHUB_STEP_SUMMARY"
-          dead=$(node -e "const r=require('./sources.json');const s=r.byStatus;console.log((s.dead||0)+(s['server-error']||0)+(s['network-error']||0)+(s.timeout||0))")
+          dead=$(node -e "const r=require(process.env.RUNNER_TEMP+'/sources.json');const s=r.byStatus;console.log((s.dead||0)+(s['server-error']||0)+(s['network-error']||0)+(s.timeout||0))")
           if [ "$dead" -gt 0 ]; then
             echo "::warning title=Sources::$dead cited URL(s) dead or unreachable — see the job summary"
           fi
@@ -52,8 +53,8 @@ jobs:
         with:
           name: freshness-report
           path: |
-            freshness.md
-            freshness.json
-            sources.md
-            sources.json
+            ${{ runner.temp }}/freshness.md
+            ${{ runner.temp }}/freshness.json
+            ${{ runner.temp }}/sources.md
+            ${{ runner.temp }}/sources.json
           retention-days: 30
