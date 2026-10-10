@@ -47,7 +47,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [NVLink](/00-lexique/nvlink/) | Interconnexion haut débit entre GPU NVIDIA. |
 | [NVSwitch](/00-lexique/nvswitch/) | Commutateur NVIDIA qui connecte plusieurs GPU en un fabric NVLink totalement non bloquant à l'intérieur d'un nœud. |
 | [Offloading](/00-lexique/offloading/) | Technique qui place une partie du modèle en RAM ou sur SSD quand la VRAM est insuffisante, au prix d'un débit réduit. |
-| [Ollama](/00-lexique/ollama/) | Runtime local simplifié pour télécharger et exécuter des LLM via llama.cpp, avec API OpenAI-compatible. |
+| [Ollama](/00-lexique/ollama/) | Runtime local simplifié pour télécharger et exécuter des LLM via llama.cpp ou MLX, avec API OpenAI-compatible. |
 | [On-Premise (IA)](/00-lexique/on-premise/) | Infrastructure IA hébergée et opérée sur les équipements propres de l'organisation, sans délégation à un fournisseur cloud. |
 | [PagedAttention](/00-lexique/pagedattention/) | Technique de gestion du KV Cache par blocs de mémoire virtuelle, popularisée par vLLM. |
 | [PCIe](/00-lexique/pcie/) | Bus d'interconnexion haut débit entre composants. |
@@ -66,7 +66,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [SmolAgents](/00-lexique/smolagents/) | Framework léger de Hugging Face pour l'orchestration agentique locale, alternative souveraine à LangChain. |
 | [Speculative Decoding](/00-lexique/speculative-decoding/) | Technique d'accélération d'inférence où un petit modèle rapide génère des tokens candidats que le grand modèle vérifie en un seul passage. Nécessite deux modèles chargés simultanément. |
 | [Tensor Parallelism](/00-lexique/tensor-parallelism/) | Stratégie de distribution d'un LLM par découpage des matrices mathématiques entre plusieurs GPU d'un même nœud. |
-| [TensorRT-LLM](/00-lexique/tensorrt-llm/) | SDK NVIDIA de compilation et d'inférence ultra-optimisée pour GPU datacenter. |
+| [TensorRT-LLM](/00-lexique/tensorrt-llm/) | SDK NVIDIA d'inférence LLM optimisée (PyTorch natif, FP8/NVFP4) pour GPU datacenter. |
 | [TFLOPS](/00-lexique/tflops/) | Mesure de débit de calcul en opérations flottantes. |
 | [Thunderbolt](/00-lexique/thunderbolt/) | Interface câblée haut débit pour postes de travail et clusters de bureau IA. |
 | [Tokenisation](/00-lexique/tokenisation/) | Découpage d'un texte en unités numériques (tokens) avant traitement par un LLM. |

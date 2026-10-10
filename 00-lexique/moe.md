@@ -19,9 +19,9 @@ Architecture de réseau de neurones où le modèle est divisé en plusieurs "exp
 
 ## 📖 Définition détaillée
 
-Dans un modèle dense classique (Llama, Mistral…), **tous les paramètres** sont activés pour chaque token. Dans un MoE, seuls les **top-k experts** (généralement 2 à 8 sur 64 ou plus) participent à chaque calcul.
+Dans un modèle dense classique (Llama, Mistral…), **tous les paramètres** sont activés pour chaque token. Dans un MoE, seuls les **top-k experts** (de 2 sur 8 pour Mixtral à 16 sur 896 pour Kimi K3[^2]) participent à chaque calcul.
 
-Exemples concrets en 2026 :
+Exemples concrets (état au T4 2026) :
 
 | Modèle | Paramètres totaux | Paramètres actifs/token | VRAM requise (Q4) |
 | :-- | :-- | :-- | :-- |
@@ -36,7 +36,7 @@ Le MoE offre donc la **qualité d'un grand modèle** avec le **coût de calcul d
 
 ## 💡 Pourquoi c'est important en IA on-premise
 
-Les MoE de petite taille active (comme Qwen3-A3B ou Phi-MoE) sont particulièrement intéressants sur les APU : ils offrent une bonne qualité de réponse avec des besoins VRAM acceptables et un bon débit de génération.
+Les MoE de petite taille active (Qwen3-30B-A3B, Nemotron 3.5 Lightning, gpt-oss-20b[^3][^4][^6]) sont particulièrement intéressants sur les APU : ils offrent une bonne qualité de réponse avec des besoins VRAM acceptables et un bon débit de génération.
 
 Pour les MoE géants (DeepSeek V4.1 : > 750 Go en FP8 ; Kimi K3 : > 1,4 To même en 4-bit natif ; le DeepSeek V3 de 2024 pesait déjà 404 Go en Q4_K_M), il faut un nœud 8 GPU ou un cluster multi-nœuds — les scénarios C ou D[^1][^2].
 
@@ -45,7 +45,7 @@ Attention aux licences : les MoE frontière ouverts de 2026 (Kimi K3, GLM-5.3, Q
 ## ⚠️ Pièges fréquents
 
 - Comparer un MoE "671B" à un dense "70B" en croyant que le dense est forcément plus rapide : le débit dépend des paramètres **actifs**, pas totaux.
-- Charger partiellement un MoE : si tous les experts ne tiennent pas en VRAM, le swap est catastrophique car les experts absents sont convoqués de façon non-prévisible.
+- Charger partiellement un MoE : si tous les experts ne tiennent pas en VRAM, le swap est catastrophique car les experts absents sont convoqués de façon non-prévisible. Exception notable : les embeddings n-gram de Qwen3.8-Flash-Next (51 B) sont conçus pour être déchargés en RAM sans ce coût, contrairement aux experts[^7].
 - Sous-estimer la VRAM requise : tous les poids doivent être chargés même si seuls 2/64 experts sont activés par token.
 
 ## 📚 Pour comprendre en profondeur
@@ -65,3 +65,5 @@ Attention aux licences : les MoE frontière ouverts de 2026 (Kimi K3, GLM-5.3, Q
 [^3]: Qwen, *Qwen3-30B-A3B* (30,5 B au total, 3,3 B activés, 8 experts sur 128, Apache 2.0), 2025. [https://huggingface.co/Qwen/Qwen3-30B-A3B](https://huggingface.co/Qwen/Qwen3-30B-A3B)
 [^4]: NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B* (hybride Mamba-2 + MoE + attention, 30 B / 3 B actifs, OpenMDW 1.1 ; checkpoint NVFP4 ≈ 21,6 Go recommandé pour le déploiement), août 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16) · [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4)
 [^5]: Z.ai, *GLM-5.3-Flash* (320 B au total, 18 B actifs, attention hybride sparse + linéaire, MIT), 2026. [https://huggingface.co/zai-org/GLM-5.3-Flash](https://huggingface.co/zai-org/GLM-5.3-Flash)
+[^6]: OpenAI, *gpt-oss-120b / gpt-oss-20b* (gpt-oss-20b : 21 B au total, 3,6 B actifs, MoE post-entraîné en MXFP4, tient dans 16 Go), août 2025. [https://huggingface.co/openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b)
+[^7]: Qwen, *Qwen3.8-Flash-Next* (10 experts routés + 1 partagé sur 512 ; 51 B d'embeddings n-gram « plus faciles à décharger que les experts MoE »), août 2026. [https://huggingface.co/Qwen/Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next)

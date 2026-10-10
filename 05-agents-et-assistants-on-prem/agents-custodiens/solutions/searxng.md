@@ -12,7 +12,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## 🔍 Vue d'ensemble rapide
 
-SearXNG est un métamoteur libre qui agrège les résultats de nombreux moteurs sans profiler l'utilisateur. Il peut être auto-hébergé et expose une API de recherche exploitable par un agent[^1][^2].
+SearXNG est un métamoteur libre (AGPL-3.0) qui agrège les résultats de nombreux moteurs sans profiler l'utilisateur. Il peut être auto-hébergé et expose une API de recherche exploitable par un agent[^1][^2].
 
 ## 💡 Pourquoi ce projet nous intéresse
 
@@ -22,7 +22,7 @@ Un agent custodien a besoin de vérifier des sources. SearXNG permet de lui donn
 
 - Auto-hébergeable.
 - Pas de profilage utilisateur selon la documentation[^1].
-- API `/search` avec format JSON si activé dans `settings.yml`[^3].
+- API `/search` avec format JSON si `json` figure dans `search: formats:` de `settings.yml` ; sinon l'instance répond 403[^3].
 - Peut être couplé à Tor/proxy selon besoin.
 - Aucun token API externe nécessaire pour démarrer.
 
@@ -30,7 +30,7 @@ Un agent custodien a besoin de vérifier des sources. SearXNG permet de lui donn
 
 - Les requêtes partent quand même vers les moteurs interrogés depuis l'instance.
 - Les instances publiques peuvent désactiver JSON ou imposer des limites.
-- Une instance mal configurée peut être abusée par des bots.
+- Une instance mal configurée peut être abusée par des bots ; activer le limiter (base Valkey requise)[^5].
 - La qualité des résultats dépend des moteurs activés.
 
 ## 🔒 Souveraineté et confidentialité
@@ -67,7 +67,7 @@ Projet mature, actif (AGPL-3.0, environ 38 000 étoiles GitHub au T4 2026) et tr
 
 [^1]: SearXNG Documentation — "Search without being tracked". [https://docs.searxng.org/](https://docs.searxng.org/)
 [^2]: SearXNG GitHub README. [https://github.com/searxng/searxng](https://github.com/searxng/searxng)
-[^3]: SearXNG Docs, *Search API*. [https://docs.searxng.org/dev/search_api](https://docs.searxng.org/dev/search_api)
+[^3]: SearXNG Docs, *Search API* (format `json` à activer dans `search: formats:`, sinon 403), build 2026.10.9. [https://docs.searxng.org/dev/search_api.html](https://docs.searxng.org/dev/search_api.html)
 [^4]: SearXNG Docs, *How to update* (« SearXNG is a rolling release; each commit to the master branch is a release », mise à jour régulière requise), build 2026.10.9. [https://docs.searxng.org/admin/update-searxng.html](https://docs.searxng.org/admin/update-searxng.html)
 [^5]: SearXNG Docs, *Limiter* (« The limiter requires a Valkey database »), build 2026.10.9. [https://docs.searxng.org/admin/searx.limiter.html](https://docs.searxng.org/admin/searx.limiter.html)
 [^6]: searxng, *searxng-docker* (dépôt archivé le 2026-03-28, « superseded » au profit de la documentation officielle), consulté le 2026-10-10. [https://github.com/searxng/searxng-docker](https://github.com/searxng/searxng-docker)

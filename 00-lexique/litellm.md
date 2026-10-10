@@ -24,7 +24,7 @@ Proxy/gateway qui expose une API compatible OpenAI et redirige les requêtes ver
 
 LiteLLM sert de couche d'abstraction entre une application agentique et les moteurs de modèle. Au lieu de coder un connecteur par provider, l'agent parle une interface commune ; l'opérateur décide ensuite si les requêtes partent vers un modèle local, un cluster vLLM ou un fournisseur cloud.
 
-Il peut aussi centraliser les clés, le routage, les quotas, les logs et l'observabilité.
+Il peut aussi centraliser les clés, le routage, les quotas, les logs, l'observabilité et, depuis 2026, une passerelle MCP vers les outils des agents[^2].
 
 ## 💡 Pourquoi c'est important en IA on-premise
 
@@ -49,3 +49,4 @@ Dans une cible souveraine, LiteLLM peut forcer un routage **local-only** vers Ol
 - [[03-stack-logicielle/inference-engines-vllm-ollama|Moteurs d'inférence]]
 
 [^1]: LiteLLM, *Version Support Policy* (quatre lignes mineures stables maintenues, fenêtre glissante d'environ un mois par ligne, en vigueur le 2026-06-29), 2026-06-20. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)
+[^2]: LiteLLM Docs, *MCP Overview* (MCP Gateway : point d'entrée unique vers les serveurs MCP, contrôle d'accès par clé et par équipe ; « Agent Gateway » A2A au menu), consulté le 2026-10-10. [https://docs.litellm.ai/docs/mcp](https://docs.litellm.ai/docs/mcp)

@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-09"
+last_modified: "2026-10-10"
 last_verified: "2026-10-09"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -24,11 +24,11 @@ GGUF (successeur de GGML) regroupe tout ce dont le moteur a besoin en un seul fi
 Avantages majeurs : chargement immédiat sans compilation, portabilité entre CPU/GPU/Mac, et gestion native de l'[[00-lexique/offloading|offloading]] partiel vers la RAM si la VRAM est insuffisante.
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Standard de fait pour les postes de travail, Mac et homelab. La plupart des modèles sur HuggingFace/Ollama sont distribués en GGUF. À connaître pour le Scénario A (labo dev) et le Scénario B (Mac Studio).
+Standard de fait pour les postes de travail, Mac et homelab. Une grande partie des modèles du Hub a une déclinaison GGUF (souvent communautaire : unsloth, bartowski, ggml-org) ; sur Apple Silicon, Ollama exécute depuis la 0.40 (septembre 2026) les architectures prises en charge via MLX plutôt que GGUF, et les éditeurs publient d'abord des checkpoints FP8/NVFP4 officiels[^2]. À connaître pour le Scénario A (labo dev) et le Scénario B (Mac Studio).
 
 ## ⚠️ Pièges fréquents
 - GGUF/llama.cpp sert plusieurs utilisateurs (continuous batching activé par défaut dans `llama-server`, slots parallèles `-np`), mais sans la gestion mémoire paginée ni le parallélisme multi-GPU de vLLM/SGLang : au-delà de quelques utilisateurs simultanés sur un modèle lourd, le débit par utilisateur s'effondre plus vite qu'avec un moteur GPU de production[^1].
-- Plusieurs variantes de quantification (Q2 à Q8) ont des compromis très différents — Q2 peut dégrader fortement la qualité de réponse.
+- Plusieurs variantes de quantification (Q2 à Q8) ont des compromis très différents — Q2 et Q3_K_S dégradent nettement la qualité (perte mesurée de 4 points en moyenne sur les tâches aval pour Q3_K_S sur Llama 3.1-8B)[^3].
 
 ## 📚 Pour comprendre en profondeur
 1. [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence]] *(GGUF + llama.cpp vs vLLM en production)*
@@ -41,3 +41,5 @@ Standard de fait pour les postes de travail, Mac et homelab. La plupart des mod�
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
 [^1]: ggml-org, *llama.cpp — llama-server README* (« Continuous batching », « Parallel decoding with multi-user support », `-cb` activé par défaut, `-np N`), lu le 2026-10-09. [https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)
+[^2]: Ollama, *Release v0.40.0* (« Models run on MLX on Apple Silicon by default »), 25 septembre 2026 ; NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16* (checkpoints BF16 / NVFP4 officiels, GGUF fourni via ggml-org), août 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0) · [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16)
+[^3]: J. Wang et al., *Which Quantization Should I Use? A Unified Evaluation of llama.cpp Quantization on Llama-3.1-8B-Instruct* (arXiv:2601.14277 : Q3_K_S perd environ 4 points en moyenne sur les tâches aval), janvier 2026. [https://arxiv.org/abs/2601.14277](https://arxiv.org/abs/2601.14277)

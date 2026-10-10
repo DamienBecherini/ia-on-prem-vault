@@ -32,7 +32,7 @@ As we saw in the hardware chapter, a huge context explodes the **[[01-fondations
 
 ---
 
-## 2. The 2026 evolution: Agentic RAG and GraphRAG
+## 2. Recent evolution: Agentic RAG and GraphRAG
 
 To avoid saturating memory with useless information, the market has shifted to **Agentic RAG**[^5][^3]. Instead of being a passive pipe, the LLM becomes the driver.
 
@@ -120,7 +120,7 @@ FROM documents ORDER BY distance LIMIT 5;
 
 ### Pattern 2 — Payload-based partitioning with Qdrant
 
-Qdrant natively recommends a single-collection architecture using **Payload-based Partitioning**[^9]. Each embedding is indexed with a `tenant_id` payload, and vector access keys are scoped to a tenant at search time:
+Qdrant natively recommends a single-collection architecture using **Payload-based Partitioning**[^9]. Each embedding is indexed with a `tenant_id` payload (payload index declared with `is_tenant=True` so that a given tenant's data is stored contiguously), and the search (`query_points`, which replaces the former `client.search`) is scoped to a tenant through a filter:
 
 ```python
 from qdrant_client import QdrantClient
@@ -128,10 +128,11 @@ from qdrant_client.models import Filter, FieldCondition, MatchValue
 
 client = QdrantClient(url="http://localhost:6333")
 
+# tenant_id payload index created beforehand with is_tenant=True (Qdrant ≥ 1.11)
 # Scoped search: only vectors from the current tenant are compared
-results = client.search(
+results = client.query_points(
     collection_name="documents",
-    query_vector=query_embedding,
+    query=query_embedding,
     query_filter=Filter(
         must=[FieldCondition(
             key="tenant_id",
@@ -162,9 +163,9 @@ GPU inference is expensive. A well-designed architecture reserves the GPU for th
 | Speech transcription (STT) | `faster-whisper` (CTranslate2)[^10] | **CPU** |
 | Re-ranking, scoring | Lightweight CrossEncoder | **CPU** |
 
-`faster-whisper` (SYSTRAN's Whisper implementation on the CTranslate2 engine) can transcribe short audio in real time directly on CPU, without using a single byte of VRAM[^10]. Embedding models like `nomic-embed-text` are small enough to run efficiently in asynchronous batches on CPU.
+`faster-whisper` (SYSTRAN's Whisper implementation on the CTranslate2 engine) can transcribe short audio in real time directly on CPU, without using a single byte of VRAM[^10]. Embedding models like EmbeddingGemma 2 (270M–740M) are small enough to run efficiently in asynchronous batches on CPU.
 
-**Benefit:** 100% of GPU VRAM remains available for generation. On a 2× L40S server (96 GB), this routing can double or triple the number of concurrent users served compared to a configuration where embeddings and Whisper share VRAM.
+**Benefit:** 100% of GPU VRAM remains available for generation. On a 2× L40S server (96 GB), this routing frees the VRAM that Whisper and the embedding model would have occupied (several GB), which translates directly into available KV Cache, and therefore into concurrent users — the actual gain depends on your workload and must be measured (see [[06-mise-en-oeuvre/evaluate-local-model|Evaluate a local model]]).
 
 ### RAG pre-filtering: the most powerful FinOps lever
 
@@ -192,14 +193,14 @@ On a document-copilot use case, going from 20 results (common practice) to 3 fil
 
 ```mermaid
 flowchart TD
-    A["Documents\n(PDF, MD, DOCX)"] --> B["Chunking + Embedding\n(nomic-embed-text, mxbai-embed via Ollama)"]
+    A["Documents\n(PDF, MD, DOCX)"] --> B["Chunking + Embedding\n(EmbeddingGemma 2 via Ollama)"]
     B --> C["Local vector database\n(Qdrant)"]
     C --> D["Routing agent\n(fast 7–8B model)"]
     D --> E["Vector DB"]
     D --> F["Web / FS tool"]
     E --> G["Assembled context"]
     F --> G
-    G --> H["Main LLM (70B)\n— answer generation"]
+    G --> H["Main LLM (27–70B)\n— answer generation"]
 ```
 
 **Recommended local embedding models:**
@@ -211,22 +212,23 @@ ollama pull embeddinggemma-2        # 740M multimodal (text + image), ~1.3 GB
 # nomic-embed-text and mxbai-embed-large remain valid for existing indexes
 # (never mix two embedding models in the same collection)
 
-# Quick test
-curl http://localhost:11434/api/embeddings \
-  -d '{"model": "nomic-embed-text", "prompt": "Memory bandwidth limits inference."}'
+# Quick test — /api/embed endpoint ("input" field, string or array for batching);
+# the former /api/embeddings ("prompt" field) is no longer documented[^17]
+curl http://localhost:11434/api/embed \
+  -d '{"model": "embeddinggemma-2:270m", "input": "Memory bandwidth limits inference."}'
 ```
 
 ---
 
 ## 📋 The Architect's Advice
 
-To build a sovereign enterprise software stack in 2026:
+To build a sovereign enterprise software stack in Q4 2026:
 
-1.  **Dedicate a small model to routing:** Do not use your large 70B model to choose which tool to call. Use an ultra-fast model (e.g. Qwen 2.5 7B or Llama 3 8B) configured for [[00-lexique/appel-outils|tool calling]]. It will call the database.
+1.  **Dedicate a small model to routing:** Do not use your large synthesis model (27–70B) to choose which tool to call. Use an ultra-fast model (e.g. Granite 4.2 8B, Apache 2.0, or Qwen3.8 in non-thinking mode) configured for [[00-lexique/appel-outils|tool calling]][^16]. It will call the database.
 2.  **Keep large models for synthesis:** Once the small agent has retrieved the right text blocks, send everything to the heavy model (the "brain") to write the final answer.
-3.  **Avoid cloud dependencies:** If you use LangChain or LlamaIndex, audit telemetry. In pure on-premise setups, minimal frameworks like [[00-lexique/smolagents|SmolAgents]] ensure your prompts will not leak to an external API during orchestration[^4].
+3.  **Avoid cloud dependencies:** If you use LangChain or LlamaIndex, audit telemetry. In pure on-premise setups, minimal frameworks like [[00-lexique/smolagents|SmolAgents]] (Apache 2.0; release pace slowed since mid-2026 — latest version 1.26.0 in May 2026 —, to be checked before a new project[^15]) ensure your prompts will not leak to an external API during orchestration[^4].
 4.  **Isolate embeddings per tenant from day one.** A [[00-lexique/multi-tenant|multi-tenant]] RAG without isolation (pgvector RLS or Qdrant payload) is a guaranteed security flaw. Adding this isolation after the fact on a production database is costly.
-5.  **Route auxiliary tasks to CPU.** Embeddings and Whisper transcription consume no VRAM when using `faster-whisper` and `nomic-embed-text` on CPU. Freed VRAM multiplies concurrent inference capacity.
+5.  **Route auxiliary tasks to CPU.** Embeddings and Whisper transcription consume no VRAM when using `faster-whisper` and EmbeddingGemma 2 (270M) on CPU. Freed VRAM multiplies concurrent inference capacity.
 
 ---
 
@@ -246,3 +248,6 @@ To build a sovereign enterprise software stack in 2026:
 [^12]: A. Garcia, *sqlite-vss* (README: "sqlite-vss is not in active development", effort moved to sqlite-vec), accessed 2026-10-10. [https://github.com/asg017/sqlite-vss](https://github.com/asg017/sqlite-vss)
 [^13]: Model Context Protocol, *Key Changes — 2026-07-28* (removal of `Mcp-Session-Id` and the `initialize` handshake, `server/discover`, Multi Round-Trip Requests, deprecation of Roots / Sampling / Logging and Dynamic Client Registration, deprecation window of at least twelve months). [https://modelcontextprotocol.io/specification/2026-07-28/changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog)
 [^14]: Qdrant, *Releases* (v1.19.0, 5 August 2026: TurboQuant 4-bit as primary storage, `cold` / `cached` / `pinned` tiers; v1.19.2 on 5 October 2026). [https://github.com/qdrant/qdrant/releases](https://github.com/qdrant/qdrant/releases); Milvus, *Releases* (v3.0.0 GA on 2026-07-29, External Collection Parquet / Lance / Iceberg; v3.0.2 on 2026-09-20). [https://github.com/milvus-io/milvus/releases](https://github.com/milvus-io/milvus/releases); pgvector, *CHANGELOG* (0.8.3 of 2026-06-17: "Fixed possible index corruption with HNSW vacuuming"; 0.8.6 and 0.8.7 of 2026-10-01: "Fixed buffer overflow with IVFFlat index build"). [https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md](https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md)
+[^15]: Hugging Face, *smolagents — Releases* (latest version v1.26.0 of 2026-05-29; maintenance commits only since), accessed 2026-10-10. [https://github.com/huggingface/smolagents/releases](https://github.com/huggingface/smolagents/releases)
+[^16]: IBM, *Granite 4.2 8B* (Apache 2.0, OpenAI-format tool calling, thinking / low-effort modes), 2026-08-25. [https://huggingface.co/ibm-granite/granite-4.2-8b](https://huggingface.co/ibm-granite/granite-4.2-8b); Qwen, *Qwen3.8-27B* (thinking mode can be enabled or disabled), August 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B)
+[^17]: Ollama, *API — Generate embeddings* (`POST /api/embed`, `input` field string or array, `truncate` / `dimensions` options; no `/api/embeddings` endpoint documented), accessed 2026-10-10. [https://docs.ollama.com/api/embed](https://docs.ollama.com/api/embed)

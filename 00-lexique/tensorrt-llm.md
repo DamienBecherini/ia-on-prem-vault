@@ -30,7 +30,7 @@ Incontournable pour amortir le coût des accélérateurs professionnels en datac
 
 ## ⚠️ Pièges fréquents
 - Confondre version stable (1.2.x) et *release candidates* 1.3.0rcN : au T4 2026, la dernière stable est la 1.2.1 (avril 2026) ; les RC apportent les nouveaux modèles et kernels mais changent d'API d'une RC à l'autre (ex. priorité CLI > YAML depuis rc18). Épinglez la version en production[^1][^2].
-- Pas adapté aux postes de travail ou aux Mac.
+- Pas adapté aux Mac ; sur station de travail, le support se limite au DGX Spark (bêta mono-nœud depuis la 1.2) et aux RTX PRO 6000 / RTX 50 avec des problèmes connus au T3 2026[^1][^3].
 
 ## 📚 Pour comprendre en profondeur
 1. [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence]] *(comparatif llama.cpp / vLLM / TensorRT-LLM)*

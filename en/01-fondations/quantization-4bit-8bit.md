@@ -54,7 +54,7 @@ Recent LLM quantization research aims to work around this: protecting subsets of
 
 ---
 
-## 🗺️ The Quantization Format Landscape (2026)
+## 🗺️ The Quantization Format Landscape
 
 Format choice depends on your **target infrastructure** (CPU, dedicated GPU, unified memory) and **inference engine** (llama.cpp, vLLM, TensorRT-LLM).
 
@@ -72,7 +72,7 @@ These formats dominate production GPU inference (vLLM, TGI, etc.) [^5][^6].
 *   **Ideal for:** maximum GPU throughput on Nvidia/AMD with dedicated kernels.
 
 ### 3. Microscaling FP4: MXFP4 and NVFP4
-Standardized by the **OCP** (Open Compute Project) and hardware-accelerated on recent GPUs (Blackwell, MI300/MI350) [^7][^8]:
+Standardized by the **OCP** (Open Compute Project) and hardware-accelerated on recent GPUs (Blackwell; AMD Instinct MI350 on CDNA 4 — the MI300X stops at FP8) [^7][^8][^14]:
 
 *   **E2M1 format:** 4-bit floating-point numbers (1 sign, 2 exponent, 1 mantissa) [^7].
 *   **MXFP4:** **E8M0** block scale shared across **32 values** [^7].
@@ -118,7 +118,7 @@ A classic mistake: preferring a **small unquantized model** over a **large quant
 For sovereign on-premise local agent deployments:
 
 1.  **SMB standard (CPU / Mac / hybrid):** **Q4_K_S or Q4_K_M in GGUF** via llama.cpp — best documented size/quality/speed compromise for Llama 3.1-8B; step up to **Q5_0** if quality margin matters more [^4].
-2.  **Shared GPU inference (vLLM / TensorRT-LLM):** **FP8** on weights (Hopper/Blackwell/recent RTX) or **AWQ INT4** depending on the engine; FP8 cuts VRAM ~×2 with low degradation when well calibrated, without being strictly identical to BF16 [^1][^6].
+2.  **Shared GPU inference (vLLM / TensorRT-LLM):** **FP8** on weights (Hopper/Blackwell/recent RTX) or **AWQ INT4** depending on the engine; FP8 cuts VRAM ~×2 with low degradation when well calibrated, without being strictly identical to BF16 [^1][^6]. Option names change fast (vLLM 0.31: `fp8` → `fp8_per_tensor`; SGLang ≥ 0.5.16: NVFP4 via FlashInfer only) and FP4 on workstation GPUs (SM120: RTX 50, RTX PRO 6000) remains partially supported in TensorRT-LLM as of Q4 2026: test your engine/GPU pairing before buying [^13][^15].
 3.  **Avoid Q2 and aggressive Q3 in production:** `Q3_K_S` and `Q2_K` noticeably degrade reasoning (GSM8K) and perplexity; reserve for extreme RAM constraints [^4][^10].
 4.  **FP4 (NVFP4/MXFP4):** natively accelerated on **Blackwell** (B200, RTX 50, RTX PRO 6000, DGX Spark); since 2026 it is also a **delivery format**: Kimi K3 is trained in native MXFP4 (QAT), gpt-oss and Nemotron 3.5 Lightning are published in official MXFP4 / NVFP4 (≈ 22 GB for Lightning), Mistral Small 4 has its NVFP4 repository [^12]. When the vendor provides this checkpoint, prefer it over a community re-quantization; on pre-Blackwell GPUs, the engine falls back to a slower W4A16 path. Always validate on your business benchmarks [^8][^9].
 
@@ -131,7 +131,7 @@ For sovereign on-premise local agent deployments:
 [^3]: ggml-org, *llama.cpp* (moteur GGUF, formats K-quant), 2026. [https://github.com/ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)
 [^4]: J. Wang et al., *Which Quantization Should I Use? A Unified Evaluation of llama.cpp Quantization on Llama-3.1-8B-Instruct* (arXiv:2601.14277), janvier 2026. [https://arxiv.org/abs/2601.14277](https://arxiv.org/abs/2601.14277)
 [^5]: E. Frantar et al., *GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers* (arXiv:2210.17323), 2022. [https://arxiv.org/abs/2210.17323](https://arxiv.org/abs/2210.17323)
-[^6]: J. Lin et al., *AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration* (arXiv:2306.00923), 2023. [https://arxiv.org/abs/2306.00923](https://arxiv.org/abs/2306.00923)
+[^6]: J. Lin et al., *AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration* (arXiv:2306.00978), 2023. [https://arxiv.org/abs/2306.00978](https://arxiv.org/abs/2306.00978)
 [^7]: J. Chhugani et al., *Unveiling the Potential of Quantization with MXFP4: Strategies for Quantization Error Reduction* (arXiv:2603.08713), 2026. [https://arxiv.org/abs/2603.08713](https://arxiv.org/abs/2603.08713)
 [^8]: S. Egiazarian et al., *Bridging the Gap Between Promise and Performance for Microscaling FP4 Quantization* (MR-GPTQ, ICLR 2026), arXiv:2509.23202. [https://arxiv.org/abs/2509.23202](https://arxiv.org/abs/2509.23202)
 [^9]: NVIDIA Technical Blog, *Optimizing Inference for Long Context and Large Batch Sizes with NVFP4 KV Cache* (format NVFP4), décembre 2025. [https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/](https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/)
@@ -139,3 +139,5 @@ For sovereign on-premise local agent deployments:
 [^11]: T. Dettmers, L. Zettlemoyer, *The case for 4-bit precision: k-bit Inference Scaling Laws* (arXiv:2212.09720; "4-bit precision is almost universally optimal for total model bits and zero-shot accuracy", more than 35,000 experiments), 2023. [https://arxiv.org/abs/2212.09720](https://arxiv.org/abs/2212.09720); Meta, *Muse Glimmer 30B* (tiers BF16 64 GB / K-Quant-Dynamic 32 GB, −0.2% / K-Quant 24 GB, −1.0% on average over 15 benchmarks), August 2026. [https://huggingface.co/meta-models/Muse-Glimmer-30B](https://huggingface.co/meta-models/Muse-Glimmer-30B)
 [^12]: Moonshot AI, *Kimi K3* ("MXFP4 weights / MXFP8 activations (quantization-aware training)"), July 2026. [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3); NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4* (≈ 21.6 GB of safetensors, "the NVFP4 release is the recommended path" for deployment), August 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4); OpenAI, *gpt-oss-120b* ("post-trained with MXFP4 quantization of the MoE weights", Apache 2.0), August 2025. [https://huggingface.co/openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b); Mistral AI, Hugging Face repositories (Mistral-Small-4-119B-2603 and its NVFP4 variant), checked 2026-10-09. [https://huggingface.co/mistralai](https://huggingface.co/mistralai)
 [^13]: DeepSeek AI, *DeepSeek-V4.1-Flash* ("FP4 main KV caching", E2M1 + one E4M3 scale per 16 channels, 890 bytes per token, MIT), 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash); vLLM Project, *Release v0.31.0* (FlashMLA + compressed NVFP4 KV cache by default on SM100 for DeepSeek-V4.1-Flash), 5 October 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
+[^14]: AMD, *AMD Instinct MI350X GPU* — product brochure (CDNA 4: hardware support for FP6 and FP4 OCP MX formats, in addition to FP16 / FP8; the MI300X, CDNA 3, stops at FP8), consulted 2026-10-10. [https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi350x-gpu-brochure.pdf](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi350x-gpu-brochure.pdf)
+[^15]: SGLang Project, *Release v0.5.16* (NVFP4 GEMM via FlashInfer only), 2026. [https://github.com/sgl-project/sglang/releases/tag/v0.5.16](https://github.com/sgl-project/sglang/releases/tag/v0.5.16) · NVIDIA, *TensorRT-LLM — Releases* (1.3.0 rc26/rc27: NVFP4 W4A16 MoE not supported on SM120), captured 2026-10-09. [https://github.com/NVIDIA/TensorRT-LLM/releases](https://github.com/NVIDIA/TensorRT-LLM/releases)

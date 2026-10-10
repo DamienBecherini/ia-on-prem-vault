@@ -22,13 +22,13 @@ Pour apprendre vite :
 - branche Git dédiée ;
 - validation humaine.
 
-Cursor CLI est très productif pour tester l'idée. Aider est plus proche de la cible souveraine, car il peut appeler directement Ollama.
+Cursor CLI (propriété de SpaceX depuis août 2026[^7]) est très productif pour tester l'idée. Aider est plus proche de la cible souveraine, car il peut appeler directement Ollama, mais son développement est gelé depuis mai 2026[^1].
 
 ## Étape 2 — Runner contrôlé
 
 Pour automatiser :
 
-- tâche planifiée (cron, systemd timer, GitHub Actions self-hosted) ;
+- tâche planifiée (cron, systemd timer, GitHub Actions self-hosted, ou automatisation Agent Canvas sur backend interne[^2]) ;
 - branche datée ;
 - run logs via `vault-log-run` sous `.agents/vault-maintenance/runs/` ;
 - rapport de sources ;
@@ -59,6 +59,7 @@ Pour une cible souveraine réaliste :
 | Suggestions simples, petits fichiers | Coder 7B/8B spécialisé | utile pour apprendre, pas assez fiable comme agent autonome |
 | Corrections contrôlées sur vault Markdown | Coder 14B | plancher pratique, avec validation humaine stricte |
 | Maintenance régulière, audit multi-fichiers | Coder 32B ou supérieur | cible recommandée si l'agent doit produire des diffs exploitables |
+| Agentique avec contexte long, VRAM 24 Go | MoE coder type Qwen3.6-35B-A3B (3B actifs) | recommandé par OpenHands au T2 2026 ; contexte ≥ 32k tokens[^6] |
 | Gros refactoring ou raisonnement long | 32B+ avec grand contexte, ou modèle frontière non souverain en MVP | arbitrage souveraineté vs qualité |
 
 Le point clé : l'agent qui **agit** sur les fichiers a besoin de plus de raisonnement que l'assistant qui **retrouve** une information. Le budget VRAM doit donc être dimensionné pour le modèle d'édition, pas seulement pour le modèle de chat.
@@ -85,3 +86,4 @@ Le point clé : l'agent qui **agit** sur les fichiers a besoin de plus de raison
 [^4]: BerriAI, *GHSA-7hp6-4w63-5g45* (escalade `internal_user` → `proxy_admin` → exécution sur l'hôte, CVSS 9.9, corrigée en 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30 ; CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822), catalogue daté 2026-10-08. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45) · [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)
 [^5]: LiteLLM, *Version Support Policy* (depuis le 2026-06-29, seules les quatre lignes mineures stables les plus récentes reçoivent des correctifs), 2026-06-20. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)
 [^6]: OpenHands Docs, *Local LLMs* (Ollama, vLLM, SGLang, LM Studio ; Qwen3.6-35B-A3B recommandé, ≥ 24 Go de VRAM en quantifié, contexte 32k), mis à jour le 2026-05-21. [https://docs.openhands.dev/openhands/usage/llms/local-llms](https://docs.openhands.dev/openhands/usage/llms/local-llms)
+[^7]: Cursor, *Cursor is now a part of SpaceX*, 2026-08-14. [https://cursor.com/blog/joining-spacex](https://cursor.com/blog/joining-spacex)

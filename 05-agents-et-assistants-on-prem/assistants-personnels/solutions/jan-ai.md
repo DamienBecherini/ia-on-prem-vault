@@ -31,7 +31,7 @@ Il est moins orienté "RAG entreprise" qu'Open WebUI ou AnythingLLM, mais excell
 - **Modèles locaux** : llama.cpp, GGUF, GPU offload selon plateforme[^2].
 - **Offline** : fonctionnement sans Internet après téléchargement des modèles[^1][^2].
 - **API locale** : endpoint OpenAI-compatible pour intégrations locales[^3].
-- **Télémétrie absente dans le mode local annoncé** : docs marketing indiquent pas de collecte ni télémétrie pour les modèles locaux[^1].
+- **Télémétrie opt-in** : la documentation Privacy indique qu'aucune donnée n'est collectée tant que l'utilisateur n'a pas accepté l'analytics produit au premier lancement (PostHog EU, identifiant aléatoire, jamais le contenu des conversations) ; avec des modèles locaux, rien ne quitte la machine[^6].
 
 ## ⚠️ Limites et risques
 
@@ -45,7 +45,7 @@ Il est moins orienté "RAG entreprise" qu'Open WebUI ou AnythingLLM, mais excell
 - **Données :** locales en usage desktop local.
 - **Modèle :** local via llama.cpp/GGUF ; cloud uniquement si provider externe configuré.
 - **Mémoire :** historique local de l'application.
-- **Télémétrie :** annoncée absente pour usage local[^1].
+- **Télémétrie :** opt-in (analytics produit refusables au premier lancement) ; rien ne quitte la machine avec des modèles locaux[^6].
 - **Mode 100% offline :** oui après téléchargement des modèles.
 - **Verdict :** ✅ souverain natif pour usage local ; ⚠️ si providers cloud activés.
 
@@ -72,8 +72,9 @@ Projet actif et populaire côté GitHub (environ 45 000 étoiles, v0.8.6 au 2026
 
 ## 📚 Sources
 
-[^1]: Jan GitHub README — offline, privacy, no telemetry en usage local. [https://github.com/janhq/jan](https://github.com/janhq/jan)
-[^2]: Jan — local models (llama.cpp, GGUF) dans la documentation du dépôt. [https://github.com/janhq/jan/tree/dev/docs](https://github.com/janhq/jan/tree/dev/docs)
-[^3]: Jan API server — serveur local OpenAI-compatible sur `localhost:1337`. [https://github.com/janhq/jan/blob/dev/docs/src/pages/docs/desktop/api-server.mdx](https://github.com/janhq/jan/blob/dev/docs/src/pages/docs/desktop/api-server.mdx)
+[^1]: Jan GitHub README (« Privacy First: Everything runs locally when you want it to »), lu le 2026-10-09. [https://github.com/janhq/jan](https://github.com/janhq/jan)
+[^2]: Jan — documentation (modèles locaux llama.cpp / GGUF). [https://www.jan.ai/docs](https://www.jan.ai/docs)
+[^3]: Jan Docs, *API Server* — serveur local OpenAI-compatible sur `localhost:1337`, Trusted Hosts, lu le 2026-10-09. [https://www.jan.ai/docs/desktop/api-server](https://www.jan.ai/docs/desktop/api-server)
 [^4]: Jan GitHub README — modèles locaux et intégrations cloud optionnelles. [https://github.com/janhq/jan](https://github.com/janhq/jan)
 [^5]: janhq, *Jan v0.8.5* — notes de release, section Migration (llama.cpp embarqué, CUDA 13 / Vulkan, fin des backends CUDA 11/12, Mac Intel sans modèles locaux, exécutable `Jan-Desktop`, CLI `jan` séparée, Trusted Hosts GHSA-x6p8-7cp8-c3p6), 2026-10-08 ; v0.8.6 publiée le 2026-10-09. [https://github.com/janhq/jan/releases/tag/v0.8.5](https://github.com/janhq/jan/releases/tag/v0.8.5)
+[^6]: Jan Docs, *Privacy* (« Zero data collection until you say so » : analytics opt-in au premier lancement, PostHog EU, identifiant aléatoire, jamais les conversations, fichiers ni prompts), lu le 2026-10-09. [https://www.jan.ai/docs/desktop/privacy](https://www.jan.ai/docs/desktop/privacy)

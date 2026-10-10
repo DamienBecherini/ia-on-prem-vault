@@ -54,7 +54,7 @@ Voir la grille complète : [[05-agents-et-assistants-on-prem/fondations-communes
 
 OpenHuman est pertinent comme :
 
-- source d'inspiration pour une mémoire Markdown/SQLite ;
+- rappel qu'une mémoire d'assistant peut quitter la machine même avec un modèle local (Memory Tree local abandonné au profit de CortexDB) ;
 - fiche de comparaison pour expliquer le piège "local-first ≠ souverain par défaut" ;
 - exemple de solution hybride à ne pas présenter comme on-premise stricte sans caveat.
 

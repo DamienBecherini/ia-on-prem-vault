@@ -37,13 +37,13 @@ Three choices are available:
 
 Here, the software stack differs depending on hardware chosen:
 
-*   **On Mac Studio:** The reference engine is **llama.cpp** (or its native server derivative **MLX Server** optimized by Apple). It exploits maximum bandwidth via the Metal graphics API.
-*   **On AMD Gorgon Halo (Linux):** You can use **vLLM** via AMD's ROCm software layer, enabling server optimizations like *Continuous Batching*.
+*   **On Mac Studio:** **MLX** (`mlx_lm.server`, or Ollama ≥ 0.40, which uses it by default on Apple Silicon) or **llama.cpp** via Metal (`llama-server` default port changed to 9931 in October 2026)[^9]. Both exploit the maximum bandwidth of unified memory.
+*   **On AMD Gorgon Halo (Linux):** llama.cpp (Vulkan or ROCm) or SGLang (ROCm image for `gfx1151` since 0.5.20), which brings server optimizations like *Continuous Batching*; vLLM on ROCm remains to be validated on this chip[^10].
 
 ### Expected performance
 Since the 40 GB model fits entirely in [[00-lexique/unified-memory|unified memory]] (which here acts as a huge [[00-lexique/vram|VRAM]]), generation speeds are excellent and stable:
 *   **Mac Studio (M5 Max, ~614 GB/s):** theoretical bound of about 15 [[00-lexique/tokens-per-second|tokens/s]] during [[00-lexique/decoding|Decoding]] on a 70B Q4 (~40 GB), calculated with the formula from [[01-fondations/memory-bandwidth|the memory bandwidth chapter]] based on the bandwidth announced by Apple in August 2026[^1] — i.e. 10 to 15 t/s expected in practice, to be confirmed by a published benchmark.
-*   **AMD Ryzen AI Max PRO 400 (~273 GB/s):** On the order of 5 to 7 tokens/s according to available benchmarks[^2] — also consistent with the formula (theoretical bound ~6.8 t/s).
+*   **AMD Ryzen AI Max PRO 400 (~273 GB/s):** on the order of 5 tokens/s measured (4.7–4.9 t/s on Llama 3.1 70B Q4_K_M, Strix Halo 128 GB, same bus)[^2][^6] — consistent with the ~6.8 t/s theoretical bound given by the formula.
 
 ---
 
@@ -68,7 +68,7 @@ Since the 40 GB model fits entirely in [[00-lexique/unified-memory|unified memor
 ### ❌ When to avoid this blueprint?
 *   **If your client has unpredictable growth needs.** Unified memory is **soldered** to the motherboard. It is impossible to add RAM to a Mac Studio or Gorgon Halo APU after purchase. If the company's business model moves from 70B to 200B the following year, you will have to discard the machine and buy a new one.
 
-To overcome this fixed capacity constraint while staying on affordable desktop hardware, the next blueprint proposes an scalable approach: **[[04-blueprints/scenario-c-desktop-cluster|The Desktop Cluster]]** — connecting several machines via Thunderbolt.
+To overcome this fixed capacity constraint while staying on affordable desktop hardware, the next blueprint proposes a scalable approach: **[[04-blueprints/scenario-c-desktop-cluster|The Desktop Cluster]]** — connecting several machines via Thunderbolt.
 
 ---
 
@@ -108,3 +108,5 @@ To overcome this fixed capacity constraint while staying on affordable desktop h
 [^6]: Qwen, *Qwen3.8-27B* (dense, Apache 2.0, 262k context; Q4 via Ollama ≈ 18 GB), August 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B) · Ollama, *qwen3.8*. [https://ollama.com/library/qwen3.8](https://ollama.com/library/qwen3.8) · ignasivt, *Strix Halo Guide* (gpt-oss-120b ≈ 70 GB, 34–38 tok/s; Llama 3.1 70B Q4_K_M 4.7–4.9 tok/s on Ryzen AI Max+ 395 128 GB), re-read on 2026-10-10. [https://github.com/ignasivt/strix-halo-guide](https://github.com/ignasivt/strix-halo-guide)
 [^7]: BerriAI, *GHSA-7hp6-4w63-5g45* (`internal_user` → `proxy_admin` escalation → execution on the host, CVSS 9.9, fixed in 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45) · LiteLLM, *Version Support Policy*. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support) · Open WebUI, *Security Advisories* (series of High advisories published 27–28 September 2026), consulted 2026-10-10. [https://github.com/open-webui/open-webui/security/advisories](https://github.com/open-webui/open-webui/security/advisories)
 [^8]: ServeTheHome, *NVIDIA DGX Spark 64GB Launched and Big 128GB GB10 Price Increases* (DGX Spark 128 GB ≈ $6,950, launched at $3,999; 64 GB version at $4,999 via OEMs from 2026-10-23), 2026-10-03. [https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/](https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/) · NVIDIA, *DGX Spark* — product page (GB10, 128 GB LPDDR5x, ~273 GB/s), re-read on 2026-10-09. [https://www.nvidia.com/en-us/products/workstations/dgx-spark/](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)
+[^9]: Ollama, *Release v0.40.0* (MLX used by default on Apple Silicon), 25 September 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0) · ggml-org, *llama.cpp — Release b11521* (`llama-server` default port changed from 8080 to 9931), 9 October 2026. [https://github.com/ggml-org/llama.cpp/releases/tag/b11521](https://github.com/ggml-org/llama.cpp/releases/tag/b11521)
+[^10]: SGLang Project, *Release v0.5.20* (ROCm image for `gfx1151` Strix / Gorgon Halo), 18 September 2026. [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20) · ignasivt, *Strix Halo Guide* (llama.cpp Vulkan / ROCm paths verified on gfx1151), re-read on 2026-10-09. [https://github.com/ignasivt/strix-halo-guide](https://github.com/ignasivt/strix-halo-guide)

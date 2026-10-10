@@ -45,6 +45,8 @@ L'agent exécute la requête depuis l'intérieur du réseau — le pare-feu pér
 
 **Règle absolue :** tout outil `fetch` fourni à un agent doit filtrer les plages CIDR privées et les adresses de métadonnées cloud (`169.254.169.254`) avant d'émettre la requête. Voir le guide [[06-mise-en-oeuvre/local-inference-security|🔒 Sécurité de l'inférence locale]] pour l'implémentation complète du filtre (SSRF protection, DNS rebinding).
 
+Ce n'est pas théorique : en août 2026, Open WebUI a corrigé une SSRF par DNS rebinding dans son chargeur de pages web — l'URL était validée, puis le navigateur résolvait à nouveau le nom vers une adresse interne (CVE-2026-87996, CVSS 7.7, corrigée en 0.11.1)[^4].
+
 ---
 
 ## Requêtes sûres
@@ -61,7 +63,7 @@ site:github.com openhands local LLM Ollama
 
 ## Pourquoi SearXNG
 
-SearXNG est un métamoteur libre qui agrège les résultats de nombreux services sans profiler les utilisateurs. Une instance privée évite de dépendre directement d'un SaaS de recherche et expose une API JSON exploitable par un agent.
+SearXNG est un métamoteur libre qui agrège les résultats de nombreux services sans profiler les utilisateurs. Une instance privée évite de dépendre directement d'un SaaS de recherche et expose une API JSON exploitable par un agent, à condition d'activer le format `json` dans `search: formats:` de `settings.yml` et de protéger l'instance par le limiter intégré (base Valkey requise)[^2][^3].
 
 ## Voir aussi
 
@@ -71,3 +73,6 @@ SearXNG est un métamoteur libre qui agrège les résultats de nombreux services
 ## 📚 Sources
 
 [^1]: Choi, Kim, Kang, Jeong, Xing, Lee, *Agent Data Injection Attacks are Realistic Threats to AI Agents* (arXiv 2607.05120 : données malveillantes déguisées en données de confiance — identifiants, origine, formats d'appels d'outils ; démontré sur des agents web et des agents de code), 2026-07-06. [https://arxiv.org/abs/2607.05120](https://arxiv.org/abs/2607.05120)
+[^2]: SearXNG Docs, *Search API* (format `json` à activer dans `search: formats:`, sinon 403), build 2026.10.9. [https://docs.searxng.org/dev/search_api.html](https://docs.searxng.org/dev/search_api.html)
+[^3]: SearXNG Docs, *Limiter* (« The limiter requires a Valkey database »), build 2026.10.9. [https://docs.searxng.org/admin/searx.limiter.html](https://docs.searxng.org/admin/searx.limiter.html)
+[^4]: GitHub Advisory Database, *GHSA-4v28-j6q3-5m4r* (Open WebUI 0.9.6 → < 0.11.1 : SSRF par DNS rebinding dans le chargeur web Playwright, CVE-2026-87996, CVSS 3.1 7.7), 2026-08-31. [https://github.com/advisories/GHSA-4v28-j6q3-5m4r](https://github.com/advisories/GHSA-4v28-j6q3-5m4r)

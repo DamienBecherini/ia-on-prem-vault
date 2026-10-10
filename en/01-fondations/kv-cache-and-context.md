@@ -110,9 +110,9 @@ To avoid VRAM explosion on-premises, systems engineers deploy several software o
 
 ### 1. PagedAttention (vLLM / SGLang)
 In classic inference engines, the KV Cache is often **pre-allocated contiguously** in VRAM [^7]. That creates fragmentation and waste: naive implementations typically use only **20 to 38%** of GPU memory reserved for the KV cache [^7].
-**[[00-lexique/pagedattention|PagedAttention]]** draws on operating-system **paged memory** [^7]. The KV Cache is split into fixed blocks, allocated on demand and mapped via a page table. Memory utilization rises to **~96%**, and throughput typically increases by **2 to 4×** at equivalent latency (more depending on workload) [^7].
+**[[00-lexique/pagedattention|PagedAttention]]** draws on operating-system **paged memory** [^7]. The KV Cache is split into fixed blocks, allocated on demand and mapped via a page table. Memory utilization rises to **~96%**, and throughput typically increases by **2 to 4×** at equivalent latency (more depending on workload) [^7]. In vLLM, the original PagedAttention kernel was replaced in mid-2026 by the V1 attention backends, but the principle — a KV cache in blocks allocated on demand — remains the foundation of every production engine [^17].
 
-### 2. KV Cache quantization (FP8 / INT8 / Q4)
+### 2. KV Cache quantization (FP8 / INT8 / NVFP4 / Q4)
 Just as model weights can be compressed, the KV Cache can be compressed too [^1].
 *   **FP8 / INT8 :** Natively supported by `vLLM` (`kv_cache_dtype="fp8"`) and other production engines [^8]. This halves cache size; precision stays close to BF16 if scales are **calibrated** (dataset or `llm-compressor`), with possible gaps on some hybrid-attention models or high `head_dim` [^8][^13].
 *   **Q4 / INT8 on K and V :** `llama.cpp` exposes `--cache-type-k` and `--cache-type-v` (e.g. `q8_0` / `q4_0`) [^9]. Aggressive compression can degrade perplexity on long reasoning, especially if keys (K) are over-quantized [^9].
@@ -128,7 +128,7 @@ On very long contexts, the decoding phase becomes limited by [[00-lexique/memory
 For any on-premise assistant deployment, KV cache management dictates your hardware strategy:
 
 1.  **Inject context, don't drown the model:** Rather than loading entire 150,000-word files into the LLM window (which would saturate dynamic VRAM), retrieve only relevant passages—via a hierarchical memory index (Markdown chunks + summaries, in the manner of the local Memory Tree that OpenHuman offered until Q2 2026 before moving to hosted memory)[^14], vector RAG, or both combined.
-2.  **Enable FP8 KV Cache:** If you use a vLLM- or LMDeploy-based engine, configure the KV cache in FP8 to halve dynamic VRAM consumption, calibrating scales when possible [^8].
+2.  **Enable FP8 KV Cache — or NVFP4 on Blackwell:** on vLLM (`--kv-cache-dtype fp8`, or `nvfp4` on Blackwell GPUs) or LMDeploy, halve (FP8) or quarter (NVFP4) your dynamic VRAM consumption, calibrating scales when possible [^8][^12][^18].
 3.  **Watch the batch/context ratio:** On a server shared by several collaborators at once, the KV Cache multiplies by the number of active users ($B$)—size VRAM accordingly.
 
 ---
@@ -151,3 +151,5 @@ For any on-premise assistant deployment, KV cache management dictates your hardw
 [^14]: OpenHuman, *Memory* (GitBook — memory is now served by CortexDB, hosted or self-hosted; the former local SQLite + Markdown Memory Tree has been removed), re-read on 2026-10-09. [https://tinyhumans.gitbook.io/openhuman/features/memory](https://tinyhumans.gitbook.io/openhuman/features/memory)
 [^15]: DeepSeek AI, *DeepSeek-V4.1-Flash* ("FP4 main KV caching", E2M1 + one E4M3 scale per 16 channels, 890 bytes per token ≈ ¼ of V4-Flash, MIT), 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash); Qwen, *Qwen3.8-27B* (262k context), August 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B); Meta, *Muse Glimmer 30B* (131,072+ tokens), August 2026. [https://huggingface.co/meta-models/Muse-Glimmer-30B](https://huggingface.co/meta-models/Muse-Glimmer-30B)
 [^16]: NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16* ("Mamba-2 + MoE + Attention hybrid", up to 1M tokens), August 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16); Z.ai, *GLM-5.3-Flash* ("hybrid architecture combining sparse and linear attention"), 2026. [https://huggingface.co/zai-org/GLM-5.3-Flash](https://huggingface.co/zai-org/GLM-5.3-Flash)
+[^17]: vLLM Project, *Release v0.25.0* (removal of the legacy PagedAttention implementation in favor of the V1 attention backends / Model Runner V2), 11 July 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.25.0](https://github.com/vllm-project/vllm/releases/tag/v0.25.0)
+[^18]: vLLM, *Cache configuration* (`kv_cache_dtype`: `auto`, `fp8`, `fp8_e4m3`, `fp8_e5m2`, `nvfp4`), consulted 2026-10-10. [https://docs.vllm.ai/en/stable/api/vllm/config/cache/](https://docs.vllm.ai/en/stable/api/vllm/config/cache/) · vLLM Project, *Release v0.31.0* (NVFP4 KV cache by default on SM100 for DeepSeek-V4.1-Flash), 5 October 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
