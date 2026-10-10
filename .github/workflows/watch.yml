@@ -1,0 +1,68 @@
+name: Vault weekly watch
+
+# Collects what changed in the ecosystem over the last 8 days (GitHub
+# releases and security advisories, Hugging Face models, vendor and
+# regulator feeds, the Vision IA YouTube channel as tier C signal) and opens
+# one GitHub issue labelled "veille" with the raw list. The `vault-watch`
+# skill then turns the issue into events, an impact map and a PR.
+# Never a required check.
+on:
+  schedule:
+    - cron: "30 6 * * 1" # Mondays 06:30 UTC, after the freshness workflow
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Window in days"
+        required: false
+        default: "8"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watch:
+    name: Collect ecosystem changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Collect feeds
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node scripts/watch-feeds.mjs --days="${{ inputs.days || '8' }}" \
+            --json="$RUNNER_TEMP/watch.json" > "$RUNNER_TEMP/watch.md"
+          cat "$RUNNER_TEMP/watch.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Open the weekly issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          items=$(node -e "console.log(require(process.env.RUNNER_TEMP+'/watch.json').items.length)")
+          if [ "$items" -eq 0 ]; then
+            echo "Nothing new in the window, no issue opened."
+            exit 0
+          fi
+          gh label create veille --color 0A7EA4 --description "Weekly ecosystem watch" 2>/dev/null || true
+          # GitHub caps issue bodies at 65 536 characters.
+          head -c 60000 "$RUNNER_TEMP/watch.md" > "$RUNNER_TEMP/body.md"
+          if [ "$(wc -c < "$RUNNER_TEMP/watch.md")" -gt 60000 ]; then
+            printf '\n\n_Truncated: the full list is in the run artifact._\n' >> "$RUNNER_TEMP/body.md"
+          fi
+          printf '\n\n---\nNext step: run the `vault-watch` skill on this issue (see `.agents/skills/vault-watch/SKILL.md`).\n' >> "$RUNNER_TEMP/body.md"
+          gh issue create --title "Veille hebdomadaire — $(date -u +%Y-%m-%d) ($items éléments)" \
+            --label veille --body-file "$RUNNER_TEMP/body.md"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: weekly-watch
+          path: |
+            ${{ runner.temp }}/watch.md
+            ${{ runner.temp }}/watch.json
+          retention-days: 60

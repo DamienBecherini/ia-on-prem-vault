@@ -47,7 +47,9 @@ A page can declare its class with a `freshness: volatile | evolving | stable` fr
 
 ## Watchlist
 
-Columns: **Page** (FR path) · **Claim** (short quote, ≤ 120 chars) · **Type** · **Value in page** (the number/version/name as written) · **Source** (footnote id or URL) · **Source date** · **Checked** (last check date) · **Status** · **Note** (what changed, proposed value, new source).
+Columns: **Page** (FR path) · **Claim** (short quote, ≤ 120 chars) · **Type** · **Value in page** (the number/version/name as written) · **Source** (footnote id or URL) · **Source date** · **Checked** (last check date) · **Status** · **Note** (what changed, proposed value, new source) · **Recheck by** (optional `YYYY-MM-DD`: the date this single claim must be re-checked because it has a known deadline — promo end, announced launch, release candidate, price on quote, unpatched advisory).
+
+Page classes (90 / 180 / 365 days) are the safety net; **Recheck by** handles the facts that move faster than their page. `npm run audit:freshness` lists claims past or within 14 days of their date, and the weekly `vault-watch` skill re-checks them claim by claim instead of re-auditing the whole page. Leave the cell empty when the claim has no known deadline.
 
 The table is split per chapter under `watchlist/` because the 2026-10-09 run seeded 585 rows (598 after the Critical PR of the same day, 641 after the first Major PR, 708 after the second Major PR, 739 after the Minor PR of 2026-10-10):
 

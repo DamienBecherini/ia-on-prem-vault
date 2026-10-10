@@ -19,6 +19,7 @@
     "audit:freshness": "node scripts/audit-freshness.mjs",
     "audit:freshness:due": "node scripts/audit-freshness.mjs --due-only",
     "audit:freshness:strict": "node scripts/audit-freshness.mjs --strict",
+    "watch:feeds": "node scripts/watch-feeds.mjs",
     "backfill:dates": "node scripts/backfill-last-modified.mjs",
     "backfill:dates:write": "node scripts/backfill-last-modified.mjs --write",
     "backfill:verified": "node scripts/backfill-verified.mjs",

@@ -139,8 +139,16 @@ const toDate = (s) => new Date(`${s}T00:00:00Z`);
 const addDays = (s, n) => new Date(toDate(s).getTime() + n * DAY_MS).toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((toDate(b) - toDate(a)) / DAY_MS);
 
+/** Claim-level re-check horizon, in days after --as-of. */
+const CLAIM_UPCOMING_DAYS = 14;
+
+/** Watchlist claims carrying a "Recheck by" date (10th column). */
+const claims = [];
+
 /**
- * Parse the per-chapter watchlist files into per-page counters.
+ * Parse the per-chapter watchlist files into per-page counters, and collect
+ * the claims that carry a "Recheck by" date (claim-level deadlines: promos,
+ * launches, release candidates, quotes).
  * @returns {Map<string, { open: number, recheck: number }>}
  */
 function loadWatchlist() {
@@ -164,6 +172,10 @@ function loadWatchlist() {
       if (!page.endsWith(".md")) continue;
       const status = cells[8].toLowerCase();
       const note = cells[9].toLowerCase();
+      const recheckBy = (cells[10] ?? "").trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(recheckBy)) {
+        claims.push({ page, claim: cells[2].split("\u0000").join("\\|"), status, recheckBy });
+      }
       const entry = map.get(page) ?? { open: 0, recheck: 0 };
       if (["drifted", "stale", "unverifiable", "pending"].includes(status)) entry.open += 1;
       if (note.includes("revérifier") || note.includes("reverifier")) entry.recheck += 1;
@@ -236,6 +248,10 @@ const byStatus = {
   ok: count((r) => r.status === "ok"),
 };
 const baselineCount = count((r) => r.baseline);
+const upcomingLimit = addDays(AS_OF, CLAIM_UPCOMING_DAYS);
+const byDate = (a, b) => a.recheckBy.localeCompare(b.recheckBy) || a.page.localeCompare(b.page);
+const claimsDue = claims.filter((c) => c.recheckBy <= AS_OF).sort(byDate);
+const claimsUpcoming = claims.filter((c) => c.recheckBy > AS_OF && c.recheckBy <= upcomingLimit).sort(byDate);
 
 const md = [];
 md.push(`# Freshness Audit — as of ${AS_OF}\n`);
@@ -246,7 +262,23 @@ md.push("| Status | Pages |");
 md.push("| :-- | --: |");
 for (const [k, v] of Object.entries(byStatus)) md.push(`| ${k} | ${v} |`);
 md.push(`| of which June 2026 baseline dates | ${baselineCount} |`);
+md.push(`| watchlist claims due for re-check | ${claimsDue.length} |`);
+md.push(`| watchlist claims due within ${CLAIM_UPCOMING_DAYS} d | ${claimsUpcoming.length} |`);
 md.push("");
+
+const claimSection = (title, list) => {
+  md.push(`## ${title} (${list.length})\n`);
+  if (!list.length) {
+    md.push("_None._\n");
+    return;
+  }
+  md.push("| Recheck by | Page | Claim | Status |");
+  md.push("| :-- | :-- | :-- | :-- |");
+  for (const c of list) md.push(`| ${c.recheckBy} | \`${c.page}\` | ${c.claim} | ${c.status} |`);
+  md.push("");
+};
+claimSection("🔔 Claims due for re-check", claimsDue);
+claimSection(`🗓️ Claims due within ${CLAIM_UPCOMING_DAYS} days`, claimsUpcoming);
 
 const section = (title, list) => {
   md.push(`## ${title} (${list.length})\n`);
@@ -282,7 +314,7 @@ if (OUT_JSON) {
   mkdirSync(dirname(target), { recursive: true });
   writeFileSync(
     target,
-    JSON.stringify({ asOf: AS_OF, cadences: CADENCE_DAYS, byStatus, baselineCount, pages: rows }, null, 2) + "\n",
+    JSON.stringify({ asOf: AS_OF, cadences: CADENCE_DAYS, byStatus, baselineCount, claimsDue, claimsUpcoming, pages: rows }, null, 2) + "\n",
     "utf8",
   );
 }
