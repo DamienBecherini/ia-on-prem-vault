@@ -17,6 +17,22 @@
     },
     "defaultAgent": "Opus 5.5"
   },
+  "footer": {
+    "text": "Contenu rédigé avec l'assistance d'une IA, sous la direction et la vérification d'un auteur humain ; chaque chiffre cite sa source primaire. Contenu dédié au domaine public (CC0 1.0).",
+    "links": [
+      { "label": "Méthode", "href": "https://github.com/DamienBecherini/ia-on-prem-vault#how-the-content-is-written" },
+      { "label": "Licence", "href": "https://github.com/DamienBecherini/ia-on-prem-vault/blob/main/LICENSE" }
+    ],
+    "translations": {
+      "en": {
+        "text": "Content written with AI assistance, under the direction and verification of a human author; every figure cites its primary source. Content dedicated to the public domain (CC0 1.0).",
+        "links": [
+          { "label": "Method", "href": "https://github.com/DamienBecherini/ia-on-prem-vault#how-the-content-is-written" },
+          { "label": "Licence", "href": "https://github.com/DamienBecherini/ia-on-prem-vault/blob/main/LICENSE" }
+        ]
+      }
+    }
+  },
   "publish": {
     "exclude": [
       ".agents/**",
