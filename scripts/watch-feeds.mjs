@@ -50,8 +50,9 @@ const TIMEOUT_MS = 20000;
 const UA = "ia-on-prem-vault-watch/1.0 (+https://ia-on-prem.damien.becherini.fr)";
 
 const sinceTime = new Date(`${SINCE}T00:00:00Z`).getTime();
-const DOMAIN_ORDER = ["security", "engines", "models", "agents", "hardware", "signals"];
+const DOMAIN_ORDER = ["security", "engines", "models", "agents", "hardware", "discovery", "signals"];
 const DOMAIN_TITLE = {
+  discovery: "Discovery (not yet in the vault? — candidates for additions)",
   security: "Security & regulation",
   engines: "Inference engines & tooling",
   models: "Open-weight models",
@@ -123,6 +124,7 @@ function parseFeed(xml) {
 const inWindow = (iso) => iso && new Date(iso).getTime() >= sinceTime;
 
 const matchesKeywords = (feed, item) => {
+  if (feed.exclude && new RegExp(feed.exclude, "i").test(item.title)) return false;
   if (!feed.keywords?.length) return true;
   const hay = `${item.title} ${item.summary}`.toLowerCase();
   return feed.keywords.some((k) => hay.includes(k.toLowerCase()));
@@ -179,6 +181,39 @@ async function readFeed(feed) {
         summary: [m.pipeline_tag, ...(m.tags || []).filter((t) => t.startsWith("license:"))].filter(Boolean).join(" · "),
       }));
     }
+    case "huggingface-trending": {
+      // Discovery: trending models from publishers not already followed.
+      const followed = new Set(
+        config.feeds.filter((f) => f.type === "huggingface-author").map((f) => f.author.toLowerCase()),
+      );
+      const list = await get(
+        `https://huggingface.co/api/models?sort=trendingScore&direction=-1&limit=${feed.limit ?? 40}`,
+        { json: true },
+      );
+      return list
+        .filter((m) => !followed.has(String(m.id).split("/")[0].toLowerCase()))
+        .map((m) => ({
+          title: `${m.id} (trending ${m.trendingScore ?? "?"}, ${m.likes ?? 0} likes)`,
+          url: `https://huggingface.co/${m.id}`,
+          date: m.createdAt ?? null,
+          summary: [m.pipeline_tag, ...(m.tags || []).filter((t) => t.startsWith("license:"))].filter(Boolean).join(" · "),
+        }));
+    }
+    case "github-search": {
+      // Discovery: young repositories that gained traction fast.
+      const created = new Date(Date.now() - (feed.maxAgeDays ?? 30) * 86400000).toISOString().slice(0, 10);
+      const q = `${feed.query} created:>${created} stars:>${feed.minStars ?? 500}`;
+      const res = await get(
+        `https://api.github.com/search/repositories?q=${encodeURIComponent(q)}&sort=stars&order=desc&per_page=${feed.limit ?? 10}`,
+        { json: true, github: true },
+      );
+      return (res.items || []).map((r) => ({
+        title: `${r.full_name} (${r.stargazers_count} stars) — ${r.description ?? ""}`.slice(0, 200),
+        url: r.html_url,
+        date: r.created_at,
+        summary: (r.topics || []).join(", "),
+      }));
+    }
     case "youtube": {
       const xml = await get(`https://www.youtube.com/feeds/videos.xml?channel_id=${feed.channelId}`);
       return parseFeed(xml).map((i) => ({ ...i, title: `${feed.name}: ${i.title}` }));
@@ -202,14 +237,20 @@ async function worker() {
   while (queue.length) {
     const feed = queue.shift();
     try {
-      let items = (await readFeed(feed)).filter((i) => inWindow(i.date) && matchesKeywords(feed, i));
+      // Discovery feeds look at how young an item is (maxAgeDays), not at the weekly window.
+      const fresh = feed.discovery
+        ? (i) => i.date && new Date(i.date).getTime() >= Date.now() - (feed.maxAgeDays ?? 45) * 86400000
+        : (i) => inWindow(i.date);
+      let items = (await readFeed(feed)).filter((i) => fresh(i) && matchesKeywords(feed, i));
       items.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
       const total = items.length;
       if (feed.collapse && total > 1) {
         items = [{ ...items[0], title: `${items[0].title} (+${total - 1} more in window)` }];
       }
       items = items.slice(0, MAX_ITEMS);
-      for (const i of items) results.push({ feed: feed.id, domain: feed.domain, tier: feed.tier, ...i });
+      for (const i of items) {
+        results.push({ feed: feed.id, domain: feed.discovery ? "discovery" : feed.domain, tier: feed.tier, ...i });
+      }
     } catch (err) {
       errors.push({ feed: feed.id, error: String(err?.message ?? err) });
     }

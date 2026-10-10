@@ -64,6 +64,12 @@
     { "id": "amd-ir", "domain": "hardware", "type": "rss", "url": "https://ir.amd.com/news-events/press-releases/rss", "tier": "A" },
     { "id": "servethehome", "domain": "hardware", "type": "rss", "url": "https://www.servethehome.com/feed/", "tier": "B", "keywords": ["GPU", "AI", "NVIDIA", "AMD", "Intel", "DGX", "Instinct", "Blackwell", "Rubin", "Strix", "Halo", "Crescent", "Cerebras", "Tenstorrent", "memory", "DRAM", "HBM"] },
 
+    { "id": "hf-trending", "domain": "discovery", "discovery": true, "type": "huggingface-trending", "limit": 60, "maxAgeDays": 45, "tier": "B", "exclude": "lora|abliterated|uncensored|exl[23]|-gguf|-awq|-gptq|-mlx|merge|nsfw|roleplay|rp-|outfit|anime", "$comment": "trending models from publishers not already followed above; fine-tunes, LoRAs and quant repacks excluded" },
+    { "id": "gh-new-llm-repos", "domain": "discovery", "discovery": true, "type": "github-search", "query": "topic:llm", "minStars": 1000, "maxAgeDays": 30, "limit": 10, "tier": "C", "exclude": "awesome-|finance|chat-jarvis" },
+    { "id": "gh-new-local-inference", "domain": "discovery", "discovery": true, "type": "github-search", "query": "topic:llm-inference", "minStars": 300, "maxAgeDays": 45, "limit": 10, "tier": "C" },
+    { "id": "simonwillison-local-llms", "domain": "discovery", "discovery": true, "type": "rss", "url": "https://simonwillison.net/tags/local-llms.atom", "maxAgeDays": 14, "tier": "B" },
+    { "id": "latent-space", "domain": "discovery", "discovery": true, "type": "rss", "url": "https://www.latent.space/feed", "maxAgeDays": 14, "tier": "B", "keywords": ["open", "local", "inference", "weights", "on-prem", "self-host", "agent", "MCP", "GPU"] },
+
     { "id": "youtube-vision-ia", "domain": "signals", "type": "youtube", "channelId": "UCyc03X3uRuxM9n7fyRH_gIw", "name": "Vision IA", "tier": "C" }
   ]
 }

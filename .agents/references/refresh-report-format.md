@@ -104,6 +104,34 @@ Rules:
 
 ---
 
+## 2 bis. Additions (weekly watch report `watch-<date>.md`)
+
+```markdown
+## Additions
+
+### Paragraphs in existing pages
+| # | Page | Where (section) | Proposed paragraph (FR, with footnote markers) | Sources (tier, date) | Why it matters on-prem |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+
+### Lexicon entries to create
+- `00-lexique/<slug>.md` — short definition (1–2 sentences, sourced) · pages that would link to it
+
+### New pages (opportunity notes — need the user's go-ahead)
+#### <Subject>
+- What it is: …
+- Why it matters for an on-prem SME (sizing, tool choice, security): …
+- Where it fits: chapter / sidebar position, pages that would link to it
+- Primary sources: …
+- Effort: paragraph-sized / page-sized
+
+### Seen, not proposed
+- <item> — reason (below threshold, cloud-only, fine-tune, already covered by …)
+```
+
+Threshold: confirmed by a tier A source or two independent tier B sources, **and** changes a sizing, tool-choice or security decision for an on-prem SME.
+
+---
+
 ## 3. Chat summary
 
 When reporting in chat, paste only the **Summary** block and the report path, then the Critical findings as a short list. Everything else stays in the file.
