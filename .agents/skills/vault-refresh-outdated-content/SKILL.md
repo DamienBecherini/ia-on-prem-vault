@@ -45,7 +45,13 @@ npm run audit:sources:report        # probes every cited URL; writes reports/sou
 npm run audit:i18n:strict           # EN drift count to record in the final report
 ```
 
-Then build the **due list**: for each FR page, infer its volatility class from `freshness-watchlist.md` → "Volatility classes" and compare `last_verified` + cadence to `RUN_DATE`. Pages with no `last_verified` are due.
+Then build the **due list** with the script:
+
+```bash
+npm run audit:freshness:due -- --json=.agents/vault-maintenance/reports/freshness-<RUN_DATE>.json > .agents/vault-maintenance/reports/freshness-<RUN_DATE>.md
+```
+
+It applies the volatility classes of `freshness-watchlist.md` (or a page's `freshness:` frontmatter), flags June 2026 baseline dates, and counts open and "à revérifier" watchlist rows per page.
 
 Copy `reports/sources-latest.md` to `reports/sources-<RUN_DATE>.md` so the run keeps its snapshot.
 
@@ -116,7 +122,7 @@ For each target page (FR version only):
 3. **If and only if the user asks to apply**:
    - branch `chore/vault-refresh-<RUN_DATE>`;
    - apply the proposed edits to FR pages only, in the order of severity;
-   - for every edited FR page set `last_modified: <RUN_DATE>`; for every audited page (edited or confirmed current) set `last_verified: <RUN_DATE>` and `verified_by: <editorial.defaultAgent>`; never set `verified_hitl` autonomously;
+   - for every edited FR page set `last_modified: <RUN_DATE>`; for every audited page (edited or confirmed current) set `last_verified: <RUN_DATE>` and `verified_by: <editorial.defaultAgent>`, for example with `node scripts/backfill-verified.mjs --write --paths=<fr.md,en/fr.md,…>` (never a whole-vault stamp); never set `verified_hitl` autonomously;
    - update the watchlist rows to `current` with the new values;
    - run `npm test` and `npm run audit:sources:offline`;
    - commit `chore(refresh): <scope>`, push, open a PR using the template in `.cursor/rules/git-workflow.mdc`, with the report path and the `audit:i18n:strict` stale count in the body. EN sync is deferred to `vault-translate-content` unless the user asked for it.
