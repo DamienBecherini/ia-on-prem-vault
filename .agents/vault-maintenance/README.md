@@ -45,7 +45,13 @@ Claim-level registry of time-sensitive statements (prices, versions, availabilit
 | `## Volatility classes` | folder → class → cadence mapping | humans, `vault-refresh-outdated-content` |
 | `## Watchlist` | one row per claim: page, quote, type, value, source, dates, status | `vault-refresh-outdated-content`, `vault-generate-content`, `vault-verify-content` |
 
-A refresh run diffs this table against the web instead of re-reading every page.
+A refresh run diffs this table against the web instead of re-reading every page. The **Recheck by** column gives a claim-level deadline for facts that move faster than their page (promos, launches, release candidates, quotes); `npm run audit:freshness` lists the claims that are due.
+
+---
+
+### `feeds.json`
+
+Sources of the weekly watch (`npm run watch:feeds`, `.github/workflows/watch.yml`): GitHub releases, tags and advisories, Hugging Face publishers, vendor and regulator RSS, and the Vision IA YouTube channel (tier C, leads only). Add a source when a tool or vendor enters the vault, remove it when it leaves. The `vault-watch` skill consumes the weekly `veille` issue. Sources flagged `"discovery": true` (Hugging Face trending, young GitHub repositories, editorial watch feeds) look for subjects the vault does not cover yet; they feed the "Additions" step. Items triaged and deliberately set aside live in `watch-seen.md`.
 
 ---
 
