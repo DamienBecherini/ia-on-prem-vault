@@ -3,8 +3,8 @@ title: "📊 Monitoring the inference stack"
 description: Setting up Prometheus + Grafana monitoring for a vLLM or Ollama stack — GPU metrics, KV Cache, throughput, and operational alerts.
 sidebar:
   order: 6
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -123,14 +123,15 @@ scrape_configs:
     static_configs:
       - targets: ['node-exporter:9100']
 
-  # If Ollama (no native /metrics — use community exporter)
-  - job_name: 'ollama'
+  # If Ollama: no native /metrics — scrape the metrics of the reverse proxy placed in front of
+  # Ollama (Caddy: admin endpoint :2019/metrics; Nginx: nginx-prometheus-exporter)
+  - job_name: 'ollama-proxy'
     static_configs:
-      - targets: ['host.docker.internal:9462']  # ollama exporter port
+      - targets: ['host.docker.internal:2019']  # reverse proxy /metrics endpoint
 ```
 
 > [!note] Ollama vs vLLM
-> vLLM natively exposes a Prometheus-compatible `/metrics` endpoint[^1]. Ollama does not — you need a community exporter such as [ollama-exporter](https://github.com/marcboeker/go-ollama) or [prometheus-ollama-exporter](https://github.com/codereliant/ollama-prometheus-exporter). These projects are unofficial; evaluate before production use.
+> vLLM natively exposes a Prometheus-compatible `/metrics` endpoint[^1]. Ollama exposes no documented Prometheus `/metrics` as of Q4 2026[^10]: instrument at the reverse proxy level (Caddy natively exposes Prometheus metrics on its admin endpoint `:2019/metrics`; Nginx via `nginx-prometheus-exporter`) or use the `eval_count`, `eval_duration` and `prompt_eval_duration` fields of `/api/generate` and `/api/chat` responses (section 7). The community exporters cited in earlier versions of this guide are no longer available (repositories deleted as of 2026-10-09).
 
 ---
 
@@ -144,7 +145,7 @@ vLLM exposes metrics on `GET /metrics`[^1]. Priority metrics to watch:
 | :-- | :-- | :-- |
 | `vllm:num_requests_running` | Requests in progress | > 80% of `--max-num-seqs` |
 | `vllm:num_requests_waiting` | Queued requests | > 0 for > 30 s |
-| `vllm:avg_generation_throughput_toks_per_s` | Average throughput tokens/s | < threshold defined by use case |
+| `rate(vllm:generation_tokens_total[1m])` | Generation throughput in tokens/s (derived from the counter; the V0 gauge `avg_generation_throughput_toks_per_s` is gone)[^1] | < threshold defined by use case |
 | `vllm:prompt_tokens_total` | Prompt tokens processed (cumulative) | — (trend) |
 | `vllm:generation_tokens_total` | Generated tokens (cumulative) | — (trend) |
 
@@ -166,7 +167,8 @@ vLLM exposes metrics on `GET /metrics`[^1]. Priority metrics to watch:
 | Metric | Description |
 | :-- | :-- |
 | `vllm:time_to_first_token_seconds` | TTFT distribution per request |
-| `vllm:time_per_output_token_seconds` | Latency per generated token |
+| `vllm:inter_token_latency_seconds` | Latency between two generated tokens (histogram)[^1] |
+| `vllm:request_time_per_output_token_seconds` | Average time per output token, per request (replaces `vllm:time_per_output_token_seconds`)[^1] |
 | `vllm:e2e_request_latency_seconds` | End-to-end latency |
 
 ---
@@ -338,17 +340,19 @@ Without traces, engineers search logs in each service separately. With OpenTelem
 
 ### OpenTelemetry (OTEL) — native vLLM and LiteLLM integration
 
-LiteLLM and vLLM support OpenTelemetry natively[^6][^7]:
+LiteLLM and vLLM support OpenTelemetry natively[^11]:
 
 ```bash
 # vLLM — enable OTEL (export to local collector)
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --otlp-traces-endpoint http://localhost:4317
 
-# LiteLLM — enable in litellm_config.yaml
-general_settings:
-  otel: true
-  otel_endpoint: http://localhost:4317   # OTLP gRPC
+# LiteLLM — litellm_config.yaml
+litellm_settings:
+  callbacks: ["otel"]
+# and in the LiteLLM proxy environment:
+# OTEL_EXPORTER=otlp_grpc
+# OTEL_ENDPOINT=http://localhost:4317   # OTLP gRPC
 ```
 
 ### Recommended LLM observability stack
@@ -357,22 +361,19 @@ For a sovereign on-prem infrastructure, two options:
 
 | Tool | Type | Strengths | Deployment |
 | :-- | :-- | :-- | :-- |
-| **Langfuse** (self-hosted) | Traces + LLM eval | LLM-focused UI, cost per token, quality evaluation | Docker Compose[^6] |
+| **Langfuse** (self-hosted, v4) | Traces + LLM eval | LLM-focused UI, cost per token, quality evaluation | Official Docker Compose (local use and testing); Helm in production[^6] |
 | **Jaeger** | Distributed traces | CNCF standard, lightweight, Kubernetes-ready | Docker `jaegertracing/all-in-one` |
-| **Arize Phoenix** | Traces + agent debug | Specialized for agents/RAG, free and open-source | `pip install arize-phoenix`[^7] |
+| **Arize Phoenix** | Traces + agent debug | Specialized for agents/RAG, free; Elastic License 2.0 (*source-available*, not OSI, forbids offering it as a managed service) | `pip install arize-phoenix`[^7][^12] |
 
 **Minimal recommended stack for a custodian agent:**
 
 ```yaml
 # docker-compose.yml — add to existing stack
-langfuse:
-  image: langfuse/langfuse:latest
-  ports:
-    - "3001:3000"
-  environment:
-    DATABASE_URL: "postgresql://langfuse:langfuse@postgres:5432/langfuse"
-    NEXTAUTH_SECRET: "your-secret"
-    SALT: "your-salt"
+# Langfuse (v4) is no longer a single container: it needs PostgreSQL, ClickHouse,
+# Redis/Valkey and S3 storage (MinIO locally). Start from the official docker-compose.yml
+# in the Langfuse repository (positioned as "local use and testing"); for
+# production, the Helm chart. See note [^6].
+#   git clone https://github.com/langfuse/langfuse && cd langfuse && docker compose up -d
 
 otel-collector:
   image: otel/opentelemetry-collector-contrib:latest
@@ -460,7 +461,10 @@ cp /qdrant/snapshots/my_collection/*.snapshot /mnt/backup/qdrant/
 [^3]: NVIDIA, *DCGM Exporter — Metrics Reference* (list of DCGM_FI_DEV_* metrics, GPU utilization, memory, temperature, NVLink). [https://github.com/NVIDIA/dcgm-exporter](https://github.com/NVIDIA/dcgm-exporter)
 [^4]: Grafana Labs, *NVIDIA DCGM Exporter Dashboard* (ID 12239, GPU metrics visualization). [https://grafana.com/grafana/dashboards/12239](https://grafana.com/grafana/dashboards/12239)
 [^5]: Grafana Labs, *Node Exporter Full Dashboard* (ID 1860, system metrics — CPU, memory, disk, network). [https://grafana.com/grafana/dashboards/1860](https://grafana.com/grafana/dashboards/1860)
-[^6]: Langfuse, *Self-Hosting Guide & LiteLLM Integration* (Docker Compose, OTEL ingestion, LLM observability). [https://langfuse.com/docs/deployment/self-host](https://langfuse.com/docs/deployment/self-host)
-[^7]: Arize AI, *Arize Phoenix — Open-source LLM Observability* (agent traces, RAG debugging, OTEL-compatible). [https://docs.arize.com/phoenix](https://docs.arize.com/phoenix)
+[^6]: Langfuse, *Self-Hosting* (v4: PostgreSQL + ClickHouse + Redis/Valkey + S3 storage; Docker Compose for local use, Helm for production), accessed 2026-10-09. [https://langfuse.com/self-hosting](https://langfuse.com/self-hosting)
+[^7]: Arize AI, *Arize Phoenix — LLM Observability* (agent traces, RAG debugging, OTEL-compatible), accessed 2026-10-09. [https://arize.com/docs/phoenix](https://arize.com/docs/phoenix)
 [^8]: vLLM Project, *Disaggregated Prefill and Decode* (`--kv-transfer-config`, `OffloadingConnector` for KV Cache CPU offload), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/disagg_prefill/](https://docs.vllm.ai/en/stable/features/disagg_prefill/)
 [^9]: Ollama, *Troubleshooting* (log locations: `journalctl -u ollama`, `~/.ollama/logs/server.log`, `docker logs`), accessed 2026-10-09 · `ollama/ollama` repository, `cmd/cmd.go` (subcommand list, no `logs`). [https://docs.ollama.com/troubleshooting](https://docs.ollama.com/troubleshooting) · [https://github.com/ollama/ollama](https://github.com/ollama/ollama)
+[^10]: Ollama, *API Reference* (`/api/generate`, `/api/chat` endpoints and `eval_count` / `eval_duration` / `prompt_eval_duration` fields; no `/metrics` endpoint), accessed 2026-10-09. [https://docs.ollama.com/api](https://docs.ollama.com/api)
+[^11]: LiteLLM, *OpenTelemetry Integration* (`litellm_settings.callbacks: ["otel"]`, `OTEL_EXPORTER` / `OTEL_ENDPOINT` variables), accessed 2026-10-09 · vLLM Project, *CLI Reference — `vllm serve`* (`--otlp-traces-endpoint`), accessed 2026-10-09. [https://docs.litellm.ai/docs/observability/opentelemetry_integration](https://docs.litellm.ai/docs/observability/opentelemetry_integration) · [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/)
+[^12]: Arize AI, `Arize-ai/phoenix` repository, `LICENSE` file (Elastic License 2.0) and *Release arize-phoenix-v20.0.0*, 2026-08-11. [https://github.com/Arize-ai/phoenix/blob/main/LICENSE](https://github.com/Arize-ai/phoenix/blob/main/LICENSE) · [https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.0.0](https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.0.0)

@@ -3,8 +3,8 @@ title: "🌐 AI Clustering: Connecting GPUs with Exo and Ray"
 description: How to merge memory across multiple machines for local AI. Comparison between Exo (Apple Silicon / homelab) and Ray Serve (datacenter).
 sidebar:
   order: 2
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -29,11 +29,11 @@ In 2026, two software schools compete for AI clustering: **Exo** for desktop har
 > Exo has not published a release since v1.0.71 (2026-04-23) and its repository has received only two commits since June 2026; the project remains usable but no longer keeps pace with new models or macOS at MLX's rhythm[^1][^5]. Since macOS 26.2 and MLX 0.32, Apple ships the maintained equivalent directly: `mlx.launch` runs a distributed program over a *hostfile* of Macs linked via Thunderbolt 5 (**JACCL** backend, RDMA) or Ethernet (*ring* backend)[^6]. For a new Mac cluster, compare distributed MLX (maintained by Apple) and Exo (simpler interface, project slowing down).
 
 ### 🌟 How it works
-Exo runs Peer-to-Peer (P2P). You run the `uv run exo` command on each machine. They automatically discover each other on the local network and merge their available memory[^1]. When a request is sent, Exo splits the model (*Pipeline Parallelism* strategy): machine A computes the first layers of the neural network, then sends the result to machine B over the network, which computes the next layers.
+Exo runs Peer-to-Peer (P2P). You run the `uv run exo` command on each machine. They automatically discover each other on the local network and merge their available memory[^1]. When a request is sent, Exo splits the model either in *pipeline* mode (successive layers on successive machines: machine A computes the first layers of the neural network, then sends the result to machine B, which computes the next layers) or in *tensor parallel* mode (each layer spread across all machines, via Thunderbolt 5 RDMA), depending on the bandwidth measured between nodes[^1].
 
 ### 🚀 Use case: The Mac cluster
 Exo shines particularly on Apple Silicon. By linking the Macs over **Thunderbolt 5** under **macOS 26.2 or later**, Exo enables **RDMA over Thunderbolt** (to be enabled once via `rdma_ctl enable` from Recovery mode, with the same macOS build on every node) and gets enough bandwidth to compensate for inter-machine latency; over Thunderbolt 4 you only get an IP link, enough for testing but not for tensor parallelism[^1].
-Community benchmarks indicate that a cluster of 8 Mac Mini M4 Pro (512 GB aggregated unified memory) can run the colossal DeepSeek V3 671B with throughput on the order of **3 to 5 tokens/s** in this configuration[^2].
+Exo Labs measured, on a cluster of 8 Mac mini M4 Pro 64 GB (512 GB aggregated), DeepSeek V3 671B in 4-bit at **5.4 tokens/s** (TTFT 2.9 s); the Mac mini M5 Pro generation (307 GB/s, Thunderbolt 5) has replaced it since September 2026 with no new published figure[^2][^8].
 
 ### ⚠️ Limitations
 If the network connection is slow (Wi-Fi or plain 1 Gigabit Ethernet cable), transferring activations between machines becomes a fatal bottleneck. Total capacity increases, but [[00-lexique/tokens-per-second|tokens/s]] collapse.
@@ -42,7 +42,7 @@ If the network connection is slow (Wi-Fi or plain 1 Gigabit Ethernet cable), tra
 
 ## 2. Ray & vLLM: The datacenter standard
 
-For enterprise production (like Apple's or OpenAI's infrastructure), consumer networking has no place. The industry standard relies on the distributed orchestrator **Ray** (often coupled with the **vLLM** engine covered earlier).
+For enterprise production (like Apple's or OpenAI's infrastructure), consumer networking has no place. The industry standard relies on the distributed orchestrator **Ray** (often coupled with the **vLLM** engine covered earlier). Ray Serve LLM reached general availability with Ray 2.59.0 (October 2, 2026): vLLM and SGLang backends, prefill/decode disaggregation, prefix-aware and KV-cache-occupancy routing, multi-LoRA; the vLLM version pinned by Ray (0.27.0) lags a few releases behind upstream vLLM (0.31.0), to be checked before aligning CUDA 13 / PyTorch[^3][^7].
 
 ### 🌟 How it works
 Ray manages entire server farms. Instead of P2P, it relies on a Master/Worker architecture. The `ray symmetric-run` command, for example, lets you launch and synchronize the vLLM engine across multiple physical servers in a unified way[^3].
@@ -64,10 +64,10 @@ Ray is very complex to administer. It requires enterprise-class infrastructure, 
 | Criterion | Exo | Ray + vLLM |
 | :-- | :-- | :-- |
 | **Installation** | `brew install --cask exo` (macOS app) or `uv sync --extra mlx` + `uv run exo` | Ray cluster + vLLM, YAML configuration |
-| **Node discovery** | Automatic (mDNS / Thunderbolt) | Manual (IP/DNS or explicit config) |
-| **Recommended network** | Thunderbolt 4/5, Wi-Fi 6E possible | RoCE v2 or InfiniBand (100/200 Gb) |
+| **Node discovery** | Automatic (zenoh since June 2026; IP or Thunderbolt)[^9] | Manual (IP/DNS or explicit config) |
+| **Recommended network** | Thunderbolt 5 + RDMA (macOS 26.2+); TB4 / Ethernet for testing | RoCE v2 or InfiniBand (200/400 Gb) |
 | **Target hardware** | Apple Silicon Macs (Mac mini M5 Pro, Mac Studio M5 Max / Ultra); Linux CPU-only | NVIDIA rack servers (H100/H200/B200/B300), AMD MI300X/MI355X via vLLM/SGLang |
-| **Parallelism** | Pipeline Parallelism only | TP + PP + Prefill/Decode disaggregation |
+| **Parallelism** | Pipeline + Tensor (automatic choice based on topology; TP advertised up to 1.8× on 2 nodes, 3.2× on 4)[^1] | TP + PP + Prefill/Decode disaggregation |
 | **Monitoring** | Text logs, no native observability | Prometheus, Grafana, Ray traces |
 | **Fault tolerance** | Low (loss of one node = crash) | Strong (Ray restarts workers) |
 | **Budget threshold** | < €15,000 (desktop cluster) | > €100,000 (GPU server + network) |
@@ -82,7 +82,7 @@ git clone https://github.com/exo-explore/exo && cd exo && uv sync --extra mlx
 # Machine 1 (P2P cluster startup)
 uv run exo
 
-# Machine 2 (automatic join via mDNS)
+# Machine 2 (automatic join, zenoh discovery)
 uv run exo
 
 # Verify that nodes see each other
@@ -98,7 +98,7 @@ curl http://localhost:52415/v1/chat/completions \
 ```
 
 > [!note] Thunderbolt vs Ethernet for Exo
-> On Wi-Fi or 1 Gb Ethernet, Exo works but performance drops drastically. For 70B+ models, prefer Thunderbolt 4 (40 Gb/s) or Thunderbolt 5 (80 Gb/s). Thunderbolt cables automatically create an IP-over-Thunderbolt network interface on macOS.
+> On Wi-Fi or 1 Gb Ethernet, Exo works but performance drops drastically. For 70B+ models, prefer **Thunderbolt 5** (80 Gb/s, 120 Gb/s asymmetric) under macOS 26.2+ to benefit from RDMA; Thunderbolt 4 (40 Gb/s) only provides an IP-over-Thunderbolt interface, created automatically by macOS[^1][^6].
 
 ---
 
@@ -106,15 +106,18 @@ curl http://localhost:52415/v1/chat/completions \
 
 To deploy on-premise autonomous agents for clients:
 
-1.  **In testing phase or for an SME lab:** If you need to run a 70B model and you have two Mac Studios or two 32 GB gaming PCs, **install Exo**. In 5 minutes, your cluster is ready and the model runs without additional cloud investment.
+1.  **In testing phase or for an SME lab:** if your models exceed the memory of a single Mac (DeepSeek, Kimi, Qwen 3.x-480B, etc.), link two to four Apple Silicon Macs over Thunderbolt 5 with **distributed MLX** (`mlx.launch`, JACCL backend) or **Exo**; a 70B Q4 fits in a 64–128 GB Mac Studio without a cluster. Linux/Windows PCs with GPUs are not served by Exo as of Q4 2026[^1][^6]. In a few minutes, your cluster is ready and the model runs without additional cloud investment.
 2.  **In critical multi-user production:** Forget P2P. Use **Ray Serve with vLLM** on Linux servers equipped with dedicated GPUs. This is the only software architecture that guarantees precise monitoring, intelligent routing of concurrent requests, and real fault tolerance at the local datacenter level.
 
 ---
 
 ## 📚 Sources and references
-[^1]: Exo Labs, *GitHub - exo-explore/exo: Run frontier AI locally* (README: MLX backend only, Linux CPU-only, Thunderbolt 5 RDMA + macOS 26.2, `rdma_ctl enable`, `brew` / `uv sync --extra mlx` install), re-read on 2026-10-09. [https://github.com/exo-explore/exo](https://github.com/exo-explore/exo)
-[^2]: Exo Labs, *Running DeepSeek V3 671B on M4 Mac Mini Cluster* (Performance via Thunderbolt 5 and Exo, 3–5 tok/s), March 2026. [https://blog.exolabs.net/day-2](https://blog.exolabs.net/day-2)
+[^1]: Exo Labs, *GitHub - exo-explore/exo: Run frontier AI locally* (README: MLX backend only, Linux CPU-only, Thunderbolt 5 RDMA + macOS 26.2, `rdma_ctl enable`, automatically chosen pipeline and tensor parallelism — TP "up to 1.8× on 2 devices, 3.2× on 4" —, `brew` / `uv sync --extra mlx` install), re-read on 2026-10-09. [https://github.com/exo-explore/exo](https://github.com/exo-explore/exo)
+[^2]: Exo Labs, *Running DeepSeek V3 671B on M4 Mac Mini Cluster — 12 days of EXO* (8 × Mac mini M4 Pro 64 GB, 4-bit, 5.37 tok/s, TTFT 2.91 s; undated page, December 2024 series), re-read on 2026-10-09. [https://blog.exolabs.net/day-2](https://blog.exolabs.net/day-2)
 [^3]: Anyscale & vLLM Blog, *Streamlined multi-node serving with Ray symmetric-run* (Multi-node vLLM launch), November 2025. [https://vllm.ai/blog/2025-11-22-ray-symmetric-run](https://vllm.ai/blog/2025-11-22-ray-symmetric-run)
 [^4]: Anyscale, *Ray Serve LLM — Wide-EP disaggregated serving with vLLM* (Prefill/Decode disaggregation, MoE), 2025. [https://www.anyscale.com/blog/ray-serve-llm-anyscale-apis-wide-ep-disaggregated-serving-vllm](https://www.anyscale.com/blog/ray-serve-llm-anyscale-apis-wide-ep-disaggregated-serving-vllm)
 [^5]: Exo Labs, *exo — Releases* (latest version v1.0.71, 2026-04-23), accessed 2026-10-09. [https://github.com/exo-explore/exo/releases](https://github.com/exo-explore/exo/releases)
 [^6]: Apple MLX, *Distributed Communication* (`mlx.launch`, JACCL / ring backends, Thunderbolt 5 RDMA), accessed 2026-10-09. [https://ml-explore.github.io/mlx/build/html/usage/distributed.html](https://ml-explore.github.io/mlx/build/html/usage/distributed.html)
+[^7]: Ray Project, *Release ray-2.59.0* ("LLM APIs graduate to general availability": vLLM 0.27.0 and SGLang, prefill/decode disaggregation, KV-aware routing, multi-LoRA), 2026-10-02 · Ray Docs, *Serving LLMs*. [https://github.com/ray-project/ray/releases/tag/ray-2.59.0](https://github.com/ray-project/ray/releases/tag/ray-2.59.0) · [https://docs.ray.io/en/latest/serve/llm/index.html](https://docs.ray.io/en/latest/serve/llm/index.html)
+[^8]: Apple Newsroom, *Apple unveils a more powerful Mac mini featuring the all-new M6 and M5 Pro* (Mac mini M5 Pro: up to 64 GB, 307 GB/s, Thunderbolt 5), August 2026 · Apple, *Mac mini — Technical Specifications*, accessed 2026-10-09. [https://www.apple.com/newsroom/2026/08/apple-unveils-a-more-powerful-mac-mini-featuring-the-all-new-m6-and-m5-pro/](https://www.apple.com/newsroom/2026/08/apple-unveils-a-more-powerful-mac-mini-featuring-the-all-new-m6-and-m5-pro/) · [https://www.apple.com/mac-mini/specs/](https://www.apple.com/mac-mini/specs/)
+[^9]: Exo Labs, `exo-explore/exo` repository, PR #2132 "libp2p -> zenoh" (replacement of the discovery layer), merged 2026-06-03. [https://github.com/exo-explore/exo/pull/2132](https://github.com/exo-explore/exo/pull/2132)
