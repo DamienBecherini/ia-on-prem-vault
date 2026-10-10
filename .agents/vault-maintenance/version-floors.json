@@ -5,6 +5,6 @@
     "adv-vllm": "0.31.0",
     "adv-litellm": "1.100.4",
     "adv-ollama": "0.31.2",
-    "adv-open-webui": "0.11.1"
+    "adv-open-webui": "0.11.4"
   }
 }
