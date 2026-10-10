@@ -1,22 +1,24 @@
 ---
 title: "OpenHands"
-description: Docker-based agentic platform for software development, powerful but heavier to operate than a simple CLI.
+description: Software development agent platform (CLI, SDK, Docker sandbox, Agent Canvas), powerful but heavier to operate than a simple CLI.
 sidebar:
   order: 3
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 ## 🔍 Quick overview
 
-OpenHands is a software development agent platform with CLI, local interface, SDK, and Docker sandbox. It targets workflows close to Devin/Jules: the agent explores, modifies, executes, and iterates in a controlled environment[^1][^2].
+OpenHands is a software development agent platform (MIT): CLI, Python SDK, Docker sandbox and, since June 2026, **Agent Canvas**, a self-hosted control center that launches sessions and scheduled or event-driven automations (Slack, GitHub, Linear) on local, Docker, VM, or Kubernetes backends. Agent Canvas drives the OpenHands agent or, via the Agent Client Protocol (ACP), third-party agents such as Claude Code, Codex, or Gemini CLI[^1][^5][^6]. The agent explores, modifies, executes, and iterates in a controlled environment[^2].
 
 ## 💡 Why this project interests us
 
 OpenHands is relevant when the custodian agent must go beyond simple file editing: test execution, isolated environment, long tasks, web interface, sandbox, and more structured orchestration.
+
+Since June 2026, it is also an orchestration layer: via ACP, the same Agent Canvas can start with a vendor agent (Claude Code, Codex) and then switch to the OpenHands agent connected to a local model without changing interface — an MVP → sovereign target path without a rewrite[^6].
 
 ## ✅ Strengths
 
@@ -50,7 +52,9 @@ OpenHands becomes interesting if the agent must:
 - execute complex tools;
 - strongly isolate the workspace.
 
-For simple Markdown maintenance, Aider remains lighter.
+Since June 2026, Agent Canvas lets you define an automation (scheduled, or triggered by GitHub/Slack/Linear) that launches the agent on an internal Docker or VM backend, with a dedicated LLM profile pointing to Ollama or vLLM: this is the controlled runner of step 2 of the [[05-agents-et-assistants-on-prem/agents-custodiens/recommandation-architecture-cible|trajectory]], with no home-made script[^5].
+
+For simple Markdown maintenance, Aider remains lighter, but its development has been frozen since May 2026; the OpenHands CLI (without Agent Canvas) is the closest maintained option[^7].
 
 ## 📊 Project maturity
 
@@ -65,7 +69,10 @@ Very active project, large community, many components. High maturity, but also h
 
 ## 📚 Sources
 
-[^1]: OpenHands GitHub README. [https://github.com/OpenHands/OpenHands](https://github.com/OpenHands/OpenHands)
+[^1]: OpenHands GitHub README (repository presented as "Agent Canvas (beta)", MIT, v1.26.0 of 2026-10-08), accessed 2026-10-10. [https://github.com/OpenHands/OpenHands](https://github.com/OpenHands/OpenHands)
 [^2]: OpenHands Docs, *Local setup*. [https://docs.openhands.dev/openhands/usage/run-openhands/local-setup](https://docs.openhands.dev/openhands/usage/run-openhands/local-setup)
 [^3]: OpenHands Docs, *Docker Sandbox*. [https://docs.openhands.dev/sdk/guides/agent-server/docker-sandbox](https://docs.openhands.dev/sdk/guides/agent-server/docker-sandbox)
 [^4]: OpenHands Docs, *Local LLMs*. [https://docs.openhands.dev/openhands/usage/llms/local-llms](https://docs.openhands.dev/openhands/usage/llms/local-llms)
+[^5]: OpenHands, *Introducing Agent Canvas* (scheduled and event-driven Slack/GitHub/Linear workflows, LLM profiles, local/Docker/VM/Kubernetes/OpenHands Cloud backends, MIT license), 2026-06-16. [https://www.openhands.dev/blog/introducing-agent-canvas](https://www.openhands.dev/blog/introducing-agent-canvas)
+[^6]: OpenHands, *Use any coding agent in OpenHands with ACP* (Agent Client Protocol: Claude Code, Codex, Gemini CLI, or any compatible agent; `ACPAgent` in the SDK), 2026-06-18. [https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp](https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp)
+[^7]: Aider-AI, *aider* (GitHub repository: last commit on 2026-05-22, latest release v0.86.0 of 2025-08-09), accessed 2026-10-10. [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider)

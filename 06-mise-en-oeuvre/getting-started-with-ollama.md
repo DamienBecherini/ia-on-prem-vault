@@ -3,8 +3,8 @@ title: "🚀 Démarrer avec Ollama"
 description: Installation, premier modèle, test API et premières bonnes pratiques pour une inférence locale en moins de 15 minutes.
 sidebar:
   order: 3
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -17,7 +17,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## Prérequis
 
-- **macOS** (Apple Silicon recommandé) ou **Linux** (GPU NVIDIA ou AMD, ou CPU seul)
+- **macOS** (Apple Silicon recommandé — depuis Ollama 0.40, septembre 2026, les architectures compatibles tournent par défaut sur le moteur MLX d'Apple[^3]) ou **Linux** (GPU NVIDIA ou AMD, ou CPU seul)
 - Windows : supporté via WSL2 ou installeur natif — les performances GPU nécessitent les pilotes CUDA ou ROCm
 - Au moins 8 Go de RAM (16+ recommandé pour un 7B/8B confortable)
 - Espace disque : 5–50 Go selon le modèle téléchargé
@@ -52,6 +52,9 @@ curl http://localhost:11434/
 
 Télécharger l'installeur depuis [ollama.com/download](https://ollama.com/download). L'installeur configure le service en arrière-plan et ajoute `ollama` au PATH.
 
+> [!note] `ollama` sans argument
+> Depuis la version 0.32 (juillet 2026), taper simplement `ollama` lance un agent de codage interactif qui propose par défaut un modèle *cloud* (`glm-5.2:cloud`) ; depuis la 0.34.2 (septembre 2026), un écran de première exécution propose de se connecter ou de « continuer en local ». Choisissez **continuer en local** : l'inférence locale ne requiert aucun compte, et `ollama run <modèle>` reste la commande à utiliser dans ce guide. La même version 0.32 affiche un avertissement « modèle ancien » au lancement de CodeLlama, Qwen2.5, Llama 3.x, Mistral ou DeepSeek-R1 de base[^4].
+
 ---
 
 ## Premier modèle
@@ -63,7 +66,7 @@ ollama run qwen3.5:9b
 # Ou un 3B très léger (~2 Go)
 ollama run llama3.2
 
-# Ou un modèle plus compact pour tester rapidement (~1,3 Go)
+# Ou un modèle plus compact pour tester rapidement (~2,5 Go)
 ollama run phi4-mini
 
 # Ou un modèle coder
@@ -100,6 +103,8 @@ journalctl -u ollama --no-pager --follow --pager-end
 ```
 
 Les emplacements des logs par plateforme sont décrits dans la page de dépannage d'Ollama[^2].
+
+Depuis Ollama 0.40.2 (octobre 2026), les modèles téléchargés avec une version antérieure sont réécrits en arrière-plan au premier lancement (originaux conservés comme sauvegardes) ; revenir à une version < 0.40 oblige à re-tirer les modèles — sur une appliance, épinglez la version d'Ollama[^5].
 
 ---
 
@@ -157,9 +162,12 @@ print(response.choices[0].message.content)
 
 ### Contexte plus long
 
-Par défaut, Ollama limite le contexte à 2048 tokens. Pour étendre :
+Par défaut, le serveur Ollama utilise une fenêtre de 4 096 tokens (`OLLAMA_CONTEXT_LENGTH`) ; l'application de bureau choisit une valeur selon la VRAM (4k sous 24 Gio, 32k entre 24 et 48 Gio, 256k au-delà)[^6]. Pour étendre :
 
 ```bash
+# Pour tout le serveur (variable d'environnement)
+OLLAMA_CONTEXT_LENGTH=8192 ollama serve
+
 # Via l'API (par requête)
 curl http://localhost:11434/api/generate \
   -d '{"model": "llama3.2", "prompt": "...", "options": {"num_ctx": 8192}}'
@@ -173,6 +181,10 @@ ollama create llama3.2-8k -f Modelfile
 
 > [!warning] VRAM et contexte
 > Doubler la fenêtre de contexte peut doubler l'empreinte du [[00-lexique/kv-cache|KV Cache]]. Vérifiez que votre VRAM/RAM tient avant d'étendre à 32K ou 128K. Voir [[01-fondations/kv-cache-and-context|KV Cache & Contexte]].
+
+### Requêtes concurrentes
+
+Par défaut, chaque modèle ne traite qu'une requête à la fois (`OLLAMA_NUM_PARALLEL=1`) : la deuxième attend en file. Relever cette valeur multiplie la mémoire réservée au contexte (parallélisme × `OLLAMA_CONTEXT_LENGTH`) ; `OLLAMA_MAX_LOADED_MODELS` (3 × nombre de GPU par défaut) borne le nombre de modèles chargés simultanément[^6]. Pour plusieurs utilisateurs réguliers, voir [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'inférence]].
 
 ### Température et paramètres de génération
 
@@ -204,6 +216,9 @@ OLLAMA_HOST=0.0.0.0 ollama serve
 > [!warning] Sécurité réseau
 > Sans authentification, n'importe qui sur votre réseau peut interroger le modèle. En production, placez un reverse proxy (nginx, Caddy) avec authentification basique ou token devant Ollama, ou utilisez [[00-lexique/litellm|LiteLLM]] comme gateway.
 
+> [!warning] Mises à jour
+> Ollama corrige des vulnérabilités sans toujours les détailler dans ses notes de version : la 0.31.2 (juillet 2026) ferme CVE-2026-102697 (exécution de commandes supplémentaires via le mode agent par injection de prompt, CVSS 7.8) et « durcit » la création de GGUF. Gardez Ollama à jour (≥ 0.31.2 au minimum au T4 2026)[^7].
+
 ---
 
 ## Vérifier les performances
@@ -218,7 +233,7 @@ curl http://localhost:11434/api/generate \
     Débit: {r['eval_count']/(r['eval_duration']/1e9):.1f} tok/s\")"
 ```
 
-Indicateurs attendus selon le matériel :
+Ordres de grandeur indicatifs (mesures communautaires sur llama.cpp, mi-2026, non sourcées individuellement ; sur Apple Silicon, Ollama ≥ 0.40 utilise MLX par défaut et les débits peuvent différer — mesurez avec la commande ci-dessus et le protocole de [[06-mise-en-oeuvre/evaluate-local-model|🧪 Évaluer un modèle local]]) :
 
 | Matériel | Modèle 8B Q4 | Modèle 70B Q4 |
 | :-- | :-- | :-- |
@@ -243,3 +258,8 @@ Indicateurs attendus selon le matériel :
 
 [^1]: Ollama, *Library* et registre `registry.ollama.ai` (manifestes : `llama3.2` = 3B, 2,02 Go ; `qwen3.5:9b` ≈ 6,5 Go), consultés le 2026-10-09. [https://ollama.com/library](https://ollama.com/library) · [https://registry.ollama.ai](https://registry.ollama.ai)
 [^2]: Ollama, *Troubleshooting* (emplacement des logs : `journalctl -u ollama`, `~/.ollama/logs/server.log`), consulté le 2026-10-09 · dépôt `ollama/ollama`, `cmd/cmd.go` (liste des sous-commandes, sans `logs`). [https://docs.ollama.com/troubleshooting](https://docs.ollama.com/troubleshooting) · [https://github.com/ollama/ollama](https://github.com/ollama/ollama)
+[^3]: Ollama, *Release v0.40.0* (« Models run on MLX on Apple Silicon by default »), 25 septembre 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
+[^4]: Ollama, *Release v0.32.0* (`ollama` sans argument lance un agent, entrée par défaut `glm-5.2:cloud` ; avertissement de dépréciation des anciens modèles agent), 11 juillet 2026 · Ollama, *Release v0.34.2* (« first-run setup … with options to sign in or continue locally »), 15 septembre 2026. [https://github.com/ollama/ollama/releases/tag/v0.32.0](https://github.com/ollama/ollama/releases/tag/v0.32.0) · [https://github.com/ollama/ollama/releases/tag/v0.34.2](https://github.com/ollama/ollama/releases/tag/v0.34.2)
+[^5]: Ollama, *Release v0.40.2* (modèles « upgraded in the background the first time you run them », sauvegardes conservées, re-pull nécessaire en cas de retour < 0.40), 8 octobre 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.2](https://github.com/ollama/ollama/releases/tag/v0.40.2)
+[^6]: Ollama, *FAQ* (« By default, Ollama uses a context window size of 4096 tokens », `OLLAMA_CONTEXT_LENGTH`, `OLLAMA_NUM_PARALLEL` = 1, `OLLAMA_MAX_LOADED_MODELS` = 3 × GPU) et *Context length* (défauts de l'application : 4k / 32k / 256k selon la VRAM), consultées le 2026-10-10. [https://docs.ollama.com/faq](https://docs.ollama.com/faq) · [https://docs.ollama.com/context-length](https://docs.ollama.com/context-length)
+[^7]: MITRE, *CVE-2026-102697* (Ollama 0.14.0 → < 0.31.2, contournement de l'approbation des commandes Bash du mode agent, CVSS v3.1 7.8), publiée le 2026-09-29 · Ollama, *Release v0.31.2* (« Hardened GGUF model creation »), 6 juillet 2026. [https://cveawg.mitre.org/api/cve/CVE-2026-102697](https://cveawg.mitre.org/api/cve/CVE-2026-102697) · [https://github.com/ollama/ollama/releases/tag/v0.31.2](https://github.com/ollama/ollama/releases/tag/v0.31.2)

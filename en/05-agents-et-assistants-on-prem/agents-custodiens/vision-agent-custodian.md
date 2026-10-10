@@ -3,9 +3,9 @@ title: "🔭 Vision: What is a custodian agent?"
 description: Definition, scope, and architecture trajectory of an autonomous agent tasked with maintaining a vault or repository.
 sidebar:
   order: 2
-last_modified: "2026-06-05"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -54,7 +54,9 @@ This is **indirect prompt injection**: the attack vector is not the user's promp
 > [!warning] Input security rules
 > - The agent must trigger only on **trusted sources**: an internal tag, cron, authenticated webhook — never on Issues or PRs opened by anyone.
 > - Its execution tools (shell, CLI) must be **sandboxed with no outbound network access** except to the local LLM API and target Git repository.
-> - Data read (Issue content, Markdown files, external docs) must be treated as **untrusted input** in the system prompt.
+> - Data read (Issue content, Markdown files, external docs, but also metadata, identifiers, and tool results) must be treated as **untrusted input**: labeling it in the prompt is not enough; the agent must never confuse data coming from outside with trusted data (resource identifier, origin, tool response format). Forged-data attacks (*agent data injection*) were demonstrated in 2026 on Claude Code, Codex, and Gemini CLI[^1].
+
+The OWASP Top 10 for LLM applications 2026 (2026-08-03, where "Excessive Agency" climbs to third place per the OWASP announcement of 2026-09-01) and the CNIL / CIANUM note on agentic AI (2026-07-20) converge: autonomy and multi-actor chains widen the attack surface and dilute responsibility; the custodian agent must remain as least-privileged as possible[^2][^3].
 
 The future security chapter (`06-mise-en-oeuvre/local-inference-security.md`) will detail technical solutions: Firecracker, rootless Podman, network namespaces.
 
@@ -78,9 +80,9 @@ Distinguish:
 
 ## Recommended trajectory
 
-1. **Simple MVP:** Cursor CLI or Aider, manual run, Markdown report.
+1. **Simple MVP:** Cursor CLI, a vendor CLI, or Aider (frozen since May 2026), manual run, Markdown report[^4].
 2. **Controlled automation:** scheduled task, Git branch, diff, notification.
-3. **Model-agnostic runner:** [[00-lexique/litellm|LiteLLM]] + Ollama/vLLM, local SearXNG, structured logs.
+3. **Model-agnostic runner:** OpenHands (CLI or Agent Canvas) or Aider behind an up-to-date [[00-lexique/litellm|LiteLLM]] (vulnerabilities exploited in 2026) + Ollama/vLLM, local SearXNG, structured logs[^4][^5].
 4. **In-house custodian:** vault business rules, autonomy levels, source policy.
 
 ## See also
@@ -88,3 +90,11 @@ Distinguish:
 - [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|Human-in-the-loop workflow]]
 - [[05-agents-et-assistants-on-prem/agents-custodiens/recommandation-architecture-cible|Target architecture recommendation]]
 - [[00-lexique/autonomous-agent|Autonomous agent]]
+
+## 📚 Sources and References
+
+[^1]: Choi, Kim, Kang, Jeong, Xing, Lee, *Agent Data Injection Attacks are Realistic Threats to AI Agents* (arXiv 2607.05120: malicious data disguised as trusted data; RCE and supply-chain attacks on Claude Code, Codex, and Gemini CLI), 2026-07-06. [https://arxiv.org/abs/2607.05120](https://arxiv.org/abs/2607.05120)
+[^2]: OWASP GenAI Security Project, *OWASP GenAI LLM Top 10 — 2026 Edition* (published 2026-08-03) and 2026-09-01 announcement ("Excessive Agency, now number three"). [https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) · [https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/](https://genai.owasp.org/2026/09/01/owasp-genai-security-project-unveils-2026-top-10-for-llm-applications-new-agent-control-standard-and-sponsors-as-community-tops-30000-members/)
+[^3]: CNIL and Conseil de l'IA et du Numérique, *IA agentique et données personnelles : note exploratoire*, 2026-07-20. [https://www.cnil.fr/fr/ia-agentique-cnil-cianum-note](https://www.cnil.fr/fr/ia-agentique-cnil-cianum-note)
+[^4]: Aider-AI, *aider* (GitHub repository: last commit on 2026-05-22, latest release v0.86.0 of 2025-08-09) and OpenHands, *Introducing Agent Canvas* (2026-06-16), accessed 2026-10-10. [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider) · [https://www.openhands.dev/blog/introducing-agent-canvas](https://www.openhands.dev/blog/introducing-agent-canvas)
+[^5]: CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822 LiteLLM), catalog dated 2026-10-08; BerriAI, *GHSA-7hp6-4w63-5g45* (CVSS 9.9, fixed in 1.100.4), 2026-09-30. [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json) · [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45)

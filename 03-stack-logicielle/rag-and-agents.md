@@ -3,8 +3,8 @@ title: "🧩 RAG & Agents : L'architecture de la connaissance"
 description: Comment donner une mémoire privée et de l'autonomie à un LLM local. Du RAG standard aux workflows agentiques (SmolAgents, LangGraph) et l'approche Memory Tree pour l'économie de VRAM.
 sidebar:
   order: 3
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -34,7 +34,7 @@ Comme nous l'avons vu au chapitre matériel, un contexte géant fait exploser la
 
 ## 2. L'Évolution 2026 : Agentic RAG et GraphRAG
 
-Pour éviter de saturer la mémoire avec des informations inutiles, le marché a basculé vers le **RAG Agentique** (*Agentic RAG*)[^1][^3]. Au lieu d'être un tuyau passif, le LLM devient le pilote.
+Pour éviter de saturer la mémoire avec des informations inutiles, le marché a basculé vers le **RAG Agentique** (*Agentic RAG*)[^5][^3]. Au lieu d'être un tuyau passif, le LLM devient le pilote.
 
 ### Le framework de l'Agent
 Grâce à des bibliothèques comme [[00-lexique/smolagents|SmolAgents]] (Hugging Face) ou [[00-lexique/langgraph|LangGraph]], le développeur donne au LLM des **Outils** ([[00-lexique/appel-outils|Tool Calling / Function Calling]]).
@@ -42,6 +42,8 @@ Le déroulé devient dynamique :
 1. L'utilisateur pose une question complexe.
 2. L'Agent réfléchit : *"Ai-je besoin de chercher dans la base RH ou dans le code source ?"*
 3. L'Agent appelle l'outil de recherche, lit un résumé, et décide **lui-même** si l'information est suffisante ou s'il doit faire une nouvelle recherche affine, avant de rédiger sa réponse finale[^4].
+
+Les outils sont de plus en plus exposés via le **Model Context Protocol** (MCP). La révision du 28 juillet 2026 rend le protocole **sans état** (plus de `Mcp-Session-Id` ni de handshake `initialize` ; version et capacités voyagent dans `_meta` à chaque requête), impose `server/discover`, remplace les requêtes initiées par le serveur par des *Multi Round-Trip Requests*, et **déprécie Roots, Sampling, Logging et l'enregistrement dynamique OAuth** (fenêtre de retrait d'au moins douze mois). Un serveur MCP on-prem écrit en 2025 continue de fonctionner, mais ne construisez plus sur ces primitives[^13].
 
 ### Le GraphRAG
 Popularisé par les recherches de Microsoft, le **[[00-lexique/graphrag|GraphRAG]]** remplace la base vectorielle "bête" par un **Knowledge Graph** (Graphe de connaissances)[^5]. Le système extrait les entités (Personnes, Lieux, Concepts) et leurs relations. Cela permet au LLM de répondre à des questions globales (ex: *"Quels sont les thèmes principaux abordés par l'équipe produit ce mois-ci ?"*) qui faisaient systématiquement échouer le RAG vectoriel classique.
@@ -71,7 +73,9 @@ Le choix de la base vectorielle dépend du volume de données, du niveau de souv
 | **Qdrant** | Serveur Docker | Filtrage payload riche, REST/gRPC, scalable | Infra à gérer | PME, production moderée |
 | **Milvus** | Serveur distribué | Milliards de vecteurs, haute disponibilité | Complexe à opérer | Datacenter, gros volumes |
 | **pgvector** | Extension PostgreSQL | Vecteurs dans la base existante | Performances < bases natives | SI existant sous Postgres |
-| **SQLite + vss** | Fichier local | Zéro dépendance, souveraineté max | Pas de scalabilité H | Solo, Memory Tree patterns |
+| **SQLite + sqlite-vec** | Fichier local | Zéro dépendance, souveraineté max | Pas de scalabilité H | Solo, Memory Tree patterns |
+
+État au T4 2026 : Qdrant 1.19 (août 2026) stocke les vecteurs directement en 4-bit (TurboQuant) avec des paliers mémoire `cold` / `cached` / `pinned` par composant ; Milvus 3.0 (GA le 29 juillet 2026) interroge Parquet, Lance et Iceberg en place ; **pgvector 0.8.3 à 0.8.7 corrigent une corruption d'index HNSW au vacuum et des débordements de tampon IVFFlat — mettez à jour toute instance ≤ 0.8.2**[^14]. `sqlite-vss` n'est plus développé ; son auteur renvoie vers `sqlite-vec`[^12].
 
 > [!tip] Démarrage rapide avec Qdrant en local
 > ```bash
@@ -90,7 +94,7 @@ Le choix de la base vectorielle dépend du volume de données, du niveau de souv
 
 Dans les déploiements **[[00-lexique/multi-tenant|multi-tenant]]** — un serveur d'inférence mutualisé pour plusieurs organisations ou équipes — le RAG introduit un risque de sécurité critique : la fuite de documents d'un locataire vers les résultats de recherche d'un autre.
 
-L'OWASP a formellement classifié ce risque dans son Top 10 LLM 2025 sous **LLM08 : Vector and Embedding Weaknesses**[^7]. Une implémentation naïve de base vectorielle sans isolation par tenant peut permettre à une requête du "Client B" de remonter des embeddings appartenant au "Client A".
+L'OWASP a formellement classifié ce risque dans son Top 10 LLM sous **LLM08:2025 Vector and Embedding Weaknesses** ; l'édition 2026 (publiée le 3 août 2026) conserve le risque sous l'identifiant **LLM09:2026**[^7]. Une implémentation naïve de base vectorielle sans isolation par tenant peut permettre à une requête du "Client B" de remonter des embeddings appartenant au "Client A".
 
 ### Pattern 1 — Row-Level Security avec pgvector
 
@@ -154,7 +158,7 @@ L'inférence GPU coûte cher. Une architecture bien conçue réserve le GPU à l
 | Tâche | Moteur recommandé | Matériel |
 | :-- | :-- | :-- |
 | Génération de texte (LLM) | vLLM, SGLang | GPU (VRAM exclusive) |
-| Génération d'embeddings | `nomic-embed-text`, `mxbai-embed` via Ollama | **CPU** |
+| Génération d'embeddings | `embeddinggemma-2` (270M–740M) via Ollama ; `nemotron-3-embed` 1B/8B si GPU disponible[^11] | **CPU** (EmbeddingGemma 2) / GPU (Nemotron 8B) |
 | Transcription vocale (STT) | `faster-whisper` (CTranslate2)[^10] | **CPU** |
 | Re-ranking, scoring | CrossEncoder léger | **CPU** |
 
@@ -201,9 +205,11 @@ flowchart TD
 **Modèles d'embedding locaux recommandés :**
 
 ```bash
-# Via Ollama
-ollama pull nomic-embed-text   # 137M paramètres, 768 dim, très rapide
-ollama pull mxbai-embed-large  # 335M paramètres, 1024 dim, meilleure qualité
+# Via Ollama (EmbeddingGemma 2, Google, octobre 2026, Apache 2.0 — contexte 8k, dimensions 768 tronquables à 512/256/128)
+ollama pull embeddinggemma-2:270m   # texte seul, ~378 Mo
+ollama pull embeddinggemma-2        # 740M multimodal (texte + image), ~1,3 Go
+# nomic-embed-text et mxbai-embed-large restent valables pour les index existants
+# (ne jamais mélanger deux modèles d'embedding dans une même collection)
 
 # Test rapide
 curl http://localhost:11434/api/embeddings \
@@ -226,13 +232,17 @@ Pour construire une stack logicielle d'entreprise souveraine en 2026 :
 
 ## 📚 Sources et Références
 
-[^1]: Lyzr Blog, *What is Agentic RAG? Everything You Need to Know in 2026* (Évolution des pipelines statiques vers l'adaptation intelligente), Janvier 2026. [https://www.lyzr.ai/blog/agentic-rag/](https://www.lyzr.ai/blog/agentic-rag/)
+[^1]: P. Lewis et al., *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks* (arXiv:2005.11401 ; définition d'origine du RAG), 2020. [https://arxiv.org/abs/2005.11401](https://arxiv.org/abs/2005.11401)
 [^2]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (Impact du contexte long sur le KV Cache), Novembre 2023. [https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/](https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/)
-[^3]: Vinod Rane (Medium), *Next-Generation Agentic RAG with LangGraph (2026 Edition)* (Graph orchestration, self-correcting RAG), Mars 2026. [https://medium.com/@vinodkrane/next-generation-agentic-rag-with-langgraph-2026-edition-d1c4c068d2b8](https://medium.com/@vinodkrane/next-generation-agentic-rag-with-langgraph-2026-edition-d1c4c068d2b8)
+[^3]: LangChain, *LangGraph* (dépôt et documentation : orchestration de graphes d'agents, RAG auto-correctif ; releases 1.2.x), consulté le 2026-10-10. [https://github.com/langchain-ai/langgraph](https://github.com/langchain-ai/langgraph)
 [^4]: Hugging Face, *Agentic RAG with SmolAgents* (RAG orchestration via Hugging Face light framework), 2025. [https://huggingface.co/docs/smolagents/main/examples/rag](https://huggingface.co/docs/smolagents/main/examples/rag)
 [^5]: Neo4j Developer Blog, *What is agentic RAG? A developer's guide* (GraphRAG, ReAct, multi-agent RAG patterns), Mai 2026. [https://neo4j.com/blog/agentic-ai/what-is-agentic-rag/](https://neo4j.com/blog/agentic-ai/what-is-agentic-rag/)
 [^6]: OpenHuman, *How memory works* (« The current memory has no memory tree … or Obsidian vault » ; moteurs TinyHumans Hosted / CortexDB), docs lues le 2026-10-09. Le *pattern* Memory Tree reste applicable dans une implémentation 100 % on-premise indépendante du projet. [https://tinyhumans.gitbook.io/openhuman/features/memory](https://tinyhumans.gitbook.io/openhuman/features/memory)
-[^7]: OWASP GenAI Security Project, *LLM08:2025 Vector and Embedding Weaknesses*. [https://genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)
+[^7]: OWASP GenAI Security Project, *LLM08:2025 Vector and Embedding Weaknesses*. [https://genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/) ; OWASP GenAI Security Project, *OWASP Top 10 for LLM Applications 2026* (LLM09:2026 Vector and Embedding Weaknesses), 2026-08-03. [https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
 [^8]: Crunchy Data, *Row-Level Security for tenants in Postgres / pgvector*. [https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres](https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres)
-[^9]: Qdrant, *Multitenancy — Payload-based Partitioning*. [https://qdrant.tech/documentation/guides/multiple-partitions/](https://qdrant.tech/documentation/guides/multiple-partitions/)
+[^9]: Qdrant, *Multitenancy* (payload partitioning, index payload `is_tenant`, tiered multitenancy v1.16+). [https://qdrant.tech/documentation/manage-data/multitenancy/](https://qdrant.tech/documentation/manage-data/multitenancy/)
 [^10]: SYSTRAN, *faster-whisper — High-throughput Whisper inference on CPU and GPU (CTranslate2)*. [https://github.com/SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper)
+[^11]: Google, *EmbeddingGemma 2* (740M dont 270M texte, 768 dimensions MRL → 128, contexte 8k, texte + image + audio + vidéo + code, Apache 2.0), 2026-10-06. [https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/](https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/) ; Ollama, *embeddinggemma-2* (tags `270m` 378 Mo, `latest` 1,3 Go), consulté le 2026-10-10. [https://ollama.com/library/embeddinggemma-2](https://ollama.com/library/embeddinggemma-2) ; NVIDIA, *Nemotron-3-Embed-8B-BF16* (4096 dimensions, 32k tokens, RTEB 78,46 NDCG@10, OpenMDW 1.1 ; variantes 1B BF16 / 1B NVFP4), 2026-07-16. [https://huggingface.co/nvidia/Nemotron-3-Embed-8B-BF16](https://huggingface.co/nvidia/Nemotron-3-Embed-8B-BF16)
+[^12]: A. Garcia, *sqlite-vss* (README : « sqlite-vss is not in active development », effort reporté sur sqlite-vec), consulté le 2026-10-10. [https://github.com/asg017/sqlite-vss](https://github.com/asg017/sqlite-vss)
+[^13]: Model Context Protocol, *Key Changes — 2026-07-28* (suppression de `Mcp-Session-Id` et du handshake `initialize`, `server/discover`, Multi Round-Trip Requests, dépréciation de Roots / Sampling / Logging et du Dynamic Client Registration, fenêtre de dépréciation de douze mois minimum). [https://modelcontextprotocol.io/specification/2026-07-28/changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog)
+[^14]: Qdrant, *Releases* (v1.19.0, 5 août 2026 : TurboQuant 4-bit en stockage primaire, paliers `cold` / `cached` / `pinned` ; v1.19.2 le 5 octobre 2026). [https://github.com/qdrant/qdrant/releases](https://github.com/qdrant/qdrant/releases) ; Milvus, *Releases* (v3.0.0 GA le 2026-07-29, External Collection Parquet / Lance / Iceberg ; v3.0.2 le 2026-09-20). [https://github.com/milvus-io/milvus/releases](https://github.com/milvus-io/milvus/releases) ; pgvector, *CHANGELOG* (0.8.3 du 2026-06-17 : « Fixed possible index corruption with HNSW vacuuming » ; 0.8.6 et 0.8.7 du 2026-10-01 : « Fixed buffer overflow with IVFFlat index build »). [https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md](https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md)

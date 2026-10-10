@@ -3,16 +3,16 @@ title: "Cursor CLI"
 description: Interface terminal de l'agent Cursor, très efficace pour prototyper un agent custodien, mais non souveraine au sens on-prem strict.
 sidebar:
   order: 1
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 ## 🔍 Vue d'ensemble rapide
 
-Cursor CLI permet d'utiliser l'agent Cursor depuis le terminal, en interactif ou en mode headless (`--print`) pour scripts et CI. Il peut lire un dépôt, modifier des fichiers, utiliser des règles, reprendre des sessions et produire des sorties texte/JSON.
+Cursor CLI permet d'utiliser l'agent Cursor depuis le terminal, en interactif ou en mode headless (`--print`) pour scripts et CI[^1][^2]. Il peut lire un dépôt, modifier des fichiers, utiliser des règles, reprendre des sessions et produire des sorties texte/JSON.
 
 ## 💡 Pourquoi ce projet nous intéresse
 
@@ -27,10 +27,10 @@ Pour ce vault, Cursor CLI est un **excellent MVP** : il permet de valider rapide
 
 ## ⚠️ Limites et risques
 
-- Nécessite l'accès aux services Cursor.
+- Nécessite l'accès aux services Cursor[^3].
 - Les prompts/code peuvent transiter vers les LLMs configurés.
-- BYOK ne signifie pas exécution locale : le prompt final passe encore par Cursor selon la documentation.
-- Pas de support documenté pour inférence 100% locale on-prem.
+- BYOK ne signifie pas exécution locale : le prompt final passe encore par Cursor selon la documentation[^4].
+- Pas de support documenté pour inférence 100% locale on-prem. Les « self-hosted machines » introduites le 2026-09-02 gardent l'**exécution des outils** (shell, navigateur) dans votre réseau, mais les prompts et le modèle restent côté Cursor[^6].
 
 ## 🔒 Souveraineté et confidentialité
 
@@ -56,7 +56,7 @@ Le dossier `.agents/` de ce vault est un exemple de structuration compatible ave
 
 ## 📊 Maturité du projet
 
-Produit intégré à Cursor, très pratique pour prototypage et usage personnel. Pour une organisation soumise à souveraineté stricte, il doit rester un outil de développement, pas la cible finale.
+Produit intégré à Cursor — société acquise par SpaceX le 2026-08-14, qui propose depuis les modèles Grok de xAI en première partie (Grok 4.6 en août 2026) — très pratique pour prototypage et usage personnel. Pour une organisation soumise à souveraineté stricte, il doit rester un outil de développement, pas la cible finale ; le changement d'actionnaire est un rappel que la politique de données d'un outil cloud peut évoluer sans préavis[^5].
 
 ## 🔗 Voir aussi
 
@@ -67,7 +67,9 @@ Produit intégré à Cursor, très pratique pour prototypage et usage personnel.
 
 ## 📚 Sources
 
-- Cursor Docs, *CLI Overview*. [https://cursor.com/docs/cli/overview.md](https://cursor.com/docs/cli/overview.md)
-- Cursor Docs, *Headless mode*. [https://cursor.com/docs/cli/headless.md](https://cursor.com/docs/cli/headless.md)
-- Cursor Docs, *Enterprise deployment patterns*. [https://cursor.com/docs/enterprise/deployment-patterns.md](https://cursor.com/docs/enterprise/deployment-patterns.md)
-- Cursor Help, *API keys / BYOK*. [https://cursor.com/help/models-and-usage/api-keys.md](https://cursor.com/help/models-and-usage/api-keys.md)
+[^1]: Cursor Docs, *CLI Overview*. [https://cursor.com/docs/cli/overview.md](https://cursor.com/docs/cli/overview.md)
+[^2]: Cursor Docs, *Headless mode*. [https://cursor.com/docs/cli/headless.md](https://cursor.com/docs/cli/headless.md)
+[^3]: Cursor Docs, *Enterprise deployment patterns*. [https://cursor.com/docs/enterprise/deployment-patterns.md](https://cursor.com/docs/enterprise/deployment-patterns.md)
+[^4]: Cursor Help, *API keys / BYOK*. [https://cursor.com/help/models-and-usage/api-keys.md](https://cursor.com/help/models-and-usage/api-keys.md)
+[^5]: Cursor, *Cursor is now a part of SpaceX* (acquisition « officiellement » clôturée, processus engagé en avril ; Grok 4.6 cité comme premier modèle commun), 2026-08-14. [https://cursor.com/blog/joining-spacex](https://cursor.com/blog/joining-spacex)
+[^6]: Cursor, *Changelog* — entrée du 2026-09-02 « self-hosted machines » (exécution des outils des cloud agents dans votre réseau, pools d'équipe, hibernation), consulté le 2026-10-10. [https://cursor.com/changelog](https://cursor.com/changelog)

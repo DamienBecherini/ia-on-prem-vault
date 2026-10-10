@@ -5,9 +5,9 @@ description: >
   Tableau comparatif, exigences matérielles et relation entre les deux pistes.
 sidebar:
   order: 3
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -44,7 +44,7 @@ Toutes les applications IA locales ne font pas la même chose. Avant de choisir 
 - Déclencheur : cron, webhook, événement Git, commande CLI
 - Autonomie : haute en lecture/analyse, **toujours human-in-the-loop pour les actions irréversibles**
 
-**Exemples :** Aider, OpenHands, un pipeline Cursor CLI + script systemd
+**Exemples :** OpenHands Agent Canvas (automatisations planifiées ou événementielles, self-hosted), un pipeline Cursor CLI + script systemd ; Aider reste utilisable mais n'a plus de release depuis août 2025 ni de commit depuis mai 2026[^1]
 
 **Analogie :** un assistant de recherche junior qui travaille pendant la nuit, dépose ses propositions sur votre bureau le matin, et ne signe rien sans votre accord.
 
@@ -62,6 +62,8 @@ Toutes les applications IA locales ne font pas la même chose. Avant de choisir 
 **Exemples :** Khoj (mode agent activé), Open WebUI avec tools, OpenHands en mode interactif
 
 **Avertissement :** la complexité de l'hybride est réelle. Une implémentation mal pensée peut donner à l'IA la capacité de modifier des fichiers, envoyer des emails ou passer des commandes sans garde-fous suffisants. Préférez une architecture explicite (assistant ou custodien) pour commencer.
+
+La plupart de ces outils exposent leurs actions via le **Model Context Protocol (MCP)**. Sa révision du 28 juillet 2026 rend le protocole sans état (plus de `Mcp-Session-Id`), introduit `server/discover` et déprécie Roots, Sampling, Logging et l'enregistrement dynamique OAuth (fenêtre de dépréciation d'au moins douze mois) : vérifiez que serveurs et clients MCP de votre stack suivent la même révision avant d'empiler les permissions[^3].
 
 ---
 
@@ -98,6 +100,7 @@ flowchart TB
 - L'agent custodien maintient le vault à jour → l'assistant personnel a une base de connaissances fraîche à interroger.
 - L'assistant personnel identifie les zones floues dans vos notes → l'agent custodien peut être déclenché pour les enrichir.
 - Les deux partagent le même moteur d'inférence → un seul serveur Ollama ou vLLM suffit pour les deux pistes.
+- Depuis juin 2026, Agent Canvas (OpenHands) peut aussi orchestrer des agents tiers via l'Agent Client Protocol et assigner un modèle local (vLLM, Ollama) par automatisation : la Piste B devient une couche d'orchestration plutôt qu'un agent unique[^1].
 
 ---
 
@@ -144,9 +147,9 @@ Ce guide couvre la théorie des architectures. Pour passer à la pratique, voici
 
 | Outil | Point de départ |
 | :-- | :-- |
-| **Aider** | [Aider quickstart](https://aider.chat/docs/usage/tutorials.html) — agent de code local, compatible Ollama |
+| **Aider** | [Aider quickstart](https://aider.chat/docs/usage/tutorials.html) — agent de code local, compatible Ollama ; **projet sans release depuis août 2025 ni commit depuis mai 2026**, à n'utiliser qu'en connaissance de cause[^1] |
 | **OpenHands** | [OpenHands Docker setup](https://github.com/OpenHands/OpenHands) — agent d'exécution de tâches autonomes |
-| **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — routage unifié vers un modèle local |
+| **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — routage unifié vers un modèle local ; **exigez une version ≥ 1.100.4 (ou le dernier correctif de sa ligne)** : trois failles LiteLLM figurent au catalogue KEV de la CISA en 2026 et une escalade critique (CVSS 9.9) a été corrigée le 2026-09-30[^2] |
 | **SmolAgents** | [SmolAgents cookbook](https://huggingface.co/docs/smolagents/tutorials/building_good_agents) — framework agent minimaliste, HuggingFace |
 | **LangGraph** | [LangGraph "local agent" tutorial](https://langchain-ai.github.io/langgraph/tutorials/introduction/) — orchestration d'agents avec graphes d'état |
 
@@ -161,3 +164,9 @@ Ce guide couvre la théorie des architectures. Pour passer à la pratique, voici
 - [[05-agents-et-assistants-on-prem/assistants-personnels/index|🧑‍💼 Assistants Personnels On-Premise]]
 - [[05-agents-et-assistants-on-prem/agents-custodiens/index|🤖 Agents Custodiens On-Premise]]
 - [[00-lexique/autonomous-agent|Agent autonome]] · [[00-lexique/rag|RAG]]
+
+## 📚 Sources
+
+[^1]: Aider-AI, *aider* (dépôt GitHub : dernier commit le 2026-05-22, dernière release v0.86.0 du 2025-08-09), consulté le 2026-10-10 ; OpenHands, *Introducing Agent Canvas* (2026-06-16) et *Use any coding agent in OpenHands with ACP* (2026-06-18). [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider) · [https://www.openhands.dev/blog/introducing-agent-canvas](https://www.openhands.dev/blog/introducing-agent-canvas) · [https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp](https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp)
+[^2]: BerriAI, *GHSA-7hp6-4w63-5g45* (escalade `internal_user` → `proxy_admin` → exécution sur l'hôte, CVSS 9.9, corrigée en 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30 ; CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822), catalogue daté 2026-10-08. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45) · [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)
+[^3]: Model Context Protocol, *Specification 2026-07-28 — Key Changes* (suppression de `Mcp-Session-Id` et du handshake `initialize`, `server/discover`, dépréciation de Roots, Sampling, Logging et de l'enregistrement dynamique OAuth, fenêtre de dépréciation de douze mois minimum). [https://modelcontextprotocol.io/specification/2026-07-28/changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog)

@@ -3,9 +3,9 @@ title: "Jan.ai"
 description: Open-source ChatGPT alternative that runs models locally via llama.cpp, with a local OpenAI-compatible API server.
 sidebar:
   order: 4
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -23,11 +23,11 @@ Jan also exposes a local OpenAI-compatible API server on `localhost:1337`, usefu
 
 Jan is probably the simplest entry point for an individual user who wants to try local AI without understanding Docker, vLLM, or web UI configuration.
 
-It is less oriented toward "enterprise RAG" than Open WebUI or AnythingLLM, but excellent for the **sovereign personal workstation**: desktop install, GGUF models, Metal/CUDA/Vulkan acceleration, local API.
+It is less oriented toward "enterprise RAG" than Open WebUI or AnythingLLM, but excellent for the **sovereign personal workstation**: desktop install, GGUF models, llama.cpp engine bundled in the installer, Metal (Apple Silicon), CUDA 13 (NVIDIA Turing and newer), or Vulkan (AMD, Intel, and NVIDIA Pascal/GTX 10xx since v0.8.5 of 2026-10-08, the downloadable CUDA 11/12 backends having been removed) acceleration, local API[^5].
 
 ## ✅ Strengths
 
-- **Simple desktop**: macOS, Windows, Linux.
+- **Simple desktop**: macOS (Apple Silicon; on Intel Macs, local models are no longer supported since v0.8.5, stay on 0.8.4), Windows, Linux[^5].
 - **Local models**: llama.cpp, GGUF, GPU offload per platform[^2].
 - **Offline**: works without Internet after model download[^1][^2].
 - **Local API**: OpenAI-compatible endpoint for local integrations[^3].
@@ -37,7 +37,7 @@ It is less oriented toward "enterprise RAG" than Open WebUI or AnythingLLM, but 
 
 - **Limited document memory**: not primarily a RAG/knowledge base system.
 - **Optional cloud features**: user can connect OpenAI/Anthropic/Mistral/Groq, which completely changes the sovereignty verdict[^4].
-- **Local API to secure**: if listening moves from `127.0.0.1` to `0.0.0.0`, network, key, and CORS must be managed[^3].
+- **Local API to secure**: if listening moves from `127.0.0.1` to `0.0.0.0`, network, API key, and CORS must be managed; since v0.8.5, Jan rejects (403) requests whose host is not localhost, a private IP, or a "Trusted Hosts" entry — declare your DNS name or reverse proxy there[^3][^5].
 - **Not the best multi-user choice**: prefer Open WebUI or AnythingLLM for a team.
 
 ## 🔒 Sovereignty and privacy
@@ -61,7 +61,7 @@ Jan is ideal as:
 
 ## 📊 Project maturity
 
-Active, popular project on GitHub, built on Tauri and llama.cpp. Distinguish Jan Desktop local from Jan Web / any cloud offerings in every client recommendation.
+Active, popular project on GitHub (about 45,000 stars, v0.8.6 as of 2026-10-09), built on Tauri and llama.cpp, the engine now being bundled in the installer. Since v0.8.5, the `jan` CLI (terminal agent) is installed separately and the executable is named `Jan-Desktop`: adapt your scripts[^5]. Distinguish Jan Desktop local from Jan Web / any cloud offerings in every client recommendation.
 
 ## 🔗 See also
 
@@ -76,3 +76,4 @@ Active, popular project on GitHub, built on Tauri and llama.cpp. Distinguish Jan
 [^2]: Jan — local models (llama.cpp, GGUF) in repository documentation. [https://github.com/janhq/jan/tree/dev/docs](https://github.com/janhq/jan/tree/dev/docs)
 [^3]: Jan API server — local OpenAI-compatible server on `localhost:1337`. [https://github.com/janhq/jan/blob/dev/docs/src/pages/docs/desktop/api-server.mdx](https://github.com/janhq/jan/blob/dev/docs/src/pages/docs/desktop/api-server.mdx)
 [^4]: Jan GitHub README — local models and optional cloud integrations. [https://github.com/janhq/jan](https://github.com/janhq/jan)
+[^5]: janhq, *Jan v0.8.5* — release notes, Migration section (bundled llama.cpp, CUDA 13 / Vulkan, end of CUDA 11/12 backends, Intel Macs without local models, `Jan-Desktop` executable, separate `jan` CLI, Trusted Hosts GHSA-x6p8-7cp8-c3p6), 2026-10-08; v0.8.6 released on 2026-10-09. [https://github.com/janhq/jan/releases/tag/v0.8.5](https://github.com/janhq/jan/releases/tag/v0.8.5)
