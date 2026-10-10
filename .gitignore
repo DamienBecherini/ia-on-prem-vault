@@ -19,6 +19,10 @@ _templates/*
 # Claude Code personal settings
 .claude/settings.local.json
 
+# Agent plans are working files (only the README is tracked)
+.agents/plans/*
+!.agents/plans/README.md
+
 # Refresh working copies (dated snapshots are committed)
 .agents/vault-maintenance/reports/*-latest.*
 

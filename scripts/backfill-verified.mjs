@@ -26,7 +26,7 @@ const VAULT_ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Z]:)/
 
 const EXCLUDED_DIRS = new Set([
   '_private', 'build', 'node_modules', '.git', '.obsidian',
-  '.agents', '.cursor', '_templates', 'scripts',
+  '.agents', '.cursor', '.claude', '_templates', 'scripts',
 ]);
 
 const ARGS = process.argv.slice(2);

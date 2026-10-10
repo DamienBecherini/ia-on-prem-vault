@@ -14,7 +14,7 @@ Git is the natural guardrail for a custodian agent. It turns a risky action ("th
 
 ## Branch convention
 
-Recommended format — aligned with `.cursor/rules/git-workflow.mdc`:
+Recommended format — aligned with `.agents/rules/git-workflow.md`:
 
 ```text
 <type>/<short-objective>
