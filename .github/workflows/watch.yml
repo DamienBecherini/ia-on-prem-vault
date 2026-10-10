@@ -1,11 +1,17 @@
 name: Vault weekly watch
 
-# Collects what changed in the ecosystem over the last 8 days (GitHub
-# releases and security advisories, Hugging Face models, vendor and
-# regulator feeds, the Vision IA YouTube channel as tier C signal) and opens
-# one GitHub issue labelled "veille" with the raw list. The `vault-watch`
-# skill then turns the issue into events, an impact map and a PR.
-# Never a required check.
+# Collects what changed in the ecosystem (GitHub releases and security
+# advisories, Hugging Face models, vendor and regulator feeds, the Vision IA
+# YouTube channel as tier C signal), applies the deterministic pre-triage of
+# scripts/watch-feeds.mjs, and opens one GitHub issue labelled "veille".
+# The `vault-watch` skill then turns the issue into events, an impact map and
+# a PR. Never a required check.
+#
+# Cadence: the workflow runs every Monday, but the issue is opened every
+# other week (even ISO weeks, 15-day window). On odd weeks it opens an issue
+# only when a High / Critical advisory is not covered by a vault floor
+# (version-floors.json); that issue gets the "urgent" label. A manual run
+# always opens an issue.
 on:
   schedule:
     - cron: "30 6 * * 1" # Mondays 06:30 UTC, after the freshness workflow
@@ -14,7 +20,7 @@ on:
       days:
         description: "Window in days"
         required: false
-        default: "8"
+        default: "15"
 
 permissions:
   contents: read
@@ -31,32 +37,28 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Choose the window
+        id: cadence
+        run: |
+          week=$(date -u +%V)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "days=${{ inputs.days || '15' }}" >> "$GITHUB_OUTPUT"
+            echo "mode=manual" >> "$GITHUB_OUTPUT"
+          elif [ $((10#$week % 2)) -eq 0 ]; then
+            echo "days=15" >> "$GITHUB_OUTPUT"
+            echo "mode=biweekly" >> "$GITHUB_OUTPUT"
+          else
+            echo "days=8" >> "$GITHUB_OUTPUT"
+            echo "mode=urgent-only" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Collect feeds
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          node scripts/watch-feeds.mjs --days="${{ inputs.days || '8' }}" \
+          node scripts/watch-feeds.mjs --days="${{ steps.cadence.outputs.days }}" \
             --json="$RUNNER_TEMP/watch.json" > "$RUNNER_TEMP/watch.md"
           cat "$RUNNER_TEMP/watch.md" >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Open the weekly issue
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          items=$(node -e "console.log(require(process.env.RUNNER_TEMP+'/watch.json').items.length)")
-          if [ "$items" -eq 0 ]; then
-            echo "Nothing new in the window, no issue opened."
-            exit 0
-          fi
-          gh label create veille --color 0A7EA4 --description "Weekly ecosystem watch" 2>/dev/null || true
-          # GitHub caps issue bodies at 65 536 characters.
-          head -c 60000 "$RUNNER_TEMP/watch.md" > "$RUNNER_TEMP/body.md"
-          if [ "$(wc -c < "$RUNNER_TEMP/watch.md")" -gt 60000 ]; then
-            printf '\n\n_Truncated: the full list is in the run artifact._\n' >> "$RUNNER_TEMP/body.md"
-          fi
-          printf '\n\n---\nNext step: run the `vault-watch` skill on this issue (see `.agents/skills/vault-watch/SKILL.md`).\n' >> "$RUNNER_TEMP/body.md"
-          gh issue create --title "Veille hebdomadaire — $(date -u +%Y-%m-%d) ($items éléments)" \
-            --label veille --body-file "$RUNNER_TEMP/body.md"
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -66,3 +68,34 @@ jobs:
             ${{ runner.temp }}/watch.md
             ${{ runner.temp }}/watch.json
           retention-days: 60
+
+      - name: Open the issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MODE: ${{ steps.cadence.outputs.mode }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          read -r kept urgent < <(node -e "const j=require(process.env.RUNNER_TEMP+'/watch.json'); console.log(j.kept, j.urgent)")
+          if [ "$kept" -eq 0 ]; then
+            echo "Nothing kept after pre-triage, no issue opened."
+            exit 0
+          fi
+          if [ "$MODE" = "urgent-only" ] && [ "$urgent" -eq 0 ]; then
+            echo "Odd week and no urgent advisory: no issue (the next even-week run covers 15 days)."
+            exit 0
+          fi
+          gh label create veille --color 0A7EA4 --description "Weekly ecosystem watch" 2>/dev/null || true
+          labels=veille
+          title="Veille — $(date -u +%Y-%m-%d) ($kept éléments)"
+          if [ "$urgent" -gt 0 ]; then
+            gh label create urgent --color B60205 --description "High / Critical advisory not covered by a vault floor" 2>/dev/null || true
+            labels=veille,urgent
+            title="Veille URGENTE — $(date -u +%Y-%m-%d) ($urgent avis, $kept éléments)"
+          fi
+          # GitHub caps issue bodies at 65 536 characters.
+          head -c 60000 "$RUNNER_TEMP/watch.md" > "$RUNNER_TEMP/body.md"
+          if [ "$(wc -c < "$RUNNER_TEMP/watch.md")" -gt 60000 ]; then
+            printf '\n\n_Truncated: the full list is in the run artifact._\n' >> "$RUNNER_TEMP/body.md"
+          fi
+          printf '\n\n---\nRun: %s (artifact `weekly-watch`: `watch.json` caches release notes and advisory texts).\nNext step: in a new session, "traite la veille #<this issue>" (skill `vault-watch`, `.agents/skills/vault-watch/SKILL.md`).\n' "$RUN_URL" >> "$RUNNER_TEMP/body.md"
+          gh issue create --title "$title" --label "$labels" --body-file "$RUNNER_TEMP/body.md"

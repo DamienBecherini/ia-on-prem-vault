@@ -220,9 +220,23 @@ Not part of `npm test`: the result depends on the calendar, not on the PR. It ru
 
 **Scope:** the sources of `.agents/vault-maintenance/feeds.json` — GitHub releases, tags and security advisories of the tools the vault covers, Hugging Face model listings of the main open-weight publishers, vendor and regulator RSS feeds, and the Vision IA YouTube channel as tier C signal.
 
-Lists every item published in the last N days (default 8, `--days`, `--since`, `--only=<domains>`, `--json`). Stateless and deterministic: no LLM, no judgement. `GITHUB_TOKEN` / `GH_TOKEN` is needed for advisories.
+Lists every item published in the last N days (default 8, `--days`, `--since`, `--only=<domains>`, `--json`). Stateless and deterministic: no LLM. `GITHUB_TOKEN` / `GH_TOKEN` is needed for advisories.
 
-Runs weekly in `.github/workflows/watch.yml` (Mondays 06:30 UTC, warn-only), which opens a GitHub issue labelled `veille` with the list. The `vault-watch` skill turns that issue into verified events, an impact map and a PR.
+**Pre-triage** (rules only, `--no-triage` to disable) marks each item `keep` or `drop` with a reason, so the agent reads about 30 items instead of 140:
+
+| Rule | Drops |
+| :-- | :-- |
+| Releases | pre-releases (rc, beta, dev, nightly, proto-…); releases below the feed's `minLevel` (default `minor`, so patch releases go; `major` for chatty projects); `collapse` feeds (build per commit). A release whose notes mention a security fix is kept anyway |
+| Advisories | low severity; advisories whose vulnerable range excludes, or whose lowest patched version is at or below, the floor in `.agents/vault-maintenance/version-floors.json` |
+| Hugging Face | quant-suffixed repos (GGUF, AWQ, FP8, MLX…), third-party quantizations, adapters; third-party fine-tunes and merges in discovery |
+| Seen | any URL already listed in `watch-seen.md` |
+| Keywords | `keywords` match at the start of a word (`IA` no longer matches `Debian`); `exclude` is a regex on the title |
+
+Kept items split into **core** (need a primary-source check) and **leads** (discovery and tier C signals, skimmed only). High / Critical advisories not covered by a floor are flagged `urgent`. The JSON caches release notes and advisory texts (`notes`, 4 000 characters max) for kept items, so the agent does not refetch them.
+
+`.github/workflows/watch.yml` runs every Monday at 06:30 UTC (warn-only). On even ISO weeks it opens a GitHub issue labelled `veille` over a 15-day window; on odd weeks it opens one only when an advisory is `urgent` (labels `veille`, `urgent`). A manual run always opens an issue. The run artifact `weekly-watch` holds `watch.md` and `watch.json`. The `vault-watch` skill turns the issue into verified events, an impact map and a PR.
+
+Keep `version-floors.json` in step with the "Planchers de version" callout of `06-mise-en-oeuvre/local-inference-security.md`: when a floor moves, update both in the same PR.
 
 ---
 
@@ -268,3 +282,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | 2026-10-09 | `audit:sources` (URL inventory, HTTP probe, evidence tiers) for the refresh workflow; not in `npm test` |
 | 2026-10-10 | `audit:freshness` (volatility classes, due pages, baseline flag, watchlist counters) and the weekly warn-only `freshness.yml` workflow |
 | 2026-10-10 | Claim-level **Recheck by** column in the watchlist; `watch:feeds` and the weekly `watch.yml` workflow opening a `veille` issue; `vault-watch` skill |
+| 2026-10-10 | Watch cost cut: deterministic pre-triage and `version-floors.json` in `watch:feeds`, cached release notes in the JSON, biweekly issue with an `urgent` label in between, one-page agent brief for `vault-watch` |
