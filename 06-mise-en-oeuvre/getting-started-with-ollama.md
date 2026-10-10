@@ -5,7 +5,7 @@ sidebar:
   order: 3
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -17,7 +17,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## Prérequis
 
-- **macOS** (Apple Silicon recommandé — depuis Ollama 0.40, septembre 2026, les architectures compatibles tournent par défaut sur le moteur MLX d'Apple[^3]) ou **Linux** (GPU NVIDIA ou AMD, ou CPU seul)
+- **macOS** (Apple Silicon recommandé — depuis Ollama 0.40, octobre 2026, les architectures compatibles tournent par défaut sur le moteur MLX d'Apple[^3]) ou **Linux** (GPU NVIDIA ou AMD, ou CPU seul)
 - Windows : supporté via WSL2 ou installeur natif — les performances GPU nécessitent les pilotes CUDA ou ROCm
 - Au moins 8 Go de RAM (16+ recommandé pour un 7B/8B confortable)
 - Espace disque : 5–50 Go selon le modèle téléchargé
@@ -259,7 +259,7 @@ Ordres de grandeur indicatifs (mesures communautaires sur llama.cpp, mi-2026, no
 
 [^1]: Ollama, *Library* et registre `registry.ollama.ai` (manifestes : `llama3.2` = 3B, 2,02 Go ; `qwen3.5:9b` ≈ 6,5 Go ; `qwen3-coder:30b` ≈ 18,6 Go ; `qwen3.6:35b` ≈ 22,6 Go ; `qwen2.5-coder:14b` ≈ 9 Go), consultés le 2026-10-09. [https://ollama.com/library](https://ollama.com/library)
 [^2]: Ollama, *Troubleshooting* (emplacement des logs : `journalctl -u ollama`, `~/.ollama/logs/server.log`), consulté le 2026-10-09 · dépôt `ollama/ollama`, `cmd/cmd.go` (liste des sous-commandes, sans `logs`). [https://docs.ollama.com/troubleshooting](https://docs.ollama.com/troubleshooting) · [https://github.com/ollama/ollama](https://github.com/ollama/ollama)
-[^3]: Ollama, *Release v0.40.0* (« Models run on MLX on Apple Silicon by default »), 25 septembre 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
+[^3]: Ollama, *Release v0.40.0* (« Models run on MLX on Apple Silicon by default »), octobre 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
 [^4]: Ollama, *Release v0.32.0* (`ollama` sans argument lance un agent, entrée par défaut `glm-5.2:cloud` ; avertissement de dépréciation des anciens modèles agent), 11 juillet 2026 · Ollama, *Release v0.34.2* (« first-run setup … with options to sign in or continue locally »), 15 septembre 2026. [https://github.com/ollama/ollama/releases/tag/v0.32.0](https://github.com/ollama/ollama/releases/tag/v0.32.0) · [https://github.com/ollama/ollama/releases/tag/v0.34.2](https://github.com/ollama/ollama/releases/tag/v0.34.2)
 [^5]: Ollama, *Release v0.40.2* (modèles « upgraded in the background the first time you run them », sauvegardes conservées, re-pull nécessaire en cas de retour < 0.40), 8 octobre 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.2](https://github.com/ollama/ollama/releases/tag/v0.40.2)
 [^6]: Ollama, *FAQ* (« By default, Ollama uses a context window size of 4096 tokens », `OLLAMA_CONTEXT_LENGTH`, `OLLAMA_NUM_PARALLEL` = 1, `OLLAMA_MAX_LOADED_MODELS` = 3 × GPU) et *Context length* (défauts de l'application : 4k / 32k / 256k selon la VRAM), consultées le 2026-10-10. [https://docs.ollama.com/faq](https://docs.ollama.com/faq) · [https://docs.ollama.com/context-length](https://docs.ollama.com/context-length)

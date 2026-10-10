@@ -8,7 +8,7 @@ tags:
   - fondations
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -40,7 +40,7 @@ Small active-parameter MoEs (Qwen3-30B-A3B, Nemotron 3.5 Lightning, gpt-oss-20b[
 
 Giant MoEs (DeepSeek V4.1: > 750 GB in FP8; Kimi K3: > 1.4 TB even in native 4-bit; the 2024 DeepSeek V3 already weighed 404 GB in Q4_K_M) need an 8-GPU node or a multi-node cluster — Scenarios C or D[^1][^2].
 
-Watch the licenses: the open frontier MoEs of 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.4T-A95B) ship under custom licenses to read before any commercial use; only small to mid-sized MoEs (Qwen3-30B-A3B, GLM-5.3-Flash, DeepSeek V4 / V4.1, Nemotron 3.5) remain under Apache 2.0, MIT or OpenMDW. On Ollama, `kimi-k3:cloud` or `glm-5.2:cloud` are **hosted** tags, not downloadable weights (see [[03-stack-logicielle/choose-your-model|🗺️ Choose your model]]).
+Watch the licenses: several open frontier MoEs of 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.4T-A95B) ship under custom licenses to read before any commercial use. The rule is not absolute: since September 2026, Xiaomi's MiMo-V2.6-Pro (1.02T parameters, 42B active) is published under MIT[^8], and most small to mid-sized MoEs (Qwen3-30B-A3B, GLM-5.3-Flash, DeepSeek V4 / V4.1, Nemotron 3.5) remain under Apache 2.0, MIT or OpenMDW. On Ollama, `kimi-k3:cloud` or `glm-5.2:cloud` are **hosted** tags, not downloadable weights (see [[03-stack-logicielle/choose-your-model|🗺️ Choose your model]]).
 
 ## ⚠️ Common pitfalls
 
@@ -67,3 +67,4 @@ Watch the licenses: the open frontier MoEs of 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.
 [^5]: Z.ai, *GLM-5.3-Flash* (320 B total, 18 B active, hybrid sparse + linear attention, MIT), 2026. [https://huggingface.co/zai-org/GLM-5.3-Flash](https://huggingface.co/zai-org/GLM-5.3-Flash)
 [^6]: OpenAI, *gpt-oss-120b / gpt-oss-20b* (gpt-oss-20b: 21 B total, 3.6 B active, MoE post-trained in MXFP4, fits in 16 GB), August 2025. [https://huggingface.co/openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b)
 [^7]: Qwen, *Qwen3.8-Flash-Next* (10 routed experts + 1 shared of 512; 51 B of n-gram embeddings "easier to offload than MoE experts"), August 2026. [https://huggingface.co/Qwen/Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next)
+[^8]: Xiaomi, *MiMo-V2.6-Pro-MOPD* (1.02T / 42B-active MoE, 1M context, text + image + video + audio, MIT license; RL checkpoint of 2026-09-21, MOPD update of 2026-09-27), Hugging Face. [https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-MOPD](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-MOPD)

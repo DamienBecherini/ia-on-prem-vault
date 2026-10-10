@@ -160,7 +160,7 @@ GPU inference is expensive. A well-designed architecture reserves the GPU for th
 | :-- | :-- | :-- |
 | Text generation (LLM) | vLLM, SGLang | GPU (exclusive VRAM) |
 | Embedding generation | `embeddinggemma-2` (270M–740M) via Ollama; `nemotron-3-embed` 1B/8B if a GPU is available[^11] | **CPU** (EmbeddingGemma 2) / GPU (Nemotron 8B) |
-| Speech transcription (STT) | `faster-whisper` (CTranslate2)[^10] | **CPU** |
+| Speech transcription (STT) | `faster-whisper` (CTranslate2)[^10]; in real time: Voxtral Mini 4B Realtime (GPU ≥ 16 GB)[^18] | **CPU** (Voxtral: GPU) |
 | Re-ranking, scoring | Lightweight CrossEncoder | **CPU** |
 
 `faster-whisper` (SYSTRAN's Whisper implementation on the CTranslate2 engine) can transcribe short audio in real time directly on CPU, without using a single byte of VRAM[^10]. Embedding models like EmbeddingGemma 2 (270M–740M) are small enough to run efficiently in asynchronous batches on CPU.
@@ -251,3 +251,4 @@ To build a sovereign enterprise software stack in Q4 2026:
 [^15]: Hugging Face, *smolagents — Releases* (latest version v1.26.0 of 2026-05-29; maintenance commits only since), accessed 2026-10-10. [https://github.com/huggingface/smolagents/releases](https://github.com/huggingface/smolagents/releases)
 [^16]: IBM, *Granite 4.2 8B* (Apache 2.0, OpenAI-format tool calling, thinking / low-effort modes), 2026-08-25. [https://huggingface.co/ibm-granite/granite-4.2-8b](https://huggingface.co/ibm-granite/granite-4.2-8b); Qwen, *Qwen3.8-27B* (thinking mode can be enabled or disabled), August 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B)
 [^17]: Ollama, *API — Generate embeddings* (`POST /api/embed`, `input` field string or array, `truncate` / `dimensions` options; no `/api/embeddings` endpoint documented), accessed 2026-10-10. [https://docs.ollama.com/api/embed](https://docs.ollama.com/api/embed)
+[^18]: Mistral AI, *Voxtral Mini 4B Realtime 2602* (real-time streaming transcription, 13 languages, BF16, one GPU ≥ 16 GB; Apache 2.0), Hugging Face, February 2026. [https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602](https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602)

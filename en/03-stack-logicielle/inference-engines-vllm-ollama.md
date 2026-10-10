@@ -5,7 +5,7 @@ sidebar:
   order: 1
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -21,7 +21,7 @@ In 2026, the ecosystem has become highly specialized. Engine choice dictates [[0
 
 ## 1. llama.cpp & Ollama: Kings of the workstation
 
-[Ollama](https://ollama.com/) has become the de facto standard for quickly testing models — as of Q4 2026, its GitHub repository exceeds 180,000 stars and its official Docker image is approaching 185 million cumulative pulls[^1]. Under the hood, [[00-lexique/ollama|Ollama]] has become a dual-engine runtime: **llama.cpp** (C/C++) on Linux, Windows and for most architectures, and **MLX** (Apple) which, since version 0.40 (September 2026), handles compatible models by default on Apple Silicon[^13].
+[Ollama](https://ollama.com/) has become the de facto standard for quickly testing models — as of Q4 2026, its GitHub repository exceeds 180,000 stars and its official Docker image is approaching 185 million cumulative pulls[^1]. Under the hood, [[00-lexique/ollama|Ollama]] has become a dual-engine runtime: **llama.cpp** (C/C++) on Linux, Windows and for most architectures, and **MLX** (Apple) which, since version 0.40 (October 2026), handles compatible models by default on Apple Silicon[^13].
 
 ### 🌟 Strengths
 *   **Hardware versatility:** Optimized to use unified memory on Mac Studio, handle [[00-lexique/offloading|offloading]] between RAM and GPU on modest workstations, and run on almost any CPU.
@@ -149,7 +149,7 @@ For an on-premise agent project deployed at customer sites, engine choice depend
 [^10]: Tenstorrent, *vLLM integration with TT-Metal* (fork tenstorrent/vllm, tt-metal, standard vLLM incompatibility), 2025. [https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md](https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md)
 [^11]: vLLM Project, *Automatic Prefix Caching* and *Engine Arguments* (`enable_prefix_caching` on by default, block hashing, `vllm:prefix_cache_hits/queries` metrics), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/) · [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)
 [^12]: Ollama, *FAQ — How does Ollama handle concurrent requests?* (`OLLAMA_NUM_PARALLEL`, `OLLAMA_MAX_LOADED_MODELS`, request queue), accessed 2026-10-09. [https://docs.ollama.com/faq](https://docs.ollama.com/faq)
-[^13]: Ollama, *Release v0.40.0* ("Models run on MLX on Apple Silicon by default"), September 25, 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
+[^13]: Ollama, *Release v0.40.0* ("Models run on MLX on Apple Silicon by default"), October 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
 [^14]: SGLang Project, *Release v0.5.20* (CUDA 12 dropped, CUDA 13 required; ROCm `gfx1151` image), September 18, 2026. [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20)
 [^15]: vLLM Project, *CLI Reference — `vllm serve`* (`--api-key`: protected paths `/v1`, `/v2`, `/inference`), accessed 2026-10-09 · vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`/tokenize` not covered by `--api-key`), October 6, 2026. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
 [^16]: vLLM Project, *Release v0.28.0* (default PyPI wheel and Docker image on CUDA 13.0, `-cu129` variants), 2026-08-26 · *Release v0.31.0* (`quantization="fp8"` renamed `fp8_per_tensor`, former name redirected), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.28.0](https://github.com/vllm-project/vllm/releases/tag/v0.28.0) · [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)

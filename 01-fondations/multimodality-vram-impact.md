@@ -3,9 +3,9 @@ title: "🖼️ Multimodalité : Impact Matériel (VRAM & KV Cache)"
 description: Ce qui change dans votre infrastructure quand vous traitez des images, des documents scannés ou de l'audio — encodeurs visuels, coût VRAM, interaction avec le KV Cache, et carte des blueprints concernés.
 sidebar:
   order: 6
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -117,6 +117,8 @@ flowchart TD
 > [!tip] Whisper peut tourner en CPU
 > Pour la transcription non-temps-réel (batch), Whisper fonctionne correctement sur CPU avec `whisper.cpp`. La VRAM GPU n'est mobilisée que si vous forcez la transcription GPU pour la latence temps réel.
 
+**Temps réel : une alternative à Whisper.** Pour sous-titrer une réunion en direct, Mistral publie depuis février 2026 **Voxtral Mini 4B Realtime** (Apache 2.0) : un modèle de transcription nativement en streaming, avec un délai réglable de 80 ms à 2,4 s, 13 langues dont le français (WER de 6,4 % en français à 480 ms de délai selon l'éditeur), servi par vLLM[^5]. Contrairement à Whisper, il ne se pose pas sur CPU : l'éditeur indique un GPU d'au moins 16 Go (poids BF16, ~4,4B paramètres), à prévoir en plus du LLM. Whisper sur CPU reste le bon choix pour le batch ; Voxtral se justifie quand la latence compte. Mistral en décline des variantes par langue (dialectes arabes en octobre 2026).
+
 **Conséquence architecturale :** Whisper peut coexister avec un VLM sur la même machine sans compétition VRAM significative, à condition de ne pas les exécuter simultanément sur GPU. En pipeline asynchrone (transcription → résumé LLM), une séquence est parfaitement viable sur un Blueprint B.
 
 ---
@@ -165,3 +167,4 @@ flowchart TD
 [^2]: Alibaba Cloud, *Qwen2-VL model documentation* (tokens visuels dynamiques selon résolution, architecture SigLIP). [https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct)
 [^3]: OpenAI, *Whisper model card* (tailles tiny à large-v3, paramètres et empreinte mémoire indicative). [https://github.com/openai/whisper](https://github.com/openai/whisper)
 [^4]: vLLM Project, *Production Metrics — KV cache usage* (comportement du KV Cache en batch continu). [https://docs.vllm.ai/en/stable/usage/metrics/](https://docs.vllm.ai/en/stable/usage/metrics/)
+[^5]: Mistral AI, *Voxtral Mini 4B Realtime 2602* (transcription temps réel en streaming, délai 80 ms – 2,4 s, 480 ms recommandé ; 13 langues ; BF16, un GPU ≥ 16 Go ; vLLM ; Apache 2.0), Hugging Face, février 2026 ; *Voxtral Mini 4B Realtime Arabic*, 2026-10-08. [https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602](https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602) · [https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-Arabic](https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-Arabic)
