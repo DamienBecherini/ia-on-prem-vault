@@ -1,8 +1,6 @@
 ---
 title: "🤖 On-Premise Agents & Assistants"
-description: >
-  Overview of the local AI application layer: personal assistants that learn from your data,
-  and custodian agents that act on your behalf — evaluated through the lens of sovereignty.
+description: "Application layer of local AI: personal assistants that learn from your data and custodian agents that act for you, assessed from a sovereignty standpoint."
 sidebar:
   order: 1
 last_modified: "2026-06-04"

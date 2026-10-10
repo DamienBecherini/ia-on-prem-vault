@@ -1,6 +1,6 @@
 ---
 title: 🚀 Index Zero to Hero
-description: Le point d'entrée de votre formation sur l'IA On-Premise
+description: "Point d'entrée de la formation Zero to Hero sur l'IA on-premise : pourquoi l'héberger en local et sommaire du vault, des fondations à la mise en œuvre."
 last_modified: "2026-06-10"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"

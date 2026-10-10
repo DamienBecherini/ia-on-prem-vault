@@ -1,6 +1,6 @@
 ---
 title: LLM
-description: Large Language Model.
+description: "Modèle IA entraîné sur de très grands corpus de texte, souvent de type Transformer ; en local, ses performances dépendent autant de la mémoire que du modèle."
 aliases:
   - Large Language Model
   - Grand modèle de langage

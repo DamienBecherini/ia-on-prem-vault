@@ -1,6 +1,6 @@
 ---
 title: Mémoire unifiée
-description: Architecture mémoire partagée entre CPU/GPU/NPU.
+description: "Architecture où CPU, GPU et parfois NPU partagent un même pool mémoire, évitant certaines copies via PCIe ; présente sur Apple Silicon et des APU AMD récents."
 aliases:
   - Unified memory
 tags:

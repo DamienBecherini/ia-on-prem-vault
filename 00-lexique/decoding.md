@@ -1,6 +1,6 @@
 ---
 title: Decoding
-description: Phase de génération auto-régressive token par token.
+description: "Phase de génération où le modèle prédit un token à la fois en relisant le KV Cache ; elle gouverne les tokens par seconde et se heurte au Memory Wall."
 aliases:
   - Génération auto-régressive
 tags:

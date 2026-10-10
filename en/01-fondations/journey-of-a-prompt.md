@@ -1,6 +1,6 @@
 ---
 title: "🧠 The Journey of a Prompt: How Does an LLM Work?"
-description: From your keyboard to the answer. No magic—just electricity and mathematics. Discover the key stages (tokenization, prefill, KV cache, decoding).
+description: "Follow a prompt's journey from your keyboard to the answer, no magic: tokenization, prefill, KV Cache and decoding explained step by step."
 sidebar:
   order: 0
 last_modified: "2026-06-04"

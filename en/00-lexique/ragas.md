@@ -1,6 +1,6 @@
 ---
 title: RAGAS
-description: Automatic evaluation framework for RAG pipelines.
+description: "Framework that evaluates a RAG system by separating retrieval quality from answer faithfulness, to diagnose where the pipeline fails."
 aliases:
   - Retrieval Augmented Generation Assessment
 tags:

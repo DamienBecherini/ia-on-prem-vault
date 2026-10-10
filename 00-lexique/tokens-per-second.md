@@ -1,6 +1,6 @@
 ---
 title: Tokens par seconde
-description: Mesure du débit de génération d'un modèle.
+description: "Nombre de tokens générés par seconde en phase de génération ; indicateur de fluidité, à interpréter avec le TTFT selon le modèle, le moteur et le matériel."
 aliases:
   - tokens/s
   - tok/s

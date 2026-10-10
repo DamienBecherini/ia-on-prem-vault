@@ -1,6 +1,6 @@
 ---
 title: Speculative Decoding
-description: Inference acceleration technique where a small fast model generates candidate tokens that the large model verifies in a single pass. Requires two models loaded simultaneously.
+description: "Inference acceleration technique where a small fast model proposes tokens that the large model verifies in a single pass; both models must be loaded."
 aliases:
   - Speculative Decoding
   - speculative sampling

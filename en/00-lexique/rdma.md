@@ -1,6 +1,6 @@
 ---
 title: RDMA
-description: Remote direct memory access without classic CPU copying.
+description: "Network technique that reads and writes remote memory without going through the CPU, with low latency; it comes in InfiniBand and RoCE implementations."
 aliases:
   - Remote Direct Memory Access
 tags:

@@ -1,6 +1,6 @@
 ---
 title: Excessive Agency
-description: Vulnérabilité du Top 10 OWASP pour les applications LLM — un agent IA dispose de trop de fonctionnalités, permissions ou autonomie, permettant des actions réelles non souhaitées.
+description: "Vulnérabilité du Top 10 OWASP pour LLM : un agent IA dispose de trop de fonctionnalités, de permissions ou d'autonomie, d'où des actions réelles non voulues."
 aliases:
   - Agence excessive
   - LLM06
