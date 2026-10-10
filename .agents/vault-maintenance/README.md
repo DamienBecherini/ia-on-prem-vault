@@ -51,7 +51,7 @@ A refresh run diffs this table against the web instead of re-reading every page.
 
 ### `feeds.json`
 
-Sources of the weekly watch (`npm run watch:feeds`, `.github/workflows/watch.yml`): GitHub releases, tags and advisories, Hugging Face publishers, vendor and regulator RSS, and the Vision IA YouTube channel (tier C, leads only). Add a source when a tool or vendor enters the vault, remove it when it leaves. The `vault-watch` skill consumes the weekly `veille` issue.
+Sources of the weekly watch (`npm run watch:feeds`, `.github/workflows/watch.yml`): GitHub releases, tags and advisories, Hugging Face publishers, vendor and regulator RSS, and the Vision IA YouTube channel (tier C, leads only). Add a source when a tool or vendor enters the vault, remove it when it leaves. The `vault-watch` skill consumes the weekly `veille` issue. Sources flagged `"discovery": true` (Hugging Face trending, young GitHub repositories, editorial watch feeds) look for subjects the vault does not cover yet; they feed the "Additions" step. Items triaged and deliberately set aside live in `watch-seen.md`.
 
 ---
 
