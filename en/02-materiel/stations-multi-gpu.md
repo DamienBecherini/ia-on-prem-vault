@@ -3,8 +3,8 @@ title: "🧩 Multi-GPU Workstations: NVIDIA, PCIe, and VRAM"
 description: "Understand when multiple discrete GPUs truly help on-premise AI inference, and why interconnect often matters more than card count."
 sidebar:
   order: 2
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -47,12 +47,14 @@ Professional workstation cards maximize flexibility: they fit standard x86 tower
 
 The RTX 6000 Ada remains a solid workstation base with 48 GB GDDR6 ECC and PCIe Gen 4 x16 [^1]. The RTX PRO 6000 Blackwell doubles capacity to 96 GB, moves to GDDR7 ECC, advertises 1,792 GB/s memory bandwidth, and PCIe Gen 5 support [^2].
 
+In Q3 2026, NVIDIA lists the RTX PRO 6000 Blackwell at **US$16,000** on its store, double its 2025 pre-order price (under $8,000); the RTX 5090 (32 GB, 1,792 GB/s, 575 W) disappeared from first-hand retail in the US in September 2026 and trades at $5,000 and up from third-party sellers against a $1,999 MSRP [^10][^11]. These increases track memory prices: TrendForce still forecasts +10 to 15% per quarter on contract DRAM in Q4 2026 [^14]. Every price in this chapter is therefore dated and must be re-checked with each quote.
+
 These cards are very attractive for on-premise because they offer **fast local VRAM** and a mature software ecosystem. But in a standard multi-GPU workstation, inter-card traffic depends entirely on the PCIe bus.
 
 > [!warning] Common pitfall — NVLink on workstations
 > RTX workstation cards (RTX 6000 Ada, RTX PRO 6000 Blackwell) and consumer lines (RTX 40xx, RTX 50xx) **no longer have a physical NVLink connector** since the Ada Lovelace generation. NVIDIA removed external NVLink bridges from all desktop and workstation lines.
 > It is therefore **impossible to buy two RTX PRO 6000 cards and link them via NVLink**: the connector simply does not exist on these cards [^1][^2].
-> NVLink today is **exclusively for server GPUs** in SXM form factor (A100, H100, H200, B200) and HGX/DGX systems — a different machine category starting above €100,000.
+> NVLink today is **exclusively for server GPUs** in SXM form factor (A100, H100, H200, B200, B300) and HGX/DGX/NVL72 systems — including the Vera Rubin generation, in full production since August 2026 for the large clouds [^12] — a different machine category starting above €100,000.
 
 ### 2. SaaS Inference Servers (L40S, A100)
 
@@ -63,14 +65,14 @@ Between PCIe workstation towers and HGX datacenter nodes, there is a category of
 | **NVIDIA L40S** | 48 GB GDDR6 | 864 GB/s | ✅ Yes (Ada Lovelace) | SaaS inference — best cost/token in production |
 | **NVIDIA A100 (80 GB)** | 80 GB HBM2e | 2,000 GB/s | ❌ No (FP16 max) | Solid legacy, available from sovereign FR hosts |
 | **NVIDIA A100 (40 GB)** | 40 GB HBM2e | 1,555 GB/s | ❌ No | Capacity/cost compromise for 13–34B models |
-| RTX 6000 Ada / RTX 4090 | 48 / 24 GB | 960 / 1,008 GB/s | ⚠️ Partial | On-prem client air-gapped (client-supplied hardware) |
+| RTX 6000 Ada / RTX 5090 | 48 / 32 GB | 960 / 1,792 GB/s | ⚠️ Partial / ✅ (Blackwell) | On-prem client air-gapped (client-supplied hardware); RTX 5090 ≥ $5,000 and scarce in Q3 2026 [^11] |
 
 #### The NVIDIA L40S — the "hidden gem" of 2026 inference
 
 The L40S (Ada Lovelace architecture) is often underestimated because it lacks HBM bandwidth like an H100. It compensates with two decisive advantages for production inference[^7]:
 
 1.  **4th-generation Tensor Cores with native FP8:** FP8 quantization of the model and [[00-lexique/kv-cache|KV Cache]] is native, without software workarounds. 4th-generation Tensor Cores (Ada as well as Hopper) execute FP8 natively; the L40S's advantage over the H100 is not the format but the **acquisition cost and power draw (350 W, PCIe)** for quantized models ≤ 70B[^7].
-2.  **Best cost/token in inference:** MLPerf Inference Datacenter 2024 benchmarks rank the L40S as the GPU with the lowest cost per generated token for 70B-class models in production — ahead of the A100 and roughly on par with the H100 on that specific ratio[^8].
+2.  **Best cost/token in inference:** MLPerf Inference Datacenter results publish per-system throughput (and, optionally, power), never a cost per token; set against list prices, L40S systems offer a competitive cost per token versus the A100 for quantized 70B models — a ratio to recompute with current prices[^8].
 
 A bare-metal server with two L40S cards (96 GB total VRAM) is the reference topology for hosting a 70B model in FP8 quantization and serving 20 to 80 simultaneous users with [[00-lexique/ttft|TTFT]] < 2 s.
 
@@ -82,7 +84,7 @@ The A100 remains the most available datacenter GPU from French sovereign hosts (
 
 #### RTX Workstation for On-Prem Client (Tier Air-Gapped)
 
-When a client deploys the stack on **its own hardware** (Tier 3 / air-gapped), there is no need to impose €15,000 datacenter GPUs. A workstation with one or two RTX 6000 Ada cards (48 GB PCIe) is enough to serve internal requests for a team of 10 to 30 people, provided the inference engine (vLLM or SGLang) is configured correctly.
+When a client deploys the stack on **its own hardware** (Tier 3 / air-gapped), it is not always necessary to impose datacenter GPUs: a workstation with one or two RTX 6000 Ada cards (48 GB PCIe) or one RTX PRO 6000 (96 GB, ~$16,000 in Q3 2026) is enough to serve internal requests for a team of 10 to 30 people, provided the inference engine (vLLM or SGLang) is configured correctly.
 
 > [!warning] RTX workstation ≠ SLA guarantee
 > Without NVLink or HBM, RTX workstation cards cannot match L40S throughput under concurrent load. They suit moderate on-site use, not multi-tenant SaaS with strict SLAs.
@@ -206,7 +208,7 @@ Beyond NVIDIA, several vendors position alternatives for on-premise inference an
 
 ### Tenstorrent (Wormhole / Blackhole)
 
-Tenstorrent (founded by Jim Keller) sells **Wormhole** accelerators (N150, N300) and announces the **Blackhole** generation. The architecture is software-first, based on **RISC-V** cores with massive local SRAM and external **GDDR6**, and integrated **Ethernet** interconnection between chips [^9].
+Tenstorrent (founded by Jim Keller) sells **Wormhole** accelerators (N150, N300) and, since 2026, the **Blackhole** generation (p100a cards at $999 and p150a/p150b at $1,399, in stock on the Tenstorrent store as of 2026-10-10)[^15]. The architecture is software-first, based on **RISC-V** cores with massive local SRAM and external **GDDR6**, and integrated **Ethernet** interconnection between chips [^9].
 
 **Claimed advantages:** purchase cost significantly lower than equivalent NVIDIA GPUs in TFLOPS, open-source **TT-Forge** software stack (TT-Metal + MLIR compiler), native Ethernet interconnection for scale-out without proprietary switch.
 
@@ -215,6 +217,10 @@ Tenstorrent (founded by Jim Keller) sells **Wormhole** accelerators (N150, N300)
 - **Standard vLLM incompatible:** you must use the `tenstorrent/vllm` fork with a manually compiled `tt-metal` environment — a non-trivial procedure, not maintained by the main vLLM team. Community source [^9] — see also the note in [[03-stack-logicielle/inference-engines-vllm-ollama|Inference Engines]].
 - **Partial model compatibility:** the TT-Forge compiler does not yet support all operators in recent architectures — "90% model compatibility" is insufficient for B2B deployments that must guarantee every model's behavior.
 - **Young software ecosystem:** no official HuggingFace, LangChain, or common monitoring tool support yet (Prometheus metrics, OpenTelemetry).
+
+### Intel Crescent Island (announced, expected in 2027)
+
+At Hot Chips (2026-08-24), Intel detailed **Crescent Island**, a 350 W air-cooled PCIe inference GPU with **160 GB of LPDDR5X** (up to 480 GB on partner cards), designed for tokens per watt and announced as compatible with vLLM and SGLang; bandwidth, price, and availability date are not published [^13]. It is the first "capacity-first" GPU to watch for large MoE models served at low throughput — nothing to buy in Q4 2026.
 
 > [!note] Advice for 2026–2027
 > Tenstorrent is **worth watching for 2026–2027**, especially if TT-Forge achieves standard vLLM compatibility and the software ecosystem matures. At this stage, **not recommended for an SMB without a dedicated AI DevOps team**: the hardware cost savings are real, but integration and maintenance overhead often erases the initial savings.
@@ -230,5 +236,11 @@ Tenstorrent (founded by Jim Keller) sells **Wormhole** accelerators (N150, N300)
 [^5]: NVIDIA TensorRT-LLM, *Parallelism in TensorRT LLM* (TP, PP, DP, EP, CP). [https://nvidia.github.io/TensorRT-LLM/features/parallel-strategy.html](https://nvidia.github.io/TensorRT-LLM/features/parallel-strategy.html)
 [^6]: vLLM, *Parallelism and Scaling* (tensor parallel, pipeline parallel, Ray, multiprocessing, GPUDirect RDMA). [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/)
 [^7]: NVIDIA, *L40S Product Page* (Ada Lovelace, 4th-generation Tensor Cores with FP8 Transformer Engine, 48 GB GDDR6 ECC, 350 W, PCIe Gen4), re-read on 2026-10-09. [https://www.nvidia.com/en-us/data-center/l40s/](https://www.nvidia.com/en-us/data-center/l40s/)
-[^8]: MLCommons, *MLPerf Inference Datacenter v4.1 Results* (datacenter inference benchmark, cost/token). [https://mlcommons.org/benchmarks/inference-datacenter/](https://mlcommons.org/benchmarks/inference-datacenter/)
+[^8]: MLCommons, *MLPerf Inference: Datacenter* (per-system throughput and power results, latest round v6.1; no cost per token published), re-read on 2026-10-10. [https://mlcommons.org/benchmarks/inference-datacenter/](https://mlcommons.org/benchmarks/inference-datacenter/)
 [^9]: Tenstorrent, *vLLM integration with TT-Metal* (Wormhole architecture, fork tenstorrent/vllm, partial standard vLLM compatibility), 2025. [https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md](https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md)
+[^10]: Tom's Hardware, *Nvidia doubles RTX PRO 6000 Blackwell's MSRP to a staggering $16,000* (96 GB, pre-orders under $8,000 in 2025), August 2026. [https://www.tomshardware.com/pc-components/gpus/nvidia-doubles-rtx-pro-6000-blackwells-msrp-to-a-staggering-usd16-000-96gb-card-started-pre-orders-below-usd8-000-last-year](https://www.tomshardware.com/pc-components/gpus/nvidia-doubles-rtx-pro-6000-blackwells-msrp-to-a-staggering-usd16-000-96gb-card-started-pre-orders-below-usd8-000-last-year)
+[^11]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500* (MSRP $1,999), 14 September 2026. [https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu](https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu) · NVIDIA, *GeForce RTX 5090* (32 GB GDDR7, 512-bit bus, 575 W). [https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/](https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/)
+[^12]: NVIDIA Newsroom, *NVIDIA Announces Financial Results for Second Quarter Fiscal 2027* ("Vera Rubin, now in full production"; Spectrum-6 with pluggable and co-packaged optics; Groq 3 LPX in production), 26 August 2026. [https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)
+[^13]: ServeTheHome, *Intel Crescent Island 160GB to 480GB LPDDR5X AI GPU at Hot Chips 2026* (350 W air-cooled PCIe, Xe3p, vLLM / SGLang, bandwidth not disclosed), 24 August 2026. [https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/](https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/)
+[^14]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
+[^15]: Tenstorrent, *Blackhole* — product page (p100a $999, p150a / p150b $1,399, "In stock"), captured 2026-10-10. [https://tenstorrent.com/hardware/blackhole](https://tenstorrent.com/hardware/blackhole)

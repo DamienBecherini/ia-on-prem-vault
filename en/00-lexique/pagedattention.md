@@ -6,9 +6,9 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -26,7 +26,7 @@ Result: memory fragmentation drops from ~60% to under 4% according to the origin
 This is the main innovation explaining why vLLM outperforms Ollama in multi-user production. Without PagedAttention, the server wastes VRAM and cannot batch concurrent requests efficiently.
 
 ## ⚠️ Common pitfalls
-- Available mainly with vLLM (and a few compatible engines). Ollama/llama.cpp do not implement PagedAttention natively.
+- PagedAttention now designates a **principle** more than a component: vLLM removed the historical implementation in v0.25 (July 2026) in favor of its V1 engine's attention backends, which keep block-based KV Cache management (`--block-size` option, `vllm:kv_cache_usage_perc` metric)[^1]. Workstation-oriented engines (llama.cpp/Ollama) rely on a different memory model and do not offer equivalent continuous batching.
 - Does not remove total capacity limits: if model + caches exceed total VRAM, OOM still occurs.
 
 ## 📚 Go deeper
@@ -38,3 +38,5 @@ This is the main innovation explaining why vLLM outperforms Ollama in multi-user
 - [[00-lexique/vram|VRAM]]
 - [[00-lexique/tokens-per-second|Tokens per second]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
+
+[^1]: vLLM Project, *Release v0.25.0* ("PagedAttention has been removed — the legacy attention implementation is deleted now that V1/MRv2 backends are the standard path"), 11 July 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.25.0](https://github.com/vllm-project/vllm/releases/tag/v0.25.0) · vLLM Project, *Engine Arguments* (`--block-size`, block-based KV cache), accessed 2026-10-10. [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)

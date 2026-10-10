@@ -49,17 +49,17 @@ Until pages carry a `freshness` frontmatter field, the class is inferred from th
 
 Columns: **Page** (FR path) · **Claim** (short quote, ≤ 120 chars) · **Type** · **Value in page** (the number/version/name as written) · **Source** (footnote id or URL) · **Source date** · **Checked** (last check date) · **Status** · **Note** (what changed, proposed value, new source).
 
-The table is split per chapter under `watchlist/` because the 2026-10-09 run seeded 585 rows (598 after the Critical PR of the same day):
+The table is split per chapter under `watchlist/` because the 2026-10-09 run seeded 585 rows (598 after the Critical PR of the same day, 641 after the first Major PR, 708 after the second Major PR of 2026-10-10):
 
-| File | Rows (2026-10-09) |
+| File | Rows (2026-10-10) |
 | :-- | --: |
-| `watchlist/00-lexique.md` | 64 |
-| `watchlist/01-fondations.md` | 27 |
-| `watchlist/02-materiel.md` | 80 |
-| `watchlist/03-stack-logicielle.md` | 95 |
-| `watchlist/04-blueprints.md` | 104 |
-| `watchlist/05-agents-et-assistants-on-prem.md` | 154 |
-| `watchlist/06-mise-en-oeuvre.md` | 117 |
+| `watchlist/00-lexique.md` | 73 |
+| `watchlist/01-fondations.md` | 35 |
+| `watchlist/02-materiel.md` | 91 |
+| `watchlist/03-stack-logicielle.md` | 100 |
+| `watchlist/04-blueprints.md` | 114 |
+| `watchlist/05-agents-et-assistants-on-prem.md` | 170 |
+| `watchlist/06-mise-en-oeuvre.md` | 125 |
 
 Rows normalised on 2026-10-09 (PR `fix/refresh-2026-10-critical`): every row has exactly 9 cells, a backticked **Page**, and a valid **Status**; the claims corrected by that PR are marked `current` with a `corrigé PR critical 2026-10-09 : ancien → nouveau` note (598 rows after 13 additions). Rule: a literal `|` inside a cell is always escaped as `\|`; when checking with `node -e "…"`, write the protecting regex as `/\\\\\|/g` under bash (double-quote processing) but `/\\\|/g` under PowerShell, otherwise every `\|` is counted as a separator and the escaped rows are reported as malformed.
 

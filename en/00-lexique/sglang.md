@@ -8,9 +8,9 @@ tags:
   - stack
 sidebar:
   order: 62
-last_modified: "2026-06-09"
-last_verified: "2026-06-09"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 ---
 
 ## 📝 Short definition
@@ -36,9 +36,9 @@ SGLang can constrain the model to produce JSON conforming to a given schema, at 
 | Agentic workloads with many tool calls and shared prefixes | **SGLang** |
 | Applications requiring reliable JSON outputs (APIs, backend integrations) | **SGLang** |
 | Pure throughput benchmarks under heavy concurrency | **vLLM** |
-| Broadest hardware compatibility (AMD ROCm, mature ecosystem) | **vLLM** |
+| Hardware compatibility (NVIDIA CUDA 12 still supported, ROCm, CPU) | **vLLM** (SGLang requires CUDA 13 since 0.5.20, September 2026) |
 
-vLLM remains the reference for maximum throughput and the widest hardware compatibility. SGLang excels where first-response latency and structured output reliability matter more than raw throughput.
+vLLM remains the reference for maximum throughput and keeps CUDA 12.9 variants; SGLang now officially covers NVIDIA (B200 → A100, RTX 30/40/50), AMD Instinct (MI300X → MI355X), Google TPU, Intel and Apple Silicon (Metal/MLX), with maturity varying by platform[^3]. SGLang excels where first-response latency and structured output reliability matter more than raw throughput.
 
 ## ⚠️ Common pitfalls
 
@@ -62,3 +62,4 @@ vLLM remains the reference for maximum throughput and the widest hardware compat
 
 [^1]: SGLang — official GitHub repository. [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang)
 [^2]: LMSys, *Fast and Expressive LLM Inference with RadixAttention*, January 2024. [https://lmsys.org/blog/2024-01-17-sglang/](https://lmsys.org/blog/2024-01-17-sglang/)
+[^3]: SGLang Project, README ("SGLang supports a wide range of GPUs, TPUs, NPUs, CPUs, and Apple Silicon platforms": NVIDIA B200 → A100 and RTX 30/40/50, AMD Instinct MI300X → MI355X, TPU v6e/v7, Intel Arc and Xeon, Apple Silicon via Metal/MLX, Ascend, Moore Threads), accessed 2026-10-10 · *Release v0.5.20* ("The CUDA 12 lane is retired"), 18 September 2026. [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang) · [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20)

@@ -3,9 +3,9 @@ title: "SearXNG"
 description: Self-hosted, privacy-first meta search engine, useful for giving a custodian agent controlled web access.
 sidebar:
   order: 5
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -54,7 +54,7 @@ The agent must then cite selected URLs in its report.
 
 ## 📊 Project maturity
 
-Mature, active project, widely used in self-hosting. Protect with rate limiting, secret key, reverse proxy, and access policy.
+Mature, active project (AGPL-3.0, about 38,000 GitHub stars in Q4 2026), widely used in self-hosting. SearXNG is a rolling release with no version number: every commit on `master` is a release, and the docs call for regular code updates[^4]. Protect with the built-in limiter (which **requires a Valkey database**), secret key, reverse proxy, and access policy[^5]; for container deployment, follow the official docs, the former `searxng-docker` repository having been archived since 2026-03-28[^6].
 
 ## 🔗 See also
 
@@ -68,3 +68,6 @@ Mature, active project, widely used in self-hosting. Protect with rate limiting,
 [^1]: SearXNG Documentation — "Search without being tracked". [https://docs.searxng.org/](https://docs.searxng.org/)
 [^2]: SearXNG GitHub README. [https://github.com/searxng/searxng](https://github.com/searxng/searxng)
 [^3]: SearXNG Docs, *Search API*. [https://docs.searxng.org/dev/search_api](https://docs.searxng.org/dev/search_api)
+[^4]: SearXNG Docs, *How to update* ("SearXNG is a rolling release; each commit to the master branch is a release", regular updates required), build 2026.10.9. [https://docs.searxng.org/admin/update-searxng.html](https://docs.searxng.org/admin/update-searxng.html)
+[^5]: SearXNG Docs, *Limiter* ("The limiter requires a Valkey database"), build 2026.10.9. [https://docs.searxng.org/admin/searx.limiter.html](https://docs.searxng.org/admin/searx.limiter.html)
+[^6]: searxng, *searxng-docker* (repository archived on 2026-03-28, "superseded" in favor of the official documentation), accessed 2026-10-10. [https://github.com/searxng/searxng-docker](https://github.com/searxng/searxng-docker)

@@ -3,9 +3,9 @@ title: "AnythingLLM"
 description: Local-first application for RAG, agents, documents, and workflows, with Ollama support and disableable telemetry.
 sidebar:
   order: 3
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -56,7 +56,7 @@ AnythingLLM is relevant for:
 
 ## 📊 Project maturity
 
-Mature project, very followed on GitHub. License/edition model must be verified before commercial use, but the self-hosted version is sufficiently documented for an on-prem pilot.
+Mature project, very followed on GitHub (about 67,000 stars, v1.17.0 as of 2026-10-01). The license is MIT for the self-hosted edition (Docker/server); since v1.15.0 (June 2026), the Desktop application offers a paid **AnythingLLM Pro** subscription that lifts the daily limits of the "Magic" features (dictation, actions on highlighted text, system-wide autocomplete) and removes watermarks from generated documents — Mintplex commits that "whatever is free today stays free", and Pro exists only on Desktop v1.15.0+, not on the Docker side[^4]. The self-hosted version remains sufficiently documented for an on-prem pilot.
 
 ## 🔗 See also
 
@@ -70,3 +70,4 @@ Mature project, very followed on GitHub. License/edition model must be verified 
 [^1]: AnythingLLM README — features, providers, telemetry, and `DISABLE_TELEMETRY`. [https://github.com/Mintplex-Labs/anything-llm/blob/master/README.md](https://github.com/Mintplex-Labs/anything-llm/blob/master/README.md)
 [^2]: AnythingLLM Self-Hosted Terms — local-first, air-gap, on-prem storage. [https://github.com/Mintplex-Labs/anything-llm/blob/master/TERMS_SELF_HOSTED.md](https://github.com/Mintplex-Labs/anything-llm/blob/master/TERMS_SELF_HOSTED.md)
 [^3]: AnythingLLM Docker guide — Ollama as LLM and embedding provider. [https://github.com/Mintplex-Labs/anything-llm/blob/master/docker/HOW_TO_USE_DOCKER.md](https://github.com/Mintplex-Labs/anything-llm/blob/master/docker/HOW_TO_USE_DOCKER.md)
+[^4]: Mintplex Labs — *Release v1.15.0* (2026-06-25, "Pro removes the daily limits", "Pro is purely additive"), *AnythingLLM Pro overview* ("only available on AnythingLLM Desktop v1.15.0 and later", "Whatever is free today stays free — forever"), and *LICENSE* (MIT), accessed 2026-10-10. [https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.15.0](https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.15.0) · [https://docs.anythingllm.com/pro/overview](https://docs.anythingllm.com/pro/overview) · [https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE](https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE)

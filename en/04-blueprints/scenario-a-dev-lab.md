@@ -3,9 +3,9 @@ title: "🛠️ Scenario A: Dev Lab (GPU PC or unified memory)"
 description: Blueprint to get started with local AI at low cost. RTX PC with CPU offloading, or laptop/station with unified memory for better solo comfort.
 sidebar:
   order: 1
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -26,18 +26,18 @@ This first blueprint covers two solo AI lab realities:
 *   **Machine:** A standard tower PC.
 *   **Processor (CPU):** A modern processor (AMD Ryzen 9 or Intel Core i9).
 *   **System memory ([[00-lexique/ram|RAM]]):** 64 GB DDR5 RAM (very important — DDR4 would completely throttle performance).
-*   **Graphics card (GPU):** A single consumer NVIDIA card with 24 GB [[00-lexique/vram|VRAM]] (e.g. a used RTX 3090, an RTX 4090, or the RTX 5090).
+*   **Graphics card (GPU):** A single consumer NVIDIA card with 24 GB [[00-lexique/vram|VRAM]] or more (e.g. a used RTX 3090 or 4090; the 32 GB RTX 5090, unobtainable at MSRP and selling for $5,000 and up since September 2026, falls outside a lab's budget — new 24 GB+ GeForce supply is scarce in Q4 2026)[^3].
 
-**Estimated budget (2026):** Between €1,500 and €3,500 (depending on GPU choice).
+**Estimated budget (Q4 2026):** between €1,500 and €2,500 with a used RTX 3090/4090; above €6,000 with a new RTX 5090 at observed prices — plus DDR5 modules whose price rises every quarter (TrendForce: +10 to 15% per quarter on DRAM in Q4 2026)[^3][^4]. The 64 GB of DDR5 and the used 24 GB GPU are the two moving line items: buy them early.
 
 ### Option A2 — Laptop / station with 64–128 GB unified memory
 
-*   **Machine:** MacBook Pro Max, entry-level Mac Studio, or mini-station APU with large unified memory.
+*   **Machine:** MacBook Pro Max, entry-level Mac Studio, or mini-station APU with large unified memory. Named options in Q4 2026: Mac mini M5 Pro 64 GB (307 GB/s, Thunderbolt 5) at the entry level, Mac Studio M5 Max 64 GB (460 to 614 GB/s depending on GPU, €3,659 incl. VAT), Framework Desktop 64 GB (€2,209 incl. VAT, often out of stock), or DGX Spark 64 GB ($4,999 from OEMs starting 2026-10-23, native CUDA)[^8][^9][^10].
 *   **Memory:** 64 to 128 GB [[00-lexique/unified-memory|unified memory]].
 *   **Engine:** MLX / llama.cpp / Ollama depending on platform.
 *   **Ideal case:** solo developer who wants to test 30B–70B quantized models with better interactive comfort than DDR5 CPU offloading.
 
-**Estimated budget (2026):** often between €3,000 and €6,000 depending on configuration. More expensive than a used gaming PC, but much more coherent if your goal is to regularly work with large local models.
+**Estimated budget (2026):** often between €3,000 and €6,000 depending on configuration. More expensive than a used gaming PC, but much more coherent if your goal is to regularly work with large local models. Soldered memory follows the DRAM increase: prices captured in October 2026 must be re-checked at purchase time[^4].
 
 ---
 
@@ -46,7 +46,7 @@ This first blueprint covers two solo AI lab realities:
 *   **Inference engine:** **Ollama** or **llama.cpp** compiled with CUDA support.
 *   **Model format:** [[00-lexique/gguf|GGUF]] in [[00-lexique/quantification-q4|Q4_K_M quantization]].
 
-On this machine, an **8B to 14B** class model (e.g. *Llama 3.1 8B* or *Qwen 2.5 14B*) will fit entirely in the graphics card's 24 GB VRAM. You will get high performance — typically **50 to 100 [[00-lexique/tokens-per-second|tokens/s]]** depending on model, quantization, and engine used.
+On this machine, an **8B to 30B** class model (e.g. *Qwen3.8-27B* ≈ 18 GB in Q4, *Granite 4.2 8B*, or a light MoE such as *Nemotron 3.5 Lightning 30B-A3B* ≈ 22 GB in NVFP4) will fit entirely in the graphics card's 24 GB VRAM[^5][^6]. Qwen3.8-27B (Apache 2.0, 262k context, vision and tools) has been the reference 24 GB model since August 2026; Meta publishes *Muse Glimmer 30B* (Apache 2.0) with explicit VRAM tiers — 64 GB at full precision, 32 GB and 24 GB in K-Quant[^7]. You will get high performance — typically **50 to 100 [[00-lexique/tokens-per-second|tokens/s]]** depending on model, quantization, and engine used.
 
 But what happens if you want to test a heavy, GPT-4-class intelligent model like **Llama 3.1 70B**?
 
@@ -64,7 +64,7 @@ Rather than giving up with an *Out Of Memory (OOM)* error, the `llama.cpp` engin
 During response generation ([[00-lexique/decoding|Decoding]]), data must constantly travel back and forth between RAM, the processor, and the graphics card via the PCIe bus.
 
 As explained in the chapter on [[01-fondations/unified-memory-vs-ram-vs-vram|VRAM vs RAM]], classic RAM is physically capped at about 80–100 GB/s. The result is immediate: generation speed collapses.
-On an RTX 4090 paired with 64 GB DDR5, a 70B model in CPU Offloading will generally generate **between 2 and 5 tokens per second**[^1][^2] — an order of magnitude consistent with the analysis in [[01-fondations/memory-bandwidth|memory bandwidth]]: DDR5 ≈ 100 GB/s for a ~40 GB model gives a theoretical bound of ~2.5 t/s. It is readable (slightly below human reading speed), but unsuitable for serving a reactive application or several concurrent users.
+On an RTX 4090 paired with 64 GB DDR5, a 70B Q4 model in CPU Offloading will generate **between 4 and 12 tokens per second** depending on the share of offloaded layers and the RAM: theoretical bound of ~4–5 t/s if half the weights travel through DDR5 (~100 GB/s, see [[01-fondations/memory-bandwidth|memory bandwidth]] — the ~2.5 t/s bound assumes the whole model goes through RAM), 8–12 t/s reported by unverified community guides[^1][^2]. It is readable (slightly below human reading speed), but unsuitable for serving a reactive application or several concurrent users.
 
 ### Why unified memory changes the experience
 
@@ -91,5 +91,13 @@ For daily SME use with 70B models without suffering this heavy transfer penalty,
 
 ## 📚 Sources and references
 
-[^1]: CraftRigs, *llama.cpp 70B on 24 GB VRAM — n-gpu-layers hybrid inference* (RTX 4090 + 64 GB DDR5, ~8–12 tok/s depending on configuration), 2026. [https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/](https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/)
+[^1]: CraftRigs (community guide, unverified), *llama.cpp 70B on 24 GB VRAM — n-gpu-layers hybrid inference* (RTX 3090/4090 + 64 GB DDR5, 8–13 tok/s claimed at 40–45 GPU layers), 2026-04-17. [https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/](https://craftrigs.com/guides/llama-cpp-70b-on-24-gb-vram-n-gpu-layers-guide/)
 [^2]: Ollama Documentation, *FAQ — GPU layer offloading and partial CPU inference* (Performance penalty during RAM offloading), 2026. [https://docs.ollama.com/faq](https://docs.ollama.com/faq)
+[^3]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500* (MSRP $1,999), 14 September 2026. [https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu](https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu)
+[^4]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
+[^5]: Qwen, *Qwen3.8-27B* (dense, Apache 2.0, 262k context, vision and tools; BF16 ≈ 56 GB, Q4 via Ollama ≈ 18 GB), August 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B) · Ollama, *qwen3.8*. [https://ollama.com/library/qwen3.8](https://ollama.com/library/qwen3.8)
+[^6]: NVIDIA, *Nemotron-3.5-Lightning-30B-A3B* (BF16 / NVFP4 ≈ 22 GB / GGUF, OpenMDW 1.1 license), August 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16)
+[^7]: Meta, *Muse Glimmer 30B* (Apache 2.0, 29.6B including vision encoder; tiers 64 GB full precision, 32 GB K-Quant-Dynamic, 24 GB K-Quant-17GB; 74.9 tok/s without speculation and 233.4 tok/s with DFlash on RTX 5090, vendor figures), August 2026, re-read on 2026-10-10. [https://huggingface.co/meta-models/Muse-Glimmer-30B](https://huggingface.co/meta-models/Muse-Glimmer-30B)
+[^8]: Apple, *Mac Studio* — Apple Store France (Mac Studio M5 Max 64 GB €3,659 incl. VAT), captured 2026-10-09. [https://www.apple.com/fr/shop/buy-mac/mac-studio](https://www.apple.com/fr/shop/buy-mac/mac-studio) · Apple Newsroom, *Apple unveils a more powerful Mac mini featuring the all-new M6 and M5 Pro* (Mac mini M5 Pro: up to 64 GB, 307 GB/s, Thunderbolt 5), August 2026. [https://www.apple.com/newsroom/2026/08/apple-unveils-a-more-powerful-mac-mini-featuring-the-all-new-m6-and-m5-pro/](https://www.apple.com/newsroom/2026/08/apple-unveils-a-more-powerful-mac-mini-featuring-the-all-new-m6-and-m5-pro/)
+[^9]: Framework, *Framework Desktop — AMD Ryzen AI Max+ 395* (64 GB €2,209 incl. VAT, 128 GB €3,889 incl. VAT, out of stock), captured 2026-10-09. [https://frame.work/fr/fr/products/desktop-diy-amd-aimax300](https://frame.work/fr/fr/products/desktop-diy-amd-aimax300)
+[^10]: ServeTheHome, *NVIDIA DGX Spark 64GB Launched and Big 128GB GB10 Price Increases* (DGX Spark 128 GB ≈ $6,950, launched at $3,999; 64 GB version at $4,999 via OEMs from 2026-10-23), 2026-10-03. [https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/](https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/) · NVIDIA, *DGX Spark* — product page, re-read on 2026-10-09. [https://www.nvidia.com/en-us/products/workstations/dgx-spark/](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)
