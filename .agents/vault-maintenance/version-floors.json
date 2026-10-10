@@ -1,0 +1,10 @@
+{
+  "$comment": "Minimum versions the vault recommends (callout 'Planchers de version' in 06-mise-en-oeuvre/local-inference-security.md). Keyed by the advisory feed id of feeds.json. scripts/watch-feeds.mjs marks an advisory as covered when the floor is outside its vulnerable range, so it never reaches the agent. Update this file in the same PR as the callout.",
+  "updated": "2026-10-10",
+  "floors": {
+    "adv-vllm": "0.31.0",
+    "adv-litellm": "1.100.4",
+    "adv-ollama": "0.31.2",
+    "adv-open-webui": "0.11.1"
+  }
+}

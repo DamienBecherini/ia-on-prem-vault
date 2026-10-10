@@ -1,6 +1,6 @@
 ---
 name: vault-watch
-description: Weekly incremental refresh of the IA on-premise vault, corrections and additions. Turns the "Veille hebdomadaire" GitHub issue (or a local `npm run watch:feeds` report) into verified, dated events, maps them to vault pages and watchlist claims, re-checks the claims whose "Recheck by" date has passed, proposes focused edits and additions (paragraphs, lexicon entries, opportunity notes for new pages), and opens a PR only on request. Use every week, or when the user asks what changed recently. The full top-down run stays `vault-refresh-outdated-content`.
+description: Biweekly incremental refresh of the IA on-premise vault, corrections and additions. Turns the "Veille" GitHub issue (pre-triaged by `npm run watch:feeds`; an `urgent` issue in between for uncovered High / Critical advisories) into verified, dated events, maps them to vault pages and watchlist claims, re-checks the claims whose "Recheck by" date has passed, proposes focused edits and additions (paragraphs, lexicon entries, opportunity notes for new pages), and opens a PR only on request. Use when a `veille` issue is open ("traite la veille #N"), or when the user asks what changed recently. The full top-down run stays `vault-refresh-outdated-content`.
 ---
 
 # vault-watch

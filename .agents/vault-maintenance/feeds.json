@@ -1,5 +1,5 @@
 {
-  "$comment": "Weekly watch sources for scripts/watch-feeds.mjs. Agent maintenance file, not published. Domains follow the refresh run: hardware, engines, models, agents, security. Tier follows .agents/vault-maintenance/source-tiers.md (A primary, B reputable secondary, C signal only — never a citation).",
+  "$comment": "Weekly watch sources for scripts/watch-feeds.mjs. Agent maintenance file, not published. Domains follow the refresh run: hardware, engines, models, agents, security. Tier follows .agents/vault-maintenance/source-tiers.md (A primary, B reputable secondary, C signal only — never a citation). Pre-triage options (scripts/watch-feeds.mjs): `minLevel` (major | minor | patch, default minor) drops smaller releases unless their notes mention security, CVE, breaking changes, deprecations or licences; `collapse` merges a chatty feed into one routine line; advisories are compared with version-floors.json.",
   "defaults": { "days": 8, "maxItemsPerFeed": 15 },
   "feeds": [
     { "id": "vllm", "domain": "engines", "type": "github-releases", "repo": "vllm-project/vllm", "tier": "A" },
@@ -8,10 +8,10 @@
     { "id": "sglang", "domain": "engines", "type": "github-releases", "repo": "sgl-project/sglang", "tier": "A" },
     { "id": "tensorrt-llm", "domain": "engines", "type": "github-releases", "repo": "NVIDIA/TensorRT-LLM", "tier": "A" },
     { "id": "exo", "domain": "engines", "type": "github-releases", "repo": "exo-explore/exo", "tier": "A" },
-    { "id": "ray", "domain": "engines", "type": "github-releases", "repo": "ray-project/ray", "tier": "A" },
+    { "id": "ray", "domain": "engines", "type": "github-releases", "repo": "ray-project/ray", "tier": "A", "minLevel": "major" },
     { "id": "mlx", "domain": "engines", "type": "github-releases", "repo": "ml-explore/mlx", "tier": "A" },
     { "id": "llm-compressor", "domain": "engines", "type": "github-releases", "repo": "vllm-project/llm-compressor", "tier": "A" },
-    { "id": "huggingface-hub", "domain": "engines", "type": "github-releases", "repo": "huggingface/huggingface_hub", "tier": "A" },
+    { "id": "huggingface-hub", "domain": "engines", "type": "github-releases", "repo": "huggingface/huggingface_hub", "tier": "A", "minLevel": "major" },
     { "id": "ollama-blog", "domain": "engines", "type": "rss", "url": "https://ollama.com/blog/rss.xml", "tier": "A" },
 
     { "id": "litellm", "domain": "agents", "type": "github-releases", "repo": "BerriAI/litellm", "tier": "A", "collapse": true },
@@ -28,8 +28,8 @@
     { "id": "qdrant", "domain": "agents", "type": "github-releases", "repo": "qdrant/qdrant", "tier": "A" },
     { "id": "milvus", "domain": "agents", "type": "github-releases", "repo": "milvus-io/milvus", "tier": "A" },
     { "id": "pgvector", "domain": "agents", "type": "github-tags", "repo": "pgvector/pgvector", "tier": "A" },
-    { "id": "langfuse", "domain": "agents", "type": "github-releases", "repo": "langfuse/langfuse", "tier": "A" },
-    { "id": "phoenix", "domain": "agents", "type": "github-releases", "repo": "Arize-ai/phoenix", "tier": "A" },
+    { "id": "langfuse", "domain": "agents", "type": "github-releases", "repo": "langfuse/langfuse", "tier": "A", "minLevel": "major" },
+    { "id": "phoenix", "domain": "agents", "type": "github-releases", "repo": "Arize-ai/phoenix", "tier": "A", "minLevel": "major" },
 
     { "id": "adv-vllm", "domain": "security", "type": "github-advisories", "repo": "vllm-project/vllm", "tier": "A" },
     { "id": "adv-ollama", "domain": "security", "type": "github-advisories", "repo": "ollama/ollama", "tier": "A" },
@@ -59,14 +59,14 @@
     { "id": "hf-xiaomi", "domain": "models", "type": "huggingface-author", "author": "XiaomiMiMo", "tier": "A" },
     { "id": "hf-blog", "domain": "models", "type": "rss", "url": "https://huggingface.co/blog/feed.xml", "tier": "B" },
 
-    { "id": "nvidia-newsroom", "domain": "hardware", "type": "rss", "url": "https://nvidianews.nvidia.com/releases.xml", "tier": "A" },
+    { "id": "nvidia-newsroom", "domain": "hardware", "type": "rss", "url": "https://nvidianews.nvidia.com/releases.xml", "tier": "A", "exclude": "GeForce NOW|Gaming|Gamescom", "keywords": ["DGX", "RTX", "Spark", "Blackwell", "Rubin", "Vera", "Grace", "GPU", "NVLink", "Jetson", "Nemotron", "NIM", "TensorRT", "Dynamo", "local AI", "open model", "inference"] },
     { "id": "apple-newsroom", "domain": "hardware", "type": "rss", "url": "https://www.apple.com/newsroom/rss-feed.rss", "tier": "A", "keywords": ["Mac", "M5", "M6", "Apple silicon", "Thunderbolt", "MLX"] },
-    { "id": "amd-ir", "domain": "hardware", "type": "rss", "url": "https://ir.amd.com/news-events/press-releases/rss", "tier": "A" },
+    { "id": "amd-ir", "domain": "hardware", "type": "rss", "url": "https://ir.amd.com/news-events/press-releases/rss", "tier": "A", "exclude": "Financial Results|Conference|Dividend|Annual Meeting" },
     { "id": "servethehome", "domain": "hardware", "type": "rss", "url": "https://www.servethehome.com/feed/", "tier": "B", "keywords": ["GPU", "AI", "NVIDIA", "AMD", "Intel", "DGX", "Instinct", "Blackwell", "Rubin", "Strix", "Halo", "Crescent", "Cerebras", "Tenstorrent", "memory", "DRAM", "HBM"] },
 
     { "id": "hf-trending", "domain": "discovery", "discovery": true, "type": "huggingface-trending", "limit": 60, "maxAgeDays": 45, "tier": "B", "exclude": "lora|abliterated|uncensored|exl[23]|-gguf|-awq|-gptq|-mlx|merge|nsfw|roleplay|rp-|outfit|anime", "$comment": "trending models from publishers not already followed above; fine-tunes, LoRAs and quant repacks excluded" },
-    { "id": "gh-new-llm-repos", "domain": "discovery", "discovery": true, "type": "github-search", "query": "topic:llm", "minStars": 1000, "maxAgeDays": 30, "limit": 10, "tier": "C", "exclude": "awesome-|finance|chat-jarvis" },
-    { "id": "gh-new-local-inference", "domain": "discovery", "discovery": true, "type": "github-search", "query": "topic:llm-inference", "minStars": 300, "maxAgeDays": 45, "limit": 10, "tier": "C" },
+    { "id": "gh-new-llm-repos", "domain": "discovery", "discovery": true, "type": "github-search", "query": "topic:llm", "minStars": 1000, "maxAgeDays": 30, "limit": 10, "tier": "C", "exclude": "awesome-|finance|chat-jarvis|interview|tutorial|course|roadmap|教程|学习" },
+    { "id": "gh-new-local-inference", "domain": "discovery", "discovery": true, "type": "github-search", "query": "topic:llm-inference", "minStars": 300, "maxAgeDays": 45, "limit": 10, "tier": "C", "exclude": "awesome-|interview|tutorial|course|roadmap|教程|学习" },
     { "id": "simonwillison-local-llms", "domain": "discovery", "discovery": true, "type": "rss", "url": "https://simonwillison.net/tags/local-llms.atom", "maxAgeDays": 14, "tier": "B" },
     { "id": "latent-space", "domain": "discovery", "discovery": true, "type": "rss", "url": "https://www.latent.space/feed", "maxAgeDays": 14, "tier": "B", "keywords": ["open", "local", "inference", "weights", "on-prem", "self-host", "agent", "MCP", "GPU"] },
 
