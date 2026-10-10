@@ -1,10 +1,10 @@
 ---
 title: "⚙️ Inference Engines: vLLM, Ollama, and TensorRT-LLM"
-description: Comparison of local deployment engines in 2026. When to use GGUF and llama.cpp on Mac, and when to switch to vLLM or TensorRT-LLM in production.
+description: Comparison of local deployment engines. When to use GGUF and llama.cpp on Mac, and when to switch to vLLM or TensorRT-LLM in production.
 sidebar:
   order: 1
-last_modified: "2026-10-09"
-last_verified: "2026-10-09"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
@@ -21,7 +21,7 @@ In 2026, the ecosystem has become highly specialized. Engine choice dictates [[0
 
 ## 1. llama.cpp & Ollama: Kings of the workstation
 
-[Ollama](https://ollama.com/) has become the de facto standard for quickly testing models — a community benchmark from Q1 2026 estimated its audience at more than 50 million monthly downloads[^1]. Under the hood, Ollama relies primarily on the **llama.cpp** engine, written in pure C/C++.
+[Ollama](https://ollama.com/) has become the de facto standard for quickly testing models — as of Q4 2026, its GitHub repository exceeds 180,000 stars and its official Docker image is approaching 185 million cumulative pulls[^1]. Under the hood, [[00-lexique/ollama|Ollama]] has become a dual-engine runtime: **llama.cpp** (C/C++) on Linux, Windows and for most architectures, and **MLX** (Apple) which, since version 0.40 (September 2026), handles compatible models by default on Apple Silicon[^13].
 
 ### 🌟 Strengths
 *   **Hardware versatility:** Optimized to use unified memory on Mac Studio, handle [[00-lexique/offloading|offloading]] between RAM and GPU on modest workstations, and run on almost any CPU.
@@ -29,7 +29,7 @@ In 2026, the ecosystem has become highly specialized. Engine choice dictates [[0
 *   **Simplicity:** A single executable, one `ollama run` command, and an OpenAI-compatible API ready to use.
 
 ### ⚠️ Limits (The production wall)
-The classic mistake is deploying Ollama to serve an SMB application with several simultaneous users. Designed for sequential processing, the underlying architecture collapses under heavy concurrency. Beyond 5 to 10 concurrent users, latency explodes (requests often going from a few seconds to more than a minute)[^1].
+The classic mistake is deploying Ollama to serve an SMB application with several simultaneous users. By default, Ollama processes only one request at a time per model (`OLLAMA_NUM_PARALLEL=1`) and queues the others; this parallelism can be raised, but the memory required grows with `OLLAMA_NUM_PARALLEL × OLLAMA_CONTEXT_LENGTH`, and the server has neither continuous batching nor a production scheduler[^12]. As soon as a handful of users query the same model at the same time, latency visibly degrades — that is the signal to move to vLLM.
 
 ---
 
@@ -39,7 +39,7 @@ The classic mistake is deploying Ollama to serve an SMB application with several
 
 ### 🌟 Strengths
 *   **[[00-lexique/pagedattention|PagedAttention]]:** vLLM popularized this technique, which manages KV Cache memory in blocks (like an OS virtual memory). This reduces memory fragmentation from ~60% to under 4% and enables massive request batching (*Continuous Batching*)[^3].
-*   **High concurrent throughput:** On multi-user architectures, vLLM can deliver overall throughput well above Ollama under concurrent load — community comparisons cite factors of ×5 to ×16 depending on configuration and model[^1][^4].
+*   **High concurrent throughput:** On multi-user architectures, vLLM can deliver overall throughput well above Ollama under concurrent load; the gap depends heavily on hardware, model and quantization — measure it with `vllm bench serve` on your own prompts rather than relying on a generic factor[^4].
 *   **Cutting-edge format support:** It handles production quantization (FP8, AWQ) via kernels natively optimized for NVIDIA Hopper and Blackwell architectures, and natively supports [[00-lexique/tensor-parallelism|Tensor Parallelism]] in [[00-lexique/multi-gpu|multi-GPU]] setups[^5].
 
 ### ⚠️ Limits
@@ -53,7 +53,7 @@ vLLM is not designed for offloading to classic CPU RAM, nor for Apple silicon. I
 
 ### 🌟 Strengths
 *   **Performance ceiling:** It often beats all other engines on datacenter GPUs (H100, B200) thanks to techniques like *Flash-Decoding*.
-*   **Native FP4:** On new Blackwell chips (B200, RTX 5090), TensorRT-LLM natively supports FP4 to halve VRAM footprint compared to FP8 while maintaining datacenter-class precision[^6].
+*   **Native FP4:** On datacenter Blackwell (B200, B300), TensorRT-LLM natively supports NVFP4 to halve VRAM footprint compared to FP8 while maintaining datacenter-class precision; on SM120 cards (RTX 5090, RTX PRO 6000) support remains partial as of Q3 2026 (NVFP4 MoE models not supported according to the release notes)[^6].
 *   **Massive parallelism:** It orchestrates execution graphs perfectly across multi-GPU nodes connected by [[00-lexique/nvlink|NVLink]].
 
 ### ⚠️ Limits
@@ -63,7 +63,7 @@ The constraint is no longer compilation but the release cadence: as of Q4 2026, 
 
 ## 4. SGLang: Agentic orchestration and structured generation
 
-[SGLang](https://github.com/sgl-project/sglang) (Structured Generation Language) is an open-source inference engine developed by LMSys (Berkeley). Emerging as a direct competitor to vLLM in late 2023, it gained the upper hand in 2026 in two specific areas where vLLM remains less optimized: **agentic loops** and **constrained JSON generation**[^7].
+[SGLang](https://github.com/sgl-project/sglang) (Structured Generation Language) is an open-source inference engine developed by LMSys (Berkeley). Emerging as a direct competitor to vLLM in late 2023, it gained the upper hand in 2026 in two specific areas where its architecture is the most specialized: **agentic loops** and **constrained JSON generation**[^7].
 
 ### 🌟 Strengths
 
@@ -72,7 +72,7 @@ The constraint is no longer compilation but the release cadence: as of Q4 2026, 
 
 ### ⚠️ Limits
 
-*   SGLang is optimized for Linux + NVIDIA GPU. AMD ROCm and macOS support remains more limited than vLLM's.
+*   SGLang is primarily optimized for Linux + NVIDIA GPU (CUDA 13 required since 0.5.20, September 2026); AMD Instinct (MI300X → MI355X), Intel, TPU and Apple Silicon (Metal/MLX) are officially supported, with maturity varying by platform[^7][^14].
 *   On **raw throughput** benchmarks (independent requests without shared prefix), vLLM remains the reference or equivalent[^9].
 
 ### When to choose SGLang over vLLM?
@@ -82,7 +82,7 @@ The constraint is no longer compilation but the release cadence: as of Q4 2026, 
 | Raw throughput, independent requests | ✅ Reference | Comparable |
 | Agentic loops, shared prefixes | ✅ Automatic Prefix Caching (on by default, hashed blocks)[^11] | ✅ RadixAttention (prefix tree, finer-grained sharing) |
 | Constrained JSON generation | ⚠️ Possible, slower | ✅ Native, no penalty |
-| Hardware compatibility (AMD, Mac) | ✅ Broad | ⚠️ NVIDIA primarily |
+| Hardware compatibility (AMD, Mac) | ✅ Broad | ✅ Broad (NVIDIA CUDA 13, AMD Instinct, Intel, TPU, Apple)[^14] |
 | Ecosystem maturity | ✅ Very broad | ✅ Mature since 2025 |
 
 > [!tip] Practical rule
@@ -99,7 +99,7 @@ The following issues are common during first vLLM installation. They occur befor
 | `torch.cuda.is_available()` returns `False` | Mismatch between installed PyTorch version and system CUDA driver | Reinstall PyTorch with the matching CUDA variant: `pip install torch --index-url https://download.pytorch.org/whl/cu124` (adapt `cu124` to installed CUDA version) |
 | OOM on load — KV Cache too large | Maximum context length requested exceeds available VRAM after weight loading | Add `--max-model-len 4096` (or a lower value) to `vllm serve` startup to reduce pre-allocated KV Cache |
 | Two vLLM servers in conflict | Port 8000 already occupied by a previous instance | Add `--port 8001` for the second instance; `lsof -i :8000` / `netstat -tulpn` to identify the process occupying the port |
-| Quickly test the local API | — | Use the OpenAI Python client with `base_url="http://localhost:8000/v1/"` and `api_key="any"` (vLLM accepts any key value in unsecured mode) |
+| Quickly test the local API | — | Use the OpenAI Python client with `base_url="http://localhost:8000/v1/"` and `api_key="any"` (without `--api-key`, vLLM accepts any value; and even with `--api-key`, only `/v1`, `/v2` and `/inference` are protected — `/tokenize` and `/metrics` remain open, hence the reverse proxy in production)[^15] |
 
 **Quick test example from Python:**
 
@@ -137,10 +137,10 @@ For an on-premise agent project deployed at customer sites, engine choice depend
 
 ## 📚 Sources and References
 
-[^1]: Particula Tech, *Ollama vs vLLM: Which LLM Server Actually Fits in 2026* (community benchmark, audience estimate and concurrency limits), March 2026. [https://particula.tech/blog/ollama-vs-vllm-comparison](https://particula.tech/blog/ollama-vs-vllm-comparison)
+[^1]: Ollama, GitHub repository `ollama/ollama` (star count) and Docker Hub image `ollama/ollama` (pull count), accessed 2026-10-09. [https://github.com/ollama/ollama](https://github.com/ollama/ollama) · [https://hub.docker.com/r/ollama/ollama](https://hub.docker.com/r/ollama/ollama)
 [^2]: J. Wang et al., *Which Quantization Should I Use? A Unified Evaluation of llama.cpp Quantization* (arXiv:2601.14277, GGUF formats), January 2026. [https://arxiv.org/abs/2601.14277](https://arxiv.org/abs/2601.14277)
 [^3]: Woosuk Kwon et al., *Efficient Memory Management for Large Language Model Serving with PagedAttention* (SOSP 2023). [https://arxiv.org/abs/2309.06180](https://arxiv.org/abs/2309.06180)
-[^4]: Ayi NEDJIMI Consultants, *LLM Local 2026 : Ollama vs LM Studio vs vLLM* (blog article, architecture comparison, Continuous Batching), February 2026. [https://www.ayinedjimi-consultants.fr/ia-llm-local-ollama-lmstudio-vllm.html](https://www.ayinedjimi-consultants.fr/ia-llm-local-ollama-lmstudio-vllm.html)
+[^4]: vLLM Project, *Benchmarking* (`vllm bench serve` / `latency` / `throughput`), stable documentation accessed 2026-10-09. [https://docs.vllm.ai/en/stable/benchmarking/](https://docs.vllm.ai/en/stable/benchmarking/)
 [^5]: vLLM Project Documentation & Spheron Blog, *vLLM Production Deployment 2026: Multi-GPU Tensor Parallel + FP8* (Model Runner V2, Hopper/Blackwell support), May 2026. [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/) · [https://www.spheron.network/blog/vllm-production-deployment-2026/](https://www.spheron.network/blog/vllm-production-deployment-2026/)
 [^6]: NVIDIA, *TensorRT-LLM Documentation & Release Notes* (1.0: PyTorch by default; 1.2: TensorRT backend and `trtllm-build` removed; SM120 known issues; Blackwell FP4), September 2026. [https://nvidia.github.io/TensorRT-LLM/](https://nvidia.github.io/TensorRT-LLM/) · [https://nvidia.github.io/TensorRT-LLM/release-notes.html](https://nvidia.github.io/TensorRT-LLM/release-notes.html) · PyPI `tensorrt-llm` (version history: 1.2.1 stable, 1.3.0rcN), accessed 2026-10-09. [https://pypi.org/project/tensorrt-llm/](https://pypi.org/project/tensorrt-llm/)
 [^7]: SGLang Project, *SGLang — Fast Serving Framework for LLMs and VLMs* (RadixAttention, structured output). [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang)
@@ -148,3 +148,7 @@ For an on-premise agent project deployed at customer sites, engine choice depend
 [^9]: SGLang Contributors, *SGLang vs vLLM — scaling benchmark under high concurrency* (throughput comparison). [https://github.com/sgl-project/sglang/issues/21061](https://github.com/sgl-project/sglang/issues/21061)
 [^10]: Tenstorrent, *vLLM integration with TT-Metal* (fork tenstorrent/vllm, tt-metal, standard vLLM incompatibility), 2025. [https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md](https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md)
 [^11]: vLLM Project, *Automatic Prefix Caching* and *Engine Arguments* (`enable_prefix_caching` on by default, block hashing, `vllm:prefix_cache_hits/queries` metrics), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/) · [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)
+[^12]: Ollama, *FAQ — How does Ollama handle concurrent requests?* (`OLLAMA_NUM_PARALLEL`, `OLLAMA_MAX_LOADED_MODELS`, request queue), accessed 2026-10-09. [https://docs.ollama.com/faq](https://docs.ollama.com/faq)
+[^13]: Ollama, *Release v0.40.0* ("Models run on MLX on Apple Silicon by default"), September 25, 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
+[^14]: SGLang Project, *Release v0.5.20* (CUDA 12 dropped, CUDA 13 required; ROCm `gfx1151` image), September 18, 2026. [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20)
+[^15]: vLLM Project, *CLI Reference — `vllm serve`* (`--api-key`: protected paths `/v1`, `/v2`, `/inference`), accessed 2026-10-09 · vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`/tokenize` not covered by `--api-key`), October 6, 2026. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
