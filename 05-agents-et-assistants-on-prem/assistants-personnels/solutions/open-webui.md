@@ -5,7 +5,7 @@ sidebar:
   order: 2
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -60,7 +60,7 @@ Open WebUI est un bon compagnon des blueprints :
 
 ## 📊 Maturité du projet
 
-Projet très utilisé et activement maintenu (environ 154 000 étoiles GitHub, v0.11.4 au 2026-09-21), avec une large communauté GitHub et un écosystème de plugins. La maturité produit est bonne, mais la surface d'attaque suit : 88 avis de sécurité publiés entre juin et septembre 2026, dont une trentaine de sévérité haute (prise de contrôle de compte via OAuth, SSRF vers les services internes, exécution d'outils entre utilisateurs) et trois exploitables sans compte. Les correctifs ne sont livrés que dans les versions courantes : une PME doit suivre le train de releases sans jamais rester sous la 0.11.1 (SSRF CVE-2026-87996), ne pas figer une version, et appliquer le guide de durcissement officiel[^4].
+Projet très utilisé et activement maintenu (environ 154 000 étoiles GitHub, v0.11.4 au 2026-09-21), avec une large communauté GitHub et un écosystème de plugins. La maturité produit est bonne, mais la surface d'attaque suit : 88 avis de sécurité publiés entre juin et septembre 2026, dont une trentaine de sévérité haute (prise de contrôle de compte via OAuth, SSRF vers les services internes, exécution d'outils entre utilisateurs) et trois exploitables sans compte. Les correctifs ne sont livrés que dans les versions courantes : une PME doit suivre le train de releases sans jamais rester sous la 0.11.4 (2026-09-21), qui corrige les 15 avis publiés fin septembre 2026, dont un vol de jeton de session déclenchable depuis n'importe quel site web tant que le partage communautaire (actif par défaut) reste ouvert. Elle ne doit pas figer de version et doit appliquer le guide de durcissement officiel[^4].
 
 ## 🔗 Voir aussi
 

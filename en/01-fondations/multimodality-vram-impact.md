@@ -3,9 +3,9 @@ title: "🖼️ Multimodality: Hardware Impact (VRAM & KV Cache)"
 description: What changes in your infrastructure when processing images, scanned documents, or audio — visual encoders, VRAM cost, KV Cache interaction, and blueprint mapping.
 sidebar:
   order: 6
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-10"
+last_verified: "2026-10-10"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -117,6 +117,8 @@ flowchart TD
 > [!tip] Whisper can run on CPU
 > For non-real-time transcription (batch), Whisper works well on CPU with `whisper.cpp`. GPU VRAM is only mobilised if you force GPU transcription for real-time latency.
 
+**Real time: an alternative to Whisper.** To caption a live meeting, Mistral has published **Voxtral Mini 4B Realtime** (Apache 2.0) since February 2026: a natively streaming transcription model with an adjustable delay from 80 ms to 2.4 s, 13 languages including French (6.4% WER in French at a 480 ms delay according to the publisher), served by vLLM[^5]. Unlike Whisper, it does not sit on a CPU: the publisher indicates a GPU of at least 16 GB (BF16 weights, ~4.4B parameters), to plan on top of the LLM. Whisper on CPU remains the right choice for batch; Voxtral is justified when latency matters. Mistral releases per-language variants (Arabic dialects in October 2026).
+
 **Architectural consequence:** Whisper can coexist with a VLM on the same machine without significant VRAM competition, provided they are not run simultaneously on the GPU. In an asynchronous pipeline (transcription → LLM summary), a sequential approach works perfectly on Blueprint B.
 
 ---
@@ -165,3 +167,4 @@ flowchart TD
 [^2]: Alibaba Cloud, *Qwen2-VL model documentation* (dynamic visual tokens by resolution, SigLIP architecture). [https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct)
 [^3]: OpenAI, *Whisper model card* (tiny to large-v3 sizes, parameters and indicative memory footprint). [https://github.com/openai/whisper](https://github.com/openai/whisper)
 [^4]: vLLM Project, *Production Metrics — KV cache usage* (KV Cache behaviour under continuous batching). [https://docs.vllm.ai/en/stable/usage/metrics/](https://docs.vllm.ai/en/stable/usage/metrics/)
+[^5]: Mistral AI, *Voxtral Mini 4B Realtime 2602* (real-time streaming transcription, 80 ms – 2.4 s delay, 480 ms recommended; 13 languages; BF16, one GPU ≥ 16 GB; vLLM; Apache 2.0), Hugging Face, February 2026; *Voxtral Mini 4B Realtime Arabic*, 2026-10-08. [https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602](https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602) · [https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-Arabic](https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-Arabic)

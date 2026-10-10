@@ -8,8 +8,8 @@ tags:
   - lexique
   - fondations
 last_modified: "2026-10-10"
-last_verified: "2026-10-09"
-verified_by: "Fable 5.1"
+last_verified: "2026-10-10"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -26,7 +26,7 @@ Major advantages: immediate load without compilation, portability across CPU/GPU
 
 ## 💡 Why it matters for on-prem AI
 
-De facto standard for workstations, Macs, and homelabs. A large share of Hub models have a GGUF version (often community-made: unsloth, bartowski, ggml-org); on Apple Silicon, Ollama has run supported architectures via MLX rather than GGUF since 0.40 (September 2026), and vendors first publish official FP8/NVFP4 checkpoints[^2]. Essential for Scenario A (dev lab) and Scenario B (Mac Studio).
+De facto standard for workstations, Macs, and homelabs. A large share of Hub models have a GGUF version (often community-made: unsloth, bartowski, ggml-org); on Apple Silicon, Ollama has run supported architectures via MLX rather than GGUF since 0.40 (October 2026), and vendors first publish official FP8/NVFP4 checkpoints[^2]. Essential for Scenario A (dev lab) and Scenario B (Mac Studio).
 
 ## ⚠️ Common pitfalls
 
@@ -46,5 +46,5 @@ De facto standard for workstations, Macs, and homelabs. A large share of Hub mod
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
 [^1]: ggml-org, *llama.cpp — llama-server README* ("Continuous batching", "Parallel decoding with multi-user support", `-cb` enabled by default, `-np N`), read on 2026-10-09. [https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)
-[^2]: Ollama, *Release v0.40.0* ("Models run on MLX on Apple Silicon by default"), 25 September 2026; NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16* (official BF16 / NVFP4 checkpoints, GGUF provided via ggml-org), August 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0) · [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16)
+[^2]: Ollama, *Release v0.40.0* ("Models run on MLX on Apple Silicon by default"), October 2026; NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16* (official BF16 / NVFP4 checkpoints, GGUF provided via ggml-org), August 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0) · [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16)
 [^3]: J. Wang et al., *Which Quantization Should I Use? A Unified Evaluation of llama.cpp Quantization on Llama-3.1-8B-Instruct* (arXiv:2601.14277: Q3_K_S loses about 4 points on average on downstream tasks), January 2026. [https://arxiv.org/abs/2601.14277](https://arxiv.org/abs/2601.14277)

@@ -160,7 +160,7 @@ L'inférence GPU coûte cher. Une architecture bien conçue réserve le GPU à l
 | :-- | :-- | :-- |
 | Génération de texte (LLM) | vLLM, SGLang | GPU (VRAM exclusive) |
 | Génération d'embeddings | `embeddinggemma-2` (270M–740M) via Ollama ; `nemotron-3-embed` 1B/8B si GPU disponible[^11] | **CPU** (EmbeddingGemma 2) / GPU (Nemotron 8B) |
-| Transcription vocale (STT) | `faster-whisper` (CTranslate2)[^10] | **CPU** |
+| Transcription vocale (STT) | `faster-whisper` (CTranslate2)[^10] ; en temps réel : Voxtral Mini 4B Realtime (GPU ≥ 16 Go)[^18] | **CPU** (Voxtral : GPU) |
 | Re-ranking, scoring | CrossEncoder léger | **CPU** |
 
 `faster-whisper` (implémentation Whisper de SYSTRAN sur le moteur CTranslate2) peut transcrire en temps réel des audio courts directement sur CPU, sans utiliser un seul octet de VRAM[^10]. Les modèles d'embedding comme EmbeddingGemma 2 (270M–740M) sont suffisamment petits pour s'exécuter efficacement en batch asynchrone sur CPU.
@@ -251,3 +251,4 @@ Pour construire une stack logicielle d'entreprise souveraine au T4 2026 :
 [^15]: Hugging Face, *smolagents — Releases* (dernière version v1.26.0 du 2026-05-29 ; commits de maintenance seulement depuis), consulté le 2026-10-10. [https://github.com/huggingface/smolagents/releases](https://github.com/huggingface/smolagents/releases)
 [^16]: IBM, *Granite 4.2 8B* (Apache 2.0, tool calling au format OpenAI, modes thinking / low-effort), 2026-08-25. [https://huggingface.co/ibm-granite/granite-4.2-8b](https://huggingface.co/ibm-granite/granite-4.2-8b) ; Qwen, *Qwen3.8-27B* (mode thinking activable ou non), août 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B)
 [^17]: Ollama, *API — Generate embeddings* (`POST /api/embed`, champ `input` chaîne ou tableau, options `truncate` / `dimensions` ; aucun endpoint `/api/embeddings` documenté), consulté le 2026-10-10. [https://docs.ollama.com/api/embed](https://docs.ollama.com/api/embed)
+[^18]: Mistral AI, *Voxtral Mini 4B Realtime 2602* (transcription temps réel en streaming, 13 langues, BF16, un GPU ≥ 16 Go ; Apache 2.0), Hugging Face, février 2026. [https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602](https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602)

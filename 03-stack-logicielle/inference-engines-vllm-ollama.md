@@ -5,7 +5,7 @@ sidebar:
   order: 1
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -21,7 +21,7 @@ En 2026, l'écosystème s'est fortement spécialisé. Le choix du moteur dicte l
 
 ## 1. llama.cpp & Ollama : Les rois du poste de travail
 
-[Ollama](https://ollama.com/) est devenu le standard de fait pour tester des modèles rapidement — au T4 2026, son dépôt GitHub dépasse 180 000 étoiles et son image Docker officielle approche 185 millions de téléchargements cumulés[^1]. Sous le capot, [[00-lexique/ollama|Ollama]] est devenu un runtime à deux moteurs : **llama.cpp** (C/C++) sur Linux, Windows et pour la plupart des architectures, et **MLX** (Apple) qui, depuis la version 0.40 (septembre 2026), prend en charge par défaut les modèles compatibles sur Apple Silicon[^13].
+[Ollama](https://ollama.com/) est devenu le standard de fait pour tester des modèles rapidement — au T4 2026, son dépôt GitHub dépasse 180 000 étoiles et son image Docker officielle approche 185 millions de téléchargements cumulés[^1]. Sous le capot, [[00-lexique/ollama|Ollama]] est devenu un runtime à deux moteurs : **llama.cpp** (C/C++) sur Linux, Windows et pour la plupart des architectures, et **MLX** (Apple) qui, depuis la version 0.40 (octobre 2026), prend en charge par défaut les modèles compatibles sur Apple Silicon[^13].
 
 ### 🌟 Les forces
 *   **Polyvalence matérielle :** Optimisé pour exploiter la mémoire unifiée des Mac Studio, gérer l'[[00-lexique/offloading|offloading]] entre RAM et GPU sur les postes modestes, et s'exécuter sur presque n'importe quel CPU.
@@ -149,7 +149,7 @@ Pour un projet d'agent on-premise déployé chez des clients, le choix du moteur
 [^10]: Tenstorrent, *vLLM integration with TT-Metal* (fork tenstorrent/vllm, tt-metal, incompatibilité vLLM standard), 2025. [https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md](https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md)
 [^11]: vLLM Project, *Automatic Prefix Caching* et *Engine Arguments* (`enable_prefix_caching` actif par défaut, hachage de blocs, métriques `vllm:prefix_cache_hits/queries`), consultés le 2026-10-09. [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/) · [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)
 [^12]: Ollama, *FAQ — How does Ollama handle concurrent requests?* (`OLLAMA_NUM_PARALLEL`, `OLLAMA_MAX_LOADED_MODELS`, file d'attente), consultée le 2026-10-09. [https://docs.ollama.com/faq](https://docs.ollama.com/faq)
-[^13]: Ollama, *Release v0.40.0* (« Models run on MLX on Apple Silicon by default »), 25 septembre 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
+[^13]: Ollama, *Release v0.40.0* (« Models run on MLX on Apple Silicon by default »), octobre 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
 [^14]: SGLang Project, *Release v0.5.20* (retrait de CUDA 12, CUDA 13 obligatoire ; image ROCm `gfx1151`), 18 septembre 2026. [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20)
 [^15]: vLLM Project, *CLI Reference — `vllm serve`* (`--api-key` : chemins protégés `/v1`, `/v2`, `/inference`), consulté le 2026-10-09 · vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`/tokenize` non couvert par `--api-key`), 6 octobre 2026. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
 [^16]: vLLM Project, *Release v0.28.0* (roue PyPI et image Docker par défaut en CUDA 13.0, variantes `-cu129`), 2026-08-26 · *Release v0.31.0* (`quantization="fp8"` renommé `fp8_per_tensor`, ancien nom redirigé), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.28.0](https://github.com/vllm-project/vllm/releases/tag/v0.28.0) · [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)

@@ -10,12 +10,12 @@ sidebar:
   order: 64
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 ---
 
 ## 📝 Short definition
 
-A distribution and CLI that runs [[00-lexique/llm|LLMs]] locally in a few commands, via **llama.cpp** (Linux, Windows, [[00-lexique/gguf|GGUF]] format) or, since version 0.40 (September 2026) on Apple Silicon, via Apple's **MLX** engine by default, with an OpenAI-compatible API server on port 11434[^1][^3].
+A distribution and CLI that runs [[00-lexique/llm|LLMs]] locally in a few commands, via **llama.cpp** (Linux, Windows, [[00-lexique/gguf|GGUF]] format) or, since version 0.40 (October 2026) on Apple Silicon, via Apple's **MLX** engine by default, with an OpenAI-compatible API server on port 11434[^1][^3].
 
 ## 📖 Detailed definition
 
@@ -51,5 +51,5 @@ Under the hood, Ollama relies on **llama.cpp** (C/C++) — aggressive [[00-lexiq
 
 [^1]: Ollama — site and documentation. [https://ollama.com/](https://ollama.com/)
 [^2]: Ollama, *FAQ — How does Ollama handle concurrent requests?* (`OLLAMA_NUM_PARALLEL` defaults to 1, `OLLAMA_MAX_LOADED_MODELS`, queueing), accessed 2026-10-10. [https://docs.ollama.com/faq](https://docs.ollama.com/faq) — see also [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Inference engines]].
-[^3]: Ollama, *Release v0.40.0* ("Models run on MLX on Apple Silicon by default"), 25 September 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
+[^3]: Ollama, *Release v0.40.0* ("Models run on MLX on Apple Silicon by default"), October 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
 [^4]: Ollama, *Release v0.32.0* (`ollama` with no argument launches an agent, default entry `glm-5.2:cloud`), 11 July 2026 · *Release v0.32.6* (`ollama run kimi-k3` offers `kimi-k3:cloud` "for cloud-only models that publish no default tag"), 4 August 2026 · *Release v0.34.2* (first-run screen "sign in or continue locally"), 15 September 2026. [https://github.com/ollama/ollama/releases/tag/v0.32.0](https://github.com/ollama/ollama/releases/tag/v0.32.0) · [https://github.com/ollama/ollama/releases/tag/v0.32.6](https://github.com/ollama/ollama/releases/tag/v0.32.6) · [https://github.com/ollama/ollama/releases/tag/v0.34.2](https://github.com/ollama/ollama/releases/tag/v0.34.2)
