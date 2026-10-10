@@ -5,7 +5,7 @@ sidebar:
   order: 1
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -49,14 +49,14 @@ Professional refresh of the **Strix Halo** platform (Zen 5 + RDNA 3.5), announce
 Announced in 2025 and available from 2026, the **DGX Spark** (formerly Project Digits) is NVIDIA's first product combining an ARM SoC and a Blackwell GPU in a desktop form factor [^14].
 
 *   **Architecture:** **Grace Blackwell** SoC — 20-core ARM CPU (Grace) + Blackwell GPU, co-developed with MediaTek, TSMC 3nm process [^14].
-*   **Unified LPDDR5x memory:** **128 GB** on DGX Spark (≈ $6,950 as of 2026-10-02, versus $3,999 at the October 2025 launch); a **64 GB** variant at $4,999 is announced from OEMs (Acer, ASUS, Dell, Gigabyte, HP, MSI) starting 2026-10-23 [^14][^16]. DGX Station scales to **748 GB** for models > 400B [^14].
+*   **Unified LPDDR5x memory:** **128 GB** on DGX Spark (≈ $6,950 as of 2026-10-02, versus $3,999 at the October 2025 launch); a **64 GB** variant (same GB10, models up to ~100B parameters according to NVIDIA, ~200B with two units linked over QSFP) from $4,999, sold exclusively by OEMs (Acer, ASUS, Dell, Gigabyte, HP, MSI) starting 2026-10-23 [^14][^16][^28]. DGX Station scales to **748 GB** for models > 400B [^14].
 *   **Bandwidth:** ~273 GB/s (LPDDR5x) — close to AMD Gorgon Halo [^14].
 *   **Power draw:** 240 W power supply, GB10 TDP ~140 W (DGX Spark) — versus > 1,000 W for a dual discrete-GPU workstation [^14].
 *   **Native FP4 (Blackwell):** unlike the Ada Lovelace architecture (RTX 4090 — emulated FP4), Blackwell implements FP4 in silicon — without software overhead [^15].
 *   **ConnectX-7 200 Gbps scale-out:** two QSFP ports link up to **four** DGX Spark units (512 GB aggregated, models up to ~700B according to NVIDIA) without an external switch [^14].
 *   **NVIDIA Sync software:** full CUDA environment pre-installed to reduce startup friction.
 
-NVIDIA also announces an **RTX Spark** (GB10-based Windows PC, pre-orders open), distinct from the DGX Spark, whose public specifications remain incomplete as of Q4 2026 [^14].
+Since 7 October 2026, NVIDIA and Microsoft are marketing the **RTX Spark**, distinct from the DGX Spark: Blackwell RTX GPU with up to 6,144 cores, Grace CPU with up to 20 cores, up to **128 GB** of unified memory and a theoretical 1 PFLOPS FP4, running **Windows** with full CUDA, from Acer, ASUS, Dell, Gigabyte, HP, Lenovo, Microsoft and MSI; laptops ship from 16 October 2026, compact form factors in November [^26]. On the desktop side, the **Surface RTX Spark Dev Box** (128 GB) is available for pre-order at $5,999 on Microsoft.com, in the United States only, with deliveries in November 2026; Microsoft specifies that the 1 PFLOPS FP4 assumes sparsity and that the GPU addresses only part of the 128 GB, and no memory bandwidth is published as of 2026-10-10 [^27].
 
 > [!tip] DGX Spark positioning
 > DGX Spark shines on **capacity** (128 GB LPDDR5x accessible to CUDA without friction) and **native FP4** — useful for loading 70B+ models and training with LoRA without precision compromises. However, for pure inference on models ≤ 34B, a discrete-GPU workstation (RTX 5090 32 GB or RTX PRO 6000 96 GB) remains significantly faster thanks to its dedicated very-high-bandwidth GDDR7 — but as of Q4 2026 an RTX 5090 trades at ≥ $5,000 and an RTX PRO 6000 at ~$16,000, which erases the price gap with unified-memory workstations [^21][^22]. DGX Spark is the right choice when **memory capacity and CUDA simplicity** take priority over raw throughput.
@@ -183,3 +183,6 @@ For sovereign on-premise deployment:
 [^23]: Phoronix, *Framework Desktop With AMD Ryzen AI Max+ PRO 495 "Gorgon Halo" Now Available For Pre-Order* (192 GB: $6,799 DIY / $7,449 assembled), September 30, 2026. [https://www.phoronix.com/news/Framework-Desktop-Gorgon-Halo](https://www.phoronix.com/news/Framework-Desktop-Gorgon-Halo)
 [^24]: TrendForce, press release of September 30, 2026 (contract DRAM prices up 10–15% in Q4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
 [^25]: Tom's Hardware, *AMD challenges Nvidia's DGX Spark with $3,999 Ryzen AI Halo* (Ryzen AI Max+ 395 development platform, 128 GB, Micro Center, available July 10, 2026), July 2026. [https://www.tomshardware.com/desktops/mini-pcs/amd-challenges-nvidias-dgx-spark-with-usd3-999-ryzen-ai-halo-with-windows-11-support-strix-halo-desktop-undercuts-nvidia-by-usd700-packs-128gb-of-unified-memory](https://www.tomshardware.com/desktops/mini-pcs/amd-challenges-nvidias-dgx-spark-with-usd3-999-ryzen-ai-halo-with-windows-11-support-strix-halo-desktop-undercuts-nvidia-by-usd700-packs-128gb-of-unified-memory)
+[^26]: NVIDIA Blog, *NVIDIA, Microsoft Kick Off a New Beginning for Windows PCs With RTX Spark and AI Agents* (Blackwell RTX GPU with up to 6,144 cores, Grace CPU with up to 20 cores, up to 128 GB of unified memory, 1 PFLOPS FP4; Acer, ASUS, Dell, HP, Lenovo, Microsoft, MSI, Gigabyte; laptops available for pre-order on 7 October and available on 16 October, compact form factors in November), 7 October 2026. [https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/](https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/)
+[^27]: Microsoft Devices Blog, *Pre-order our most powerful Surface devices ever* (Surface RTX Spark Dev Box: 128 GB of unified memory, $5,999 suggested price, pre-order on Microsoft.com in the United States only, deliveries from November; theoretical 1 PFLOPS FP4 with sparsity; GPU-addressable memory lower than the total), 7 October 2026. [https://blogs.windows.com/devices/2026/10/07/pre-order-our-most-powerful-surface-devices-ever/](https://blogs.windows.com/devices/2026/10/07/pre-order-our-most-powerful-surface-devices-ever/)
+[^28]: NVIDIA Blog, *NVIDIA DGX Spark 64GB Gives Developers More Ways to Build and Scale Local AI* (same GB10, from $4,999, models up to 100B parameters, OEMs Acer, ASUS, Dell, Gigabyte, HP, MSI from Friday 23 October; two units linked over QSFP = 128 GB, models up to 200B), 2 October 2026. [https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/](https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/)

@@ -5,7 +5,7 @@ sidebar:
   order: 4
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -134,6 +134,7 @@ Pour un SLA datacenter avec objectif de MTTR (Mean Time To Recovery) sous 2 minu
 - **NVMe PCIe 5.0 en RAID 0** : doublement du débit séquentiel (~20 Go/s réels), MTTR < 45 secondes sur un 405B
 - **GPUDirect Storage** (NVIDIA Magnum IO) : transfert direct SSD→VRAM sans copie CPU, réduit la charge système et améliore le débit[^4]
 - **Modèle quantifié** : un 405B en Q4 (~230 Go) réduit le temps de chargement de ~65% vs BF16
+- **Préchargement vLLM** : depuis vLLM 0.31 (octobre 2026), `vllm preload` lance un démon qui garde les poids déjà quantifiés en mémoire GPU d'un redémarrage du moteur à l'autre (avec un endpoint `/health`) ; cela raccourcit les redémarrages de service, pas un redémarrage de la machine ni une panne GPU[^11]
 
 > [!note] Lien avec les SLAs d'entreprise
 > Pour les déploiements critiques (IA en production dans des workflows métier), le temps de rechargement doit être documenté dans les accords de niveau de service. Prévoyez un processus de redémarrage planifié (rolling restart avec double instance) pour les mises à jour sans downtime.
@@ -194,3 +195,4 @@ rsync -az /backup/ nas-secondary:/ia-on-prem-backup/
 [^8]: Ray Project, *Release ray-2.59.0* (Ray Serve LLM GA : routage KV-aware, désagrégation prefill/decode, vLLM figé en 0.27.0), 2 octobre 2026. [https://github.com/ray-project/ray/releases/tag/ray-2.59.0](https://github.com/ray-project/ray/releases/tag/ray-2.59.0)
 [^9]: DeepSeek AI, *DeepSeek-V4.1-Flash* (≈ 763 Go en FP8, MIT), septembre 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) · Moonshot AI, *Kimi K3* (poids MXFP4 natifs, ≈ 1,4–1,56 To), juillet 2026. [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3)
 [^10]: vLLM, *Metrics* (liste des métriques Prometheus du moteur V1 : `vllm:prompt_tokens`, `vllm:generation_tokens`, `vllm:request_success`, `vllm:kv_cache_usage_perc`, `vllm:num_requests_running`, `vllm:time_to_first_token_seconds`… ; politique de dépréciation « masquée en X.Y+1, retirée en X.Y+2 »), consulté le 2026-10-10. [https://docs.vllm.ai/en/latest/usage/metrics/](https://docs.vllm.ai/en/latest/usage/metrics/)
+[^11]: vLLM Project, *Release v0.31.0* (`vllm preload` : démon qui conserve les poids post-quantifiés en mémoire GPU entre redémarrages du moteur, #56680, #58552), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)

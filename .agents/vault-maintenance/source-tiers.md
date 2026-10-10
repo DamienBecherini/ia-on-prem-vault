@@ -20,6 +20,7 @@ One domain per line. A domain matches itself and all its subdomains (`nvidia.com
 - acm.org
 - ai.meta.com
 - aider.chat
+- aleph-alpha.com
 - amd.com
 - anssi.gouv.fr
 - anthropic.com
