@@ -10,7 +10,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [⚡ SGLang](/00-lexique/sglang/) | Framework open-source d'inférence et de serving LLM, alternative à vLLM pour les workloads agentiques et les sorties structurées. |
 | [🌳 RadixAttention](/00-lexique/radixattention/) | Technique de gestion du KV Cache par arbre de préfixes, introduite par SGLang pour réutiliser les contextes communs entre requêtes. |
 | [🏢 Multi-tenant](/00-lexique/multi-tenant/) | Architecture SaaS IA où une même infrastructure sert plusieurs organisations isolées, avec risque de fuite inter-tenant en RAG. |
-| [🔐 Zero Data Retention (ZDR)](/00-lexique/zero-data-retention/) | Clause contractuelle d'API cloud LLM garantissant l'absence de persistance, de réutilisation et de revue humaine des prompts et réponses. |
+| [🔐 Zero Data Retention (ZDR)](/00-lexique/zero-data-retention/) | Clause contractuelle d'API cloud LLM : pour les modèles et endpoints couverts, aucune persistance, réutilisation ni revue humaine des prompts et réponses — une couverture désormais négociée modèle par modèle. |
 | [Agent autonome (LLM)](/00-lexique/autonomous-agent/) | Système où un LLM pilote lui-même des outils et des décisions pour accomplir une tâche multi-étapes. |
 | [Agent custodien](/00-lexique/agent-custodian/) | Agent autonome chargé de maintenir un vault, dépôt ou corpus documentaire en proposant des corrections validées par l'humain. |
 | [Appel d'outils (Tool / Function Calling)](/00-lexique/appel-outils/) | Capacité d'un LLM à émettre des requêtes structurées vers des fonctions externes (API, SQL, code) plutôt que du texte libre. |
@@ -22,7 +22,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [Decoding](/00-lexique/decoding/) | Phase de génération auto-régressive token par token. |
 | [ECN](/00-lexique/ecn/) | Explicit Congestion Notification — mécanisme de signalement de congestion réseau utilisé avec RoCE pour éviter les pertes de paquets. |
 | [Embedding](/00-lexique/embedding/) | Représentation numérique dense d'un token ou d'un document dans un espace vectoriel. |
-| [Excessive Agency](/00-lexique/excessive-agency/) | Vulnérabilité OWASP LLM06 (2025) — un agent IA dispose de trop de fonctionnalités, permissions ou autonomie, permettant des actions réelles non souhaitées. |
+| [Excessive Agency](/00-lexique/excessive-agency/) | Vulnérabilité du Top 10 OWASP pour les applications LLM — un agent IA dispose de trop de fonctionnalités, permissions ou autonomie, permettant des actions réelles non souhaitées. |
 | [Exo](/00-lexique/exo/) | Orchestrateur P2P open-source pour fusionner la mémoire de plusieurs machines en un cluster IA local. |
 | [Fenêtre de contexte](/00-lexique/context-window/) | Nombre maximal de tokens qu'un LLM peut traiter en entrée active — détermine le coût mémoire dynamique de l'inférence. |
 | [GGUF](/00-lexique/gguf/) | Format de fichier portable pour l'inférence locale avec llama.cpp, optimisé pour les quantifications K-quant. |
