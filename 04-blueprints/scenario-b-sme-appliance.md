@@ -3,9 +3,9 @@ title: "🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)"
 description: Le blueprint idéal pour les PME. Comment servir une équipe de 10 à 50 personnes avec un modèle 70B en utilisant un Mac Studio ou un APU AMD.
 sidebar:
   order: 2
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -38,7 +38,7 @@ Ici, la stack logicielle diffère selon le matériel choisi :
 
 ### Les Performances Attendues
 Puisque le modèle de 40 Go rentre intégralement dans la [[00-lexique/unified-memory|Mémoire unifiée]] (qui agit ici comme une immense [[00-lexique/vram|VRAM]]), les vitesses de génération sont excellentes et stables :
-*   **Mac Studio (M4 Max, ~546 Go/s) :** Entre 10 et 15 [[00-lexique/tokens-per-second|tokens/s]] en phase de [[00-lexique/decoding|Decoding]][^1] — cohérent avec la borne théorique de ~13,6 t/s calculée dans [[01-fondations/memory-bandwidth|le chapitre bande passante]].
+*   **Mac Studio (M5 Max, ~614 Go/s) :** borne théorique d'environ 15 [[00-lexique/tokens-per-second|tokens/s]] en phase de [[00-lexique/decoding|Decoding]] sur un 70B Q4 (~40 Go), calculée avec la formule du [[01-fondations/memory-bandwidth|chapitre bande passante]] à partir de la bande passante annoncée par Apple en août 2026[^1] — soit 10 à 15 t/s attendus en pratique, à confirmer par un benchmark publié.
 *   **AMD Ryzen AI Max PRO 400 (~273 Go/s) :** De l'ordre de 5 à 7 tokens/s selon les benchmarks disponibles[^2] — également cohérent avec la formule (borne théorique ~6,8 t/s).
 
 ---
@@ -96,5 +96,5 @@ Pour dépasser cette contrainte de capacité fixe et rester sur du matériel de 
 
 ## 📚 Sources et Références
 
-[^1]: llmhardware.io, *Mac Studio M4 Max / M3 Ultra for LLMs* (Performances Llama 3 70B Q4_K_M avec MLX et allocation de mémoire Metal maximale), 2025-2026. [https://llmhardware.io/guides/mac-studio-m4-max-llm-guide](https://llmhardware.io/guides/mac-studio-m4-max-llm-guide)
+[^1]: Apple Newsroom, *Apple introduces new Mac Studio with M5 Max and M5 Ultra* (bande passante mémoire M5 Max 614 Go/s et M5 Ultra 1,2 To/s, capacités jusqu'à 128 Go et 512 Go, clustering Thunderbolt 5), 2026-08-25. [https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/](https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/)
 [^2]: ServeTheHome & ignasivt (GitHub), *Strix Halo / Gorgon Halo 192GB Unified Memory Benchmarks* (Débit decoding attendu sur modèle dense 70B), Mai 2026. [https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/](https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/) · [https://github.com/ignasivt/strix-halo-guide](https://github.com/ignasivt/strix-halo-guide)

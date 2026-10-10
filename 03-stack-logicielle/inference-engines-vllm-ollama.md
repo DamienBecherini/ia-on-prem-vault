@@ -3,9 +3,9 @@ title: "⚙️ Moteurs d'Inférence : vLLM, Ollama et TensorRT-LLM"
 description: Comparatif des moteurs de déploiement locaux en 2026. Quand utiliser GGUF et llama.cpp sur Mac, et quand basculer sur vLLM ou TensorRT-LLM en production.
 sidebar:
   order: 1
-last_modified: "2026-06-10"
-last_verified: "2026-06-09"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -49,7 +49,7 @@ vLLM n'est pas conçu pour faire de l'offloading sur RAM CPU classique, ni pour 
 
 ## 3. TensorRT-LLM : L'accélération extrême NVIDIA
 
-[TensorRT-LLM](https://nvidia.github.io/TensorRT-LLM/) est le SDK officiel de NVIDIA pour tirer le maximum physique de ses propres GPU. Il compile le modèle dans un format propriétaire ultra-optimisé (un "engine").
+[TensorRT-LLM](https://nvidia.github.io/TensorRT-LLM/) est le SDK officiel de NVIDIA pour tirer le maximum physique de ses propres GPU. Depuis la version 1.0 (septembre 2025) il repose sur une architecture PyTorch native, et la version 1.2 (mars 2026) a retiré l'ancien backend TensorRT : il n'y a plus de compilation d'« engine » préalable, le modèle est servi directement par `trtllm-serve`[^6].
 
 ### 🌟 Les forces
 *   **Plafond de performance :** Il bat souvent tous les autres moteurs sur les GPU Datacenter (H100, B200) grâce à des techniques comme le *Flash-Decoding*.
@@ -57,7 +57,7 @@ vLLM n'est pas conçu pour faire de l'offloading sur RAM CPU classique, ni pour 
 *   **Parallélisme massif :** Il orchestre parfaitement les graphes d'exécution sur des nœuds multi-GPU connectés par [[00-lexique/nvlink|NVLink]].
 
 ### ⚠️ Les limites
-La compilation d'un moteur TensorRT est lourde (*Ahead-of-Time*), très stricte sur la génération physique du GPU cible, et la courbe d'apprentissage est beaucoup plus ardue que celle de vLLM.
+La contrainte n'est plus la compilation mais le rythme de publication : au T4 2026, la dernière version stable est la 1.2.1 (avril 2026), la 1.3 est restée en *release candidates* pendant tout l'été 2026, et les notes de version signalent des problèmes connus sur les GPU SM120 (RTX PRO 6000, RTX 50) pour les modèles MoE NVFP4 et MLA[^6]. La courbe d'apprentissage reste plus ardue que celle de vLLM.
 
 ---
 
@@ -80,7 +80,7 @@ La compilation d'un moteur TensorRT est lourde (*Ahead-of-Time*), très stricte 
 | Critère | vLLM | SGLang |
 | :-- | :-- | :-- |
 | Débit brut, requêtes indépendantes | ✅ Référence | Comparable |
-| Boucles agentiques, préfixes partagés | ⚠️ Pas de prefix cache natif | ✅ RadixAttention |
+| Boucles agentiques, préfixes partagés | ✅ Automatic Prefix Caching (actif par défaut, par blocs hachés)[^11] | ✅ RadixAttention (arbre de préfixes, partage plus fin) |
 | Génération JSON contrainte | ⚠️ Possible, plus lent | ✅ Natif, sans pénalité |
 | Compatibilité matérielle (AMD, Mac) | ✅ Large | ⚠️ NVIDIA principalement |
 | Maturité écosystème | ✅ Très large | ✅ Mature depuis 2025 |
@@ -142,8 +142,9 @@ Pour un projet d'agent on-premise déployé chez des clients, le choix du moteur
 [^3]: Woosuk Kwon et al., *Efficient Memory Management for Large Language Model Serving with PagedAttention* (SOSP 2023). [https://arxiv.org/abs/2309.06180](https://arxiv.org/abs/2309.06180)
 [^4]: Ayi NEDJIMI Consultants, *LLM Local 2026 : Ollama vs LM Studio vs vLLM* (article de blog, comparaison d'architectures, Continuous Batching), Février 2026. [https://www.ayinedjimi-consultants.fr/ia-llm-local-ollama-lmstudio-vllm.html](https://www.ayinedjimi-consultants.fr/ia-llm-local-ollama-lmstudio-vllm.html)
 [^5]: vLLM Project Documentation & Spheron Blog, *vLLM Production Deployment 2026: Multi-GPU Tensor Parallel + FP8* (Model Runner V2, Hopper/Blackwell support), Mai 2026. [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/) · [https://www.spheron.network/blog/vllm-production-deployment-2026/](https://www.spheron.network/blog/vllm-production-deployment-2026/)
-[^6]: NVIDIA, *TensorRT-LLM Documentation* (FP4 Support, Blackwell optimization, DeepSeek-R1 performance records), Mai 2026. [https://nvidia.github.io/TensorRT-LLM/](https://nvidia.github.io/TensorRT-LLM/)
+[^6]: NVIDIA, *TensorRT-LLM Documentation & Release Notes* (1.0 : PyTorch par défaut ; 1.2 : backend TensorRT et `trtllm-build` retirés ; problèmes connus SM120 ; FP4 Blackwell), Septembre 2026. [https://nvidia.github.io/TensorRT-LLM/](https://nvidia.github.io/TensorRT-LLM/) · [https://nvidia.github.io/TensorRT-LLM/release-notes.html](https://nvidia.github.io/TensorRT-LLM/release-notes.html) · PyPI `tensorrt-llm` (historique des versions : 1.2.1 stable, 1.3.0rcN), consulté le 2026-10-09. [https://pypi.org/project/tensorrt-llm/](https://pypi.org/project/tensorrt-llm/)
 [^7]: SGLang Project, *SGLang — Fast Serving Framework for LLMs and VLMs* (RadixAttention, structured output). [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang)
 [^8]: Lianmin Zheng et al., *Efficiently Programming Large Language Models using SGLang* (RadixAttention, prefix cache, TTFT reduction). [https://lmsys.org/blog/2024-01-17-sglang/](https://lmsys.org/blog/2024-01-17-sglang/)
 [^9]: SGLang Contributors, *SGLang vs vLLM — scaling benchmark under high concurrency* (throughput comparison). [https://github.com/sgl-project/sglang/issues/21061](https://github.com/sgl-project/sglang/issues/21061)
 [^10]: Tenstorrent, *vLLM integration with TT-Metal* (fork tenstorrent/vllm, tt-metal, incompatibilité vLLM standard), 2025. [https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md](https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md)
+[^11]: vLLM Project, *Automatic Prefix Caching* et *Engine Arguments* (`enable_prefix_caching` actif par défaut, hachage de blocs, métriques `vllm:prefix_cache_hits/queries`), consultés le 2026-10-09. [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/) · [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)

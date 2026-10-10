@@ -3,9 +3,9 @@ title: "⚙️ Configurer vLLM en production multi-GPU"
 description: Installation, configuration tensor parallel, déploiement multi-nœuds avec Ray, et bonnes pratiques de production pour vLLM sur GPU NVIDIA.
 sidebar:
   order: 5
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -188,12 +188,13 @@ vLLM et Ray gèrent automatiquement la répartition : les 4 premiers GPU (nœud 
 Architecture avancée disponible depuis vLLM v0.6+ : des nœuds dédiés au **Prefill** (lecture du prompt, CPU-bound) et d'autres au **Decode** (génération, memory-bandwidth-bound)[^5]. Réduit le TTFT de 30 à 50% sur des prompts longs.
 
 ```bash
-# Nœud Prefill (optimisé calcul)
-vllm serve ... --num-speculative-tokens 5 --role prefill
-
-# Nœud Decode (optimisé mémoire)
-vllm serve ... --role decode
+# Désagrégation P/D — même flag sur les deux rôles, connecteur NIXL
+# (kv_role : "kv_producer" côté Prefill, "kv_consumer" côté Decode, "kv_both" pour les deux)
+vllm serve ... \
+  --kv-transfer-config '{"kv_connector":"NixlConnector","kv_role":"kv_both"}'
 ```
+
+Les connecteurs disponibles au T4 2026 sont `NixlConnector`, `LMCacheConnectorV1`, `MooncakeConnector`, `OffloadingConnector` (déport CPU) et `MultiConnector` ; la fonctionnalité est documentée comme « expérimentale et susceptible de changer »[^5]. Les flags `--role` et `--num-speculative-tokens` n'existent pas dans `vllm serve` (la spéculation se configure via `--speculative-config`)[^8].
 
 > [!note] Stabilité
 > La désagrégation Prefill/Decode est disponible mais encore en évolution active en 2026. À tester en staging avant tout déploiement production.
@@ -206,25 +207,27 @@ vllm serve ... --role decode
 
 ```bash
 vllm serve ... \
-  --api-key "sk-votre-token-secret"
+  --api-key "VOTRE-TOKEN-A-REMPLACER"
 ```
 
 Ou via variable d'environnement :
 ```bash
-export VLLM_API_KEY="sk-votre-token-secret"
+export VLLM_API_KEY="VOTRE-TOKEN-A-REMPLACER"
 vllm serve ...
 ```
 
-Les clients doivent envoyer `Authorization: Bearer sk-votre-token-secret`.
+Les clients doivent envoyer `Authorization: Bearer VOTRE-TOKEN-A-REMPLACER`.
 
 ### Limites et timeouts
 
 ```bash
 vllm serve ... \
-  --max-num-seqs 512 \              # file d'attente max (au-delà : erreur 503)
-  --request-timeout 120 \           # timeout par requête en secondes
+  --max-num-seqs 512 \              # séquences traitées par itération (batch continu)
+  --max-num-queued-reqs 1024 \      # requêtes en vol max ; au-delà : HTTP 503 (vLLM ≥ 0.29)
   --disable-log-requests            # désactiver les logs de requêtes en production
 ```
+
+`--max-num-seqs` borne le nombre de séquences traitées par itération, pas la file d'attente (illimitée par défaut) : c'est `--max-num-queued-reqs` (vLLM 0.29) qui produit le 503, à dimensionner autour de `data_parallel_size × max_num_seqs` plus la profondeur de file souhaitée[^2][^8]. vLLM n'a pas de timeout par requête côté moteur : fixez-le dans le reverse proxy (Caddy `reverse_proxy … { transport http { response_header_timeout 120s } }`, Nginx `proxy_read_timeout 120s`) ou côté client[^8].
 
 ### Optimisation KV Cache — quantification FP8
 
@@ -232,9 +235,10 @@ Sur GPU NVIDIA Hopper (H100, H200), la quantification du KV Cache en FP8 réduit
 
 ```bash
 vllm serve ... \
-  --kv-cache-dtype fp8 \
-  --calculate-kv-cache-size         # affiche la taille KV cache configurée
+  --kv-cache-dtype fp8
 ```
+
+La taille du KV Cache effectivement allouée est écrite dans les logs de démarrage (« GPU KV cache size: … tokens ») ; il n'existe pas de flag dédié pour l'afficher[^8].
 
 ### Automatic Prefix Caching (APC) — indispensable pour RAG et agents
 
@@ -257,7 +261,7 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
 | Pipeline RAG : même contexte document partagé | recalcul intégral × N | hit cache : ~96% VRAM économisée sur le préfixe |
 
 > [!note] Compatibilité
-> L'APC est **incompatible** avec la désagrégation Prefill/Decode (`--role prefill/decode`). Ne pas activer les deux simultanément. Compatible avec le Tensor Parallelism et la quantification FP8 du KV Cache[^7].
+> L'APC est **incompatible** avec la désagrégation Prefill/Decode (`--kv-transfer-config`). Ne pas activer les deux simultanément. Compatible avec le Tensor Parallelism et la quantification FP8 du KV Cache[^7].
 
 ### Systemd service (Linux)
 
@@ -305,7 +309,7 @@ curl http://localhost:8000/v1/models | python3 -m json.tool
 # Test de génération
 curl http://localhost:8000/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer sk-votre-token" \
+  -H "Authorization: Bearer VOTRE-TOKEN-A-REMPLACER" \
   -d '{
     "model": "llama-70b",
     "messages": [{"role": "user", "content": "Bonjour, tu fonctionnes ?"}],
@@ -329,9 +333,10 @@ curl http://localhost:8000/metrics | grep vllm
 ## Sources et Références
 
 [^1]: vLLM Project, *Installation — Docker* (image officielle `vllm/vllm-openai`, CUDA 12.x, dépendances). [https://docs.vllm.ai/en/stable/getting_started/installation.html](https://docs.vllm.ai/en/stable/getting_started/installation.html)
-[^2]: vLLM Project, *Engine Arguments* (`--gpu-memory-utilization`, `--max-model-len`, `--max-num-seqs`, comportement KV Cache). [https://docs.vllm.ai/en/stable/serving/engine_args.html](https://docs.vllm.ai/en/stable/serving/engine_args.html)
+[^2]: vLLM Project, *Engine Arguments* (`--gpu-memory-utilization`, `--max-model-len`, `--max-num-seqs`, `--max-num-queued-reqs`, comportement KV Cache), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)
 [^3]: vLLM Project, *Parallelism and Scaling — Tensor Parallelism* (`--tensor-parallel-size`, sharding des poids, recommandations NVLink). [https://docs.vllm.ai/en/stable/serving/parallelism_scaling/](https://docs.vllm.ai/en/stable/serving/parallelism_scaling/)
 [^4]: Anyscale & vLLM Blog, *Streamlined multi-node serving with Ray symmetric-run* (configuration Ray cluster, pipeline parallelism inter-nœuds). [https://www.anyscale.com/blog/streamlined-multi-node-serving](https://www.anyscale.com/blog/streamlined-multi-node-serving), Novembre 2025.
-[^5]: vLLM Project, *Disaggregated Prefill and Decode* (architecture séparation phases, réduction TTFT). [https://docs.vllm.ai/en/stable/features/disagg_prefill.html](https://docs.vllm.ai/en/stable/features/disagg_prefill.html)
+[^5]: vLLM Project, *Disaggregated Prefill and Decode* (`--kv-transfer-config`, connecteurs NIXL / LMCache / Mooncake / Offloading, statut expérimental), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/disagg_prefill/](https://docs.vllm.ai/en/stable/features/disagg_prefill/)
 [^6]: vLLM Project, *KV Cache Quantization* (FP8 KV cache, prise en charge NVIDIA Hopper, impact mémoire). [https://docs.vllm.ai/en/stable/features/quantization/fp8_kv_cache.html](https://docs.vllm.ai/en/stable/features/quantization/fp8_kv_cache.html)
 [^7]: vLLM Project, *Automatic Prefix Caching* (fonctionnement par blocs de 16 tokens, impact TTFT, compatibilité tensor parallelism). [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching.html](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching.html)
+[^8]: vLLM Project, *CLI Reference — `vllm serve`* (liste exhaustive des flags : absence de `--role`, `--request-timeout`, `--calculate-kv-cache-size` ; `--speculative-config`), consulté le 2026-10-09 · vLLM Project, *Release v0.29.0* (ajout de `--max-num-queued-reqs`), 2026-09-09. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/releases/tag/v0.29.0](https://github.com/vllm-project/vllm/releases/tag/v0.29.0)

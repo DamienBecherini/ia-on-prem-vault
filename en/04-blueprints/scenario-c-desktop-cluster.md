@@ -3,14 +3,14 @@ title: "🖥️ Scenario C: Desktop Cluster (Exo & Thunderbolt)"
 description: The scalability blueprint. Connect several Mac Minis or compact PCs via Thunderbolt to run massive models inaccessible on a single machine.
 sidebar:
   order: 3
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
-[[04-blueprints/scenario-b-sme-appliance|Scenario B]] (the Appliance) has a major flaw: its memory is fixed. If your client's needs evolve and they want to deploy a colossal [[00-lexique/moe|MoE]] model of more than 400 billion parameters (requiring more than 300 GB of memory), no single desktop machine in the world can host it.
+[[04-blueprints/scenario-b-sme-appliance|Scenario B]] (the Appliance) has a major flaw: its memory is fixed. If your client's needs evolve and they want to deploy a colossal [[00-lexique/moe|MoE]] model of more than 400 billion parameters (requiring more than 300 GB of memory), only a high-end unified-memory workstation can host it — the Mac Studio M5 Ultra, configurable up to 512 GB (1.2 TB/s), from €6,599 incl. VAT in the 96 GB configuration, with the 512 GB configuration shipping in late October 2026 — and none exceeds 512 GB[^2].
 
 Before 2025, the only solution was to rent a cloud server or buy a prohibitively expensive datacenter rack. Today, software architecture allows merging several affordable small machines: the **Desktop Cluster**.
 
@@ -97,7 +97,7 @@ ollama logs
 | Thunderbolt bandwidth | > 70 Gb/s sustained | `nettop` |
 
 > [!note] Advanced monitoring
-> For centralized monitoring (Prometheus + Grafana), the community project [ollama-exporter](https://github.com/marcboeker/go-ollama) exposes compatible metrics. Unofficial — validate before production use.
+> For centralized monitoring (Prometheus + Grafana), there is no official Ollama exporter as of October 2026; go through the gateway (LiteLLM) or vLLM metrics, or node-exporter for memory and network. See [[06-mise-en-oeuvre/monitoring-inference-stack|Monitoring]].
 
 ### Storage Wall — model reload time
 
@@ -113,3 +113,4 @@ ollama logs
 ## 📚 Sources and references
 
 [^1]: Exo Labs, *Running DeepSeek V3 671B on M4 Mac Mini Cluster* (Performance via Thunderbolt 5 and Exo, Pipeline Parallelism constraints, 3–5 tok/s), March 2026. [https://blog.exolabs.net/day-2](https://blog.exolabs.net/day-2)
+[^2]: Apple Newsroom, *Apple introduces new Mac Studio with M5 Max and M5 Ultra* (M5 Ultra up to 512 GB unified memory, 1.2 TB/s, 512 GB configuration available late October 2026), 2026-08-25. [https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/](https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/) · Apple Store France, *Mac Studio* (M5 Ultra 96 GB from €6,599 incl. VAT), captured 2026-10-09. [https://www.apple.com/fr/shop/buy-mac/mac-studio](https://www.apple.com/fr/shop/buy-mac/mac-studio)

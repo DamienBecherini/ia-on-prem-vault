@@ -1,34 +1,34 @@
 ---
 title: "OpenHuman"
-description: Assistant personnel local-first avec Memory Tree, mais expérience managée cloud par défaut pour le routage modèle, OAuth et certaines intégrations.
+description: Harness d'agent open source (Rust + Tauri) avec mémoire hébergée par défaut, abonnement managé optionnel et mode Privacy local-only ; à configurer volontairement pour une posture on-premise.
 sidebar:
   order: 1
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 ## 🔍 Vue d'ensemble rapide
 
-OpenHuman est un assistant personnel open-source basé sur **Tauri + Rust**. Son idée forte est le **[[00-lexique/memory-tree|Memory Tree]]** : vos sources sont transformées en chunks Markdown, résumées hiérarchiquement, stockées en SQLite et exposées sous forme de vault Obsidian-compatible[^1][^2].
+OpenHuman est un agent open source (GPL-3.0) basé sur **Tauri + Rust**, livré en application de bureau, en terminal ou en serveur headless. Au 2026-10-09, sa mémoire n'est plus le [[00-lexique/memory-tree|Memory Tree]] local des premières versions : les documents, conversations et « learnings » sont stockés dans **CortexDB**, soit hébergé par TinyHumans (connexion requise), soit sur un endpoint CortexDB que vous opérez ; avant chaque tour, un « memory pack » borné en tokens est rappelé avec citations[^1][^2].
 
 Ce n'est cependant pas un outil 100% on-premise par défaut. Le README est explicite : l'expérience managée utilise encore des services OpenHuman pour la connexion au compte, le routage des modèles, la recherche web proxyfiée et certains flux OAuth via Composio[^3].
 
 > [!warning] Verdict souveraineté
-> **⚠️ Configurable** — très intéressant pour l'architecture mémoire, mais une posture on-premise stricte demande une configuration volontaire : modèle local, recherche auto-hébergée, intégrations directes et désactivation des chemins managés.
+> **⚠️ Configurable** — intéressant pour son mode Privacy local-only, mais une posture on-premise stricte demande une configuration volontaire : modèle local, CortexDB que vous opérez, recherche auto-hébergée, intégrations directes et désactivation des chemins managés.
 
 ## 💡 Pourquoi ce projet nous intéresse
 
-OpenHuman est le meilleur exemple actuel d'un assistant "mémoire d'abord" : il ne se contente pas de coller une base vectorielle sous un chat. Il structure les documents en arbres de résumés et garde un équivalent Markdown lisible par l'humain.
+OpenHuman a été, jusqu'à sa version 1, l'exemple le plus lisible d'un assistant "mémoire d'abord" : il structurait les documents en arbres de résumés et gardait un équivalent Markdown lisible par l'humain. Au T4 2026, cette architecture a disparu du produit au profit d'une mémoire hébergée (CortexDB)[^2].
 
-Pour ce vault, il sert surtout de **référence architecturale** pour le pattern [[00-lexique/memory-tree|Memory Tree]] : comment donner une mémoire longue à un assistant sans injecter tout l'historique dans le prompt.
+Pour ce vault, il a servi de référence au pattern [[00-lexique/memory-tree|Memory Tree]] jusqu'à sa version 1 ; depuis la mémoire v2 (CortexDB, 2026), il illustre surtout deux autres leçons : la mémoire d'un assistant peut quitter la machine même quand le modèle est local, et un mode « local-only » appliqué dans le code vaut mieux qu'une configuration[^4][^5].
 
 ## ✅ Points forts
 
-- **Mémoire locale lisible** : SQLite + Markdown dans un vault compatible Obsidian[^1][^2].
-- **Approche Memory Tree** : hiérarchie de résumés plutôt qu'un simple "vector soup"[^2].
+- **Mémoire pluggable** : moteur CortexDB hébergé ou auto-hébergé, « learnings » et « beliefs » construits en arrière-plan, rappel par memory pack avec citations ; secrets et identifiants purgés avant stockage, effacement complet possible[^2].
+- **Mode Privacy local-only** : un interrupteur appliqué dans le cœur Rust refuse tout fournisseur cloud (y compris BYOK et Composio) et ne laisse passer que les runtimes locaux Ollama, LM Studio, MLX ou OpenAI-compatibles[^4].
 - **Agent outillé** : recherche, fetch web, fichiers, Git, lint/test/grep, intégrations et voix selon configuration[^3].
 - **Local AI possible** : Ollama/LM Studio peuvent prendre certains workloads on-device[^3].
 
@@ -41,9 +41,9 @@ Pour ce vault, il sert surtout de **référence architecturale** pour le pattern
 
 ## 🔒 Souveraineté et confidentialité
 
-- **Données :** mémoire, vault Markdown, configuration workspace et runtime local stockés sur la machine[^3].
+- **Données :** fichiers du workspace, réglages et tampons audio sur la machine ; **la mémoire, non** : elle est dans CortexDB (hébergé TinyHumans ou endpoint que vous opérez)[^5].
 - **Modèle :** routage managé par défaut ; Ollama/LM Studio possibles pour workloads locaux[^3].
-- **Mémoire :** SQLite local + Markdown local ; backend `agentmemory` possible pour store partagé[^3].
+- **Mémoire :** CortexDB, hébergé ou auto-hébergé ; sans connexion ni clé CortexDB, la mémoire est désactivée[^2][^5].
 - **Télémétrie :** à vérifier dans l'instance déployée.
 - **Mode 100% offline :** partiel ; les fonctionnalités managées et intégrations temps réel peuvent nécessiter le backend.
 - **Verdict :** ⚠️ configurable.
@@ -71,6 +71,8 @@ Projet open-source en évolution rapide. À auditer avant déploiement client : 
 
 ## 📚 Sources
 
-[^1]: OpenHuman, *Architecture* — React + Tauri v2, Rust core, Memory Tree, SQLite et vault Markdown. [https://github.com/tinyhumansai/openhuman/blob/main/gitbooks/developing/architecture/README.md](https://github.com/tinyhumansai/openhuman/blob/main/gitbooks/developing/architecture/README.md)
-[^2]: OpenHuman, *Memory Trees* — pipeline Memory Tree et stockage local. [https://tinyhumans.gitbook.io/openhuman/features/memory-tree](https://tinyhumans.gitbook.io/openhuman/features/memory-tree)
+[^1]: OpenHuman, *Architecture* — React + Tauri v2, cœur Rust, modes desktop / terminal / headless (lu le 2026-10-09). [https://github.com/tinyhumansai/openhuman/blob/main/gitbooks/developing/architecture/README.md](https://github.com/tinyhumansai/openhuman/blob/main/gitbooks/developing/architecture/README.md)
+[^2]: OpenHuman, *How memory works* — « The current memory has no memory tree … or Obsidian vault » ; moteurs TinyHumans Hosted / CortexDB, memory pack, purge des secrets (docs lues le 2026-10-09). [https://tinyhumans.gitbook.io/openhuman/features/memory](https://tinyhumans.gitbook.io/openhuman/features/memory)
 [^3]: OpenHuman README — "Local + managed services, upfront", Ollama/LM Studio, Composio et backend managé. [https://github.com/tinyhumansai/openhuman/blob/main/README.md](https://github.com/tinyhumansai/openhuman/blob/main/README.md)
+[^4]: OpenHuman, *Privacy mode* (`local_only`, appliqué dans le cœur Rust ; runtimes locaux autorisés), docs lues le 2026-10-09. [https://tinyhumans.gitbook.io/openhuman/features/privacy-mode](https://tinyhumans.gitbook.io/openhuman/features/privacy-mode)
+[^5]: OpenHuman, *Privacy and security* (où vit la mémoire, ce que le backend relaie), docs lues le 2026-10-09. [https://tinyhumans.gitbook.io/openhuman/features/privacy-and-security](https://tinyhumans.gitbook.io/openhuman/features/privacy-and-security)

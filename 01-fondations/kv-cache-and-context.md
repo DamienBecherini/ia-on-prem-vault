@@ -3,9 +3,9 @@ title: 💾 Le KV Cache & La Gestion du Contexte
 description: Analyse mathématique de la consommation mémoire dynamique et techniques d'optimisation (GQA, Quantification, PagedAttention).
 sidebar:
   order: 3
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -123,7 +123,7 @@ Sur de très longs contextes, la phase de décodage devient limitée par la [[00
 
 Pour tout déploiement d'assistant on-premise, la gestion du KV cache dicte votre stratégie matérielle :
 
-1.  **Injectez le contexte, ne noyez pas le modèle :** Plutôt que de charger des fichiers entiers de 150 000 mots dans la fenêtre du LLM (ce qui saturerait votre VRAM dynamique), récupérez seulement les passages pertinents — via un **Memory Tree** structuré (chunks Markdown + résumés hiérarchiques)[^14], un RAG vectoriel, ou les deux combinés.
+1.  **Injectez le contexte, ne noyez pas le modèle :** Plutôt que de charger des fichiers entiers de 150 000 mots dans la fenêtre du LLM (ce qui saturerait votre VRAM dynamique), récupérez seulement les passages pertinents — via un index hiérarchique de mémoire (chunks Markdown + résumés, à la manière du Memory Tree local qu'OpenHuman proposait jusqu'au T2 2026 avant de passer à une mémoire hébergée)[^14], un RAG vectoriel, ou les deux combinés.
 2.  **Activez le FP8 KV Cache :** Si vous utilisez un moteur basé sur vLLM ou LMDeploy, configurez le KV cache en FP8 pour diviser par deux votre consommation dynamique de VRAM, en calibrant les scales si possible [^8].
 3.  **Surveillez le ratio Batch/Contexte :** Sur un serveur partagé par plusieurs collaborateurs en simultané, le KV Cache se multiplie par le nombre d'utilisateurs actifs ($B$) — dimensionner la VRAM en conséquence.
 
@@ -144,4 +144,4 @@ Pour tout déploiement d'assistant on-premise, la gestion du KV cache dicte votr
 [^11]: Dao-AILab, *FA3 kvcache + split kv + gqa parallelization* (PR #1236), septembre 2024. [https://github.com/Dao-AILab/flash-attention/pull/1236](https://github.com/Dao-AILab/flash-attention/pull/1236)
 [^12]: NVIDIA Technical Blog, *Optimizing Inference for Long Context and Large Batch Sizes with NVFP4 KV Cache*, décembre 2025. [https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/](https://developer.nvidia.com/blog/optimizing-inference-for-long-context-and-large-batch-sizes-with-nvfp4-kv-cache/)
 [^13]: vLLM Blog, *The State of FP8 KV-Cache and Attention Quantization in vLLM*, avril 2026. [https://vllm.ai/blog/2026-04-22-fp8-kvcache](https://vllm.ai/blog/2026-04-22-fp8-kvcache)
-[^14]: OpenHuman, *Memory Trees* (GitBook — pipeline local SQLite + Markdown, injection sélective), 2025. [https://tinyhumans.gitbook.io/openhuman/features/memory-tree](https://tinyhumans.gitbook.io/openhuman/features/memory-tree)
+[^14]: OpenHuman, *Memory* (GitBook — la mémoire est désormais servie par CortexDB, hébergé ou auto-hébergé ; l'ancien Memory Tree local SQLite + Markdown a été retiré), relu le 2026-10-09. [https://tinyhumans.gitbook.io/openhuman/features/memory](https://tinyhumans.gitbook.io/openhuman/features/memory)

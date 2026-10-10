@@ -3,9 +3,9 @@ title: "🚀 Démarrer avec Ollama"
 description: Installation, premier modèle, test API et premières bonnes pratiques pour une inférence locale en moins de 15 minutes.
 sidebar:
   order: 3
-last_modified: "2026-06-05"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -57,7 +57,10 @@ Télécharger l'installeur depuis [ollama.com/download](https://ollama.com/downl
 ## Premier modèle
 
 ```bash
-# Télécharger et lancer un modèle 8B (~5 Go en Q4_K_M)
+# Télécharger et lancer un petit modèle récent (~6,5 Go en Q4_K_M)
+ollama run qwen3.5:9b
+
+# Ou un 3B très léger (~2 Go)
 ollama run llama3.2
 
 # Ou un modèle plus compact pour tester rapidement (~1,3 Go)
@@ -67,7 +70,7 @@ ollama run phi4-mini
 ollama run qwen2.5-coder:14b
 ```
 
-La première exécution télécharge le modèle depuis [ollama.com/library](https://ollama.com/library). Les suivantes utilisent le cache local.
+La première exécution télécharge le modèle depuis [ollama.com/library](https://ollama.com/library) (tailles relevées sur le registre au 2026-10-09[^1]). Les suivantes utilisent le cache local.
 
 Pour quitter la session interactive : `/bye` ou `Ctrl+D`.
 
@@ -91,9 +94,12 @@ ollama rm llama3.2
 # Voir les processus en cours
 ollama ps
 
-# Logs du service
-ollama logs
+# Logs du service (Linux systemd) — il n'existe pas de sous-commande `ollama logs`
+journalctl -u ollama --no-pager --follow --pager-end
+# macOS : cat ~/.ollama/logs/server.log
 ```
+
+Les emplacements des logs par plateforme sont décrits dans la page de dépannage d'Ollama[^2].
 
 ---
 
@@ -230,3 +236,10 @@ Indicateurs attendus selon le matériel :
 - **Passer à la production multi-utilisateurs** → [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ vLLM en production]]
 - **Évaluer la qualité** → [[06-mise-en-oeuvre/evaluate-local-model|🧪 Évaluer un modèle local]]
 - **Connecter un agent ou un RAG** → [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]]
+
+---
+
+## Sources et Références
+
+[^1]: Ollama, *Library* et registre `registry.ollama.ai` (manifestes : `llama3.2` = 3B, 2,02 Go ; `qwen3.5:9b` ≈ 6,5 Go), consultés le 2026-10-09. [https://ollama.com/library](https://ollama.com/library) · [https://registry.ollama.ai](https://registry.ollama.ai)
+[^2]: Ollama, *Troubleshooting* (emplacement des logs : `journalctl -u ollama`, `~/.ollama/logs/server.log`), consulté le 2026-10-09 · dépôt `ollama/ollama`, `cmd/cmd.go` (liste des sous-commandes, sans `logs`). [https://docs.ollama.com/troubleshooting](https://docs.ollama.com/troubleshooting) · [https://github.com/ollama/ollama](https://github.com/ollama/ollama)

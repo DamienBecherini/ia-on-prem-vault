@@ -3,9 +3,9 @@ title: "🔄 Migrate from Ollama to vLLM"
 description: When and how to move from Ollama to vLLM without breaking existing clients — API compatibility, model conversion, cutover strategy, and rollback plan.
 sidebar:
   order: 7
-last_modified: "2026-06-07"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -43,7 +43,7 @@ Both services expose an OpenAI-compatible API on `/v1/`. In most cases, **only t
 client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
 # After (vLLM)
-client = OpenAI(base_url="http://localhost:8000/v1", api_key="sk-your-token")
+client = OpenAI(base_url="http://localhost:8000/v1", api_key="YOUR-TOKEN-TO-REPLACE")
 
 # The code below is identical in both cases
 response = client.chat.completions.create(
@@ -86,7 +86,7 @@ vllm serve meta-llama/Llama-3.1-8B-Instruct \
 
 ## Converting GGUF models
 
-vLLM does not natively read GGUF files. Two options:
+vLLM can load a GGUF (`vllm-gguf-plugin` plugin, e.g. `vllm serve unsloth/Qwen3-0.6B-GGUF:Q4_K_M --tokenizer Qwen/Qwen3-0.6B`), but as of Q4 2026 the project describes this support as "highly experimental and under-optimized": it is suitable for validating a model, not for production[^5]. Three options, in order of preference:
 
 ### Option A — Download native HuggingFace weights (recommended)
 
@@ -123,21 +123,30 @@ vllm serve hugging-quants/Meta-Llama-3.1-70B-Instruct-AWQ-INT4 \
 
 ### Option C — Convert GGUF to safetensors (advanced)
 
-If you have a custom GGUF model (fine-tuned, merged), conversion is possible via `llama.cpp`:
+If you have a custom GGUF model (fine-tuned, merged), conversion is possible via the Transformers GGUF loader (`llama.cpp` only does the reverse direction, HF → GGUF, with `convert_hf_to_gguf.py`)[^6]:
 
 ```bash
-git clone https://github.com/ggml-org/llama.cpp
-cd llama.cpp
-pip install -r requirements.txt
+pip install transformers gguf
 
-# Convert GGUF → safetensors (dequantize to fp16)
-python convert_hf_to_gguf.py --outtype f16 \
-  /path/to/model.gguf \
-  --outfile /path/to/output/model.safetensors
+# Convert GGUF → safetensors with Transformers (dequantizes to bf16)
+python - <<'PY'
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, GgufConfig
+repo, f = "/path/to/model-dir", "model.gguf"
+m = AutoModelForCausalLM.from_pretrained(
+    repo, gguf_file=f,
+    quantization_config=GgufConfig(dequantize=True),
+    dtype=torch.bfloat16,
+)
+t = AutoTokenizer.from_pretrained(repo, gguf_file=f)
+m.save_pretrained("/path/to/output"); t.save_pretrained("/path/to/output")
+PY
 ```
 
+The loader dequantizes Llama, Mistral, Qwen2, Phi3, etc.; check the list of supported architectures in the Transformers documentation[^6].
+
 > [!warning] Quantization loss
-> GGUF → safetensors conversion dequantizes the model (back to fp16). To re-quantize to AWQ, use [AutoAWQ](https://github.com/casper-hansen/AutoAWQ). This process needs VRAM and time (several hours on a 70B).
+> GGUF → safetensors conversion dequantizes the model (back to bf16). To re-quantize to AWQ, use [AutoAWQ](https://github.com/casper-hansen/AutoAWQ). This process needs VRAM and time (several hours on a 70B).
 
 ---
 
@@ -257,3 +266,5 @@ Full rollback takes < 2 minutes if Ollama was only stopped (not uninstalled).
 [^2]: vLLM Project, *OpenAI-Compatible Server* (supported endpoints `/v1/chat/completions`, `/v1/completions`, `/v1/embeddings`, `--served-model-name`). [https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html](https://docs.vllm.ai/en/stable/serving/openai_compatible_server.html)
 [^3]: vLLM Project, *Quantization — AWQ* (AWQ Marlin kernel, performance vs GPTQ, compatible HuggingFace models). [https://docs.vllm.ai/en/stable/features/quantization/auto_awq.html](https://docs.vllm.ai/en/stable/features/quantization/auto_awq.html)
 [^4]: vLLM Project, *Benchmarks* (comparative benchmarking scripts, latency and throughput). [https://docs.vllm.ai/en/stable/performance/benchmarks.html](https://docs.vllm.ai/en/stable/performance/benchmarks.html)
+[^5]: vLLM Project, *Quantization — GGUF* (`vllm-gguf-plugin` plugin, "highly experimental and under-optimized" support, base model tokenizer recommended), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/gguf/](https://docs.vllm.ai/en/stable/features/quantization/gguf/)
+[^6]: Hugging Face, *Transformers — GGUF* (`from_pretrained(gguf_file=…)`, `GgufConfig(dequantize=True)`, supported architectures, export via `save_pretrained`), accessed 2026-10-09. [https://huggingface.co/docs/transformers/gguf](https://huggingface.co/docs/transformers/gguf)

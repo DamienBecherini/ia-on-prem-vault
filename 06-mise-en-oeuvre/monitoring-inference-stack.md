@@ -3,9 +3,9 @@ title: "📊 Monitoring de la stack d'inférence"
 description: Mise en place d'un monitoring Prometheus + Grafana pour une stack vLLM ou Ollama — métriques GPU, KV Cache, débit et alertes opérationnelles.
 sidebar:
   order: 6
-last_modified: "2026-06-10"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -152,12 +152,14 @@ vLLM expose ses métriques sur `GET /metrics`[^1]. Voici celles à surveiller en
 
 | Métrique | Description | Seuil d'alerte |
 | :-- | :-- | :-- |
-| `vllm:gpu_cache_usage_perc` | % KV Cache occupé | > 90% |
-| `vllm:cpu_cache_usage_perc` | % KV Cache swap CPU | > 0 (indique du swap) |
+| `vllm:kv_cache_usage_perc` | Fraction du KV Cache occupée (1 = 100 %) | > 0.90 |
 | `vllm:num_preemptions_total` | Requêtes préemptées (KV Cache plein) | > 0 régulier |
 
-> [!warning] KV Cache swap
-> Si `cpu_cache_usage_perc > 0`, vLLM swap le KV Cache de la VRAM vers la RAM CPU — signe que la VRAM est insuffisante pour la charge actuelle. Les performances s'effondrent dès que le swap commence[^2]. Réduire `--max-model-len` ou `--max-num-seqs`, ou augmenter `--gpu-memory-utilization`.
+> [!note] Métrique renommée
+> `vllm:gpu_cache_usage_perc` et `vllm:cpu_cache_usage_perc` (moteur V0) ont disparu de la référence : la jauge courante est `vllm:kv_cache_usage_perc`. Les métriques dépréciées sont masquées une version après et supprimées deux versions après (`--show-hidden-metrics-for-version=X.Y` pour les réafficher temporairement)[^1].
+
+> [!warning] Préemptions
+> Quand le KV Cache est plein, le moteur V1 ne swappe plus vers la RAM : il **préempte** des requêtes et recalcule leur préfixe. Un `vllm:num_preemptions_total` qui croît régulièrement signifie que la VRAM est insuffisante pour la charge : réduire `--max-model-len` ou `--max-num-seqs`[^2], ou ajouter un déport CPU explicite (`--kv-transfer-config '{"kv_connector":"OffloadingConnector",…}'`, métriques `vllm:simple_kv_offload_*`)[^1][^8].
 
 ### Latences
 
@@ -214,7 +216,7 @@ rate(vllm:generation_tokens_total[1m])
 
 **Panel "KV Cache %" :**
 ```text
-vllm:gpu_cache_usage_perc * 100
+vllm:kv_cache_usage_perc * 100
 ```
 
 **Panel "File d'attente" :**
@@ -238,13 +240,13 @@ groups:
     rules:
 
       - alert: VLLMKVCacheHigh
-        expr: vllm:gpu_cache_usage_perc > 0.90
+        expr: vllm:kv_cache_usage_perc > 0.90
         for: 2m
         labels:
           severity: warning
         annotations:
           summary: "KV Cache vLLM > 90%"
-          description: "Le KV Cache est à {{ $value | humanizePercentage }}. Risque de swap ou de préemption."
+          description: "Le KV Cache est à {{ $value | humanizePercentage }}. Risque de préemption."
 
       - alert: VLLMRequestQueueBacklog
         expr: vllm:num_requests_waiting > 0
@@ -291,14 +293,16 @@ alerting:
 
 ## 7. Monitoring Ollama (sans Prometheus natif)
 
-Si vous utilisez Ollama, quelques commandes de monitoring immédiat :
+Si vous utilisez Ollama, quelques commandes de monitoring immédiat[^9] :
 
 ```bash
 # Modèles chargés et VRAM occupée
 ollama ps
 
-# Logs en temps réel (incluent les durées de génération)
-ollama logs -f
+# Logs en temps réel (incluent les durées de génération) — pas de sous-commande `ollama logs`
+# Linux (systemd)
+journalctl -u ollama --no-pager --follow --pager-end
+# macOS : cat ~/.ollama/logs/server.log — Docker : docker logs <conteneur>
 
 # Métriques dans la réponse API (durées en nanosecondes)
 curl -s http://localhost:11434/api/generate \
@@ -451,10 +455,12 @@ cp /qdrant/snapshots/my_collection/*.snapshot /mnt/backup/qdrant/
 
 ## Sources et Références
 
-[^1]: vLLM Project, *Production Metrics* (endpoint `/metrics`, liste complète des métriques Prometheus exposées, histogrammes de latence). [https://docs.vllm.ai/en/stable/serving/metrics.html](https://docs.vllm.ai/en/stable/serving/metrics.html)
-[^2]: vLLM Project, *Engine Arguments — `gpu-memory-utilization`* (comportement swap KV Cache CPU, impact performances). [https://docs.vllm.ai/en/stable/serving/engine_args.html](https://docs.vllm.ai/en/stable/serving/engine_args.html)
+[^1]: vLLM Project, *Metrics* (endpoint `/metrics`, liste complète des métriques Prometheus exposées — `vllm:kv_cache_usage_perc`, `vllm:num_preemptions`, `vllm:simple_kv_offload_*` — politique de dépréciation des métriques), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/usage/metrics/](https://docs.vllm.ai/en/stable/usage/metrics/)
+[^2]: vLLM Project, *Engine Arguments* (`--gpu-memory-utilization`, `--max-model-len`, `--max-num-seqs`), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)
 [^3]: NVIDIA, *DCGM Exporter — Metrics Reference* (liste des métriques DCGM_FI_DEV_*, GPU utilization, memory, température, NVLink). [https://github.com/NVIDIA/dcgm-exporter](https://github.com/NVIDIA/dcgm-exporter)
 [^4]: Grafana Labs, *NVIDIA DCGM Exporter Dashboard* (ID 12239, GPU metrics visualization). [https://grafana.com/grafana/dashboards/12239](https://grafana.com/grafana/dashboards/12239)
 [^5]: Grafana Labs, *Node Exporter Full Dashboard* (ID 1860, system metrics — CPU, memory, disk, network). [https://grafana.com/grafana/dashboards/1860](https://grafana.com/grafana/dashboards/1860)
 [^6]: Langfuse, *Self-Hosting Guide & LiteLLM Integration* (Docker Compose, OTEL ingestion, LLM observability). [https://langfuse.com/docs/deployment/self-host](https://langfuse.com/docs/deployment/self-host)
 [^7]: Arize AI, *Arize Phoenix — Open-source LLM Observability* (traces agentiques, RAG debugging, OTEL-compatible). [https://docs.arize.com/phoenix](https://docs.arize.com/phoenix)
+[^8]: vLLM Project, *Disaggregated Prefill and Decode* (`--kv-transfer-config`, `OffloadingConnector` pour le déport CPU du KV Cache), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/disagg_prefill/](https://docs.vllm.ai/en/stable/features/disagg_prefill/)
+[^9]: Ollama, *Troubleshooting* (emplacement des logs : `journalctl -u ollama`, `~/.ollama/logs/server.log`, `docker logs`), consulté le 2026-10-09 · dépôt `ollama/ollama`, `cmd/cmd.go` (liste des sous-commandes, sans `logs`). [https://docs.ollama.com/troubleshooting](https://docs.ollama.com/troubleshooting) · [https://github.com/ollama/ollama](https://github.com/ollama/ollama)

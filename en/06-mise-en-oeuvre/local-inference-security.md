@@ -3,9 +3,9 @@ title: "🔒 Local inference security"
 description: Local API authentication, network isolation, encryption, OWASP LLM Top 10, and prompt injection protection for an on-premise inference stack.
 sidebar:
   order: 4
-last_modified: "2026-06-10"
-last_verified: "2026-06-09"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -425,13 +425,16 @@ sha256sum ./models/Llama-3.1-70B-Instruct-Q4_K_M.gguf
 
 ### SHA-256 verification — Safetensors (vLLM / HuggingFace)
 
-HuggingFace provides a `model.safetensors.index.json` file with individual hashes per shard. The `huggingface-cli` verifies them automatically on download when `--verify` is passed[^8]:
+HuggingFace exposes the SHA-256 of each LFS file in the repository's "Files and versions" tab (information icon next to the file). The `hf download` CLI (the documented name, as of Q4 2026, of the former `huggingface-cli download`) does not verify these hashes for you: there is no verification option in the CLI. After downloading, compare them manually, shard by shard, as you would for a GGUF[^8]:
 
 ```bash
-huggingface-cli download meta-llama/Llama-3.1-70B-Instruct \
-  --verify \
+hf download meta-llama/Llama-3.1-70B-Instruct \
   --local-dir ./models/llama-70b/
+sha256sum ./models/llama-70b/*.safetensors
+# → compare each line with the SHA-256 shown on the Hub
 ```
+
+The `model.safetensors.index.json` file serves the loader (tensor → shard map), not integrity: it contains no hashes.
 
 ### Recommendations for sovereign infrastructure
 
@@ -553,7 +556,7 @@ For GDPR/AI Act compliance, interactions with an LLM processing personal data mu
 
 ## References
 
-[^8]: HuggingFace, *huggingface_hub CLI — download with hash verification* (`--verify` flag, safetensors integrity). [https://huggingface.co/docs/huggingface_hub/guides/download](https://huggingface.co/docs/huggingface_hub/guides/download)
+[^8]: Hugging Face, *Download files from the Hub* (`huggingface_hub` v2.2.0 guide: `hf download` CLI, `--include` / `--exclude` / `--revision` / `--dry-run` options, no hash verification option; SHA-256 of LFS files available on the Hub), read on 2026-10-09. [https://huggingface.co/docs/huggingface_hub/guides/download](https://huggingface.co/docs/huggingface_hub/guides/download)
 [^9]: Tailscale, *How Tailscale Works* — official documentation (WireGuard, MagicDNS, DERP relays, ACLs). [https://tailscale.com/blog/how-tailscale-works](https://tailscale.com/blog/how-tailscale-works)
 [^10]: Cloudflare, *Cloudflare Tunnel documentation* (HTTP/HTTPS tunnels without open port, routing via Cloudflare network). [https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
 [^11]: Twingate, *How Twingate Works* — official documentation (Zero Trust Network Access, granular per-resource access). [https://www.twingate.com/docs/how-twingate-works](https://www.twingate.com/docs/how-twingate-works)

@@ -7,9 +7,9 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
-last_verified: "2026-06-05"
-verified_by: "Sonnet 4.6"
+last_modified: "2026-10-09"
+last_verified: "2026-10-09"
+verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -27,7 +27,7 @@ Avantages majeurs : chargement immédiat sans compilation, portabilité entre CP
 Standard de fait pour les postes de travail, Mac et homelab. La plupart des modèles sur HuggingFace/Ollama sont distribués en GGUF. À connaître pour le Scénario A (labo dev) et le Scénario B (Mac Studio).
 
 ## ⚠️ Pièges fréquents
-- GGUF n'est pas adapté à la production multi-utilisateurs : llama.cpp ne gère pas le Continuous Batching comme vLLM.
+- GGUF/llama.cpp sert plusieurs utilisateurs (continuous batching activé par défaut dans `llama-server`, slots parallèles `-np`), mais sans la gestion mémoire paginée ni le parallélisme multi-GPU de vLLM/SGLang : au-delà de quelques utilisateurs simultanés sur un modèle lourd, le débit par utilisateur s'effondre plus vite qu'avec un moteur GPU de production[^1].
 - Plusieurs variantes de quantification (Q2 à Q8) ont des compromis très différents — Q2 peut dégrader fortement la qualité de réponse.
 
 ## 📚 Pour comprendre en profondeur
@@ -39,3 +39,5 @@ Standard de fait pour les postes de travail, Mac et homelab. La plupart des mod�
 - [[00-lexique/quantification-q4|Quantification Q4]]
 - [[00-lexique/offloading|Offloading]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
+
+[^1]: ggml-org, *llama.cpp — llama-server README* (« Continuous batching », « Parallel decoding with multi-user support », `-cb` activé par défaut, `-np N`), lu le 2026-10-09. [https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)
