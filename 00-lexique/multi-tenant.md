@@ -11,8 +11,8 @@ tags:
 sidebar:
   order: 39
 last_modified: "2026-10-10"
-last_verified: "2026-06-09"
-verified_by: "Sonnet 4.6"
+last_verified: "2026-10-10"
+verified_by: "Opus 5.5"
 ---
 
 ## 📝 Définition courte
@@ -45,6 +45,7 @@ Qdrant permet de scoper les recherches vectorielles via des filtres sur le *payl
 - Croire qu'une collection vectorielle par tenant suffit sans contrôler les clés d'API partagées.
 - Oublier d'isoler aussi les pipelines d'indexation : un worker qui indexe le mauvais corpus contamine toute la base.
 - Négliger les tests de non-régression sur l'isolation à chaque changement de schéma ou de requête.
+- Oublier que le moteur d'inférence partagé est aussi un point de défaillance commun : en 2026, plusieurs avis vLLM ont montré qu'une seule requête d'un tenant (`prompt_logprobs` sur un préfixe servi par un connecteur KV, image ou vidéo surdimensionnée) pouvait faire tomber le moteur pour tous, d'où une version à jour (≥ 0.31.0 en octobre 2026) et des quotas par tenant au gateway[^4].
 
 ## 📚 Pour comprendre en profondeur
 
@@ -61,3 +62,4 @@ Qdrant permet de scoper les recherches vectorielles via des filtres sur le *payl
 [^1]: OWASP GenAI Security Project, *LLM Top 10 for LLM Applications (2025)*. [https://genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)
 [^2]: Crunchy Data, *Row Level Security for Tenants in Postgres*. [https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres](https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres)
 [^3]: Qdrant, *Multitenancy*. [https://qdrant.tech/documentation/manage-data/multitenancy/](https://qdrant.tech/documentation/manage-data/multitenancy/)
+[^4]: vLLM, advisories *GHSA-rhcx-5729-88vg* (DoS inter-tenants via `prompt_logprobs`, corrigé 0.31.0) et *GHSA-gx7p-2j49-hfq4* (DoS non authentifié via `mm_processor_kwargs`, corrigé 0.31.0), 6–9 octobre 2026. [https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg](https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-gx7p-2j49-hfq4](https://github.com/vllm-project/vllm/security/advisories/GHSA-gx7p-2j49-hfq4)

@@ -5,7 +5,7 @@ sidebar:
   order: 4
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -82,6 +82,7 @@ memory.used,memory.free,temperature.gpu,power.draw \
 **vLLM — native Prometheus metrics:**
 
 vLLM exposes a `/metrics` endpoint compatible with Prometheus. Key metrics (V1 engine names, re-read in the documentation on 2026-10-10; deprecated metrics are hidden one version later)[^10]:
+[^11]: vLLM Project, *Release v0.31.0* (`vllm preload`: daemon that keeps post-quantization weights in GPU memory across engine restarts, #56680, #58552), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
 
 | vLLM metric | Description |
 | :-- | :-- |
@@ -134,6 +135,7 @@ For a datacenter SLA with an MTTR (Mean Time To Recovery) target under 2 minutes
 - **PCIe 5.0 NVMe in RAID 0:** doubles sequential throughput (~20 GB/s real), MTTR < 45 seconds on a 405B
 - **GPUDirect Storage** (NVIDIA Magnum IO): direct SSD→VRAM transfer without CPU copy, reduces system load and improves throughput[^4]
 - **Quantized model:** a 405B in Q4 (~230 GB) reduces load time by ~65% vs BF16
+- **vLLM preload:** since vLLM 0.31 (October 2026), `vllm preload` starts a daemon that keeps the already-quantized weights in GPU memory from one engine restart to the next (with a `/health` endpoint); this shortens service restarts, not a machine reboot or a GPU failure[^11]
 
 > [!note] Link with enterprise SLAs
 > For critical deployments (AI in production in business workflows), reload time must be documented in service level agreements. Plan a scheduled restart process (rolling restart with double instance) for updates without downtime.

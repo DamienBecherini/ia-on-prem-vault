@@ -5,7 +5,7 @@ sidebar:
   order: 5
 last_modified: "2026-10-10"
 last_verified: "2026-10-10"
-verified_by: "Fable 5.1"
+verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
@@ -204,7 +204,7 @@ vllm serve ... \
 Les connecteurs disponibles au T4 2026 sont `NixlConnector`, `LMCacheConnectorV1`, `MooncakeConnector`, `OffloadingConnector` (déport CPU) et `MultiConnector` ; la fonctionnalité est documentée comme « expérimentale et susceptible de changer »[^5]. Les flags `--role` et `--num-speculative-tokens` n'existent pas dans `vllm serve` (la spéculation se configure via `--speculative-config`)[^8].
 
 > [!note] Stabilité
-> La désagrégation Prefill/Decode est disponible mais encore en évolution active en 2026. À tester en staging avant tout déploiement production.
+> La désagrégation Prefill/Decode est disponible mais encore en évolution active en 2026. À tester en staging avant tout déploiement production. Côté sécurité, utilisez vLLM ≥ 0.31.0 avec un connecteur KV : jusqu'à la 0.30, une seule requête `prompt_logprobs` (ou `echo` + `logprobs`) sur un préfixe servi par NIXL, LMCache ou Mooncake faisait tomber le moteur pour tous les clients (avis High du 9 octobre 2026), et l'ancien `P2pNcclConnector`, supprimé en 0.24.0, laissait fuir le KV Cache d'une requête via l'en-tête `X-Request-Id`[^14]. Sur une version plus ancienne, filtrez `prompt_logprobs`, `logprobs` et `echo` au reverse proxy.
 
 ---
 
@@ -356,3 +356,4 @@ curl http://localhost:8000/metrics | grep vllm
 [^11]: vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`--api-key` limité à `/v1`, `/v2`, `/inference` ; `/tokenize` non authentifié), 2026-10-06. [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
 [^12]: vLLM Project, *Release v0.24.0* (vLLM ne positionne plus `CUDA_VISIBLE_DEVICES` ; argument `device_ids` ; variable dépréciée sur ROCm), 2026-06-29. [https://github.com/vllm-project/vllm/releases/tag/v0.24.0](https://github.com/vllm-project/vllm/releases/tag/v0.24.0)
 [^13]: vLLM Project, *Release v0.31.0* (`quantization="fp8"` renommé `fp8_per_tensor`, ancien nom redirigé), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
+[^14]: vLLM Project, advisories *GHSA-rhcx-5729-88vg* (crash inter-tenants via `prompt_logprobs` et connecteur KV, corrigé 0.31.0 ; contournement : retirer `prompt_logprobs`, `logprobs` et `echo` au gateway) et *GHSA-vfp2-c8pq-v6h6* (SSRF via `X-Request-Id`, fuite du KV Cache par `P2pNcclConnector`, connecteur supprimé en 0.24.0), 2026-10-09. [https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg](https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-vfp2-c8pq-v6h6](https://github.com/vllm-project/vllm/security/advisories/GHSA-vfp2-c8pq-v6h6)
