@@ -61,6 +61,12 @@ Domain → evidence tier (A/B/C) used by `npm run audit:sources` to classify eve
 
 ---
 
+### `readability/` folder
+
+Readability scores of the FR pages (/100, two reader profiles: non-technical SME decision-maker and developer new to local AI). `npm run audit:readability` writes the deterministic part (`deterministic.json`, /40); an agent adds the judged part (`judged.json`, /60) with `rubric.md`. Scores stay here, never in public pages. See `readability/README.md`.
+
+---
+
 ### `reports/` folder
 
 Dated outputs of maintenance and refresh runs:

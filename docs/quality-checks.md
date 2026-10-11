@@ -47,6 +47,7 @@ npm run audit:agent-leaks # agent-only headings in FR notes
 npm run audit:i18n:strict # FR/EN parity via last_modified
 npm run audit:ascii       # ASCII diagram warnings (non-blocking)
 npm run audit:ascii:strict
+npm run audit:readability # readability, deterministic part /40 (warn-only)
 npm run audit:links       # delegates to engine (requires ENGINE_PATH)
 ```
 
@@ -216,6 +217,37 @@ Not part of `npm test`: the result depends on the calendar, not on the PR. It ru
 
 ---
 
+### `audit:readability`
+
+**Scope:** FR published notes (no `en/`, no README / CLAUDE, no generated lexicon index).
+
+Deterministic part (**40 points**) of a readability score out of 100, computed for two reader profiles from the same measurements: **A** « dirigeant de PME non technique » and **B** « développeur qui découvre l'IA locale ». The other 60 points are judged by an agent with `.agents/vault-maintenance/readability/rubric.md`. Pages are judged for direct arrival (reader coming from a search engine): only the page's text and its own links count. Scores are agent-only data and never go into public pages; see `.agents/vault-maintenance/readability/README.md`.
+
+Before measuring, the script strips frontmatter, fenced code (Mermaid included), `$$` math, footnote definitions and references, "Sources / Références" sections, HTML, images, emoji, inline code and inline math; links are replaced by their visible text, with their spans kept.
+
+| Sub-score | Measure | Formula (0..1) | A | B |
+| :-- | :-- | :-- | --: | --: |
+| U | distinct technical terms whose first occurrence is not explained: lexicon titles and aliases of `00-lexique/` entries tagged `lexique`, and acronyms (`[A-Z][A-Z0-9]+[a-z]?`, minus an allowlist: IA, PME, UE, RGPD, brand names…) | `1 / (1 + u / 5)`; for B, common developer terms (API, GPU, JSON…) weigh 0 | 16 | 12 |
+| S | sentence length (prose, lists, callouts; fragments under 3 words ignored) | `0.5 × lin(mean, 18 → 1, 30 → 0) + 0.5 × lin(share > 30 words, 5 % → 1, 30 % → 0)` | 8 | 6 |
+| P | paragraphs or list items over 120 words | `1 − min(1, n / 4)` | 4 | 6 |
+| I | introduction: words before the first H2 (lexicon entry: its short definition) | 0 under 15, linear to 1 at 40, 1 up to 250, 0.7 above (lexicon: `lin(words, 4 → 0, 10 → 1)`) | 6 | 6 |
+| T | tables, `$$` formulas and Mermaid diagrams introduced by a sentence (previous non-blank line is prose of 3+ words) | `1 − not introduced / total` (1 if none) | 3 | 5 |
+| L | distinct lexicon entries linked per 1 000 words | `min(1, links per 1 000 words / 3)` | 3 | 5 |
+
+A term counts as **explained** when its first occurrence (headings count only if they explain it) is inside a wikilink or Markdown link; follows a link to the same lexicon entry (for an acronym: to an entry whose title or alias contains it); is followed right away by a parenthesis or by « est un / une / le / la / des », « est fait pour », « sert à »; is the whole content of a short parenthesis after a gloss, or follows « appelé / nommé / baptisé »; or is followed in the same sentence, within 12 words, by « : », « c'est », « soit », « c'est-à-dire », « désigne », « signifie » or « autrement dit ». On a lexicon entry, the entry's own term is never counted.
+
+Output: `.agents/vault-maintenance/readability/deterministic.json` (per page: type, primary profile, metrics, unexplained terms with occurrences and context, long paragraphs, blocks not introduced, sub-scores, score /40 for A and B) and a Markdown summary on stdout (means, pages under 24/40, worst pages per profile).
+
+| Flag | Effect |
+| :-- | :-- |
+| `--paths=a.md,b.md` | score only these pages (paths relative to the vault root) |
+| `--json=<path>` | write the JSON elsewhere |
+| `--top=N` | rows in the worst-pages tables (default 15) |
+
+Final score = deterministic (/40) + judged (/60); alert below **60/100** on the page's primary profile (lexicon entries: 50 on both). With the script alone, under 24/40 is an early warning. Exit code is always `0`: warn-only, not part of `npm test`.
+
+---
+
 ### `watch:feeds`
 
 **Scope:** the sources of `.agents/vault-maintenance/feeds.json` — GitHub releases, tags and security advisories of the tools the vault covers, Hugging Face model listings of the main open-weight publishers, vendor and regulator RSS feeds, and the Vision IA YouTube channel as tier C signal.
@@ -283,3 +315,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | 2026-10-10 | `audit:freshness` (volatility classes, due pages, baseline flag, watchlist counters) and the weekly warn-only `freshness.yml` workflow |
 | 2026-10-10 | Claim-level **Recheck by** column in the watchlist; `watch:feeds` and the weekly `watch.yml` workflow opening a `veille` issue; `vault-watch` skill |
 | 2026-10-10 | Watch cost cut: deterministic pre-triage and `version-floors.json` in `watch:feeds`, cached release notes in the JSON, biweekly issue with an `urgent` label in between, one-page agent brief for `vault-watch` |
+| 2026-10-11 | `audit:readability`: deterministic part (/40) of a two-profile readability score, with the judged rubric and a 6-page calibration under `.agents/vault-maintenance/readability/`; warn-only, not in `npm test` |
