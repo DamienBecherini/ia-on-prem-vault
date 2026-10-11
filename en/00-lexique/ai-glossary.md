@@ -1,7 +1,7 @@
 ---
 title: 📖 AI Glossary
 description: "Central glossary of on-premise AI: key notions, reading paths for beginners and by theme, and access to the detailed lexicon entries."
-last_modified: "2026-06-10"
+last_modified: "2026-10-11"
 last_verified: "2026-06-10"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -43,6 +43,7 @@ Use it as a quick entry point, then open detailed entries.
 | [[00-lexique/infiniband\|IB]] | InfiniBand |
 | [[00-lexique/kv-cache\|KV]] | Key-Value |
 | [[00-lexique/llm\|LLM]] | Large Language Model |
+| [[00-lexique/mla\|MLA]] | Multi-head Latent Attention |
 | [[00-lexique/moe\|MoE]] | Mixture of Experts |
 | [[00-lexique/nccl\|NCCL]] | NVIDIA Collective Communications Library |
 | [[00-lexique/npu\|NPU]] | Neural Processing Unit |
@@ -78,6 +79,9 @@ Use it as a quick entry point, then open detailed entries.
 | [[00-lexique/prefill\|Prefill]] | Prompt ingestion phase, more parallel. |
 | [[00-lexique/decoding\|Decoding]] | Autoregressive token-by-token phase, often memory-bound. |
 | [[00-lexique/kv-cache\|KV Cache]] | Cached attention keys/values to speed generation. |
+| [[00-lexique/mla\|MLA]] | Attention that stores a compressed summary per token instead of full keys/values. |
+| [[00-lexique/sparse-attention\|Sparse attention]] | Each token rereads only a selection of relevant past tokens. |
+| [[00-lexique/linear-attention\|Linear attention]] | Context memory kept in a fixed-size state instead of a growing cache. |
 | [[00-lexique/tokens-per-second\|Tokens/s]] | Generation throughput in tokens per second. |
 
 ---
