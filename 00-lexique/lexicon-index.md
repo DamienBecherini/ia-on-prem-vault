@@ -16,6 +16,8 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [Appel d'outils (Tool / Function Calling)](/00-lexique/appel-outils/) | Capacité d'un LLM à émettre des requêtes structurées vers des fonctions externes (API, SQL, code) plutôt que du texte libre. |
 | [APU](/00-lexique/apu/) | Puce combinant CPU, GPU et NPU sur un même SoC, avec mémoire unifiée partagée. |
 | [Attention (mécanisme)](/00-lexique/attention/) | Mécanisme central du Transformer qui permet à chaque token de pondérer l'importance des autres tokens du contexte. |
+| [Attention linéaire](/00-lexique/linear-attention/) | Famille d'attention qui résume le contexte dans un état de taille fixe au lieu d'un KV cache croissant ; souvent mêlée à quelques couches classiques (hybride). |
+| [Attention sparse](/00-lexique/sparse-attention/) | Attention où chaque token ne relit qu'une sélection des tokens passés jugés pertinents, au lieu de tout l'historique, pour réduire le coût des contextes longs. |
 | [Bande passante mémoire](/00-lexique/memory-bandwidth/) | Quantité de données transférées par seconde entre la mémoire et le processeur ou le GPU, en Go/s ; indicateur clé pour estimer la fluidité de la génération. |
 | [Base de données vectorielle](/00-lexique/vectordb/) | Base de données spécialisée dans le stockage et la recherche de vecteurs d'embeddings pour le RAG. |
 | [Benchmark LLM](/00-lexique/benchmark-llm/) | Jeu de tests standardisé pour comparer les capacités, limites et risques de modèles de langage. |
@@ -40,6 +42,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [Mémoire unifiée](/00-lexique/unified-memory/) | Architecture où CPU, GPU et parfois NPU partagent un même pool mémoire, évitant certaines copies via PCIe ; présente sur Apple Silicon et des APU AMD récents. |
 | [Memory Tree](/00-lexique/memory-tree/) | Architecture mémoire qui organise documents et résumés en arbre hiérarchique pour limiter le contexte injecté au LLM. |
 | [Memory Wall](/00-lexique/memory-wall/) | Situation où le débit mémoire limite la performance plus que la puissance de calcul, surtout en génération auto-régressive ; à ne pas juger sur les TFLOPS. |
+| [MLA (Multi-head Latent Attention)](/00-lexique/mla/) | Variante de l'attention qui stocke dans le KV cache un petit vecteur compressé par token au lieu des clés et valeurs complètes, introduite par DeepSeek-V2. |
 | [MoE](/00-lexique/moe/) | Mixture of Experts — architecture où seuls certains sous-réseaux sont activés par token, permettant des modèles énormes avec un coût d'inférence maîtrisé. |
 | [Multi-GPU](/00-lexique/multi-gpu/) | Architecture à plusieurs GPU dans une machine ou un cluster pour augmenter la mémoire et le débit ; les gains dépendent de l'interconnexion (PCIe, NVLink). |
 | [NCCL](/00-lexique/nccl/) | Bibliothèque NVIDIA de communication collective optimisée pour les transferts GPU-à-GPU à grande échelle. |
