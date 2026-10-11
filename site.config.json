@@ -33,6 +33,7 @@
       }
     }
   },
+  "apache": { "forceHttps": true, "notFoundPage": "/404.html" },
   "publish": {
     "exclude": [
       ".agents/**",
