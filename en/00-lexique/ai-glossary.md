@@ -38,11 +38,13 @@ Use it as a quick entry point, then open detailed entries.
 | Acronym | Meaning |
 | :-- | :-- |
 | [[00-lexique/apu\|APU]] | Accelerated Processing Unit |
+| [[00-lexique/cuda\|CUDA]] | Compute Unified Device Architecture (NVIDIA GPU platform) |
 | [[00-lexique/ecn\|ECN]] | Explicit Congestion Notification |
 | [[00-lexique/hbm\|HBM]] | High Bandwidth Memory |
 | [[00-lexique/infiniband\|IB]] | InfiniBand |
 | [[00-lexique/kv-cache\|KV]] | Key-Value |
 | [[00-lexique/llm\|LLM]] | Large Language Model |
+| [[00-lexique/lpddr5x\|LPDDR5X]] | Low Power Double Data Rate 5X (low-power memory) |
 | [[00-lexique/mla\|MLA]] | Multi-head Latent Attention |
 | [[00-lexique/moe\|MoE]] | Mixture of Experts |
 | [[00-lexique/nccl\|NCCL]] | NVIDIA Collective Communications Library |
@@ -54,6 +56,7 @@ Use it as a quick entry point, then open detailed entries.
 | [[00-lexique/ram\|RAM]] | Random Access Memory |
 | [[00-lexique/rdma\|RDMA]] | Remote Direct Memory Access |
 | [[00-lexique/roce\|RoCE]] | RDMA over Converged Ethernet |
+| [[00-lexique/soc\|SoC]] | System on a Chip |
 | [[00-lexique/tflops\|TFLOPS]] | Tera Floating Point Operations Per Second |
 | [[00-lexique/ttft\|TTFT]] | Time To First Token |
 | [[00-lexique/vram\|VRAM]] | Video RAM |

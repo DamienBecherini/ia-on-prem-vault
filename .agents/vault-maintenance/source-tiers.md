@@ -60,6 +60,7 @@ One domain per line. A domain matches itself and all its subdomains (`nvidia.com
 - infinibandta.org
 - intel.com
 - jan.ai
+- jedec.org
 - khoj.dev
 - kubernetes.io
 - kb.cert.org
