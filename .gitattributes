@@ -1,0 +1,14 @@
+# Line endings: LF in the repository and in working copies, whatever core.autocrlf says.
+# Generators (lexicon index, scripts) write LF, so CRLF working copies showed false changes.
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
