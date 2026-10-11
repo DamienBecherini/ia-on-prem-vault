@@ -25,6 +25,7 @@ const allowed = new Set([
     'deploy',
     'upload',
     'auth-install',
+    'htaccess-install',
     'auth-remove',
     'audit-links',
 ]);
