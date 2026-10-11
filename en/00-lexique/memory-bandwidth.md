@@ -1,6 +1,6 @@
 ---
 title: Memory bandwidth
-description: Rate at which memory feeds compute units.
+description: "Amount of data transferred per second between memory and the processor or GPU, in GB/s; the key indicator for estimating how smooth text generation will be."
 aliases:
   - Memory bandwidth
 tags:

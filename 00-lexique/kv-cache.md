@@ -1,6 +1,6 @@
 ---
 title: KV Cache
-description: Cache des clés/valeurs d'attention utilisé pendant la génération.
+description: "Mémoire qui conserve les clés et valeurs d'attention déjà calculées pour éviter de les recalculer, mais dont la taille croît avec le contexte."
 aliases:
   - Key-Value Cache
   - Cache KV

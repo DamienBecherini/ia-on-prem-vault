@@ -1,6 +1,6 @@
 ---
 title: "🌐 Réseau IA : RoCE, InfiniBand et Thunderbolt"
-description: "Comprendre quand le réseau devient le goulot d'étranglement d'une architecture IA on-premise, et pourquoi RoCE, InfiniBand et Thunderbolt ne répondent pas au même problème."
+description: "Quand le réseau devient le goulot d'une architecture IA on-premise, et pourquoi RoCE, InfiniBand et Thunderbolt traitent des problèmes différents."
 sidebar:
   order: 3
 last_modified: "2026-10-10"

@@ -1,6 +1,6 @@
 ---
 title: PCIe
-description: Bus d'interconnexion haut débit entre composants.
+description: "Bus standard reliant CPU, GPU, SSD et autres périphériques ; il limite l'offloading CPU vers GPU et le Tensor Parallelism sur les setups multi-GPU sans NVLink."
 aliases:
   - PCI Express
   - Peripheral Component Interconnect Express

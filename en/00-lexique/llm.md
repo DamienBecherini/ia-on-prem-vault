@@ -1,6 +1,6 @@
 ---
 title: LLM
-description: Large Language Model.
+description: "AI model trained on very large text corpora, most often of the Transformer type; locally, its performance depends as much on memory as on the model itself."
 aliases:
   - Large Language Model
 tags:

@@ -1,6 +1,6 @@
 ---
 title: VRAM
-description: Mémoire vidéo dédiée au GPU.
+description: "Mémoire à haut débit attachée au GPU, qui stocke poids, KV Cache et buffers ; capacité et bande passante déterminent quels modèles tournent sans offloading."
 aliases:
   - Video RAM
   - Mémoire vidéo

@@ -1,6 +1,6 @@
 ---
 title: 🧠 APU & Mémoire Unifiée
-description: Analyse comparative des puces Apple Silicon M5 Max / M5 Ultra, des APU AMD Ryzen AI Max PRO 400 (Gorgon Halo) et de la famille NVIDIA Grace Blackwell (DGX Spark) pour l'inférence de grands LLM.
+description: "Comparatif des puces Apple Silicon M5 Max / M5 Ultra, des APU AMD Ryzen AI Max PRO 400 et de NVIDIA Grace Blackwell (DGX Spark) pour l'inférence de grands LLM."
 sidebar:
   order: 1
 last_modified: "2026-10-10"

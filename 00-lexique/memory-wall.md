@@ -1,6 +1,6 @@
 ---
 title: Memory Wall
-description: Limite de performance causée par la mémoire plus que par le calcul.
+description: "Situation où le débit mémoire limite la performance plus que la puissance de calcul, surtout en génération auto-régressive ; à ne pas juger sur les TFLOPS."
 aliases:
   - Mur de la mémoire
 tags:

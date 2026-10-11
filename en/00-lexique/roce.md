@@ -1,6 +1,6 @@
 ---
 title: RoCE
-description: RDMA implementation on converged Ethernet.
+description: "Protocol bringing RDMA benefits to standard Ethernet, without a dedicated InfiniBand fabric, at the cost of configuring a lossless network (PFC, ECN)."
 aliases:
   - RDMA over Converged Ethernet
 tags:

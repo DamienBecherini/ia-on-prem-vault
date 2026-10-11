@@ -1,6 +1,6 @@
 ---
 title: "🖼️ Multimodality: Hardware Impact (VRAM & KV Cache)"
-description: What changes in your infrastructure when processing images, scanned documents, or audio — visual encoders, VRAM cost, KV Cache interaction, and blueprint mapping.
+description: "What images, scanned documents and audio change for your infrastructure: vision encoders, VRAM cost, interaction with the KV Cache and the affected blueprints."
 sidebar:
   order: 6
 last_modified: "2026-10-10"

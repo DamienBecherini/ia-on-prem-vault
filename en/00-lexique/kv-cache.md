@@ -1,6 +1,6 @@
 ---
 title: KV Cache
-description: Cache of attention keys/values used during generation.
+description: "Memory that keeps the attention keys and values already computed to avoid recomputing them, at the cost of memory use that grows with context length."
 aliases:
   - Key-Value Cache
   - KV cache

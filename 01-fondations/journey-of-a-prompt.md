@@ -1,6 +1,6 @@
 ---
 title: "🧠 Le Voyage d'un Prompt : Comment fonctionne un LLM ?"
-description: De votre clavier jusqu'à la réponse. Pas de magie, juste de l'électricité et des mathématiques. Découvrez les étapes clés (Tokenisation, Prefill, KV Cache, Decoding).
+description: "Le parcours d'un prompt, du clavier à la réponse, sans magie : tokenisation, prefill, KV Cache et decoding expliqués étape par étape."
 sidebar:
   order: 0
 last_modified: "2026-06-04"
