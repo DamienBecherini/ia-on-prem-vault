@@ -127,6 +127,14 @@ On very long contexts, the decoding phase becomes limited by [[00-lexique/memory
 
 The techniques above work **inside the inference engine**: they store the cache more efficiently or compress it. Since 2024, another family of optimizations works **inside the model itself**, from its design. Chinese labs (DeepSeek, Moonshot AI with Kimi, Qwen, MiniMax) play a leading role here. The common idea: stop keeping, for every token, a full copy of its keys (K) and values (V) in memory.
 
+> [!note] A little vocabulary for this section
+> - **Token**: a piece of a word; the unit the model reads and writes (see [[00-lexique/tokenisation|tokenisation]]).
+> - **Layer**: a model is a stack of identical computation steps, the layers (several dozen); each one keeps its own share of the KV cache.
+> - **Attention head**: inside a layer, several "readers" look at the text in parallel from different angles; these are the heads.
+> - **Vector**: simply a list of numbers. Keys (K) and values (V) are vectors.
+> - **BF16, FP8, FP4**: the precision used to write each number (2 bytes, 1 byte, half a byte). Less precision = less memory.
+> - **FLOPs**: the number of computing operations; it measures computing effort, not memory space.
+
 To make it concrete, imagine the model takes notes during a meeting. The classic KV cache is **a full transcript**, word for word, that keeps growing. The four approaches below change the way these notes are taken.
 
 ```mermaid
