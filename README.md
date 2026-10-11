@@ -180,6 +180,11 @@ npm run auth:install    # generate + upload .htaccess + .htpasswd
 npm run auth:remove     # make the site public again
 ```
 
+The `apache` block of `site.config.json` (`forceHttps`, `notFoundPage`) generates the server rules: 301 redirect from
+`http://` to `https://` and the site's own 404 page. Deploy never uploads dotfiles, so upload them once (and again
+after changing the block) with `npm run htaccess:install` on a public site; `auth:install` / `auth:remove` include them.
+The command **replaces** any existing `.htaccess` at the site root.
+
 Full docs: engine [Publishing](https://github.com/DamienBecherini/starlight-obsidian-engine#publishing) section.
 
 ## License
