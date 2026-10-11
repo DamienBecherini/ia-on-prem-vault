@@ -127,6 +127,14 @@ Sur de très longs contextes, la phase de décodage devient limitée par la [[00
 
 Les techniques précédentes agissent **dans le moteur d'inférence** : elles rangent mieux le cache ou le compressent. Depuis 2024, une autre famille d'optimisations agit **dans le modèle lui-même**, dès sa conception. Les laboratoires chinois (DeepSeek, Moonshot AI avec Kimi, Qwen, MiniMax) y jouent un rôle moteur. L'idée commune : ne plus garder en mémoire, pour chaque token, une copie complète de ses clés (K) et de ses valeurs (V).
 
+> [!note] Petit vocabulaire pour cette section
+> - **Token** : un morceau de mot ; c'est l'unité que le modèle lit et écrit (voir [[00-lexique/tokenisation|tokenisation]]).
+> - **Couche** : un modèle est un empilement d'étapes de calcul identiques, les couches (plusieurs dizaines) ; chacune garde sa propre part du KV cache.
+> - **Tête d'attention** : à l'intérieur d'une couche, plusieurs « lecteurs » en parallèle regardent le texte sous des angles différents ; ce sont les têtes.
+> - **Vecteur** : une simple liste de nombres. Les clés (K) et les valeurs (V) sont des vecteurs.
+> - **BF16, FP8, FP4** : la précision avec laquelle on écrit chaque nombre (2 octets, 1 octet, un demi-octet). Moins de précision = moins de mémoire.
+> - **FLOPs** : le nombre d'opérations de calcul ; il mesure l'effort de calcul, pas la place en mémoire.
+
 Pour fixer les idées, imaginez que le modèle prend des notes pendant une réunion. Le KV cache classique, c'est **une transcription intégrale**, mot pour mot, qui s'allonge sans fin. Les quatre approches ci-dessous changent la manière de prendre ces notes.
 
 ```mermaid
