@@ -41,7 +41,7 @@ For profile B, common developer terms (API, GPU, JSON, Docker…) do not count a
 | :-- | :-- | :-- |
 | `README.md` | humans | this page |
 | `rubric.md` | humans | criteria and anchors, page types, thresholds, scoring prompt, `judged.json` schema |
-| `deterministic.json` | `npm run audit:readability` | per page: metrics, unexplained terms with context, sub-scores, deterministic score A / B |
+| `deterministic.json` | `npm run audit:readability` | per page: metrics, unexplained terms with context, sub-scores, deterministic score A / B (gitignored: regenerated on every run) |
 | `judged.json` | scoring agent | per page: criterion scores with justifications, final scores, alert, 3 suggestions in French |
 | `calibration-YYYY-MM-DD.md` | scoring agent | full scoring of a sample, to compare with the user's judgement before scaling up |
 | `report-YYYY-MM-DD.md` | scoring agent | (to come) vault-wide ranking: alerts first, then watch, with the main suggestion per page |
