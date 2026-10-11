@@ -11,6 +11,10 @@ The readability score of a FR page is out of 100 for each of two reader profiles
 
 **Alert threshold: 60/100** on the page's primary profile (see [Page types](#page-types-and-primary-profile)).
 
+## Three-tier reading pattern (editorial rule)
+
+Articles follow « lecture à trois étages » (`.agents/rules/editorial-basics.md`): (1) an « En bref » for profile A with no jargon; (2) `prerequisites` in frontmatter, rendered as a « Pour bien lire cette page » box, giving 2–3 pages to read first; (3) an expert body where every technical term is linked to the lexicon (tooltip) or explained at first occurrence. Judge A1 on tier 1, A2 and B3 on tier 3, and credit tier 2 as described under A2.
+
 ## The two profiles
 
 | Code | Profile (FR) | Who they are |
@@ -32,7 +36,7 @@ Each criterion is scored 1 to 5. Anchors describe 1, 3 and 5; 2 and 4 sit betwee
 | :-- | :-- |
 | 1 | The first screen is a spec sheet, a formula or a jargon list. The reader cannot say what the page is about or why it matters to a company. |
 | 3 | The subject is stated in the first lines, but the business stake (cost, risk, capacity, confidentiality) is implicit or arrives late, or the opening is in technical words. |
-| 5 | In the first 3–5 sentences, in plain French, the reader knows the subject and why it matters to them (what it changes for cost, risk or what the company can do). |
+| 5 | In the first 3–5 sentences, in plain French, the reader knows the subject and why it matters to them (what it changes for cost, risk or what the company can do). On articles this is the « En bref » callout of the three-tier pattern: no acronym, no product code, no unit the reader cannot picture. |
 
 ### A2. Jargon maîtrisé — termes expliqués ou liés
 
@@ -43,6 +47,8 @@ Each criterion is scored 1 to 5. Anchors describe 1, 3 and 5; 2 and 4 sit betwee
 | 5 | Every technical term needed to follow the reasoning is explained in a few plain words at first use or linked to the lexicon; leftover jargon sits in clearly technical sub-sections the reader can skip. |
 
 Use the deterministic `unexplainedTerms` list as evidence, but judge importance: one unexplained term in the conclusion weighs more than five in a spec table.
+
+A term linked to the lexicon counts as explained: the site shows the entry's definition as a tooltip on hover or tap. A page that declares `prerequisites` (rendered as « 📚 Pour bien lire cette page ») may rely on those pages for the basics it lists; do not penalise it for not re-explaining them, as long as the « En bref » itself stays jargon-free.
 
 ### A3. Progression — du simple au complexe
 
@@ -163,7 +169,7 @@ Prompt to give a scoring agent (one page or a small batch, disjoint pages per ag
 
 ### Output schema (`judged.json`)
 
-`judged.json` is `{ "rubricVersion": 1, "pages": [ <entry>, ... ] }`, one entry per page:
+`judged.json` is `{ "rubricVersion": 2, "pages": [ <entry>, ... ] }`, one entry per page:
 
 ```json
 {

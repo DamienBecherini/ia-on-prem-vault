@@ -30,3 +30,6 @@ _templates/*
 
 # AIContextCraft export config (personal tooling, kept locally)
 config-concat*
+
+# Claude Code agent worktrees (local)
+.claude/worktrees/
