@@ -33,7 +33,12 @@
       }
     }
   },
-  "apache": { "forceHttps": true, "notFoundPage": "/404.html" },
+  "apache": {
+    "forceHttps": true,
+    "notFoundPage": "/404.html",
+    "notFoundPages": { "/en/": "/en/404/" },
+    "hsts": true
+  },
   "publish": {
     "exclude": [
       ".agents/**",
