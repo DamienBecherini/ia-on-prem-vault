@@ -21,6 +21,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [Bande passante mémoire](/00-lexique/memory-bandwidth/) | Quantité de données transférées par seconde entre la mémoire et le processeur ou le GPU, en Go/s ; indicateur clé pour estimer la fluidité de la génération. |
 | [Base de données vectorielle](/00-lexique/vectordb/) | Base de données spécialisée dans le stockage et la recherche de vecteurs d'embeddings pour le RAG. |
 | [Benchmark LLM](/00-lexique/benchmark-llm/) | Jeu de tests standardisé pour comparer les capacités, limites et risques de modèles de langage. |
+| [CUDA](/00-lexique/cuda/) | Plateforme logicielle de NVIDIA pour programmer ses GPU ; la plupart des moteurs d'IA locale la visent en priorité, ce qui pèse sur le choix du matériel. |
 | [Decoding](/00-lexique/decoding/) | Phase de génération où le modèle prédit un token à la fois en relisant le KV Cache ; elle gouverne les tokens par seconde et se heurte au Memory Wall. |
 | [ECN](/00-lexique/ecn/) | Explicit Congestion Notification — mécanisme de signalement de congestion réseau utilisé avec RoCE pour éviter les pertes de paquets. |
 | [Embedding](/00-lexique/embedding/) | Représentation numérique dense d'un token ou d'un document dans un espace vectoriel. |
@@ -39,6 +40,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [LiteLLM](/00-lexique/litellm/) | Gateway OpenAI-compatible qui route les appels LLM vers des modèles locaux ou cloud depuis une interface unique. |
 | [LLM](/00-lexique/llm/) | Modèle IA entraîné sur de très grands corpus de texte, souvent de type Transformer ; en local, ses performances dépendent autant de la mémoire que du modèle. |
 | [LLM-as-a-judge](/00-lexique/llm-as-a-judge/) | Technique d'évaluation où un modèle de langage sert de juge pour noter ou comparer des réponses. |
+| [LPDDR5X](/00-lexique/lpddr5x/) | Mémoire vive basse consommation, normalisée par le JEDEC, soudée près de la puce ; elle équipe les machines à mémoire unifiée (Mac, Ryzen AI Max, DGX Spark). |
 | [Mémoire unifiée](/00-lexique/unified-memory/) | Architecture où CPU, GPU et parfois NPU partagent un même pool mémoire, évitant certaines copies via PCIe ; présente sur Apple Silicon et des APU AMD récents. |
 | [Memory Tree](/00-lexique/memory-tree/) | Architecture mémoire qui organise documents et résumés en arbre hiérarchique pour limiter le contexte injecté au LLM. |
 | [Memory Wall](/00-lexique/memory-wall/) | Situation où le débit mémoire limite la performance plus que la puissance de calcul, surtout en génération auto-régressive ; à ne pas juger sur les TFLOPS. |
@@ -67,6 +69,7 @@ Liste générée automatiquement au build. Pour une lecture guidée, voir [[00-l
 | [RDMA](/00-lexique/rdma/) | Technique réseau qui lit et écrit en mémoire distante sans passer par le CPU, avec faible latence ; elle se décline en InfiniBand et en RoCE. |
 | [RoCE](/00-lexique/roce/) | Protocole qui apporte les bénéfices du RDMA sur Ethernet standard, sans fabric InfiniBand dédié, au prix d'un réseau lossless à configurer (PFC, ECN). |
 | [SmolAgents](/00-lexique/smolagents/) | Framework léger de Hugging Face pour l'orchestration agentique locale, alternative souveraine à LangChain. |
+| [SoC](/00-lexique/soc/) | System on a Chip : une seule puce qui réunit processeur, puce graphique, accélérateur IA et contrôleur mémoire ; base des Mac Apple Silicon et du DGX Spark. |
 | [Speculative Decoding](/00-lexique/speculative-decoding/) | Technique d'accélération de l'inférence où un petit modèle rapide propose des tokens que le grand modèle vérifie en un passage ; deux modèles sont à charger. |
 | [Tensor Parallelism](/00-lexique/tensor-parallelism/) | Stratégie de distribution d'un LLM par découpage des matrices mathématiques entre plusieurs GPU d'un même nœud. |
 | [TensorRT-LLM](/00-lexique/tensorrt-llm/) | SDK NVIDIA d'inférence LLM optimisée (PyTorch natif, FP8/NVFP4) pour GPU datacenter. |
