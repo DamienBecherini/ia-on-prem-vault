@@ -1,7 +1,7 @@
 ---
 title: 📖 Glossaire IA
 description: "Glossaire central de l'IA on-premise : notions clés, parcours de lecture pour débutants et par thème, et accès aux fiches détaillées du lexique."
-last_modified: "2026-06-10"
+last_modified: "2026-10-11"
 last_verified: "2026-06-10"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -43,6 +43,7 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 | [[00-lexique/infiniband\|IB]] | InfiniBand |
 | [[00-lexique/kv-cache\|KV]] | Key-Value |
 | [[00-lexique/llm\|LLM]] | Large Language Model |
+| [[00-lexique/mla\|MLA]] | Multi-head Latent Attention |
 | [[00-lexique/moe\|MoE]] | Mixture of Experts |
 | [[00-lexique/nccl\|NCCL]] | NVIDIA Collective Communications Library |
 | [[00-lexique/npu\|NPU]] | Neural Processing Unit |
@@ -78,6 +79,9 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 | [[00-lexique/prefill\|Prefill]] | Phase d'ingestion du prompt, plus parallèle. |
 | [[00-lexique/decoding\|Decoding]] | Phase auto-régressive token par token, souvent memory-bound. |
 | [[00-lexique/kv-cache\|KV Cache]] | Cache des clés/valeurs d'attention pour accélérer la génération. |
+| [[00-lexique/mla\|MLA]] | Attention qui stocke un résumé compressé par token au lieu des clés/valeurs complètes. |
+| [[00-lexique/sparse-attention\|Attention sparse]] | Chaque token ne relit qu'une sélection des tokens passés pertinents. |
+| [[00-lexique/linear-attention\|Attention linéaire]] | Mémoire du contexte dans un état de taille fixe au lieu d'un cache croissant. |
 | [[00-lexique/tokens-per-second\|Tokens/s]] | Débit de génération mesuré en tokens par seconde. |
 
 ---

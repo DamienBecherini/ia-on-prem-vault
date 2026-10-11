@@ -28,6 +28,11 @@ History sections archived to `archives/` when they exceed ~150 lines total.
 
 ## Done
 
+- `00-lexique/mla.md` — created 2026-10-11 (FR + EN). Source: `01-fondations/kv-cache-and-context.md` (section on model-level KV cache reduction)
+- `00-lexique/sparse-attention.md` — created 2026-10-11 (FR + EN). Source: idem
+- `00-lexique/linear-attention.md` — created 2026-10-11 (FR + EN). Source: idem
+- `00-lexique/ai-glossary.md` — hub sync 2026-10-11 (MLA, attention sparse, attention linéaire; FR + EN)
+
 - `00-lexique/vllm.md` — created 2026-06-10. Source: audit-corrections batch + `03-stack-logicielle/inference-engines-vllm-ollama.md`
 - `00-lexique/ollama.md` — created 2026-06-10. Source: idem
 - `00-lexique/langgraph.md` — created 2026-06-10. Source: `03-stack-logicielle/rag-and-agents.md`
