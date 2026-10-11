@@ -232,6 +232,19 @@ function readFrontmatterList(fm, key) {
 }
 
 /**
+ * `prerequisites` frontmatter, block list or inline array: `["a", "b"]`.
+ * @param {string | null} fm
+ * @returns {string[]}
+ */
+function readPrerequisites(fm) {
+  const block = readFrontmatterList(fm, "prerequisites");
+  if (block.length) return block;
+  const inline = fm?.match(/^prerequisites:\s*\[([^\]]*)\]/m);
+  if (!inline) return [];
+  return inline[1].split(",").map((x) => x.trim().replace(/^["']|["']$/g, "")).filter(Boolean);
+}
+
+/**
  * Full-line scalar (readFrontmatterScalar stops at the first space of an unquoted value).
  * @param {string | null} fm @param {string} key
  */
@@ -541,8 +554,9 @@ function isExplained(text, start, end, links, earlierSlugs, slug, lexicon) {
  * @param {Map<string, LexEntry>} lexicon
  * @param {ReturnType<typeof buildFormMatchers>} formMatchers
  * @param {string | null} selfSlug
+ * @param {Set<string>} [prereqSlugs] lexicon slugs listed in `prerequisites` (count as explained: the page sends the reader there first)
  */
-function findTerms(text, links, lexicon, formMatchers, selfSlug) {
+function findTerms(text, links, lexicon, formMatchers, selfSlug, prereqSlugs = new Set()) {
   const headings = headingRanges(text);
   const selfForms = selfSlug ? (lexicon.get(selfSlug)?.forms ?? []) : [];
   /** @param {number} p */
@@ -598,9 +612,10 @@ function findTerms(text, links, lexicon, formMatchers, selfSlug) {
       known.occurrences += 1;
       continue;
     }
-    const earlierSlugs = new Set(
-      links.filter((l) => l.end <= h.start && l.target.includes(LEXICON_DIR + "/")).map((l) => slugFromTarget(l.target)),
-    );
+    const earlierSlugs = new Set([
+      ...prereqSlugs,
+      ...links.filter((l) => l.end <= h.start && l.target.includes(LEXICON_DIR + "/")).map((l) => slugFromTarget(l.target)),
+    ]);
     const explained = isExplained(text, h.start, h.end, links, earlierSlugs, h.slug, lexicon);
     // a heading counts only when it explains the term ("Le piège de l'OOM (Out Of Memory)")
     if (h.heading && !explained) continue;
@@ -729,7 +744,9 @@ for (const file of walkMd(VAULT_ROOT, { locale: "fr" })) {
 
   const prose = proseStats(text);
   const words = countWords(text.replace(/^#{1,6}\s[^\n]*$/gm, ""));
-  const terms = findTerms(text, links, lexicon, formMatchers, selfSlug);
+  const prerequisites = readPrerequisites(fm);
+  const prereqSlugs = new Set(prerequisites.filter((x) => x.startsWith(LEXICON_DIR + "/")).map(slugFromTarget));
+  const terms = findTerms(text, links, lexicon, formMatchers, selfSlug, prereqSlugs);
   const unexplained = terms.filter((t) => !t.explained).sort((a, b) => b.occurrences - a.occurrences);
   const uAll = unexplained.length;
   const uDev = unexplained.filter((t) => !DEV_KNOWN.has(t.term) && !DEV_KNOWN.has(t.term.toUpperCase())).length;
@@ -770,6 +787,7 @@ for (const file of walkMd(VAULT_ROOT, { locale: "fr" })) {
     lastModified: readFrontmatterScalar(fm, "last_modified"),
     words,
     metrics: {
+      prerequisites,
       sentences: prose.sentences,
       meanSentenceWords: round(prose.meanSentenceWords, 1),
       longSentenceShare: round(prose.longSentenceShare),
