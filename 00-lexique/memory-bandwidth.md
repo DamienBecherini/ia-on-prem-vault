@@ -1,6 +1,6 @@
 ---
 title: Bande passante mémoire
-description: Débit auquel la mémoire alimente les unités de calcul.
+description: "Quantité de données transférées par seconde entre la mémoire et le processeur ou le GPU, en Go/s ; indicateur clé pour estimer la fluidité de la génération."
 aliases:
   - Memory bandwidth
 tags:

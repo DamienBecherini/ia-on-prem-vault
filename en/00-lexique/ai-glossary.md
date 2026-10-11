@@ -1,6 +1,6 @@
 ---
 title: 📖 AI Glossary
-description: Lexicon of technical terms and acronyms used in the vault.
+description: "Central glossary of on-premise AI: key notions, reading paths for beginners and by theme, and access to the detailed lexicon entries."
 last_modified: "2026-06-10"
 last_verified: "2026-06-10"
 verified_by: "Sonnet 4.6"

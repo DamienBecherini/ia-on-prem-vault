@@ -1,6 +1,6 @@
 ---
 title: Multi-GPU
-description: Utilisation conjointe de plusieurs GPU.
+description: "Architecture à plusieurs GPU dans une machine ou un cluster pour augmenter la mémoire et le débit ; les gains dépendent de l'interconnexion (PCIe, NVLink)."
 aliases:
   - Multi GPU
 tags:

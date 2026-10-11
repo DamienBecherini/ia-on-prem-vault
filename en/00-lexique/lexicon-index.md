@@ -1,6 +1,6 @@
 ---
 title: Lexicon index
-description: Alphabetical list of all on-premise AI lexicon entries.
+description: "Alphabetical index of all on-premise AI lexicon entries, from LLM and VRAM to KV Cache, quantization, interconnects and the other notions in the vault."
 ---
 
 Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI Glossary]].

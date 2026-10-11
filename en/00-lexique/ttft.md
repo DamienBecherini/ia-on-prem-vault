@@ -1,6 +1,6 @@
 ---
 title: TTFT
-description: Time To First Token.
+description: "Time To First Token: time between sending a request and receiving the first response token, which mostly reflects prefill and complements the tokens/s metric."
 aliases:
   - Time To First Token
 tags:

@@ -1,6 +1,6 @@
 ---
 title: "OpenHuman"
-description: Harness d'agent open source (Rust + Tauri) avec mémoire hébergée par défaut, abonnement managé optionnel et mode Privacy local-only ; à configurer volontairement pour une posture on-premise.
+description: "Harness d'agent open source (Rust + Tauri) à mémoire hébergée par défaut, abonnement managé optionnel et mode Privacy local-only ; à configurer en on-premise."
 sidebar:
   order: 1
 last_modified: "2026-10-10"

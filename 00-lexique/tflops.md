@@ -1,6 +1,6 @@
 ---
 title: TFLOPS
-description: Mesure de débit de calcul en opérations flottantes.
+description: "Unité qui mesure la capacité de calcul flottant par seconde ; utile pour comparer le calcul brut, mais insuffisante pour prédire les performances d'un LLM."
 aliases:
   - TeraFLOPS
   - Tera Floating Point Operations Per Second

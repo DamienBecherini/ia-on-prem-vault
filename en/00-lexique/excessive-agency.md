@@ -1,6 +1,6 @@
 ---
 title: Excessive Agency
-description: OWASP Top 10 for LLM applications vulnerability — an AI agent has too much functionality, permissions, or autonomy, enabling unintended real-world actions.
+description: "OWASP Top 10 for LLM applications vulnerability: an AI agent has too many features, permissions or too much autonomy, allowing unintended real-world actions."
 aliases:
   - LLM06
   - LLM03

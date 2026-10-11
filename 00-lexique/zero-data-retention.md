@@ -1,6 +1,6 @@
 ---
 title: "🔐 Zero Data Retention (ZDR)"
-description: "Clause contractuelle d'API cloud LLM : pour les modèles et endpoints couverts, aucune persistance, réutilisation ni revue humaine des prompts et réponses — une couverture désormais négociée modèle par modèle."
+description: "Clause contractuelle d'API cloud LLM : ni persistance, ni réutilisation, ni revue humaine des prompts et réponses pour les modèles et endpoints couverts."
 aliases:
   - ZDR
   - Zero Retention Policy

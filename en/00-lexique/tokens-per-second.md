@@ -1,6 +1,6 @@
 ---
 title: Tokens per second
-description: Measure of a model's generation throughput.
+description: "Number of tokens generated per second during generation; a smoothness indicator, to be read alongside TTFT given the model, engine and hardware."
 aliases:
   - tokens/s
   - tok/s
