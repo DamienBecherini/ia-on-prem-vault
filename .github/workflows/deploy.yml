@@ -1,0 +1,70 @@
+name: Deploy site
+
+# Builds the static site on Linux (Pagefind runs here; Windows Smart App Control blocks its binary locally)
+# and uploads it incrementally over FTPS. Credentials come from repository secrets, never from the repo.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - ".agents/**"
+      - ".claude/**"
+      - ".cursor/**"
+      - ".github/**"
+      - "docs/**"
+      - "scripts/**"
+      - "README.md"
+      - "CLAUDE.md"
+      - "LICENSE*"
+  workflow_dispatch:
+    inputs:
+      engine_ref:
+        description: "starlight-obsidian-engine ref to build with"
+        default: main
+        required: false
+
+concurrency:
+  group: deploy-site
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build and upload
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: vault
+
+      - uses: actions/checkout@v4
+        with:
+          repository: DamienBecherini/starlight-obsidian-engine
+          ref: ${{ inputs.engine_ref || 'main' }}
+          path: engine
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: engine/package-lock.json
+
+      - name: Install engine dependencies
+        working-directory: engine
+        run: npm ci
+
+      - name: Build and deploy (incremental)
+        working-directory: engine
+        env:
+          VAULT_PATH: ${{ github.workspace }}/vault
+          FORCE_VAULT_PATH: "1"
+          DEPLOY_PROTOCOL: ftps
+          DEPLOY_PORT: "21"
+          DEPLOY_FTPS_INSECURE: "true"
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+          DEPLOY_REMOTE_PATH: ${{ secrets.DEPLOY_REMOTE_PATH }}
+        run: node scripts/deploy.mjs --yes
