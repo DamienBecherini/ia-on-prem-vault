@@ -1,0 +1,449 @@
+{
+  "rubricVersion": 1,
+  "pages": [
+    {
+      "page": "00-index.md",
+      "type": "hub",
+      "primaryProfile": "A",
+      "typeNote": null,
+      "lastModifiedScored": "2026-06-10",
+      "scoredOn": "2026-10-11",
+      "scoredBy": "Opus 5.5",
+      "profiles": {
+        "A": {
+          "criteria": {
+            "A1": {
+              "score": 4,
+              "why": "« Pourquoi faire tourner l'IA en local ? » donne trois raisons métier claires (données, coût, contrôle) ; l'ouverture « jardin numérique » reste générique."
+            },
+            "A2": {
+              "score": 3,
+              "why": "Les liens couvrent les grands termes, mais « prompt », « 70B », « MoE », « SLA », « tensor parallelism » ou « OWASP » restent bruts dans le tableau et le sommaire."
+            },
+            "A3": {
+              "score": 3,
+              "why": "Ordre logique (pourquoi → sommaire → choix → parcours), mais le parcours « Je découvre » arrive après un long sommaire jargonneux."
+            },
+            "A4": {
+              "score": 4,
+              "why": "Exemples parlants : cabinet médical, service juridique, 50 employés, « un ordinateur à 4000€ peut être trop lent »."
+            },
+            "A5": {
+              "score": 4,
+              "why": "Le tableau « Quel blueprint choisir ? » (utilisateurs, budget) est une vraie aide à la décision ; l'argument coût n'est ni chiffré ni relié à la comparaison TCO."
+            }
+          },
+          "sum": 18,
+          "judged": 43.2,
+          "deterministic": 31.3,
+          "final": 75
+        },
+        "B": {
+          "criteria": {
+            "B1": {
+              "score": 3,
+              "why": "« L'IA on-premise est la seule réponse technique » est trop absolu ; budgets du tableau et argument coût sans source ni date."
+            },
+            "B2": {
+              "score": 4,
+              "why": "Le sommaire 06 mène vite au guide Ollama et aux protocoles pratiques."
+            },
+            "B3": {
+              "score": 4,
+              "why": "Presque tout est lié ; restent bruts MoE, SLA, tensor parallelism, OWASP."
+            },
+            "B4": {
+              "score": 3,
+              "why": "Le parcours « Je découvre » n'inclut aucune étape pratique (le guide Ollama n'y figure pas)."
+            },
+            "B5": {
+              "score": 3,
+              "why": "Rôle de hub tenu, couverture complète des entrées ; pas de repère sur le niveau requis par section."
+            }
+          },
+          "sum": 17,
+          "judged": 40.8,
+          "deterministic": 34,
+          "final": 75
+        }
+      },
+      "alert": false,
+      "watch": [],
+      "suggestions": [
+        "Remonter le parcours « 🚶 Je découvre : par où commencer ? » juste après « Pourquoi faire tourner l'IA en local ? », avant le sommaire.",
+        "Dans le tableau « Quel blueprint choisir ? », expliquer « 70B » (taille du modèle, en milliards de paramètres) et lier ou gloser « MoE » et « SLA ».",
+        "Relier l'argument « Coût prévisible à l'échelle » à [[04-blueprints/tco-comparison]] avec un ordre de grandeur sourcé, et ajouter « Démarrer avec Ollama » comme étape pratique du parcours débutant."
+      ]
+    },
+    {
+      "page": "01-fondations/kv-cache-and-context.md",
+      "type": "article",
+      "primaryProfile": "A",
+      "typeNote": null,
+      "lastModifiedScored": "2026-10-11",
+      "scoredOn": "2026-10-11",
+      "scoredBy": "Opus 5.5",
+      "profiles": {
+        "A": {
+          "criteria": {
+            "A1": {
+              "score": 3,
+              "why": "L'encadré « En bref » dit l'enjeu (le cache grossit avec la conversation jusqu'à égaler le modèle), mais dès la première phrase avec « VRAM » et « KV Cache » non expliqués."
+            },
+            "A2": {
+              "score": 2,
+              "why": "Avant la section « nouvelles architectures », GQA, MHA, BF16, FP8, NVFP4, PagedAttention, Flash-Decoding s'enchaînent ; le « Petit vocabulaire » utile arrive trop tard (section 5)."
+            },
+            "A3": {
+              "score": 3,
+              "why": "Mécanisme → équation → cas pratiques → optimisations → architectures → conseil : logique pour un ingénieur, mais la formule précède le piège OOM qui parle au dirigeant."
+            },
+            "A4": {
+              "score": 4,
+              "why": "Très bonnes analogies dans la partie récente (transcription intégrale, résumé, carnet de taille fixe, table des matières) et un exemple chiffré concret (Mac Studio 64 Go qui sature)."
+            },
+            "A5": {
+              "score": 3,
+              "why": "« Conseil de l'Architecte » utile mais rédigé pour l'ingénieur (flags vLLM) ; la conséquence budgétaire (« acheter plus de VRAM que nécessaire ») n'est pas chiffrée en €."
+            }
+          },
+          "sum": 15,
+          "judged": 36,
+          "deterministic": 21.6,
+          "final": 58
+        },
+        "B": {
+          "criteria": {
+            "B1": {
+              "score": 5,
+              "why": "Très précis et nuancé : formule sourcée, Go vs GiB, extrapolation 300K signalée, gains « selon la source », dates de support moteur."
+            },
+            "B2": {
+              "score": 4,
+              "why": "Formule + paramètres de Llama 3.1 70B + tableau permettent de refaire le calcul ; le calcul détaillé d'une ligne n'est pas posé pas à pas."
+            },
+            "B3": {
+              "score": 4,
+              "why": "Prefill, decoding, VRAM, PagedAttention, MLA liés ; BF16 / FP8 / INT8 utilisés dès la formule mais définis seulement dans l'encadré de la section 5."
+            },
+            "B4": {
+              "score": 4,
+              "why": "Progression nette ; une référence en avant (architectures hybrides citées dans le focus GQA) et un aparté OpenHuman / Memory Tree dans le conseil."
+            },
+            "B5": {
+              "score": 5,
+              "why": "Mécanisme, ordres de grandeur, optimisations moteur et modèle, limites de la formule, conséquences pour le dimensionnement."
+            }
+          },
+          "sum": 22,
+          "judged": 52.8,
+          "deterministic": 24.3,
+          "final": 77
+        }
+      },
+      "alert": true,
+      "watch": [],
+      "suggestions": [
+        "Dans l'encadré « En bref », expliquer en mots simples « VRAM » (la mémoire de la carte graphique) et « KV Cache » (la mémoire de travail de la conversation), avec un lien vers [[00-lexique/vram]] et [[00-lexique/kv-cache]].",
+        "Placer l'encadré « Petit vocabulaire » (token, couche, BF16/FP8/FP4…) avant « L'Équation Mathématique du KV Cache », et y ajouter GQA et MHA.",
+        "Ajouter, avant la formule, une phrase de conséquence pour le décideur (« à 128K tokens, le cache d'un 70B pèse autant que le modèle : prévoir ~2× la mémoire ») et chiffrer la marge en € dans le « Conseil de l'Architecte »."
+      ]
+    },
+    {
+      "page": "02-materiel/apu-and-unified-memory.md",
+      "type": "article",
+      "primaryProfile": "A",
+      "typeNote": null,
+      "lastModifiedScored": "2026-10-10",
+      "scoredOn": "2026-10-11",
+      "scoredBy": "Opus 5.5",
+      "profiles": {
+        "A": {
+          "criteria": {
+            "A1": {
+              "score": 2,
+              "why": "L'« En bref » aligne Gorgon Halo, FP4 natif, CUDA, ConnectX-7 200 Gbps ; l'enjeu (faire tourner un 70B sur une station silencieuse de bureau) n'arrive qu'au deuxième paragraphe, en jargon."
+            },
+            "A2": {
+              "score": 1,
+              "why": "Aucun lien vers le lexique (APU, mémoire unifiée, VRAM, PCIe ont pourtant une fiche) ; LPDDR5X, SoC, NPU, CU, SKU, TDP, QSFP, UMA, PFLOPS, GDDR7 bruts."
+            },
+            "A3": {
+              "score": 2,
+              "why": "Trois fiches techniques produit avant l'explication du principe (« Pourquoi l'unifié supprime le goulot PCIe »), puis un guide BIOS / sysctl au milieu de l'arbitrage."
+            },
+            "A4": {
+              "score": 2,
+              "why": "Peu d'analogies ; les exemples sont des specs et des prix, l'exemple du page cache de 140 Go est concret mais technique."
+            },
+            "A5": {
+              "score": 4,
+              "why": "Le « Conseil de l'Architecte » donne une règle de choix par situation (Linux/Docker, vitesse, CUDA, mémoire soudée) et l'encadré prix en hausse aide à décider, malgré le jargon."
+            }
+          },
+          "sum": 11,
+          "judged": 26.4,
+          "deterministic": 12.6,
+          "final": 39
+        },
+        "B": {
+          "criteria": {
+            "B1": {
+              "score": 5,
+              "why": "Précis, daté, sourcé ; bornes théoriques et mesures clairement séparées, limites des chiffres NVIDIA signalées."
+            },
+            "B2": {
+              "score": 4,
+              "why": "Procédures BIOS et sysctl avec vérification et retour arrière ; côté AMD, pas de moyen de vérifier l'allocation sous Linux."
+            },
+            "B3": {
+              "score": 2,
+              "why": "Aucun lien lexique ; UMA, CU, TDP, QSFP, MLX, GB10 non expliqués, même pour un développeur."
+            },
+            "B4": {
+              "score": 3,
+              "why": "Fiches produit avant le mécanisme ; le guide pratique coupe la partie comparaison."
+            },
+            "B5": {
+              "score": 4,
+              "why": "Pièges utiles (page cache, mémoire soudée, plafond Metal 75 %) ; le lien bande passante → débit est renvoyé à un autre chapitre."
+            }
+          },
+          "sum": 18,
+          "judged": 43.2,
+          "deterministic": 13.8,
+          "final": 57
+        }
+      },
+      "alert": true,
+      "watch": [],
+      "suggestions": [
+        "Ouvrir la page par 3–4 phrases simples : ce qu'est une puce à mémoire unifiée (CPU et carte graphique partagent la même mémoire), ce que cela permet (un modèle 70B sur une station de bureau silencieuse) et le compromis (moins rapide qu'une carte graphique dédiée), puis déplacer « Pourquoi l'unifié supprime le goulot PCIe » avant le « Paysage matériel ».",
+        "Ajouter les liens lexique à la première occurrence : [[00-lexique/apu]], [[00-lexique/unified-memory]], [[00-lexique/vram]], [[00-lexique/pcie]], [[00-lexique/ram]], [[00-lexique/memory-bandwidth]], [[00-lexique/tokens-per-second]].",
+        "Gloser en quelques mots les sigles des fiches produit (LPDDR5X, TDP, QSFP, FP4, CUDA, MLX) ou les regrouper dans un encadré « Vocabulaire » avant la première fiche produit."
+      ]
+    },
+    {
+      "page": "04-blueprints/scenario-b-sme-appliance.md",
+      "type": "blueprint",
+      "primaryProfile": "A",
+      "typeNote": null,
+      "lastModifiedScored": "2026-10-10",
+      "scoredOn": "2026-10-11",
+      "scoredBy": "Opus 5.5",
+      "profiles": {
+        "A": {
+          "criteria": {
+            "A1": {
+              "score": 4,
+              "why": "Ouverture parlante (cabinet d'avocats, cabinet médical, documents confidentiels) ; la deuxième phrase bascule aussitôt dans « 70B dense quantifié », « MoE léger », « t/s »."
+            },
+            "A2": {
+              "score": 2,
+              "why": "Offloading, mémoire unifiée, VRAM, KV Cache liés ; mais MoE, MLX, llama.cpp, Vulkan, ROCm, SGLang, Continuous Batching, RDMA, DRP, RTO, CVE / KEV restent bruts."
+            },
+            "A3": {
+              "score": 4,
+              "why": "Structure de blueprint claire : besoin → matériel → logiciel → performances → piège → verdict → sauvegarde."
+            },
+            "A4": {
+              "score": 4,
+              "why": "Images concrètes : « le bruit d'un avion au décollage », 5 employés qui envoient des PDF de 100 pages, « jeter la machine et en racheter une »."
+            },
+            "A5": {
+              "score": 4,
+              "why": "Verdict « quand utiliser / quand fuir », fourchette de budget, RTO : très utile ; pas de lien vers la comparaison TCO, et la description (10 à 50 personnes) ne colle pas au verdict (une dizaine de requêtes)."
+            }
+          },
+          "sum": 18,
+          "judged": 43.2,
+          "deterministic": 17.3,
+          "final": 61
+        },
+        "B": {
+          "criteria": {
+            "B1": {
+              "score": 3,
+              "why": "Prix datés et sourcés, mais « moins de 150W », « 30 à 50 Go pour 5 requêtes longues » sans calcul ni source ; capacité incohérente entre description et verdict."
+            },
+            "B2": {
+              "score": 3,
+              "why": "Stack nommée sans commande de lancement ni configuration ; la procédure de reprise et le tableau de sauvegarde sont actionnables."
+            },
+            "B3": {
+              "score": 3,
+              "why": "MLX, SGLang, ROCm, Continuous Batching, MoE non liés alors que plusieurs ont une fiche."
+            },
+            "B4": {
+              "score": 4,
+              "why": "Ordre logique sans dépendance en avant."
+            },
+            "B5": {
+              "score": 3,
+              "why": "Le piège KV cache est là, mais le calcul de capacité (combien d'utilisateurs simultanés pour 128 Go) n'est pas fait."
+            }
+          },
+          "sum": 16,
+          "judged": 38.4,
+          "deterministic": 19.3,
+          "final": 58
+        }
+      },
+      "alert": false,
+      "watch": [],
+      "suggestions": [
+        "Remplacer la deuxième phrase par une version simple (« un modèle de grande taille, environ 40 Go ») et déplacer les variantes MoE / 27B dans une note, avec un lien [[00-lexique/moe]].",
+        "Ajouter un calcul de capacité dans « Le Piège du KV Cache Concurrent » : combien d'utilisateurs simultanés tiennent dans 64, 128 et 192 Go avec un contexte de 32K, en citant la formule du chapitre KV Cache, et aligner la description (« 10 à 50 personnes ») sur le verdict.",
+        "Dans « Le Verdict de l'Architecte », ajouter un lien vers [[04-blueprints/tco-comparison]] et une ligne « coût total sur 3 ans vs API cloud » ; gloser DRP et RTO (plan de reprise, délai de remise en service)."
+      ]
+    },
+    {
+      "page": "06-mise-en-oeuvre/getting-started-with-ollama.md",
+      "type": "guide",
+      "primaryProfile": "B",
+      "typeNote": null,
+      "lastModifiedScored": "2026-10-10",
+      "scoredOn": "2026-10-11",
+      "scoredBy": "Opus 5.5",
+      "profiles": {
+        "A": {
+          "criteria": {
+            "A1": {
+              "score": 3,
+              "why": "« En bref » clair (le moyen le plus rapide de faire tourner un modèle en local, 15 minutes) mais avec « LLM » et « API compatible OpenAI » non expliqués."
+            },
+            "A2": {
+              "score": 2,
+              "why": "tok/s, Q4, VRAM, WSL2, CUDA, ROCm, MLX, Modelfile non expliqués ; normal pour un guide, mais bloquant pour A."
+            },
+            "A3": {
+              "score": 3,
+              "why": "Progression linéaire et claire, mais entièrement en ligne de commande."
+            },
+            "A4": {
+              "score": 2,
+              "why": "Pas d'analogie ; les exemples sont des commandes."
+            },
+            "A5": {
+              "score": 2,
+              "why": "Peu d'aide à la décision : le tableau de débits et l'encadré « Sécurité réseau » sont les seuls éléments exploitables par un décideur."
+            }
+          },
+          "sum": 12,
+          "judged": 28.8,
+          "deterministic": 25.7,
+          "final": 55
+        },
+        "B": {
+          "criteria": {
+            "B1": {
+              "score": 4,
+              "why": "Versions et dates précises, pièges réels (pas de `ollama logs`, retour arrière < 0.40) ; mais l'exemple « Température » met des commentaires `#` dans le JSON envoyé par curl, ce qui le rend invalide, et les débits sont non sourcés (signalé)."
+            },
+            "B2": {
+              "score": 4,
+              "why": "Installation, vérification, premier modèle, API, Python : reproductible ; seul l'exemple de température échoue tel quel."
+            },
+            "B3": {
+              "score": 4,
+              "why": "KV Cache et LiteLLM liés ; Modelfile, MLX, WSL2 non expliqués mais devinables pour un développeur."
+            },
+            "B4": {
+              "score": 5,
+              "why": "Prérequis → installation → modèle → commandes → API → réglages → performances → étapes suivantes."
+            },
+            "B5": {
+              "score": 4,
+              "why": "Couvre contexte, concurrence, exposition réseau et mises à jour de sécurité ; suffisant pour démarrer, avec renvois vers la suite."
+            }
+          },
+          "sum": 21,
+          "judged": 50.4,
+          "deterministic": 29.6,
+          "final": 80
+        }
+      },
+      "alert": false,
+      "watch": [],
+      "suggestions": [
+        "Corriger l'exemple « Température et paramètres de génération » : retirer les commentaires `#` du JSON (les mettre en texte sous le bloc), sinon la requête curl échoue.",
+        "Dans « Prérequis », expliquer en une phrase ce que sont CUDA / ROCm (pilotes de calcul NVIDIA / AMD) et WSL2, et lier [[00-lexique/vram]] et [[00-lexique/quantification-q4]] au tableau des débits.",
+        "Ajouter sous « En bref » une phrase pour le décideur : ce qu'on obtient au bout de 15 minutes, et le lien vers [[04-blueprints/scenario-a-dev-lab]] pour le matériel."
+      ]
+    },
+    {
+      "page": "00-lexique/kv-cache.md",
+      "type": "lexique",
+      "primaryProfile": "A+B",
+      "typeNote": null,
+      "lastModifiedScored": "2026-06-04",
+      "scoredOn": "2026-10-11",
+      "scoredBy": "Opus 5.5",
+      "profiles": {
+        "A": {
+          "criteria": {
+            "A1": {
+              "score": 3,
+              "why": "La définition courte se comprend (« éviter de recalculer »), mais « états d'attention » et « recomputations » la rendent abstraite."
+            },
+            "A2": {
+              "score": 2,
+              "why": "Transformer, clés/valeurs, token, prefill, VRAM, coût quadratique, calcul matriciel : rien n'est expliqué ni lié dans le corps."
+            },
+            "A3": {
+              "score": 4,
+              "why": "Court → détaillé → pourquoi → mécanisme → pour aller plus loin : le format lexique joue son rôle."
+            },
+            "A4": {
+              "score": 1,
+              "why": "Aucun exemple ni ordre de grandeur (par exemple la taille du cache à 128K tokens)."
+            },
+            "A5": {
+              "score": 2,
+              "why": "« Pourquoi c'est important » reste vague (« influence fortement la capacité de contexte ») ; la conséquence concrète (saturer la mémoire) n'apparaît que dans le teaser des liens."
+            }
+          },
+          "sum": 12,
+          "judged": 28.8,
+          "deterministic": 35.4,
+          "final": 64
+        },
+        "B": {
+          "criteria": {
+            "B1": {
+              "score": 4,
+              "why": "Correct ; « en VRAM » ignore le cas mémoire unifiée / CPU."
+            },
+            "B2": {
+              "score": 2,
+              "why": "Ni formule, ni ordre de grandeur, ni réglage (type de cache FP8) pour reconnaître ou mesurer le concept."
+            },
+            "B3": {
+              "score": 3,
+              "why": "Prefill et Transformer non liés alors que la fiche prefill existe ; decoding et fenêtre de contexte liés en « Voir aussi »."
+            },
+            "B4": {
+              "score": 4,
+              "why": "Structure lexique claire."
+            },
+            "B5": {
+              "score": 3,
+              "why": "Mécanisme en quelques lignes, mais les renvois annotés vers le chapitre complet compensent."
+            }
+          },
+          "sum": 16,
+          "judged": 38.4,
+          "deterministic": 36.6,
+          "final": 75
+        }
+      },
+      "alert": false,
+      "watch": [],
+      "suggestions": [
+        "Ajouter un ordre de grandeur dans « Pourquoi c'est important » : à 128K tokens, le cache de Llama 3.1 70B pèse ~42 Go en BF16, autant que le modèle quantifié, avec renvoi au chapitre.",
+        "Lier [[00-lexique/prefill]], [[00-lexique/vram]] et [[00-lexique/attention]] à leur première occurrence, et remplacer « états d'attention » par « résultats intermédiaires déjà calculés pour chaque mot ».",
+        "Ajouter une analogie d'une phrase (les notes de réunion qu'on garde au lieu de tout réécouter) et un réglage concret (cache en FP8 dans vLLM / llama.cpp) pour le développeur."
+      ]
+    }
+  ]
+}

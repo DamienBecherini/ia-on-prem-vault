@@ -94,10 +94,12 @@ export function extractFrontmatterBlock(text) {
 export function readFrontmatterScalar(frontmatter, key) {
   if (!frontmatter) return null;
   const match = frontmatter.match(
-    new RegExp(`^${key}:\\s*(?:"([^"]*)"|'([^']*)'|(\\S+))`, "m"),
+    new RegExp(`^${key}:[ \\t]*(?:"([^"]*)"|'([^']*)'|([^\\r\\n]*))`, "m"),
   );
   if (!match) return null;
-  const value = (match[1] ?? match[2] ?? match[3] ?? "").trim();
+  // Unquoted values run to the end of the line (YAML plain scalar), minus a trailing " # comment".
+  const plain = match[3]?.replace(/\s+#.*$/, "");
+  const value = (match[1] ?? match[2] ?? plain ?? "").trim();
   return value.length > 0 ? value : null;
 }
 
