@@ -25,6 +25,11 @@ _templates/*
 
 # Refresh working copies (dated snapshots are committed)
 .agents/vault-maintenance/reports/*-latest.*
+# Readability: regenerated on every run (large, churns); judged.json and calibration files stay tracked
+.agents/vault-maintenance/readability/deterministic.json
 
 # AIContextCraft export config (personal tooling, kept locally)
 config-concat*
+
+# Claude Code agent worktrees (local)
+.claude/worktrees/
