@@ -3,7 +3,7 @@ title: "🚀 Getting started with Ollama"
 description: Installation, first model, API testing, and initial best practices for local inference in under 15 minutes.
 sidebar:
   order: 3
-last_modified: "2026-10-10"
+last_modified: "2026-10-11"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -195,12 +195,14 @@ curl http://localhost:11434/api/generate \
     "model": "llama3.2",
     "prompt": "...",
     "options": {
-      "temperature": 0.1,    # 0 = deterministic, 1 = creative
+      "temperature": 0.1,
       "top_p": 0.9,
-      "num_predict": 512     # max tokens to generate
+      "num_predict": 512
     }
   }'
 ```
+
+`temperature` sets how much randomness the model uses (0 = deterministic answers, 1 = more creative) and `num_predict` the maximum number of tokens generated. JSON does not accept comments: do not paste `#` into the request body.
 
 ### Expose Ollama on the local network
 

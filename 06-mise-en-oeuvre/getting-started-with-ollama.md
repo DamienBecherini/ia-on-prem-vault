@@ -3,7 +3,7 @@ title: "🚀 Démarrer avec Ollama"
 description: Installation, premier modèle, test API et premières bonnes pratiques pour une inférence locale en moins de 15 minutes.
 sidebar:
   order: 3
-last_modified: "2026-10-10"
+last_modified: "2026-10-11"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -195,12 +195,14 @@ curl http://localhost:11434/api/generate \
     "model": "llama3.2",
     "prompt": "...",
     "options": {
-      "temperature": 0.1,    # 0 = déterministe, 1 = créatif
+      "temperature": 0.1,
       "top_p": 0.9,
-      "num_predict": 512     # tokens max à générer
+      "num_predict": 512
     }
   }'
 ```
+
+`temperature` règle la part de hasard (0 = réponses déterministes, 1 = plus créatives) et `num_predict` le nombre maximal de tokens générés. Le JSON n'accepte pas de commentaires : ne collez pas de `#` dans le corps de la requête.
 
 ### Exposer Ollama sur le réseau local
 
