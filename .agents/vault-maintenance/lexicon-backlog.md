@@ -28,6 +28,11 @@ History sections archived to `archives/` when they exceed ~150 lines total.
 
 ## Done
 
+- `00-lexique/soc.md` — created 2026-10-11 (FR + EN). Source: `02-materiel/apu-and-unified-memory.md` (readability pilot)
+- `00-lexique/lpddr5x.md` — created 2026-10-11 (FR + EN). Source: idem
+- `00-lexique/cuda.md` — created 2026-10-11 (FR + EN). Source: idem
+- `00-lexique/ai-glossary.md` — hub sync 2026-10-11 (CUDA, LPDDR5X, SoC; FR + EN)
+
 - `00-lexique/mla.md` — created 2026-10-11 (FR + EN). Source: `01-fondations/kv-cache-and-context.md` (section on model-level KV cache reduction)
 - `00-lexique/sparse-attention.md` — created 2026-10-11 (FR + EN). Source: idem
 - `00-lexique/linear-attention.md` — created 2026-10-11 (FR + EN). Source: idem

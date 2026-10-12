@@ -3,7 +3,11 @@ title: 🧠 APU & Unified Memory
 description: "Comparison of Apple Silicon M5 Max / M5 Ultra chips, AMD Ryzen AI Max PRO 400 APUs and NVIDIA Grace Blackwell (DGX Spark) for large LLM inference."
 sidebar:
   order: 1
-last_modified: "2026-10-10"
+last_modified: "2026-10-11"
+prerequisites:
+  - "00-lexique/vram"
+  - "01-fondations/memory-bandwidth"
+  - "01-fondations/quantization-4bit-8bit"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -11,11 +15,13 @@ verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] In brief
-> Apple Silicon, AMD Gorgon Halo, and NVIDIA DGX Spark all offer 128 GB+ unified memory on a desktop workstation. Apple leads on bandwidth; AMD offers native Linux and Docker; NVIDIA DGX Spark brings native FP4, CUDA, and ConnectX-7 200 Gbps scale-out (up to 4 nodes). The right choice depends on your stack, not capacity alone.
+> A conventional computer has two separate memories: the processor's and the graphics card's, which runs the AI and whose size limits the models you can use. Some recent machines (Apple's Mac Studio, PCs with an AMD chip, NVIDIA DGX Spark) have a single large shared memory, often 128 GB or more, four times that of the most powerful consumer graphics card. A quiet desktop machine can therefore run AI models that used to require a server. The right choice depends mostly on the software your team already uses, more than on the amount of memory.
 
-For sovereign enterprise AI deployment, **unified memory** is one of the most important hardware shifts of the decade.
+For sovereign enterprise AI deployment, **[[00-lexique/unified-memory|unified memory]]** (a single memory shared by every component of the chip) is one of the most important hardware shifts of the decade.
 
-By eliminating the RAM → VRAM copy over PCIe, **APU** SoCs (CPU + GPU + NPU on the same die) access a shared **LPDDR5X** pool — up to **192 GB** on AMD Ryzen AI Max PRO 400 platforms, and up to **512 GB** on the Mac Studio M5 Ultra (1.2 TB/s, 512 GB configuration shipping late October 2026) [^1][^2][^4][^17]. This is the reference architecture for running **70B+ quantized** models (e.g. Llama 3.1 70B in Q4_K_M, ~40 GB of weights) on a quiet desktop workstation without a datacenter GPU server [^3][^4].
+On a conventional PC, the model is first loaded into [[00-lexique/ram|RAM]] (the processor's memory), then copied into [[00-lexique/vram|VRAM]] (the graphics card's memory) over the [[00-lexique/pcie|PCIe]] bus, the "pipe" that connects the two. Unified-memory machines eliminate this copy. Their chip is a [[00-lexique/soc|SoC]] (*system on a chip*: nearly a whole computer on a single chip), which AMD calls an [[00-lexique/apu|APU]]. The central processor (CPU), the graphics processor (GPU) that computes the AI and an AI accelerator ([[00-lexique/npu|NPU]]) share the same memory, of the **[[00-lexique/lpddr5x|LPDDR5X]]** type (low-power memory soldered next to the chip).
+
+This memory goes up to **192 GB** on AMD Ryzen AI Max PRO 400 platforms, and up to **512 GB** on the Mac Studio M5 Ultra (512 GB configuration shipping late October 2026) [^1][^2][^4][^17]. The latter reaches 1.2 TB/s of [[00-lexique/memory-bandwidth|memory bandwidth]], the data rate between the memory and the chip [^4][^17]. Unified memory is the reference architecture for running a model with 70 billion parameters ("70B") or more on a quiet desktop workstation, without a datacenter GPU server [^3][^4]. This requires [[00-lexique/quantification|quantizing]] it, that is, compressing it by reducing the precision of its numbers: Llama 3.1 70B in [[00-lexique/quantification-q4|Q4_K_M]] thus weighs ~40 GB of weights [^3][^4].
 
 > [!note] Related link
 > For memory sizing (weights + KV cache), see [[01-fondations/quantization-4bit-8bit|Quantization]] and [[01-fondations/kv-cache-and-context|KV Cache]].
@@ -31,41 +37,43 @@ Apple integrates CPU, GPU, and NPU on a single package, with **LPDDR5X** modules
 
 *   **Mac Studio M5 Max** (18c CPU / 40c GPU): up to **128 GB** unified, **614 GB/s** bandwidth (460 GB/s with the 32-core GPU), from US$2,499 [^4][^17].
 *   **Mac Studio M5 Ultra** (up to 36c CPU / 80c GPU): **96, 256, or 512 GB** unified, **1.2 TB/s**, from US$5,499; the 512 GB version ships late October 2026 [^4][^17]. (Apple skipped the M4 Ultra generation: the M5 Ultra directly succeeds the 2025 M3 Ultra [^5].)
-*   **Strengths:** very high bandwidth, mature **MLX** and **Metal** ecosystems, silence and low power draw [^3][^17].
-*   **Limits:** macOS, non-upgradable soldered memory, high price at 128 GB+ configurations [^4].
+*   **Strengths:** very high bandwidth, mature **MLX** (Apple's AI framework for its chips) and **Metal** (its GPU compute interface) ecosystems, silence and low power draw [^3][^17].
+*   **Limits:** macOS (operating system imposed), non-upgradable soldered memory, high price at 128 GB+ configurations [^4].
 
 ### 2. AMD Ryzen AI Max PRO 400 (“Gorgon Halo”)
 Professional refresh of the **Strix Halo** platform (Zen 5 + RDNA 3.5), announced in May 2026; as of Q4 2026 the flagship Max+ PRO 495 is listed by AMD and shipping in the 192 GB Framework Desktop (pre-orders opened 2026-09-30, deliveries from November 2026) [^1][^2][^18].
 
-*   **Architecture:** up to **16 Zen 5 cores**, **Radeon 8065S** iGPU (40 CUs on flagship SKU **Max+ PRO 495**), **256-bit** LPDDR5X-8533 memory bus [^1][^2].
+*   **Architecture:** up to **16 Zen 5 cores**, **Radeon 8065S** integrated GPU (iGPU) with 40 compute units (CUs) on the flagship model **Max+ PRO 495**, **256-bit** LPDDR5X-8533 memory bus [^1][^2].
 *   **Capacity:** up to **192 GB** unified (+50% vs the 300 series at 128 GB) [^1][^2].
 *   **Bandwidth:** **~273 GB/s** (vs ~256 GB/s theoretical on Strix Halo 128 GB — ~7% gain from memory clock) [^1][^2].
 *   **GPU allocation:** up to **160 GB** reservable as iGPU VRAM, **32 GB** left for the system [^1][^2].
-*   **Strengths:** open x86 (native Linux / Windows / Docker), capacity/price ratio still attractive but deteriorating fast: the 128 GB **Ryzen AI Halo** development platform sold for US$3,999 (July 2026) and the 128 GB Framework Desktop is listed at €3,889 incl. VAT and out of stock as of 2026-10-09, versus $1,999 at launch — the LPDDR5X price surge is hitting every capacity tier [^18][^20][^25].
-*   **Limits:** bandwidth roughly **2.2× lower** than the M5 Max (614 GB/s) and ~4.4× lower than the M5 Ultra (1.2 TB/s) — decoding dense 70B models stays memory-bound (~5 tok/s measured on Strix Halo 395, similar profile expected on PRO 400) [^2][^4][^6].
+*   **Strengths:** open x86 PC architecture (native Linux / Windows / Docker), capacity/price ratio still attractive but deteriorating fast: the 128 GB **Ryzen AI Halo** development platform sold for US$3,999 (July 2026) and the 128 GB Framework Desktop is listed at €3,889 incl. VAT and out of stock as of 2026-10-09, versus $1,999 at launch — the LPDDR5X price surge is hitting every capacity tier [^18][^20][^25].
+*   **Limits:** bandwidth roughly **2.2× lower** than the M5 Max (614 GB/s) and ~4.4× lower than the M5 Ultra (1.2 TB/s) — decoding dense 70B models stays memory-bound, that is, limited by memory (~5 [[00-lexique/tokens-per-second|tok/s]] measured on Strix Halo 395, similar profile expected on PRO 400) [^2][^4][^6].
 
 ### 3. NVIDIA Grace Blackwell (DGX Spark)
 
-Announced in 2025 and available from 2026, the **DGX Spark** (formerly Project Digits) is NVIDIA's first product combining an ARM SoC and a Blackwell GPU in a desktop form factor [^14].
+Announced in 2025 and available from 2026, the **DGX Spark** (formerly Project Digits) is NVIDIA's first product combining an ARM SoC (a processor architecture that comes from smartphones) and a Blackwell GPU in a desktop form factor [^14].
 
-*   **Architecture:** **Grace Blackwell** SoC — 20-core ARM CPU (Grace) + Blackwell GPU, co-developed with MediaTek, TSMC 3nm process [^14].
-*   **Unified LPDDR5x memory:** **128 GB** on DGX Spark (≈ $6,950 as of 2026-10-02, versus $3,999 at the October 2025 launch); a **64 GB** variant (same GB10, models up to ~100B parameters according to NVIDIA, ~200B with two units linked over QSFP) from $4,999, sold exclusively by OEMs (Acer, ASUS, Dell, Gigabyte, HP, MSI) starting 2026-10-23 [^14][^16][^28]. DGX Station scales to **748 GB** for models > 400B [^14].
+*   **Architecture:** **Grace Blackwell** SoC (GB10) — 20-core ARM CPU (Grace) + Blackwell GPU, co-developed with MediaTek, manufactured in 3 nm by TSMC (the Taiwanese foundry) [^14].
+*   **Unified LPDDR5x memory:** **128 GB** on DGX Spark (≈ $6,950 as of 2026-10-02, versus $3,999 at the October 2025 launch); a **64 GB** variant (same GB10, models up to ~100B parameters according to NVIDIA, ~200B with two units linked through their QSFP ports: a high-speed network link) from $4,999, sold exclusively by OEMs (Acer, ASUS, Dell, Gigabyte, HP, MSI) starting 2026-10-23 [^14][^16][^28]. DGX Station scales to **748 GB** for models > 400B [^14].
 *   **Bandwidth:** ~273 GB/s (LPDDR5x) — close to AMD Gorgon Halo [^14].
-*   **Power draw:** 240 W power supply, GB10 TDP ~140 W (DGX Spark) — versus > 1,000 W for a dual discrete-GPU workstation [^14].
-*   **Native FP4 (Blackwell):** unlike the Ada Lovelace architecture (RTX 4090 — emulated FP4), Blackwell implements FP4 in silicon — without software overhead [^15].
-*   **ConnectX-7 200 Gbps scale-out:** two QSFP ports link up to **four** DGX Spark units (512 GB aggregated, models up to ~700B according to NVIDIA) without an external switch [^14].
-*   **NVIDIA Sync software:** full CUDA environment pre-installed to reduce startup friction.
+*   **Power draw:** 240 W power supply, GB10 TDP (power to dissipate) ~140 W (DGX Spark) — versus > 1,000 W for a dual discrete-GPU workstation [^14].
+*   **Native [[00-lexique/quantification|FP4]] (Blackwell):** numbers encoded on 4 bits, a quantization format. Unlike the Ada Lovelace architecture (RTX 4090 — emulated FP4), Blackwell implements FP4 in silicon — without software overhead [^15].
+*   **ConnectX-7 200 Gbps scale-out:** ConnectX-7 is NVIDIA's built-in network card; two QSFP ports link up to **four** DGX Spark units (512 GB aggregated, models up to ~700B according to NVIDIA) without an external switch [^14].
+*   **NVIDIA Sync software:** full [[00-lexique/cuda|CUDA]] (the software platform of NVIDIA GPUs) environment pre-installed to reduce startup friction.
 
-Since 7 October 2026, NVIDIA and Microsoft are marketing the **RTX Spark**, distinct from the DGX Spark: Blackwell RTX GPU with up to 6,144 cores, Grace CPU with up to 20 cores, up to **128 GB** of unified memory and a theoretical 1 PFLOPS FP4, running **Windows** with full CUDA, from Acer, ASUS, Dell, Gigabyte, HP, Lenovo, Microsoft and MSI; laptops ship from 16 October 2026, compact form factors in November [^26]. On the desktop side, the **Surface RTX Spark Dev Box** (128 GB) is available for pre-order at $5,999 on Microsoft.com, in the United States only, with deliveries in November 2026; Microsoft specifies that the 1 PFLOPS FP4 assumes sparsity and that the GPU addresses only part of the 128 GB, and no memory bandwidth is published as of 2026-10-10 [^27].
+Since 7 October 2026, NVIDIA and Microsoft are marketing the **RTX Spark**, distinct from the DGX Spark: Blackwell RTX GPU with up to 6,144 cores, Grace CPU with up to 20 cores, up to **128 GB** of unified memory and a theoretical 1 [[00-lexique/tflops|PFLOPS]] FP4, running **Windows** with full CUDA, from Acer, ASUS, Dell, Gigabyte, HP, Lenovo, Microsoft and MSI; laptops ship from 16 October 2026, compact form factors in November [^26].
+
+On the desktop side, the **Surface RTX Spark Dev Box** (128 GB) is available for pre-order at $5,999 on Microsoft.com, in the United States only, with deliveries in November 2026; Microsoft specifies that the 1 PFLOPS FP4 assumes sparsity and that the GPU addresses only part of the 128 GB, and no memory bandwidth is published as of 2026-10-10 [^27].
 
 > [!tip] DGX Spark positioning
-> DGX Spark shines on **capacity** (128 GB LPDDR5x accessible to CUDA without friction) and **native FP4** — useful for loading 70B+ models and training with LoRA without precision compromises. However, for pure inference on models ≤ 34B, a discrete-GPU workstation (RTX 5090 32 GB or RTX PRO 6000 96 GB) remains significantly faster thanks to its dedicated very-high-bandwidth GDDR7 — but as of Q4 2026 an RTX 5090 trades at ≥ $5,000 and an RTX PRO 6000 at ~$16,000, which erases the price gap with unified-memory workstations [^21][^22]. DGX Spark is the right choice when **memory capacity and CUDA simplicity** take priority over raw throughput.
+> DGX Spark shines on **capacity** (128 GB LPDDR5x accessible to CUDA without friction) and **native FP4** — useful for loading 70B+ models and training with LoRA (lightweight fine-tuning of a model) without precision compromises. However, for pure [[00-lexique/inference|inference]] (using the model, without training) on models ≤ 34B, a discrete-GPU workstation (RTX 5090 32 GB or RTX PRO 6000 96 GB) remains significantly faster thanks to its dedicated very-high-bandwidth GDDR7 (graphics card memory) — but as of Q4 2026 an RTX 5090 trades at ≥ $5,000 and an RTX PRO 6000 at ~$16,000, which erases the price gap with unified-memory workstations [^21][^22]. DGX Spark is the right choice when **memory capacity and CUDA simplicity** take priority over raw throughput.
 
 ---
 
 ## 🏎️ Why Unified Memory Removes the “PCIe Bottleneck”
 
-On a PC with a discrete GPU, loading an LLM often involves **copying** weights from system RAM to VRAM over **PCIe** (typically ~32–64 GB/s effective in practice, far below the GPU’s internal ~1,500+ GB/s) [^11].
+On a PC with a discrete GPU (separate graphics card), loading an [[00-lexique/llm|LLM]] often involves **copying** weights from system RAM to VRAM over **PCIe** (typically ~32–64 GB/s effective in practice, far below the GPU’s internal ~1,500+ GB/s) [^11].
 
 ```mermaid
 graph TD
@@ -75,6 +83,8 @@ graph TD
         C -->|Compute ~1500+ GB/s| D[GPU Cores]
     end
 ```
+
+With unified memory, the model goes directly from the disk to the shared memory:
 
 ```mermaid
 graph TD
@@ -90,19 +100,19 @@ With unified memory, **CPU and GPU address the same physical pool**: no weight d
 
 ## 🛠️ Practical Guide: Configuring GPU Memory Allocation
 
-Operating systems cap the share of unified RAM usable by the GPU by default — you must raise this ceiling for heavy LLMs.
+Operating systems (OS) cap the share of unified RAM usable by the GPU by default — you must raise this ceiling for heavy LLMs.
 
 ### 1. AMD Side (Ryzen AI Max 300 / PRO 400)
 On Strix Halo and Gorgon Halo, allocation is mainly via **OEM BIOS/firmware** [^1][^2]:
 
-1.  Reboot → **BIOS/UEFI**.
-2.  *Advanced* menu → **UMA Frame Buffer Size** (label varies by OEM).
+1.  Reboot → **BIOS/UEFI** (the boot firmware).
+2.  *Advanced* menu → **UMA Frame Buffer Size**, i.e. the share of unified memory (UMA) reserved for the GPU (label varies by OEM).
 3.  On a **192 GB** system, AMD documents up to **160 GB** for the GPU and **32 GB** for the OS [^1][^2].
 
 > [!warning] Pitfall: page cache during load
-> If the model lives on SSD and weighs **140 GB** (e.g. Llama 3.1 70B in Q8), the OS will fill its **page cache** in the 32 GB system partition while reading the GGUF file — before inference even starts. Result: OOM or heavy swap on the remaining 32 GB. Best practice: leave **at least 10–15% of total RAM** outside GPU allocation, i.e. ~20–28 GB free on a 192 GB system, to cover OS + page cache + load buffers.
+> If the model lives on SSD (the disk) and weighs **140 GB** (e.g. Llama 3.1 70B in Q8), the OS will fill its **page cache** in the 32 GB system partition while reading the [[00-lexique/gguf|GGUF]] file — before inference even starts. Result: OOM (*out of memory*, a crash for lack of memory) or heavy swap on the remaining 32 GB. Best practice: leave **at least 10–15% of total RAM** outside GPU allocation, i.e. ~20–28 GB free on a 192 GB system, to cover OS + page cache + load buffers.
 
-The first **PRO 400** systems have been on pre-order since Q4 2026 (192 GB Framework Desktop; HP, Lenovo and ASUS announced); Strix Halo 395 guides remain the practical reference for llama.cpp/Vulkan/ROCm, and SGLang has published a ROCm image for `gfx1151` (Strix Halo) since v0.5.20 [^6][^18][^19].
+The first **PRO 400** systems have been on pre-order since Q4 2026 (192 GB Framework Desktop; HP, Lenovo and ASUS announced); Strix Halo 395 guides remain the practical reference for llama.cpp/Vulkan/ROCm (AMD's GPU software stack, the equivalent of CUDA), and [[00-lexique/sglang|SGLang]] has published a ROCm image for `gfx1151` (Strix Halo) since v0.5.20 [^6][^18][^19].
 
 ### 2. Apple Silicon Side (macOS)
 By default, macOS caps the GPU **Metal working set** at about **75%** of unified RAM (via `recommendedMaxWorkingSetSize`) — on 128 GB, only ~96 GB is usable without tweaks [^12][^13].
@@ -136,15 +146,15 @@ sudo sysctl iogpu.wired_limit_mb=122880
 | **Bandwidth** | **614 GB/s** (460 GB/s with the 32-core GPU) [^4][^17] | **1.2 TB/s** [^4][^17] | **~273 GB/s** [^1][^2] | **~273 GB/s** [^14] |
 | **70B Q4 throughput (decode)** | **≤ ~15 tok/s** (ceiling 614 GB/s ÷ 40 GB; M5 Max MLX measurements not published) [^4] | **≤ ~30 tok/s** (ceiling 1.2 TB/s ÷ 40 GB; M5 Ultra MLX measurements not published) [^4] | **~4.5–5 tok/s** (Strix Halo 395) [^6] | *not officially published* [^14] |
 | **Native FP4** | ❌ | ❌ | ❌ | ✅ Blackwell [^15] |
-| **Scale-out** | ✅ Thunderbolt 5 RDMA (macOS 26.2+, up to 4 Mac Studios) [^17] | ✅ Thunderbolt 5 RDMA (macOS 26.2+, up to 4 Mac Studios) [^17] | ❌ | ✅ ConnectX-7 200 Gbps, up to 4 nodes [^14] |
+| **Scale-out** | ✅ [[00-lexique/thunderbolt|Thunderbolt 5]] [[00-lexique/rdma|RDMA]] (macOS 26.2+, up to 4 Mac Studios) [^17] | ✅ Thunderbolt 5 RDMA (macOS 26.2+, up to 4 Mac Studios) [^17] | ❌ | ✅ ConnectX-7 200 Gbps, up to 4 nodes [^14] |
 | **OS** | macOS | macOS | **Linux / Windows** [^1][^2] | Linux (CUDA) [^14] |
-| **Indicative price** | from US$2,499 (48 GB base); 128 GB config: CTO price to be checked [^17] | from US$5,499 (96 GB); 256 / 512 GB: CTO price to be checked [^17] | **~€3,900** (128 GB, out of stock as of 2026-10) · **~$6,800–7,450** (192 GB, pre-order, shipping Nov. 2026) [^18][^20][^23] | **≈ $6,950** (128 GB, as of 2026-10-02) · $4,999 (64 GB, OEM, from 2026-10-23) [^14][^16] |
+| **Indicative price** | from US$2,499 (48 GB base); 128 GB config: custom-configuration (CTO) price to be checked [^17] | from US$5,499 (96 GB); 256 / 512 GB: custom-configuration (CTO) price to be checked [^17] | **~€3,900** (128 GB, out of stock as of 2026-10) · **~$6,800–7,450** (192 GB, pre-order, shipping Nov. 2026) [^18][^20][^23] | **≈ $6,950** (128 GB, as of 2026-10-02) · $4,999 (64 GB, OEM, from 2026-10-23) [^14][^16] |
 
 > [!note] Reading the numbers
 > Apple throughputs are **theoretical memory-bound ceilings** (bandwidth ÷ model weight), not measurements: as of 2026-10-09, no MLX benchmark of the M5 Max / M5 Ultra with a published methodology was available, and **llama.cpp/Metal** is generally a bit slower than MLX on pure decode. NVIDIA DGX Spark inference figures are not officially published — community source claims are not reproduced here. NVIDIA does, however, publish a capacity table (1 × 128 GB ≈ 200B parameters, 2 × ≈ 400B, 4 × ≈ 700B) with no associated throughput [^14]. The method for computing the memory-bound ceiling is detailed in [[01-fondations/unified-memory-vs-ram-vs-vram|Unified memory vs RAM vs VRAM]].
 
 > [!warning] Memory prices rising (Q4 2026)
-> Contract DRAM prices are still climbing 10–15% per quarter in Q4 2026 (TrendForce, September 30, 2026) and Framework warns that "memory pricing for all capacities will continue to increase over the next six months" [^18][^24]. The prices in this table must therefore be re-checked at every purchase; soldered memory now comes at a premium.
+> Contract prices of DRAM (memory chips) are still climbing 10–15% per quarter in Q4 2026 (TrendForce, September 30, 2026) and Framework warns that "memory pricing for all capacities will continue to increase over the next six months" [^18][^24]. The prices in this table must therefore be re-checked at every purchase; soldered memory now comes at a premium.
 
 ---
 
