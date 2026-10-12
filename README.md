@@ -123,6 +123,12 @@ To preview the site locally, follow the [engine README](https://github.com/Damie
 
 ## Publish to the web
 
+The site is deployed by GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)): every push to `main` that changes
+content builds the site on Linux with the engine and uploads it incrementally over FTPS; run it by hand from the **Actions** tab
+(`Deploy site` → *Run workflow*, optional engine ref) after an engine change. Credentials are repository secrets
+(`DEPLOY_HOST`, `DEPLOY_USER`, `DEPLOY_PASSWORD`, `DEPLOY_REMOTE_PATH`). The local commands below still work where the
+Pagefind binary is allowed to run (Windows Smart App Control blocks it).
+
 Deploy credentials (FTPS or SFTP) belong in **this vault's `.env`** (see [`.env.example`](.env.example)).
 Use the `DEPLOY_*` variables; pick the protocol with `DEPLOY_PROTOCOL`.
 
