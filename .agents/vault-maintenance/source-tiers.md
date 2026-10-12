@@ -50,6 +50,7 @@ One domain per line. A domain matches itself and all its subdomains (`nvidia.com
 - europa.eu
 - exolabs.net
 - firecracker-microvm.github.io
+- frame.work
 - genai.owasp.org
 - github.com
 - githubusercontent.com
