@@ -62,7 +62,9 @@ jobs:
           FORCE_VAULT_PATH: "1"
           DEPLOY_PROTOCOL: ftps
           DEPLOY_PORT: "21"
-          # TLS certificate is verified: DEPLOY_HOST must be a name on the server certificate (the o2switch server name).
+          # TLS certificate is verified by default: DEPLOY_HOST must be a name on the server certificate.
+          # Hosts whose certificate does not match can opt out with the repository variable DEPLOY_FTPS_INSECURE=true.
+          DEPLOY_FTPS_INSECURE: ${{ vars.DEPLOY_FTPS_INSECURE || 'false' }}
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
