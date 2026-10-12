@@ -1,7 +1,7 @@
 ---
 title: "Frontmatter Schema"
 description: "Standard frontmatter fields for all vault notes — editorial metadata, pricing validity, and verification chain."
-last_modified: "2026-06-05"
+last_modified: "2026-10-11"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -65,6 +65,27 @@ HITL name, HITL URL, and default agent slug are defined in **`site.config.json`*
 - Pages whose `last_verified` is **2026-06-05** (and a few at 2026-06-09 / 2026-06-10) received that value from a **bulk stamp** (`scripts/backfill-verified.mjs --write`, commit 44abeab), not from a per-page verification. The human review behind it was a batch review of the June 2026 audit corrections. Treat these as a *baseline*, not as proof that every claim on the page was checked.
 - Pages whose `last_verified` is **2026-10-09 or later** were audited claim by claim during the 2026-10 refresh run (`.agents/vault-maintenance/reports/refresh-2026-10-09.md`) and corrected in PRs #17, #20, #21 and the Minor PR that followed. Their claims are tracked in `.agents/vault-maintenance/watchlist/`.
 - The baseline is overwritten progressively: each page gets its real date when a refresh run audits it. Since 2026-10-10 the backfill script refuses whole-vault writes unless `--all --baseline` is passed explicitly, and never writes `verified_hitl*` without `--hitl-approved`.
+
+---
+
+## Reading Prerequisites Field (optional)
+
+Part of the « lecture à trois étages » readability rule (`.agents/rules/editorial-basics.md`). Lists what a reader should read first to understand the page.
+
+```yaml
+prerequisites:
+  - "00-lexique/vram"
+  - "01-fondations/memory-bandwidth"
+  - "01-fondations/quantization-4bit-8bit"
+```
+
+| Rule | Detail |
+| :-- | :-- |
+| Optional | Add it to chapter articles whose body assumes prior notions. Lexicon entries and hubs usually do not need it. |
+| Count | 2–3 entries. Pick pages that genuinely help, not every related page. |
+| Format | Vault paths **without** the `.md` extension, quoted, in **FR form** (vault root path, never `en/...`). Every path must exist. |
+| EN mirror | Lists **the same FR-form paths**. The engine resolves the English titles for the `en/` page. |
+| Rendering | `starlight-obsidian-engine` renders it as a « 📚 Pour bien lire cette page » box. Engines that do not know the key ignore it. |
 
 ---
 
