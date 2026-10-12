@@ -3,7 +3,7 @@ title: 🧠 APU & Unified Memory
 description: "Comparison of Apple Silicon M5 Max / M5 Ultra chips, AMD Ryzen AI Max PRO 400 APUs and NVIDIA Grace Blackwell (DGX Spark) for large LLM inference."
 sidebar:
   order: 1
-last_modified: "2026-10-11"
+last_modified: "2026-10-12"
 prerequisites:
   - "00-lexique/vram"
   - "01-fondations/memory-bandwidth"
@@ -33,7 +33,7 @@ This memory goes up to **192 GB** on AMD Ryzen AI Max PRO 400 platforms, and up 
 Three ecosystems share the high-performance unified memory market as of Q4 2026:
 
 ### 1. Apple Silicon (Mac Studio M5, August 2026)
-Apple integrates CPU, GPU, and NPU on a single package, with **LPDDR5X** modules soldered immediately next to the silicon [^3][^4]. The Mac Studio M5 (announced 2026-08-25) replaces the 2025 M4 Max / M3 Ultra generation [^17].
+Apple integrates CPU, GPU, and NPU on a single package and houses the unified memory inside the chip's package, a design introduced with the M1 chip [^29]. The Mac Studio M5 (announced 2026-08-25) replaces the 2025 M4 Max / M3 Ultra generation [^17].
 
 *   **Mac Studio M5 Max** (18c CPU / 40c GPU): up to **128 GB** unified, **614 GB/s** bandwidth (460 GB/s with the 32-core GPU), from US$2,499 [^4][^17].
 *   **Mac Studio M5 Ultra** (up to 36c CPU / 80c GPU): **96, 256, or 512 GB** unified, **1.2 TB/s**, from US$5,499; the 512 GB version ships late October 2026 [^4][^17]. (Apple skipped the M4 Ultra generation: the M5 Ultra directly succeeds the 2025 M3 Ultra [^5].)
@@ -95,6 +95,9 @@ graph TD
 ```
 
 With unified memory, **CPU and GPU address the same physical pool**: no weight duplication and no PCIe transfer for tensors already in RAM [^11]. The trade-off: **shared** global bandwidth **lower** than dedicated GDDR7 VRAM, but **much larger capacity** per machine [^11].
+
+> [!note] Unified does not mean "closer"
+> "Unified" means there is **a single memory pool**, shared by the processor and the graphics part of the chip, not that this memory sits closer than elsewhere. Its placement varies. Apple has housed it inside the chip's own package since the M1 [^29]. With AMD (Ryzen AI Max), it is soldered onto the motherboard: Framework found no way to reach that data rate with removable memory modules [^30]. Bringing memory closer therefore helps speed, but is not enough. A graphics card's VRAM also sits right next to its GPU, and it is much faster (1,792 GB/s on an RTX PRO 6000 [^31], versus 273 to 1,200 GB/s for the machines on this page). The [[00-lexique/hbm|HBM]] of datacenter accelerators is faster still (4.8 TB/s on an NVIDIA H200 [^32]). The decisive advantage of unified memory for AI is the **capacity** available to the GPU (128 GB or more, versus 32 GB on the best consumer card), while **bandwidth** sets the generation speed in [[00-lexique/tokens-per-second|tokens per second]]. In practice: unified memory wins when the model is too big for the graphics card; when it fits, the graphics card stays faster.
 
 ---
 
@@ -196,3 +199,7 @@ For sovereign on-premise deployment:
 [^26]: NVIDIA Blog, *NVIDIA, Microsoft Kick Off a New Beginning for Windows PCs With RTX Spark and AI Agents* (Blackwell RTX GPU with up to 6,144 cores, Grace CPU with up to 20 cores, up to 128 GB of unified memory, 1 PFLOPS FP4; Acer, ASUS, Dell, HP, Lenovo, Microsoft, MSI, Gigabyte; laptops available for pre-order on 7 October and available on 16 October, compact form factors in November), 7 October 2026. [https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/](https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/)
 [^27]: Microsoft Devices Blog, *Pre-order our most powerful Surface devices ever* (Surface RTX Spark Dev Box: 128 GB of unified memory, $5,999 suggested price, pre-order on Microsoft.com in the United States only, deliveries from November; theoretical 1 PFLOPS FP4 with sparsity; GPU-addressable memory lower than the total), 7 October 2026. [https://blogs.windows.com/devices/2026/10/07/pre-order-our-most-powerful-surface-devices-ever/](https://blogs.windows.com/devices/2026/10/07/pre-order-our-most-powerful-surface-devices-ever/)
 [^28]: NVIDIA Blog, *NVIDIA DGX Spark 64GB Gives Developers More Ways to Build and Scale Local AI* (same GB10, from $4,999, models up to 100B parameters, OEMs Acer, ASUS, Dell, Gigabyte, HP, MSI from Friday 23 October; two units linked over QSFP = 128 GB, models up to 200B), 2 October 2026. [https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/](https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/)
+[^29]: Apple Newsroom, *Apple unleashes M1* ("a unified memory architecture that brings together high-bandwidth, low-latency memory into a single pool within a custom package", with no copying between multiple memory pools), 10 November 2020. [https://www.apple.com/newsroom/2020/11/apple-unleashes-m1/](https://www.apple.com/newsroom/2020/11/apple-unleashes-m1/)
+[^30]: Framework, *Introducing the Framework Desktop* (LPDDR5x soldered to reach the Ryzen AI Max's memory bandwidth; modular memory judged not technically feasible at high throughput on the 256-bit bus), 25 February 2025. [https://frame.work/blog/introducing-the-framework-desktop](https://frame.work/blog/introducing-the-framework-desktop)
+[^31]: NVIDIA, *RTX PRO 6000 Blackwell Workstation Edition* — product page (96 GB GDDR7 ECC, 1,792 GB/s), accessed 2026-10-12. [https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/](https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/)
+[^32]: NVIDIA, *H200 Tensor Core GPU* — product page (141 GB HBM3e, 4.8 TB/s), accessed 2026-10-12. [https://www.nvidia.com/en-us/data-center/h200/](https://www.nvidia.com/en-us/data-center/h200/)
