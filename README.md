@@ -128,6 +128,9 @@ content builds the site on Linux with the engine and uploads it incrementally ov
 (`Deploy site` → *Run workflow*, optional engine ref) after an engine change. Credentials are repository secrets
 (`DEPLOY_HOST`, `DEPLOY_USER`, `DEPLOY_PASSWORD`, `DEPLOY_REMOTE_PATH`). The local commands below still work where the
 Pagefind binary is allowed to run (Windows Smart App Control blocks it).
+The FTPS certificate is verified; if your FTP host name is not on the server certificate, add the repository **variable**
+`DEPLOY_FTPS_INSECURE=true` (Settings → Secrets and variables → Actions → *Variables*) to skip the check, at the cost of
+not authenticating the server.
 
 Deploy credentials (FTPS or SFTP) belong in **this vault's `.env`** (see [`.env.example`](.env.example)).
 Use the `DEPLOY_*` variables; pick the protocol with `DEPLOY_PROTOCOL`.

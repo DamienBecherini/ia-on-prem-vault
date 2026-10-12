@@ -35,17 +35,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           path: vault
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: DamienBecherini/starlight-obsidian-engine
           ref: ${{ inputs.engine_ref || 'main' }}
           path: engine
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
           cache: npm
@@ -62,7 +62,9 @@ jobs:
           FORCE_VAULT_PATH: "1"
           DEPLOY_PROTOCOL: ftps
           DEPLOY_PORT: "21"
-          DEPLOY_FTPS_INSECURE: "true"
+          # TLS certificate is verified by default: DEPLOY_HOST must be a name on the server certificate.
+          # Hosts whose certificate does not match can opt out with the repository variable DEPLOY_FTPS_INSECURE=true.
+          DEPLOY_FTPS_INSECURE: ${{ vars.DEPLOY_FTPS_INSECURE || 'false' }}
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
