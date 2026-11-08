@@ -3,7 +3,7 @@ title: "AnythingLLM"
 description: Local-first application for RAG, agents, documents, and workflows, with Ollama support and disableable telemetry.
 sidebar:
   order: 3
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -23,7 +23,7 @@ AnythingLLM is interesting when the need goes beyond simple local chat: document
 ## ✅ Strengths
 
 - **All-in-one**: documents, workspaces, agents, multi-user, vector DB, and pipelines[^1].
-- **Ollama support**: LLM and embeddings can go through Ollama in Docker[^3].
+- **Ollama support**: LLM and embeddings can go through Ollama in Docker[^3]; since v1.19.0 (October 2026), the Docker image can also embed a built-in local engine (Lemonade, on llama.cpp, accelerated with CUDA, Vulkan, or CPU), disabled by default and enabled via `ENABLE_BUILT_IN_LLM=true`, which avoids operating a separate Ollama server[^6].
 - **On-prem storage**: in self-host, data resides on user-operated infrastructure[^2].
 - **Air-gap possible**: if LLM, embeddings, and vector database are local[^2].
 - **Documented telemetry**: optional PostHog, disableable via `DISABLE_TELEMETRY=true`[^1].
@@ -56,7 +56,7 @@ AnythingLLM is relevant for:
 
 ## 📊 Project maturity
 
-Mature project, very followed on GitHub (about 67,000 stars, v1.17.0 as of 2026-10-01). The license is MIT for the self-hosted edition (Docker/server); since v1.15.0 (June 2026), the Desktop application offers a paid **AnythingLLM Pro** subscription that lifts the daily limits of the "Magic" features (dictation, actions on highlighted text, system-wide autocomplete) and removes watermarks from generated documents — Mintplex commits that "whatever is free today stays free", and Pro exists only on Desktop v1.15.0+, not on the Docker side[^4]. The self-hosted version remains sufficiently documented for an on-prem pilot.
+Mature project, very followed on GitHub (about 67,000 stars, v1.19.0 as of 2026-10-26). The license is MIT for the self-hosted edition (Docker/server); since v1.15.0 (June 2026), the Desktop application offers a paid **AnythingLLM Pro** subscription that lifts the daily limits of the "Magic" features (dictation, actions on highlighted text, system-wide autocomplete) and removes watermarks from generated documents — Mintplex commits that "whatever is free today stays free", and Pro exists only on Desktop v1.15.0+, not on the Docker side[^4]. The self-hosted version remains sufficiently documented for an on-prem pilot.
 
 ## 🔗 See also
 
@@ -72,3 +72,4 @@ Mature project, very followed on GitHub (about 67,000 stars, v1.17.0 as of 2026-
 [^3]: AnythingLLM Docker guide — Ollama as LLM and embedding provider. [https://github.com/Mintplex-Labs/anything-llm/blob/master/docker/HOW_TO_USE_DOCKER.md](https://github.com/Mintplex-Labs/anything-llm/blob/master/docker/HOW_TO_USE_DOCKER.md)
 [^4]: Mintplex Labs — *Release v1.15.0* (2026-06-25, "Pro removes the daily limits", "Pro is purely additive"), *AnythingLLM Pro overview* ("only available on AnythingLLM Desktop v1.15.0 and later", "Whatever is free today stays free — forever"), and *LICENSE* (MIT), accessed 2026-10-10. [https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.15.0](https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.15.0) · [https://docs.anythingllm.com/pro/overview](https://docs.anythingllm.com/pro/overview) · [https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE](https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE)
 [^5]: Mintplex Labs, *AnythingLLM and You.com bring real-time web search to everyone* ("Web search is on from your first chat, with no API key and nothing to setup"; You.com by default unless a provider is already configured, DuckDuckGo fallback), September 2026, read on 2026-10-10. [https://anythingllm.com/blog/you-com-search](https://anythingllm.com/blog/you-com-search)
+[^6]: Mintplex Labs — *Release v1.19.0* (2026-10-26, "Built-in LLM for Docker", "The built-in LLM is off by default", `-e ENABLE_BUILT_IN_LLM=true`). [https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.19.0](https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.19.0)

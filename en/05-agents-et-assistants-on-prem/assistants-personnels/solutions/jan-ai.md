@@ -3,7 +3,7 @@ title: "Jan.ai"
 description: Open-source ChatGPT alternative that runs models locally via llama.cpp, with a local OpenAI-compatible API server.
 sidebar:
   order: 4
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -27,7 +27,7 @@ It is less oriented toward "enterprise RAG" than Open WebUI or AnythingLLM, but 
 
 ## ✅ Strengths
 
-- **Simple desktop**: macOS (Apple Silicon; on Intel Macs, local models are no longer supported since v0.8.5, stay on 0.8.4), Windows, Linux[^5].
+- **Simple desktop**: macOS (Apple Silicon; on Intel Macs, local models are no longer supported since v0.8.5, and v0.8.4 remains exposed to the flaws fixed in 0.8.8 (including a one-click RCE): prefer another tool on these machines), Windows, Linux[^5].
 - **Local models**: llama.cpp, GGUF, GPU offload per platform[^2].
 - **Offline**: works without Internet after model download[^1][^2].
 - **Local API**: OpenAI-compatible endpoint for local integrations[^3].
@@ -37,7 +37,7 @@ It is less oriented toward "enterprise RAG" than Open WebUI or AnythingLLM, but 
 
 - **Limited document memory**: not primarily a RAG/knowledge base system.
 - **Optional cloud features**: user can connect OpenAI/Anthropic/Mistral/Groq, which completely changes the sovereignty verdict[^4].
-- **Local API to secure**: if listening moves from `127.0.0.1` to `0.0.0.0`, network, API key, and CORS must be managed; since v0.8.5, Jan rejects (403) requests whose host is not localhost, a private IP, or a "Trusted Hosts" entry — declare your DNS name or reverse proxy there[^3][^5].
+- **Local API to secure**: if listening moves from `127.0.0.1` to `0.0.0.0`, network, API key, and CORS must be managed. Since v0.8.5, Jan rejects (403) requests whose host is not localhost, a private IP, or a "Trusted Hosts" entry: declare your DNS name or your reverse proxy there[^3][^5]. Since v0.8.8 (2026-10-28), Jan also checks the origin of browser requests: a web application hosted on another machine (Open WebUI direct connection, for example) or a browser extension must be listed in "Trusted Hosts". Requests without a browser origin (SDKs, scripts, curl) are unchanged. The CORS switch, previously without effect, is now enforced and is found enabled after the update[^7].
 - **Not the best multi-user choice**: prefer Open WebUI or AnythingLLM for a team.
 
 ## 🔒 Sovereignty and privacy
@@ -61,7 +61,7 @@ Jan is ideal as:
 
 ## 📊 Project maturity
 
-Active, popular project on GitHub (about 45,000 stars, v0.8.6 as of 2026-10-09), built on Tauri and llama.cpp, the engine now being bundled in the installer. Since v0.8.5, the `jan` CLI (terminal agent) is installed separately and the executable is named `Jan-Desktop`: adapt your scripts[^5]. Distinguish Jan Desktop local from Jan Web / any cloud offerings in every client recommendation.
+Active, popular project on GitHub (about 45,000 stars, v0.8.8 as of 2026-10-28), built on Tauri and llama.cpp, the engine now being bundled in the installer. **Install at least v0.8.8**, a security update. Up to v0.8.7, a booby-trapped link in a model or MCP tool response allows one-click remote code execution (critical advisory). The application is also exposed to CSRF on the local API, path traversal outside the data folder, and command injection via the Claude Code launch[^7]. Since v0.8.5, the `jan` CLI (terminal agent) is installed separately and the executable is named `Jan-Desktop`: adapt your scripts[^5]. Distinguish Jan Desktop local from Jan Web / any cloud offerings in every client recommendation.
 
 ## 🔗 See also
 
@@ -78,3 +78,4 @@ Active, popular project on GitHub (about 45,000 stars, v0.8.6 as of 2026-10-09),
 [^4]: Jan GitHub README — local models and optional cloud integrations. [https://github.com/janhq/jan](https://github.com/janhq/jan)
 [^5]: janhq, *Jan v0.8.5* — release notes, Migration section (bundled llama.cpp, CUDA 13 / Vulkan, end of CUDA 11/12 backends, Intel Macs without local models, `Jan-Desktop` executable, separate `jan` CLI, Trusted Hosts GHSA-x6p8-7cp8-c3p6), 2026-10-08; v0.8.6 released on 2026-10-09. [https://github.com/janhq/jan/releases/tag/v0.8.5](https://github.com/janhq/jan/releases/tag/v0.8.5)
 [^6]: Jan Docs, *Privacy* ("Zero data collection until you say so": opt-in analytics at first launch, PostHog EU, random identifier, never conversations, files, or prompts), read on 2026-10-09. [https://www.jan.ai/docs/desktop/privacy](https://www.jan.ai/docs/desktop/privacy)
+[^7]: janhq, *Jan v0.8.8* — release notes (security update: links opened in the system browser, browser request origin check, effective CORS switch, paths confined to the data folder, Claude Code shell profile written safely; llama.cpp 0.7.0), 2026-10-28; advisories published on 2026-10-29 and fixed in 0.8.8, including GHSA-j6hv-vhmg-vpj6 (one-click RCE, critical), GHSA-66pg-h682-8cmf (CSRF on the local API, high), GHSA-9qq3-j6jv-qmpv (path traversal via thread_id, high) and GHSA-959c-grmq-2738 (command injection at Claude Code launch, high). [https://github.com/janhq/jan/releases/tag/v0.8.8](https://github.com/janhq/jan/releases/tag/v0.8.8) · [https://github.com/janhq/jan/security/advisories](https://github.com/janhq/jan/security/advisories)

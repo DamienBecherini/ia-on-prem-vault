@@ -3,7 +3,7 @@ title: "AnythingLLM"
 description: Application local-first pour RAG, agents, documents et workflows, avec support Ollama et télémétrie désactivable.
 sidebar:
   order: 3
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -23,7 +23,7 @@ AnythingLLM est intéressant quand le besoin dépasse le simple chat local : RAG
 ## ✅ Points forts
 
 - **All-in-one** : documents, workspaces, agents, multi-utilisateur, vector DB et pipelines[^1].
-- **Support Ollama** : LLM et embeddings peuvent passer par Ollama en Docker[^3].
+- **Support Ollama** : LLM et embeddings peuvent passer par Ollama en Docker[^3] ; depuis la v1.19.0 (octobre 2026), l'image Docker peut aussi embarquer un moteur local intégré (Lemonade, sur llama.cpp, accéléré en CUDA, Vulkan ou CPU), désactivé par défaut et activable via `ENABLE_BUILT_IN_LLM=true`, ce qui évite d'exploiter un serveur Ollama séparé[^6].
 - **Stockage on-prem** : en self-host, les données résident sur l'infrastructure opérée par l'utilisateur[^2].
 - **Air-gap possible** : si LLM, embeddings et vector database sont locaux[^2].
 - **Télémétrie documentée** : PostHog optionnel, désactivable via `DISABLE_TELEMETRY=true`[^1].
@@ -56,7 +56,7 @@ AnythingLLM est pertinent pour :
 
 ## 📊 Maturité du projet
 
-Projet mature et très suivi côté GitHub (environ 67 000 étoiles, v1.17.0 au 2026-10-01). La licence est MIT pour l'édition self-hosted (Docker/serveur) ; depuis la v1.15.0 (juin 2026), l'application Desktop propose un abonnement payant **AnythingLLM Pro** qui lève les limites quotidiennes des fonctions « Magic » (dictée, actions sur texte surligné, autocomplétion à l'échelle du système) et retire les filigranes des documents générés — Mintplex s'engage à ce que « ce qui est gratuit aujourd'hui le reste », et Pro n'existe que sur Desktop v1.15.0+, pas côté Docker[^4]. La version self-hosted reste suffisamment documentée pour un pilote on-prem.
+Projet mature et très suivi côté GitHub (environ 67 000 étoiles, v1.19.0 au 2026-10-26). La licence est MIT pour l'édition self-hosted (Docker/serveur) ; depuis la v1.15.0 (juin 2026), l'application Desktop propose un abonnement payant **AnythingLLM Pro** qui lève les limites quotidiennes des fonctions « Magic » (dictée, actions sur texte surligné, autocomplétion à l'échelle du système) et retire les filigranes des documents générés — Mintplex s'engage à ce que « ce qui est gratuit aujourd'hui le reste », et Pro n'existe que sur Desktop v1.15.0+, pas côté Docker[^4]. La version self-hosted reste suffisamment documentée pour un pilote on-prem.
 
 ## 🔗 Voir aussi
 
@@ -72,3 +72,4 @@ Projet mature et très suivi côté GitHub (environ 67 000 étoiles, v1.17.0 au 
 [^3]: AnythingLLM Docker guide — Ollama comme LLM et embedding provider. [https://github.com/Mintplex-Labs/anything-llm/blob/master/docker/HOW_TO_USE_DOCKER.md](https://github.com/Mintplex-Labs/anything-llm/blob/master/docker/HOW_TO_USE_DOCKER.md)
 [^4]: Mintplex Labs — *Release v1.15.0* (2026-06-25, « Pro removes the daily limits », « Pro is purely additive »), *AnythingLLM Pro overview* (« only available on AnythingLLM Desktop v1.15.0 and later », « Whatever is free today stays free — forever ») et *LICENSE* (MIT), consultés le 2026-10-10. [https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.15.0](https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.15.0) · [https://docs.anythingllm.com/pro/overview](https://docs.anythingllm.com/pro/overview) · [https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE](https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE)
 [^5]: Mintplex Labs, *AnythingLLM and You.com bring real-time web search to everyone* (« Web search is on from your first chat, with no API key and nothing to setup » ; You.com par défaut sauf fournisseur déjà configuré, repli DuckDuckGo), septembre 2026, lu le 2026-10-10. [https://anythingllm.com/blog/you-com-search](https://anythingllm.com/blog/you-com-search)
+[^6]: Mintplex Labs — *Release v1.19.0* (2026-10-26, « Built-in LLM for Docker », « The built-in LLM is off by default », `-e ENABLE_BUILT_IN_LLM=true`). [https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.19.0](https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.19.0)
