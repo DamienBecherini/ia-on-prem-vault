@@ -3,7 +3,7 @@ title: 💾 Le KV Cache & La Gestion du Contexte
 description: "Calcul de la mémoire du KV cache et moyens de la réduire : GQA, quantification, PagedAttention, puis MLA, attention sparse et attention linéaire."
 sidebar:
   order: 3
-last_modified: "2026-10-11"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -82,7 +82,7 @@ Prenons le modèle de référence **Llama 3.1 70B** [^4]. Ses caractéristiques 
 
 Calculons la VRAM nécessaire pour **une seule requête ($B=1$)** à différentes fenêtres de contexte :
 
-| Longueur du Contexte ($S$) | Taille du KV Cache (BF16) | Taille avec Quantification (FP8) [^8] | Taille avec NVFP4 (Blackwell) [^12] |
+| Longueur du Contexte ($S$) | Taille du KV Cache (BF16) | Taille avec Quantification (FP8) [^8] | Taille avec NVFP4 [^12][^18] |
 | :--- | :--- | :--- | :--- |
 | **8 192 tokens** | $\sim 2,68 \text{ Go}$ | $\sim 1,34 \text{ Go}$ | $\sim 0,67 \text{ Go}$ |
 | **32 768 tokens** (32K) | $\sim 10,73 \text{ Go}$ | $\sim 5,36 \text{ Go}$ | $\sim 2,68 \text{ Go}$ |
@@ -212,7 +212,7 @@ Au 11 octobre 2026, la liste officielle des modèles de vLLM inclut les architec
 Pour tout déploiement d'assistant on-premise, la gestion du KV cache dicte votre stratégie matérielle :
 
 1.  **Injectez le contexte, ne noyez pas le modèle :** Plutôt que de charger des fichiers entiers de 150 000 mots dans la fenêtre du LLM (ce qui saturerait votre VRAM dynamique), récupérez seulement les passages pertinents — via un index hiérarchique de mémoire (chunks Markdown + résumés, à la manière du Memory Tree local qu'OpenHuman proposait jusqu'au T2 2026 avant de passer à une mémoire hébergée)[^14], un RAG vectoriel, ou les deux combinés.
-2.  **Activez le FP8 KV Cache — ou NVFP4 sur Blackwell :** sur vLLM (`--kv-cache-dtype fp8`, ou `nvfp4` sur GPU Blackwell) ou LMDeploy, divisez par deux (FP8) ou par quatre (NVFP4) votre consommation dynamique de VRAM, en calibrant les scales si possible [^8][^12][^18].
+2.  **Activez le FP8 KV Cache, ou NVFP4 :** sur vLLM (`--kv-cache-dtype fp8`, ou `nvfp4` sur Blackwell et, depuis vLLM 0.32 (octobre 2026), aussi sur Ampere et Ada (SM8x) et sur Hopper (SM90)) ou LMDeploy, divisez par deux (FP8) ou par quatre (NVFP4) votre consommation dynamique de VRAM, en calibrant les scales si possible [^8][^12][^18].
 3.  **Surveillez le ratio Batch/Contexte :** Sur un serveur partagé par plusieurs collaborateurs en simultané, le KV Cache se multiplie par le nombre d'utilisateurs actifs ($B$) — dimensionner la VRAM en conséquence.
 
 ---
@@ -236,7 +236,7 @@ Pour tout déploiement d'assistant on-premise, la gestion du KV cache dicte votr
 [^15]: DeepSeek AI, *DeepSeek-V4.1-Flash* (« FP4 main KV caching », E2M1 + une échelle E4M3 par 16 canaux, 890 octets par token ≈ ¼ de V4-Flash, MIT), 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) ; Qwen, *Qwen3.8-27B* (contexte 262k), août 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B) ; Meta, *Muse Glimmer 30B* (131 072+ tokens), août 2026. [https://huggingface.co/meta-models/Muse-Glimmer-30B](https://huggingface.co/meta-models/Muse-Glimmer-30B)
 [^16]: NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16* (« Mamba-2 + MoE + Attention hybrid », jusqu'à 1M tokens), août 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16) ; Z.ai, *GLM-5.3-Flash* (« hybrid architecture combining sparse and linear attention »), 2026. [https://huggingface.co/zai-org/GLM-5.3-Flash](https://huggingface.co/zai-org/GLM-5.3-Flash)
 [^17]: vLLM Project, *Release v0.25.0* (retrait de l'implémentation PagedAttention historique au profit des backends d'attention V1 / Model Runner V2), 11 juillet 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.25.0](https://github.com/vllm-project/vllm/releases/tag/v0.25.0)
-[^18]: vLLM, *Cache configuration* (`kv_cache_dtype` : `auto`, `fp8`, `fp8_e4m3`, `fp8_e5m2`, `nvfp4`), consulté le 2026-10-10. [https://docs.vllm.ai/en/stable/api/vllm/config/cache/](https://docs.vllm.ai/en/stable/api/vllm/config/cache/) · vLLM Project, *Release v0.31.0* (KV cache NVFP4 par défaut sur SM100 pour DeepSeek-V4.1-Flash), 5 octobre 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
+[^18]: vLLM, *Cache configuration* (`kv_cache_dtype` : `auto`, `fp8`, `fp8_e4m3`, `fp8_e5m2`, `nvfp4`), consulté le 2026-10-10. [https://docs.vllm.ai/en/stable/api/vllm/config/cache/](https://docs.vllm.ai/en/stable/api/vllm/config/cache/) · vLLM Project, *Release v0.31.0* (KV cache NVFP4 par défaut sur SM100 pour DeepSeek-V4.1-Flash), 5 octobre 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0) · vLLM Project, *Release v0.32.0* (KV cache NVFP4 étendu aux SM8x, SM90 et SM12x), 18 octobre 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.32.0](https://github.com/vllm-project/vllm/releases/tag/v0.32.0)
 [^19]: DeepSeek-AI, *DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model* (arXiv:2405.04434 ; MLA compresse le KV cache en un vecteur latent, −93,3 % de KV cache par rapport à DeepSeek 67B, cache équivalent à un GQA à 2,25 groupes, meilleur que MHA ; cache par token = (d_c + d_h^R) × l éléments), mai 2024. [https://arxiv.org/abs/2405.04434](https://arxiv.org/abs/2405.04434)
 [^20]: DeepSeek-AI, *DeepSeek-V3 Technical Report* (arXiv:2412.19437 ; MLA et DeepSeekMoE, 671 B de paramètres dont 37 B activés par token), décembre 2024. [https://arxiv.org/abs/2412.19437](https://arxiv.org/abs/2412.19437) ; Moonshot AI, *Kimi-K2-Instruct* (mécanisme d'attention « MLA », 1T de paramètres, 32B activés, licence Modified MIT ; `config.json` : `DeepseekV3ForCausalLM`, 61 couches, `kv_lora_rank` 512, `qk_rope_head_dim` 64), juillet 2025. [https://huggingface.co/moonshotai/Kimi-K2-Instruct](https://huggingface.co/moonshotai/Kimi-K2-Instruct)
 [^21]: DeepSeek-AI, *DeepSeek-V3.2: Pushing the Frontier of Open Large Language Models* (arXiv:2512.02556, section 2.1 : lightning indexer, sélection de 2 048 tokens clé-valeur par token, attention principale O(L²) → O(Lk), DSA implémentée sur le mode MQA de MLA), décembre 2025. [https://arxiv.org/abs/2512.02556](https://arxiv.org/abs/2512.02556) ; DeepSeek AI, *DeepSeek-V3.2-Exp* (performances « on par with V3.1-Terminus », licence MIT), 2025. [https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp](https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp)
