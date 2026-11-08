@@ -82,7 +82,7 @@ La mémoire de travail standard d'un PC classique, branchée sur des slots de ca
 | :-- | :-- | :-- | :-- | :-- |
 | **Bande passante mémoire** | ~1 792 Go/s[^2] | 614 à 1 200 Go/s (M5 Max / M5 Ultra)[^3] | ~273 Go/s[^4] | ~80 à 100 Go/s (desktop dual-channel) |
 | **Borne théorique 70B Q4 (\~40 Go)** | ~44,8 tok/s | ~15,4 à 30 tok/s | ~6,8 tok/s | ~2 à 2,5 tok/s |
-| **Capacité machine typique (2026)** | 32 Go par carte grand public[^1] | jusqu'à 128 Go (M5 Max) / 512 Go (M5 Ultra, depuis août 2026)[^3] | jusqu'à 192 Go[^4] | 64 à 256 Go fréquents, plus possible selon carte mère |
+| **Capacité machine typique (2026)** | 32 Go par carte grand public[^1] | jusqu'à 128 Go (M5 Max) / 512 Go (M5 Ultra 36c/80c, option commandable depuis le 28 octobre 2026)[^3] | jusqu'à 192 Go[^4] | 64 à 256 Go fréquents, plus possible selon carte mère |
 | **Évolutivité matérielle** | élevée (ajout de GPU) | nulle (mémoire soudée) | nulle (mémoire soudée) | élevée (ajout DIMM) |
 | **Positionnement** | performance brute / multi-utilisateur | station locale très performante | compromis capacité locale + x86 | entrée de gamme / batch offline |
 
