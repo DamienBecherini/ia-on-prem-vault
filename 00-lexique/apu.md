@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -25,7 +25,7 @@ Les deux plateformes APU dominantes pour l'inférence LLM en 2026 :
 
 | Plateforme | Exemple | VRAM allouable | Bande passante |
 | :-- | :-- | :-- | :-- |
-| Apple Silicon | Mac Studio M3 Ultra | ~160 Go (sur 192 Go) | 819 Go/s |
+| Apple Silicon | Mac Studio M5 Max / M5 Ultra (depuis août 2026) | ~120 Go (sur 128 Go) / ~240 Go (sur 256 Go), via `sysctl` | 614 Go/s / 1,2 To/s |
 | AMD Gorgon Halo | Ryzen AI Max+ PRO 495 | 160 Go (BIOS, sur 192 Go) | ~273 Go/s |
 
 Ces chiffres permettent de faire tourner un modèle **70B quantifié** (~40 Go) avec une grande fenêtre de contexte sur une station silencieuse de bureau — ce qui est impossible avec un GPU grand public même haut de gamme (24 Go de VRAM max en grand public).
