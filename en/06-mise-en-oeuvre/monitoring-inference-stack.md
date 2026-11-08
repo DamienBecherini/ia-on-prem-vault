@@ -3,7 +3,7 @@ title: "📊 Monitoring the inference stack"
 description: Setting up Prometheus + Grafana monitoring for a vLLM or Ollama stack — GPU metrics, KV Cache, throughput, and operational alerts.
 sidebar:
   order: 6
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -366,7 +366,7 @@ litellm_settings:
 
 ### Recommended LLM observability stack
 
-For a sovereign on-prem infrastructure, two options:
+For a sovereign on-prem infrastructure, three options:
 
 | Tool | Type | Strengths | Deployment |
 | :-- | :-- | :-- | :-- |
