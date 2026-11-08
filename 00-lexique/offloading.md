@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - stack
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -19,29 +19,29 @@ Technique qui déplace une partie des poids d'un modèle hors de la VRAM (en RAM
 
 ## 📖 Définition détaillée
 
-Quand un modèle de 40 Go ne tient pas dans une VRAM de 24 Go, llama.cpp peut en charger 24 Go en VRAM et garder le reste en RAM. Lors de l'inférence, chaque couche "hors VRAM" doit être transférée via PCIe avant le calcul.
+Quand un modèle de 40 Go ne tient pas dans une VRAM de 24 Go, llama.cpp peut en charger une vingtaine de Go en VRAM et garder le reste en RAM. Lors de l'inférence, les couches "hors VRAM" sont calculées par le CPU directement en RAM (option `-ngl`) : seules les activations traversent le PCIe.
 
-Le goulot d'étranglement est le **débit PCIe** :
+Le goulot d'étranglement est la **bande passante de la RAM système** (~80–100 Go/s en DDR5 dual-channel) ; le PCIe ne devient limitant que si des poids sont recopiés vers le GPU à chaque passe :
 
 | Connexion | Bande passante réelle | Impact token/s |
 | :-- | :-- | :-- |
-| PCIe 5.0 x16 | ~60 Go/s (bi-directionnel) | Fort si beaucoup de couches offloa |
-| PCIe 4.0 x16 | ~30 Go/s | Significatif sur modèles 70B |
+| PCIe 5.0 x16 | ~64 Go/s par direction (~128 Go/s bidirectionnel) | Limitant si les poids sont recopiés à chaque passe |
+| PCIe 4.0 x16 | ~32 Go/s par direction (~64 Go/s bidirectionnel) | Idem, deux fois plus lent |
 | Thunderbolt 4 | ~5 Go/s | Rédhibitoire pour LLM |
 
-La formule rough de débit en offloading partiel (k couches en VRAM sur N totales) :
+Formule approchée du débit en offloading partiel (P_VRAM et P_RAM : Go de poids placés en VRAM et en RAM ; D : bande passante en Go/s) :
 
-$$\text{tokens/s} \approx \frac{1}{\frac{k}{D_{VRAM}} + \frac{N-k}{D_{PCIe}}}$$
+$$\text{tokens/s} \approx \frac{1}{\frac{P_{VRAM}}{D_{VRAM}} + \frac{P_{RAM}}{D_{RAM}}}$$
 
 ## 💡 Pourquoi c'est important en IA on-premise
 
-L'offloading est le cœur du **Scénario A (Labo Dev)** : une machine à moins de 3 500 € avec 16–24 Go de VRAM peut faire tourner un modèle 70B en Q4 (~40 Go) en offloadant les couches excédentaires en DDR5. Le débit sera de 3–8 tokens/s plutôt que 15–40 tokens/s, mais c'est suffisant pour développer et tester.
+L'offloading est le cœur du **Scénario A (Labo Dev)** : une machine à moins de 3 500 € avec 16–24 Go de VRAM peut faire tourner un modèle 70B en Q4 (~40 Go) en offloadant les couches excédentaires en DDR5. Le débit sera d'environ 4–5 tokens/s en borne théorique (8–12 rapportés par la communauté, voir [[04-blueprints/scenario-a-dev-lab|Scénario A]]) plutôt que 15–40 tokens/s, mais c'est suffisant pour développer et tester.
 
 ## ⚠️ Pièges fréquents
 
-- L'offloading et la **concurrence ne font pas bon ménage** : à 5 utilisateurs simultanés, chacun déclenche des transferts PCIe en parallèle, ce qui effondre le débit global.
+- L'offloading et la **concurrence ne font pas bon ménage** : à 5 utilisateurs simultanés, chaque requête relit les couches restées en RAM, déjà bornées par la bande passante DDR5, ce qui effondre le débit global.
 - Offloader sur SSD (au lieu de RAM) est possible mais 10× plus lent — à réserver au chargement initial, pas à l'inférence en temps réel.
-- Croire que plus de RAM compense toujours : passé 64–128 Go, la RAM n'est plus le goulot — c'est le PCIe.
+- Croire que plus de RAM compense toujours : la capacité permet de charger le modèle, mais le débit reste borné par la bande passante de la RAM (~80–100 Go/s en DDR5 dual-channel), pas par sa taille.
 
 ## 📚 Pour comprendre en profondeur
 

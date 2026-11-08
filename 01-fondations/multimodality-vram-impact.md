@@ -3,7 +3,7 @@ title: "🖼️ Multimodalité : Impact Matériel (VRAM & KV Cache)"
 description: "Ce que changent images, documents scannés et audio pour l'infrastructure : encodeurs visuels, coût en VRAM, lien avec le KV Cache et blueprints concernés."
 sidebar:
   order: 6
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -11,7 +11,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] En bref
-> Ajouter de la vision à un LLM ajoute un **encodeur visuel** qui consomme 1–4 Go de VRAM et transforme chaque image en centaines à milliers de tokens — l'équivalent d'un long texte en termes de KV Cache. Une image 1024×1024 peut occuper autant d'espace de contexte qu'un document de 2 000 mots.
+> Ajouter de la vision à un LLM ajoute un **encodeur visuel** qui consomme 1–4 Go de VRAM et transforme chaque image en centaines à milliers de tokens — l'équivalent d'un long texte en termes de KV Cache. Une image 1024×1024 (576 à 1 024 visual tokens) peut occuper autant d'espace de contexte qu'un texte de 450 à 800 mots.
 
 ---
 
@@ -41,16 +41,16 @@ L'encodeur et le projecteur sont des poids supplémentaires chargés **en plus**
 
 | Modèle VLM | LLM backbone | Encodeur visuel | VRAM totale (FP16) | Visual tokens / image |
 | :-- | :-- | :-- | :-- | :-- |
-| LLaVA 1.6 (Mistral 7B) | 7B | CLIP-ViT-L/14 (~0,3 Go) | ~15 Go | 256–576 |
-| Qwen2-VL 7B | 7B | SigLIP-SO400M (~0,4 Go) | ~16 Go | 256–1 024 (dynamique) |
-| Qwen2-VL 72B | 72B | SigLIP-SO400M (~0,4 Go) | ~144 Go | 256–1 024 (dynamique) |
+| LLaVA 1.6 (Mistral 7B) | 7B | CLIP-ViT-L/14, 304M (~0,6 Go) | ~15 Go | 256–576 |
+| Qwen2-VL 7B | 7B | ViT 675M (~1,35 Go) | ~16 Go | 256–1 024 (dynamique) |
+| Qwen2-VL 72B | 72B | ViT 675M (~1,35 Go) | ~144 Go | 256–1 024 (dynamique) |
 | Pixtral 12B (Mistral) | 12B | Vision encoder 400M (~0,8 Go) | ~26 Go | jusqu'à 1 024 |
-| Gemma 3 27B Vision | 27B | SigLIP (~0,4 Go) | ~54 Go | 256–729 |
+| Gemma 3 27B Vision | 27B | SigLIP 400M (~0,8 Go) | ~54 Go | 256–729 |
 
 *Sources : LLaVA [^1] · Qwen2-VL [^2]*
 
 > [!note] Ordres de grandeur
-> L'encodeur visuel lui-même pèse généralement **0,3 à 1 Go** de VRAM — négligeable comparé au backbone. L'impact mémoire dominant vient des **visual tokens injectés dans le KV Cache**, pas de l'encodeur.
+> L'encodeur visuel lui-même pèse généralement **0,6 à 1,4 Go** de VRAM en FP16 — négligeable comparé au backbone. L'impact mémoire dominant vient des **visual tokens injectés dans le KV Cache**, pas de l'encodeur.
 
 ---
 
@@ -63,29 +63,29 @@ Le KV Cache stocke les états intermédiaires de chaque token du contexte. Les v
 Pour un modèle à précision FP16 :
 
 ```
-KV Cache par token = 2 (K+V) × nombre_de_couches × dimension_tête × 2 octets
+KV Cache par token = 2 (K+V) × nombre_de_couches × têtes_KV × dimension_tête × 2 octets
 ```
 
-Pour un LLM 7B typique (32 couches, 128 dim de tête) :
+Pour un LLM 7B typique en GQA (Mistral 7B, backbone de LLaVA 1.6 : 32 couches, 8 têtes KV, 128 dim de tête) :
 
 ```
-≈ 2 × 32 × 128 × 2 = 16 384 octets ≈ 16 Ko par token
+≈ 2 × 32 × 8 × 128 × 2 = 131 072 octets ≈ 128 Kio (~0,13 Mo) par token — 512 Kio en MHA complet (32 têtes KV, ex. Llama 2 7B)
 ```
 
 ### Comparaison texte vs image
 
-| Input | Tokens typiques | KV Cache estimé (7B) |
+| Input | Tokens typiques | KV Cache estimé (7B GQA, ~0,13 Mo/token) |
 | :-- | :-- | :-- |
-| Document texte 500 mots | ~650 tokens | ~10 Mo |
-| Image 512×512 (LLaVA 1.6) | ~256 tokens | ~4 Mo |
-| Image 1024×1024 (LLaVA 1.6 HD) | ~576 tokens | ~9 Mo |
-| Image 1024×1024 (Qwen2-VL dynamique) | ~1 024 tokens | ~16 Mo |
-| PDF 10 pages converti en images | ~5 000–10 000 tokens | ~80–160 Mo |
+| Document texte 500 mots | ~650 tokens | ~85 Mo |
+| Image 512×512 (LLaVA 1.6) | ~256 tokens | ~34 Mo |
+| Image 1024×1024 (LLaVA 1.6 HD) | ~576 tokens | ~75 Mo |
+| Image 1024×1024 (Qwen2-VL dynamique) | ~1 024 tokens | ~134 Mo (~59 Mo sur le backbone Qwen2-VL 7B : 28 couches, 4 têtes KV) |
+| PDF 10 pages converti en images | ~5 000–10 000 tokens | ~0,65–1,3 Go |
 
 *Source : vLLM metrics [^4]*
 
 > [!warning] L'effet cumulatif dans un batch
-> En production avec plusieurs requêtes concurrentes (vLLM continuous batching), chaque image dans le batch occupe son slot KV Cache. Dix images 1024×1024 simultanées sur un Qwen2-VL 7B : ~160 Mo de KV Cache pour les images seules, avant tout contexte texte.
+> En production avec plusieurs requêtes concurrentes (vLLM continuous batching), chaque image dans le batch occupe son slot KV Cache. Dix images 1024×1024 simultanées sur un Qwen2-VL 7B : ~590 Mo de KV Cache pour les images seules (10 × 1 024 tokens × 56 Kio), avant tout contexte texte.
 
 ---
 
@@ -134,7 +134,7 @@ flowchart TD
 | D — Datacenter (8× GPU 80 Go) | ✅ Oui | Qwen2-VL 72B, Pixtral Large | Cas d'usage production haute concurrence |
 
 > [!note] Budgétisation VRAM
-> Pour ajouter de la vision à votre blueprint, comptez : **VRAM backbone + 0,5–1 Go (encodeur) + 20–30 % de marge KV Cache supplémentaire** pour les requêtes visuelles en batch.
+> Pour ajouter de la vision à votre blueprint, comptez : **VRAM backbone + 0,6–1,4 Go (encodeur en FP16) + 20–30 % de marge KV Cache supplémentaire** pour les requêtes visuelles en batch.
 
 ---
 
@@ -164,7 +164,7 @@ flowchart TD
 ## Sources et Références
 
 [^1]: Liu et al., *Visual Instruction Tuning (LLaVA)* (architecture : encodeur CLIP-ViT-L/14 + projecteur MLP + LLM backbone ; le poids de l'encodeur VRAM est calculé à partir de la taille des paramètres publiés). [https://arxiv.org/abs/2304.08485](https://arxiv.org/abs/2304.08485)
-[^2]: Alibaba Cloud, *Qwen2-VL model documentation* (tokens visuels dynamiques selon résolution, architecture SigLIP). [https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct)
+[^2]: Alibaba Cloud, *Qwen2-VL model documentation* (tokens visuels dynamiques selon résolution) ; P. Wang et al., *Qwen2-VL* (arXiv:2409.12191 : encodeur ViT d'environ 675 M de paramètres). [https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct)
 [^3]: OpenAI, *Whisper model card* (tailles tiny à large-v3, paramètres et empreinte mémoire indicative). [https://github.com/openai/whisper](https://github.com/openai/whisper)
 [^4]: vLLM Project, *Production Metrics — KV cache usage* (comportement du KV Cache en batch continu). [https://docs.vllm.ai/en/stable/usage/metrics/](https://docs.vllm.ai/en/stable/usage/metrics/)
 [^5]: Mistral AI, *Voxtral Mini 4B Realtime 2602* (transcription temps réel en streaming, délai 80 ms – 2,4 s, 480 ms recommandé ; 13 langues ; BF16, un GPU ≥ 16 Go ; vLLM ; Apache 2.0), Hugging Face, février 2026 ; *Voxtral Mini 4B Realtime Arabic*, 2026-10-08. [https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602](https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602) · [https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-Arabic](https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-Arabic)

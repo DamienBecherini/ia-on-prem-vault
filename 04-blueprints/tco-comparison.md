@@ -7,7 +7,7 @@ prices_valid_as_of: "2026-10"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
@@ -169,7 +169,7 @@ Les modèles open-weights de cette classe (DeepSeek V4, GLM-5.3, Kimi K3) sont d
 | :-- | :-- | :-- |
 | API cloud (500 M tok/mois, 2/3 en entrée, tarifs du 2026-10-09)[^1][^2] | ~120 $ (Haiku 5.5) à ~6 700 $/mois (GPT-5.5) ; ~11 700 $ (Fable 5.1) | Pas de garantie SLA custom ; le nœud HGX ne devient moins cher qu'au-delà de ~1 G tokens/mois face à GPT-5.5 (~0,6 G face à Fable 5.1) |
 | GPU dédié cloud (8× A100 80 Go on-demand, 2,79 $/GPU-h)[^6] | ~16 000 $/mois (8× H100 : ~23 000 $) | SLA fort, mais coût élevé |
-| GPU réservé cloud (1 an, H100 × 8)[^6] | ~11 000 $/mois (1,9 $/GPU-h) à ~32 000 $/mois selon l'hébergeur | Engagement 1 an ; demander un devis |
+| GPU réservé cloud (H100, Lambda 1-Click Clusters, 2 semaines à 1 an, 16 GPU min.)[^6] | ~32 000 – 36 000 $/mois ramenés à 8 GPU (5,54 – 6,16 $/GPU-h relevés le 2026-10-09) | Engagement ; au-dessus de l'on-demand chez Lambda : demander un devis |
 
 > [!note] Point de rentabilité D
 > Le nœud HGX devient compétitif au bout de 28 à 49 mois face au GPU dédié cloud on-demand (tarifs Lambda du 2026-10-09)[^6], et seulement au-delà d'environ 1 milliard de tokens par mois face à une API frontière. Sa vraie valeur n'est pas uniquement économique : c'est la **maîtrise totale** (données, modèles, SLA, évolution du modèle), le **contrôle des coûts sur 5 ans**, et la conformité réglementaire maximale.
@@ -199,9 +199,9 @@ Modèles 100B+                  Quelconque                → Blueprint C (proto
 | A (labo dev, 5 M in + 2,5 M out/mois) | ~55 – 85 € | ~2 000 – 3 100 € | ~60 € (Haiku 5.5) / ~1 160 € (Sonnet 5.5, GPT-6 Sol) / ~3 300 € (GPT-5.5) / ~5 800 € (Fable 5.1) |
 | B (PME, 34 M tok/mois) | ~155 € | ~5 580 € | ~260 € (Haiku 5.5) / ~670 € (DeepSeek V4.1 Flash) / ~1 160 € (Together AI Llama 3.3 70B) / ~5 200 € (Sonnet 5.5) / ~10 400 € (Opus 5.5) / ~14 900 € (GPT-5.5) / ~26 100 € (Fable 5.1) |
 | C (cluster, 34 M tok/mois, modèles 100B+) | ~285 – 400 € | ~10 300 – 14 400 € | ~670 € (DeepSeek V4.1 Flash) / ~2 460 € (DeepSeek V4 Pro, Together AI) / ~270 000 € (4× A100 on-demand 24 h/24) |
-| D (datacenter, 500 M tok/mois) | ~13 600 € | ~489 600 € | ~77 000 € (Sonnet 5.5) / ~221 000 € (GPT-5.5) / ~386 000 € (Fable 5.1) / ~365 000 – 540 000 € (8 GPU, de H100 réservés 1 an à 1,9 $/GPU-h à A100 on-demand) |
+| D (datacenter, 500 M tok/mois) | ~13 600 € | ~489 600 € | ~77 000 € (Sonnet 5.5) / ~221 000 € (GPT-5.5) / ~386 000 € (Fable 5.1) / ~540 000 € (8× A100 on-demand) / ~770 000 € (8× H100 on-demand) / ~1,07 M€ (8× H100 au tarif réservé 1-Click Lambda, 5,54 $/GPU-h) |
 
-*Calcul : coût cloud mensuel des sections A à D × 36 mois (Fable 5.1 et DeepSeek relevés le 2026-10-10) ; GPU cloud : ~11 000 $/mois réservés 1 an à 1,9 $/GPU-h (tableau D) et 8× A100 on-demand ≈ 16 300 $/mois (Lambda, 2026-10-09)[^6].*
+*Calcul : coût cloud mensuel des sections A à D × 36 mois (Fable 5.1 et DeepSeek relevés le 2026-10-10) ; GPU cloud : 8× A100 on-demand ≈ 16 300 $/mois, 8× H100 on-demand ≈ 23 300 $/mois et 8× H100 au tarif réservé 1-Click ≈ 32 350 $/mois à 5,54 $/GPU-h (Lambda, 2026-10-09)[^6].*
 
 > [!warning] Coûts cachés à ne pas oublier
 > - **Formation et onboarding** de l'équipe sur la stack on-premise

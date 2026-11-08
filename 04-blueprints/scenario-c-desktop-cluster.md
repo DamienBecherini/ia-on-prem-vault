@@ -3,7 +3,7 @@ title: "🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)"
 description: Le blueprint de l'évolutivité. Relier plusieurs Mac Mini ou PC compacts via Thunderbolt pour exécuter des modèles massifs inaccessibles sur une seule machine.
 sidebar:
   order: 3
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -32,7 +32,7 @@ L'idée est de créer une "ferme" de calcul posée sur une étagère.
 
 ## ⚙️ La Stack Logicielle et le Mécanisme
 
-Ce miracle matériel est rendu possible par l'inférence distribuée de **MLX** (`mlx.launch` avec un fichier d'hôtes, pipeline parallelism, RDMA sur Thunderbolt 5 depuis macOS 26.2) — l'orchestrateur **[[00-lexique/exo|Exo]]**, qui a popularisé l'approche (étudié dans le chapitre sur le [[03-stack-logicielle/clustering-exo-and-ray|Clustering IA]]), n'a plus de release depuis la v1.0.71 d'avril 2026, ne supporte que le backend MLX (Linux en CPU seulement) et doit être considéré comme non maintenu au T4 2026[^4][^5].
+Ce miracle matériel est rendu possible par l'inférence distribuée de **MLX** (`mlx.launch` avec un fichier d'hôtes, pipeline parallelism, RDMA sur Thunderbolt 5 depuis macOS 26.2) — l'orchestrateur **[[00-lexique/exo|Exo]]**, qui a popularisé l'approche (étudié dans le chapitre sur le [[03-stack-logicielle/clustering-exo-and-ray|Clustering IA]]), n'a plus de release depuis la v1.0.71 d'avril 2026, ne supporte que le backend MLX (Linux en CPU seulement) et doit être considéré comme au ralenti au T4 2026 (aucune release depuis avril, deux commits depuis juin 2026)[^4][^5].
 
 1.  Le runtime distribué (MLX, ou Exo) s'installe sur tous les Mac Mini.
 2.  Ils se découvrent via le réseau Thunderbolt (IP-over-Thunderbolt en Thunderbolt 4 ; RDMA en Thunderbolt 5 sous macOS 26.2).

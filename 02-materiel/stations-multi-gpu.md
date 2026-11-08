@@ -3,7 +3,7 @@ title: "🧩 Stations Multi-GPU : NVIDIA, PCIe et VRAM"
 description: "Comprendre quand plusieurs GPU discrets aident vraiment l'inférence IA on-premise, et pourquoi l'interconnexion décide souvent plus que le nombre de cartes."
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -67,7 +67,7 @@ Entre les stations workstation PCIe et les nœuds HGX datacenter, il existe une 
 | **NVIDIA L40S** | 48 Go GDDR6 | 864 Go/s | ✅ Oui (Ada Lovelace) | Inférence SaaS — meilleur coût/token en production |
 | **NVIDIA A100 (80 Go)** | 80 Go HBM2e | 2 000 Go/s | ❌ Non (FP16 max) | Legacy solide, disponible chez hébergeurs souverains FR |
 | **NVIDIA A100 (40 Go)** | 40 Go HBM2e | 1 555 Go/s | ❌ Non | Compromis capacité/coût pour modèles 13–34B |
-| RTX 6000 Ada / RTX 5090 | 48 / 32 Go | 960 / 1 792 Go/s | ⚠️ Partiel / ✅ (Blackwell) | On-prem client air-gapped (matériel fourni par le client) ; RTX 5090 ≥ 5 000 $ et peu disponible au T3 2026 [^11] |
+| RTX 6000 Ada / RTX 5090 | 48 / 32 Go | 960 / 1 792 Go/s | ✅ (Ada Lovelace) / ✅ (Blackwell) | On-prem client air-gapped (matériel fourni par le client) ; RTX 5090 ≥ 5 000 $ et peu disponible au T3 2026 [^11] |
 
 #### Le NVIDIA L40S — le "joyau caché" de l'inférence au T4 2026
 
