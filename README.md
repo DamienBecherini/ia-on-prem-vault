@@ -131,6 +131,11 @@ Pagefind binary is allowed to run (Windows Smart App Control blocks it).
 The FTPS certificate is verified; if your FTP host name is not on the server certificate, add the repository **variable**
 `DEPLOY_FTPS_INSECURE=true` (Settings → Secrets and variables → Actions → *Variables*) to skip the check, at the cost of
 not authenticating the server.
+The FTP service of the host sends only its leaf certificate, without the Let's Encrypt intermediate; FileZilla fills
+the gap, Node does not. [`scripts/ca/lets-encrypt-yr2-chain.pem`](scripts/ca/lets-encrypt-yr2-chain.pem) (YR2 and
+Root YR, both signed up to ISRG Root X1, valid until 2028) completes the chain through `NODE_EXTRA_CA_CERTS`, set by
+`scripts/delegate.mjs` and by the deploy workflow; the certificate check stays on. Refresh the file if Let's Encrypt
+switches intermediates (symptom: `unable to verify the first certificate`).
 
 Deploy credentials (FTPS or SFTP) belong in **this vault's `.env`** (see [`.env.example`](.env.example)).
 Use the `DEPLOY_*` variables; pick the protocol with `DEPLOY_PROTOCOL`.
