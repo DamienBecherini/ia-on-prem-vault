@@ -3,7 +3,7 @@ title: "🚀 Démarrer avec Ollama"
 description: Installation, premier modèle, test API et premières bonnes pratiques pour une inférence locale en moins de 15 minutes.
 sidebar:
   order: 3
-last_modified: "2026-10-11"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -236,13 +236,13 @@ curl http://localhost:11434/api/generate \
     Débit: {r['eval_count']/(r['eval_duration']/1e9):.1f} tok/s\")"
 ```
 
-Ordres de grandeur indicatifs (mesures communautaires sur llama.cpp, mi-2026, non sourcées individuellement ; sur Apple Silicon, Ollama ≥ 0.40 utilise MLX par défaut et les débits peuvent différer — mesurez avec la commande ci-dessus et le protocole de [[06-mise-en-oeuvre/evaluate-local-model|🧪 Évaluer un modèle local]]) :
+Ordres de grandeur indicatifs (mesures communautaires sur llama.cpp, mi-2026, non sourcées individuellement ; sur Apple Silicon, Ollama ≥ 0.40 utilise MLX par défaut et les débits peuvent différer — mesurez avec la commande ci-dessus et le protocole de [[06-mise-en-oeuvre/evaluate-local-model|🧪 Évaluer un modèle local]]). Les lignes Apple portent sur la génération précédente. Pour le Mac Studio M5 (depuis le 2026-08-25), aucune mesure n'est publiée. Les bornes théoriques sur un 70B Q4 (~40 Go) sont d'environ 15 tok/s en M5 Max (614 Go/s ÷ 40 Go) et d'environ 30 tok/s en M5 Ultra (1 200 Go/s ÷ 40 Go) :
 
 | Matériel | Modèle 8B Q4 | Modèle 70B Q4 |
 | :-- | :-- | :-- |
-| MacBook M4 Pro 48 Go | ~40–60 tok/s | ~10–15 tok/s |
-| Mac Studio M3 Ultra 192 Go | ~50–70 tok/s | ~12–18 tok/s |
-| AMD Ryzen AI Max PRO (192 Go) | ~25–35 tok/s | ~4–6 tok/s |
+| MacBook Pro M4 Pro 48 Go (génération 2024, 273 Go/s) | ~30–50 tok/s | ✗ (~40 Go de poids > ~36 Go allouables au GPU par défaut ; borne ≤ 6,8 tok/s même après `sysctl`) |
+| Mac Studio M3 Ultra 256 Go (génération 2025, 819 Go/s, remplacée par le M5 depuis le 2026-08-25) | ~50–70 tok/s | ~12–18 tok/s |
+| AMD Ryzen AI Max PRO (192 Go, 273 Go/s) | ~25–35 tok/s | ~4–6 tok/s |
 | RTX 4090 (24 Go VRAM) | ~50–80 tok/s | Partiel offloading |
 | CPU seul (pas de GPU) | ~3–8 tok/s | < 2 tok/s |
 
