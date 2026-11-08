@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - stack
-last_modified: "2026-11-08"
+last_modified: "2026-11-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -27,7 +27,7 @@ The bottleneck is **system RAM bandwidth** (~80–100 GB/s with dual-channel DDR
 | :-- | :-- | :-- |
 | PCIe 5.0 x16 | ~64 GB/s per direction (~128 GB/s bidirectional) | Limiting if weights are copied on every pass |
 | PCIe 4.0 x16 | ~32 GB/s per direction (~64 GB/s bidirectional) | Same, twice as slow |
-| Thunderbolt 4 | ~5 GB/s | Prohibitive for LLMs |
+| Thunderbolt 4 (external GPU) | ~4 GB/s (32 Gb/s PCIe tunnel) | Prohibitive if weights are copied on every pass; otherwise, only slows down initial loading |
 
 Approximate throughput formula for partial offloading (P_VRAM and P_RAM: GB of weights placed in VRAM and in RAM; D: bandwidth in GB/s):
 
