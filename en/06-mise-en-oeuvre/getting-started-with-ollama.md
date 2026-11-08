@@ -3,7 +3,7 @@ title: "🚀 Getting started with Ollama"
 description: Installation, first model, API testing, and initial best practices for local inference in under 15 minutes.
 sidebar:
   order: 3
-last_modified: "2026-10-11"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -236,13 +236,13 @@ curl http://localhost:11434/api/generate \
     Throughput: {r['eval_count']/(r['eval_duration']/1e9):.1f} tok/s\")"
 ```
 
-Indicative orders of magnitude (community measurements on llama.cpp, mid-2026, not individually sourced; on Apple Silicon, Ollama ≥ 0.40 uses MLX by default and throughputs may differ — measure with the command above and the protocol in [[06-mise-en-oeuvre/evaluate-local-model|🧪 Evaluate a local model]]):
+Indicative orders of magnitude (community measurements on llama.cpp, mid-2026, not individually sourced; on Apple Silicon, Ollama ≥ 0.40 uses MLX by default and throughputs may differ — measure with the command above and the protocol in [[06-mise-en-oeuvre/evaluate-local-model|🧪 Evaluate a local model]]). The Apple rows cover the previous generation. For the Mac Studio M5 (since 2026-08-25), no measurements have been published. The theoretical upper bounds for a 70B Q4 (~40 GB) are about 15 tok/s on the M5 Max (614 GB/s ÷ 40 GB) and about 30 tok/s on the M5 Ultra (1,200 GB/s ÷ 40 GB):
 
 | Hardware | 8B Q4 model | 70B Q4 model |
 | :-- | :-- | :-- |
-| MacBook M4 Pro 48 GB | ~40–60 tok/s | ~10–15 tok/s |
-| Mac Studio M3 Ultra 192 GB | ~50–70 tok/s | ~12–18 tok/s |
-| AMD Ryzen AI Max PRO (192 GB) | ~25–35 tok/s | ~4–6 tok/s |
+| MacBook Pro M4 Pro 48 GB (2024 generation, 273 GB/s) | ~30–50 tok/s | ✗ (~40 GB of weights > ~36 GB allocatable to the GPU by default; upper bound ≤ 6.8 tok/s even after `sysctl`) |
+| Mac Studio M3 Ultra 256 GB (2025 generation, 819 GB/s, replaced by the M5 since 2026-08-25) | ~50–70 tok/s | ~12–18 tok/s |
+| AMD Ryzen AI Max PRO (192 GB, 273 GB/s) | ~25–35 tok/s | ~4–6 tok/s |
 | RTX 4090 (24 GB VRAM) | ~50–80 tok/s | Partial offloading |
 | CPU only (no GPU) | ~3–8 tok/s | < 2 tok/s |
 

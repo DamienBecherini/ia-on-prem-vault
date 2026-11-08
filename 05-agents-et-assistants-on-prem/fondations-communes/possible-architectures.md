@@ -75,8 +75,8 @@ La plupart de ces outils exposent leurs actions via le **Model Context Protocol 
 | **Déclencheur** | Humain | Cron / webhook | Humain ou automatique |
 | **Autonomie d'action** | Basse (réponses) | Haute (tâches) | Variable |
 | **Mémoire requise** | Longue, personnelle | Courte, contexte de tâche | Les deux |
-| **Modèle LLM** | Gros (qualité réponse) | Petit OK (routage) + gros (synthèse) | Les deux |
-| **VRAM minimale** | 8–24 Go (modèle 7–14B) | 8 Go (modèle 7B suffit souvent) | 24+ Go |
+| **Modèle LLM** | Gros (qualité réponse) | Petit OK (routage) + coder 14B+ (édition de fichiers) | Les deux |
+| **VRAM minimale** | 8–24 Go (modèle 7–14B) | 12–16 Go (modèle coder 14B minimum dès que l'agent modifie des fichiers ; un 7B ne suffit que pour le routage) | 24+ Go |
 | **Complexité d'installation** | Faible à moyenne | Moyenne à haute | Haute |
 | **Risque de side effects** | Faible | Moyen (si mauvais guardrails) | Élevé sans guardrails |
 | **Souveraineté** | Variable selon outil | Maîtrisable si stack open | Maîtrisable si bien architecturé |
@@ -124,7 +124,7 @@ Les deux pistes partagent le même moteur d'inférence, mais n'ont pas les même
 | Piste | Modèle LLM type | VRAM minimale | Commentaire |
 | :-- | :-- | :-- | :-- |
 | Assistant Personnel (qualité dialogue) | 14B–70B | 16–48 Go | La qualité des réponses compte — éviter les < 7B |
-| Agent Custodien (routage + synthèse) | 7B pour le routage, 14–32B pour la synthèse | 8–24 Go | Le routage n'a pas besoin d'un gros modèle |
+| Agent Custodien (routage + édition) | 7B pour le seul routage, modèle coder 14B minimum pour éditer des fichiers, 32B+ recommandé | 12–24 Go | Le routage n'a pas besoin d'un gros modèle ; l'édition de fichiers, si |
 | Hybride | 14B–70B | 24–48 Go | Compromis entre les deux |
 
 Pour le sizing détaillé, voir les [[04-blueprints/scenario-a-dev-lab|Blueprints A–D]].
