@@ -3,7 +3,7 @@ title: "OpenHuman"
 description: "Harness d'agent open source (Rust + Tauri) à mémoire hébergée par défaut, abonnement managé optionnel et mode Privacy local-only ; à configurer en on-premise."
 sidebar:
   order: 1
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -71,7 +71,7 @@ Projet open-source (GPL-3.0) en évolution très rapide (v0.57.5 en juin 2026, v
 
 ## 📚 Sources
 
-[^1]: OpenHuman, *Architecture* — React + Tauri v2, cœur Rust, modes desktop / terminal / headless (lu le 2026-10-09). [https://github.com/tinyhumansai/openhuman/blob/main/gitbooks/developing/architecture/README.md](https://github.com/tinyhumansai/openhuman/blob/main/gitbooks/developing/architecture/README.md)
+[^1]: OpenHuman, *Architecture* — application de bureau React + Tauri v2, cœur Rust exécuté dans le même processus, frontend terminal autonome (`openhuman-tui`), binaire `openhuman-core` et bibliothèque embarquable (`openhuman-embed`) (lu le 2026-11-08). [https://tinyhumans.gitbook.io/openhuman/developing/architecture](https://tinyhumans.gitbook.io/openhuman/developing/architecture)
 [^2]: OpenHuman, *How memory works* — « The current memory has no memory tree … or Obsidian vault » ; moteurs TinyHumans Hosted / CortexDB, memory pack, purge des secrets (docs lues le 2026-10-09). [https://tinyhumans.gitbook.io/openhuman/features/memory](https://tinyhumans.gitbook.io/openhuman/features/memory)
 [^3]: OpenHuman README — "Local + managed services, upfront", Ollama/LM Studio, Composio et backend managé. [https://github.com/tinyhumansai/openhuman/blob/main/README.md](https://github.com/tinyhumansai/openhuman/blob/main/README.md)
 [^4]: OpenHuman, *Privacy mode* (`local_only`, appliqué dans le cœur Rust ; runtimes locaux autorisés), docs lues le 2026-10-09. [https://tinyhumans.gitbook.io/openhuman/features/privacy-mode](https://tinyhumans.gitbook.io/openhuman/features/privacy-mode)
