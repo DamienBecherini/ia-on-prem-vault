@@ -27,7 +27,7 @@ Quantization where weights are compressed to about 4 bits per parameter, dividin
 `Q4_K_M` means:
 - **Q4**: 4 bits per parameter (~0.5 effective byte with block metadata)
 - **K**: the "K-quants" family from llama.cpp. Weights are quantized in blocks of 32 values, grouped into super-blocks of 256, with scales that are themselves quantized. It is not K-means clustering.
-- **M**: "medium" block size — quality/speed compromise recommended for most uses
+- **M**: the "medium" variant of the tensor mix. Q4_K_M keeps some of the most sensitive tensors (half of `attention.wv` and `feed_forward.w2`) in Q6_K and puts the rest in Q4_K. The S, M and L suffixes denote this mix, not a block size. It is the quality/speed compromise recommended for most uses.
 
 Typical VRAM footprints in Q4_K_M:
 

@@ -27,7 +27,7 @@ Quantification où les poids sont compressés sur environ 4 bits par paramètre,
 `Q4_K_M` signifie :
 - **Q4** : 4 bits par paramètre (~0,5 octet effectif avec les métadonnées de blocs)
 - **K** : famille des « K-quants » de llama.cpp. Les poids sont quantifiés par blocs de 32 valeurs, regroupés en super-blocs de 256, avec des échelles elles-mêmes quantifiées. Il ne s'agit pas d'un clustering K-means.
-- **M** : taille de bloc "medium" — compromis qualité/vitesse recommandé pour la plupart des usages
+- **M** : variante « medium » du mélange de tenseurs. Q4_K_M garde en Q6_K une partie des tenseurs les plus sensibles (la moitié des `attention.wv` et `feed_forward.w2`) et met le reste en Q4_K. Les suffixes S, M et L désignent ce dosage, pas une taille de bloc. C'est le compromis qualité/vitesse recommandé pour la plupart des usages.
 
 Empreintes VRAM typiques en Q4_K_M :
 
