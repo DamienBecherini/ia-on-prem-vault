@@ -95,7 +95,7 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 | :--: | :--: | :--: | :-- |
 | 1 (dev / test) | 8–14B | < 3 500 € | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Labo Dev]] |
 | 1 (dev / test) | 70B avec offloading | < 3 500 € | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Labo Dev]] *(performances limitées)* |
-| 2–20 (PME, équipe de 10–50 personnes) | 70B | ~4 000 € à plus de 8 000 € | [[04-blueprints/scenario-b-sme-appliance|🏢 B — Appliance PME]] |
+| 2–20 (PME, équipe de 10–50 personnes) | 70B | 3 900 € à plus de 8 000 € TTC (oct. 2026, en hausse) | [[04-blueprints/scenario-b-sme-appliance|🏢 B — Appliance PME]] |
 | 2–20 (PME, équipe) | 200B+ / MoE | 10 000–22 000 € | [[04-blueprints/scenario-c-desktop-cluster|🖥️ C — Cluster Bureau]] |
 | 50+ (production) | 70B–400B | > 250 000 € | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
 | Contrainte SLA < 500 ms | Tout | — | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |

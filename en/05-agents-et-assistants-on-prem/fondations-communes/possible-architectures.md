@@ -75,8 +75,8 @@ Most of these tools expose their actions through the **Model Context Protocol (M
 | **Trigger** | Human | Cron / webhook | Human or automatic |
 | **Action autonomy** | Low (responses) | High (tasks) | Variable |
 | **Memory required** | Long, personal | Short, task context | Both |
-| **LLM model** | Large (response quality) | Small OK (routing) + large (synthesis) | Both |
-| **Minimum VRAM** | 8–24 GB (7–14B model) | 8 GB (7B often enough) | 24+ GB |
+| **LLM model** | Large (response quality) | Small OK (routing) + 14B+ coder (file editing) | Both |
+| **Minimum VRAM** | 8–24 GB (7–14B model) | 12–16 GB (14B coder model minimum as soon as the agent modifies files; a 7B is only enough for routing) | 24+ GB |
 | **Install complexity** | Low to medium | Medium to high | High |
 | **Side-effect risk** | Low | Medium (without guardrails) | High without guardrails |
 | **Sovereignty** | Varies by tool | Controllable if open stack | Controllable if well architected |
@@ -124,7 +124,7 @@ Both tracks share the same inference engine but do not have the same requirement
 | Track | Typical LLM model | Minimum VRAM | Comment |
 | :-- | :-- | :-- | :-- |
 | Personal Assistant (dialogue quality) | 14B–70B | 16–48 GB | Response quality matters — avoid < 7B |
-| Custodian Agent (routing + synthesis) | 7B for routing, 14–32B for synthesis | 8–24 GB | Routing does not need a large model |
+| Custodian Agent (routing + editing) | 7B for routing only, 14B coder model minimum for editing files, 32B+ recommended | 12–24 GB | Routing does not need a large model; file editing does |
 | Hybrid | 14B–70B | 24–48 GB | Compromise between the two |
 
 For detailed sizing, see [[04-blueprints/scenario-a-dev-lab|Blueprints A–D]].
