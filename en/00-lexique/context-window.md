@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-11-08"
+last_modified: "2026-11-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -37,7 +37,7 @@ A 128K context can **double** VRAM needs versus weights quantized to Q4 (~40 GB 
 
 ## 💡 Why it matters for on-prem AI
 
-On an APU with 128 GB allocated to the GPU, a 70B Q4 model (~40 GB) leaves ~88 GB for KV Cache: the native 128K-token window (~42 GB in BF16) fits for one request, with ~46 GB of headroom. Comfortable for most uses. On a 24 GB VRAM machine, KV Cache is the first knob to adjust.
+On a 128 GB APU (~120 GB allocatable to the GPU on Mac via `sysctl`), a 70B Q4 model (~40 GB) leaves ~80 GB for KV Cache: the native 128K-token window (~42 GB in BF16) fits for one request, with ~38 GB of headroom. Comfortable for most uses. On a 24 GB VRAM machine, KV Cache is the first knob to adjust.
 
 ## ⚠️ Common pitfalls
 

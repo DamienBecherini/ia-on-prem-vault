@@ -3,7 +3,7 @@ title: "⚙️ Configurer vLLM en production multi-GPU"
 description: Installation, configuration tensor parallel, déploiement multi-nœuds avec Ray, et bonnes pratiques de production pour vLLM sur GPU NVIDIA.
 sidebar:
   order: 5
-last_modified: "2026-11-08"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -98,7 +98,7 @@ vllm serve TheBloke/Llama-2-70B-GPTQ \
   --quantization gptq \
   --dtype float16
 
-# FP8 en ligne, sans checkpoint pré-quantifié (Hopper / Blackwell)
+# FP8 en ligne, sans checkpoint pré-quantifié (Ada Lovelace / Hopper / Blackwell)
 # vLLM ≥ 0.31 : la méthode s'appelle fp8_per_tensor ; l'ancien nom "fp8" redirige[^13]
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --quantization fp8_per_tensor
