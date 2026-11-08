@@ -3,7 +3,7 @@ title: 🧠 APU & Mémoire Unifiée
 description: "Comparatif des puces Apple Silicon M5 Max / M5 Ultra, des APU AMD Ryzen AI Max PRO 400 et de NVIDIA Grace Blackwell (DGX Spark) pour l'inférence de grands LLM."
 sidebar:
   order: 1
-last_modified: "2026-10-12"
+last_modified: "2026-11-08"
 prerequisites:
   - "00-lexique/vram"
   - "01-fondations/memory-bandwidth"
@@ -151,7 +151,7 @@ sudo sysctl iogpu.wired_limit_mb=122880
 | **FP4 natif** | ❌ | ❌ | ❌ | ✅ Blackwell [^15] |
 | **Scale-out** | ✅ [[00-lexique/thunderbolt|Thunderbolt 5]] [[00-lexique/rdma|RDMA]] (macOS 26.2+, jusqu'à 4 Mac Studio) [^17] | ✅ Thunderbolt 5 RDMA (macOS 26.2+, jusqu'à 4 Mac Studio) [^17] | ❌ | ✅ ConnectX-7 200 Gbps, jusqu'à 4 nœuds [^14] |
 | **OS** | macOS | macOS | **Linux / Windows** [^1][^2] | Linux (CUDA) [^14] |
-| **Tarif indicatif** | à partir de 2 499 $ US (base 48 Go) ; config 128 Go : prix sur mesure (CTO) à relever [^17] | à partir de 5 499 $ US (96 Go) ; 256 / 512 Go : prix sur mesure (CTO) à relever [^17] | **~3 900 €** (128 Go, rupture au 2026-10) · **~6 800–7 450 $** (192 Go, précommande, livraison nov. 2026) [^18][^20][^23] | **≈ 6 950 $** (128 Go, au 2026-10-02) · 4 999 $ (64 Go, OEM, dès le 2026-10-23) [^14][^16] |
+| **Tarif indicatif** | à partir de 2 499 $ US (base 36 Go) ; config 128 Go : prix sur mesure (CTO) à relever [^17] | à partir de 5 499 $ US (96 Go) ; 256 / 512 Go : prix sur mesure (CTO) à relever [^17] | **~3 900 €** (128 Go, rupture au 2026-10) · **~6 800–7 450 $** (192 Go, précommande, livraison nov. 2026) [^18][^20][^23] | **≈ 6 950 $** (128 Go, au 2026-10-02) · 4 999 $ (64 Go, OEM, dès le 2026-10-23) [^14][^16] |
 
 > [!note] Lecture des chiffres
 > Les débits Apple sont des **bornes théoriques memory-bound** (bande passante ÷ poids du modèle), pas des mesures : au 2026-10-09, aucun benchmark MLX du M5 Max / M5 Ultra avec méthodologie publiée n'était disponible, et **llama.cpp/Metal** est généralement un peu plus lent que MLX en decode pur. Les chiffres NVIDIA DGX Spark en inférence ne sont pas publiés officiellement — les claims des sources communautaires ne sont pas repris ici. NVIDIA publie en revanche un tableau de capacité (1 × 128 Go ≈ 200 B paramètres, 2 × ≈ 400 B, 4 × ≈ 700 B) sans débit associé [^14]. La méthode de calcul de la borne memory-bound est détaillée dans [[01-fondations/unified-memory-vs-ram-vs-vram|Mémoire unifiée vs RAM vs VRAM]].

@@ -3,7 +3,7 @@ title: "🖥️ Index — Le Matériel"
 description: "Point d'entrée du chapitre matériel : postes de travail, serveurs rack GPU et fabric réseau pour l'inférence on-premise."
 sidebar:
   order: 0
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -31,7 +31,7 @@ Le matériel dicte ce que vous pouvez charger en [[00-lexique/vram|VRAM]], quel 
 ## Fiches du chapitre
 
 1. [[02-materiel/apu-and-unified-memory|🧠 APU & Mémoire Unifiée]] — Apple M5, AMD Ryzen AI Max PRO 400, NVIDIA DGX Spark 64/128 Go
-2. [[02-materiel/stations-multi-gpu|🧩 Stations Multi-GPU]] — workstations PCIe, NVLink consumer
+2. [[02-materiel/stations-multi-gpu|🧩 Stations Multi-GPU]] — workstations PCIe (sans NVLink depuis Ada), switches PCIe, serveurs L40S / A100
 3. [[02-materiel/gpu-rack-servers|🏭 Serveurs rack GPU]] — 1U/2U/4U, HGX, choix RTX vs datacenter
 4. [[02-materiel/network-roce-infiniband-thunderbolt|🌐 Réseau IA]] — RoCE, InfiniBand, Thunderbolt
 

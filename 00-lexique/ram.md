@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -22,7 +22,7 @@ Mémoire principale de la machine, utilisée par le CPU pour l'OS et les applica
 
 Une barrette DDR5-5600 en dual-channel offre une bande passante d'environ **85–90 Go/s** en conditions idéales. C'est environ 15× moins qu'une VRAM GDDR6X (1 000+ Go/s) et 30× moins qu'une HBM3 de puce datacenter.
 
-En inférence LLM, cette différence se traduit directement en débit de génération : un modèle 7B entièrement en VRAM génère 40–60 tokens/s ; le même modèle partiellement en RAM tombe souvent à 5–15 tokens/s, car chaque couche doit transiter via PCIe (~30–60 Go/s effectifs).
+En inférence LLM, cette différence se traduit directement en débit de génération : un modèle 7B entièrement en VRAM génère 40–60 tokens/s ; le même modèle partiellement en RAM tombe souvent à 5–15 tokens/s, car les couches restées en RAM sont calculées par le CPU au rythme de la DDR5 (~85–90 Go/s), seules les activations transitant par PCIe.
 
 La RAM reste utile dans trois cas :
 
@@ -34,13 +34,13 @@ La RAM reste utile dans trois cas :
 
 ## 💡 Pourquoi c'est important en IA on-premise
 
-Le Scénario A (Labo Dev) repose explicitement sur l'offloading RAM pour faire tourner un modèle 70B sur une machine à 3 500 € sans GPU dédié puissant. C'est le point d'entrée accessible pour un développeur solo.
+Le Scénario A (Labo Dev) repose explicitement sur l'offloading RAM pour faire tourner un modèle 70B sur une machine à moins de 3 500 € équipée d'un seul GPU 24 Go : les couches qui ne tiennent pas en VRAM sont calculées par le CPU en RAM. C'est le point d'entrée accessible pour un développeur solo.
 
 ## ⚠️ Pièges fréquents
 
 - Croire que 128 Go de RAM remplace 128 Go de VRAM : le débit est 10–30× inférieur.
 - Ignorer le **page cache** : lire un GGUF de 140 Go depuis un SSD remplit la RAM disponible avant même le début de l'inférence, risquant d'OOM sur les machines serrées.
-- Oublier que l'offloading est catastrophique en **concurrence** : chaque utilisateur supplémentaire multiplie les transferts RAM↔GPU.
+- Oublier que l'offloading est catastrophique en **concurrence** : chaque utilisateur supplémentaire multiplie les lectures des couches restées en RAM, déjà bornées par la bande passante DDR5.
 
 ## 📚 Pour comprendre en profondeur
 

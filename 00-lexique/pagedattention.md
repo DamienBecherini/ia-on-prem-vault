@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -26,7 +26,7 @@ Résultat : le gaspillage mémoire passe de 60 à 80 % à moins de 4 % selon les
 C'est l'innovation qui a rendu possible le batching continu de vLLM — avec le cache de préfixes par blocs (actif par défaut), elle explique pourquoi vLLM surpasse Ollama en production multi-utilisateurs[^3]. Sans PagedAttention, le serveur gaspille de la VRAM et ne peut pas batche efficacement les requêtes concurrentes.
 
 ## ⚠️ Pièges fréquents
-- PagedAttention désigne aujourd'hui un **principe** plus qu'un composant : vLLM a retiré en v0.25 (juillet 2026) l'implémentation historique au profit des backends d'attention de son moteur V1, qui conservent la gestion du KV Cache par blocs (option `--block-size`, métrique `vllm:kv_cache_usage_perc`)[^1]. Les moteurs orientés poste de travail (llama.cpp/Ollama) reposent sur un autre modèle mémoire et n'offrent pas de batching continu équivalent.
+- PagedAttention désigne aujourd'hui un **principe** plus qu'un composant : vLLM a retiré en v0.25 (juillet 2026) l'implémentation historique au profit des backends d'attention de son moteur V1, qui conservent la gestion du KV Cache par blocs (option `--block-size`, métrique `vllm:kv_cache_usage_perc`)[^1]. Les moteurs orientés poste de travail reposent sur un autre modèle mémoire : `llama-server` (llama.cpp) fait bien du continuous batching (actif par défaut, slots parallèles `-np`), mais sans KV Cache paginé ni partage de blocs entre requêtes, et Ollama ne traite par défaut qu'une requête à la fois par modèle (`OLLAMA_NUM_PARALLEL=1`).
 - Ne résout pas les contraintes de capacité totale : si le modèle + les caches dépassent la VRAM totale, l'OOM survient quand même.
 
 ## 📚 Pour comprendre en profondeur

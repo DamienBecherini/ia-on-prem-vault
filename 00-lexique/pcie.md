@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -32,7 +32,7 @@ Débits maximaux selon la génération :
 À titre de comparaison, NVLink 4 (H100) offre 900 Go/s — soit ~14× plus qu'un lien PCIe 5.0 x16.
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Le coût des transferts PCIe influence fortement l'offloading CPU→GPU et est le facteur limitant du Tensor Parallelism sur des setups bureau sans NVLink.
+Le PCIe pèse sur l'offloading quand des poids sont recopiés vers le GPU (le calcul des couches restées en RAM est, lui, borné par la DDR5) et c'est le facteur limitant du Tensor Parallelism sur des setups bureau sans NVLink.
 
 ## ⚠️ Pièges fréquents
 - Le débit PCIe théorique est divisé par le nombre de GPU partagés sur le même contrôleur CPU.
