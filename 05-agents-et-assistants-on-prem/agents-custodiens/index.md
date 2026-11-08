@@ -5,7 +5,7 @@ description: >
   et attendent la validation humaine avant d'agir.
 sidebar:
   order: 1
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -28,7 +28,7 @@ Le cycle type est :
 2. **Exécution** — l'agent lit, analyse, génère des propositions
 3. **Branche + diff** — les changements sont isolés dans une branche Git dédiée
 4. **Rapport** — l'agent produit un résumé lisible (PR description, email, message)
-5. **Validation humaine** — you merge, or you don't
+5. **Validation humaine** — vous fusionnez, ou non
 6. **Publication** — uniquement si approuvé
 
 Les niveaux d'autonomie varient : de "rapport seulement" jusqu'à "commit automatique en branche feature" — mais jamais de merge ou de publication automatique sur `main` sans accord explicite.
