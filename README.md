@@ -47,14 +47,15 @@ Errors remain possible: check the cited sources before acting on a figure, and o
 
 ## Keeping it up to date
 
-The ecosystem moves weekly, so the vault is maintained by deterministic scripts plus agent skills, with a human merge at the end.
+The ecosystem moves weekly, so the vault is maintained by deterministic scripts plus an agent ([vault-watch-agent](https://github.com/DamienBecherini/vault-watch-agent)) and agent skills, with a human review and merge at the end.
 
 | What | How |
 | :-- | :-- |
 | Freshness | `freshness.yml` (Mondays): pages due for review, and claims of the [watchlist](.agents/vault-maintenance/watchlist/) past their **Recheck by** date |
 | Sources | `npm run audit:sources`: inventory and HTTP probe of every cited URL, tiers in [`source-tiers.md`](.agents/vault-maintenance/source-tiers.md) |
 | Ecosystem watch | `watch.yml` (every other Monday): releases, advisories, models and news from [`feeds.json`](.agents/vault-maintenance/feeds.json), pre-triaged into a `veille` issue; an `urgent` issue when a High / Critical advisory is not covered by the [version floors](.agents/vault-maintenance/version-floors.json) |
-| Processing | agent skill `vault-watch` ("traite la veille #N"): verify on primary sources, report, then one PR with FR + EN edits after the author's go-ahead |
+| Processing | [**vault-watch-agent**](https://github.com/DamienBecherini/vault-watch-agent), a LangGraph agent with a local web interface: triage, sourced corrections cross-checked against the whole guide, the author's review, FR + EN edits, the audits below, then one PR after a second go-ahead. The PR closes the watch issue. The agent loads the rules of the `vault-watch` skill below at run time; the skill alone ("traite la veille #N") still works by hand |
+| Reported errors | `vault-watch fix` in the same agent: each reported error is checked on primary sources and goes through the same review and PR |
 
 ```bash
 npm run audit:freshness:due                          # pages due + watchlist claims past "Recheck by"
