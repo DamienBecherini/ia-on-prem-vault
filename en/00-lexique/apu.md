@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -25,7 +25,7 @@ Dominant APU platforms for LLM inference in 2026:
 
 | Platform | Example | Allocatable VRAM | Bandwidth |
 | :-- | :-- | :-- | :-- |
-| Apple Silicon | Mac Studio M3 Ultra | ~160 GB (of 192 GB) | 819 GB/s |
+| Apple Silicon | Mac Studio M5 Max / M5 Ultra (since August 2026) | ~120 GB (of 128 GB) / ~240 GB (of 256 GB), via `sysctl` | 614 GB/s / 1.2 TB/s |
 | AMD Gorgon Halo | Ryzen AI Max+ PRO 495 | 160 GB (BIOS, of 192 GB) | ~273 GB/s |
 
 These figures allow running a **quantized 70B model** (~40 GB) with a large context window on a quiet desktop station — impossible on consumer high-end GPUs (24 GB VRAM max in consumer tiers).
