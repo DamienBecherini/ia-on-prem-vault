@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -26,7 +26,7 @@ Cette synchronisation est très fréquente (à chaque couche), donc elle nécess
 Exploité nativement par vLLM et TensorRT-LLM. La configuration `tp=8` sur un nœud HGX 8-GPU répartit le modèle sur les 8 puces.
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Réduit directement la latence de génération (tokens/s ×N) en production datacenter. Clé du Scénario D : permet aux 8 GPU d'un nœud HGX d'agir comme un seul accélérateur.
+Réduit la latence de génération en production datacenter : chaque GPU ne lit plus que 1/N des poids, mais les synchronisations à chaque couche (all-reduce via [[00-lexique/nccl|NCCL]]) rendent le gain sous-linéaire. Il reste inférieur à ×N, et d'autant plus que l'interconnexion est lente. Clé du Scénario D : permet aux 8 GPU d'un nœud HGX d'agir comme un seul accélérateur.
 
 ## ⚠️ Pièges fréquents
 - Inefficace sur PCIe seul (bus trop lent pour la synchronisation inter-GPU).
