@@ -8,7 +8,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -23,7 +23,7 @@ Wired interface providing up to 80 Gb/s bidirectional between machines—used to
 - **Thunderbolt 4**: up to 40 Gb/s bidirectional.
 - **Thunderbolt 5**: up to 80 Gb/s bidirectional.
 
-Between Macs, Thunderbolt emulates a very low-latency local IP network (IP-over-Thunderbolt). That bandwidth is enough for Exo [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] on models up to 600B+.
+Between Macs, Thunderbolt 4 provides a local IP network connection (IP-over-Thunderbolt); since macOS 26.2, Thunderbolt 5 adds RDMA (MLX's JACCL backend, also used by [[00-lexique/exo|Exo]]), to be enabled once with `rdma_ctl enable` in Recovery mode. That bandwidth is enough for Exo [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] on models up to 600B+.
 
 **In perspective:** a Thunderbolt 5 link at 80 Gb/s ≈ 10 GB/s—about a hundred times less than an [[00-lexique/nvlink|NVLink]] bus (1,800 GB/s). That is its fundamental limit.
 
@@ -31,7 +31,7 @@ Between Macs, Thunderbolt emulates a very low-latency local IP network (IP-over-
 Desktop solution to link several Mac minis into a quiet, economical cluster without investing in datacenter RoCE/InfiniBand networking.
 
 ## ⚠️ Common pitfalls
-- No native RDMA: latency remains far higher than NVLink or InfiniBand.
+- RDMA only on Thunderbolt 5 under macOS 26.2+ (Thunderbolt 4: IP only); even with RDMA, throughput and latency remain far from NVLink or InfiniBand.
 - TTFT degrades sharply on long prompts (prefill moves a lot of data).
 - Not a substitute for datacenter networking at high concurrency.
 

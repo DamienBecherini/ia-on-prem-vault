@@ -3,7 +3,7 @@ title: "🛠️ Scenario A: Dev Lab (GPU PC or unified memory)"
 description: Blueprint to get started with local AI at low cost. RTX PC with CPU offloading, or laptop/station with unified memory for better solo comfort.
 sidebar:
   order: 1
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -61,14 +61,14 @@ Rather than giving up with an *Out Of Memory (OOM)* error, the `llama.cpp` engin
 2.  It places the remaining layers (about 18 to 20 GB) in the motherboard's **system RAM**.
 
 ### ⚠️ The performance wall
-During response generation ([[00-lexique/decoding|Decoding]]), data must constantly travel back and forth between RAM, the processor, and the graphics card via the PCIe bus.
+During response generation ([[00-lexique/decoding|Decoding]]), the layers left in RAM are computed by the processor, at the speed of DDR5 RAM; only the activations travel over the PCIe bus.
 
 As explained in the chapter on [[01-fondations/unified-memory-vs-ram-vs-vram|VRAM vs RAM]], classic RAM is physically capped at about 80–100 GB/s. The result is immediate: generation speed collapses.
 On an RTX 4090 paired with 64 GB DDR5, a 70B Q4 model in CPU Offloading will generate **between 4 and 12 tokens per second** depending on the share of offloaded layers and the RAM: theoretical bound of ~4–5 t/s if half the weights travel through DDR5 (~100 GB/s, see [[01-fondations/memory-bandwidth|memory bandwidth]] — the ~2.5 t/s bound assumes the whole model goes through RAM), 8–12 t/s reported by unverified community feedback; the mechanism (`-ngl` option, GPU vs CPU layers) is documented by llama.cpp and Ollama[^1][^2]. It is readable (slightly below human reading speed), but unsuitable for serving a reactive application or several concurrent users.
 
 ### Why unified memory changes the experience
 
-On a [[00-lexique/unified-memory|unified memory]] machine, model weights are not split between fast VRAM and slow RAM connected by PCIe. CPU, GPU, and accelerators share the same memory pool. Bandwidth remains lower than a high-end NVIDIA card (RTX 5090: 1.8 TB/s; Mac Studio M5 Max: 614 GB/s, M5 Ultra: 1.2 TB/s)[^13], but it avoids the worst trap of the standard PC: constant round-trips between DDR5 RAM and VRAM.
+On a [[00-lexique/unified-memory|unified memory]] machine, model weights are not split between fast VRAM and slow RAM connected by PCIe. CPU, GPU, and accelerators share the same memory pool. Bandwidth remains lower than a high-end NVIDIA card (RTX 5090: 1.8 TB/s; Mac Studio M5 Max: 614 GB/s, M5 Ultra: 1.2 TB/s)[^13], but it avoids the worst trap of the standard PC: computing part of the model at the slow speed of DDR5 RAM.
 
 For a solo developer, this often makes the difference between *"I can test a quantized 70B and reason comfortably"* and *"I watch tokens arrive one by one"*.
 

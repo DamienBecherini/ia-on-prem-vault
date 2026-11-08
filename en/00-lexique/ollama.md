@@ -8,7 +8,7 @@ tags:
   - stack
 sidebar:
   order: 64
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 ---
@@ -25,7 +25,7 @@ Under the hood, Ollama relies on **llama.cpp** (C/C++) — aggressive [[00-lexiq
 
 ## 💡 Why it matters for on-prem AI
 
-- **Scenario A** (dev lab) and first steps of **Scenario B** (SMB): validate model, prompts, light RAG before switching to [[00-lexique/vllm|vLLM]].
+- **Scenario A** (dev lab) and first steps of **Scenario B** (SMB): validate model, prompts, light RAG before switching to [[00-lexique/vllm|vLLM]] on a GPU server (or staying on llama.cpp / MLX for a Mac or APU appliance).
 - Reference for [[06-mise-en-oeuvre/getting-started-with-ollama|Getting started with Ollama]] and [[06-mise-en-oeuvre/evaluate-local-model|evaluating a local model]] guides.
 - Local embedding models (`nomic-embed-text`, etc.) via the same API.
 

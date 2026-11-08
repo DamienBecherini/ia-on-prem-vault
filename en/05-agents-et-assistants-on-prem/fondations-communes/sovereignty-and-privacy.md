@@ -5,7 +5,7 @@ description: >
   GDPR/AI Act regulatory context, and practical checklist.
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -209,7 +209,7 @@ The AI vendor is no longer an American cloud but the **vendor itself**, hosting 
 | :-- | :-- | :-- |
 | Data transits through a third party | Yes (LLM vendor) | Yes (vendor, GDPR sub-processor) |
 | Infrastructure in France | ❌ Variable | ✅ Yes (SecNumCloud / HDS) |
-| Open-weights models | ❌ Proprietary | ✅ Mistral, Llama, etc. |
+| Open-weights models | ⚠️ Possible (Mistral, Llama, DeepSeek… via API) but served by a third party | ✅ Mistral, Llama, etc., on dedicated GPU |
 | Applicable to public procurement | ❌ Often no | ✅ Yes with adequate qualification |
 | Infrastructure cost | €0 (usage/token) | Shared (subscription) |
 

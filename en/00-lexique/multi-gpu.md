@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -25,7 +25,7 @@ Multi-GPU increases total memory capacity, throughput, or both. Gains depend dir
 | :-- | :-- | :-- |
 | PCIe x16 | ~64 GB/s (Gen5) | desktop builds, Exo |
 | NVLink (H100) | 900 GB/s | pro/datacenter nodes |
-| NVLink + NVSwitch (HGX) | 1,800 GB/s full fabric | HGX B200 clusters |
+| NVLink 5 + NVSwitch (HGX B200) | 1,800 GB/s per GPU (~14.4 TB/s aggregate across 8 GPUs) | HGX B200 nodes |
 
 Two parallelism strategies use multi-GPU: [[00-lexique/tensor-parallelism|Tensor Parallelism]] (splits work within a layer) and [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] (splits layers across nodes).
 

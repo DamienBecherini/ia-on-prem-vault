@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -21,7 +21,7 @@ The machine's primary memory, used by the CPU for the OS and applications. In lo
 
 A DDR5-5600 stick in dual-channel offers about **85–90 GB/s** bandwidth under ideal conditions. That is roughly 15× less than GDDR6X VRAM (1,000+ GB/s) and 30× less than datacenter HBM3.
 
-In LLM inference, this difference translates directly into generation throughput: a 7B model entirely in VRAM generates 40–60 tokens/s; the same model partly in RAM often falls to 5–15 tokens/s, because each layer must cross PCIe (~30–60 GB/s effective).
+In LLM inference, this difference translates directly into generation throughput: a 7B model entirely in VRAM generates 40–60 tokens/s; the same model partly in RAM often falls to 5–15 tokens/s, because the layers left in RAM are computed by the CPU at DDR5 speed (~85–90 GB/s), with only the activations crossing PCIe.
 
 RAM remains useful in three cases:
 
@@ -33,13 +33,13 @@ RAM remains useful in three cases:
 
 ## 💡 Why it matters for on-prem AI
 
-Scenario A (Dev Lab) explicitly relies on RAM offloading to run a 70B model on a ~€3,500 machine without a powerful dedicated GPU. It is the accessible entry point for a solo developer.
+Scenario A (Dev Lab) explicitly relies on RAM offloading to run a 70B model on a machine costing under €3,500 equipped with a single 24 GB GPU: the layers that do not fit in VRAM are computed by the CPU in RAM. It is the accessible entry point for a solo developer.
 
 ## ⚠️ Common pitfalls
 
 - Believing 128 GB of RAM replaces 128 GB of VRAM: throughput is 10–30× lower.
 - Ignoring **page cache**: reading a 140 GB GGUF from SSD fills available RAM before inference even starts, risking OOM on tight machines.
-- Forgetting that offloading is catastrophic under **concurrency**: each extra user multiplies RAM↔GPU transfers.
+- Forgetting that offloading is catastrophic under **concurrency**: each extra user multiplies the reads of the layers left in RAM, which are already bounded by DDR5 bandwidth.
 
 ## 📚 Go deeper
 

@@ -5,7 +5,7 @@ description: >
   concrète, contexte réglementaire RGPD/AI Act et checklist pratique.
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -209,7 +209,7 @@ Le prestataire IA n'est plus un cloud américain mais l'**éditeur lui-même**, 
 | :-- | :-- | :-- |
 | Données transitent chez un tiers | Oui (prestataire LLM) | Oui (éditeur, sous-traitant RGPD) |
 | Infrastructure en France | ❌ Variable | ✅ Oui (SecNumCloud / HDS) |
-| Modèles open-weights | ❌ Propriétaires | ✅ Mistral, Llama, etc. |
+| Modèles open-weights | ⚠️ Possibles (Mistral, Llama, DeepSeek… via API) mais servis par un tiers | ✅ Mistral, Llama, etc., sur GPU dédié |
 | Applicable aux marchés publics | ❌ Souvent non | ✅ Oui si qualification adéquate |
 | Coût infrastructure | 0 € (usage/token) | Partagé (abonnement) |
 

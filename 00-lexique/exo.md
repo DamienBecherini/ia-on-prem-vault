@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -16,12 +16,12 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 
 ## 📝 Définition courte
-Logiciel open-source qui transforme plusieurs machines ordinaires (Mac, PC, smartphones) en un cluster IA P2P capable de faire tourner des modèles massifs.
+Logiciel open-source qui relie plusieurs Mac Apple Silicon en un cluster IA P2P capable de faire tourner des modèles massifs ; au T4 2026, Exo repose uniquement sur MLX (Linux en CPU seulement, Windows non pris en charge).
 
 ## 📖 Définition détaillée
-Exo (développé par *Exo Labs*) utilise la découverte automatique sur le réseau local : chaque machine lance `uv run exo`, elles se détectent et fusionnent leur mémoire disponible. Le modèle est découpé en tranches de couches selon la stratégie [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] : la machine A calcule les premières couches, transmet le résultat à la machine B, etc.
+Exo (développé par *Exo Labs*) utilise la découverte automatique sur le réseau local : chaque machine lance `uv run exo`, elles se détectent et fusionnent leur mémoire disponible. Le modèle est réparti soit en tranches de couches ([[00-lexique/pipeline-parallelism|Pipeline Parallelism]] : la machine A calcule les premières couches, transmet le résultat à la machine B, etc.), soit en [[00-lexique/tensor-parallelism|Tensor Parallelism]] via RDMA Thunderbolt 5 ; Exo choisit automatiquement selon la bande passante mesurée entre nœuds.
 
-Particulièrement efficace sur Apple Silicon via des câbles [[00-lexique/thunderbolt|Thunderbolt]] (bande passante suffisante pour compenser la latence inter-machines).
+Les Mac sont reliés de préférence par des câbles [[00-lexique/thunderbolt|Thunderbolt 5]] (RDMA sous macOS 26.2+), seule liaison de bureau assez rapide pour compenser la latence inter-machines.
 
 ## 💡 Pourquoi c'est important en IA on-premise
 Permet de dépasser la limite d'une seule machine sans investissement datacenter. Un cluster de 4 à 8 Mac Mini peut accueillir des modèles de 200 à 600B+ inaccessibles sur une machine unique.
@@ -30,6 +30,7 @@ Permet de dépasser la limite d'une seule machine sans investissement datacenter
 - Un réseau Wi-Fi ou Ethernet 1 Gbps détruit les performances : le réseau devient le goulot.
 - Le TTFT explose sur les prompts longs (le prefill fait transiter beaucoup de données entre nœuds).
 - Mauvais support de la concurrence élevée : pas adapté à 50 utilisateurs simultanés.
+- Projet au ralenti : aucune release depuis la v1.0.71 (avril 2026) ; pour un cluster Mac neuf, comparer avec MLX distribué (`mlx.launch`), maintenu par Apple.
 
 ## 📚 Pour comprendre en profondeur
 1. [[03-stack-logicielle/clustering-exo-and-ray|🌐 Clustering IA : Exo et Ray]] *(le chapitre complet avec benchmarks et cas d'usage)*

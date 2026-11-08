@@ -8,7 +8,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -23,7 +23,7 @@ Interface câblée qui permet jusqu'à 80 Gb/s bidirectionnel entre machines —
 - **Thunderbolt 4** : jusqu'à 40 Gb/s bidirectionnel.
 - **Thunderbolt 5** : jusqu'à 80 Gb/s bidirectionnel.
 
-Entre Mac, Thunderbolt simule une connexion réseau IP locale (IP-over-Thunderbolt) à très faible latence. Cette bande passante est suffisante pour le [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] d'Exo sur des modèles jusqu'à 600B+.
+Entre Mac, Thunderbolt 4 fournit une connexion réseau IP locale (IP-over-Thunderbolt) ; depuis macOS 26.2, Thunderbolt 5 ajoute le RDMA (backend JACCL de MLX, utilisé aussi par [[00-lexique/exo|Exo]]), à activer une fois par `rdma_ctl enable` en mode Recovery. Cette bande passante est suffisante pour le [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] d'Exo sur des modèles jusqu'à 600B+.
 
 **En perspective :** un lien Thunderbolt 5 à 80 Gb/s ≈ 10 Go/s, soit cent fois moins qu'un bus [[00-lexique/nvlink|NVLink]] (1 800 Go/s). C'est sa limite fondamentale.
 
@@ -31,7 +31,7 @@ Entre Mac, Thunderbolt simule une connexion réseau IP locale (IP-over-Thunderbo
 Solution bureau pour relier plusieurs Mac Mini en cluster silencieux et économique, sans investir dans un réseau datacenter RoCE/InfiniBand.
 
 ## ⚠️ Pièges fréquents
-- Pas de RDMA natif : la latence reste bien supérieure à NVLink ou InfiniBand.
+- RDMA seulement en Thunderbolt 5 sous macOS 26.2+ (Thunderbolt 4 : IP uniquement) ; même en RDMA, débit et latence restent loin de NVLink ou InfiniBand.
 - Le TTFT se dégrade fortement sur les prompts longs (le prefill fait transiter beaucoup de données).
 - Pas un substitut au réseau datacenter pour la production à haute concurrence.
 

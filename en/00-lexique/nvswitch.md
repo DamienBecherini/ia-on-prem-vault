@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -20,7 +20,7 @@ NVIDIA chip that links all GPUs in an HGX node via [[00-lexique/nvlink|NVLink]],
 ## 📖 Detailed definition
 In a typical multi-GPU workstation on PCIe, GPUs communicate through the CPU bus — slow and asymmetric. NVSwitch replaces that topology with a non-blocking fabric: each GPU can send and receive data at full NVLink speed simultaneously to all others.
 
-An HGX B200 node (8 GPUs) embeds several NVSwitch chips that enable **1,800 GB/s** aggregate bidirectional bandwidth across the 8 chips — a prerequisite for efficient [[00-lexique/tensor-parallelism|Tensor Parallelism]].
+An HGX B200 node (8 GPUs) embeds several NVSwitch chips that give each GPU **1,800 GB/s** of bidirectional NVLink bandwidth to the others, i.e. ~14.4 TB/s aggregate across the 8 chips — a prerequisite for efficient [[00-lexique/tensor-parallelism|Tensor Parallelism]].
 
 **NVLink vs NVSwitch:** NVLink is the protocol/cable; NVSwitch is the routing chip that forms the complete fabric.
 

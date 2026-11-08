@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -20,7 +20,7 @@ Puce NVIDIA qui relie tous les GPU d'un nœud HGX entre eux via [[00-lexique/nvl
 ## 📖 Définition détaillée
 Dans une station multi-GPU classique sur PCIe, les GPU communiquent via le bus CPU — lent et asymétrique. NVSwitch remplace cette topologie par un fabric non bloquant : chaque GPU peut envoyer et recevoir des données à pleine vitesse NVLink simultanément vers tous les autres.
 
-Un nœud HGX B200 (8 GPU) embarque plusieurs NVSwitch qui permettent une bande passante agrégée de **1 800 Go/s** bidirectionnelle entre les 8 puces — condition nécessaire au [[00-lexique/tensor-parallelism|Tensor Parallelism]] efficace.
+Un nœud HGX B200 (8 GPU) embarque plusieurs NVSwitch qui donnent à chaque GPU **1 800 Go/s** de bande passante NVLink bidirectionnelle vers les autres, soit ~14,4 To/s agrégés pour les 8 puces — condition nécessaire au [[00-lexique/tensor-parallelism|Tensor Parallelism]] efficace.
 
 **NVLink vs NVSwitch :** NVLink est le protocole/câble ; NVSwitch est la puce de routage qui forme le fabric complet.
 

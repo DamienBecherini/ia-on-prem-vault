@@ -3,7 +3,7 @@ title: "Aider"
 description: Terminal-first, open-source, model-agnostic code agent capable of working directly with Ollama.
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -37,7 +37,7 @@ For a Markdown vault, it can reread pages, apply fixes, create commits on a bran
 - Weak local models can break edit format, miss precise replacements, or loop on a fix.
 - A 7B/8B generalist is acceptable for simple suggestions but too fragile for a custodian agent that actually modifies files.
 - For serious local work, aim at least at a **coder** 14B class model for small controlled fixes, and preferably 32B or more for multi-file audits, refactoring, or reliable complex Markdown editing.
-- Ollama silently truncates beyond its window (2k by default); Aider sets `num_ctx` itself, but the docs recommend running `OLLAMA_CONTEXT_LENGTH=8192 ollama serve` or setting `num_ctx` in `.aider.model.settings.yml`[^2].
+- Ollama silently truncates beyond its window (4,096 tokens by default on the server side as of Q4 2026); Aider sets `num_ctx` itself, but the docs recommend running `OLLAMA_CONTEXT_LENGTH=8192 ollama serve` or setting `num_ctx` in `.aider.model.settings.yml`[^2].
 - If a cloud provider is used, code goes to that provider.
 - Commands and allowed files must be controlled carefully.
 
