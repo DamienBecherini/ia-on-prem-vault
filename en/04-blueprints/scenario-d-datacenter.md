@@ -82,7 +82,6 @@ memory.used,memory.free,temperature.gpu,power.draw \
 **vLLM — native Prometheus metrics:**
 
 vLLM exposes a `/metrics` endpoint compatible with Prometheus. Key metrics (V1 engine names, re-read in the documentation on 2026-10-10; deprecated metrics are hidden one version later)[^10]:
-[^11]: vLLM Project, *Release v0.31.0* (`vllm preload`: daemon that keeps post-quantization weights in GPU memory across engine restarts, #56680, #58552), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
 
 | vLLM metric | Description |
 | :-- | :-- |

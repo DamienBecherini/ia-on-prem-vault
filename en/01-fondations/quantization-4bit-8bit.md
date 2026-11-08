@@ -3,7 +3,7 @@ title: 🗜️ Quantization (4-bit & 8-bit)
 description: Understand the mathematical physics of model compression (GGUF, AWQ, MXFP4) and the Perplexity vs VRAM trade-off.
 sidebar:
   order: 4
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -126,7 +126,7 @@ For sovereign on-premise local agent deployments:
 
 ## 📚 Sources and References
 
-[^1]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (quantification, compromis précision/mémoire), novembre 2023. [https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/](https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/)
+[^1]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (quantization, precision/memory trade-off), November 2023. [https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/](https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/)
 [^2]: NVIDIA Technical Blog, *Mastering LLM Techniques: Inference Optimization* (outliers, activation quantization), novembre 2023. [https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/](https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/)
 [^3]: ggml-org, *llama.cpp* (moteur GGUF, formats K-quant), 2026. [https://github.com/ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)
 [^4]: J. Wang et al., *Which Quantization Should I Use? A Unified Evaluation of llama.cpp Quantization on Llama-3.1-8B-Instruct* (arXiv:2601.14277), janvier 2026. [https://arxiv.org/abs/2601.14277](https://arxiv.org/abs/2601.14277)

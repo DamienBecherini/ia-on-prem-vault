@@ -3,7 +3,7 @@ title: "🧠 The Journey of a Prompt: How Does an LLM Work?"
 description: "Follow a prompt's journey from your keyboard to the answer, no magic: tokenization, prefill, KV Cache and decoding explained step by step."
 sidebar:
   order: 0
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -85,4 +85,4 @@ When a user complains that *"the AI is slow,"* you need to know which phase they
 > Now that you understand Decoding is limited by memory speed, continue to the chapter on [[01-fondations/memory-bandwidth|Memory Bandwidth]].
 
 ## 📚 Sources and References
-[^1]: Meta, *Llama 3.1 Model Card* (Architecture, vocabulaire 128 256 tokens, tokenizer Tiktoken), 2024. [GitHub — llama-models](https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md)
+[^1]: Meta, *Llama 3.1 Model Card* (Architecture, vocabulary of 128,256 tokens, Tiktoken tokenizer), 2024. [GitHub — llama-models](https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md)
