@@ -36,7 +36,7 @@ Reduces generation latency in datacenter production: each GPU only reads 1/N of 
 ## 📚 Go deeper
 1. [[04-blueprints/scenario-d-datacenter|🏢 Scenario D: Datacenter]] *(Tensor Parallelism + NVLink + Ray in practice)*
 2. [[03-stack-logicielle/clustering-exo-and-ray|🌐 AI Clustering: Exo and Ray]] *(comparison with Pipeline Parallelism)*
-3. [[02-materiel/stations-multi-gpu|🧩 Multi-GPU Workstations]] *(NVLink architecture that makes TP possible)*
+3. [[02-materiel/stations-multi-gpu|🧩 Multi-GPU Workstations]] *(why TP plateaus on PCIe and is only efficient with the NVLink / NVSwitch of SXM servers)*
 
 ## 🔗 See also
 - [[00-lexique/pipeline-parallelism|Pipeline Parallelism]]

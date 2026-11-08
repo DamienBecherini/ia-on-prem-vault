@@ -8,7 +8,7 @@ tags:
   - lexique
   - rag
   - agents
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -38,7 +38,7 @@ On a local machine, VRAM and memory bandwidth are limited. A Memory Tree helps k
 ## 📚 Go deeper
 
 1. [[03-stack-logicielle/rag-and-agents|RAG & Agents: Memory Tree approach]]
-2. [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] *(local-first Memory Tree example, hybrid cloud by default)*
+2. [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] *(popularized the pattern in its early versions; since 2026, CortexDB-hosted memory, no local Memory Tree)*
 
 ## 🔗 See also
 

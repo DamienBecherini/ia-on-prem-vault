@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -16,13 +16,13 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ## 📝 Short definition
 
-Open-source software that turns several ordinary machines (Mac, PC, smartphones) into a P2P AI cluster able to run very large models.
+Open-source software that links several Apple Silicon Macs into a P2P AI cluster able to run very large models; as of Q4 2026, Exo relies solely on MLX (Linux on CPU only, Windows not supported).
 
 ## 📖 Detailed definition
 
-Exo (by *Exo Labs*) uses automatic discovery on the local network: each machine runs `uv run exo`, they detect each other and merge available memory. The model is split into layer slices per [[00-lexique/pipeline-parallelism|Pipeline Parallelism]]: machine A runs early layers, passes activations to machine B, and so on.
+Exo (by *Exo Labs*) uses automatic discovery on the local network: each machine runs `uv run exo`, they detect each other and merge available memory. The model is distributed either as layer slices ([[00-lexique/pipeline-parallelism|Pipeline Parallelism]]: machine A runs early layers, passes activations to machine B, and so on), or via [[00-lexique/tensor-parallelism|Tensor Parallelism]] over Thunderbolt 5 RDMA; Exo chooses automatically based on the bandwidth measured between nodes.
 
-Especially effective on Apple Silicon over [[00-lexique/thunderbolt|Thunderbolt]] cables (enough bandwidth to offset inter-machine latency).
+Macs are preferably linked by [[00-lexique/thunderbolt|Thunderbolt 5]] cables (RDMA on macOS 26.2+), the only desktop link fast enough to offset inter-machine latency.
 
 ## 💡 Why it matters for on-prem AI
 
@@ -33,6 +33,7 @@ Lets you exceed a single machine’s limits without datacenter investment. A clu
 - Wi-Fi or 1 Gbps Ethernet destroys performance: the network becomes the bottleneck.
 - TTFT explodes on long prompts (prefill moves a lot of data between nodes).
 - Poor support for high concurrency: not suited to 50 simultaneous users.
+- Slowing project: no release since v1.0.71 (April 2026); for a new Mac cluster, compare with distributed MLX (`mlx.launch`), maintained by Apple.
 
 ## 📚 Go deeper
 

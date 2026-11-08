@@ -59,7 +59,7 @@ The `num_speculative_tokens` key (γ) controls how many tokens the draft model g
 
 ## 💡 Why it matters for on-prem AI
 
-For a sovereign stack with a single 70B model in service, speculative decoding can reduce perceived user latency (TTFT and generation time) without changing hardware — provided you have the memory capacity for the second model.
+For a sovereign stack with a single 70B model in service, speculative decoding can reduce the generation time perceived by users (inter-token latency) without changing hardware — provided you have the memory capacity for the second model. It does not improve [[00-lexique/ttft|TTFT]], which depends on prefill, and may even lengthen it slightly.
 
 It is particularly attractive on high-capacity blueprints ([[02-materiel/apu-and-unified-memory|128 GB+ unified memory]]) where loading a 1B–7B draft model adds only a few extra gigabytes.
 
