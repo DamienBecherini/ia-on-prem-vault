@@ -3,7 +3,7 @@ title: "LiteLLM"
 description: OpenAI-compatible gateway to route agents and applications to Ollama, vLLM, cloud providers, or internal models.
 sidebar:
   order: 4
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -32,7 +32,7 @@ This avoids rewriting the agent on every model change.
 - Not a model: it routes to backends.
 - Bad config = leak to cloud.
 - Logging/observability can capture prompts/responses if enabled without care[^3].
-- Adds a critical layer to secure: in 2026 LiteLLM suffered a series of exploited vulnerabilities, including three listed in CISA's KEV catalog (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822, all fixed from 1.84.0 onwards) and a critical privilege escalation (GHSA-7hp6-4w63-5g45, CVSS 9.9, an `internal_user` becomes `proxy_admin` and then executes commands on the host; fixed in 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1). As of Q4 2026, never deploy a version earlier than 1.84.0, and target 1.100.4 or the latest patch of your line[^4][^5].
+- Adds a critical layer to secure: in 2026 LiteLLM suffered a series of exploited vulnerabilities, including three listed in CISA's KEV catalog (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822, all fixed from 1.84.0 onwards) and a critical privilege escalation (GHSA-7hp6-4w63-5g45, CVSS 9.9, an `internal_user` becomes `proxy_admin` and then executes commands on the host; fixed in 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1). As of Q4 2026, never deploy a version earlier than 1.84.0. Version 1.100.4 fixes the September escalation, but the critical advisory of 2026-10-27 only patches the 1.103 to 1.106 lines: target at least 1.103.10 / 1.104.8 / 1.105.6 / 1.106.5. This is imperative with an Enterprise license (GHSA-w4c7-34wj-hqm8, CVSS 10.0: an unauthenticated request makes the proxy read a local file, for example `/proc/self/environ`, and exposes `LITELLM_MASTER_KEY` and the providers' keys; open-source deployments without a license are not affected). In all cases, restrict the proxy's outbound network access to the providers' endpoints and load the master key from a secrets manager rather than from the process environment[^4][^5][^9].
 - Version discipline: since 2026-06-29, only the four most recent stable minor lines receive patches (one minor per week, so roughly one month of coverage per line) — plan at least a monthly update; a frozen version is a vulnerable version[^6].
 - Supply chain: in March 2026, two PyPI releases (1.82.7 and 1.82.8) published by an attacker stole the host machine's secrets; the official Docker image was not affected[^7]. Install from the pinned official image or with hash-pinned dependencies, and rotate every secret held by the proxy if a compromised version was installed.
 - MCP surface: the proxy also embeds an MCP gateway; two of its vulnerabilities were exploited in 2026 (CVE-2026-42271, CVE-2026-59822). If the custodian agent does not use MCP through LiteLLM, do not expose these endpoints[^4].
@@ -77,3 +77,4 @@ Very widely used as a gateway (over 60,000 GitHub stars as of Q4 2026[^1]), Lite
 [^6]: LiteLLM, *Version Support Policy* (blog: from 2026-06-29, only the four most recent stable minor lines receive patches), 2026-06-20. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)
 [^7]: BerriAI, *Issue #24518* (PyPI releases 1.82.7 and 1.82.8 published outside CI by an attacker, host secret theft; proxy Docker image not affected), 2026-03-24. [https://github.com/BerriAI/litellm/issues/24518](https://github.com/BerriAI/litellm/issues/24518)
 [^8]: BerriAI, *LiteLLM Releases* (v1.104.2 published on 2026-10-08, cadence of one minor line per week), accessed 2026-10-09. [https://github.com/BerriAI/litellm/releases](https://github.com/BerriAI/litellm/releases)
+[^9]: BerriAI, *GHSA-w4c7-34wj-hqm8* (critical LiteLLM advisory, CVSS 10.0: unauthenticated file read on a proxy under an Enterprise license, exposing `LITELLM_MASTER_KEY` and the providers' keys; affected versions < 1.103.10 / < 1.104.8 / < 1.105.6 / < 1.106.5, fixed in 1.103.10 / 1.104.8 / 1.105.6 / 1.106.5; open source without a license not affected; recommendations: master key in a secrets manager, distinct `LITELLM_SALT_KEY`, outbound network access limited to the providers), 2026-10-27. [https://github.com/BerriAI/litellm/security/advisories/GHSA-w4c7-34wj-hqm8](https://github.com/BerriAI/litellm/security/advisories/GHSA-w4c7-34wj-hqm8)
