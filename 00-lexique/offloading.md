@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - stack
-last_modified: "2026-11-08"
+last_modified: "2026-11-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -27,7 +27,7 @@ Le goulot d'étranglement est la **bande passante de la RAM système** (~80–10
 | :-- | :-- | :-- |
 | PCIe 5.0 x16 | ~64 Go/s par direction (~128 Go/s bidirectionnel) | Limitant si les poids sont recopiés à chaque passe |
 | PCIe 4.0 x16 | ~32 Go/s par direction (~64 Go/s bidirectionnel) | Idem, deux fois plus lent |
-| Thunderbolt 4 | ~5 Go/s | Rédhibitoire pour LLM |
+| Thunderbolt 4 (GPU externe) | ~4 Go/s (tunnel PCIe 32 Gb/s) | Rédhibitoire si les poids sont recopiés à chaque passe ; sinon, ne ralentit que le chargement initial |
 
 Formule approchée du débit en offloading partiel (P_VRAM et P_RAM : Go de poids placés en VRAM et en RAM ; D : bande passante en Go/s) :
 

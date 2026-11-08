@@ -1,7 +1,7 @@
 ---
 title: 🚀 Index Zero to Hero
 description: "Point d'entrée de la formation Zero to Hero sur l'IA on-premise : pourquoi l'héberger en local et sommaire du vault, des fondations à la mise en œuvre."
-last_modified: "2026-11-08"
+last_modified: "2026-11-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -93,8 +93,8 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 
 | Utilisateurs simultanés | Taille de modèle | Budget matériel | → Blueprint |
 | :--: | :--: | :--: | :-- |
-| 1 (dev / test) | 8–14B | < 3 500 € | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Labo Dev]] |
-| 1 (dev / test) | 70B avec offloading | < 3 500 € | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Labo Dev]] *(performances limitées)* |
+| 1 (dev / test) | 8–14B | 1 500 à 3 700 € (oct. 2026 ; > 6 000 € avec une RTX 5090 neuve) | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Labo Dev]] |
+| 1 (dev / test) | 70B avec offloading | 1 500 à 2 500 € (GPU 24 Go d'occasion, oct. 2026) | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Labo Dev]] *(performances limitées)* |
 | 2–20 (PME, équipe de 10–50 personnes) | 70B | 3 900 € à plus de 8 000 € TTC (oct. 2026, en hausse) | [[04-blueprints/scenario-b-sme-appliance|🏢 B — Appliance PME]] |
 | 2–20 (PME, équipe) | 200B+ / MoE | 10 000–22 000 € | [[04-blueprints/scenario-c-desktop-cluster|🖥️ C — Cluster Bureau]] |
 | 50+ (production) | 70B–400B | > 250 000 € | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
