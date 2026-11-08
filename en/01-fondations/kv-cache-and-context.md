@@ -3,7 +3,7 @@ title: 💾 KV Cache & Context Management
 description: "Computing KV cache memory and the ways to reduce it: GQA, quantization, PagedAttention, then MLA, sparse attention and linear attention."
 sidebar:
   order: 3
-last_modified: "2026-10-11"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -82,7 +82,7 @@ Take the reference model **Llama 3.1 70B** [^4]. Its physical characteristics ar
 
 Let's calculate the VRAM required for **a single request ($B=1$)** at different context windows:
 
-| Context length ($S$) | KV Cache size (BF16) | Size with quantization (FP8) [^8] | Size with NVFP4 (Blackwell) [^12] |
+| Context length ($S$) | KV Cache size (BF16) | Size with quantization (FP8) [^8] | Size with NVFP4 [^12][^18] |
 | :--- | :--- | :--- | :--- |
 | **8,192 tokens** | $\sim 2.68 \text{ GB}$ | $\sim 1.34 \text{ GB}$ | $\sim 0.67 \text{ GB}$ |
 | **32,768 tokens** (32K) | $\sim 10.73 \text{ GB}$ | $\sim 5.36 \text{ GB}$ | $\sim 2.68 \text{ GB}$ |
@@ -212,7 +212,7 @@ As of 11 October 2026, vLLM's official model list includes the DeepSeek-V2, Deep
 For any on-premise assistant deployment, KV cache management dictates your hardware strategy:
 
 1.  **Inject context, don't drown the model:** Rather than loading entire 150,000-word files into the LLM window (which would saturate dynamic VRAM), retrieve only relevant passages—via a hierarchical memory index (Markdown chunks + summaries, in the manner of the local Memory Tree that OpenHuman offered until Q2 2026 before moving to hosted memory)[^14], vector RAG, or both combined.
-2.  **Enable FP8 KV Cache — or NVFP4 on Blackwell:** on vLLM (`--kv-cache-dtype fp8`, or `nvfp4` on Blackwell GPUs) or LMDeploy, halve (FP8) or quarter (NVFP4) your dynamic VRAM consumption, calibrating scales when possible [^8][^12][^18].
+2.  **Enable FP8 KV Cache, or NVFP4:** on vLLM (`--kv-cache-dtype fp8`, or `nvfp4` on Blackwell and, since vLLM 0.32 (October 2026), also on Ampere and Ada (SM8x) and on Hopper (SM90)) or LMDeploy, halve (FP8) or quarter (NVFP4) your dynamic VRAM consumption, calibrating scales when possible [^8][^12][^18].
 3.  **Watch the batch/context ratio:** On a server shared by several collaborators at once, the KV Cache multiplies by the number of active users ($B$)—size VRAM accordingly.
 
 ---
@@ -236,7 +236,7 @@ For any on-premise assistant deployment, KV cache management dictates your hardw
 [^15]: DeepSeek AI, *DeepSeek-V4.1-Flash* ("FP4 main KV caching", E2M1 + one E4M3 scale per 16 channels, 890 bytes per token ≈ ¼ of V4-Flash, MIT), 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash); Qwen, *Qwen3.8-27B* (262k context), August 2026. [https://huggingface.co/Qwen/Qwen3.8-27B](https://huggingface.co/Qwen/Qwen3.8-27B); Meta, *Muse Glimmer 30B* (131,072+ tokens), August 2026. [https://huggingface.co/meta-models/Muse-Glimmer-30B](https://huggingface.co/meta-models/Muse-Glimmer-30B)
 [^16]: NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16* ("Mamba-2 + MoE + Attention hybrid", up to 1M tokens), August 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16); Z.ai, *GLM-5.3-Flash* ("hybrid architecture combining sparse and linear attention"), 2026. [https://huggingface.co/zai-org/GLM-5.3-Flash](https://huggingface.co/zai-org/GLM-5.3-Flash)
 [^17]: vLLM Project, *Release v0.25.0* (removal of the legacy PagedAttention implementation in favor of the V1 attention backends / Model Runner V2), 11 July 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.25.0](https://github.com/vllm-project/vllm/releases/tag/v0.25.0)
-[^18]: vLLM, *Cache configuration* (`kv_cache_dtype`: `auto`, `fp8`, `fp8_e4m3`, `fp8_e5m2`, `nvfp4`), consulted 2026-10-10. [https://docs.vllm.ai/en/stable/api/vllm/config/cache/](https://docs.vllm.ai/en/stable/api/vllm/config/cache/) · vLLM Project, *Release v0.31.0* (NVFP4 KV cache by default on SM100 for DeepSeek-V4.1-Flash), 5 October 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
+[^18]: vLLM, *Cache configuration* (`kv_cache_dtype`: `auto`, `fp8`, `fp8_e4m3`, `fp8_e5m2`, `nvfp4`), consulted 2026-10-10. [https://docs.vllm.ai/en/stable/api/vllm/config/cache/](https://docs.vllm.ai/en/stable/api/vllm/config/cache/) · vLLM Project, *Release v0.31.0* (NVFP4 KV cache by default on SM100 for DeepSeek-V4.1-Flash), 5 October 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0) · vLLM Project, *Release v0.32.0* (NVFP4 KV cache extended to SM8x, SM90 and SM12x), 18 October 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.32.0](https://github.com/vllm-project/vllm/releases/tag/v0.32.0)
 [^19]: DeepSeek-AI, *DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model* (arXiv:2405.04434; MLA compresses the KV cache into a latent vector, −93.3% KV cache compared with DeepSeek 67B, cache equivalent to GQA with 2.25 groups, better than MHA; per-token cache = (d_c + d_h^R) × l elements), May 2024. [https://arxiv.org/abs/2405.04434](https://arxiv.org/abs/2405.04434)
 [^20]: DeepSeek-AI, *DeepSeek-V3 Technical Report* (arXiv:2412.19437; MLA and DeepSeekMoE, 671B parameters with 37B activated per token), December 2024. [https://arxiv.org/abs/2412.19437](https://arxiv.org/abs/2412.19437); Moonshot AI, *Kimi-K2-Instruct* (attention mechanism "MLA", 1T parameters, 32B activated, Modified MIT license; `config.json`: `DeepseekV3ForCausalLM`, 61 layers, `kv_lora_rank` 512, `qk_rope_head_dim` 64), July 2025. [https://huggingface.co/moonshotai/Kimi-K2-Instruct](https://huggingface.co/moonshotai/Kimi-K2-Instruct)
 [^21]: DeepSeek-AI, *DeepSeek-V3.2: Pushing the Frontier of Open Large Language Models* (arXiv:2512.02556, section 2.1: lightning indexer, 2,048 key-value tokens selected per query token, core attention O(L²) → O(Lk), DSA implemented on the MQA mode of MLA), December 2025. [https://arxiv.org/abs/2512.02556](https://arxiv.org/abs/2512.02556); DeepSeek AI, *DeepSeek-V3.2-Exp* (performance "on par with V3.1-Terminus", MIT license), 2025. [https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp](https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp)
