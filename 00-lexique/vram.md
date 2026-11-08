@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-11-08"
+last_modified: "2026-11-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -23,7 +23,7 @@ La VRAM sert à stocker poids, activations, [[00-lexique/kv-cache|KV Cache]] et 
 
 | Mémoire | Type | Débit typique |
 | :-- | :-- | :-- |
-| DDR5 (RAM PC) | SDRAM | ~100–200 Go/s |
+| DDR5 (RAM PC, dual-channel) | SDRAM | ~80–100 Go/s |
 | GDDR7 (RTX 50xx) | GDDR | ~1 700 Go/s |
 | HBM3 (H100 SXM) | HBM | ~3 350 Go/s |
 

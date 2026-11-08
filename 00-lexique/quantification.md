@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -32,7 +32,7 @@ Trois grandes familles de méthodes :
 
 - **GGUF / llama.cpp** : format portable pour Ollama et les postes de travail. Inclut des variantes Q2 à Q8 ; les variantes "K" (K-quants) découpent les poids en super-blocs de 256 valeurs avec plusieurs échelles et gardent les tenseurs sensibles en précision plus haute, ce qui préserve mieux la qualité à taille égale[^1].
 - **AWQ / GPTQ** : quantifications 4-bit pour GPU (AWQ protège ~1 % de poids saillants selon les activations ; GPTQ compense l'arrondi par la Hessienne), optimisées pour vLLM/SGLang avec des noyaux dédiés. Qualité comparable aux K-quants à bits égaux, débit GPU supérieur[^3].
-- **FP8 / FP4** : précisions flottantes basse résolution. FP8 est natif sur Hopper (H100, H200) et Blackwell ; FP4 (NVFP4, MXFP4) est natif sur Blackwell uniquement (B200, RTX 50, RTX PRO 6000, DGX Spark). Depuis 2026, des éditeurs livrent directement des poids FP4 (gpt-oss et Kimi K3 en MXFP4 ; Nemotron 3.5 Lightning en NVFP4, ≈ 22 Go), y compris pour des GPU de station[^2].
+- **FP8 / FP4** : précisions flottantes basse résolution. FP8 est natif sur Ada Lovelace (L40S, RTX 6000 Ada, RTX 40), Hopper (H100, H200) et Blackwell ; FP4 (NVFP4, MXFP4) est natif sur Blackwell uniquement (B200, RTX 50, RTX PRO 6000, DGX Spark). Depuis 2026, des éditeurs livrent directement des poids FP4 (gpt-oss et Kimi K3 en MXFP4 ; Nemotron 3.5 Lightning en NVFP4, ≈ 22 Go), y compris pour des GPU de station[^2].
 
 Quatrième tendance en 2026 : la **quantification à l'entraînement** (QAT). Kimi K3 est entraîné en MXFP4 dès la phase SFT, et NVIDIA publie Nemotron 3.5 Lightning en NVFP4 comme « chemin recommandé pour le déploiement », les poids BF16 étant réservés au post-entraînement. Le checkpoint 4-bit de l'éditeur devient alors la version canonique, et requantifier soi-même n'apporte rien[^2].
 

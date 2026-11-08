@@ -3,7 +3,7 @@ title: "🏗️ Recommandation d'architecture cible"
 description: Trajectoire réaliste pour passer d'un MVP Cursor CLI à une stack custodienne souveraine basée sur OpenHands ou Aider, Ollama/vLLM, LiteLLM et SearXNG.
 sidebar:
   order: 6
-last_modified: "2026-10-10"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -41,7 +41,7 @@ Stack recommandée :
 | Couche | Choix recommandé | Rôle |
 | :-- | :-- | :-- |
 | Agent code | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] (CLI/SDK) — ou [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]], gelé depuis mai 2026, pour les essais[^1] | Modifie fichiers et travaille avec Git |
-| Modèle local | Ollama ou vLLM + modèle coder spécialisé | Inférence on-prem, avec niveau de raisonnement suffisant |
+| Modèle local | Ollama ou vLLM + modèle agentique 27–30B (Qwen3.8-27B, Muse Glimmer 30B) ou coder spécialisé | Inférence on-prem, avec niveau de raisonnement suffisant |
 | Gateway | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|LiteLLM]] ([[00-lexique/litellm|lexique]]) — **mise à jour mensuelle obligatoire** (failles exploitées en 2026, support d'un mois par ligne mineure)[^4][^5] | API OpenAI-compatible, routage, logs |
 | Recherche | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng|SearXNG]] | Recherche web auto-hébergée |
 | Runner et sandbox | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] / Agent Canvas[^2][^3] | Agent Docker, automatisations planifiées, pilotage d'agents tiers via ACP |
@@ -59,7 +59,7 @@ Pour une cible souveraine réaliste :
 | Suggestions simples, petits fichiers | Coder 7B/8B spécialisé | utile pour apprendre, pas assez fiable comme agent autonome |
 | Corrections contrôlées sur vault Markdown | Coder 14B | plancher pratique, avec validation humaine stricte |
 | Maintenance régulière, audit multi-fichiers | Coder 32B ou supérieur | cible recommandée si l'agent doit produire des diffs exploitables |
-| Agentique avec contexte long, VRAM 24 Go | MoE coder type Qwen3.6-35B-A3B (3B actifs) | recommandé par OpenHands au T2 2026 ; contexte ≥ 32k tokens[^6] |
+| Agentique avec contexte long, VRAM 24 Go | Généraliste agentique 27–30B type Qwen3.8-27B (~18 Go en Q4, 262k de contexte) ou Muse Glimmer 30B au T4 2026 ; le MoE Qwen3.6-35B-A3B (3B actifs) reste celui recommandé par la doc OpenHands (mai 2026) | contexte ≥ 32k tokens[^6] ; voir [[03-stack-logicielle/choose-your-model|Choisir son modèle]] |
 | Gros refactoring ou raisonnement long | 32B+ avec grand contexte, ou modèle frontière non souverain en MVP | arbitrage souveraineté vs qualité |
 
 Le point clé : l'agent qui **agit** sur les fichiers a besoin de plus de raisonnement que l'assistant qui **retrouve** une information. Le budget VRAM doit donc être dimensionné pour le modèle d'édition, pas seulement pour le modèle de chat.
@@ -67,7 +67,7 @@ Le point clé : l'agent qui **agit** sur les fichiers a besoin de plus de raison
 ## Recommandation concrète pour ce vault
 
 1. **Court terme** : continuer avec Cursor/Aider en validation humaine.
-2. **Moyen terme** : OpenHands (CLI, ou Agent Canvas avec automatisations planifiées et profil LLM local) ou Aider tant qu'il fonctionne, + Ollama + modèle coder récent (dense 14B/32B, ou MoE type Qwen3.6-35B-A3B recommandé par OpenHands au T2 2026) + SearXNG + scripts de maintenance[^2][^6].
+2. **Moyen terme** : OpenHands (CLI, ou Agent Canvas avec automatisations planifiées et profil LLM local) ou Aider tant qu'il fonctionne, + Ollama + modèle agentique récent (au T4 2026, généraliste 27–30B type Qwen3.8-27B ou Muse Glimmer 30B ; ou le MoE Qwen3.6-35B-A3B recommandé par OpenHands au T2 2026) + SearXNG + scripts de maintenance[^2][^6].
 3. **Long terme** : [[00-lexique/litellm|LiteLLM]] comme gateway (ligne mineure maintenue, patchée dans le mois)[^5], vLLM si besoin de débit, OpenHands/Agent Canvas pour les automatisations et les tâches complexes sandboxées[^2][^3].
 
 > [!warning] Ne pas confondre

@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-11-08"
+last_modified: "2026-11-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -37,7 +37,7 @@ Un contexte 128K peut donc **doubler** la VRAM nécessaire par rapport aux poids
 
 ## 💡 Pourquoi c'est important en IA on-premise
 
-Sur un APU avec 128 Go alloués au GPU, un modèle 70B Q4 (~40 Go) laisse ~88 Go pour le KV Cache : la fenêtre native de 128K tokens (~42 Go en BF16) tient pour une requête, avec ~46 Go de marge. C'est confortable pour la plupart des usages. Sur une machine avec 24 Go de VRAM, le KV Cache est le premier élément à ajuster.
+Sur un APU de 128 Go (~120 Go allouables au GPU sur Mac via `sysctl`), un modèle 70B Q4 (~40 Go) laisse ~80 Go pour le KV Cache : la fenêtre native de 128K tokens (~42 Go en BF16) tient pour une requête, avec ~38 Go de marge. C'est confortable pour la plupart des usages. Sur une machine avec 24 Go de VRAM, le KV Cache est le premier élément à ajuster.
 
 ## ⚠️ Pièges fréquents
 
