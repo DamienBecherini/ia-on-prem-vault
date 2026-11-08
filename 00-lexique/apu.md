@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-11-08"
+last_modified: "2026-11-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -32,7 +32,7 @@ Ces chiffres permettent de faire tourner un modèle **70B quantifié** (~40 Go) 
 
 ## 💡 Pourquoi c'est important en IA on-premise
 
-L'APU est la plateforme de référence pour le [[04-blueprints/scenario-b-sme-appliance|Scénario B (Appliance PME)]] : autonome, silencieuse, consommant moins de 60 W en charge légère, elle héberge un assistant local pour une équipe de 5 à 20 personnes.
+L'APU est la plateforme de référence pour le [[04-blueprints/scenario-b-sme-appliance|Scénario B (Appliance PME)]] : autonome, silencieuse, consommant moins de 60 W en charge légère, elle héberge un assistant local pour une équipe de 10 à 50 personnes (2 à 20 utilisateurs simultanés).
 
 ## ⚠️ Pièges fréquents
 
