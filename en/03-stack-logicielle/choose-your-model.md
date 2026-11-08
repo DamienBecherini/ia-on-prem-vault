@@ -3,7 +3,7 @@ title: "🗺️ Choosing your local model"
 description: Practical guide to navigating the open-weights LLM landscape — families, sizes, specializations, and on-premise scenario mapping.
 sidebar:
   order: 4
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -94,7 +94,7 @@ The most versatile family in the open-weights landscape, with excellent multilin
 ### Mistral / Mixtral (Mistral AI)
 
 - **Mistral Small 4 (119B)** and **Mistral Medium 3.5 (128B)**: the current open line, with official NVFP4 checkpoints for Small 4[^11]. Mistral 7B and Mixtral 8x7B remain usable but date from 2023-2024.
-- **Mistral Large 4** (~1T MoE, 52B active): announced on 6 October 2026 in API preview; open weights promised for late October, license not published at the time of writing — verify before planning a deployment[^12].
+- **Mistral Large 4** (~1T MoE, 52B active, multimodal, 1M context): presented on 6 October 2026 in API preview, weights published on 29 October 2026 on Hugging Face (`mistralai/Mistral-Large-4-1T-A52B`) under the *Mistral Ecosystem Open-Weight license*, a modified MIT. Use, modification, fine-tuning and commercial use are free, but a company that resells it as Model-as-a-Service must obtain a separate commercial license from Mistral. Datacenter size[^12].
 
 ### Kolibri (Aleph Alpha)
 
@@ -211,7 +211,7 @@ Before downloading a model:
 [^9]: IBM, *Granite 4.2 30B* (Apache 2.0, OpenAI-format tool calling), 2026-08-25. [https://huggingface.co/ibm-granite/granite-4.2-30b](https://huggingface.co/ibm-granite/granite-4.2-30b)
 [^10]: DeepSeek AI, *DeepSeek-V4.1-Flash* (MIT, 552B + 196B of Engram conditional memory, 8–16B active, FP4 KV cache 890 bytes/token), September 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash); DeepSeek AI, *DeepSeek-V4-Flash-0731* (MIT, ~304B, 1M tokens), 2026-07-31. [https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731)
 [^11]: Mistral AI, Hugging Face repositories (Mistral-Small-4-119B-2603 and its NVFP4 variant, Mistral-Medium-3.5-128B), captured 2026-10-09. [https://huggingface.co/mistralai](https://huggingface.co/mistralai)
-[^12]: Mistral AI, *Mistral Large 4* (API preview, open weights announced for late October 2026, license not published), 2026-10-06. [https://mistral.ai/news/mistral-large-4](https://mistral.ai/news/mistral-large-4)
+[^12]: Mistral AI, *Mistral Large 4* (API preview), 2026-10-06. [https://mistral.ai/news/mistral-large-4](https://mistral.ai/news/mistral-large-4) · Mistral AI, announcement of the weights release (Hugging Face `mistralai/Mistral-Large-4-1T-A52B`, Mistral Ecosystem Open-Weight license: modified MIT, separate commercial license for Model-as-a-Service offerings), 2026-10-29. [https://mistral.ai/news/mistral-large-4-oss/](https://mistral.ai/news/mistral-large-4-oss/) · [https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B/blob/main/LICENSE](https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B/blob/main/LICENSE)
 [^13]: NVIDIA, *Nemotron-3.5-Lightning-30B-A3B* (BF16 / NVFP4 ≈ 22 GB / GGUF, OpenMDW 1.1 license, 256k context on an 80 GB GPU), August 2026. [https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16)
 [^14]: Z.ai, *GLM-5.3-Flash* (320B MoE, 18B active, MIT), 2026-08-26. [https://huggingface.co/zai-org/GLM-5.3-Flash](https://huggingface.co/zai-org/GLM-5.3-Flash); Z.ai, *GLM-5.3* (`glm-5.3` license). [https://huggingface.co/zai-org/GLM-5.3](https://huggingface.co/zai-org/GLM-5.3)
 [^15]: Moonshot AI, *Kimi K3* (native MXFP4; Kimi K3 License: separate agreement above $20M of MaaS revenue over 12 months). [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3)

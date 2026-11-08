@@ -3,14 +3,14 @@ title: "🖥️ Scenario C: Desktop Cluster (Exo & Thunderbolt)"
 description: The scalability blueprint. Connect several Mac Minis or compact PCs via Thunderbolt to run massive models inaccessible on a single machine.
 sidebar:
   order: 3
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
-[[04-blueprints/scenario-b-sme-appliance|Scenario B]] (the Appliance) has a major flaw: its memory is fixed. If your client's needs evolve and they want to deploy a colossal [[00-lexique/moe|MoE]] model of more than 400 billion parameters (requiring more than 300 GB of memory), only a high-end unified-memory workstation can host it — the Mac Studio M5 Ultra, configurable up to 512 GB (1.2 TB/s), from €6,599 incl. VAT in the 96 GB configuration, with the 512 GB configuration shipping in late October 2026 — and none exceeds 512 GB[^2].
+[[04-blueprints/scenario-b-sme-appliance|Scenario B]] (the Appliance) has a major flaw: its memory is fixed. If your client's needs evolve and they want to deploy a colossal [[00-lexique/moe|MoE]] model of more than 400 billion parameters (requiring more than 300 GB of memory), only a high-end unified-memory workstation can host it — the Mac Studio M5 Ultra, configurable up to 512 GB (1.2 TB/s), from €6,599 incl. VAT in the 96 GB configuration; the 512 GB option, orderable since 28 October 2026 and reserved for the M5 Ultra with 36-core CPU / 80-core GPU, costs at least €25,079 incl. VAT, with lead times of 13 to 15 weeks noted in early November 2026 — and none exceeds 512 GB[^2][^11].
 
 Before 2025, the only solution was to rent a cloud server or buy a prohibitively expensive datacenter rack. Today, software architecture allows merging several affordable small machines: the **Desktop Cluster**.
 
@@ -24,7 +24,7 @@ The idea is to create a compute "farm" sitting on a shelf.
 *   **Total capacity:** With 6 Mac Minis at 64 GB, you get a silent cluster with **384 GB aggregated unified memory**.
 
 > [!note] The "one big machine" alternative
-> Since August 2026, a Mac Studio M5 Ultra can be configured up to 512 GB (1.2 TB/s, 512 GB configuration shipping late October): a 671B in 4-bit fits on a single machine, with no Thunderbolt or pipeline parallelism. Beyond that, Apple documents RDMA clustering over Thunderbolt 5 directly in MLX (four Mac Studios "up to 3×" faster than one, Apple's measurement)[^2][^5]. On the CUDA side, NVIDIA documents pairing two DGX Sparks (64 or 128 GB) via their 200 Gbps ConnectX-7 port, at $4,999 (64 GB, OEMs from 2026-10-23) or ≈ $6,950 (128 GB) per unit[^6]. The Mac mini cluster remains the cheapest option per GB, but no longer the only one.
+> Since August 2026, a Mac Studio M5 Ultra can be configured up to 512 GB (1.2 TB/s; 512 GB option orderable since 28 October 2026, reserved for the M5 Ultra with 36-core CPU / 80-core GPU, from US$22,299 or €25,079 incl. VAT[^11]): a 671B in 4-bit fits on a single machine, with no Thunderbolt or pipeline parallelism. Beyond that, Apple documents RDMA clustering over Thunderbolt 5 directly in MLX (four Mac Studios "up to 3×" faster than one, Apple's measurement)[^2][^5]. On the CUDA side, NVIDIA has officially supported DGX Spark clusters of up to eight nodes since 22 October 2026 (1 TB aggregated with 128 GB units), linked via 200 Gbps ConnectX-7: in a switchless ring up to four nodes, via a switch at eight. Two 64 GB units linked over QSFP provide 128 GB, and eight-node support in NVIDIA Sync's cluster wizard is announced for late 2026. At $4,999 (64 GB, OEMs from 2026-10-23) or ≈ $6,950 (128 GB) per unit, four 128 GB DGX Sparks (512 GB) cost ≈ $27,800 and eight (1 TB) ≈ $55,600, excluding the switch[^6][^10]. The Mac mini cluster remains the cheapest option per GB, but no longer the only one.
 
 **Estimated budget (Q4 2026):** ~€10,000 to €22,000 for 4 to 6 machines (Mac mini M5 Pro 64 GB or Mac Studio M5 Max 64 GB at €3,659 incl. VAT)[^3]. About 10 times cheaper than an equivalent NVIDIA DGX server in VRAM. 64 GB machines follow the DRAM increase (TrendForce: +10 to 15% per quarter in Q4 2026): prices captured in October 2026 must be re-checked at purchase time[^7].
 
@@ -124,3 +124,5 @@ ollama logs
 [^7]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
 [^8]: DeepSeek AI, *DeepSeek-V4.1-Flash* (MIT, 8–16B active, FP4 KV cache 890 bytes/token), September 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash)
 [^9]: DeepSeek AI — Hugging Face organization (V4 family: DeepSeek-V4-Flash 284B-A13B, DeepSeek-V4.1-Flash, DeepSeek-V4-Pro 1.6T; V3 671B retained), captured 2026-10-09. [https://huggingface.co/deepseek-ai](https://huggingface.co/deepseek-ai)
+[^10]: NVIDIA Technical Blog, *Running Frontier-Class AI Models Across 8 NVIDIA DGX Spark Nodes* (official support for 8-node clusters, 1 TB; switchless ring recommended up to 4 nodes, switch required at 8; 8-node support in NVIDIA Sync planned for late 2026), 22 October 2026. [https://developer.nvidia.com/blog/running-frontier-class-ai-models-across-8-nvidia-dgx-spark-nodes/](https://developer.nvidia.com/blog/running-frontier-class-ai-models-across-8-nvidia-dgx-spark-nodes/)
+[^11]: MacRumors, *Mac Studio With M5 Ultra Now Available With 512GB RAM for $22,299* (512 GB option reserved for the M5 Ultra with 36-core CPU / 80-core GPU, $6,799 + $15,500), 28 October 2026 · MacGeneration, *Mac Studio M5 Ultra : l'option 512 Go de RAM coûte plus cher qu'un second Mac Studio* (€25,079 incl. VAT, lead times of 13 to 15 weeks), 4 November 2026. [https://www.macrumors.com/2026/10/28/mac-studio-m5-ultra-512gb-ram/](https://www.macrumors.com/2026/10/28/mac-studio-m5-ultra-512gb-ram/) · [https://www.macg.co/mac/2026/11/mac-studio-m5-ultra-loption-512-go-de-ram-coute-plus-cher-quun-second-mac-studio-312149](https://www.macg.co/mac/2026/11/mac-studio-m5-ultra-loption-512-go-de-ram-coute-plus-cher-quun-second-mac-studio-312149)

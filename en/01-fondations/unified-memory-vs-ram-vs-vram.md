@@ -82,7 +82,7 @@ Standard working memory on a conventional PC, installed in motherboard slots (DI
 | :-- | :-- | :-- | :-- | :-- |
 | **Memory bandwidth** | ~1,792 GB/s[^2] | 614 to 1,200 GB/s (M5 Max / M5 Ultra)[^3] | ~273 GB/s[^4] | ~80 to 100 GB/s (desktop dual-channel) |
 | **Theoretical ceiling 70B Q4 (~40 GB)** | ~44.8 tok/s | ~15.4 to 30 tok/s | ~6.8 tok/s | ~2 to 2.5 tok/s |
-| **Typical machine capacity (2026)** | 32 GB per consumer card[^1] | up to 128 GB (M5 Max) / 512 GB (M5 Ultra, since August 2026)[^3] | up to 192 GB[^4] | 64 to 256 GB common, more possible depending on motherboard |
+| **Typical machine capacity (2026)** | 32 GB per consumer card[^1] | up to 128 GB (M5 Max) / 512 GB (M5 Ultra 36c/80c, orderable option since October 28, 2026)[^3] | up to 192 GB[^4] | 64 to 256 GB common, more possible depending on motherboard |
 | **Hardware expandability** | high (add GPUs) | none (soldered memory) | none (soldered memory) | high (add DIMMs) |
 | **Positioning** | raw performance / multi-user | high-performance local workstation | local capacity + x86 compromise | entry-level / offline batch |
 
