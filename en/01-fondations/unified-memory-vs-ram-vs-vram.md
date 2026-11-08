@@ -3,7 +3,7 @@ title: ⚔️ Unified Memory vs RAM vs VRAM
 description: In-depth comparative analysis of the three physical memory architectures for LLM inference.
 sidebar:
   order: 2
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -28,14 +28,14 @@ graph TD
     subgraph "Classic PC (Multi-GPU / CPU)"
         CPU_PC[Intel/AMD CPU] -->|DDR5 Bus: 100 GB/s| RAM_PC[System RAM]
         CPU_PC -->|PCIe 5.0 Bus: 64 GB/s| GPU_PC[Nvidia/AMD GPU]
-        GPU_PC -->|GDDR7 Bus: 1500 GB/s| VRAM_PC[Dedicated VRAM]
+        GPU_PC -->|GDDR7 Bus: 1,792 GB/s| VRAM_PC[Dedicated VRAM]
     end
 ```
 
 ```mermaid
 graph TD
     subgraph "Unified Memory (Apple / AMD)"
-        SOC[Unified SoC] -->|Direct Bus: 273 to 819 GB/s| UMEM[Unified LPDDR5X Memory]
+        SOC[Unified SoC] -->|Direct Bus: 273 to 1,200 GB/s| UMEM[Unified LPDDR5X Memory]
         SOC_CPU[CPU Cores] --> SOC
         SOC_GPU[GPU / NPU Cores] --> SOC
     end
@@ -60,7 +60,7 @@ Popularized by Apple and reinforced on x86 by AMD Ryzen AI Max PRO 400, **unifie
 *   **Physical routing:** The central processor (CPU), graphics unit (GPU), and AI accelerator ([[00-lexique/npu|NPU]]) are integrated on the same silicon die (SoC). Memory modules (LPDDR5X-8000/8533) are soldered right next to it, on the same package.
 *   **Eliminating the copy:** On a classic PC, for the GPU to process data stored in RAM, the CPU must copy the data, send it over the PCIe bus (limited to 64 GB/s), then write it back into VRAM. **With unified memory, this copy step is eliminated.** The GPU reads directly from shared memory.
 *   **Bandwidth nuance (AMD vs Apple):** 
-    *   **Apple Silicon:** M4 Max reaches **546 GB/s** (16-core CPU / 40-core GPU variant); M3 Ultra at **819 GB/s**[^3].
+    *   **Apple Silicon:** since 2026-08-25, the Mac Studio M5 Max reaches **614 GB/s** (460 GB/s with the 32-core GPU) and the M5 Ultra **1.2 TB/s**. They replace the 2025 M4 Max (546 GB/s) and M3 Ultra (819 GB/s)[^3].
     *   **AMD Ryzen AI Max PRO 400:** roughly **273 GB/s** with LPDDR5X-8533 and a 256-bit bus, with x86 compatibility (Windows/Linux)[^4].
 *   **The AMD breakthrough (2026):** the PRO 400 platform scales to **192 GB** of shared memory, with up to **160 GB** allocatable to the GPU depending on OEM configuration[^4].
 *   **The physical limit:** Because memory is soldered onto the SoC to guarantee this throughput, it is strictly **impossible to add RAM** after purchase. You must size the machine for the next five years on day one.
@@ -80,9 +80,9 @@ Standard working memory on a conventional PC, installed in motherboard slots (DI
 
 | Evaluation criterion | Dedicated VRAM (RTX 5090) | Apple unified memory | AMD PRO 400 unified memory | Classic RAM (DDR5) |
 | :-- | :-- | :-- | :-- | :-- |
-| **Memory bandwidth** | ~1,792 GB/s[^2] | 546 to 819 GB/s[^3] | ~273 GB/s[^4] | ~80 to 100 GB/s (desktop dual-channel) |
-| **Theoretical ceiling 70B Q4 (~40 GB)** | ~44.8 tok/s | ~13.6 to 20.5 tok/s | ~6.8 tok/s | ~2 to 2.5 tok/s |
-| **Typical machine capacity (2026)** | 32 GB per consumer card[^1] | 64 GB (high-end M4 Max) / 96 GB (current M3 Ultra)[^3] | up to 192 GB[^4] | 64 to 256 GB common, more possible depending on motherboard |
+| **Memory bandwidth** | ~1,792 GB/s[^2] | 614 to 1,200 GB/s (M5 Max / M5 Ultra)[^3] | ~273 GB/s[^4] | ~80 to 100 GB/s (desktop dual-channel) |
+| **Theoretical ceiling 70B Q4 (~40 GB)** | ~44.8 tok/s | ~15.4 to 30 tok/s | ~6.8 tok/s | ~2 to 2.5 tok/s |
+| **Typical machine capacity (2026)** | 32 GB per consumer card[^1] | up to 128 GB (M5 Max) / 512 GB (M5 Ultra, since August 2026)[^3] | up to 192 GB[^4] | 64 to 256 GB common, more possible depending on motherboard |
 | **Hardware expandability** | high (add GPUs) | none (soldered memory) | none (soldered memory) | high (add DIMMs) |
 | **Positioning** | raw performance / multi-user | high-performance local workstation | local capacity + x86 compromise | entry-level / offline batch |
 
@@ -106,6 +106,6 @@ To advise your SMB client on a local deployment:
 
 [^1]: NVIDIA, *GeForce RTX 5090 product page* (32 GB GDDR7, bus 512-bit, TGP 575 W). [https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/](https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/)
 [^2]: TechPowerUp, *NVIDIA GeForce RTX 5090 Specs* (bandwidth mémoire 1.79 TB/s). [https://www.techpowerup.com/gpu-specs/geforce-rtx-5090.c4216](https://www.techpowerup.com/gpu-specs/geforce-rtx-5090.c4216)
-[^3]: Apple, *Mac Studio - Technical Specifications* (M4 Max 546 GB/s, M3 Ultra 819 GB/s, configurations mémoire actuelles). [https://www.apple.com/mac-studio/specs/](https://www.apple.com/mac-studio/specs/)
+[^3]: Apple, *Mac Studio — Technical Specifications* (M5 Max 614 GB/s, or 460 GB/s with the 32-core GPU, up to 128 GB; M5 Ultra 1.2 TB/s, up to 512 GB), reviewed on 2026-10-09 · Apple Newsroom, *Apple introduces new Mac Studio with M5 Max and M5 Ultra*, August 25, 2026 · Apple Support, *Mac Studio (2025) — Tech Specs* (M4 Max 546 GB/s, M3 Ultra 819 GB/s). [https://www.apple.com/mac-studio/specs/](https://www.apple.com/mac-studio/specs/) · [https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/](https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/) · [https://support.apple.com/en-us/122211](https://support.apple.com/en-us/122211)
 [^4]: ServeTheHome, *AMD Ups Ante With 192GB Ryzen AI Max PRO 400 Chips for AI Systems* (192 GB, 160 GB allouables GPU, ~273 GB/s), 2026. [https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/](https://www.servethehome.com/amd-reveals-ryzen-ai-max-pro-400-series-192gb-ram-for-ai-systems/)
 [^5]: Amir Gholami et al., *AI and Memory Wall* (arXiv:2403.14123), 2024. [https://arxiv.org/abs/2403.14123](https://arxiv.org/abs/2403.14123)

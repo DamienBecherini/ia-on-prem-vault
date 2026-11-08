@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -25,19 +25,19 @@ La fenêtre de contexte détermine deux choses distinctes :
 1. **Ce que le modèle peut lire** : si votre document fait 50 000 tokens et que le modèle a une fenêtre de 32K, il ne peut pas tout lire en une requête.
 2. **La VRAM dynamique consommée** : chaque token en contexte occupe de l'espace dans le [[00-lexique/kv-cache|KV Cache]]. Plus la fenêtre est longue, plus le KV Cache grossit.
 
-Ordres de grandeur du KV Cache pour un modèle 70B (Llama 3.1) selon la longueur du contexte :
+Ordres de grandeur du KV Cache pour un modèle 70B (Llama 3.1 : 80 couches, 8 têtes KV en GQA, dimension 128), pour une seule requête, selon la longueur du contexte :
 
 | Contexte | KV Cache estimé (BF16) | KV Cache (Q8) |
 | :-- | :-- | :-- |
-| 4K tokens | ~4 Go | ~2 Go |
-| 32K tokens | ~32 Go | ~16 Go |
-| 128K tokens | ~128 Go | ~64 Go |
+| 4K tokens | ~1,3 Go | ~0,7 Go |
+| 32K tokens | ~10,7 Go | ~5,4 Go |
+| 128K tokens | ~42 Go | ~21 Go |
 
-Un contexte 128K peut donc **doubler ou tripler** la VRAM nécessaire par rapport aux poids seuls. En pratique, c'est la fenêtre de contexte qui provoque les OOM inattendus sur les machines locales.
+Un contexte 128K peut donc **doubler** la VRAM nécessaire par rapport aux poids quantifiés en Q4 (~40 Go de poids + ~42 Go de KV Cache en BF16). En pratique, c'est la fenêtre de contexte qui provoque les OOM inattendus sur les machines locales.
 
 ## 💡 Pourquoi c'est important en IA on-premise
 
-Sur un APU avec 128 Go alloués au GPU, un modèle 70B Q4 (~40 Go) laisse ~88 Go pour le KV Cache — soit ~88K tokens en BF16. C'est confortable pour la plupart des usages. Sur une machine avec 24 Go de VRAM, le KV Cache est le premier élément à ajuster.
+Sur un APU avec 128 Go alloués au GPU, un modèle 70B Q4 (~40 Go) laisse ~88 Go pour le KV Cache : la fenêtre native de 128K tokens (~42 Go en BF16) tient pour une requête, avec ~46 Go de marge. C'est confortable pour la plupart des usages. Sur une machine avec 24 Go de VRAM, le KV Cache est le premier élément à ajuster.
 
 ## ⚠️ Pièges fréquents
 
