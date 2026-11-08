@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -25,7 +25,7 @@ Where a consumer RTX 4090 offers ~1,008 GB/s via GDDR6X, HBM3 reaches:
 | :-- | :-- | :-- |
 | NVIDIA H100 SXM5 | HBM3 80 GB | **3.35 TB/s** |
 | AMD MI300X | HBM3 192 GB | **5.3 TB/s** |
-| Apple M3 Ultra | LPDDR5X 192 GB | 819 GB/s |
+| Apple M5 Ultra | LPDDR5X 512 GB | 1,200 GB/s |
 | RTX 4090 (consumer) | GDDR6X 24 GB | ~1,008 GB/s |
 
 That gap explains why the [[00-lexique/memory-wall|Memory Wall]] is less constraining on an H100: it can sustain 70B generation throughput without being as memory-bound as a workstation card.

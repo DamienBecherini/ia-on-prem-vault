@@ -3,7 +3,7 @@ title: "⚙️ Configure vLLM for multi-GPU production"
 description: Installation, tensor parallel configuration, multi-node deployment with Ray, and production best practices for vLLM on NVIDIA GPUs.
 sidebar:
   order: 5
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -223,7 +223,7 @@ export VLLM_API_KEY="YOUR-TOKEN-TO-REPLACE"
 vllm serve ...
 ```
 
-Clients must send `Authorization: Bearer YOUR-TOKEN-TO-REPLACE`. Caution: `--api-key` only protects the `/v1`, `/v2` and `/inference` paths — `/tokenize`, `/metrics` or `/invocations` remain reachable without a key[^8][^11]. In production, put an authenticating reverse proxy in front of *all* paths (see [[06-mise-en-oeuvre/local-inference-security|Security]]).
+Clients must send `Authorization: Bearer YOUR-TOKEN-TO-REPLACE`. Caution: `--api-key` only protects the `/v1`, `/v2` and `/inference` paths — `/tokenize`, `/metrics` or `/invocations` remain reachable without a key[^8][^11]. In production, put an authenticating reverse proxy in front of *all* paths (see [[06-mise-en-oeuvre/local-inference-security|Security]]). Since vLLM 0.32.0 (18 October 2026), `--allowed-origins` defaults to `[]` instead of `["*"]` (CVE-2026-115917). A web interface that calls vLLM directly from the browser must declare its origin (`--allowed-origins '["https://chat.interne.example"]'`). Server-side clients (SDKs, curl, LiteLLM) are not affected[^15].
 
 ### Limits and timeouts
 
@@ -357,3 +357,4 @@ curl http://localhost:8000/metrics | grep vllm
 [^12]: vLLM Project, *Release v0.24.0* (vLLM no longer sets `CUDA_VISIBLE_DEVICES`; `device_ids` argument; variable deprecated on ROCm), 2026-06-29. [https://github.com/vllm-project/vllm/releases/tag/v0.24.0](https://github.com/vllm-project/vllm/releases/tag/v0.24.0)
 [^13]: vLLM Project, *Release v0.31.0* (`quantization="fp8"` renamed `fp8_per_tensor`, former name redirected), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
 [^14]: vLLM Project, advisories *GHSA-rhcx-5729-88vg* (cross-tenant crash via `prompt_logprobs` and KV connector, fixed 0.31.0; workaround: strip `prompt_logprobs`, `logprobs` and `echo` at the gateway) and *GHSA-vfp2-c8pq-v6h6* (SSRF via `X-Request-Id`, KV Cache leak through `P2pNcclConnector`, connector removed in 0.24.0), 2026-10-09. [https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg](https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-vfp2-c8pq-v6h6](https://github.com/vllm-project/vllm/security/advisories/GHSA-vfp2-c8pq-v6h6)
+[^15]: vLLM Project, *Release v0.32.0* ("Default CORS settings no longer allow every origin in the Python and Rust frontends; set `--allowed-origins` to permit browser origins", #61009; empty list by default; fixes CVE-2026-115917, vLLM ≤ 0.31.x), 18 October 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.32.0](https://github.com/vllm-project/vllm/releases/tag/v0.32.0) · [https://github.com/vllm-project/vllm/pull/61009](https://github.com/vllm-project/vllm/pull/61009)

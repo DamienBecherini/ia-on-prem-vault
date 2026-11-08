@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -26,7 +26,7 @@ That synchronization happens very often (every layer), so it needs an extremely 
 Used natively by vLLM and TensorRT-LLM. Setting `tp=8` on an 8-GPU HGX node spreads the model across all eight chips.
 
 ## 💡 Why it matters for on-prem AI
-Directly reduces generation latency (tokens/s ×N) in datacenter production. Key to Scenario D: lets the eight GPUs on an HGX node act as one accelerator.
+Reduces generation latency in datacenter production: each GPU only reads 1/N of the weights, but the per-layer synchronizations (all-reduce via [[00-lexique/nccl|NCCL]]) make the gain sub-linear. It stays below ×N, and all the more so when the interconnect is slow. Key to Scenario D: lets the eight GPUs on an HGX node act as one accelerator.
 
 ## ⚠️ Common pitfalls
 - Inefficient on PCIe alone (bus too slow for inter-GPU sync).

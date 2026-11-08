@@ -8,7 +8,7 @@ tags:
   - lexique
   - fondations
   - inférence
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -41,7 +41,7 @@ Target model (70B) →  ✅ tok1  ✅ tok2  ❌ tok3  [stop, correction]
 Real gains depend on the **acceptance rate** of candidate tokens. When the draft model correctly predicts 70 to 90% of tokens (strong distribution correlation with the target model), acceleration is significant. If the acceptance rate is low (< 50%), frequent verifications cancel the benefit.
 
 > [!warning] Memory prerequisite — critical point on-premise
-> Speculative decoding requires loading **two models simultaneously** in memory: the draft model and the target model. On a machine with 24 GB of VRAM (e.g. RTX 4090), this is often impractical for 70B models. The technique becomes relevant on systems with **128 GB+ unified memory** (e.g. [[02-materiel/apu-and-unified-memory|Mac Studio M3 Ultra, AMD Gorgon Halo, NVIDIA DGX Spark]]) or on **multi-GPU servers** with enough cumulative VRAM.
+> Speculative decoding requires loading **two models simultaneously** in memory: the draft model and the target model. On a machine with 24 GB of VRAM (e.g. RTX 4090), this is often impractical for 70B models. The technique becomes relevant on systems with **128 GB+ unified memory** (e.g. [[02-materiel/apu-and-unified-memory|Mac Studio M5 Max / M5 Ultra, AMD Gorgon Halo, NVIDIA DGX Spark]]) or on **multi-GPU servers** with enough cumulative VRAM.
 
 ## ⚙️ Support in vLLM
 

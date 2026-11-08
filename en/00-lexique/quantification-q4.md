@@ -8,7 +8,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -26,7 +26,7 @@ Quantization where weights are compressed to about 4 bits per parameter, dividin
 
 `Q4_K_M` means:
 - **Q4**: 4 bits per parameter (~0.5 effective byte with block metadata)
-- **K**: K-means method that groups weights into clusters to minimize precision loss
+- **K**: the "K-quants" family from llama.cpp. Weights are quantized in blocks of 32 values, grouped into super-blocks of 256, with scales that are themselves quantized. It is not K-means clustering.
 - **M**: "medium" block size — quality/speed compromise recommended for most uses
 
 Typical VRAM footprints in Q4_K_M:
