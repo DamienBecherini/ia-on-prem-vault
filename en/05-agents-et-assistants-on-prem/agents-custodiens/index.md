@@ -5,7 +5,7 @@ description: >
   and wait for human validation before acting.
 sidebar:
   order: 1
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
