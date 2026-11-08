@@ -3,7 +3,7 @@ title: 🧠 APU & Unified Memory
 description: "Comparison of Apple Silicon M5 Max / M5 Ultra chips, AMD Ryzen AI Max PRO 400 APUs and NVIDIA Grace Blackwell (DGX Spark) for large LLM inference."
 sidebar:
   order: 1
-last_modified: "2026-10-12"
+last_modified: "2026-11-08"
 prerequisites:
   - "00-lexique/vram"
   - "01-fondations/memory-bandwidth"
@@ -151,7 +151,7 @@ sudo sysctl iogpu.wired_limit_mb=122880
 | **Native FP4** | ❌ | ❌ | ❌ | ✅ Blackwell [^15] |
 | **Scale-out** | ✅ [[00-lexique/thunderbolt|Thunderbolt 5]] [[00-lexique/rdma|RDMA]] (macOS 26.2+, up to 4 Mac Studios) [^17] | ✅ Thunderbolt 5 RDMA (macOS 26.2+, up to 4 Mac Studios) [^17] | ❌ | ✅ ConnectX-7 200 Gbps, up to 4 nodes [^14] |
 | **OS** | macOS | macOS | **Linux / Windows** [^1][^2] | Linux (CUDA) [^14] |
-| **Indicative price** | from US$2,499 (48 GB base); 128 GB config: custom-configuration (CTO) price to be checked [^17] | from US$5,499 (96 GB); 256 / 512 GB: custom-configuration (CTO) price to be checked [^17] | **~€3,900** (128 GB, out of stock as of 2026-10) · **~$6,800–7,450** (192 GB, pre-order, shipping Nov. 2026) [^18][^20][^23] | **≈ $6,950** (128 GB, as of 2026-10-02) · $4,999 (64 GB, OEM, from 2026-10-23) [^14][^16] |
+| **Indicative price** | from US$2,499 (36 GB base); 128 GB config: custom-configuration (CTO) price to be checked [^17] | from US$5,499 (96 GB); 256 / 512 GB: custom-configuration (CTO) price to be checked [^17] | **~€3,900** (128 GB, out of stock as of 2026-10) · **~$6,800–7,450** (192 GB, pre-order, shipping Nov. 2026) [^18][^20][^23] | **≈ $6,950** (128 GB, as of 2026-10-02) · $4,999 (64 GB, OEM, from 2026-10-23) [^14][^16] |
 
 > [!note] Reading the numbers
 > Apple throughputs are **theoretical memory-bound ceilings** (bandwidth ÷ model weight), not measurements: as of 2026-10-09, no MLX benchmark of the M5 Max / M5 Ultra with a published methodology was available, and **llama.cpp/Metal** is generally a bit slower than MLX on pure decode. NVIDIA DGX Spark inference figures are not officially published — community source claims are not reproduced here. NVIDIA does, however, publish a capacity table (1 × 128 GB ≈ 200B parameters, 2 × ≈ 400B, 4 × ≈ 700B) with no associated throughput [^14]. The method for computing the memory-bound ceiling is detailed in [[01-fondations/unified-memory-vs-ram-vs-vram|Unified memory vs RAM vs VRAM]].

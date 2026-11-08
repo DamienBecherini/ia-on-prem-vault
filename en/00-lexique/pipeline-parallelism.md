@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -18,7 +18,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 Splitting a model into layer blocks across multiple nodes: each node processes its slice and passes the result to the next.
 
 ## 📖 Detailed definition
-Machine A computes layers 1 to N, sends the result (*activations*) over the network to machine B, which computes the next layers, and so on until the last node. This is the strategy used by [[00-lexique/exo|Exo]] on desktop clusters.
+Machine A computes layers 1 to N, sends the result (*activations*) over the network to machine B, which computes the next layers, and so on until the last node. This is one of the two strategies of [[00-lexique/exo|Exo]] on desktop clusters (the other being Tensor Parallelism over Thunderbolt 5 RDMA).
 
 **Key difference from [[00-lexique/tensor-parallelism|Tensor Parallelism]]**:
 - Pipeline Parallelism: split *between* layers (needs a fast network but not extreme).
@@ -27,7 +27,7 @@ Machine A computes layers 1 to N, sends the result (*activations*) over the netw
 Pipeline Parallelism *increases memory capacity* but *adds latency* at each node boundary (the famous "pipeline bubbles" — idle time between slices).
 
 ## 💡 Why it matters for on-prem AI
-The only viable option for office clusters where NVLink is unavailable. Key to understanding why [[00-lexique/ttft|TTFT]] degrades in Scenario C.
+The most robust option for office clusters without NVLink (Tensor Parallelism is only conceivable there between Macs linked via Thunderbolt 5 RDMA). Key to understanding why [[00-lexique/ttft|TTFT]] degrades in Scenario C.
 
 ## ⚠️ Common pitfalls
 - Pipeline bubbles hurt latency, especially on long prompts (prefill).

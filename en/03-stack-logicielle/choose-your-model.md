@@ -3,7 +3,7 @@ title: "🗺️ Choosing your local model"
 description: Practical guide to navigating the open-weights LLM landscape — families, sizes, specializations, and on-premise scenario mapping.
 sidebar:
   order: 4
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -36,10 +36,10 @@ See [[01-fondations/quantization-4bit-8bit|Quantization]] to calculate exact foo
 | Available VRAM | Accessible model size |
 | :-- | :-- |
 | 8–12 GB | 7–8B |
-| 16–24 GB | 14B — 24B with Q4 |
+| 16–24 GB | 14B (16 GB) — up to ~30B in Q4 (24 GB, e.g. Qwen3.8-27B ≈ 18 GB) |
 | 48 GB | 32–34B comfortably |
-| 80 GB (H100) | 70B in FP8/Q8 (~70 GB) or ~120–140B in Q4[^7] |
-| 128–160 GB (APU) | 70B Q8 or 120B Q4 |
+| 80 GB (H100) | 70B in FP8/Q8 (~70 GB, short context) or up to ~120B in Q4 (≈ 0.55–0.6 byte/parameter, short context)[^7] |
+| 128–160 GB (APU) | 70B Q8 or ~150–230B in Q4 depending on the memory allocatable to the GPU and the KV headroom |
 
 **3. How many concurrent users?**
 
@@ -85,7 +85,7 @@ The most versatile family in the open-weights landscape, with excellent multilin
 
 ### DeepSeek (DeepSeek AI)
 
-- **DeepSeek V4 / V4.1 (MIT)**: the current generation. **V4-Flash** (~300B, 1M tokens) and **V4.1-Flash** (552B + 196B of conditional memory, 8 to 16B active, FP4 KV cache) replace V3 and R1; reasoning is built in (adjustable effort), no more separate "R" model. Datacenter size (8× 80 GB GPU node minimum)[^10].
+- **DeepSeek V4 / V4.1 (MIT)**: the current generation. **V4-Flash** (284B with 13B active for the preview, 304B for the 0731 revision, 1M tokens) and **V4.1-Flash** (552B + 196B of conditional memory, 8 to 16B active, FP4 KV cache) replace V3 and R1; reasoning is built in (adjustable effort), no more separate "R" model. V4.1-Flash and V4-Pro are datacenter size (8× 80 GB GPU node minimum); V4-Flash (~300 GB in FP8, ~150–170 GB in 4-bit) also fits on a 256–384 GB desktop cluster (Scenario C)[^10].
 - **DeepSeek-R1 / V3 (2025)**: still available and well supported, but outclassed at equal cost.
 
 > [!warning] MoE: do not confuse total and active
@@ -113,7 +113,7 @@ Compact models (3.8B–14B) with high reasoning quality for their size. Interest
 
 | Scenario | Typical hardware | Recommended model | Use case |
 | :-- | :-- | :-- | :-- |
-| [[04-blueprints/scenario-a-dev-lab|A — Dev Lab]] | PC 16 GB VRAM + offloading | Qwen3.8-27B Q4 (~18 GB)[^7], Granite 4.2 8B[^9] or Gemma 4 E4B[^16] | Solo dev, testing, prototyping |
+| [[04-blueprints/scenario-a-dev-lab|A — Dev Lab]] | PC with 24 GB GPU (+ offloading beyond) or 64 GB unified memory | Qwen3.8-27B Q4 (~18 GB)[^7], Granite 4.2 8B[^9] or Gemma 4 E4B[^16] | Solo dev, testing, prototyping |
 | [[04-blueprints/scenario-b-sme-appliance\|B — SME Appliance]] | APU 128 GB unified memory | Qwen3.8-27B[^7] or Muse Glimmer 30B[^8] (Q8 possible); Nemotron 3.5 Lightning 30B-A3B NVFP4 (~22 GB, 256k) for throughput[^13] | Team assistant, document RAG |
 | [[04-blueprints/scenario-c-desktop-cluster\|C — Desktop Cluster]] | 2–4 Thunderbolt machines | GLM-5.3-Flash (320B / 18B active, MIT)[^14] or DeepSeek V4-Flash (MIT)[^10] | Advanced SME, highly capable model |
 | [[04-blueprints/scenario-d-datacenter\|D — Datacenter]] | Multi-H100 / MI300X | DeepSeek V4.1-Flash / V4-Pro (MIT)[^10], MiMo-V2.6-Pro (1.02T / 42B active) and MiMo-V2.6-Flash (309B / 15B active), MIT, text + image + video + audio, since September 2026[^20], GLM-5.3 (custom license)[^14], Kimi K3 (native MXFP4, custom license)[^15], Qwen3.8-2.4T-A95B (custom license); Llama 4 Scout / Maverick remain valid[^2] | Production 50+ users, SLA, multimodal |

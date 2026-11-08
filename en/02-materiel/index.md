@@ -3,7 +3,7 @@ title: "🖥️ Index — Hardware"
 description: Entry point for the hardware chapter — workstations, GPU rack servers, and AI networking fabric for on-premise inference.
 sidebar:
   order: 0
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -31,7 +31,7 @@ Hardware dictates what you can load in [[00-lexique/vram|VRAM]], what memory thr
 ## Chapter pages
 
 1. [[02-materiel/apu-and-unified-memory|🧠 APU & Unified Memory]] — Apple M5, AMD Ryzen AI Max PRO 400, NVIDIA DGX Spark 64/128 GB
-2. [[02-materiel/stations-multi-gpu|🧩 Multi-GPU Workstations]] — PCIe workstations, consumer NVLink
+2. [[02-materiel/stations-multi-gpu|🧩 Multi-GPU Workstations]] — PCIe workstations (no NVLink since Ada), PCIe switches, L40S / A100 servers
 3. [[02-materiel/gpu-rack-servers|🏭 GPU rack servers]] — 1U/2U/4U, HGX, RTX vs datacenter choice
 4. [[02-materiel/network-roce-infiniband-thunderbolt|🌐 AI networking]] — RoCE, InfiniBand, Thunderbolt
 

@@ -3,7 +3,7 @@ title: "🧩 Multi-GPU Workstations: NVIDIA, PCIe, and VRAM"
 description: "Understand when multiple discrete GPUs truly help on-premise AI inference, and why interconnect often matters more than card count."
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -67,7 +67,7 @@ Between PCIe workstation towers and HGX datacenter nodes, there is a category of
 | **NVIDIA L40S** | 48 GB GDDR6 | 864 GB/s | ✅ Yes (Ada Lovelace) | SaaS inference — best cost/token in production |
 | **NVIDIA A100 (80 GB)** | 80 GB HBM2e | 2,000 GB/s | ❌ No (FP16 max) | Solid legacy, available from sovereign FR hosts |
 | **NVIDIA A100 (40 GB)** | 40 GB HBM2e | 1,555 GB/s | ❌ No | Capacity/cost compromise for 13–34B models |
-| RTX 6000 Ada / RTX 5090 | 48 / 32 GB | 960 / 1,792 GB/s | ⚠️ Partial / ✅ (Blackwell) | On-prem client air-gapped (client-supplied hardware); RTX 5090 ≥ $5,000 and scarce in Q3 2026 [^11] |
+| RTX 6000 Ada / RTX 5090 | 48 / 32 GB | 960 / 1,792 GB/s | ✅ (Ada Lovelace) / ✅ (Blackwell) | On-prem client air-gapped (client-supplied hardware); RTX 5090 ≥ $5,000 and scarce in Q3 2026 [^11] |
 
 #### The NVIDIA L40S — the "hidden gem" of inference as of Q4 2026
 

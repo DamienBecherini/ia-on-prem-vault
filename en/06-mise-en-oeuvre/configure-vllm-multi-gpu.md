@@ -139,11 +139,11 @@ vllm serve meta-llama/Llama-3.1-405B-Instruct \
 ```mermaid
 graph LR
     A[API Request] --> B[vLLM Scheduler]
-    B --> C[GPU 0 — layers 0-17]
-    B --> D[GPU 1 — layers 18-35]
-    B --> E[GPU 2 — layers 36-53]
-    B --> F[GPU 3 — layers 54-71]
-    C & D & E & F --> G[Response]
+    B --> C[GPU 0 — 1/4 of the weights of each layer 0-79]
+    B --> D[GPU 1 — 1/4 of the weights of each layer 0-79]
+    B --> E[GPU 2 — 1/4 of the weights of each layer 0-79]
+    B --> F[GPU 3 — 1/4 of the weights of each layer 0-79]
+    C & D & E & F -->|all-reduce at each layer (NVLink or PCIe)| G[Response]
 ```
 
 ---

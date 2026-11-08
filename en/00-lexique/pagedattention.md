@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -26,7 +26,7 @@ Result: memory waste drops from 60–80% to under 4% according to the original p
 This is the innovation that made vLLM's continuous batching possible — together with block-based prefix caching (enabled by default), it explains why vLLM outperforms Ollama in multi-user production[^3]. Without PagedAttention, the server wastes VRAM and cannot batch concurrent requests efficiently.
 
 ## ⚠️ Common pitfalls
-- PagedAttention now designates a **principle** more than a component: vLLM removed the historical implementation in v0.25 (July 2026) in favor of its V1 engine's attention backends, which keep block-based KV Cache management (`--block-size` option, `vllm:kv_cache_usage_perc` metric)[^1]. Workstation-oriented engines (llama.cpp/Ollama) rely on a different memory model and do not offer equivalent continuous batching.
+- PagedAttention now designates a **principle** more than a component: vLLM removed the historical implementation in v0.25 (July 2026) in favor of its V1 engine's attention backends, which keep block-based KV Cache management (`--block-size` option, `vllm:kv_cache_usage_perc` metric)[^1]. Workstation-oriented engines rely on a different memory model: `llama-server` (llama.cpp) does do continuous batching (enabled by default, parallel slots via `-np`), but without a paged KV Cache or block sharing between requests, and Ollama by default processes only one request at a time per model (`OLLAMA_NUM_PARALLEL=1`).
 - Does not remove total capacity limits: if model + caches exceed total VRAM, OOM still occurs.
 
 ## 📚 Go deeper

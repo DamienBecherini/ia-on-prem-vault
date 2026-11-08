@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -32,7 +32,7 @@ Maximum throughput by generation:
 For comparison, NVLink 4 (H100) offers 900 GB/s — about **14×** more than a PCIe 5.0 x16 link.
 
 ## 💡 Why it matters for on-prem AI
-PCIe transfer cost strongly affects CPU→GPU offloading and is the limiting factor for Tensor Parallelism on desktop setups without NVLink.
+PCIe weighs on offloading when weights are copied to the GPU (the computation of layers left in RAM is itself bounded by DDR5), and it is the limiting factor for Tensor Parallelism on desktop setups without NVLink.
 
 ## ⚠️ Common pitfalls
 - Theoretical PCIe bandwidth is divided by the number of GPUs sharing the same CPU controller.
