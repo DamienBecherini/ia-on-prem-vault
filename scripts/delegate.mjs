@@ -50,6 +50,11 @@ if (!fs.existsSync(engineScript)) {
 
 console.log(`↪ Delegating ${command} to ${enginePath}\n`);
 
+// The FTP service of the host sends only the leaf certificate and Node does not fetch the missing
+// intermediate: give it Let's Encrypt YR2 + Root YR (signed by ISRG Root X1) so FTPS stays verified.
+const extraCa = path.join(vaultRoot, 'scripts', 'ca', 'lets-encrypt-yr2-chain.pem');
+if (!process.env.NODE_EXTRA_CA_CERTS && fs.existsSync(extraCa)) process.env.NODE_EXTRA_CA_CERTS = extraCa;
+
 const delegateEnv = command === 'audit-links'
     ? { ...process.env, VAULT_PATH: vaultRoot, FORCE_VAULT_PATH: '1' }
     : process.env;

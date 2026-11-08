@@ -65,6 +65,9 @@ jobs:
           # TLS certificate is verified by default: DEPLOY_HOST must be a name on the server certificate.
           # Hosts whose certificate does not match can opt out with the repository variable DEPLOY_FTPS_INSECURE=true.
           DEPLOY_FTPS_INSECURE: ${{ vars.DEPLOY_FTPS_INSECURE || 'false' }}
+          # The FTP service sends only the leaf certificate; Node does not fetch the missing intermediate.
+          # Let's Encrypt YR2 + Root YR (signed by ISRG Root X1) complete the chain, so the check stays on.
+          NODE_EXTRA_CA_CERTS: ${{ github.workspace }}/vault/scripts/ca/lets-encrypt-yr2-chain.pem
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
