@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -19,7 +19,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 Découpage d'un modèle en blocs de couches répartis sur plusieurs nœuds : chaque nœud traite sa tranche et transmet le résultat au suivant.
 
 ## 📖 Définition détaillée
-La machine A calcule les couches 1 à N, envoie le résultat (les *activations*) par le réseau à la machine B qui calcule les suivantes, et ainsi de suite jusqu'au dernier nœud. C'est la stratégie utilisée par [[00-lexique/exo|Exo]] sur les clusters de bureau.
+La machine A calcule les couches 1 à N, envoie le résultat (les *activations*) par le réseau à la machine B qui calcule les suivantes, et ainsi de suite jusqu'au dernier nœud. C'est l'une des deux stratégies d'[[00-lexique/exo|Exo]] sur les clusters de bureau (l'autre étant le Tensor Parallelism en RDMA Thunderbolt 5).
 
 **Différence clé avec le [[00-lexique/tensor-parallelism|Tensor Parallelism]]** :
 - Pipeline Parallelism : découpage *entre* couches (besoin d'un réseau rapide mais pas extrême).
@@ -28,7 +28,7 @@ La machine A calcule les couches 1 à N, envoie le résultat (les *activations*)
 Le Pipeline Parallelism *augmente la capacité mémoire* mais *introduit de la latence* à chaque frontière entre nœuds (les fameux "pipeline bubbles" — temps d'attente entre tranches).
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Seule option viable pour les clusters bureau où NVLink n'est pas disponible. Clé pour comprendre pourquoi le [[00-lexique/ttft|TTFT]] se dégrade dans le Scénario C.
+Option la plus robuste pour les clusters bureau sans NVLink (le Tensor Parallelism n'y est envisageable qu'entre Mac reliés en RDMA Thunderbolt 5). Clé pour comprendre pourquoi le [[00-lexique/ttft|TTFT]] se dégrade dans le Scénario C.
 
 ## ⚠️ Pièges fréquents
 - Les pipeline bubbles dégradent la latence, surtout sur les prompts longs (prefill).

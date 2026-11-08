@@ -8,7 +8,7 @@ tags:
   - stack
 sidebar:
   order: 63
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 ---
@@ -25,7 +25,7 @@ Its signature mechanism is the **paged** KV Cache management popularized by [[00
 
 ## 💡 Why it matters for on-prem AI
 
-- **Scenarios B, C, and D** in this vault: SMB appliance, office cluster behind proxy, multi-GPU datacenter.
+- **Scenario D** in this vault (multi-GPU datacenter), and Scenario B in its NVIDIA GPU rack server variant (see [[02-materiel/gpu-rack-servers|GPU rack servers]]); the Mac / APU appliances of Scenario B (MLX, llama.cpp, SGLang ROCm) and the Mac cluster of Scenario C (MLX / Exo) do not rely on vLLM.
 - Natural alternative to a cloud API when internal request volume justifies hardware amortization.
 - Anchor point for [[06-mise-en-oeuvre/configure-vllm-multi-gpu|configuring vLLM multi-GPU]] and [[06-mise-en-oeuvre/migrate-ollama-to-vllm|migrating from Ollama]].
 

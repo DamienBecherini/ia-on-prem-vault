@@ -8,7 +8,7 @@ tags:
   - stack
 sidebar:
   order: 64
-last_modified: "2026-10-10"
+last_modified: "2026-11-08"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 ---
@@ -25,7 +25,7 @@ Sous le capot, Ollama s'appuie sur **llama.cpp** (C/C++) — [[00-lexique/quanti
 
 ## 💡 Pourquoi c'est important en IA on-premise
 
-- **Scénario A** (labo dev) et premiers pas du **scénario B** (PME) : validation modèle, prompts, RAG léger avant bascule [[00-lexique/vllm|vLLM]].
+- **Scénario A** (labo dev) et premiers pas du **scénario B** (PME) : validation modèle, prompts, RAG léger avant bascule vers [[00-lexique/vllm|vLLM]] sur serveur GPU (ou maintien sur llama.cpp / MLX pour une appliance Mac ou APU).
 - Référence pour les guides [[06-mise-en-oeuvre/getting-started-with-ollama|Démarrer avec Ollama]] et [[06-mise-en-oeuvre/evaluate-local-model|évaluer un modèle local]].
 - Modèles d'embedding locaux (`nomic-embed-text`, etc.) via la même API.
 

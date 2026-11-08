@@ -36,10 +36,10 @@ Voir [[01-fondations/quantization-4bit-8bit|Quantification]] pour calculer l'emp
 | VRAM disponible | Taille de modèle accessible |
 | :-- | :-- |
 | 8–12 Go | 7–8B |
-| 16–24 Go | 14B — 24B avec Q4 |
+| 16–24 Go | 14B (16 Go) — jusqu'à ~30B en Q4 (24 Go, ex. Qwen3.8-27B ≈ 18 Go) |
 | 48 Go | 32–34B confortablement |
-| 80 Go (H100) | 70B en FP8/Q8 (~70 Go) ou ~120–140B en Q4[^7] |
-| 128–160 Go (APU) | 70B Q8 ou 120B Q4 |
+| 80 Go (H100) | 70B en FP8/Q8 (~70 Go, contexte court) ou jusqu'à ~120B en Q4 (≈ 0,55–0,6 octet/paramètre, contexte court)[^7] |
+| 128–160 Go (APU) | 70B Q8 ou ~150–230B en Q4 selon la mémoire allouable au GPU et la marge KV |
 
 **3. Combien d'utilisateurs simultanés ?**
 
@@ -85,7 +85,7 @@ La famille la plus polyvalente du paysage open weights, avec une excellente couv
 
 ### DeepSeek (DeepSeek AI)
 
-- **DeepSeek V4 / V4.1 (MIT)** : la génération courante. **V4-Flash** (~300B, 1M tokens) et **V4.1-Flash** (552B + 196B de mémoire conditionnelle, 8 à 16B actifs, KV cache FP4) remplacent V3 et R1 ; le raisonnement est intégré (effort réglable), plus de modèle « R » séparé. Taille datacenter (nœud 8 GPU 80 Go minimum)[^10].
+- **DeepSeek V4 / V4.1 (MIT)** : la génération courante. **V4-Flash** (284B dont 13B actifs pour la preview, 304B pour la révision 0731, 1M tokens) et **V4.1-Flash** (552B + 196B de mémoire conditionnelle, 8 à 16B actifs, KV cache FP4) remplacent V3 et R1 ; le raisonnement est intégré (effort réglable), plus de modèle « R » séparé. V4.1-Flash et V4-Pro sont de taille datacenter (nœud 8 GPU 80 Go minimum) ; V4-Flash (~300 Go en FP8, ~150–170 Go en 4-bit) tient aussi sur un cluster de bureau de 256–384 Go (scénario C)[^10].
 - **DeepSeek-R1 / V3 (2025)** : encore disponibles et bien supportés, mais dépassés à coût égal.
 
 > [!warning] MoE : ne pas confondre total et actif
@@ -113,7 +113,7 @@ Modèles compacts (3.8B–14B) avec une qualité de raisonnement élevée pour l
 
 | Scénario | Matériel type | Modèle recommandé | Cas d'usage |
 | :-- | :-- | :-- | :-- |
-| [[04-blueprints/scenario-a-dev-lab|A — Labo Dev]] | PC 16 Go VRAM + offloading | Qwen3.8-27B Q4 (~18 Go)[^7], Granite 4.2 8B[^9] ou Gemma 4 E4B[^16] | Dev solo, tests, prototypage |
+| [[04-blueprints/scenario-a-dev-lab|A — Labo Dev]] | PC GPU 24 Go (+ offloading au-delà) ou mémoire unifiée 64 Go | Qwen3.8-27B Q4 (~18 Go)[^7], Granite 4.2 8B[^9] ou Gemma 4 E4B[^16] | Dev solo, tests, prototypage |
 | [[04-blueprints/scenario-b-sme-appliance\|B — Appliance PME]] | APU 128 Go mémoire unifiée | Qwen3.8-27B[^7] ou Muse Glimmer 30B[^8] (Q8 possible) ; Nemotron 3.5 Lightning 30B-A3B NVFP4 (~22 Go, 256k) pour le débit[^13] | Assistant équipe, RAG documentaire |
 | [[04-blueprints/scenario-c-desktop-cluster\|C — Cluster Bureau]] | 2–4 machines Thunderbolt | GLM-5.3-Flash (320B / 18B actifs, MIT)[^14] ou DeepSeek V4-Flash (MIT)[^10] | PME avancée, modèle très capable |
 | [[04-blueprints/scenario-d-datacenter\|D — Datacenter]] | Multi-H100 / MI300X | DeepSeek V4.1-Flash / V4-Pro (MIT)[^10], MiMo-V2.6-Pro (1,02T / 42B actifs) et MiMo-V2.6-Flash (309B / 15B actifs), MIT, texte + image + vidéo + audio, depuis septembre 2026[^20], GLM-5.3 (licence custom)[^14], Kimi K3 (MXFP4 natif, licence custom)[^15], Qwen3.8-2.4T-A95B (licence custom) ; Llama 4 Scout / Maverick restent valables[^2] | Production 50+ utilisateurs, SLA, multimodal |

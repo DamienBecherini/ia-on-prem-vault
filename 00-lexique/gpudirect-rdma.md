@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -24,7 +24,7 @@ Dans un pipeline classique, un transfert GPU → réseau requiert : GPU VRAM →
 > [!info] Prérequis
 > - GPU NVIDIA et carte réseau Mellanox/ConnectX compatibles.
 > - InfiniBand ou RoCE configuré en mode lossless.
-> - Pilotes `nvidia-peermem` chargés.
+> - Support noyau : DMA-BUF (approche recommandée par NVIDIA quand noyau et pilote le permettent) ou, à défaut, le module historique `nvidia-peermem`.
 
 Utilisé par NCCL pour les communications inter-nœuds dans les clusters distribués.
 
@@ -33,7 +33,7 @@ Réduit la latence et la charge CPU lors des synchronisations inter-GPU sur Infi
 
 ## ⚠️ Pièges fréquents
 - Ne fonctionne pas si le GPU et la carte réseau sont sur des branches PCIe séparées avec une topologie NUMA défavorable.
-- Nécessite `nvidia-peermem` : son absence silencieuse fait basculer NCCL en mode copie CPU sans avertissement clair.
+- Sans DMA-BUF ni `nvidia-peermem` chargé, NCCL bascule silencieusement en mode copie CPU : vérifier dans les logs (`NCCL_DEBUG=INFO`) que le chemin `NET/IB/GDRDMA` est bien utilisé.
 
 ## 🔗 Voir aussi
 - [[00-lexique/rdma|RDMA]]

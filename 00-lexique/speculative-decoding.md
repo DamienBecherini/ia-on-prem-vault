@@ -59,7 +59,7 @@ La clé `num_speculative_tokens` (γ) contrôle le nombre de tokens générés p
 
 ## 💡 Pourquoi c'est important en IA on-premise
 
-Pour une stack souveraine avec un seul modèle 70B en service, le speculative decoding peut réduire la latence perçue par utilisateur (TTFT et temps de génération) sans changer le matériel — à condition de disposer de la capacité mémoire pour le second modèle.
+Pour une stack souveraine avec un seul modèle 70B en service, le speculative decoding peut réduire le temps de génération perçu par utilisateur (latence entre tokens) sans changer le matériel — à condition de disposer de la capacité mémoire pour le second modèle. Il n'améliore pas le [[00-lexique/ttft|TTFT]], qui dépend du prefill, et peut même l'allonger légèrement.
 
 Il est particulièrement attractif sur les blueprints haute capacité ([[02-materiel/apu-and-unified-memory|mémoire unifiée 128 Go+]]) où charger un draft model 1B–7B ne représente que quelques gigaoctets supplémentaires.
 

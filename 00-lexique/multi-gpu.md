@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-03"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -24,7 +24,7 @@ Le multi-GPU sert à augmenter la capacité mémoire totale, le débit, ou les d
 | :-- | :-- | :-- |
 | PCIe x16 | ~64 Go/s (Gen5) | assemblages bureau, Exo |
 | NVLink (H100) | 900 Go/s | nœuds pro/datacenter |
-| NVLink + NVSwitch (HGX) | 1 800 Go/s fabric complet | clusters HGX B200 |
+| NVLink 5 + NVSwitch (HGX B200) | 1 800 Go/s par GPU (~14,4 To/s agrégés sur 8 GPU) | nœuds HGX B200 |
 
 Deux stratégies de parallélisme utilisent le multi-GPU : le [[00-lexique/tensor-parallelism|Tensor Parallelism]] (distribue les calculs dans une couche) et le [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] (distribue les couches entre nœuds).
 

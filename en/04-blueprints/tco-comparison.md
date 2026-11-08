@@ -169,7 +169,7 @@ Open-weights models in this class (DeepSeek V4, GLM-5.3, Kimi K3) are available 
 | :-- | :-- | :-- |
 | Cloud API (500 M tok/month, 2/3 input, prices of 2026-10-09)[^1][^2] | ~$120 (Haiku 5.5) to ~$6,700/month (GPT-5.5); ~$11,700 (Fable 5.1) | No custom SLA guarantee; the HGX node only becomes cheaper beyond ~1 G tokens/month against GPT-5.5 (~0.6 G against Fable 5.1) |
 | Dedicated GPU cloud (8× A100 80 GB on-demand, $2.79/GPU-h)[^6] | ~$16,000/month (8× H100: ~$23,000) | Strong SLA, but high cost |
-| Reserved GPU cloud (1 year, H100 × 8)[^6] | ~$11,000/month ($1.9/GPU-h) to ~$32,000/month depending on the provider | 1-year commitment; request a quote |
+| Reserved GPU cloud (H100, Lambda 1-Click Clusters, 2 weeks to 1 year, 16 GPUs min.)[^6] | ~$32,000 – 36,000/month scaled down to 8 GPUs ($5.54 – 6.16/GPU-h as of 2026-10-09) | Commitment; above on-demand pricing at Lambda: request a quote |
 
 > [!note] Break-even point D
 > The HGX node becomes competitive after 28 to 49 months versus on-demand dedicated GPU cloud (Lambda prices of 2026-10-09)[^6], and only beyond about 1 billion tokens per month against a frontier API. Its real value is not purely economic: **full control** (data, models, SLA, model evolution), **5-year cost control**, and maximum regulatory compliance.
@@ -199,9 +199,9 @@ Monthly token volume          Sovereignty constraint   → Recommended blueprint
 | A (dev lab, 5 M in + 2.5 M out/month) | ~€55 – €85 | ~€2,000 – €3,100 | ~€60 (Haiku 5.5) / ~€1,160 (Sonnet 5.5, GPT-6 Sol) / ~€3,300 (GPT-5.5) / ~€5,800 (Fable 5.1) |
 | B (SME, 34 M tok/month) | ~€155 | ~€5,580 | ~€260 (Haiku 5.5) / ~€670 (DeepSeek V4.1 Flash) / ~€1,160 (Together AI Llama 3.3 70B) / ~€5,200 (Sonnet 5.5) / ~€10,400 (Opus 5.5) / ~€14,900 (GPT-5.5) / ~€26,100 (Fable 5.1) |
 | C (cluster, 34 M tok/month, 100B+ models) | ~€285 – €400 | ~€10,300 – €14,400 | ~€670 (DeepSeek V4.1 Flash) / ~€2,460 (DeepSeek V4 Pro, Together AI) / ~€270,000 (4× A100 on-demand 24/7) |
-| D (datacenter, 500 M tok/month) | ~€13,600 | ~€489,600 | ~€77,000 (Sonnet 5.5) / ~€221,000 (GPT-5.5) / ~€386,000 (Fable 5.1) / ~€365,000 – €540,000 (8 GPUs, from 1-year reserved H100 at $1.9/GPU-h to on-demand A100) |
+| D (datacenter, 500 M tok/month) | ~€13,600 | ~€489,600 | ~€77,000 (Sonnet 5.5) / ~€221,000 (GPT-5.5) / ~€386,000 (Fable 5.1) / ~€540,000 (8× A100 on-demand) / ~€770,000 (8× H100 on-demand) / ~€1.07M (8× H100 at Lambda 1-Click reserved rate, $5.54/GPU-h) |
 
-*Calculation: monthly cloud cost from sections A to D × 36 months (Fable 5.1 and DeepSeek captured 2026-10-10); GPU cloud: ~$11,000/month reserved for 1 year at $1.9/GPU-h (table D) and 8× A100 on-demand ≈ $16,300/month (Lambda, 2026-10-09)[^6].*
+*Calculation: monthly cloud cost from sections A to D × 36 months (Fable 5.1 and DeepSeek captured 2026-10-10); GPU cloud: 8× A100 on-demand ≈ $16,300/month, 8× H100 on-demand ≈ $23,300/month and 8× H100 at the 1-Click reserved rate ≈ $32,350/month at $5.54/GPU-h (Lambda, 2026-10-09)[^6].*
 
 > [!warning] Hidden costs not to forget
 > - **Training and onboarding** of the team on the on-premise stack

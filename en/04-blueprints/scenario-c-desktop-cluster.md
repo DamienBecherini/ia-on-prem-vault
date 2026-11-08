@@ -32,7 +32,7 @@ The idea is to create a compute "farm" sitting on a shelf.
 
 ## ⚙️ Software stack and mechanism
 
-This hardware miracle is made possible by **MLX** distributed inference (`mlx.launch` with a hostfile, pipeline parallelism, RDMA over Thunderbolt 5 since macOS 26.2) — the **[[00-lexique/exo|Exo]]** orchestrator, which popularized the approach (covered in the [[03-stack-logicielle/clustering-exo-and-ray|AI Clustering]] chapter), has had no release since v1.0.71 in April 2026, supports only the MLX backend (Linux is CPU-only), and must be considered unmaintained in Q4 2026[^4][^5].
+This hardware miracle is made possible by **MLX** distributed inference (`mlx.launch` with a hostfile, pipeline parallelism, RDMA over Thunderbolt 5 since macOS 26.2) — the **[[00-lexique/exo|Exo]]** orchestrator, which popularized the approach (covered in the [[03-stack-logicielle/clustering-exo-and-ray|AI Clustering]] chapter), has had no release since v1.0.71 in April 2026, supports only the MLX backend (Linux is CPU-only), and must be considered as slowed down in Q4 2026 (no release since April, two commits since June 2026)[^4][^5].
 
 1.  The distributed runtime (MLX, or Exo) installs on all Mac Minis.
 2.  They discover each other via the Thunderbolt network (IP-over-Thunderbolt on Thunderbolt 4; RDMA on Thunderbolt 5 under macOS 26.2).

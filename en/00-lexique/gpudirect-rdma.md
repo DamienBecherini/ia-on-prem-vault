@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -25,7 +25,7 @@ In a classic pipeline, GPU → network requires: GPU VRAM → CPU RAM → NIC (t
 > [!info] Requirements
 > - Compatible NVIDIA GPU and Mellanox/ConnectX NIC.
 > - InfiniBand or RoCE configured in lossless mode.
-> - `nvidia-peermem` drivers loaded.
+> - Kernel support: DMA-BUF (the approach recommended by NVIDIA when the kernel and driver allow it) or, failing that, the legacy `nvidia-peermem` module.
 
 Used by NCCL for inter-node communication in distributed clusters.
 
@@ -36,7 +36,7 @@ Cuts latency and CPU load during inter-GPU sync on InfiniBand or RoCE. Critical 
 ## ⚠️ Common pitfalls
 
 - Fails if GPU and NIC sit on separate PCIe branches with unfavorable NUMA topology.
-- Requires `nvidia-peermem`: if missing, NCCL silently falls back to CPU copy without a clear warning.
+- Without DMA-BUF or a loaded `nvidia-peermem`, NCCL silently falls back to CPU copy: check in the logs (`NCCL_DEBUG=INFO`) that the `NET/IB/GDRDMA` path is actually used.
 
 ## 🔗 See also
 

@@ -95,9 +95,9 @@ On-premises, you choose the model, customize it, run without an Internet connect
 | :--: | :--: | :--: | :-- |
 | 1 (dev / test) | 8–14B | < €3,500 | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Dev Lab]] |
 | 1 (dev / test) | 70B with offloading | < €3,500 | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Dev Lab]] *(limited performance)* |
-| 2–20 (SME, team) | 70B | €3,900 to over €8,000 incl. VAT (Oct. 2026, rising) | [[04-blueprints/scenario-b-sme-appliance|🏢 B — SME Appliance]] |
-| 2–20 (SME, team) | 200B+ / MoE | €10,000–15,000 | [[04-blueprints/scenario-c-desktop-cluster|🖥️ C — Desktop Cluster]] |
-| 50+ (production) | 70B–400B | > €300,000 | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
+| 2–20 (SME, team of 10–50 people) | 70B | €3,900 to over €8,000 incl. VAT (Oct. 2026, rising) | [[04-blueprints/scenario-b-sme-appliance|🏢 B — SME Appliance]] |
+| 2–20 (SME, team) | 200B+ / MoE | €10,000–22,000 | [[04-blueprints/scenario-c-desktop-cluster|🖥️ C — Desktop Cluster]] |
+| 50+ (production) | 70B–400B | > €250,000 | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
 | SLA constraint < 500 ms | Any | — | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
 
 > [!tip] Reading
