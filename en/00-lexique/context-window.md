@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -25,19 +25,19 @@ The context window determines two distinct things:
 1. **What the model can read**: if your document is 50,000 tokens and the model has a 32K window, it cannot read everything in one request.
 2. **Dynamic VRAM consumed**: each token in context uses space in the [[00-lexique/kv-cache|KV Cache]]. Longer windows mean a larger KV Cache.
 
-Rough KV Cache sizes for a 70B model (Llama 3.1) by context length:
+Rough KV Cache sizes for a 70B model (Llama 3.1: 80 layers, 8 KV heads in GQA, dimension 128), for a single request, by context length:
 
 | Context | Estimated KV Cache (BF16) | KV Cache (Q8) |
 | :-- | :-- | :-- |
-| 4K tokens | ~4 GB | ~2 GB |
-| 32K tokens | ~32 GB | ~16 GB |
-| 128K tokens | ~128 GB | ~64 GB |
+| 4K tokens | ~1.3 GB | ~0.7 GB |
+| 32K tokens | ~10.7 GB | ~5.4 GB |
+| 128K tokens | ~42 GB | ~21 GB |
 
-A 128K context can **double or triple** VRAM needs versus weights alone. In practice, context window size causes unexpected OOM on local machines.
+A 128K context can **double** VRAM needs versus weights quantized to Q4 (~40 GB of weights + ~42 GB of KV Cache in BF16). In practice, context window size causes unexpected OOM on local machines.
 
 ## 💡 Why it matters for on-prem AI
 
-On an APU with 128 GB allocated to the GPU, a 70B Q4 model (~40 GB) leaves ~88 GB for KV Cache — roughly ~88K tokens in BF16. Comfortable for most uses. On a 24 GB VRAM machine, KV Cache is the first knob to adjust.
+On an APU with 128 GB allocated to the GPU, a 70B Q4 model (~40 GB) leaves ~88 GB for KV Cache: the native 128K-token window (~42 GB in BF16) fits for one request, with ~46 GB of headroom. Comfortable for most uses. On a 24 GB VRAM machine, KV Cache is the first knob to adjust.
 
 ## ⚠️ Common pitfalls
 

@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -25,7 +25,7 @@ Là où une RTX 4090 grand public offre ~1 008 Go/s via GDDR6X, une puce HBM3 at
 | :-- | :-- | :-- |
 | NVIDIA H100 SXM5 | HBM3 80 Go | **3,35 To/s** |
 | AMD MI300X | HBM3 192 Go | **5,3 To/s** |
-| Apple M3 Ultra | LPDDR5X 192 Go | 819 Go/s |
+| Apple M5 Ultra | LPDDR5X 512 Go | 1 200 Go/s |
 | RTX 4090 (grand public) | GDDR6X 24 Go | ~1 008 Go/s |
 
 Cette différence explique pourquoi le [[00-lexique/memory-wall|Memory Wall]] est bien moins contraignant sur un H100 : il peut saturer le débit de génération d'un modèle 70B sans être memory-bound au même degré qu'une carte de workstation.

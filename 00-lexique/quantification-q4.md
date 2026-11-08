@@ -8,7 +8,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-08"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -26,7 +26,7 @@ Quantification où les poids sont compressés sur environ 4 bits par paramètre,
 
 `Q4_K_M` signifie :
 - **Q4** : 4 bits par paramètre (~0,5 octet effectif avec les métadonnées de blocs)
-- **K** : méthode K-means qui regroupe les poids en clusters pour minimiser la perte de précision
+- **K** : famille des « K-quants » de llama.cpp. Les poids sont quantifiés par blocs de 32 valeurs, regroupés en super-blocs de 256, avec des échelles elles-mêmes quantifiées. Il ne s'agit pas d'un clustering K-means.
 - **M** : taille de bloc "medium" — compromis qualité/vitesse recommandé pour la plupart des usages
 
 Empreintes VRAM typiques en Q4_K_M :
