@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-11-08"
+last_modified: "2026-11-09"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -32,7 +32,7 @@ These figures allow running a **quantized 70B model** (~40 GB) with a large cont
 
 ## 💡 Why it matters for on-prem AI
 
-The APU is the reference platform for [[04-blueprints/scenario-b-sme-appliance|Scenario B (SME appliance)]]: self-contained, quiet, under ~60 W at light load, hosting a local assistant for teams of 5–20 people.
+The APU is the reference platform for [[04-blueprints/scenario-b-sme-appliance|Scenario B (SME appliance)]]: self-contained, quiet, under ~60 W at light load, hosting a local assistant for teams of 10–50 people (2 to 20 concurrent users).
 
 ## ⚠️ Common pitfalls
 

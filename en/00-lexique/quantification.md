@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -32,7 +32,7 @@ Three main families of methods:
 
 - **GGUF / llama.cpp**: portable format for Ollama and workstations. Includes Q2 through Q8 variants; the "K" variants (K-quants) split weights into 256-value super-blocks with several scales and keep sensitive tensors at higher precision, which preserves quality better at equal size[^1].
 - **AWQ / GPTQ**: 4-bit quantizations for GPUs (AWQ protects ~1% of salient weights based on activations; GPTQ compensates rounding using the Hessian), optimized for vLLM/SGLang with dedicated kernels. Quality comparable to K-quants at equal bits, higher GPU throughput[^3].
-- **FP8 / FP4**: low-resolution floating precisions. FP8 is native on Hopper (H100, H200) and Blackwell; FP4 (NVFP4, MXFP4) is native on Blackwell only (B200, RTX 50, RTX PRO 6000, DGX Spark). Since 2026, vendors ship FP4 weights directly (gpt-oss and Kimi K3 in MXFP4; Nemotron 3.5 Lightning in NVFP4, ≈ 22 GB), including for workstation GPUs[^2].
+- **FP8 / FP4**: low-resolution floating precisions. FP8 is native on Ada Lovelace (L40S, RTX 6000 Ada, RTX 40), Hopper (H100, H200) and Blackwell; FP4 (NVFP4, MXFP4) is native on Blackwell only (B200, RTX 50, RTX PRO 6000, DGX Spark). Since 2026, vendors ship FP4 weights directly (gpt-oss and Kimi K3 in MXFP4; Nemotron 3.5 Lightning in NVFP4, ≈ 22 GB), including for workstation GPUs[^2].
 
 Fourth trend in 2026: **quantization-aware training** (QAT). Kimi K3 is trained in MXFP4 from the SFT phase onward, and NVIDIA publishes Nemotron 3.5 Lightning in NVFP4 as the "recommended path for deployment", with BF16 weights reserved for post-training. The vendor's 4-bit checkpoint then becomes the canonical version, and re-quantizing it yourself brings nothing[^2].
 
