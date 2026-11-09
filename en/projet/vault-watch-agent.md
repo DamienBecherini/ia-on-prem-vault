@@ -31,7 +31,7 @@ The guide gives minimum versions, prices and security vulnerabilities to watch. 
 
 Each correction appears as a card: the current text, the proposed text, the severity and the source. Related corrections, such as a sentence and its footnote, are approved together.
 
-![vault-watch-agent review screen: ticked corrections, with the current text in red, the proposed text in green and the source.](https://raw.githubusercontent.com/DamienBecherini/vault-watch-agent/main/docs/review.png)
+![vault-watch-agent review screen: ticked corrections, with the current text in red, the proposed text in green and the source.](/vault-watch-review.png)
 
 ## Its safeguards
 

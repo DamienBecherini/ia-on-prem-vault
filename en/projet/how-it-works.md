@@ -83,7 +83,7 @@ Yes, and it is better to say so. The agent calls Claude models through the Anthr
 
 ## What the upkeep costs
 
-Cost of the model calls at list price, [measured in November 2026](https://github.com/DamienBecherini/vault-watch-agent#what-the-upkeep-costs):
+Cost of the Claude API calls at list price, [measured in November 2026](https://github.com/DamienBecherini/vault-watch-agent#what-the-upkeep-costs), with Claude Opus 5.5 for the triage (medium effort), the proposals and the cross-check (high effort), and Claude Sonnet 5.5 for the translation (medium effort). Another model or effort level would give other figures:
 
 | Run | Cost |
 | :-- | --: |

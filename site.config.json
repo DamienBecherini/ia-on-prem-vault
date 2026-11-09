@@ -37,7 +37,8 @@
     "forceHttps": true,
     "notFoundPage": "/404.html",
     "notFoundPages": { "/en/": "/en/404/" },
-    "hsts": true
+    "hsts": true,
+    "directoryListing": false
   },
   "publish": {
     "exclude": [

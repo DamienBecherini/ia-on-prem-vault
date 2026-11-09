@@ -83,7 +83,7 @@ Oui, et il vaut mieux le dire. L'agent appelle les modèles Claude par l'API d'A
 
 ## Ce que coûte l'entretien
 
-Coût des appels au modèle au tarif public, [mesuré en novembre 2026](https://github.com/DamienBecherini/vault-watch-agent#what-the-upkeep-costs) :
+Coût des appels à l'API Claude au tarif public, [mesuré en novembre 2026](https://github.com/DamienBecherini/vault-watch-agent#what-the-upkeep-costs), avec Claude Opus 5.5 pour le tri (effort moyen), les propositions et la vérification (effort élevé), et Claude Sonnet 5.5 pour la traduction (effort moyen). Un autre modèle ou un autre niveau d'effort donnerait d'autres chiffres :
 
 | Passage | Coût |
 | :-- | --: |

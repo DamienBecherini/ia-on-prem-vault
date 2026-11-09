@@ -31,7 +31,7 @@ Le guide donne des versions minimales, des prix et des failles de sécurité à 
 
 Chaque correction apparaît sous forme de carte : le texte actuel, le texte proposé, la gravité et la source. Les corrections liées, comme une phrase et sa note de bas de page, se valident ensemble.
 
-![Écran de relecture de vault-watch-agent : des corrections cochées, avec le texte actuel en rouge, le texte proposé en vert et la source.](https://raw.githubusercontent.com/DamienBecherini/vault-watch-agent/main/docs/review.png)
+![Écran de relecture de vault-watch-agent : des corrections cochées, avec le texte actuel en rouge, le texte proposé en vert et la source.](/vault-watch-review.png)
 
 ## Ses garde-fous
 
