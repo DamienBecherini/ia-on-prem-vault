@@ -36,7 +36,7 @@ SGLang can constrain the model to produce JSON conforming to a given schema, at 
 | Agentic workloads with many tool calls and shared prefixes | **SGLang** |
 | Applications requiring reliable JSON outputs (APIs, backend integrations) | **SGLang** |
 | Pure throughput benchmarks under heavy concurrency | **vLLM** |
-| Hardware compatibility (NVIDIA CUDA 12 still supported, ROCm, CPU) | **vLLM** (SGLang requires CUDA 13 since 0.5.20, September 2026) |
+| Older NVIDIA drivers (CUDA 12) | Neither in an up-to-date version: vLLM is CUDA 13 only since 0.33 (November 2026), SGLang since 0.5.20 (September 2026)[^3] |
 
 vLLM remains the reference for maximum throughput (CUDA 13 only since 0.33, like SGLang); SGLang now officially covers NVIDIA (B200 → A100, RTX 30/40/50), AMD Instinct (MI300X → MI355X), Google TPU, Intel and Apple Silicon (Metal/MLX), with maturity varying by platform[^3]. SGLang excels where first-response latency and structured output reliability matter more than raw throughput.
 
@@ -62,5 +62,5 @@ vLLM remains the reference for maximum throughput (CUDA 13 only since 0.33, like
 
 [^1]: SGLang — official GitHub repository. [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang)
 [^2]: LMSys, *Fast and Expressive LLM Inference with RadixAttention*, January 2024. [https://lmsys.org/blog/2024-01-17-sglang/](https://lmsys.org/blog/2024-01-17-sglang/)
-[^3]: SGLang Project, README ("SGLang supports a wide range of GPUs, TPUs, NPUs, CPUs, and Apple Silicon platforms": NVIDIA B200 → A100 and RTX 30/40/50, AMD Instinct MI300X → MI355X, TPU v6e/v7, Intel Arc and Xeon, Apple Silicon via Metal/MLX, Ascend, Moore Threads), accessed 2026-10-10 · *Release v0.5.20* ("The CUDA 12 lane is retired"), 18 September 2026. [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang) · [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20)
+[^3]: SGLang Project, README ("SGLang supports a wide range of GPUs, TPUs, NPUs, CPUs, and Apple Silicon platforms": NVIDIA B200 → A100 and RTX 30/40/50, AMD Instinct MI300X → MI355X, TPU v6e/v7, Intel Arc and Xeon, Apple Silicon via Metal/MLX, Ascend, Moore Threads), accessed 2026-10-10 · *Release v0.5.20* ("The CUDA 12 lane is retired"), 18 September 2026 · vLLM Project, *Release v0.33.0* (CUDA 13.0 only wheels and images), 2 November 2026. [https://github.com/sgl-project/sglang](https://github.com/sgl-project/sglang) · [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20) · [https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3](https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3)
 [^4]: vLLM Project, *Structured Outputs* (`xgrammar` and `guidance` backends, JSON schemas, regex, grammars), accessed 2026-10-10. [https://docs.vllm.ai/en/stable/features/structured_outputs/](https://docs.vllm.ai/en/stable/features/structured_outputs/)
