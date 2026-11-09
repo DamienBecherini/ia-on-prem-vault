@@ -21,10 +21,10 @@ Hardware dictates what you can load in [[00-lexique/vram|VRAM]], what memory thr
 
 | Blueprint | Priority hardware pages |
 | :-- | :-- |
-| [[04-blueprints/scenario-a-dev-lab|A — Dev Lab]] | [[02-materiel/apu-and-unified-memory|APU & unified memory]], [[02-materiel/stations-multi-gpu|Multi-GPU workstations]] (offloading) |
-| [[04-blueprints/scenario-b-sme-appliance|B — SMB Appliance]] | [[02-materiel/apu-and-unified-memory|APU & unified memory]], [[02-materiel/gpu-rack-servers|GPU rack servers]] (1–2 GPU) |
-| [[04-blueprints/scenario-c-desktop-cluster|C — Office cluster]] | [[02-materiel/stations-multi-gpu|Multi-GPU workstations]], [[02-materiel/network-roce-infiniband-thunderbolt|AI networking]] (Thunderbolt 5 + RDMA) |
-| [[04-blueprints/scenario-d-datacenter|D — Datacenter]] | [[02-materiel/gpu-rack-servers|GPU rack servers]], [[02-materiel/network-roce-infiniband-thunderbolt|RoCE / InfiniBand]] |
+| [[04-blueprints/scenario-a-dev-lab\|A — Dev Lab]] | [[02-materiel/apu-and-unified-memory\|APU & unified memory]], [[02-materiel/stations-multi-gpu\|Multi-GPU workstations]] (offloading) |
+| [[04-blueprints/scenario-b-sme-appliance\|B — SMB Appliance]] | [[02-materiel/apu-and-unified-memory\|APU & unified memory]], [[02-materiel/gpu-rack-servers\|GPU rack servers]] (1–2 GPU) |
+| [[04-blueprints/scenario-c-desktop-cluster\|C — Office cluster]] | [[02-materiel/stations-multi-gpu\|Multi-GPU workstations]], [[02-materiel/network-roce-infiniband-thunderbolt\|AI networking]] (Thunderbolt 5 + RDMA) |
+| [[04-blueprints/scenario-d-datacenter\|D — Datacenter]] | [[02-materiel/gpu-rack-servers\|GPU rack servers]], [[02-materiel/network-roce-infiniband-thunderbolt\|RoCE / InfiniBand]] |
 
 ---
 

@@ -56,11 +56,11 @@ Human validation protects the output (merge, publication), not the input: what t
 
 | Tool | Role in the stack | Sovereignty |
 |------|-------------------|-------------|
-| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]] | Code agent, terminal-first, supports Ollama — development frozen since May 2026[^4] | ✅ if local, ⚠️ unmaintained |
-| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] | Docker/sandbox agent, Agent Canvas (scheduled automations, third-party agents via ACP), local models supported[^6] | ⚠️ configurable |
-| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|LiteLLM]] / [[00-lexique/litellm|lexicon]] | Unifying proxy (Ollama, vLLM, cloud); vulnerabilities exploited in 2026, patch every month[^5] | ✅ if local-only and up to date |
-| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng|SearXNG]] | Self-hosted meta-search, no API key | ✅ web privacy |
-| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli|Cursor CLI]] | Powerful MVP, but Cursor cloud routing (SpaceX since August 2026)[^7] | ❌ strict |
+| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider\|Aider]] | Code agent, terminal-first, supports Ollama — development frozen since May 2026[^4] | ✅ if local, ⚠️ unmaintained |
+| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands\|OpenHands]] | Docker/sandbox agent, Agent Canvas (scheduled automations, third-party agents via ACP), local models supported[^6] | ⚠️ configurable |
+| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm\|LiteLLM]] / [[00-lexique/litellm\|lexicon]] | Unifying proxy (Ollama, vLLM, cloud); vulnerabilities exploited in 2026, patch every month[^5] | ✅ if local-only and up to date |
+| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng\|SearXNG]] | Self-hosted meta-search, no API key | ✅ web privacy |
+| [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli\|Cursor CLI]] | Powerful MVP, but Cursor cloud routing (SpaceX since August 2026)[^7] | ❌ strict |
 
 ---
 

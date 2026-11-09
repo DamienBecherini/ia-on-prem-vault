@@ -93,12 +93,12 @@ Utilisez-le comme point d'entrée rapide, puis ouvrez les fiches détaillées.
 
 | Terme | Définition rapide |
 | :-- | :-- |
-| [[00-lexique/ollama|Ollama]] | Runtime local llama.cpp + API OpenAI pour tests et labo. |
-| [[00-lexique/vllm|vLLM]] | Moteur production haut débit, PagedAttention, multi-utilisateurs. |
-| [[00-lexique/sglang|SGLang]] | Inférence agentique, RadixAttention, JSON structuré. |
-| [[00-lexique/radixattention|RadixAttention]] | KV Cache par arbre de préfixes (SGLang). |
-| [[00-lexique/speculative-decoding|Speculative Decoding]] | Petit modèle draft + grand modèle validateur pour accélérer le decoding. |
-| [[00-lexique/pagedattention|PagedAttention]] | Gestion du KV Cache par blocs virtuels ; clé de la production vLLM. |
+| [[00-lexique/ollama\|Ollama]] | Runtime local llama.cpp + API OpenAI pour tests et labo. |
+| [[00-lexique/vllm\|vLLM]] | Moteur production haut débit, PagedAttention, multi-utilisateurs. |
+| [[00-lexique/sglang\|SGLang]] | Inférence agentique, RadixAttention, JSON structuré. |
+| [[00-lexique/radixattention\|RadixAttention]] | KV Cache par arbre de préfixes (SGLang). |
+| [[00-lexique/speculative-decoding\|Speculative Decoding]] | Petit modèle draft + grand modèle validateur pour accélérer le decoding. |
+| [[00-lexique/pagedattention\|PagedAttention]] | Gestion du KV Cache par blocs virtuels ; clé de la production vLLM. |
 | [[00-lexique/gguf\|GGUF]] | Format portable pour l'inférence locale avec llama.cpp/Ollama. |
 | [[00-lexique/tensorrt-llm\|TensorRT-LLM]] | SDK NVIDIA de compilation ultra-optimisée pour GPU datacenter. |
 | [[00-lexique/exo\|Exo]] | Orchestrateur P2P pour cluster IA de bureau (Mac Mini + Thunderbolt). |

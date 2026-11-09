@@ -93,12 +93,12 @@ En local, vous choisissez le modèle, vous le personnalisez, il fonctionne sans 
 
 | Utilisateurs simultanés | Taille de modèle | Budget matériel | → Blueprint |
 | :--: | :--: | :--: | :-- |
-| 1 (dev / test) | 8–14B | 1 500 à 3 700 € (oct. 2026 ; > 6 000 € avec une RTX 5090 neuve) | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Labo Dev]] |
-| 1 (dev / test) | 70B avec offloading | 1 500 à 2 500 € (GPU 24 Go d'occasion, oct. 2026) | [[04-blueprints/scenario-a-dev-lab|🛠️ A — Labo Dev]] *(performances limitées)* |
-| 2–20 (PME, équipe de 10–50 personnes) | 70B | 3 900 € à plus de 8 000 € TTC (oct. 2026, en hausse) | [[04-blueprints/scenario-b-sme-appliance|🏢 B — Appliance PME]] |
-| 2–20 (PME, équipe) | 200B+ / MoE | 10 000–22 000 € | [[04-blueprints/scenario-c-desktop-cluster|🖥️ C — Cluster Bureau]] |
-| 50+ (production) | 70B–400B | > 250 000 € | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
-| Contrainte SLA < 500 ms | Tout | — | [[04-blueprints/scenario-d-datacenter|🏭 D — Datacenter]] |
+| 1 (dev / test) | 8–14B | 1 500 à 3 700 € (oct. 2026 ; > 6 000 € avec une RTX 5090 neuve) | [[04-blueprints/scenario-a-dev-lab\|🛠️ A — Labo Dev]] |
+| 1 (dev / test) | 70B avec offloading | 1 500 à 2 500 € (GPU 24 Go d'occasion, oct. 2026) | [[04-blueprints/scenario-a-dev-lab\|🛠️ A — Labo Dev]] *(performances limitées)* |
+| 2–20 (PME, équipe de 10–50 personnes) | 70B | 3 900 € à plus de 8 000 € TTC (oct. 2026, en hausse) | [[04-blueprints/scenario-b-sme-appliance\|🏢 B — Appliance PME]] |
+| 2–20 (PME, équipe) | 200B+ / MoE | 10 000–22 000 € | [[04-blueprints/scenario-c-desktop-cluster\|🖥️ C — Cluster Bureau]] |
+| 50+ (production) | 70B–400B | > 250 000 € | [[04-blueprints/scenario-d-datacenter\|🏭 D — Datacenter]] |
+| Contrainte SLA < 500 ms | Tout | — | [[04-blueprints/scenario-d-datacenter\|🏭 D — Datacenter]] |
 
 > [!tip] Lecture
 > Commencez par la ligne qui correspond à votre nombre d'utilisateurs, puis vérifiez que le budget correspond. En cas de doute, lisez d'abord le [[04-blueprints/scenario-a-dev-lab|Scénario A]] pour comprendre les mécanismes, puis remontez vers le scénario cible.

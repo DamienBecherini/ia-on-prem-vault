@@ -8,6 +8,7 @@
     "audit:frontmatter": "node scripts/audit-frontmatter.mjs",
     "audit:mermaid": "node scripts/audit-mermaid.mjs",
     "audit:agent-leaks": "node scripts/audit-agent-leaks.mjs",
+    "audit:table-wikilinks": "node scripts/audit-table-wikilinks.mjs",
     "audit:ascii": "node scripts/audit-ascii-diagrams.mjs",
     "audit:ascii:strict": "node scripts/audit-ascii-diagrams.mjs --strict",
     "audit:links": "node scripts/delegate.mjs audit-links",

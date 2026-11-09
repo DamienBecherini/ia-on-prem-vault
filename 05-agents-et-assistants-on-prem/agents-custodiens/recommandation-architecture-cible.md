@@ -40,12 +40,12 @@ Stack recommandée :
 
 | Couche | Choix recommandé | Rôle |
 | :-- | :-- | :-- |
-| Agent code | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] (CLI/SDK) — ou [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]], gelé depuis mai 2026, pour les essais[^1] | Modifie fichiers et travaille avec Git |
+| Agent code | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands\|OpenHands]] (CLI/SDK) — ou [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider\|Aider]], gelé depuis mai 2026, pour les essais[^1] | Modifie fichiers et travaille avec Git |
 | Modèle local | Ollama ou vLLM + modèle agentique 27–30B (Qwen3.8-27B, Muse Glimmer 30B) ou coder spécialisé | Inférence on-prem, avec niveau de raisonnement suffisant |
-| Gateway | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|LiteLLM]] ([[00-lexique/litellm|lexique]]) — **mise à jour mensuelle obligatoire** (failles exploitées en 2026, support d'un mois par ligne mineure)[^4][^5] | API OpenAI-compatible, routage, logs |
-| Recherche | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng|SearXNG]] | Recherche web auto-hébergée |
-| Runner et sandbox | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] / Agent Canvas[^2][^3] | Agent Docker, automatisations planifiées, pilotage d'agents tiers via ACP |
-| MVP rapide | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli|Cursor CLI]] | Productivité initiale |
+| Gateway | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm\|LiteLLM]] ([[00-lexique/litellm\|lexique]]) — **mise à jour mensuelle obligatoire** (failles exploitées en 2026, support d'un mois par ligne mineure)[^4][^5] | API OpenAI-compatible, routage, logs |
+| Recherche | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng\|SearXNG]] | Recherche web auto-hébergée |
+| Runner et sandbox | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands\|OpenHands]] / Agent Canvas[^2][^3] | Agent Docker, automatisations planifiées, pilotage d'agents tiers via ACP |
+| MVP rapide | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli\|Cursor CLI]] | Productivité initiale |
 
 > [!warning] Piège fréquent
 > "Aider + Ollama" ne suffit pas à faire un bon agent custodien souverain. Aider est exigeant : il fonctionne mieux avec des modèles de code forts, souvent bien plus lourds qu'un modèle RAG conversationnel. Un 7B/8B généraliste peut répondre correctement à une question, mais rester trop faible pour éditer un dépôt sans casser le Markdown, rater un remplacement ou proposer des diffs incohérents.
@@ -59,7 +59,7 @@ Pour une cible souveraine réaliste :
 | Suggestions simples, petits fichiers | Coder 7B/8B spécialisé | utile pour apprendre, pas assez fiable comme agent autonome |
 | Corrections contrôlées sur vault Markdown | Coder 14B | plancher pratique, avec validation humaine stricte |
 | Maintenance régulière, audit multi-fichiers | Coder 32B ou supérieur | cible recommandée si l'agent doit produire des diffs exploitables |
-| Agentique avec contexte long, VRAM 24 Go | Généraliste agentique 27–30B type Qwen3.8-27B (~18 Go en Q4, 262k de contexte) ou Muse Glimmer 30B au T4 2026 ; le MoE Qwen3.6-35B-A3B (3B actifs) reste celui recommandé par la doc OpenHands (mai 2026) | contexte ≥ 32k tokens[^6] ; voir [[03-stack-logicielle/choose-your-model|Choisir son modèle]] |
+| Agentique avec contexte long, VRAM 24 Go | Généraliste agentique 27–30B type Qwen3.8-27B (~18 Go en Q4, 262k de contexte) ou Muse Glimmer 30B au T4 2026 ; le MoE Qwen3.6-35B-A3B (3B actifs) reste celui recommandé par la doc OpenHands (mai 2026) | contexte ≥ 32k tokens[^6] ; voir [[03-stack-logicielle/choose-your-model\|Choisir son modèle]] |
 | Gros refactoring ou raisonnement long | 32B+ avec grand contexte, ou modèle frontière non souverain en MVP | arbitrage souveraineté vs qualité |
 
 Le point clé : l'agent qui **agit** sur les fichiers a besoin de plus de raisonnement que l'assistant qui **retrouve** une information. Le budget VRAM doit donc être dimensionné pour le modèle d'édition, pas seulement pour le modèle de chat.

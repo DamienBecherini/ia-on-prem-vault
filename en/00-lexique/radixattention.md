@@ -29,7 +29,7 @@ Both techniques optimize KV Cache memory management, but for different goals:
 
 | Technique | Primary objective |
 | :-- | :-- |
-| [[00-lexique/pagedattention|PagedAttention]] | Eliminate memory fragmentation to increase concurrency |
+| [[00-lexique/pagedattention\|PagedAttention]] | Eliminate memory fragmentation to increase concurrency |
 | RadixAttention | Maximize prefix reuse to reduce latency |
 
 They are not mutually exclusive conceptually: PagedAttention addresses throughput under load; RadixAttention addresses latency when context repeats.

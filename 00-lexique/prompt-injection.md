@@ -45,9 +45,9 @@ En on-premise, le risque est **identique** au cloud : la souveraineté des donn�
 | Mesure | Rôle |
 | :-- | :-- |
 | Moindre privilège sur les outils | Limite l'impact d'une injection réussie |
-| Validation HITL sur actions sensibles | [[00-lexique/human-in-the-loop|Human-in-the-loop]] |
+| Validation HITL sur actions sensibles | [[00-lexique/human-in-the-loop\|Human-in-the-loop]] |
 | Filtrage entrée/sortie | Détection de patterns d'injection |
-| Isolation tenant RAG | [[00-lexique/multi-tenant|Multi-tenant]] sans fuite inter-organisation |
+| Isolation tenant RAG | [[00-lexique/multi-tenant\|Multi-tenant]] sans fuite inter-organisation |
 
 ## 🔗 Voir aussi
 

@@ -22,9 +22,9 @@ Après les [[02-materiel/apu-and-unified-memory|APU mémoire unifiée]] (PME lé
 | Format | GPU typiques | Usage inférence |
 | :-- | :-- | :-- |
 | **1U** | 1–2 GPU (souvent RTX/L40S) | PME, edge, modèles ≤ 30B quantifiés |
-| **2U** | 2–4 GPU PCIe | Sweet spot PME / ETI — [[00-lexique/vllm|vLLM]] multi-utilisateurs |
+| **2U** | 2–4 GPU PCIe | Sweet spot PME / ETI — [[00-lexique/vllm\|vLLM]] multi-utilisateurs |
 | **4U** | 4–8 GPU, parfois NVLink intra-nœud | Modèles 70B+, tensor parallelism |
-| **HGX / OAM / NVL72** | 8× H100/H200/B200/**B300**, [[00-lexique/nvswitch|NVSwitch]] ; Vera Rubin (NVL72) en pleine production depuis août 2026, d'abord pour les grands clouds[^5] | Datacenter, modèles 405B+, [[00-lexique/tensor-parallelism|TP]] massif |
+| **HGX / OAM / NVL72** | 8× H100/H200/B200/**B300**, [[00-lexique/nvswitch\|NVSwitch]] ; Vera Rubin (NVL72) en pleine production depuis août 2026, d'abord pour les grands clouds[^5] | Datacenter, modèles 405B+, [[00-lexique/tensor-parallelism\|TP]] massif |
 
 La contrainte n°1 reste la **[[00-lexique/vram|VRAM]] totale adressable** : un Llama 3 70B en FP16 demande ~140 Go de poids seuls, sans compter le [[00-lexique/kv-cache|KV Cache]] concurrent.
 
@@ -36,9 +36,9 @@ Hors NVIDIA, trois annonces de 2026 complètent le paysage rack sans le changer 
 
 | Critère | RTX 5090 / RTX PRO 6000 (workstation/rack 2U) | H100 / H200 / B200 / B300 (HGX) |
 | :-- | :-- | :-- |
-| **VRAM** | 32–96 Go GDDR7 | 80–288 Go [[00-lexique/hbm|HBM]] |
+| **VRAM** | 32–96 Go GDDR7 | 80–288 Go [[00-lexique/hbm\|HBM]] |
 | **Bande passante mémoire** | ~1,8 To/s[^6] | ~3–8 To/s |
-| **NVLink multi-GPU** | Aucun (pas de NVLink depuis Ada ; PCIe seulement)[^6] | [[00-lexique/nvswitch|NVSwitch]] full mesh |
+| **NVLink multi-GPU** | Aucun (pas de NVLink depuis Ada ; PCIe seulement)[^6] | [[00-lexique/nvswitch\|NVSwitch]] full mesh |
 | **Coût d'acquisition** | Nettement inférieur au HGX, mais l'écart se réduit avec la hausse 2026 des GPU GDDR7 (RTX PRO 6000 ~16 000 $, RTX 5090 ≥ 5 000 $) ; un serveur 8× RTX PRO 6000 est listé ~266 k$ par un OEM en juillet 2026[^3][^4] | TCO datacenter, support enterprise ; pas de prix catalogue public pour HGX B300 / GB300 |
 | **Meilleur pour** | Scénario B, labo charge modérée | Scénario D, SLA strict, gros modèles |
 

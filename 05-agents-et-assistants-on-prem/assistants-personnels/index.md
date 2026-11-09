@@ -24,11 +24,11 @@ Le défi : beaucoup de logiciels présentent une interface locale tout en routan
 
 | Priorité | Contrainte | Outil recommandé | Verdict |
 |----------|-----------|-----------------|---------|
-| Souveraineté native, zéro cloud | Tout doit rester sur machine, mode offline requis | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai|Jan.ai]] | ✅ natif |
-| Mémoire longue sur documents personnels | Vault Markdown / notes, pas seulement des fichiers | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj|Khoj]] (maintenance ralentie depuis mars 2026)[^1] | ⚠️ configurable |
-| Interface web multi-modèles | Plusieurs utilisateurs, plusieurs moteurs | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|Open WebUI]] | ⚠️ configurable |
-| Connaissance d'entreprise + agents | RAG structuré + workflows | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm|AnythingLLM]] | ⚠️ configurable |
-| Agent multi-canaux avec mémoire hébergée et mode local-only | Accepter une mémoire hors machine, ou opérer son propre CortexDB | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] | ⚠️ configurable |
+| Souveraineté native, zéro cloud | Tout doit rester sur machine, mode offline requis | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/jan-ai\|Jan.ai]] | ✅ natif |
+| Mémoire longue sur documents personnels | Vault Markdown / notes, pas seulement des fichiers | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/khoj\|Khoj]] (maintenance ralentie depuis mars 2026)[^1] | ⚠️ configurable |
+| Interface web multi-modèles | Plusieurs utilisateurs, plusieurs moteurs | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui\|Open WebUI]] | ⚠️ configurable |
+| Connaissance d'entreprise + agents | RAG structuré + workflows | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/anythingllm\|AnythingLLM]] | ⚠️ configurable |
+| Agent multi-canaux avec mémoire hébergée et mode local-only | Accepter une mémoire hors machine, ou opérer son propre CortexDB | [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman\|OpenHuman]] | ⚠️ configurable |
 
 > [!tip] Lecture rapide
 > Si vous voulez démarrer sans risque de cloud involontaire, commencez par Jan.ai (Apple Silicon, Windows ou Linux ; les Mac Intel ne chargent plus de modèles locaux depuis la v0.8.5)[^4]. Si vous voulez une interface d'équipe, regardez Open WebUI — en acceptant sa licence à clause de marque au-delà de 50 utilisateurs et un train de correctifs de sécurité à suivre de près[^5]. Si vous voulez RAG + workflows, comparez AnythingLLM et Khoj. OpenHuman a abandonné son [[00-lexique/memory-tree|Memory Tree]] local au profit d'une mémoire hébergée (CortexDB) ; il reste intéressant pour son mode Privacy local-only appliqué dans le code, mais sa mémoire ne reste sur site que si vous opérez votre propre CortexDB.

@@ -149,7 +149,7 @@ sudo sysctl iogpu.wired_limit_mb=122880
 | **Bande passante** | **614 Go/s** (460 Go/s avec le GPU 32 cœurs) [^4][^17] | **1,2 To/s** [^4][^17] | **~273 Go/s** [^1][^2] | **~273 Go/s** [^14] |
 | **Débit 70B Q4 (decode)** | **≤ ~15 tok/s** (borne 614 Go/s ÷ 40 Go ; mesures MLX M5 Max non publiées) [^4] | **≤ ~30 tok/s** (borne 1,2 To/s ÷ 40 Go ; mesures MLX M5 Ultra non publiées) [^4] | **~4,5–5 tok/s** (Strix Halo 395) [^6] | *non publié officiellement* [^14] |
 | **FP4 natif** | ❌ | ❌ | ❌ | ✅ Blackwell [^15] |
-| **Scale-out** | ✅ [[00-lexique/thunderbolt|Thunderbolt 5]] [[00-lexique/rdma|RDMA]] (macOS 26.2+, jusqu'à 4 Mac Studio) [^17] | ✅ Thunderbolt 5 RDMA (macOS 26.2+, jusqu'à 4 Mac Studio) [^17] | ❌ | ✅ ConnectX-7 200 Gbps, jusqu'à 4 nœuds en anneau, 8 avec switch (depuis le 2026-10-22) [^14][^34] |
+| **Scale-out** | ✅ [[00-lexique/thunderbolt\|Thunderbolt 5]] [[00-lexique/rdma\|RDMA]] (macOS 26.2+, jusqu'à 4 Mac Studio) [^17] | ✅ Thunderbolt 5 RDMA (macOS 26.2+, jusqu'à 4 Mac Studio) [^17] | ❌ | ✅ ConnectX-7 200 Gbps, jusqu'à 4 nœuds en anneau, 8 avec switch (depuis le 2026-10-22) [^14][^34] |
 | **OS** | macOS | macOS | **Linux / Windows** [^1][^2] | Linux (CUDA) [^14] |
 | **Tarif indicatif** | à partir de 2 499 $ US (base 36 Go) ; config 128 Go : prix sur mesure (CTO) à relever [^17] | à partir de 5 499 $ US (96 Go) ; 512 Go : à partir de 22 299 $ US (M5 Ultra 36c/80c obligatoire) ; 256 Go : prix sur mesure (CTO) à relever [^17][^33] | **~3 900 €** (128 Go, rupture au 2026-10) · **~6 800–7 450 $** (192 Go, précommande, livraison nov. 2026) [^18][^20][^23] | **≈ 6 950 $** (128 Go, au 2026-10-02) · 4 999 $ (64 Go, OEM, dès le 2026-10-23) [^14][^16] |
 
