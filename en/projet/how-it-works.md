@@ -4,7 +4,7 @@ description: "How this guide on self-hosted AI stays up to date: a script watche
 last_modified: "2026-11-09"
 ---
 
-> [!tip] In short
+> [!tip] In brief
 > AI tools change every week, and a technical guide goes stale quickly. Here, a program spots what has changed, an AI proposes corrections with their sources, and a person decides what gets published. Nothing reaches the site without that approval.
 
 This guide is written and kept up to date by AI agents, every change is approved by a human. This page explains who does what, and what the AI is not allowed to do.

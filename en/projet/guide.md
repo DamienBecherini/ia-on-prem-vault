@@ -4,7 +4,7 @@ description: "Overview of the Zero to Hero guide on self-hosted AI: who it is fo
 last_modified: "2026-11-09"
 ---
 
-> [!tip] In short
+> [!tip] In brief
 > This guide explains how to run AI models on your own machines rather than with an online provider. It helps you choose the right hardware and decide whether this path pays off for you. It is free and open to reuse, in French and English.
 
 ## Who it is for
