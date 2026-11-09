@@ -3,7 +3,7 @@ title: "🔄 Migrate from Ollama to vLLM"
 description: When and how to move from Ollama to vLLM without breaking existing clients — API compatibility, model conversion, cutover strategy, and rollback plan.
 sidebar:
   order: 7
-last_modified: "2026-10-10"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -247,7 +247,7 @@ Full rollback takes < 2 minutes if Ollama was only stopped (not uninstalled).
 ## Migration checklist
 
 ```
-□ vLLM ≥ 0.31.0 installed, trust_remote_code disabled
+□ vLLM ≥ 0.33.0 installed, trust_remote_code disabled
 □ HuggingFace equivalent identified for each Ollama model in use
 □ Models downloaded and loaded in vLLM (/health test OK)
 □ --served-model-name configured for name compatibility

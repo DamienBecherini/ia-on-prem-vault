@@ -14,7 +14,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 > vLLM transforme un serveur GPU en API d'inférence haute performance. Ce guide couvre l'installation, la configuration mono et multi-GPU, le déploiement multi-nœuds via Ray, et les paramètres critiques pour la production.
 
 > [!info] Prérequis
-> Ce guide suppose des GPU NVIDIA (capacité de calcul ≥ 7.5) avec un pilote compatible **CUDA 13.0** — la cible par défaut des roues et images vLLM depuis la 0.28 (août 2026 ; des variantes CUDA 12.9 restent publiées, tag `-cu129`) — et **Python 3.11 à 3.14**[^1][^9]. Pour Apple Silicon ou AMD ROCm, les instructions d'installation diffèrent — voir la [documentation officielle vLLM](https://docs.vllm.ai/en/stable/getting_started/installation/gpu/).
+> Ce guide suppose des GPU NVIDIA (capacité de calcul ≥ 7.5) avec un pilote compatible **CUDA 13.0** — la cible par défaut des roues et images vLLM depuis la 0.28 (août 2026) et la seule depuis la 0.33 (novembre 2026), qui ne publie plus de variantes CUDA 12.9 — et **Python 3.11 à 3.14**[^1][^9]. Pour Apple Silicon ou AMD ROCm, les instructions d'installation diffèrent — voir la [documentation officielle vLLM](https://docs.vllm.ai/en/stable/getting_started/installation/gpu/).
 
 ---
 
@@ -24,7 +24,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 
 ```bash
 # Python 3.11-3.14 ; roue par défaut CUDA 13.0
-# (variante CUDA 12.9 : pip install vllm --extra-index-url https://download.pytorch.org/whl/cu129)
+# (depuis vLLM 0.33 : CUDA 13.0 uniquement, plus de variante CUDA 12.9)
 pip install vllm
 
 # Vérification
@@ -204,7 +204,7 @@ vllm serve ... \
 Les connecteurs disponibles au T4 2026 sont `NixlConnector`, `LMCacheConnectorV1`, `MooncakeConnector`, `OffloadingConnector` (déport CPU) et `MultiConnector` ; la fonctionnalité est documentée comme « expérimentale et susceptible de changer »[^5]. Les flags `--role` et `--num-speculative-tokens` n'existent pas dans `vllm serve` (la spéculation se configure via `--speculative-config`)[^8].
 
 > [!note] Stabilité
-> La désagrégation Prefill/Decode est disponible mais encore en évolution active en 2026. À tester en staging avant tout déploiement production. Côté sécurité, utilisez vLLM ≥ 0.31.0 avec un connecteur KV : jusqu'à la 0.30, une seule requête `prompt_logprobs` (ou `echo` + `logprobs`) sur un préfixe servi par NIXL, LMCache ou Mooncake faisait tomber le moteur pour tous les clients (avis High du 9 octobre 2026), et l'ancien `P2pNcclConnector`, supprimé en 0.24.0, laissait fuir le KV Cache d'une requête via l'en-tête `X-Request-Id`[^14]. Sur une version plus ancienne, filtrez `prompt_logprobs`, `logprobs` et `echo` au reverse proxy.
+> La désagrégation Prefill/Decode est disponible mais encore en évolution active en 2026. À tester en staging avant tout déploiement production. Côté sécurité, utilisez vLLM ≥ 0.33.0 avec un connecteur KV : jusqu'à la 0.30, une seule requête `prompt_logprobs` (ou `echo` + `logprobs`) sur un préfixe servi par NIXL, LMCache ou Mooncake faisait tomber le moteur pour tous les clients (avis High du 9 octobre 2026), et l'ancien `P2pNcclConnector`, supprimé en 0.24.0, laissait fuir le KV Cache d'une requête via l'en-tête `X-Request-Id`[^14]. Sur une version antérieure à 0.31.0, filtrez `prompt_logprobs`, `logprobs` et `echo` au reverse proxy.
 
 ---
 
@@ -351,7 +351,7 @@ curl http://localhost:8000/metrics | grep vllm
 [^6]: vLLM Project, *Quantized KV Cache* (`--kv-cache-dtype fp8` / `fp8_e5m2`, CUDA 11.8+ et ROCm, calibration `llm-compressor`, `--kv-cache-dtype-skip-layers`), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/quantized_kvcache/](https://docs.vllm.ai/en/stable/features/quantization/quantized_kvcache/)
 [^7]: vLLM Project, *Automatic Prefix Caching* (hachage par blocs de KV Cache, impact TTFT, compatibilité tensor parallelism), consulté le 2026-10-10. [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/)
 [^8]: vLLM Project, *CLI Reference — `vllm serve`* (liste exhaustive des flags : absence de `--role`, `--request-timeout`, `--calculate-kv-cache-size` ; `--speculative-config`), consulté le 2026-10-09 · vLLM Project, *Release v0.29.0* (ajout de `--max-num-queued-reqs`), 2026-09-09. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/releases/tag/v0.29.0](https://github.com/vllm-project/vllm/releases/tag/v0.29.0)
-[^9]: vLLM Project, *Release v0.28.0* (roue PyPI et image Docker par défaut en CUDA 13.0, variantes `-cu129`), 2026-08-26. [https://github.com/vllm-project/vllm/releases/tag/v0.28.0](https://github.com/vllm-project/vllm/releases/tag/v0.28.0)
+[^9]: vLLM Project, *Release v0.28.0* (roue PyPI et image Docker par défaut en CUDA 13.0, variantes `-cu129`), 2026-08-26 · *Release v0.33.0* (roues et images CUDA 13.0 uniquement, variantes `-cu129` retirées), 2026-11-02. [https://github.com/vllm-project/vllm/releases/tag/v0.28.0](https://github.com/vllm-project/vllm/releases/tag/v0.28.0) · [https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3](https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3)
 [^10]: vLLM Project, *GGUF* (plugin `vllm-gguf-plugin`, support « highly experimental and under-optimized », tokenizer du modèle de base), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/gguf/](https://docs.vllm.ai/en/stable/features/quantization/gguf/)
 [^11]: vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`--api-key` limité à `/v1`, `/v2`, `/inference` ; `/tokenize` non authentifié), 2026-10-06. [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
 [^12]: vLLM Project, *Release v0.24.0* (vLLM ne positionne plus `CUDA_VISIBLE_DEVICES` ; argument `device_ids` ; variable dépréciée sur ROCm), 2026-06-29. [https://github.com/vllm-project/vllm/releases/tag/v0.24.0](https://github.com/vllm-project/vllm/releases/tag/v0.24.0)

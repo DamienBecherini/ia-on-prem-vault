@@ -10,7 +10,7 @@ tags:
   - security
 sidebar:
   order: 39
-last_modified: "2026-10-10"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 ---
@@ -45,7 +45,7 @@ Qdrant allows scoping vector searches via *payload* filters (tenant-specific acc
 - Believing one vector collection per tenant is enough without controlling shared API keys.
 - Forgetting to also isolate indexing pipelines: a worker that indexes the wrong corpus contaminates the entire database.
 - Neglecting non-regression tests on isolation with every schema or query change.
-- Forgetting that the shared inference engine is also a common point of failure: in 2026, several vLLM advisories showed that a single request from one tenant (`prompt_logprobs` on a prefix served by a KV connector, an oversized image or video) could bring the engine down for everyone, hence an up-to-date version (≥ 0.31.0 as of October 2026) and per-tenant quotas at the gateway[^4].
+- Forgetting that the shared inference engine is also a common point of failure: in 2026, several vLLM advisories showed that a single request from one tenant (`prompt_logprobs` on a prefix served by a KV connector, an oversized image or video) could bring the engine down for everyone, hence an up-to-date version (≥ 0.33.0 as of November 2026, which also closes the engine shutdown under `--skip-tokenizer-init`) and per-tenant quotas at the gateway[^4].
 
 ## 📚 To go deeper
 
@@ -62,4 +62,4 @@ Qdrant allows scoping vector searches via *payload* filters (tenant-specific acc
 [^1]: OWASP GenAI Security Project, *LLM Top 10 for LLM Applications (2025)*. [https://genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)
 [^2]: Crunchy Data, *Row Level Security for Tenants in Postgres*. [https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres](https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres)
 [^3]: Qdrant, *Multitenancy*. [https://qdrant.tech/documentation/manage-data/multitenancy/](https://qdrant.tech/documentation/manage-data/multitenancy/)
-[^4]: vLLM, advisories *GHSA-rhcx-5729-88vg* (cross-tenant DoS via `prompt_logprobs`, fixed 0.31.0) and *GHSA-gx7p-2j49-hfq4* (unauthenticated DoS via `mm_processor_kwargs`, fixed 0.31.0), 6–9 October 2026. [https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg](https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-gx7p-2j49-hfq4](https://github.com/vllm-project/vllm/security/advisories/GHSA-gx7p-2j49-hfq4)
+[^4]: vLLM, advisories *GHSA-rhcx-5729-88vg* (cross-tenant DoS via `prompt_logprobs`, fixed 0.31.0) and *GHSA-gx7p-2j49-hfq4* (unauthenticated DoS via `mm_processor_kwargs`, fixed 0.31.0), 6–9 October 2026 · *GHSA-q9v9-qpjp-fc24* (engine shutdown under `--skip-tokenizer-init`, fixed 0.33.0), 2 November 2026. [https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg](https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-gx7p-2j49-hfq4](https://github.com/vllm-project/vllm/security/advisories/GHSA-gx7p-2j49-hfq4) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-q9v9-qpjp-fc24](https://github.com/vllm-project/vllm/security/advisories/GHSA-q9v9-qpjp-fc24)

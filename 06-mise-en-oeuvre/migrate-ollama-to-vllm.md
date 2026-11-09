@@ -3,7 +3,7 @@ title: "🔄 Migrer d'Ollama vers vLLM"
 description: Quand et comment passer d'Ollama à vLLM sans casser les clients existants — compatibilité API, conversion de modèles, stratégie de bascule et plan de rollback.
 sidebar:
   order: 7
-last_modified: "2026-10-10"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -247,7 +247,7 @@ Le rollback complet prend < 2 minutes si Ollama était simplement arrêté (pas 
 ## Checklist de migration
 
 ```
-□ vLLM ≥ 0.31.0 installé, trust_remote_code désactivé
+□ vLLM ≥ 0.33.0 installé, trust_remote_code désactivé
 □ Équivalent HuggingFace identifié pour chaque modèle Ollama utilisé
 □ Modèles téléchargés et chargés dans vLLM (test /health OK)
 □ --served-model-name configuré pour la compatibilité des noms
