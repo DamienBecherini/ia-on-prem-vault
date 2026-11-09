@@ -1,12 +1,21 @@
 ---
 name: vault-watch
-description: Biweekly incremental refresh of the IA on-premise vault, corrections and additions. Turns the "Veille" GitHub issue (pre-triaged by `npm run watch:feeds`; an `urgent` issue in between for uncovered High / Critical advisories) into verified, dated events, maps them to vault pages and watchlist claims, re-checks the claims whose "Recheck by" date has passed, proposes focused edits and additions (paragraphs, lexicon entries, opportunity notes for new pages), and opens a PR only on request. Use when a `veille` issue is open ("traite la veille #N"), or when the user asks what changed recently. The full top-down run stays `vault-refresh-outdated-content`.
+description: Normally run vault-watch-agent for a `veille` GitHub issue (`vault-watch run --issue N`, after asking the user, since a run is billed). This skill is the manual procedure, only when the user asks for it or the agent is unavailable. Biweekly incremental refresh of the IA on-premise vault, corrections and additions. Turns the "Veille" GitHub issue (pre-triaged by `npm run watch:feeds`; an `urgent` issue in between for uncovered High / Critical advisories) into verified, dated events, maps them to vault pages and watchlist claims, re-checks the claims whose "Recheck by" date has passed, proposes focused edits and additions (paragraphs, lexicon entries, opportunity notes for new pages), and opens a PR only on request. Use when a `veille` issue is open ("traite la veille #N"), or when the user asks what changed recently. The full top-down run stays `vault-refresh-outdated-content`.
 paths:
   - "**/*.md"
   - "**/*.mdx"
 ---
 
 # Vault Watch (biweekly)
+
+## Agent first
+
+A `veille` issue is normally processed by [`vault-watch-agent`](https://github.com/DamienBecherini/vault-watch-agent) (local clone next to this repository), which loads `brief.md` at run time. When the user says "traite la veille #N":
+
+1. Tell them the agent will do it and confirm before starting: a full run is billed to the Anthropic API key (about 4 $), and they may prefer its web interface (`vault-watch serve`, http://127.0.0.1:4430/).
+2. On the command line, from the agent's virtualenv: `vault-watch run --issue N`. The run stops at the review; `vault-watch resume issue-N --accept <ids|all|none>` applies the corrections, `vault-watch resume issue-N --publish yes` opens the PR. Both pauses are the user's decisions.
+
+Use the rest of this skill only when the user asks for the manual procedure or the agent is unavailable, and say so before starting.
 
 ## Purpose
 

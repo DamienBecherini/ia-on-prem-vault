@@ -97,5 +97,5 @@ jobs:
           if [ "$(wc -c < "$RUNNER_TEMP/watch.md")" -gt 60000 ]; then
             printf '\n\n_Truncated: the full list is in the run artifact._\n' >> "$RUNNER_TEMP/body.md"
           fi
-          printf '\n\n---\nRun: %s (artifact `weekly-watch`: `watch.json` caches release notes and advisory texts).\nNext step: in a new session, "traite la veille #<this issue>" (skill `vault-watch`, `.agents/skills/vault-watch/SKILL.md`).\n' "$RUN_URL" >> "$RUNNER_TEMP/body.md"
+          printf '\n\n---\nRun: %s (artifact `weekly-watch`: `watch.json` caches release notes and advisory texts).\nNext step: process it with vault-watch-agent (https://github.com/DamienBecherini/vault-watch-agent), from its web interface or with "vault-watch run --issue <this issue>". Manual fallback: skill `vault-watch`, `.agents/skills/vault-watch/SKILL.md`.\n' "$RUN_URL" >> "$RUNNER_TEMP/body.md"
           gh issue create --title "$title" --label "$labels" --body-file "$RUNNER_TEMP/body.md"
