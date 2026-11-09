@@ -21,6 +21,7 @@ const AUDITS = [
   { name: "mermaid", script: "audit-mermaid.mjs" },
   { name: "agent-leaks", script: "audit-agent-leaks.mjs" },
   { name: "table-wikilinks", script: "audit-table-wikilinks.mjs" },
+  { name: "version-floors", script: "audit-version-floors.mjs" },
   { name: "i18n-strict", script: "audit-i18n.mjs", args: ["--stale-days=0"] },
 ];
 
