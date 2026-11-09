@@ -20,7 +20,7 @@ flowchart LR
 
 ## What it gives the reader
 
-- **Definitions on hover.** A link to the glossary shows its definition without leaving the page.
+- **Definitions on hover.** Hover over the word [[00-lexique/vram|VRAM]]: its definition appears without leaving the page.
 - **Interactive diagrams.** Mermaid diagrams can be zoomed, panned and opened full screen.
 - **Incoming references.** Each page lists those that cite it.
 - **Reading prerequisites.** A box shows what to read first.

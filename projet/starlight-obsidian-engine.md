@@ -20,7 +20,7 @@ flowchart LR
 
 ## Ce qu'il apporte au lecteur
 
-- **Des définitions au survol.** Un lien vers le lexique affiche sa définition sans quitter la page.
+- **Des définitions au survol.** Survolez le mot [[00-lexique/vram|VRAM]] : sa définition s'affiche sans quitter la page.
 - **Des schémas interactifs.** Les diagrammes Mermaid se zooment, se déplacent et s'ouvrent en plein écran.
 - **Les références entrantes.** Chaque page liste celles qui la citent.
 - **Les prérequis de lecture.** Un encadré indique quoi lire d'abord.
