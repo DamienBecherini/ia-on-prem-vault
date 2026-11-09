@@ -4,7 +4,7 @@ description: "Overview of vault-watch-agent, the AI agent that proposes sourced 
 last_modified: "2026-11-09"
 ---
 
-> [!tip] In short
+> [!tip] In brief
 > vault-watch-agent is the program that helps keep this guide accurate. It reads the list of what is new in the field, finds the passages that have become wrong and proposes corrections. A person reviews everything, and nothing is published without their approval.
 
 ## What it is for

@@ -4,7 +4,7 @@ description: "Overview of starlight-obsidian-engine, the open source engine that
 last_modified: "2026-11-09"
 ---
 
-> [!tip] In short
+> [!tip] In brief
 > starlight-obsidian-engine is the tool that builds this site from plain notes. The author writes in the Obsidian application, and the engine turns that into fast web pages, in several languages. It is free and reusable for your own notes.
 
 ## What it is for
