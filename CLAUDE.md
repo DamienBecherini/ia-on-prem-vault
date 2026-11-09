@@ -20,7 +20,7 @@ Canonical skills live in `.agents/skills/<name>/SKILL.md`; `.claude/skills/<name
 
 | Skill | Use it for |
 | :-- | :-- |
-| `vault-watch` | biweekly incremental refresh from the `veille` GitHub issue (one fresh session per issue, `brief.md` first): corrections, due claims, additions |
+| `vault-watch` | a `veille` GitHub issue is normally processed by [`vault-watch-agent`](../vault-watch-agent) (ask before launching a run, it is billed). The skill is the manual procedure, only on request or if the agent is unavailable (one fresh session per issue, `brief.md` first): corrections, due claims, additions |
 | `vault-refresh-outdated-content` | full top-down refresh run (quarterly, or when many pages are due) |
 | `vault-verify-content` | factual and source audit of a page |
 | `vault-generate-content` | new or substantially rewritten FR content |
