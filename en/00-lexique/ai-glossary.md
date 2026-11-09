@@ -93,12 +93,12 @@ Use it as a quick entry point, then open detailed entries.
 
 | Term | Quick definition |
 | :-- | :-- |
-| [[00-lexique/ollama|Ollama]] | Local llama.cpp runtime + OpenAI API for testing and lab use. |
-| [[00-lexique/vllm|vLLM]] | High-throughput production engine, PagedAttention, multi-user. |
-| [[00-lexique/sglang|SGLang]] | Agentic inference, RadixAttention, structured JSON. |
-| [[00-lexique/radixattention|RadixAttention]] | Prefix-tree KV Cache (SGLang). |
-| [[00-lexique/speculative-decoding|Speculative Decoding]] | Small draft model + large validator model to speed decoding. |
-| [[00-lexique/pagedattention|PagedAttention]] | KV Cache managed in virtual blocks; key to vLLM production. |
+| [[00-lexique/ollama\|Ollama]] | Local llama.cpp runtime + OpenAI API for testing and lab use. |
+| [[00-lexique/vllm\|vLLM]] | High-throughput production engine, PagedAttention, multi-user. |
+| [[00-lexique/sglang\|SGLang]] | Agentic inference, RadixAttention, structured JSON. |
+| [[00-lexique/radixattention\|RadixAttention]] | Prefix-tree KV Cache (SGLang). |
+| [[00-lexique/speculative-decoding\|Speculative Decoding]] | Small draft model + large validator model to speed decoding. |
+| [[00-lexique/pagedattention\|PagedAttention]] | KV Cache managed in virtual blocks; key to vLLM production. |
 | [[00-lexique/gguf\|GGUF]] | Portable format for local inference with llama.cpp/Ollama. |
 | [[00-lexique/tensorrt-llm\|TensorRT-LLM]] | NVIDIA SDK for highly optimized datacenter GPU compilation. |
 | [[00-lexique/exo\|Exo]] | P2P orchestrator for desktop AI clusters (Mac Mini + Thunderbolt). |

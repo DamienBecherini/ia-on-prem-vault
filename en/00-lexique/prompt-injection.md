@@ -45,9 +45,9 @@ On-premise, the risk is **identical** to the cloud: data sovereignty does not im
 | Measure | Role |
 | :-- | :-- |
 | Least privilege on tools | Limits impact of a successful injection |
-| HITL validation on sensitive actions | [[00-lexique/human-in-the-loop|Human-in-the-loop]] |
+| HITL validation on sensitive actions | [[00-lexique/human-in-the-loop\|Human-in-the-loop]] |
 | Input/output filtering | Detection of injection patterns |
-| RAG tenant isolation | [[00-lexique/multi-tenant|Multi-tenant]] without cross-organization leakage |
+| RAG tenant isolation | [[00-lexique/multi-tenant\|Multi-tenant]] without cross-organization leakage |
 
 ## 🔗 See also
 

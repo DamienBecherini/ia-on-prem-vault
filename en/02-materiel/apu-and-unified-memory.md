@@ -149,7 +149,7 @@ sudo sysctl iogpu.wired_limit_mb=122880
 | **Bandwidth** | **614 GB/s** (460 GB/s with the 32-core GPU) [^4][^17] | **1.2 TB/s** [^4][^17] | **~273 GB/s** [^1][^2] | **~273 GB/s** [^14] |
 | **70B Q4 throughput (decode)** | **≤ ~15 tok/s** (ceiling 614 GB/s ÷ 40 GB; M5 Max MLX measurements not published) [^4] | **≤ ~30 tok/s** (ceiling 1.2 TB/s ÷ 40 GB; M5 Ultra MLX measurements not published) [^4] | **~4.5–5 tok/s** (Strix Halo 395) [^6] | *not officially published* [^14] |
 | **Native FP4** | ❌ | ❌ | ❌ | ✅ Blackwell [^15] |
-| **Scale-out** | ✅ [[00-lexique/thunderbolt|Thunderbolt 5]] [[00-lexique/rdma|RDMA]] (macOS 26.2+, up to 4 Mac Studios) [^17] | ✅ Thunderbolt 5 RDMA (macOS 26.2+, up to 4 Mac Studios) [^17] | ❌ | ✅ ConnectX-7 200 Gbps, up to 4 nodes in a ring, 8 with a switch (since 2026-10-22) [^14][^34] |
+| **Scale-out** | ✅ [[00-lexique/thunderbolt\|Thunderbolt 5]] [[00-lexique/rdma\|RDMA]] (macOS 26.2+, up to 4 Mac Studios) [^17] | ✅ Thunderbolt 5 RDMA (macOS 26.2+, up to 4 Mac Studios) [^17] | ❌ | ✅ ConnectX-7 200 Gbps, up to 4 nodes in a ring, 8 with a switch (since 2026-10-22) [^14][^34] |
 | **OS** | macOS | macOS | **Linux / Windows** [^1][^2] | Linux (CUDA) [^14] |
 | **Indicative price** | from US$2,499 (36 GB base); 128 GB config: custom-configuration (CTO) price to be checked [^17] | from US$5,499 (96 GB); 512 GB: from US$22,299 (M5 Ultra 36c/80c required); 256 GB: custom-configuration (CTO) price to be checked [^17][^33] | **~€3,900** (128 GB, out of stock as of 2026-10) · **~$6,800–7,450** (192 GB, pre-order, shipping Nov. 2026) [^18][^20][^23] | **≈ $6,950** (128 GB, as of 2026-10-02) · $4,999 (64 GB, OEM, from 2026-10-23) [^14][^16] |
 

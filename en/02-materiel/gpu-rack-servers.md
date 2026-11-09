@@ -22,9 +22,9 @@ After [[02-materiel/apu-and-unified-memory|unified-memory APUs]] (light SMB) and
 | Format | Typical GPUs | Inference use |
 | :-- | :-- | :-- |
 | **1U** | 1–2 GPU (often RTX/L40S) | SMB, edge, models ≤ 30B quantized |
-| **2U** | 2–4 PCIe GPUs | SMB / mid-market sweet spot — multi-user [[00-lexique/vllm|vLLM]] |
+| **2U** | 2–4 PCIe GPUs | SMB / mid-market sweet spot — multi-user [[00-lexique/vllm\|vLLM]] |
 | **4U** | 4–8 GPU, sometimes intra-node NVLink | 70B+ models, tensor parallelism |
-| **HGX / OAM / NVL72** | 8× H100/H200/B200/**B300**, [[00-lexique/nvswitch|NVSwitch]]; Vera Rubin (NVL72) in full production since August 2026, first for the large clouds[^5] | Datacenter, 405B+ models, massive [[00-lexique/tensor-parallelism|TP]] |
+| **HGX / OAM / NVL72** | 8× H100/H200/B200/**B300**, [[00-lexique/nvswitch\|NVSwitch]]; Vera Rubin (NVL72) in full production since August 2026, first for the large clouds[^5] | Datacenter, 405B+ models, massive [[00-lexique/tensor-parallelism\|TP]] |
 
 Constraint #1 remains **total addressable [[00-lexique/vram|VRAM]]**: a Llama 3 70B in FP16 needs ~140 GB of weights alone, not counting concurrent [[00-lexique/kv-cache|KV Cache]].
 
@@ -36,9 +36,9 @@ Outside NVIDIA, three 2026 announcements complete the rack landscape without cha
 
 | Criterion | RTX 5090 / RTX PRO 6000 (workstation/rack 2U) | H100 / H200 / B200 / B300 (HGX) |
 | :-- | :-- | :-- |
-| **VRAM** | 32–96 GB GDDR7 | 80–288 GB [[00-lexique/hbm|HBM]] |
+| **VRAM** | 32–96 GB GDDR7 | 80–288 GB [[00-lexique/hbm\|HBM]] |
 | **Memory bandwidth** | ~1.8 TB/s[^6] | ~3–8 TB/s |
-| **Multi-GPU NVLink** | None (no NVLink since Ada; PCIe only)[^6] | [[00-lexique/nvswitch|NVSwitch]] full mesh |
+| **Multi-GPU NVLink** | None (no NVLink since Ada; PCIe only)[^6] | [[00-lexique/nvswitch\|NVSwitch]] full mesh |
 | **Acquisition cost** | Significantly lower than HGX, but the gap is narrowing with the 2026 rise in GDDR7 GPU prices (RTX PRO 6000 ~$16,000, RTX 5090 ≥ $5,000); an 8× RTX PRO 6000 server is listed at ~$266k by an OEM in July 2026[^3][^4] | Datacenter TCO, enterprise support; no public list price for HGX B300 / GB300 |
 | **Best for** | Scenario B, moderate-load lab | Scenario D, strict SLA, large models |
 

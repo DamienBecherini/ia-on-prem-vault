@@ -40,12 +40,12 @@ Recommended stack:
 
 | Layer | Recommended choice | Role |
 | :-- | :-- | :-- |
-| Code agent | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] (CLI/SDK) — or [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]], frozen since May 2026, for experiments[^1] | Modifies files and works with Git |
+| Code agent | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands\|OpenHands]] (CLI/SDK) — or [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider\|Aider]], frozen since May 2026, for experiments[^1] | Modifies files and works with Git |
 | Local model | Ollama or vLLM + 27–30B agentic model (Qwen3.8-27B, Muse Glimmer 30B) or specialized coder | On-prem inference with sufficient reasoning |
-| Gateway | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|LiteLLM]] ([[00-lexique/litellm|lexicon]]) — **monthly update mandatory** (vulnerabilities exploited in 2026, one month of support per minor line)[^4][^5] | OpenAI-compatible API, routing, logs |
-| Search | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng|SearXNG]] | Self-hosted web search |
-| Runner and sandbox | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] / Agent Canvas[^2][^3] | Docker agent, scheduled automations, orchestration of third-party agents via ACP |
-| Fast MVP | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli|Cursor CLI]] | Initial productivity |
+| Gateway | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm\|LiteLLM]] ([[00-lexique/litellm\|lexicon]]) — **monthly update mandatory** (vulnerabilities exploited in 2026, one month of support per minor line)[^4][^5] | OpenAI-compatible API, routing, logs |
+| Search | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng\|SearXNG]] | Self-hosted web search |
+| Runner and sandbox | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands\|OpenHands]] / Agent Canvas[^2][^3] | Docker agent, scheduled automations, orchestration of third-party agents via ACP |
+| Fast MVP | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/cursor-cli\|Cursor CLI]] | Initial productivity |
 
 > [!warning] Common trap
 > "Aider + Ollama" is not enough for a good sovereign custodian agent. Aider is demanding: it works better with strong code models, often much heavier than a conversational RAG model. A 7B/8B generalist can answer a question correctly but remain too weak to edit a repository without breaking Markdown, missing replacements, or proposing incoherent diffs.
@@ -59,7 +59,7 @@ For a realistic sovereign target:
 | Simple suggestions, small files | Specialized coder 7B/8B | useful to learn, not reliable as an autonomous agent |
 | Controlled fixes on Markdown vault | Coder 14B | practical floor, with strict human validation |
 | Regular maintenance, multi-file audit | Coder 32B or higher | recommended target if the agent must produce usable diffs |
-| Agentic work with long context, 24 GB VRAM | Agentic generalist 27–30B such as Qwen3.8-27B (~18 GB in Q4, 262k context) or Muse Glimmer 30B in Q4 2026; the Qwen3.6-35B-A3B MoE (3B active) remains the one recommended by the OpenHands docs (May 2026) | context ≥ 32k tokens[^6]; see [[03-stack-logicielle/choose-your-model|Choose your model]] |
+| Agentic work with long context, 24 GB VRAM | Agentic generalist 27–30B such as Qwen3.8-27B (~18 GB in Q4, 262k context) or Muse Glimmer 30B in Q4 2026; the Qwen3.6-35B-A3B MoE (3B active) remains the one recommended by the OpenHands docs (May 2026) | context ≥ 32k tokens[^6]; see [[03-stack-logicielle/choose-your-model\|Choose your model]] |
 | Large refactor or long reasoning | 32B+ with large context, or frontier non-sovereign model in MVP | sovereignty vs quality trade-off |
 
 Key point: the agent that **acts** on files needs more reasoning than the assistant that **retrieves** information. VRAM budget must be sized for the editing model, not only the chat model.

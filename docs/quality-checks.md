@@ -1,7 +1,7 @@
 ---
 title: "Quality Checks"
 description: "Automated vault quality checks — deterministic CI scripts, local usage, and what stays agent-driven."
-last_modified: "2026-06-10"
+last_modified: "2026-11-09"
 ---
 
 # Quality Checks — IA On-Premise Vault
@@ -21,6 +21,7 @@ flowchart LR
   VA --> T1[frontmatter]
   VA --> T2[mermaid]
   VA --> T3[agent-leaks]
+  VA --> T5[table-wikilinks]
   VA --> T4[i18n strict]
   LA --> ENG[starlight-obsidian-engine]
   ENG --> LINKS[audit:links]
@@ -44,6 +45,7 @@ npm test                  # full vault audit suite (CI gate)
 npm run audit:frontmatter # title, description, last_modified
 npm run audit:mermaid     # lightweight Mermaid syntax checks
 npm run audit:agent-leaks # agent-only headings in FR notes
+npm run audit:table-wikilinks # wikilink aliases that would break a table
 npm run audit:i18n:strict # FR/EN parity via last_modified
 npm run audit:ascii       # ASCII diagram warnings (non-blocking)
 npm run audit:ascii:strict
@@ -123,6 +125,11 @@ This is a **syntax smoke check**, not a visual render test. Full Mermaid renderi
 **Exit code:** `1` on any invalid block.
 
 ---
+
+### `audit:table-wikilinks`
+
+Fails when a table row holds a wikilink written `[[path|label]]`: the pipe ends the cell and the link shows as raw
+text. Inside a table, write `[[path\|label]]`, which Obsidian and the site both accept. Code blocks are ignored.
 
 ### `audit:agent-leaks`
 

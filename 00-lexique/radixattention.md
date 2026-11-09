@@ -29,7 +29,7 @@ Les deux techniques optimisent la gestion mémoire du KV Cache, mais pour des ob
 
 | Technique | Objectif principal |
 | :-- | :-- |
-| [[00-lexique/pagedattention|PagedAttention]] | Éliminer la fragmentation mémoire pour augmenter la concurrence |
+| [[00-lexique/pagedattention\|PagedAttention]] | Éliminer la fragmentation mémoire pour augmenter la concurrence |
 | RadixAttention | Maximiser la réutilisation des préfixes pour réduire la latence |
 
 Elles ne s'excluent pas conceptuellement : PagedAttention adresse le débit sous charge ; RadixAttention adresse la latence quand le contexte se répète.

@@ -113,7 +113,7 @@ Modèles compacts (3.8B–14B) avec une qualité de raisonnement élevée pour l
 
 | Scénario | Matériel type | Modèle recommandé | Cas d'usage |
 | :-- | :-- | :-- | :-- |
-| [[04-blueprints/scenario-a-dev-lab|A — Labo Dev]] | PC GPU 24 Go (+ offloading au-delà) ou mémoire unifiée 64 Go | Qwen3.8-27B Q4 (~18 Go)[^7], Granite 4.2 8B[^9] ou Gemma 4 E4B[^16] | Dev solo, tests, prototypage |
+| [[04-blueprints/scenario-a-dev-lab\|A — Labo Dev]] | PC GPU 24 Go (+ offloading au-delà) ou mémoire unifiée 64 Go | Qwen3.8-27B Q4 (~18 Go)[^7], Granite 4.2 8B[^9] ou Gemma 4 E4B[^16] | Dev solo, tests, prototypage |
 | [[04-blueprints/scenario-b-sme-appliance\|B — Appliance PME]] | APU 128 Go mémoire unifiée | Qwen3.8-27B[^7] ou Muse Glimmer 30B[^8] (Q8 possible) ; Nemotron 3.5 Lightning 30B-A3B NVFP4 (~22 Go, 256k) pour le débit[^13] | Assistant équipe, RAG documentaire |
 | [[04-blueprints/scenario-c-desktop-cluster\|C — Cluster Bureau]] | 2–4 machines Thunderbolt | GLM-5.3-Flash (320B / 18B actifs, MIT)[^14] ou DeepSeek V4-Flash (MIT)[^10] | PME avancée, modèle très capable |
 | [[04-blueprints/scenario-d-datacenter\|D — Datacenter]] | Multi-H100 / MI300X | DeepSeek V4.1-Flash / V4-Pro (MIT)[^10], MiMo-V2.6-Pro (1,02T / 42B actifs) et MiMo-V2.6-Flash (309B / 15B actifs), MIT, texte + image + vidéo + audio, depuis septembre 2026[^20], GLM-5.3 (licence custom)[^14], Kimi K3 (MXFP4 natif, licence custom)[^15], Qwen3.8-2.4T-A95B (licence custom) ; Llama 4 Scout / Maverick restent valables[^2] | Production 50+ utilisateurs, SLA, multimodal |
