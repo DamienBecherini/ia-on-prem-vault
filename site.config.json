@@ -18,16 +18,16 @@
     "defaultAgent": "Opus 5.5"
   },
   "footer": {
-    "text": "Contenu rédigé avec l'assistance d'une IA, sous la direction et la vérification d'un auteur humain ; chaque chiffre cite sa source primaire. Contenu dédié au domaine public (CC0 1.0).",
+    "text": "Rédigé et tenu à jour par des agents IA, chaque modification est validée par un humain ; chaque chiffre cite sa source primaire. Contenu dédié au domaine public (CC0 1.0).",
     "links": [
-      { "label": "Méthode", "href": "https://github.com/DamienBecherini/ia-on-prem-vault#how-the-content-is-written" },
+      { "label": "Méthode", "href": "/projet/how-it-works/" },
       { "label": "Licence", "href": "https://github.com/DamienBecherini/ia-on-prem-vault/blob/main/LICENSE" }
     ],
     "translations": {
       "en": {
-        "text": "Content written with AI assistance, under the direction and verification of a human author; every figure cites its primary source. Content dedicated to the public domain (CC0 1.0).",
+        "text": "Written and kept up to date by AI agents, every change is approved by a human; every figure cites its primary source. Content dedicated to the public domain (CC0 1.0).",
         "links": [
-          { "label": "Method", "href": "https://github.com/DamienBecherini/ia-on-prem-vault#how-the-content-is-written" },
+          { "label": "Method", "href": "/en/projet/how-it-works/" },
           { "label": "Licence", "href": "https://github.com/DamienBecherini/ia-on-prem-vault/blob/main/LICENSE" }
         ]
       }
@@ -76,7 +76,11 @@
       "translations": { "en": "The Project" },
       "items": [
         { "label": "Accueil", "translations": { "en": "Home" }, "link": "/" },
-        { "label": "🚀 Index Zero to Hero", "link": "/00-index/" }
+        { "label": "🚀 Index Zero to Hero", "link": "/00-index/" },
+        { "label": "⚙️ Comment ça marche", "translations": { "en": "⚙️ How it works" }, "link": "/projet/how-it-works/" },
+        { "label": "📚 Le guide", "translations": { "en": "📚 The guide" }, "link": "/projet/guide/" },
+        { "label": "🤖 vault-watch-agent", "link": "/projet/vault-watch-agent/" },
+        { "label": "🛠️ Le moteur de publication", "translations": { "en": "🛠️ The publishing engine" }, "link": "/projet/starlight-obsidian-engine/" }
       ]
     },
     {
