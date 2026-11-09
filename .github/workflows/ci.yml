@@ -49,3 +49,14 @@ jobs:
           VAULT_PATH: ${{ github.workspace }}/vault
           FORCE_VAULT_PATH: "1"
         run: npm run audit:links
+
+      - name: Build the site
+        working-directory: engine
+        env:
+          VAULT_PATH: ${{ github.workspace }}/vault
+          FORCE_VAULT_PATH: "1"
+          PAGEFIND: "0"
+        run: npm run build
+
+      - name: Check that no wiki link is left raw in the pages
+        run: node vault/scripts/audit-rendered-wikilinks.mjs engine/dist
