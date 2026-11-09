@@ -8,7 +8,7 @@ tags:
   - stack
 sidebar:
   order: 62
-last_modified: "2026-10-10"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 ---
@@ -38,7 +38,7 @@ SGLang can constrain the model to produce JSON conforming to a given schema, at 
 | Pure throughput benchmarks under heavy concurrency | **vLLM** |
 | Hardware compatibility (NVIDIA CUDA 12 still supported, ROCm, CPU) | **vLLM** (SGLang requires CUDA 13 since 0.5.20, September 2026) |
 
-vLLM remains the reference for maximum throughput and keeps CUDA 12.9 variants; SGLang now officially covers NVIDIA (B200 → A100, RTX 30/40/50), AMD Instinct (MI300X → MI355X), Google TPU, Intel and Apple Silicon (Metal/MLX), with maturity varying by platform[^3]. SGLang excels where first-response latency and structured output reliability matter more than raw throughput.
+vLLM remains the reference for maximum throughput (CUDA 13 only since 0.33, like SGLang); SGLang now officially covers NVIDIA (B200 → A100, RTX 30/40/50), AMD Instinct (MI300X → MI355X), Google TPU, Intel and Apple Silicon (Metal/MLX), with maturity varying by platform[^3]. SGLang excels where first-response latency and structured output reliability matter more than raw throughput.
 
 ## ⚠️ Common pitfalls
 

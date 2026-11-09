@@ -10,7 +10,7 @@ tags:
   - security
 sidebar:
   order: 39
-last_modified: "2026-10-10"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 ---
@@ -45,7 +45,7 @@ Qdrant allows scoping vector searches via *payload* filters (tenant-specific acc
 - Believing one vector collection per tenant is enough without controlling shared API keys.
 - Forgetting to also isolate indexing pipelines: a worker that indexes the wrong corpus contaminates the entire database.
 - Neglecting non-regression tests on isolation with every schema or query change.
-- Forgetting that the shared inference engine is also a common point of failure: in 2026, several vLLM advisories showed that a single request from one tenant (`prompt_logprobs` on a prefix served by a KV connector, an oversized image or video) could bring the engine down for everyone, hence an up-to-date version (≥ 0.31.0 as of October 2026) and per-tenant quotas at the gateway[^4].
+- Forgetting that the shared inference engine is also a common point of failure: in 2026, several vLLM advisories showed that a single request from one tenant (`prompt_logprobs` on a prefix served by a KV connector, an oversized image or video) could bring the engine down for everyone, hence an up-to-date version (≥ 0.33.0 as of November 2026, which also closes the engine shutdown under `--skip-tokenizer-init`) and per-tenant quotas at the gateway[^4].
 
 ## 📚 To go deeper
 

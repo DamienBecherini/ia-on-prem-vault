@@ -8,7 +8,7 @@ tags:
   - stack
 sidebar:
   order: 63
-last_modified: "2026-11-08"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 ---
@@ -36,7 +36,7 @@ Its signature mechanism is the **paged** KV Cache management popularized by [[00
 - Forgetting VRAM sizing: model + concurrent KV Cache must fit in available GPU memory.
 - Believing vLLM does not reuse prefixes: Automatic Prefix Caching is **enabled by default**[^3]; on **agentic** workloads with highly shared prefixes, still evaluate [[00-lexique/sglang|SGLang]] in parallel (RadixAttention, finer-grained sharing).
 - Exposing the server with `--api-key` alone: it only protects `/v1`, `/v2` and `/inference`; `/tokenize` and `/metrics` remain open — a reverse proxy is mandatory[^4].
-- Staying on a version earlier than 0.31.0 (October 2026): several remote code executions and denials of service were fixed between 0.28 and 0.31, and the default wheels have targeted CUDA 13.0 since 0.28 (August 2026)[^5].
+- Staying on a version earlier than 0.33.0 (November 2026): several remote code executions and denials of service were fixed between 0.28 and 0.33, and the wheels have targeted CUDA 13.0 by default since 0.28 (August 2026), and exclusively since 0.33[^5].
 
 ## 📚 To go deeper
 
