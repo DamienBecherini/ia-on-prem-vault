@@ -29,7 +29,7 @@ Default to human-in-the-loop: **propose, apply only when the user asks**. Read-o
 
 One issue, one fresh session. The user opens a new session (or runs `/clear`) and says "traite la veille #N". Do not process a watch at the end of a long session, and do not carry one session's context into the next week: the issue, the cached `watch.json` and the brief are the whole input. Previous watch reports are not read; what was set aside is already in `watch-seen.md`, which the script applies.
 
-The session ends at the report (read-only) or at the PR (after the go-ahead). After the merge, the user publishes with `npm run deploy -- -y`.
+The session ends at the report (read-only) or at the PR (after the go-ahead). After the merge, `.github/workflows/deploy.yml` publishes the site by itself: do not also run `npm run deploy`, two deploys at once delete each other's files (outage of 2026-11-09). `npm run deploy -- --full -y` is only for repairing the site, while no deploy workflow is running.
 
 ## Inputs
 
