@@ -22,6 +22,7 @@ flowchart LR
   VA --> T2[mermaid]
   VA --> T3[agent-leaks]
   VA --> T5[table-wikilinks]
+  VA --> T6[version-floors]
   VA --> T4[i18n strict]
   LA --> ENG[starlight-obsidian-engine]
   ENG --> LINKS[audit:links]
@@ -47,6 +48,7 @@ npm run audit:frontmatter # title, description, last_modified
 npm run audit:mermaid     # lightweight Mermaid syntax checks
 npm run audit:agent-leaks # agent-only headings in FR notes
 npm run audit:table-wikilinks # wikilink aliases that would break a table
+npm run audit:version-floors  # version-floors.json matches the minimums in the guide
 npm run audit:i18n:strict # FR/EN parity via last_modified
 npm run audit:ascii       # ASCII diagram warnings (non-blocking)
 npm run audit:ascii:strict
@@ -138,6 +140,10 @@ Fails when the visible text of a built page contains `[[`, outside code. It need
 
 Fails when a table row holds a wikilink written `[[path|label]]`: the pipe ends the cell and the link shows as raw
 text. Inside a table, write `[[path\|label]]`, which Obsidian and the site both accept. Code blocks are ignored.
+
+### `audit:version-floors`
+
+Fails when `.agents/vault-maintenance/version-floors.json` disagrees with the minimum versions the guide states: the "Planchers de version" callout of `06-mise-en-oeuvre/local-inference-security.md`, and the tool's own page for Jan. A new floor needs a mapping in the script. `--write` aligns the file on the pages; `vault-watch-agent` runs it when it applies corrections.
 
 ### `audit:agent-leaks`
 
@@ -332,3 +338,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | 2026-10-10 | Watch cost cut: deterministic pre-triage and `version-floors.json` in `watch:feeds`, cached release notes in the JSON, biweekly issue with an `urgent` label in between, one-page agent brief for `vault-watch` |
 | 2026-10-11 | `audit:readability`: deterministic part (/40) of a two-profile readability score, with the judged rubric and a 6-page calibration under `.agents/vault-maintenance/readability/`; warn-only, not in `npm test` |
 | 2026-11-09 | `watch:feeds` recognises backported fixes (one entry per release line) when checking a version floor; floors aligned with the vault for LiteLLM and Jan |
+| 2026-11-09 | `audit:version-floors` in `npm test`: `version-floors.json` must match the minimums stated in the guide |

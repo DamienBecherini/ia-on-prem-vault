@@ -9,6 +9,7 @@
     "audit:mermaid": "node scripts/audit-mermaid.mjs",
     "audit:agent-leaks": "node scripts/audit-agent-leaks.mjs",
     "audit:table-wikilinks": "node scripts/audit-table-wikilinks.mjs",
+    "audit:version-floors": "node scripts/audit-version-floors.mjs",
     "audit:rendered-wikilinks": "node scripts/audit-rendered-wikilinks.mjs",
     "audit:ascii": "node scripts/audit-ascii-diagrams.mjs",
     "audit:ascii:strict": "node scripts/audit-ascii-diagrams.mjs --strict",
