@@ -62,7 +62,7 @@ HITL name, HITL URL, and default agent slug are defined in **`site.config.json`*
 
 ### Baseline dates (read this before trusting `last_verified`)
 
-- Pages whose `last_verified` is **2026-06-05** (and a few at 2026-06-09 / 2026-06-10) received that value from a **bulk stamp** (`scripts/backfill-verified.mjs --write`, commit 44abeab), not from a per-page verification. The human review behind it was a batch review of the June 2026 audit corrections. Treat these as a *baseline*, not as proof that every claim on the page was checked.
+- Pages whose `last_verified` is **2026-06-05** (and a few at 2026-06-09 / 2026-06-10) received that value from a **bulk stamp** (`scripts/backfill-verified.mjs --write`, commit 9049818), not from a per-page verification. The human review behind it was a batch review of the June 2026 audit corrections. Treat these as a *baseline*, not as proof that every claim on the page was checked.
 - Pages whose `last_verified` is **2026-10-09 or later** were audited claim by claim during the 2026-10 refresh run (`.agents/vault-maintenance/reports/refresh-2026-10-09.md`) and corrected in PRs #17, #20, #21 and the Minor PR that followed. Their claims are tracked in `.agents/vault-maintenance/watchlist/`.
 - The baseline is overwritten progressively: each page gets its real date when a refresh run audits it. Since 2026-10-10 the backfill script refuses whole-vault writes unless `--all --baseline` is passed explicitly, and never writes `verified_hitl*` without `--hitl-approved`.
 
