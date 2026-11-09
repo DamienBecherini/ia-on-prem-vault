@@ -274,7 +274,7 @@ Lists every item published in the last N days (default 8, `--days`, `--since`, `
 | Rule | Drops |
 | :-- | :-- |
 | Releases | pre-releases (rc, beta, dev, nightly, proto-…); releases below the feed's `minLevel` (default `minor`, so patch releases go; `major` for chatty projects); `collapse` feeds (build per commit). A release whose notes mention a security fix is kept anyway |
-| Advisories | low severity; advisories whose vulnerable range excludes, or whose lowest patched version is at or below, the floor in `.agents/vault-maintenance/version-floors.json` |
+| Advisories | low severity; advisories whose vulnerable range excludes, or whose lowest patched version is at or below, the floor in `.agents/vault-maintenance/version-floors.json`; backported advisories (one entry per release line) already fixed at the floor on its own line |
 | Hugging Face | quant-suffixed repos (GGUF, AWQ, FP8, MLX…), third-party quantizations, adapters; third-party fine-tunes and merges in discovery |
 | Seen | any URL already listed in `watch-seen.md` |
 | Keywords | `keywords` match at the start of a word (`IA` no longer matches `Debian`); `exclude` is a regex on the title |
@@ -283,7 +283,7 @@ Kept items split into **core** (need a primary-source check) and **leads** (disc
 
 `.github/workflows/watch.yml` runs every Monday at 06:30 UTC (warn-only). On even ISO weeks it opens a GitHub issue labelled `veille` over a 15-day window; on odd weeks it opens one only when an advisory is `urgent` (labels `veille`, `urgent`). A manual run always opens an issue. The run artifact `weekly-watch` holds `watch.md` and `watch.json`. The `vault-watch` skill turns the issue into verified events, an impact map and a PR.
 
-Keep `version-floors.json` in step with the "Planchers de version" callout of `06-mise-en-oeuvre/local-inference-security.md`: when a floor moves, update both in the same PR.
+Keep `version-floors.json` in step with the "Planchers de version" callout of `06-mise-en-oeuvre/local-inference-security.md`, or the tool's own page when the callout does not list it: when a floor moves, update both in the same PR. Otherwise an advisory already handled comes back as `urgent` while the 15-day window still covers it (issue #69 repeated 8 advisories of #50). When the vault gives one minimum per release line, use the lowest.
 
 ---
 
@@ -331,3 +331,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | 2026-10-10 | Claim-level **Recheck by** column in the watchlist; `watch:feeds` and the weekly `watch.yml` workflow opening a `veille` issue; `vault-watch` skill |
 | 2026-10-10 | Watch cost cut: deterministic pre-triage and `version-floors.json` in `watch:feeds`, cached release notes in the JSON, biweekly issue with an `urgent` label in between, one-page agent brief for `vault-watch` |
 | 2026-10-11 | `audit:readability`: deterministic part (/40) of a two-profile readability score, with the judged rubric and a 6-page calibration under `.agents/vault-maintenance/readability/`; warn-only, not in `npm test` |
+| 2026-11-09 | `watch:feeds` recognises backported fixes (one entry per release line) when checking a version floor; floors aligned with the vault for LiteLLM and Jan |
