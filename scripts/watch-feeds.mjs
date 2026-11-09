@@ -316,6 +316,18 @@ function floorCovers(floor, { range, patched }) {
   return fixes.length > 0 && cmpVersion(fixes[0], floor) <= 0;
 }
 
+/**
+ * Backported fixes come as one entry per release line ("< 1.103.10", "< 1.104.8"…),
+ * so a floor sitting on an older line still falls inside the later ranges. It is
+ * safe when the fix published for its own line (same major.minor) is at or below it.
+ */
+function floorFixedOnItsLine(floor, vulns) {
+  const line = (v) => (parseVersion(v) || []).slice(0, 2).join(".");
+  return vulns.some(({ patched }) =>
+    (patched.match(/\d+\.\d+(?:\.\d+)*/g) || []).some((fix) => line(fix) === line(floor) && cmpVersion(fix, floor) <= 0),
+  );
+}
+
 /** "major" if x.0.0, "minor" if x.y.0, "patch" otherwise. */
 function releaseLevel(v) {
   const p = parseVersion(v);
@@ -347,7 +359,7 @@ function triage(feed, item) {
     const sev = String(item.severity ?? "").toLowerCase();
     if (sev === "low") return ["drop", "low severity", false];
     const floor = FLOORS[feed.id];
-    if (floor && item.vulns?.length && item.vulns.every((v) => floorCovers(floor, v))) {
+    if (floor && item.vulns?.length && (item.vulns.every((v) => floorCovers(floor, v)) || floorFixedOnItsLine(floor, item.vulns))) {
       return ["drop", `covered by floor ${floor}`, false];
     }
     return ["keep", floor ? `affects floor ${floor}` : "no floor in the vault", sev === "high" || sev === "critical"];
