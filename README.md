@@ -151,6 +151,8 @@ npm run upload          # incremental upload only (existing dist/)
 npm run upload:full     # full remote scan + upload all + mirror
 ```
 
+Merging a content change to `main` already deploys the site (`.github/workflows/deploy.yml`). Use these commands only outside that flow and never while the workflow runs: two deploys at once delete each other's files. `deploy:full` repairs a site whose deploy manifest no longer matches the server.
+
 Incremental deploy uses `.deploy-manifest.json` (gitignored in this vault) plus a **remote copy** at
 `{DEPLOY_REMOTE_PATH}/.deploy-manifest.json`. The engine merges both before comparing `dist/` hashes, so
 CI and multi-machine deploys stay in sync; only changed files are uploaded after each build.
