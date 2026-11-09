@@ -29,6 +29,7 @@ Excluded from translation scope:
 ## Wikilinks and code
 
 - Wikilink paths stay identical: `[[00-lexique/kv-cache]]` not `[[00-lexique/kv-cache|KV Cache]]` unless FR used a label pipe.
+- Inside a table, write the alias separator as `\|` (`[[path\|label]]`): a bare `|` ends the cell and breaks the link.
 - Code blocks, CLI commands, env vars: unchanged.
 - Footnote references `[^1]` and URL targets: unchanged.
 

@@ -11,7 +11,7 @@
 - For chapter generation, track lexicon follow-up: existing terms to link, new entries to create, and linked entries to verify/update.
 - On every substantive FR edit, set or update `last_modified: YYYY-MM-DD` in frontmatter (today's date). This feeds `npm run audit:i18n` for EN translation backlog.
 - Never invent sources. Performance claims must be cited with relevant context or written as cautious order-of-magnitude statements.
-- Use Obsidian wikilinks for internal references and footnotes for external sources.
+- Use Obsidian wikilinks for internal references and footnotes for external sources. Inside a Markdown table, write the alias separator as `\|` (`[[path\|label]]`): a bare `|` ends the cell and breaks the link (`npm test` fails on it).
 - If the user explicitly asks not to use project skills or workflows, respect that request while keeping factuality and source constraints.
 
 ## Lisibilité : lecture à trois étages

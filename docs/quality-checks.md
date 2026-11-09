@@ -25,6 +25,7 @@ flowchart LR
   VA --> T4[i18n strict]
   LA --> ENG[starlight-obsidian-engine]
   ENG --> LINKS[audit:links]
+  ENG --> RENDER[built pages: no raw wikilink]
 ```
 
 | Layer | Runs where | Needs agent? |
@@ -74,6 +75,8 @@ VAULT_PATH=<vault-checkout> FORCE_VAULT_PATH=1 npm run audit:links
 ```
 
 Unresolved wiki-links are suppressed when listed in `.agents/vault-maintenance/link-audit-allowlist.md`.
+
+The job then builds the site without the search index and runs `audit-rendered-wikilinks.mjs` on the output.
 
 ### Branch protection (`main`)
 
@@ -125,6 +128,11 @@ This is a **syntax smoke check**, not a visual render test. Full Mermaid renderi
 **Exit code:** `1` on any invalid block.
 
 ---
+
+### `audit:rendered-wikilinks`
+
+Fails when the visible text of a built page contains `[[`, outside code. It needs a build, so it runs in the CI
+`link-audit` job and not in `npm test`. Locally: `npm run audit:rendered-wikilinks -- <built-site-directory>`.
 
 ### `audit:table-wikilinks`
 

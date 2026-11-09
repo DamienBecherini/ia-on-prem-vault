@@ -23,7 +23,7 @@ Do **not** read previous watch or refresh reports, the whole watchlist, or `en/`
 
 1. Does it change a sentence of the vault? If not: one line in "Dropped", stop.
 2. Primary source (tier A, or two independent tier B): date + exact fact + tier. Use `notes` first; fetch only what `notes` lacks. Tier C is a lead, never a citation.
-3. Output: page path, current sentence (verbatim), proposed French sentence (dated wording, "au T4 2026"), source, severity (Critical / Major / Minor).
+3. Output: page path, current sentence (verbatim), proposed French sentence (dated wording, "au T4 2026"), source, severity (Critical / Major / Minor). Inside a table, write the alias separator as `\|` (`[[path\|label]]`): a bare `|` ends the cell and breaks the link.
 
 Addition threshold: tier A or two tier B sources **and** a change to sizing, tool choice or security for an on-prem SME. Paragraph < lexicon entry < new page (opportunity note only, never written without the user's go-ahead).
 
