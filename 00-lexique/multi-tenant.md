@@ -10,7 +10,7 @@ tags:
   - sécurité
 sidebar:
   order: 39
-last_modified: "2026-10-10"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 ---
@@ -45,7 +45,7 @@ Qdrant permet de scoper les recherches vectorielles via des filtres sur le *payl
 - Croire qu'une collection vectorielle par tenant suffit sans contrôler les clés d'API partagées.
 - Oublier d'isoler aussi les pipelines d'indexation : un worker qui indexe le mauvais corpus contamine toute la base.
 - Négliger les tests de non-régression sur l'isolation à chaque changement de schéma ou de requête.
-- Oublier que le moteur d'inférence partagé est aussi un point de défaillance commun : en 2026, plusieurs avis vLLM ont montré qu'une seule requête d'un tenant (`prompt_logprobs` sur un préfixe servi par un connecteur KV, image ou vidéo surdimensionnée) pouvait faire tomber le moteur pour tous, d'où une version à jour (≥ 0.31.0 en octobre 2026) et des quotas par tenant au gateway[^4].
+- Oublier que le moteur d'inférence partagé est aussi un point de défaillance commun : en 2026, plusieurs avis vLLM ont montré qu'une seule requête d'un tenant (`prompt_logprobs` sur un préfixe servi par un connecteur KV, image ou vidéo surdimensionnée) pouvait faire tomber le moteur pour tous, d'où une version à jour (≥ 0.33.0 en novembre 2026, qui ferme aussi l'arrêt du moteur sous `--skip-tokenizer-init`) et des quotas par tenant au gateway[^4].
 
 ## 📚 Pour comprendre en profondeur
 

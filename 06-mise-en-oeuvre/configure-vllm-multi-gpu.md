@@ -14,7 +14,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 > vLLM transforme un serveur GPU en API d'inférence haute performance. Ce guide couvre l'installation, la configuration mono et multi-GPU, le déploiement multi-nœuds via Ray, et les paramètres critiques pour la production.
 
 > [!info] Prérequis
-> Ce guide suppose des GPU NVIDIA (capacité de calcul ≥ 7.5) avec un pilote compatible **CUDA 13.0** — la cible par défaut des roues et images vLLM depuis la 0.28 (août 2026 ; des variantes CUDA 12.9 restent publiées, tag `-cu129`) — et **Python 3.11 à 3.14**[^1][^9]. Pour Apple Silicon ou AMD ROCm, les instructions d'installation diffèrent — voir la [documentation officielle vLLM](https://docs.vllm.ai/en/stable/getting_started/installation/gpu/).
+> Ce guide suppose des GPU NVIDIA (capacité de calcul ≥ 7.5) avec un pilote compatible **CUDA 13.0** — la cible par défaut des roues et images vLLM depuis la 0.28 (août 2026) et la seule depuis la 0.33 (novembre 2026), qui ne publie plus de variantes CUDA 12.9 — et **Python 3.11 à 3.14**[^1][^9]. Pour Apple Silicon ou AMD ROCm, les instructions d'installation diffèrent — voir la [documentation officielle vLLM](https://docs.vllm.ai/en/stable/getting_started/installation/gpu/).
 
 ---
 

@@ -8,7 +8,7 @@ tags:
   - stack
 sidebar:
   order: 62
-last_modified: "2026-10-10"
+last_modified: "2026-11-09"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 ---
@@ -38,7 +38,7 @@ SGLang peut contraindre le modèle à produire du JSON conforme à un schéma do
 | Benchmarks de débit pur sous forte concurrence | **vLLM** |
 | Compatibilité matérielle (NVIDIA CUDA 12 encore pris en charge, ROCm, CPU) | **vLLM** (SGLang exige CUDA 13 depuis la 0.5.20, septembre 2026) |
 
-vLLM reste la référence pour le débit maximal et conserve des variantes CUDA 12.9 ; SGLang couvre désormais officiellement NVIDIA (B200 → A100, RTX 30/40/50), AMD Instinct (MI300X → MI355X), Google TPU, Intel et Apple Silicon (Metal/MLX), avec une maturité variable selon la plateforme[^3]. SGLang excelle là où la latence de première réponse et la fiabilité des sorties structurées priment sur le throughput brut.
+vLLM reste la référence pour le débit maximal (CUDA 13 seul depuis la 0.33, comme SGLang) ; SGLang couvre désormais officiellement NVIDIA (B200 → A100, RTX 30/40/50), AMD Instinct (MI300X → MI355X), Google TPU, Intel et Apple Silicon (Metal/MLX), avec une maturité variable selon la plateforme[^3]. SGLang excelle là où la latence de première réponse et la fiabilité des sorties structurées priment sur le throughput brut.
 
 ## ⚠️ Pièges fréquents
 
