@@ -86,7 +86,7 @@ When the article introduces an important missing term, either create a minimal l
    - `## Voir aussi`
 4. Add chapter links in `Voir aussi` when relevant.
 5. Avoid unsourced performance numbers. If a numeric claim is necessary, cite it.
-6. After adding or renaming a lexicon entry, regenerate `00-lexique/lexicon-index.md` from the engine repo (`npm run lexicon:index`) and commit the updated file alongside the new entry.
+6. After adding or renaming a lexicon entry, or changing its `description` (FR or EN), regenerate the indexes from the engine repo (`npm run lexicon:index`) and commit both `lexicon-index.md` files (FR and EN) alongside the entry. CI fails if they are out of date.
 
 ## Frontmatter on save
 

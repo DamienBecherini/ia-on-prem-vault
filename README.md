@@ -109,7 +109,7 @@ LICENSE, LICENSE-CODE   CC0 1.0 for the content, MIT for the code
 - **Generated index** : `00-lexique/lexicon-index.md` (alphabetical table; regen at build when `lexicon.enabled` in `site.config.json`).
 - **New term** : use `_templates/_Terme Lexique.md`, tag `lexique` in frontmatter.
 - **Regenerate index manually** (from the engine repo): `npm run lexicon:index` (vault is resolved via the `src/content/docs` junction; no `VAULT_PATH` needed after `npm run link:vault`).
-- **Commit policy** : commit `lexicon-index.md` with the vault when you add or change lexicon entries.
+- **Commit policy** : commit both `lexicon-index.md` files (FR and EN) with the vault when you add, rename or change the description of a lexicon entry. CI fails if they are out of date. Do not add them to `.gitignore`: the engine does not publish ignored files.
 
 The engine excludes everything matched by the vault [`.gitignore`](.gitignore) (including `_private/*`) and
 **never builds this root `README.md`** as a site page. See the engine
