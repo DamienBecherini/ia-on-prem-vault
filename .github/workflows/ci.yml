@@ -60,3 +60,12 @@ jobs:
 
       - name: Check that no wiki link is left raw in the pages
         run: node vault/scripts/audit-rendered-wikilinks.mjs engine/dist
+
+      # The build regenerates both indexes from the lexicon frontmatter. A stale
+      # committed index would show up as an uncommitted change after any local build.
+      - name: Check that the generated lexicon indexes are up to date
+        run: |
+          if ! git -C vault diff --exit-code -- 00-lexique/lexicon-index.md en/00-lexique/lexicon-index.md; then
+            echo "::error::Lexicon index out of date. Run 'npm run lexicon:index' from the engine repo and commit both lexicon-index.md files."
+            exit 1
+          fi

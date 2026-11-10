@@ -78,7 +78,7 @@ VAULT_PATH=<vault-checkout> FORCE_VAULT_PATH=1 npm run audit:links
 
 Unresolved wiki-links are suppressed when listed in `.agents/vault-maintenance/link-audit-allowlist.md`.
 
-The job then builds the site without the search index and runs `audit-rendered-wikilinks.mjs` on the output.
+The job then builds the site without the search index and runs `audit-rendered-wikilinks.mjs` on the output. Last, it fails if the build changed `00-lexique/lexicon-index.md` or its EN mirror: both are generated from the lexicon frontmatter and must be committed up to date (`npm run lexicon:index` from the engine repo). A change to the engine's index format also trips this check, until the indexes are regenerated.
 
 ### Branch protection (`main`)
 
@@ -339,3 +339,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | 2026-10-11 | `audit:readability`: deterministic part (/40) of a two-profile readability score, with the judged rubric and a 6-page calibration under `.agents/vault-maintenance/readability/`; warn-only, not in `npm test` |
 | 2026-11-09 | `watch:feeds` recognises backported fixes (one entry per release line) when checking a version floor; floors aligned with the vault for LiteLLM and Jan |
 | 2026-11-09 | `audit:version-floors` in `npm test`: `version-floors.json` must match the minimums stated in the guide |
+| 2026-11-10 | `link-audit` job fails when the committed lexicon indexes (FR, EN) are out of date |

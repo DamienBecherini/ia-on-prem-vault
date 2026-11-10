@@ -10,7 +10,7 @@ Auto-generated at build time. For a guided read, see [[00-lexique/ai-glossary|AI
 | [⚡ SGLang](/en/00-lexique/sglang/) | Open-source LLM inference and serving framework, an alternative to vLLM for agentic workloads and structured outputs. |
 | [🌳 RadixAttention](/en/00-lexique/radixattention/) | KV Cache management technique using a prefix tree, introduced by SGLang to reuse common contexts across requests. |
 | [🏢 Multi-tenant](/en/00-lexique/multi-tenant/) | AI SaaS architecture where a single infrastructure serves multiple isolated organizations, with inter-tenant leakage risk in RAG. |
-| [🔐 Zero Data Retention (ZDR)](/en/00-lexique/zero-data-retention/) | Cloud LLM API contractual clause: no persistence, reuse or human review of prompts and responses for the covered models and endpoints. |
+| [🔐 Zero Data Retention (ZDR)](/en/00-lexique/zero-data-retention/) | Cloud LLM API contractual clause: no persistence, reuse or human review of prompts and responses for the covered models and endpoints, negotiated per model. |
 | [APU](/en/00-lexique/apu/) | Chip combining CPU, GPU, and NPU on one SoC with shared unified memory. |
 | [Attention (mechanism)](/en/00-lexique/attention/) | Core Transformer mechanism that lets each token weight the importance of other tokens in context. |
 | [Autonomous agent (LLM)](/en/00-lexique/autonomous-agent/) | System where an LLM drives tools and decisions itself to complete a multi-step task. |
