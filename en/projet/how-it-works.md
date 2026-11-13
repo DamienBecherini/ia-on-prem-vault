@@ -1,13 +1,13 @@
 ---
 title: "⚙️ How it works"
 description: "How this guide on self-hosted AI stays up to date: a script watches the news, an AI agent proposes sourced corrections, a human approves them before publication."
-last_modified: "2026-11-09"
+last_modified: "2026-11-13"
 ---
 
 > [!tip] In brief
 > AI tools change every week, and a technical guide goes stale quickly. Here, a program spots what has changed, an AI proposes corrections with their sources, and a person decides what gets published. Nothing reaches the site without that approval.
 
-This guide is written and kept up to date by AI agents, every change is approved by a human. This page explains who does what, and what the AI is not allowed to do.
+This guide is written with the help of AI agents; its author reviews and approves every change before publication. This page explains who does what, and what the AI is not allowed to do.
 
 ## Three separate roles
 
