@@ -18,14 +18,14 @@
     "defaultAgent": "Opus 5.5"
   },
   "footer": {
-    "text": "Rédigé et tenu à jour par des agents IA, chaque modification est validée par un humain ; chaque chiffre cite sa source primaire. Contenu dédié au domaine public (CC0 1.0).",
+    "text": "Guide de Damien BECHERINI, écrit avec l'aide d'agents IA. L'auteur relit et valide chaque modification avant publication, et chaque chiffre cite sa source primaire. Contenu dédié au domaine public (CC0 1.0).",
     "links": [
       { "label": "Méthode", "href": "/projet/how-it-works/" },
       { "label": "Licence", "href": "https://github.com/DamienBecherini/ia-on-prem-vault/blob/main/LICENSE" }
     ],
     "translations": {
       "en": {
-        "text": "Written and kept up to date by AI agents, every change is approved by a human; every figure cites its primary source. Content dedicated to the public domain (CC0 1.0).",
+        "text": "A guide by Damien BECHERINI, written with the help of AI agents. The author reviews and approves every change before publication, and every figure cites its primary source. Content dedicated to the public domain (CC0 1.0).",
         "links": [
           { "label": "Method", "href": "/en/projet/how-it-works/" },
           { "label": "Licence", "href": "https://github.com/DamienBecherini/ia-on-prem-vault/blob/main/LICENSE" }

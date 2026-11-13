@@ -1,13 +1,13 @@
 ---
 title: "⚙️ Comment ça marche"
 description: "Comment ce guide sur l'IA auto-hébergée reste à jour : un script surveille l'actualité, un agent IA propose des corrections sourcées, un humain valide avant publication."
-last_modified: "2026-11-09"
+last_modified: "2026-11-13"
 ---
 
 > [!tip] En bref
 > Les outils d'IA changent chaque semaine, et un guide technique périme vite. Ici, un programme repère ce qui a changé, une IA propose des corrections avec leurs sources, et une personne décide de ce qui est publié. Rien n'arrive sur le site sans cette validation.
 
-Ce guide est rédigé et tenu à jour par des agents IA, chaque modification est validée par un humain. Cette page explique qui fait quoi, et ce que l'IA n'a pas le droit de faire.
+Ce guide est écrit avec l'aide d'agents IA ; son auteur relit et valide chaque modification avant publication. Cette page explique qui fait quoi, et ce que l'IA n'a pas le droit de faire.
 
 ## Trois rôles bien séparés
 
