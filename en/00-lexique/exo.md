@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-11-08"
+last_modified: "2026-11-17"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -26,7 +26,7 @@ Macs are preferably linked by [[00-lexique/thunderbolt|Thunderbolt 5]] cables (R
 
 ## 💡 Why it matters for on-prem AI
 
-Lets you exceed a single machine’s limits without datacenter investment. A cluster of 4–8 Mac Minis can host 200B–600B+ models inaccessible on one box.
+Lets you exceed a single machine’s limits without datacenter investment. A cluster of 2 to 4 Macs linked via Thunderbolt 5 RDMA (full mesh), or more Mac Minis in pipeline over IP, like the 8 Mac Minis in the 2024 Exo test, can host 200B–600B+ models inaccessible on one box.
 
 ## ⚠️ Common pitfalls
 

@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - stack
-last_modified: "2026-11-09"
+last_modified: "2026-11-17"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -35,7 +35,7 @@ $$\text{tokens/s} \approx \frac{1}{\frac{P_{VRAM}}{D_{VRAM}} + \frac{P_{RAM}}{D_
 
 ## 💡 Why it matters for on-prem AI
 
-Offloading is at the heart of **Scenario A (Dev Lab)**: a machine under €3,500 with 16–24 GB VRAM can run a 70B model in Q4 (~40 GB) by offloading excess layers to DDR5. Throughput will be about 4–5 tokens/s as a theoretical bound (8–12 reported by the community, see [[04-blueprints/scenario-a-dev-lab|Scenario A]]) rather than 15–40 tokens/s, but that is enough for development and testing.
+Offloading is at the heart of **Scenario A (Dev Lab)**: a machine under €3,500 with 16–24 GB VRAM can run a 70B model in Q4 (~40 GB) by offloading excess layers to DDR5. Throughput will cap at about 4–5 tokens/s (theoretical bound; measured throughput is lower, see [[04-blueprints/scenario-a-dev-lab|Scenario A]]) rather than 15–40 tokens/s, but that is enough for development and testing.
 
 ## ⚠️ Common pitfalls
 

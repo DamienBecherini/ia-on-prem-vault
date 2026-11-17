@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-11-08"
+last_modified: "2026-11-17"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -31,7 +31,7 @@ Two parallelism strategies use multi-GPU: [[00-lexique/tensor-parallelism|Tensor
 
 ## 💡 Why it matters for on-prem AI
 
-Required for models exceeding one GPU’s VRAM (e.g. Llama 3.1 405B in FP8 ≈ 200 GB). Interconnect speed is often more limiting than raw compute.
+Required for models exceeding one GPU’s VRAM (e.g. Llama 3.1 405B in FP8 = ~405 GB of weights, at 1 byte per parameter). Interconnect speed is often more limiting than raw compute.
 
 ## ⚠️ Common pitfalls
 

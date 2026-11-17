@@ -9,7 +9,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-17"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -31,11 +31,11 @@ The attention score between two tokens is the dot product Q·K. Those scores wei
 
 **Link to KV Cache**: during [[00-lexique/prefill|Prefill]], K and V vectors for each token are computed and stored in the [[00-lexique/kv-cache|KV Cache]]. In [[00-lexique/decoding|Decoding]], the model reuses them without recomputing.
 
-Attention cost is quadratic O(n²) in context length: doubling the prompt multiplies prefill cost by 4.
+Attention cost is quadratic O(n²) in context length: doubling the prompt multiplies the cost of the attention part of prefill by 4 (the dense layers only cost 2 times more).
 
 ## 💡 Why it matters for on-prem AI
 
-Quadratic prefill cost explains why very long prompts (100K+ tokens) saturate VRAM and spike [[00-lexique/ttft|TTFT]] — and why optimizations like Flash Attention or GQA exist.
+The quadratic cost of attention at Prefill explains why very long prompts (100K+ tokens) spike [[00-lexique/ttft|TTFT]]; VRAM saturation comes instead from the [[00-lexique/kv-cache|KV Cache]], which grows linearly with context — hence Flash Attention (computing without materializing the n² matrix) and GQA (smaller KV Cache).
 
 ## ⚠️ Common pitfalls
 
