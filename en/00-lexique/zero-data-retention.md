@@ -1,6 +1,6 @@
 ---
 title: "🔐 Zero Data Retention (ZDR)"
-description: "Cloud LLM API contractual clause: no persistence, reuse or human review of prompts and responses for the covered models and endpoints, negotiated per model."
+description: "Cloud LLM API contractual clause: no persistence, reuse or human review of prompts and responses for the covered models and endpoints."
 aliases:
   - ZDR
   - Zero Retention Policy
@@ -10,7 +10,7 @@ tags:
   - compliance
 sidebar:
   order: 71
-last_modified: "2026-10-10"
+last_modified: "2026-11-17"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 ---
