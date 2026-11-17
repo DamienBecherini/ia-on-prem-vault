@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-11-08"
+last_modified: "2026-11-17"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -29,7 +29,7 @@ Le multi-GPU sert à augmenter la capacité mémoire totale, le débit, ou les d
 Deux stratégies de parallélisme utilisent le multi-GPU : le [[00-lexique/tensor-parallelism|Tensor Parallelism]] (distribue les calculs dans une couche) et le [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] (distribue les couches entre nœuds).
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Indispensable pour les modèles dépassant la VRAM d'un seul GPU (ex. Llama 3.1 405B en FP8 = ~200 Go). La vitesse de l'interconnexion est souvent plus limitante que la puissance de calcul brute.
+Indispensable pour les modèles dépassant la VRAM d'un seul GPU (ex. Llama 3.1 405B en FP8 = ~405 Go de poids, à 1 octet par paramètre). La vitesse de l'interconnexion est souvent plus limitante que la puissance de calcul brute.
 
 ## ⚠️ Pièges fréquents
 - La VRAM totale de plusieurs GPU n'est pas une pool unifiée sur PCIe : chaque GPU n'accède aux poids de l'autre qu'en passant par le bus, avec latence.

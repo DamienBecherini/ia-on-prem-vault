@@ -3,7 +3,7 @@ title: "🏭 Scenario D: Datacenter (RoCE & Multi-GPU)"
 description: The Enterprise AI blueprint. HGX 8-GPU nodes, RoCE/InfiniBand network, and Tensor Parallelism for very high-concurrency production.
 sidebar:
   order: 4
-last_modified: "2026-11-09"
+last_modified: "2026-11-17"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -24,7 +24,7 @@ Here, the basic unit is no longer the graphics card, but the **Server Node** and
 *   **The Network (Scale-Out):** To connect several nodes together, very high-throughput network cards (400 Gbps or 800 Gbps) compatible with **[[00-lexique/rdma|RDMA]]** are used. The standard is **InfiniBand** or **[[00-lexique/roce|RoCEv2]]** (RDMA over Converged Ethernet)[^2].
 *   **Storage:** Distributed NVMe flash storage accessible via *GPUDirect Storage*, to load terabytes of model weights in seconds at startup.
 
-**Estimated budget (Q4 2026):** from €250,000 (8× RTX PRO 6000 server, OEM list price $266k) to over €1 million per node (GB300 on quote)[^6], excluding network infrastructure, energy, and cooling costs.
+**Estimated budget (Q4 2026):** from about €280,000 (HGX H200 node, $300–420k according to third-party estimates, on quote) to over €1 million per node (GB300 on quote)[^6], excluding network infrastructure, energy, and cooling costs. An 8× RTX PRO 6000 server (OEM list price $266k, ~€250,000) costs less, but its GPUs communicate over PCIe, without NVLink or NVSwitch: it is a PCIe variant that does not benefit from the NVLink Tensor Parallelism described below.
 
 ---
 

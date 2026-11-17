@@ -3,7 +3,7 @@ title: "🖥️ Scénario C : Le Cluster Bureau (Exo & Thunderbolt)"
 description: Le blueprint de l'évolutivité. Relier plusieurs Mac Mini ou PC compacts via Thunderbolt pour exécuter des modèles massifs inaccessibles sur une seule machine.
 sidebar:
   order: 3
-last_modified: "2026-11-08"
+last_modified: "2026-11-17"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -20,8 +20,8 @@ Avant 2025, la seule solution était de louer un serveur cloud ou d'acheter une 
 
 L'idée est de créer une "ferme" de calcul posée sur une étagère.
 *   **Les Nœuds :** 4 à 8 machines compactes. Le standard en 2026 pour ce scénario est le **Mac mini M5 Pro** (64 Go de mémoire unifiée, 307 Go/s, Thunderbolt 5, à partir de 1 999 € TTC en 24 Go ; il remplace le Mac mini M4 Pro depuis le 2026-08-25) — ou, plus cher mais plus rapide, le Mac Studio M5 Max 64 Go (3 659 € TTC) — et des mini-PC AMD Ryzen AI Max récents[^3].
-*   **Le Réseau :** C'est le cœur du système. Pour éviter que le transfert de données ne tue les performances, les machines sont reliées en guirlande (Daisy-Chain) ou via un hub avec des câbles **[[00-lexique/thunderbolt|Thunderbolt 5]]** (80 Gb/s symétrique, jusqu'à 120 Gb/s en mode asymétrique), seuls à permettre le RDMA sur Thunderbolt introduit par macOS 26.2 — Thunderbolt 4 reste limité à de l'IP classique à 40 Gb/s[^2][^4].
-*   **Capacité Totale :** Avec 6 Mac Mini de 64 Go, vous obtenez un cluster silencieux avec **384 Go de mémoire unifiée agrégée**.
+*   **Le Réseau :** C'est le cœur du système. Pour éviter que le transfert de données ne tue les performances, les machines sont reliées par des câbles **[[00-lexique/thunderbolt|Thunderbolt 5]]** (80 Gb/s symétrique, jusqu'à 120 Gb/s en mode asymétrique), seuls à permettre le RDMA sur Thunderbolt introduit par macOS 26.2. Ce RDMA (backend JACCL de MLX) exige un maillage complet, avec un câble entre chaque paire de machines, soit en pratique 2 à 4 Mac (configuration documentée par Apple et MLX). Au-delà, ou en guirlande via un hub, les nœuds échangent en TCP sur Thunderbolt (backend ring, pipeline parallelism), sans RDMA — Thunderbolt 4 reste limité à de l'IP classique à 40 Gb/s[^2][^4][^5].
+*   **Capacité Totale :** Avec 4 Mac Mini de 64 Go reliés en maillage RDMA, vous obtenez un cluster silencieux avec **256 Go de mémoire unifiée agrégée** ; avec 6 Mac Mini (384 Go), il faut passer au backend ring en TCP sur Thunderbolt, sans RDMA.
 
 > [!note] L'alternative « une seule grosse machine »
 > Depuis août 2026, un Mac Studio M5 Ultra se configure jusqu'à 512 Go (1,2 To/s ; option 512 Go commandable depuis le 28 octobre 2026, réservée au M5 Ultra 36c CPU / 80c GPU, à partir de 22 299 $ US ou 25 079 € TTC[^11]) : un 671B en 4 bits tient sur une seule machine, sans Thunderbolt ni pipeline parallelism. Au-delà, Apple documente le clustering RDMA sur Thunderbolt 5 directement dans MLX (quatre Mac Studio « jusqu'à 3× » plus rapides qu'un seul, mesure Apple)[^2][^5]. Côté CUDA, NVIDIA prend officiellement en charge depuis le 22 octobre 2026 des clusters de DGX Spark jusqu'à huit nœuds (1 To agrégé avec des unités de 128 Go), reliés en ConnectX-7 200 Gbps : en anneau sans switch jusqu'à quatre nœuds, via un switch à huit. Deux unités de 64 Go reliées en QSFP offrent 128 Go, et le support des huit nœuds dans l'assistant de cluster de NVIDIA Sync est annoncé pour fin 2026. À 4 999 $ (64 Go, OEM dès le 2026-10-23) ou ≈ 6 950 $ (128 Go) l'unité, quatre DGX Spark 128 Go (512 Go) coûtent ≈ 27 800 $ et huit (1 To) ≈ 55 600 $, hors switch[^6][^10]. Le cluster de Mac mini reste l'option la moins chère par Go, mais plus la seule.
@@ -41,7 +41,7 @@ Ce miracle matériel est rendu possible par l'inférence distribuée de **MLX** 
 
 ### Les Performances Attendues
 Le gain est purement capacitaire : **vous ne gagnez pas en vitesse, vous gagnez le droit de faire tourner le modèle**.
-La latence du réseau, même en Thunderbolt, est infiniment plus lente que la vitesse interne de la RAM. Sur un cluster de 8 Mac Mini faisant tourner un modèle de 600B+ quantifié, les benchmarks communautaires disponibles indiquent une vitesse de génération de l'ordre de **3 à 5 [[00-lexique/tokens-per-second|tokens/s]]** sur Thunderbolt 4 (mesure Exo fin 2024)[^1] ; Apple annonce jusqu'à 3× mieux avec quatre Mac Studio M5 reliés en RDMA sur Thunderbolt 5[^2]. Côté modèles, DeepSeek V4.1 Flash (septembre 2026) introduit un KV cache FP4 d'environ 890 octets par token, ce qui soulage précisément la contrainte mémoire et TTFT de ce scénario[^8].
+La latence du réseau, même en Thunderbolt, est infiniment plus lente que la vitesse interne de la RAM. Sur un cluster de 8 Mac Mini M4 Pro 64 Go faisant tourner DeepSeek V3 671B en 4 bits, Exo Labs a mesuré **5,4 [[00-lexique/tokens-per-second|tokens/s]]** (TTFT 2,9 s, décembre 2024, sans RDMA ; le billet ne précise pas l'interconnexion)[^1] ; Apple annonce jusqu'à 3× mieux avec quatre Mac Studio M5 reliés en RDMA sur Thunderbolt 5[^2]. Côté modèles, DeepSeek V4.1 Flash (septembre 2026) introduit un KV cache FP4 d'environ 890 octets par token, ce qui soulage précisément la contrainte mémoire et TTFT de ce scénario[^8].
 
 ---
 
@@ -87,7 +87,7 @@ nettop -m tcp -J bytes_in,bytes_out
 curl http://localhost:11434/api/tags
 
 # Métriques de génération dans les logs
-ollama logs
+cat ~/.ollama/logs/server.log   # macOS ; Linux : journalctl -u ollama --no-pager --follow --pager-end
 ```
 
 **Indicateurs clés à surveiller :**

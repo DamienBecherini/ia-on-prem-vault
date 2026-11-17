@@ -3,7 +3,7 @@ title: "🛠️ Scenario A: Dev Lab (GPU PC or unified memory)"
 description: Blueprint to get started with local AI at low cost. RTX PC with CPU offloading, or laptop/station with unified memory for better solo comfort.
 sidebar:
   order: 1
-last_modified: "2026-11-08"
+last_modified: "2026-11-17"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -64,7 +64,7 @@ Rather than giving up with an *Out Of Memory (OOM)* error, the `llama.cpp` engin
 During response generation ([[00-lexique/decoding|Decoding]]), the layers left in RAM are computed by the processor, at the speed of DDR5 RAM; only the activations travel over the PCIe bus.
 
 As explained in the chapter on [[01-fondations/unified-memory-vs-ram-vs-vram|VRAM vs RAM]], classic RAM is physically capped at about 80–100 GB/s. The result is immediate: generation speed collapses.
-On an RTX 4090 paired with 64 GB DDR5, a 70B Q4 model in CPU Offloading will generate **between 4 and 12 tokens per second** depending on the share of offloaded layers and the RAM: theoretical bound of ~4–5 t/s if half the weights travel through DDR5 (~100 GB/s, see [[01-fondations/memory-bandwidth|memory bandwidth]] — the ~2.5 t/s bound assumes the whole model goes through RAM), 8–12 t/s reported by unverified community feedback; the mechanism (`-ngl` option, GPU vs CPU layers) is documented by llama.cpp and Ollama[^1][^2]. It is readable (slightly below human reading speed), but unsuitable for serving a reactive application or several concurrent users.
+On an RTX 4090 paired with 64 GB DDR5, a 70B Q4 model in CPU Offloading will generate **at most 4 to 5 tokens per second** depending on the share of offloaded layers and the RAM: theoretical bound of ~4–5 t/s if half the weights travel through DDR5 (~100 GB/s, see [[01-fondations/memory-bandwidth|memory bandwidth]] — the ~2.5 t/s bound assumes the whole model goes through RAM), the measured throughput remaining lower; the mechanism (`-ngl` option, GPU vs CPU layers) is documented by llama.cpp and Ollama[^1][^2]. It is readable (slightly below human reading speed), but unsuitable for serving a reactive application or several concurrent users.
 
 ### Why unified memory changes the experience
 

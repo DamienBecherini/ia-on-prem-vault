@@ -3,7 +3,7 @@ title: "🔄 Migrate from Ollama to vLLM"
 description: When and how to move from Ollama to vLLM without breaking existing clients — API compatibility, model conversion, cutover strategy, and rollback plan.
 sidebar:
   order: 7
-last_modified: "2026-11-09"
+last_modified: "2026-11-17"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -59,7 +59,7 @@ response = client.chat.completions.create(
 | Feature | Ollama | vLLM |
 | :-- | :-- | :-- |
 | Default port | 11434 | 8000 |
-| Authentication | None (key ignored) | `--api-key` (only covers `/v1`, `/v2` and `/inference`; reverse proxy for the rest)[^8] |
+| Authentication | None (key ignored) | `--api-key` (only covers `/v1`, `/v2`, `/inference` and `/cohere`; reverse proxy for the rest)[^8] |
 | Model format | GGUF (native) | HuggingFace safetensors, AWQ, GPTQ |
 | Pull model endpoint | `POST /api/pull` | Not supported (pre-load) |
 | Generate endpoint (legacy) | `POST /api/generate` | Not supported (use `/v1/`) |
@@ -282,7 +282,7 @@ The minimum version is not a detail: between August and October 2026, vLLM fixed
 [^5]: vLLM Project, *Quantization — GGUF* (`vllm-gguf-plugin` plugin, "highly experimental and under-optimized" support, base model tokenizer recommended), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/gguf/](https://docs.vllm.ai/en/stable/features/quantization/gguf/)
 [^6]: Hugging Face, *Transformers — GGUF* (`from_pretrained(gguf_file=…)`, `GgufConfig(dequantize=True)`, supported architectures, export via `save_pretrained`), accessed 2026-10-09. [https://huggingface.co/docs/transformers/gguf](https://huggingface.co/docs/transformers/gguf)
 [^7]: Ollama, *FAQ — How does Ollama handle concurrent requests?* (`OLLAMA_NUM_PARALLEL` defaults to 1, queueing), accessed 2026-10-10. [https://docs.ollama.com/faq](https://docs.ollama.com/faq)
-[^8]: vLLM Project, *CLI Reference — `vllm serve`* (`--api-key`: protected paths `/v1`, `/v2`, `/inference`), accessed 2026-10-10 · vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`/tokenize` not covered by `--api-key`), 6 October 2026. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
+[^8]: vLLM Project, *CLI Reference — `vllm serve`* (`--api-key`; the vLLM *Security* page lists the protected prefixes `/v1`, `/v2`, `/inference`, `/cohere`), accessed 2026-10-10 · vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`/tokenize` not covered by `--api-key`), 6 October 2026. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
 [^9]: Ollama, *Release v0.32.0* (deprecation warning for CodeLlama, Qwen2.5(-coder), Llama 3.x, Mistral, StarCoder and base DeepSeek-R1), 11 July 2026 · Ollama, *Library* (`qwen3.5`, `qwen3.6`, `gemma4`, `qwen3-coder`), accessed 2026-10-10. [https://github.com/ollama/ollama/releases/tag/v0.32.0](https://github.com/ollama/ollama/releases/tag/v0.32.0) · [https://ollama.com/library](https://ollama.com/library)
 [^10]: Hugging Face, *Command Line Interface (CLI)* (`hf auth login`, `hf download … --local-dir`), accessed 2026-10-10. [https://huggingface.co/docs/huggingface_hub/guides/cli](https://huggingface.co/docs/huggingface_hub/guides/cli)
 [^11]: *ShadowPickle: Evading Machine Learning Model Scanners via Stealthy Pickle Deserialization Attacks* (arXiv:2607.17503; ten model scanners bypassed), July 2026. [https://arxiv.org/abs/2607.17503](https://arxiv.org/abs/2607.17503)

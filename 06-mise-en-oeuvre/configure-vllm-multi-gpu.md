@@ -3,7 +3,7 @@ title: "⚙️ Configurer vLLM en production multi-GPU"
 description: Installation, configuration tensor parallel, déploiement multi-nœuds avec Ray, et bonnes pratiques de production pour vLLM sur GPU NVIDIA.
 sidebar:
   order: 5
-last_modified: "2026-11-09"
+last_modified: "2026-11-17"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -223,7 +223,7 @@ export VLLM_API_KEY="VOTRE-TOKEN-A-REMPLACER"
 vllm serve ...
 ```
 
-Les clients doivent envoyer `Authorization: Bearer VOTRE-TOKEN-A-REMPLACER`. Attention : `--api-key` ne protège que les chemins `/v1`, `/v2` et `/inference` — `/tokenize`, `/metrics` ou `/invocations` restent accessibles sans clé[^8][^11]. En production, placez un reverse proxy authentifiant devant *tous* les chemins (voir [[06-mise-en-oeuvre/local-inference-security|Sécurité]]). Depuis vLLM 0.32.0 (18 octobre 2026), `--allowed-origins` vaut `[]` par défaut au lieu de `["*"]` (CVE-2026-115917). Une interface web qui appelle vLLM directement depuis le navigateur doit déclarer son origine (`--allowed-origins '["https://chat.interne.example"]'`). Les clients côté serveur (SDK, curl, LiteLLM) ne sont pas concernés[^15].
+Les clients doivent envoyer `Authorization: Bearer VOTRE-TOKEN-A-REMPLACER`. Attention : `--api-key` ne protège que les chemins `/v1`, `/v2`, `/inference` et `/cohere` — `/tokenize`, `/metrics` ou `/invocations` restent accessibles sans clé[^8][^11]. En production, placez un reverse proxy authentifiant devant *tous* les chemins (voir [[06-mise-en-oeuvre/local-inference-security|Sécurité]]). Depuis vLLM 0.32.0 (18 octobre 2026), `--allowed-origins` vaut `[]` par défaut au lieu de `["*"]` (CVE-2026-115917). Une interface web qui appelle vLLM directement depuis le navigateur doit déclarer son origine (`--allowed-origins '["https://chat.interne.example"]'`). Les clients côté serveur (SDK, curl, LiteLLM) ne sont pas concernés[^15].
 
 ### Limites et timeouts
 
@@ -353,7 +353,7 @@ curl http://localhost:8000/metrics | grep vllm
 [^8]: vLLM Project, *CLI Reference — `vllm serve`* (liste exhaustive des flags : absence de `--role`, `--request-timeout`, `--calculate-kv-cache-size` ; `--speculative-config`), consulté le 2026-10-09 · vLLM Project, *Release v0.29.0* (ajout de `--max-num-queued-reqs`), 2026-09-09. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/releases/tag/v0.29.0](https://github.com/vllm-project/vllm/releases/tag/v0.29.0)
 [^9]: vLLM Project, *Release v0.28.0* (roue PyPI et image Docker par défaut en CUDA 13.0, variantes `-cu129`), 2026-08-26 · *Release v0.33.0* (roues et images CUDA 13.0 uniquement, variantes `-cu129` retirées), 2026-11-02. [https://github.com/vllm-project/vllm/releases/tag/v0.28.0](https://github.com/vllm-project/vllm/releases/tag/v0.28.0) · [https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3](https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3)
 [^10]: vLLM Project, *GGUF* (plugin `vllm-gguf-plugin`, support « highly experimental and under-optimized », tokenizer du modèle de base), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/gguf/](https://docs.vllm.ai/en/stable/features/quantization/gguf/)
-[^11]: vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`--api-key` limité à `/v1`, `/v2`, `/inference` ; `/tokenize` non authentifié), 2026-10-06. [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
+[^11]: vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`--api-key` limité à `/v1`, `/v2`, `/inference`, `/cohere` selon la page *Security* de vLLM ; `/tokenize` non authentifié), 2026-10-06. [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
 [^12]: vLLM Project, *Release v0.24.0* (vLLM ne positionne plus `CUDA_VISIBLE_DEVICES` ; argument `device_ids` ; variable dépréciée sur ROCm), 2026-06-29. [https://github.com/vllm-project/vllm/releases/tag/v0.24.0](https://github.com/vllm-project/vllm/releases/tag/v0.24.0)
 [^13]: vLLM Project, *Release v0.31.0* (`quantization="fp8"` renommé `fp8_per_tensor`, ancien nom redirigé), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
 [^14]: vLLM Project, advisories *GHSA-rhcx-5729-88vg* (crash inter-tenants via `prompt_logprobs` et connecteur KV, corrigé 0.31.0 ; contournement : retirer `prompt_logprobs`, `logprobs` et `echo` au gateway) et *GHSA-vfp2-c8pq-v6h6* (SSRF via `X-Request-Id`, fuite du KV Cache par `P2pNcclConnector`, connecteur supprimé en 0.24.0), 2026-10-09. [https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg](https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-vfp2-c8pq-v6h6](https://github.com/vllm-project/vllm/security/advisories/GHSA-vfp2-c8pq-v6h6)

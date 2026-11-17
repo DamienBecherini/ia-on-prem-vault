@@ -9,7 +9,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-17"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -30,10 +30,10 @@ Le score d'attention entre deux tokens est le produit scalaire Q·K. Ces scores 
 
 **Lien avec le KV Cache** : pendant le [[00-lexique/prefill|Prefill]], les vecteurs K et V de chaque token sont calculés et sauvegardés dans le [[00-lexique/kv-cache|KV Cache]]. En [[00-lexique/decoding|Decoding]], le modèle les relira sans les recalculer.
 
-Le coût du calcul d'attention est quadratique O(n²) en longueur de contexte : doubler le prompt multiplie par 4 le coût du prefill.
+Le coût du calcul d'attention est quadratique O(n²) en longueur de contexte : doubler le prompt multiplie par 4 le coût de la partie attention du prefill (les couches denses, elles, ne coûtent que 2 fois plus).
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Le coût quadratique du Prefill explique pourquoi les prompts très longs (100K+ tokens) saturent la VRAM et font exploser le TTFT — et pourquoi des optimisations comme Flash Attention ou GQA existent.
+Le coût quadratique de l'attention au Prefill explique pourquoi les prompts très longs (100K+ tokens) font exploser le TTFT ; la saturation de la VRAM vient, elle, du [[00-lexique/kv-cache|KV Cache]], qui grandit linéairement avec le contexte — d'où Flash Attention (calcul sans matérialiser la matrice n²) et GQA (KV Cache plus petit).
 
 ## ⚠️ Pièges fréquents
 - La complexité O(n²) s'applique au prefill. En decoding, le KV Cache ramène le coût à O(n) par token généré.

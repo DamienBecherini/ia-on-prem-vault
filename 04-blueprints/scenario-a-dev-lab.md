@@ -3,7 +3,7 @@ title: "🛠️ Scénario A : Le Labo Dev (PC GPU ou mémoire unifiée)"
 description: Le blueprint pour s'initier à l'IA locale à moindre coût. PC RTX avec CPU offloading, ou laptop/station à mémoire unifiée pour un meilleur confort solo.
 sidebar:
   order: 1
-last_modified: "2026-11-08"
+last_modified: "2026-11-17"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -64,7 +64,7 @@ Plutôt que d'abandonner en affichant une erreur *Out Of Memory (OOM)*, le moteu
 Lors de la génération de la réponse ([[00-lexique/decoding|Decoding]]), les couches restées en RAM sont calculées par le processeur, au rythme de la RAM DDR5 ; seules les activations passent par le bus PCIe. 
 
 Comme expliqué dans le chapitre sur [[01-fondations/unified-memory-vs-ram-vs-vram|la VRAM vs RAM]], la RAM classique est physiquement bridée à environ 80-100 Go/s. Le résultat est immédiat : la vitesse de génération s'effondre.
-Sur une RTX 4090 couplée à 64 Go de DDR5, un modèle 70B Q4 en CPU Offloading génèrera **entre 4 et 12 tokens par seconde** selon la part de couches déchargées et la RAM : borne théorique de ~4–5 t/s si la moitié des poids transite par la DDR5 (~100 Go/s, voir [[01-fondations/memory-bandwidth|la bande passante mémoire]] — la borne de ~2,5 t/s suppose que tout le modèle passe par la RAM), 8–12 t/s rapportés par des retours communautaires non vérifiés ; le mécanisme (option `-ngl`, couches GPU vs CPU) est documenté par llama.cpp et Ollama[^1][^2]. C'est lisible (légèrement inférieur à la vitesse de lecture humaine), mais inadapté pour servir une application réactive ou plusieurs utilisateurs simultanés.
+Sur une RTX 4090 couplée à 64 Go de DDR5, un modèle 70B Q4 en CPU Offloading génèrera **au plus 4 à 5 tokens par seconde** selon la part de couches déchargées et la RAM : borne théorique de ~4–5 t/s si la moitié des poids transite par la DDR5 (~100 Go/s, voir [[01-fondations/memory-bandwidth|la bande passante mémoire]] — la borne de ~2,5 t/s suppose que tout le modèle passe par la RAM), le débit mesuré restant inférieur ; le mécanisme (option `-ngl`, couches GPU vs CPU) est documenté par llama.cpp et Ollama[^1][^2]. C'est lisible (légèrement inférieur à la vitesse de lecture humaine), mais inadapté pour servir une application réactive ou plusieurs utilisateurs simultanés.
 
 ### Pourquoi l'option mémoire unifiée change l'expérience
 

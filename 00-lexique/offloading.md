@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - stack
-last_modified: "2026-11-09"
+last_modified: "2026-11-17"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -35,7 +35,7 @@ $$\text{tokens/s} \approx \frac{1}{\frac{P_{VRAM}}{D_{VRAM}} + \frac{P_{RAM}}{D_
 
 ## 💡 Pourquoi c'est important en IA on-premise
 
-L'offloading est le cœur du **Scénario A (Labo Dev)** : une machine à moins de 3 500 € avec 16–24 Go de VRAM peut faire tourner un modèle 70B en Q4 (~40 Go) en offloadant les couches excédentaires en DDR5. Le débit sera d'environ 4–5 tokens/s en borne théorique (8–12 rapportés par la communauté, voir [[04-blueprints/scenario-a-dev-lab|Scénario A]]) plutôt que 15–40 tokens/s, mais c'est suffisant pour développer et tester.
+L'offloading est le cœur du **Scénario A (Labo Dev)** : une machine à moins de 3 500 € avec 16–24 Go de VRAM peut faire tourner un modèle 70B en Q4 (~40 Go) en offloadant les couches excédentaires en DDR5. Le débit plafonnera à environ 4–5 tokens/s (borne théorique ; le débit mesuré est inférieur, voir [[04-blueprints/scenario-a-dev-lab|Scénario A]]) plutôt que 15–40 tokens/s, mais c'est suffisant pour développer et tester.
 
 ## ⚠️ Pièges fréquents
 
