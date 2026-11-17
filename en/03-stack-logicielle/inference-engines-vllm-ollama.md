@@ -127,7 +127,7 @@ For an on-premise agent project deployed at customer sites, engine choice depend
 1.  **"Local Copilot" use case (one user, desktop):**
     Choose **Ollama / llama.cpp**. Native support for `GGUF` models in [[00-lexique/quantification-q4|Q4]] on Mac or a small Windows PC delivers excellent responsiveness without server infrastructure.
 2.  **"SMB Appliance" use case (10–50 users, GPU server):**
-    **Switch to vLLM without hesitation.** PagedAttention and continuous batching ensure the AI will not collapse when five collaborators launch RAG requests at the same time. Use weights in **AWQ or FP8** precision.
+    If the appliance is a rack server with NVIDIA GPUs (rack variant of [[04-blueprints/scenario-b-sme-appliance|Scenario B]]), **switch to vLLM without hesitation**; on a Mac Studio or AMD APU appliance, stay on MLX, llama.cpp or SGLang (ROCm), since vLLM is not designed for these chips. PagedAttention and continuous batching ensure the AI will not collapse when five collaborators launch RAG requests at the same time. Use weights in **AWQ or FP8** precision.
 3.  **"Sovereign Datacenter" use case (high volume, multi-node):**
     Use **TensorRT-LLM** via `trtllm-serve` (OpenAI-compatible API) or, if you already run Triton, via its TensorRT-LLM backend[^17]. This is the most efficient way to amortize the cost of professional accelerators.
 4.  **"Agents and backend integration" use case (tool calling, structured JSON):**
