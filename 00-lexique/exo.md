@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-11-08"
+last_modified: "2026-11-17"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -24,7 +24,7 @@ Exo (développé par *Exo Labs*) utilise la découverte automatique sur le rése
 Les Mac sont reliés de préférence par des câbles [[00-lexique/thunderbolt|Thunderbolt 5]] (RDMA sous macOS 26.2+), seule liaison de bureau assez rapide pour compenser la latence inter-machines.
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Permet de dépasser la limite d'une seule machine sans investissement datacenter. Un cluster de 4 à 8 Mac Mini peut accueillir des modèles de 200 à 600B+ inaccessibles sur une machine unique.
+Permet de dépasser la limite d'une seule machine sans investissement datacenter. Un cluster de 2 à 4 Mac reliés en RDMA Thunderbolt 5 (maillage complet), ou davantage de Mac Mini en pipeline sur IP, comme les 8 Mac Mini du test Exo de 2024, peut accueillir des modèles de 200 à 600B+ inaccessibles sur une machine unique.
 
 ## ⚠️ Pièges fréquents
 - Un réseau Wi-Fi ou Ethernet 1 Gbps détruit les performances : le réseau devient le goulot.

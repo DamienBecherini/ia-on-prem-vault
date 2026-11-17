@@ -7,7 +7,7 @@ prices_valid_as_of: "2026-10"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
-last_modified: "2026-11-08"
+last_modified: "2026-11-17"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
@@ -68,10 +68,10 @@ Pour rendre la comparaison concrète, utilisons un cas typique de PME :
 
 | Poste | Montant |
 | :-- | :-- |
-| Matériel (PC RTX 3090/4090 d'occasion, ou Mac Studio M5 Max 64 Go à 3 659 € TTC, ou Framework Desktop 64 Go à 2 209 € TTC — prix France relevés le 2026-10-09)[^7][^8] | 2 200 – 3 700 € (amorti 4 ans) |
-| Amortissement mensuel | ~45 – 75 €/mois |
+| Matériel (PC RTX 3090/4090 d'occasion, ou Mac Studio M5 Max 64 Go à 3 659 € TTC, ou Framework Desktop 64 Go à 2 209 € TTC — prix France relevés le 2026-10-09)[^7][^8] | 1 500 – 3 700 € (amorti 4 ans) |
+| Amortissement mensuel | ~30 – 75 €/mois |
 | Électricité (150 W × 8 h/j × 30 j × 0,20 €/kWh, tarif réglementé août 2026)[^12] | ~7 €/mois |
-| **Coût mensuel total** | **~55 – 85 €/mois** |
+| **Coût mensuel total** | **~40 – 85 €/mois** |
 
 **Équivalent cloud (5 M tokens d'entrée + 2,5 M de sortie par mois, tarifs d'octobre 2026) :**
 - Haiku 5.5 ou GPT-6 Luna (0,10 / 0,50 $) : 0,5 + 1,25 = **~1,75 $/mois (~2 €)**
@@ -80,7 +80,7 @@ Pour rendre la comparaison concrète, utilisons un cas typique de PME :
 - Claude Fable 5.1 (10 / 50 $) : 50 + 125 = **175 $/mois (~161 €)**
 
 > [!note] Point de rentabilité A
-> À faible volume (< 5 M tokens/mois), le cloud est souvent moins cher qu'un poste de travail dédié — sauf face aux modèles frontière les plus chers (Fable 5.1 : ~161 €/mois contre 55 à 85 € on-premise) ou si la **souveraineté des données** est non négociable. L'on-premise se justifie dès le premier token si vos données ne peuvent pas sortir de vos locaux.
+> À faible volume (< 5 M tokens/mois), le cloud est souvent moins cher qu'un poste de travail dédié — sauf face aux modèles frontière les plus chers (Fable 5.1 : ~161 €/mois contre 40 à 85 € on-premise) ou si la **souveraineté des données** est non négociable. L'on-premise se justifie dès le premier token si vos données ne peuvent pas sortir de vos locaux.
 
 ---
 
@@ -156,7 +156,7 @@ Les modèles open-weights de cette classe (DeepSeek V4, GLM-5.3, Kimi K3) sont d
 
 | Poste | Montant |
 | :-- | :-- |
-| Nœud 8 GPU (HGX H200 ; serveur 8× RTX PRO 6000 : 266 k$ prix public OEM ; nœud B300 : sur devis, ≈ 400 k$)[^13] | ~300 000 – 450 000 €, 400 000 € retenu (amorti 5 ans) |
+| Nœud 8 GPU NVLink (HGX H200 ou nœud B300 : sur devis, ≈ 300–420 k$ ; un serveur 8× RTX PRO 6000, 266 k$ prix public OEM, coûte moins cher mais relie ses GPU en PCIe, sans NVLink)[^13] | ~300 000 – 450 000 €, 400 000 € retenu (amorti 5 ans) |
 | Infrastructure (réseau, refroidissement) + électricité (~10 kW × 8 760 h × 0,15–0,20 €/kWh ≈ 13 000 – 17 500 €/an)[^12] | ~30 000 – 40 000 €/an, 35 000 € retenu |
 | Amortissement mensuel matériel | ~6 700 €/mois |
 | Infrastructure + ops | ~2 900 €/mois |
@@ -196,7 +196,7 @@ Modèles 100B+                  Quelconque                → Blueprint C (proto
 
 | Blueprint | Coût/mois | Total 3 ans | Équivalent API cloud 3 ans (tarifs d'octobre 2026, 1 $ ≈ 0,92 €) |
 | :-- | :-- | :-- | :-- |
-| A (labo dev, 5 M in + 2,5 M out/mois) | ~55 – 85 € | ~2 000 – 3 100 € | ~60 € (Haiku 5.5) / ~1 160 € (Sonnet 5.5, GPT-6 Sol) / ~3 300 € (GPT-5.5) / ~5 800 € (Fable 5.1) |
+| A (labo dev, 5 M in + 2,5 M out/mois) | ~40 – 85 € | ~1 400 – 3 100 € | ~60 € (Haiku 5.5) / ~1 160 € (Sonnet 5.5, GPT-6 Sol) / ~3 300 € (GPT-5.5) / ~5 800 € (Fable 5.1) |
 | B (PME, 34 M tok/mois) | ~155 € | ~5 580 € | ~260 € (Haiku 5.5) / ~670 € (DeepSeek V4.1 Flash) / ~1 160 € (Together AI Llama 3.3 70B) / ~5 200 € (Sonnet 5.5) / ~10 400 € (Opus 5.5) / ~14 900 € (GPT-5.5) / ~26 100 € (Fable 5.1) |
 | C (cluster, 34 M tok/mois, modèles 100B+) | ~285 – 400 € | ~10 300 – 14 400 € | ~670 € (DeepSeek V4.1 Flash) / ~2 460 € (DeepSeek V4 Pro, Together AI) / ~270 000 € (4× A100 on-demand 24 h/24) |
 | D (datacenter, 500 M tok/mois) | ~13 600 € | ~489 600 € | ~77 000 € (Sonnet 5.5) / ~221 000 € (GPT-5.5) / ~386 000 € (Fable 5.1) / ~540 000 € (8× A100 on-demand) / ~770 000 € (8× H100 on-demand) / ~1,07 M€ (8× H100 au tarif réservé 1-Click Lambda, 5,54 $/GPU-h) |
@@ -218,7 +218,7 @@ Avant d'investir dans plus de GPU, deux optimisations logicielles peuvent divise
 
 **1. Pré-filtrage RAG :** en limitant le contexte envoyé au LLM aux K meilleurs résultats (Top-3 au lieu de Top-20), on réduit les tokens d'entrée d'un facteur 5 à 10 sans dégradation de qualité perceptible. Sur un API cloud facturant à l'input token, l'économie est directe. Sur un modèle local, c'est autant de VRAM et de temps de calcul libérés. Voir [[03-stack-logicielle/rag-and-agents|RAG & Agents — section FinOps]].
 
-**2. Routage CPU/GPU :** décharger les embeddings et la transcription vocale (Whisper) sur CPU libère la totalité de la VRAM GPU pour la génération. Sur un serveur 2× L40S, ce routage peut multiplier par 2 à 3 le nombre d'utilisateurs simultanés servis sans changer la moindre ligne matérielle.
+**2. Routage CPU/GPU :** décharger les embeddings et la transcription vocale (Whisper) sur CPU libère la totalité de la VRAM GPU pour la génération. Sur un serveur 2× L40S, ce routage libère quelques Go de VRAM pour le KV Cache, donc quelques utilisateurs simultanés de plus, sans changer de matériel : le gain réel dépend de la charge et se mesure.
 
 Ces deux leviers s'appliquent à tous les blueprints, mais leur impact est le plus fort sur les Blueprints B et D où la concurrence multi-utilisateurs est dimensionnante.
 

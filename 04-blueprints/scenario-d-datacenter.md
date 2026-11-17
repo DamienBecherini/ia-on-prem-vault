@@ -3,7 +3,7 @@ title: "🏭 Scénario D : Datacenter (RoCE & Multi-GPU)"
 description: Le blueprint de l'Enterprise IA. Nœuds HGX 8-GPU, réseau RoCE/InfiniBand et Tensor Parallelism pour une production à très haute concurrence.
 sidebar:
   order: 4
-last_modified: "2026-11-09"
+last_modified: "2026-11-17"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -24,7 +24,7 @@ Ici, l'unité de base n'est plus la carte graphique, mais le **Nœud Serveur** (
 *   **Le Réseau (Scale-Out) :** Pour relier plusieurs nœuds entre eux, on utilise des cartes réseau à très haut débit (400 Gbps ou 800 Gbps) compatibles **[[00-lexique/rdma|RDMA]]**. Le standard est **InfiniBand** ou **[[00-lexique/roce|RoCEv2]]** (RDMA over Converged Ethernet)[^2].
 *   **Le Stockage :** Un stockage flash NVMe distribué accessible en *GPUDirect Storage*, pour charger les To de poids du modèle en quelques secondes au démarrage.
 
-**Budget estimé (T4 2026) :** de 250 000 € (serveur 8× RTX PRO 6000, prix public OEM 266 k$) à plus d'1 million d'euros par nœud (GB300 sur devis)[^6], hors coûts d'infrastructure réseau, d'énergie et de refroidissement.
+**Budget estimé (T4 2026) :** d'environ 280 000 € (nœud HGX H200, 300–420 k$ selon des estimations tierces, sur devis) à plus d'1 million d'euros par nœud (GB300 sur devis)[^6], hors coûts d'infrastructure réseau, d'énergie et de refroidissement. Un serveur 8× RTX PRO 6000 (prix public OEM 266 k$, ~250 000 €) coûte moins cher, mais ses GPU communiquent en PCIe, sans NVLink ni NVSwitch : c'est une variante PCIe qui ne bénéficie pas du Tensor Parallelism NVLink décrit ci-dessous.
 
 ---
 
