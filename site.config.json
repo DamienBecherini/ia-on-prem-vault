@@ -38,7 +38,20 @@
     "notFoundPage": "/404.html",
     "notFoundPages": { "/en/": "/en/404/" },
     "hsts": true,
-    "directoryListing": false
+    "directoryListing": false,
+    "mergeSlashes": true,
+    "redirects": {
+      "/02-materiel/index/": "/02-materiel/",
+      "/05-agents-et-assistants-on-prem/index/": "/05-agents-et-assistants-on-prem/",
+      "/05-agents-et-assistants-on-prem/agents-custodiens/index/": "/05-agents-et-assistants-on-prem/agents-custodiens/",
+      "/05-agents-et-assistants-on-prem/assistants-personnels/index/": "/05-agents-et-assistants-on-prem/assistants-personnels/",
+      "/06-mise-en-oeuvre/index/": "/06-mise-en-oeuvre/",
+      "/en/02-materiel/index/": "/en/02-materiel/",
+      "/en/06-mise-en-oeuvre/index/": "/en/06-mise-en-oeuvre/"
+    }
+  },
+  "seo": {
+    "noindex": ["00-lexique/**", "!00-lexique/ai-glossary", "!00-lexique/lexicon-index"]
   },
   "publish": {
     "exclude": [
