@@ -16,6 +16,26 @@
 
 </div>
 
+[![A page of the published guide: Mermaid diagrams, navigation, table of contents and incoming links](docs/images/site-unified-memory.png)](https://ia-on-prem.damien.becherini.fr/en/01-fondations/unified-memory-vs-ram-vs-vram/)
+
+## What this repository shows
+
+- **Content:** 129 French notes, each with its English mirror under `en/`, and 26 Mermaid diagrams per language,
+  published as a static site by [`starlight-obsidian-engine`](https://github.com/DamienBecherini/starlight-obsidian-engine).
+- **Checks on every pull request**, both required on a protected `main`: `npm test` runs six audits (front matter,
+  Mermaid syntax, agent-only notes left in public pages, wiki links in tables, security version floors, French and
+  English kept in step), and a build with the engine checks every internal link and that the generated lexicon
+  indexes are up to date.
+- **Scheduled upkeep:** every Monday, the pages due for review and the dated claims past their recheck date; every
+  other Monday, the releases, advisories and models of the ecosystem collected into a watch issue, with an urgent
+  issue in between when a High or Critical advisory is not covered. A merge to `main` deploys the site.
+- **An agent with a human in the loop:** the watch issues and the reported errors are processed by
+  [vault-watch-agent](https://github.com/DamienBecherini/vault-watch-agent), which proposes sourced corrections and
+  opens a pull request only after the author has reviewed them. Twelve of its pull requests have been merged since
+  November 2026, for example [#78](https://github.com/DamienBecherini/ia-on-prem-vault/pull/78) (a watch) and
+  [#79](https://github.com/DamienBecherini/ia-on-prem-vault/pull/79) (30 corrections from a verification of the whole
+  guide).
+
 ---
 
 This repository is the **Obsidian vault** (content) of *Zero to Hero: On-Premise AI* — a **digital garden**
