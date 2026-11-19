@@ -1,5 +1,5 @@
 {
-  "$comment": "Minimum versions the vault recommends (callout 'Planchers de version' in 06-mise-en-oeuvre/local-inference-security.md, or the tool's own page when the callout does not list it, such as Jan). Keyed by the advisory feed id of feeds.json. When the vault gives one minimum per release line, use the lowest. scripts/watch-feeds.mjs marks an advisory as covered when the floor is outside its vulnerable range or already fixed on its own line, so it never reaches the agent. Update this file in the same PR as the page.",
+  "$comment": "Minimum versions the vault recommends (callout 'Planchers de version' in 06-mise-en-oeuvre/local-inference-security.md, or the tool's own page when the callout does not list it, such as Jan). Keyed by the advisory feed id of feeds.json. When the vault gives one minimum per release line, use the lowest. The collector (vault-watch-agent) marks an advisory as covered when the floor is outside its vulnerable range or already fixed on its own line, so it never reaches the agent. Update this file in the same PR as the page.",
   "updated": "2026-11-17",
   "floors": {
     "adv-vllm": "0.33.0",

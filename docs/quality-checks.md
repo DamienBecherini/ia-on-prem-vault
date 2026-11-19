@@ -269,11 +269,11 @@ Final score = deterministic (/40) + judged (/60); alert below **60/100** on the 
 
 ---
 
-### `watch:feeds`
+### The weekly watch (`vault-watch collect`)
 
-**Scope:** the sources of `.agents/vault-maintenance/feeds.json` — GitHub releases, tags and security advisories of the tools the vault covers, Hugging Face model listings of the main open-weight publishers, vendor and regulator RSS feeds, and the Vision IA YouTube channel as tier C signal.
+**Scope:** the sources of `.agents/vault-maintenance/feeds.json` — GitHub releases, tags and security advisories of the tools the vault covers, Hugging Face model listings of the main open-weight publishers, vendor and regulator RSS feeds, watched pages (price lists), and the Vision IA YouTube channel as tier C signal.
 
-Lists every item published in the last N days (default 8, `--days`, `--since`, `--only=<domains>`, `--json`). Stateless and deterministic: no LLM. `GITHUB_TOKEN` / `GH_TOKEN` is needed for advisories.
+The collector is [vault-watch-agent](https://github.com/DamienBecherini/vault-watch-agent)'s (`pipx install git+https://github.com/DamienBecherini/vault-watch-agent@v1.1.0`; until November 2026 the vault had its own, `scripts/watch-feeds.mjs`, which gave the same list). It lists every item published in the last N days (default 8, `--days`, `--since`, `--only <domains>`, `--json`). Deterministic: no LLM. `GITHUB_TOKEN` / `GH_TOKEN` is needed for advisories (the token of `gh` is used when it is signed in). The format of the sources and of the watch: `docs/collect.md` and `docs/watch-format.md` of the agent.
 
 **Pre-triage** (rules only, `--no-triage` to disable) marks each item `keep` or `drop` with a reason, so the agent reads about 30 items instead of 140:
 
@@ -283,6 +283,7 @@ Lists every item published in the last N days (default 8, `--days`, `--since`, `
 | Advisories | low severity; advisories whose vulnerable range excludes, or whose lowest patched version is at or below, the floor in `.agents/vault-maintenance/version-floors.json`; backported advisories (one entry per release line) already fixed at the floor on its own line |
 | Hugging Face | quant-suffixed repos (GGUF, AWQ, FP8, MLX…), third-party quantizations, adapters; third-party fine-tunes and merges in discovery |
 | Seen | any URL already listed in `watch-seen.md` |
+| Watched pages | nothing: a page that no longer says what it said is always kept, with what is gone and what is new |
 | Keywords | `keywords` match at the start of a word (`IA` no longer matches `Debian`); `exclude` is a regex on the title |
 
 Kept items split into **core** (need a primary-source check) and **leads** (discovery and tier C signals, skimmed only). High / Critical advisories not covered by a floor are flagged `urgent`. The JSON caches release notes and advisory texts (`notes`, 4 000 characters max) for kept items, so the agent does not refetch them.
@@ -340,3 +341,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | 2026-11-09 | `watch:feeds` recognises backported fixes (one entry per release line) when checking a version floor; floors aligned with the vault for LiteLLM and Jan |
 | 2026-11-09 | `audit:version-floors` in `npm test`: `version-floors.json` must match the minimums stated in the guide |
 | 2026-11-10 | `link-audit` job fails when the committed lexicon indexes (FR, EN) are out of date |
+| 2026-11-19 | The weekly watch is collected by vault-watch-agent (`vault-watch collect`, its reusable workflow): `scripts/watch-feeds.mjs` and `watch:feeds` retired after both gave the same watch on the 84 sources; first watched page (Lambda GPU prices) |

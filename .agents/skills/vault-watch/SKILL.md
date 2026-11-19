@@ -1,6 +1,6 @@
 ---
 name: vault-watch
-description: Normally run vault-watch-agent for a `veille` GitHub issue (`vault-watch run --issue N`, after asking the user, since a run costs: API billing or Claude subscription usage). This skill is the manual procedure, only when the user asks for it or the agent is unavailable. Biweekly incremental refresh of the IA on-premise vault, corrections and additions. Turns the "Veille" GitHub issue (pre-triaged by `npm run watch:feeds`; an `urgent` issue in between for uncovered High / Critical advisories) into verified, dated events, maps them to vault pages and watchlist claims, re-checks the claims whose "Recheck by" date has passed, proposes focused edits and additions (paragraphs, lexicon entries, opportunity notes for new pages), and opens a PR only on request. Use when a `veille` issue is open ("traite la veille #N"), or when the user asks what changed recently. The full top-down run stays `vault-refresh-outdated-content`.
+description: Normally run vault-watch-agent for a `veille` GitHub issue (`vault-watch run --issue N`, after asking the user, since a run costs: API billing or Claude subscription usage). This skill is the manual procedure, only when the user asks for it or the agent is unavailable. Biweekly incremental refresh of the IA on-premise vault, corrections and additions. Turns the "Veille" GitHub issue (pre-triaged by `vault-watch collect`; an `urgent` issue in between for uncovered High / Critical advisories) into verified, dated events, maps them to vault pages and watchlist claims, re-checks the claims whose "Recheck by" date has passed, proposes focused edits and additions (paragraphs, lexicon entries, opportunity notes for new pages), and opens a PR only on request. Use when a `veille` issue is open ("traite la veille #N"), or when the user asks what changed recently. The full top-down run stays `vault-refresh-outdated-content`.
 paths:
   - "**/*.md"
   - "**/*.mdx"
@@ -35,7 +35,7 @@ The session ends at the report (read-only) or at the PR (after the go-ahead). Af
 
 | Input | Produced by |
 | :-- | :-- |
-| GitHub issue labelled `veille` ("Veille — YYYY-MM-DD"), every other Monday over 15 days; `veille` + `urgent` in between when a High / Critical advisory is not covered by a vault floor | `.github/workflows/watch.yml`, from `scripts/watch-feeds.mjs` (with its deterministic pre-triage), `.agents/vault-maintenance/feeds.json` and `version-floors.json` |
+| GitHub issue labelled `veille` ("Veille — YYYY-MM-DD"), every other Monday over 15 days; `veille` + `urgent` in between when a High / Critical advisory is not covered by a vault floor | `.github/workflows/watch.yml`, from vault-watch-agent's `vault-watch collect` (with its deterministic pre-triage), `.agents/vault-maintenance/feeds.json` and `version-floors.json` |
 | `watch.json` in the run artifact `weekly-watch`: kept items with cached `notes` (release notes, advisory text) | same run; `gh run download <run-id> -n weekly-watch -D <tmp>` |
 | Freshness job summary (pages due, sources dead) | `.github/workflows/freshness.yml`, Mondays 06:00 UTC |
 | Claims with a past **Recheck by** date | `npm run audit:freshness` → section "Claims due for re-check" |
@@ -44,7 +44,7 @@ The session ends at the report (read-only) or at the PR (after the go-ahead). Af
 Locally, the same list is produced with:
 
 ```bash
-GITHUB_TOKEN=$(gh auth token) npm run watch:feeds -- --json=.agents/vault-maintenance/reports/watch-<DATE>.json > .agents/vault-maintenance/reports/watch-<DATE>.md
+vault-watch collect --json .agents/vault-maintenance/reports/watch-<DATE>.json --markdown .agents/vault-maintenance/reports/watch-<DATE>.md
 ```
 
 ## Steps
@@ -118,4 +118,4 @@ One Sonnet agent does the whole apply step from the report: branch `chore/watch-
 
 ## Feeds
 
-Sources live in `.agents/vault-maintenance/feeds.json` (types: `github-releases`, `github-tags`, `github-advisories`, `huggingface-author`, `rss`, `youtube`; optional `keywords` filter, `exclude` regex, `minLevel` (`major` for projects that ship a minor every week) and `collapse` for build-per-commit repositories). Pre-triage rules are documented in `docs/quality-checks.md` → `watch:feeds`. If the issue keeps carrying noise of one kind, add a rule or a filter there rather than triaging it by hand every time. Add a source when a tool or vendor enters the vault; remove it when it leaves. Check a new source locally with `npm run watch:feeds -- --only=<domain>`.
+Sources live in `.agents/vault-maintenance/feeds.json` (types: `github-releases`, `github-tags`, `github-advisories`, `huggingface-author`, `rss`, `youtube`, `page` for a watched page; optional `keywords` filter, `exclude` regex, `minLevel` (`major` for projects that ship a minor every week) and `collapse` for build-per-commit repositories). Pre-triage rules are documented in `docs/quality-checks.md` → « The weekly watch ». If the issue keeps carrying noise of one kind, add a rule or a filter there rather than triaging it by hand every time. Add a source when a tool or vendor enters the vault; remove it when it leaves. Check a new source locally with `vault-watch collect --only <domain>`.
