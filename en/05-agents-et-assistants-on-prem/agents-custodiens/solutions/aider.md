@@ -3,7 +3,7 @@ title: "Aider"
 description: Terminal-first, open-source, model-agnostic code agent capable of working directly with Ollama.
 sidebar:
   order: 2
-last_modified: "2026-11-08"
+last_modified: "2026-11-19"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -36,7 +36,7 @@ For a Markdown vault, it can reread pages, apply fixes, create commits on a bran
 - Quality depends heavily on the local model: sovereign does not mean competent.
 - Weak local models can break edit format, miss precise replacements, or loop on a fix.
 - A 7B/8B generalist is acceptable for simple suggestions but too fragile for a custodian agent that actually modifies files.
-- For serious local work, aim at least at a **coder** 14B class model for small controlled fixes, and preferably 32B or more for multi-file audits, refactoring, or reliable complex Markdown editing.
+- For serious local work, aim at least at a **coder** 14B class model for small controlled fixes, and preferably 24–32B or more (Devstral Small 2 24B, Qwen3-Coder-30B-A3B) for multi-file audits, refactoring, or reliable complex Markdown editing.
 - Ollama silently truncates beyond its window (4,096 tokens by default on the server side as of Q4 2026); Aider sets `num_ctx` itself, but the docs recommend running `OLLAMA_CONTEXT_LENGTH=8192 ollama serve` or setting `num_ctx` in `.aider.model.settings.yml`[^2].
 - If a cloud provider is used, code goes to that provider.
 - Commands and allowed files must be controlled carefully.
@@ -54,7 +54,7 @@ For a Markdown vault, it can reread pages, apply fixes, create commits on a bran
 
 Aider remains the simplest candidate for a first sovereign trial, provided you accept a tool frozen since May 2026; for a durable target, prefer a maintained, model-agnostic agent such as [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] (CLI or Agent Canvas, MIT) connected to Ollama/vLLM[^6]:
 
-- `aider --model ollama_chat/<recent coder model>`: for example a Qwen3.6-35B-A3B (MoE, ~24 GB of VRAM quantized, recommended by OpenHands for agentic use as of Q2 2026) or a dense 14B for controlled trials, 32B+ for regular maintenance; since Aider no longer knows the models released after May 2026, ignore its "model warnings" after manually checking the context window[^2][^6];
+- `aider --model ollama_chat/<recent coder model>`: for example a Qwen3.6-35B-A3B (MoE, ~24 GB of VRAM quantized, recommended by OpenHands for agentic use as of Q2 2026) or a dense 14B (Qwen2.5-Coder-14B, from 2024) for controlled trials, 24B+ (Devstral Small 2, Qwen3-Coder-30B-A3B) for regular maintenance; since Aider no longer knows the models released after May 2026, ignore its "model warnings" after manually checking the context window[^2][^6];
 - dedicated branch;
 - vault plan/rules in context;
 - final Markdown report.

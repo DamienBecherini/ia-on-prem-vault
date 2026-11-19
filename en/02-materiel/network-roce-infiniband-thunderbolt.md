@@ -2,8 +2,8 @@
 title: "🌐 AI Networking: RoCE, InfiniBand, and Thunderbolt"
 description: "When the network becomes the bottleneck of an on-premise AI architecture, and why RoCE, InfiniBand and Thunderbolt address different problems."
 sidebar:
-  order: 3
-last_modified: "2026-10-10"
+  order: 4
+last_modified: "2026-11-19"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
