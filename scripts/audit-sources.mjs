@@ -208,21 +208,24 @@ for (const abs of walkMd(VAULT_ROOT, { locale: LOCALE })) {
 
 const UA =
   "Mozilla/5.0 (compatible; ia-on-prem-vault-source-audit/1.0; +https://ia-on-prem.damien.becherini.fr)";
+// For the second try only: some sites (amd.com) leave a request that names itself a script without an answer.
+const BROWSER_UA =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
 
 /**
  * @param {string} url
  * @returns {Promise<{ status: string, code: number | null, finalUrl: string | null, error: string | null }>}
  */
-async function probe(url) {
+async function probe(url, timeoutMs = TIMEOUT_MS, userAgent = UA) {
   const attempt = async (method) => {
     const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     try {
       const res = await fetch(url, {
         method,
         redirect: "follow",
         signal: ctrl.signal,
-        headers: { "user-agent": UA, accept: "text/html,application/xhtml+xml,*/*;q=0.8" },
+        headers: { "user-agent": userAgent, accept: "text/html,application/xhtml+xml,*/*;q=0.8" },
       });
       // Drain small bodies so sockets are released; ignore errors.
       if (method === "GET") {
@@ -249,7 +252,8 @@ async function probe(url) {
     return { status: r.error === "timeout" ? "timeout" : "network-error", code: null, finalUrl: null, error: r.error };
   }
   const redirected = r.finalUrl && normalize(r.finalUrl) !== normalize(url);
-  if (r.code >= 200 && r.code < 300) {
+  // 304 Not Modified: the page is there (seen on support.apple.com, which answers it to a request without a cache).
+  if ((r.code >= 200 && r.code < 300) || r.code === 304) {
     return { status: redirected ? "redirected" : "ok", code: r.code, finalUrl: redirected ? r.finalUrl : null, error: null };
   }
   if (r.code === 401 || r.code === 403 || r.code === 429) {
@@ -287,6 +291,16 @@ async function probeAll(entries) {
     }
   };
   await Promise.all(Array.from({ length: Math.min(CONCURRENCY, entries.length) }, worker));
+  // Second try, one at a time, with three times the delay and as a browser, for what did not answer: a site that
+  // leaves scripts without an answer (amd.com) times out in the first pass and answers here. A link is reported
+  // only if it fails both tries.
+  const again = entries.filter((e) => ["timeout", "network-error", "server-error"].includes(results.get(e.url).status));
+  if (again.length) process.stderr.write(`  second try for ${again.length} URL(s) that did not answer
+`);
+  for (const e of again) {
+    const second = await probe(e.url, TIMEOUT_MS * 3, BROWSER_UA);
+    if (!["timeout", "network-error", "server-error"].includes(second.status)) results.set(e.url, second);
+  }
   return results;
 }
 
