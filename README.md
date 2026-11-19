@@ -80,7 +80,7 @@ The ecosystem moves weekly, so the vault is maintained by deterministic scripts 
 ```bash
 npm run audit:freshness:due                          # pages due + watchlist claims past "Recheck by"
 npm run audit:sources                                # cited URLs (network)
-GITHUB_TOKEN=$(gh auth token) npm run watch:feeds    # what changed recently
+vault-watch collect --days 8                          # what changed recently (vault-watch-agent, no model)
 node scripts/backfill-verified.mjs --write --paths=<fr.md,en/fr.md>   # stamp audited pages only
 ```
 
