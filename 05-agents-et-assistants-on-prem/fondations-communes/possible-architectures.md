@@ -5,7 +5,7 @@ description: >
   Tableau comparatif, exigences matérielles et relation entre les deux pistes.
 sidebar:
   order: 3
-last_modified: "2026-11-17"
+last_modified: "2026-11-19"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -75,7 +75,7 @@ La plupart de ces outils exposent leurs actions via le **Model Context Protocol 
 | **Déclencheur** | Humain | Cron / webhook | Humain ou automatique |
 | **Autonomie d'action** | Basse (réponses) | Haute (tâches) | Variable |
 | **Mémoire requise** | Longue, personnelle | Courte, contexte de tâche | Les deux |
-| **Modèle LLM** | Gros (qualité réponse) | Petit OK (routage) + coder 14B+ (édition de fichiers) | Les deux |
+| **Modèle LLM** | Gros (qualité réponse) | Petit OK (routage) + coder 14B+ (édition de fichiers : Qwen2.5-Coder-14B, Devstral Small 2 24B, Qwen3-Coder-30B-A3B)[^7] | Les deux |
 | **VRAM minimale** | 8–24 Go (modèle 7–14B) | 12–16 Go (modèle coder 14B minimum dès que l'agent modifie des fichiers ; un 7B ne suffit que pour le routage) | 24+ Go |
 | **Complexité d'installation** | Faible à moyenne | Moyenne à haute | Haute |
 | **Risque de side effects** | Faible | Moyen (si mauvais guardrails) | Élevé sans guardrails |
@@ -124,7 +124,7 @@ Les deux pistes partagent le même moteur d'inférence, mais n'ont pas les même
 | Piste | Modèle LLM type | VRAM minimale | Commentaire |
 | :-- | :-- | :-- | :-- |
 | Assistant Personnel (qualité dialogue) | 14B–70B | 16–48 Go | La qualité des réponses compte — éviter les < 7B |
-| Agent Custodien (routage + édition) | 7B pour le seul routage, modèle coder 14B minimum pour éditer des fichiers, 32B+ recommandé | 12–24 Go | Le routage n'a pas besoin d'un gros modèle ; l'édition de fichiers, si |
+| Agent Custodien (routage + édition) | 7B pour le seul routage, modèle coder 14B minimum pour éditer des fichiers (Qwen2.5-Coder-14B, de 2024), 24–32B recommandé (Devstral Small 2 24B, Qwen3-Coder-30B-A3B ou Qwen2.5-Coder-32B)[^7] | 12–24 Go | Le routage n'a pas besoin d'un gros modèle ; l'édition de fichiers, si |
 | Hybride | 14B–70B | 24–48 Go | Compromis entre les deux |
 
 Pour le sizing détaillé, voir les [[04-blueprints/scenario-a-dev-lab|Blueprints A–D]].
@@ -173,3 +173,4 @@ Ce guide couvre la théorie des architectures. Pour passer à la pratique, voici
 [^4]: Open WebUI, *Release v0.11.0* (sous-agents, synchronisation des groupes LDAP), 2026-07-27. [https://github.com/open-webui/open-webui/releases/tag/v0.11.0](https://github.com/open-webui/open-webui/releases/tag/v0.11.0)
 [^5]: Khoj, *Self-Host* (installation Docker / pip), lu le 2026-10-10 ; khoj-ai, *khoj* — Releases (dernière version 2.0.0-beta.28 du 2026-03-26). [https://docs.khoj.dev/get-started/setup](https://docs.khoj.dev/get-started/setup) · [https://github.com/khoj-ai/khoj/releases](https://github.com/khoj-ai/khoj/releases)
 [^6]: Hugging Face, *smolagents* — Releases (dernière version v1.26.0 du 2026-05-29, dépôt non archivé), consulté le 2026-10-10. [https://github.com/huggingface/smolagents/releases](https://github.com/huggingface/smolagents/releases)
+[^7]: Qwen, *Qwen2.5-Coder-32B-Instruct* (famille 0,5 à 32B, 14B et 32B sous Apache 2.0, 2024) ; QwenLM, *Qwen3-Coder* (README : 30B-A3B, Next et 480B-A35B, aucune variante dense 14B ou 32B), consulté le 2026-11-19 ; Mistral AI, *Introducing Devstral 2 and Mistral Vibe CLI* (Devstral Small 2 : 24B, Apache 2.0), 2025-12-09. [https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct) · [https://github.com/QwenLM/Qwen3-Coder](https://github.com/QwenLM/Qwen3-Coder) · [https://mistral.ai/news/devstral-2-vibe-cli](https://mistral.ai/news/devstral-2-vibe-cli)

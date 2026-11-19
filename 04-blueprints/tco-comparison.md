@@ -7,7 +7,7 @@ prices_valid_as_of: "2026-10"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
-last_modified: "2026-11-17"
+last_modified: "2026-11-19"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
@@ -137,16 +137,16 @@ Pour rendre la comparaison concrète, utilisons un cas typique de PME :
 
 Les modèles open-weights de cette classe (DeepSeek V4, GLM-5.3, Kimi K3) sont disponibles via des API OpenAI-compatibles chez des hébergeurs spécialisés (Together AI, Groq) à des tarifs souvent inférieurs aux modèles propriétaires — mais hébergés hors de vos locaux[^5] :
 
-| Service (tarifs du 2026-10-09, USD hors taxes) | Tarif 100B+ | Coût pour 33,75 M tok/mois (2/3 en entrée) |
+| Service (tarifs du 2026-10-09 ; GPU cloud Lambda du 2026-11-19 ; USD hors taxes) | Tarif 100B+ | Coût pour 33,75 M tok/mois (2/3 en entrée) |
 | :-- | :-- | :-- |
 | Together AI (DeepSeek V4 Pro)[^5] | 1,32 / 3,96 $/M tok | ~74 $ ≈ 68 €/mois |
 | Together AI (DeepSeek V4.1 Flash)[^5] | 0,30 / 1,20 $/M tok | ~20 $ ≈ 18 €/mois |
-| GPU cloud on-demand (4× A100 80 Go à 2,79 $/h, ou 4× H100 à 3,99 $/h, 24 h/24)[^6] | ~8 150 – 11 650 $/mois | ~7 500 – 10 700 €/mois (≈ 2 500 – 3 500 € à 8 h/jour) |
+| GPU cloud on-demand (4× A100 80 Go à 3,19 $/h, prix par GPU de l'instance 8 GPU, ou instance 4× H100 à 4,69 $/h, 24 h/24)[^6] | ~9 310 – 13 690 $/mois | ~8 600 – 12 600 €/mois (≈ 2 900 – 4 200 € à 8 h/jour) |
 
 > [!note] Point de rentabilité C
-> Face à la location de GPU cloud 24 h/24 (7 500 à 10 700 €/mois), le cluster bureau est amorti en un à deux mois. Face aux API serverless qui servent les mêmes modèles open-weights (DeepSeek V4 chez Together AI : 18 à 68 €/mois pour 33,75 M tokens), il n'est jamais amorti sur le seul coût : son avantage est la confidentialité, l'accès permanent et l'absence de quota.
+> Face à la location de GPU cloud 24 h/24 (8 600 à 12 600 €/mois), le cluster bureau est amorti en un à deux mois. Face aux API serverless qui servent les mêmes modèles open-weights (DeepSeek V4 chez Together AI : 18 à 68 €/mois pour 33,75 M tokens), il n'est jamais amorti sur le seul coût : son avantage est la confidentialité, l'accès permanent et l'absence de quota.
 
-*Calcul : 9 300 à 14 900 € de capital / (7 500 €/mois de GPU cloud − 92 €/mois de fonctionnement du cluster hors amortissement) ≈ 1,3 à 2 mois.*
+*Calcul : 9 300 à 14 900 € de capital / (8 600 €/mois de GPU cloud − 92 €/mois de fonctionnement du cluster hors amortissement) ≈ 1,1 à 1,8 mois.*
 
 ---
 
@@ -168,13 +168,13 @@ Les modèles open-weights de cette classe (DeepSeek V4, GLM-5.3, Kimi K3) sont d
 | Service | Coût estimé | Commentaire |
 | :-- | :-- | :-- |
 | API cloud (500 M tok/mois, 2/3 en entrée, tarifs du 2026-10-09)[^1][^2] | ~120 $ (Haiku 5.5) à ~6 700 $/mois (GPT-5.5) ; ~11 700 $ (Fable 5.1) | Pas de garantie SLA custom ; le nœud HGX ne devient moins cher qu'au-delà de ~1 G tokens/mois face à GPT-5.5 (~0,6 G face à Fable 5.1) |
-| GPU dédié cloud (8× A100 80 Go on-demand, 2,79 $/GPU-h)[^6] | ~16 000 $/mois (8× H100 : ~23 000 $) | SLA fort, mais coût élevé |
-| GPU réservé cloud (H100, Lambda 1-Click Clusters, 2 semaines à 1 an, 16 GPU min.)[^6] | ~32 000 – 36 000 $/mois ramenés à 8 GPU (5,54 – 6,16 $/GPU-h relevés le 2026-10-09) | Engagement ; au-dessus de l'on-demand chez Lambda : demander un devis |
+| GPU dédié cloud (8× A100 80 Go on-demand, 3,19 $/GPU-h)[^6] | ~18 600 $/mois (8× H100 à 4,59 $/GPU-h : ~26 800 $) | SLA fort, mais coût élevé |
+| GPU réservé cloud (H100, Lambda 1-Click Clusters, 2 semaines à 1 an, 16 GPU min.)[^6] | ~32 000 – 36 000 $/mois ramenés à 8 GPU (5,54 – 6,16 $/GPU-h, inchangés au 2026-11-19) | Engagement ; au-dessus de l'on-demand chez Lambda : demander un devis |
 
 > [!note] Point de rentabilité D
-> Le nœud HGX devient compétitif au bout de 28 à 49 mois face au GPU dédié cloud on-demand (tarifs Lambda du 2026-10-09)[^6], et seulement au-delà d'environ 1 milliard de tokens par mois face à une API frontière. Sa vraie valeur n'est pas uniquement économique : c'est la **maîtrise totale** (données, modèles, SLA, évolution du modèle), le **contrôle des coûts sur 5 ans**, et la conformité réglementaire maximale.
+> Le nœud HGX devient compétitif au bout de 22 à 39 mois face au GPU dédié cloud on-demand (tarifs Lambda relevés le 2026-11-19)[^6], et seulement au-delà d'environ 1 milliard de tokens par mois face à une API frontière. Sa vraie valeur n'est pas uniquement économique : c'est la **maîtrise totale** (données, modèles, SLA, évolution du modèle), le **contrôle des coûts sur 5 ans**, et la conformité réglementaire maximale.
 
-*Calcul : 400 000 € / (15 000 €/mois de 8× A100 on-demand − 6 900 €/mois d'ops et d'infrastructure) ≈ 49 mois ; 400 000 € / (21 400 €/mois de 8× H100 on-demand − 6 900 €) ≈ 28 mois. Seuil API : 13 600 € ≈ 14 800 $/mois ÷ 13,3 $/M pondéré (GPT-5.5) ≈ 1,1 G tokens/mois.*
+*Calcul : 400 000 € / (17 100 €/mois de 8× A100 on-demand − 6 900 €/mois d'ops et d'infrastructure) ≈ 39 mois ; 400 000 € / (24 700 €/mois de 8× H100 on-demand − 6 900 €) ≈ 22 mois. Seuil API : 13 600 € ≈ 14 800 $/mois ÷ 13,3 $/M pondéré (GPT-5.5) ≈ 1,1 G tokens/mois.*
 
 ---
 
@@ -194,14 +194,14 @@ Modèles 100B+                  Quelconque                → Blueprint C (proto
 
 ### TCO à 3 ans — récapitulatif visuel
 
-| Blueprint | Coût/mois | Total 3 ans | Équivalent API cloud 3 ans (tarifs d'octobre 2026, 1 $ ≈ 0,92 €) |
+| Blueprint | Coût/mois | Total 3 ans | Équivalent API cloud 3 ans (tarifs d'octobre 2026, GPU cloud Lambda de novembre 2026, 1 $ ≈ 0,92 €) |
 | :-- | :-- | :-- | :-- |
 | A (labo dev, 5 M in + 2,5 M out/mois) | ~40 – 85 € | ~1 400 – 3 100 € | ~60 € (Haiku 5.5) / ~1 160 € (Sonnet 5.5, GPT-6 Sol) / ~3 300 € (GPT-5.5) / ~5 800 € (Fable 5.1) |
 | B (PME, 34 M tok/mois) | ~155 € | ~5 580 € | ~260 € (Haiku 5.5) / ~670 € (DeepSeek V4.1 Flash) / ~1 160 € (Together AI Llama 3.3 70B) / ~5 200 € (Sonnet 5.5) / ~10 400 € (Opus 5.5) / ~14 900 € (GPT-5.5) / ~26 100 € (Fable 5.1) |
-| C (cluster, 34 M tok/mois, modèles 100B+) | ~285 – 400 € | ~10 300 – 14 400 € | ~670 € (DeepSeek V4.1 Flash) / ~2 460 € (DeepSeek V4 Pro, Together AI) / ~270 000 € (4× A100 on-demand 24 h/24) |
-| D (datacenter, 500 M tok/mois) | ~13 600 € | ~489 600 € | ~77 000 € (Sonnet 5.5) / ~221 000 € (GPT-5.5) / ~386 000 € (Fable 5.1) / ~540 000 € (8× A100 on-demand) / ~770 000 € (8× H100 on-demand) / ~1,07 M€ (8× H100 au tarif réservé 1-Click Lambda, 5,54 $/GPU-h) |
+| C (cluster, 34 M tok/mois, modèles 100B+) | ~285 – 400 € | ~10 300 – 14 400 € | ~670 € (DeepSeek V4.1 Flash) / ~2 460 € (DeepSeek V4 Pro, Together AI) / ~309 000 € (4× A100 on-demand 24 h/24) |
+| D (datacenter, 500 M tok/mois) | ~13 600 € | ~489 600 € | ~77 000 € (Sonnet 5.5) / ~221 000 € (GPT-5.5) / ~386 000 € (Fable 5.1) / ~617 000 € (8× A100 on-demand) / ~888 000 € (8× H100 on-demand) / ~1,07 M€ (8× H100 au tarif réservé 1-Click Lambda, 5,54 $/GPU-h) |
 
-*Calcul : coût cloud mensuel des sections A à D × 36 mois (Fable 5.1 et DeepSeek relevés le 2026-10-10) ; GPU cloud : 8× A100 on-demand ≈ 16 300 $/mois, 8× H100 on-demand ≈ 23 300 $/mois et 8× H100 au tarif réservé 1-Click ≈ 32 350 $/mois à 5,54 $/GPU-h (Lambda, 2026-10-09)[^6].*
+*Calcul : coût cloud mensuel des sections A à D × 36 mois (Fable 5.1 et DeepSeek relevés le 2026-10-10) ; GPU cloud : 8× A100 on-demand ≈ 18 630 $/mois à 3,19 $/GPU-h, 8× H100 on-demand ≈ 26 810 $/mois à 4,59 $/GPU-h et 8× H100 au tarif réservé 1-Click ≈ 32 350 $/mois à 5,54 $/GPU-h (Lambda, relevé le 2026-11-19)[^6].*
 
 > [!warning] Coûts cachés à ne pas oublier
 > - **Formation et onboarding** de l'équipe sur la stack on-premise
@@ -287,7 +287,7 @@ Ces deux chiffres sont cohérents : le Mac Studio sert des modèles beaucoup plu
 [^3]: Mistral AI, *Pricing* (Mistral Large 3 : 0,50 / 1,50 $ par million de tokens), relevé le 2026-10-09. [https://mistral.ai/pricing](https://mistral.ai/pricing) · Mistral AI, annonce de la publication des poids de Mistral Large 4 (0,70 $ en entrée, 0,07 $ en entrée en cache, 2,10 $ en sortie par million de tokens, contre 1,36 / 4,18 $ pendant la preview du 2026-10-06), 2026-10-29. [https://mistral.ai/news/mistral-large-4-oss/](https://mistral.ai/news/mistral-large-4-oss/) · [https://docs.mistral.ai/models/mistral-large-4-0](https://docs.mistral.ai/models/mistral-large-4-0)
 [^4]: Groq, *GroqCloud — Models* (openai/gpt-oss-120b 0,15 / 0,60 $ par million de tokens ; Llama 3.3 70B et Llama 3.1 8B passés « Enterprise / Contact sales », sans prix public), relevé le 2026-10-09. [https://console.groq.com/docs/models](https://console.groq.com/docs/models)
 [^5]: Together AI, *Pricing* (Llama 3.3 70B 1,04 / 1,04 $ ; DeepSeek V4 Pro 1,32 / 3,96 $, DeepSeek V4.1 Flash 0,30 / 1,20 $, GLM-5.3 1,40 / 4,40 $ et Kimi K3 3 / 15 $ en API OpenAI-compatible), relevé le 2026-10-09. [https://www.together.ai/pricing](https://www.together.ai/pricing)
-[^6]: Lambda, *GPU Cloud Pricing* (on-demand : H100 SXM 3,99 $, A100 80 Go 2,79 $ par GPU-heure ; H100 réservé 2 semaines à 1 an : 5,54 – 6,16 $), relevé le 2026-10-09. [https://lambda.ai/pricing](https://lambda.ai/pricing)
+[^6]: Lambda, *GPU Cloud Pricing* (on-demand, prix par GPU-heure : H100 SXM 4,59 $ en instance 8 GPU et 4,69 $ en instance 4 GPU, HGX A100 80 Go 3,19 $ en instance 8 GPU ; H100 réservé 1-Click Clusters 2 semaines à 1 an : 5,54 – 6,16 $), relevé le 2026-11-19. [https://lambda.com/pricing](https://lambda.com/pricing)
 [^7]: Apple, *Mac Studio* et *Mac mini* — Apple Store France (Mac Studio M5 Max 64 Go 3 659 € TTC ; Mac mini M5 Pro 24 Go 1 999 € TTC ; options 128 Go et 64 Go sur configurateur uniquement), relevé le 2026-10-09. [https://www.apple.com/fr/shop/buy-mac/mac-studio](https://www.apple.com/fr/shop/buy-mac/mac-studio) · [https://www.apple.com/fr/shop/buy-mac/mac-mini](https://www.apple.com/fr/shop/buy-mac/mac-mini)
 [^8]: Framework, *Framework Desktop — AMD Ryzen AI Max+ 395* (64 Go 2 209 € TTC, 128 Go 3 889 € TTC, en rupture), relevé le 2026-10-09. [https://frame.work/fr/fr/products/desktop-diy-amd-aimax300](https://frame.work/fr/fr/products/desktop-diy-amd-aimax300)
 [^9]: ServeTheHome, *NVIDIA DGX Spark 64GB Launched and Big 128GB GB10 Price Increases* (DGX Spark 128 Go ≈ 6 950 $, lancé à 3 999 $ ; version 64 Go à 4 999 $ via OEM), 2026-10-03. [https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/](https://www.servethehome.com/nvidia-dgx-spark-64gb-launched-and-big-128gb-gb10-price-increases/) · NVIDIA Blog, *NVIDIA DGX Spark 64GB Gives Developers More Ways to Build and Scale Local AI* (même GB10, à partir de 4 999 $, modèles jusqu'à 100 B paramètres, OEM Acer, ASUS, Dell, Gigabyte, HP, MSI à partir du vendredi 23 octobre ; deux unités reliées en QSFP = 128 Go, modèles jusqu'à 200 B), 2 octobre 2026. [https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/](https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/)

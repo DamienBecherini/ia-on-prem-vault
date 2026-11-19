@@ -3,7 +3,7 @@ title: "🏗️ Target architecture recommendation"
 description: Realistic path from a Cursor CLI MVP to a sovereign custodian stack based on OpenHands or Aider, Ollama/vLLM, LiteLLM, and SearXNG.
 sidebar:
   order: 6
-last_modified: "2026-11-09"
+last_modified: "2026-11-19"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -57,8 +57,8 @@ For a realistic sovereign target:
 | Use | Recommended local model | Hardware reading |
 | :-- | :-- | :-- |
 | Simple suggestions, small files | Specialized coder 7B/8B | useful to learn, not reliable as an autonomous agent |
-| Controlled fixes on Markdown vault | Coder 14B | practical floor, with strict human validation |
-| Regular maintenance, multi-file audit | Coder 32B or higher | recommended target if the agent must produce usable diffs |
+| Controlled fixes on Markdown vault | Dense 14B coder (Qwen2.5-Coder-14B, from 2024; the Qwen3-Coder range has no 14B)[^8] | practical floor, with strict human validation |
+| Regular maintenance, multi-file audit | Coder 24–32B or higher: Devstral Small 2 (24B, December 2025), the Qwen3-Coder-30B-A3B MoE, or Qwen2.5-Coder-32B (2024)[^8] | recommended target if the agent must produce usable diffs |
 | Agentic work with long context, 24 GB VRAM | Agentic generalist 27–30B such as Qwen3.8-27B (~18 GB in Q4, 262k context) or Muse Glimmer 30B in Q4 2026; the Qwen3.6-35B-A3B MoE (3B active) remains the one recommended by the OpenHands docs (May 2026) | context ≥ 32k tokens[^6]; see [[03-stack-logicielle/choose-your-model\|Choose your model]] |
 | Large refactor or long reasoning | 32B+ with large context, or frontier non-sovereign model in MVP | sovereignty vs quality trade-off |
 
@@ -87,3 +87,4 @@ Key point: the agent that **acts** on files needs more reasoning than the assist
 [^5]: LiteLLM, *Version Support Policy* (since 2026-06-29, only the four most recent stable minor lines receive fixes), 2026-06-20. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)
 [^6]: OpenHands Docs, *Local LLMs* (Ollama, vLLM, SGLang, LM Studio; Qwen3.6-35B-A3B recommended, ≥ 24 GB of VRAM when quantized, 32k context), updated 2026-05-21. [https://docs.openhands.dev/openhands/usage/llms/local-llms](https://docs.openhands.dev/openhands/usage/llms/local-llms)
 [^7]: Cursor, *Cursor is now a part of SpaceX*, 2026-08-14. [https://cursor.com/blog/joining-spacex](https://cursor.com/blog/joining-spacex)
+[^8]: Qwen, *Qwen2.5-Coder-32B-Instruct* (family from 0.5 to 32B, 14B and 32B under Apache 2.0, technical report arXiv:2409.12186 of September 2024); QwenLM, *Qwen3-Coder* (README: 30B-A3B, Next and 480B-A35B, no dense 14B or 32B variant), accessed 2026-11-19; Mistral AI, *Introducing Devstral 2 and Mistral Vibe CLI* (Devstral Small 2: 24B, Apache 2.0; Devstral 2: 123B, modified MIT), 2025-12-09. [https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct) · [https://github.com/QwenLM/Qwen3-Coder](https://github.com/QwenLM/Qwen3-Coder) · [https://mistral.ai/news/devstral-2-vibe-cli](https://mistral.ai/news/devstral-2-vibe-cli)
