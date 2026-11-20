@@ -1,7 +1,7 @@
 ---
 title: "⚙️ Comment ça marche"
 description: "Comment ce guide sur l'IA auto-hébergée reste à jour : un script surveille l'actualité, un agent IA propose des corrections sourcées, un humain valide avant publication."
-last_modified: "2026-11-13"
+last_modified: "2026-11-20"
 ---
 
 > [!tip] En bref
@@ -13,7 +13,7 @@ Ce guide est écrit avec l'aide d'agents IA ; son auteur relit et valide chaque 
 
 | Qui | Ce qu'il fait | Ce qu'il ne fait pas |
 | :-- | :-- | :-- |
-| **Un script, sans IA** | Relève les nouvelles versions, les failles de sécurité, les nouveaux modèles et l'actualité des fabricants, puis écarte ce qui ne compte pas selon des règles fixes | Il ne juge pas si une page est fausse |
+| **Une collecte, sans IA** | Relève les nouvelles versions, les failles de sécurité, les nouveaux modèles et l'actualité des fabricants, puis écarte ce qui ne compte pas selon des règles fixes | Elle ne juge pas si une page est fausse |
 | **Un agent IA** ([[projet/vault-watch-agent\|vault-watch-agent]]) | Repère les passages devenus faux, propose un nouveau texte et sa source, vérifie ses propositions sur l'ensemble du guide, traduit les changements en anglais | Il ne modifie aucun fichier lui-même et ne publie rien |
 | **Un humain**, l'auteur | Lance l'agent, relit chaque proposition, autorise la publication | Il ne recopie pas la veille à la main |
 
@@ -21,14 +21,14 @@ Un programme ordinaire applique ensuite les corrections acceptées. Il refuse to
 
 ## Comment les projets s'articulent
 
-Deux projets travaillent ensemble : [[projet/guide|le guide]] contient les pages, les règles éditoriales et le script de veille, et [[projet/vault-watch-agent|l'agent]] fait le travail d'analyse. Un troisième, [[projet/starlight-obsidian-engine|le moteur de publication]], transforme les pages en site web.
+Deux projets travaillent ensemble : [[projet/guide|le guide]] contient les pages, les règles éditoriales et la liste des sources à surveiller, et [[projet/vault-watch-agent|l'agent]] collecte la veille puis fait le travail d'analyse. Un troisième, [[projet/starlight-obsidian-engine|le moteur de publication]], transforme les pages en site web.
 
 ```mermaid
 flowchart TB
   S["Sources publiques<br/>versions, failles, modèles"]
 
   subgraph G["Le guide"]
-    W["Script de veille<br/>sans IA"]
+    W["Collecte de la veille<br/>sans IA"]
     I["Issue GitHub<br/>la liste à traiter"]
     R["Pages actuelles<br/>et règles éditoriales"]
     C["Contrôles automatiques<br/>et pull request"]
@@ -59,8 +59,8 @@ Les règles éditoriales restent dans le guide et l'agent les charge à chaque p
 
 ## Chronologie d'une mise à jour
 
-1. **Le lundi matin, une semaine sur deux, le script collecte** les changements des 15 derniers jours. Il tourne tout seul sur GitHub. Les autres semaines, il n'intervient que si une faille grave n'est pas couverte par le guide.
-2. **Il ouvre une issue GitHub publique** qui liste les éléments à examiner, et l'auteur en est averti par e-mail.
+1. **Le lundi matin, une semaine sur deux, la collecte relève** les changements des 15 derniers jours. Elle tourne toute seule sur GitHub. Les autres semaines, elle n'intervient que si une faille grave n'est pas couverte par le guide.
+2. **Elle ouvre une issue GitHub publique** qui liste les éléments à examiner, et l'auteur en est averti par e-mail.
 3. **L'auteur lance l'agent à la main.** C'est un choix, pour surveiller le budget : l'interface affiche une estimation du coût de la passe avant son lancement. Ce démarrage pourrait être automatisé si besoin, sans supprimer les deux validations humaines qui suivent.
 4. **L'agent trie les éléments** : à corriger, à ajouter peut-être, ou sans intérêt pour le guide.
 5. **Il propose des corrections.** Chacune cite le texte actuel mot pour mot, donne le nouveau texte et une source.
@@ -75,7 +75,7 @@ Les règles éditoriales restent dans le guide et l'agent les charge à chaque p
 > [!example] Un cas réel
 > La [veille du 2 novembre 2026](https://github.com/DamienBecherini/ia-on-prem-vault/issues/50) listait 81 éléments, dont 8 failles de sécurité. Après relecture, les corrections ont été fusionnées le 8 novembre dans la [pull request n° 51](https://github.com/DamienBecherini/ia-on-prem-vault/pull/51), qui modifie 12 fichiers en français et en anglais.
 
-Les erreurs signalées suivent le même chemin : elles sont vérifiées sur des sources primaires, puis passent par la même relecture et la même pull request.
+Les erreurs signalées suivent le même chemin : elles sont vérifiées sur des sources primaires, puis passent par la même relecture et la même pull request. Deux autres travaux aussi : alléger les pages quand elles s'alourdissent, et chercher ce qui manque au guide ([[projet/vault-watch-agent|détail]]).
 
 ## Une IA dans le cloud pour un guide sur l'auto-hébergement ?
 
@@ -83,18 +83,22 @@ Oui, et il vaut mieux le dire. L'agent appelle les modèles Claude par l'API d'A
 
 ## Ce que coûte l'entretien
 
-Coût des appels à l'API Claude au tarif public, [mesuré en novembre 2026](https://github.com/DamienBecherini/vault-watch-agent#what-the-upkeep-costs), avec Claude Opus 5.5 pour le tri (effort moyen), les propositions et la vérification (effort élevé), et Claude Sonnet 5.5 pour la traduction (effort moyen). Un autre modèle ou un autre niveau d'effort donnerait d'autres chiffres :
+Coût des appels à l'API Claude au tarif public, [mesuré en novembre 2026](https://github.com/DamienBecherini/vault-watch-agent/blob/main/README.fr.md#le-guide-de-r%C3%A9f%C3%A9rence), avec Claude Opus 5.5 pour le tri (effort moyen), les propositions et la vérification (effort élevé), et Claude Sonnet 5.5 pour la traduction (effort moyen). Un autre modèle ou un autre niveau d'effort donnerait d'autres chiffres :
 
 | Passage | Coût |
 | :-- | --: |
 | Veille avec de simples extraits des pages | 0,90 $ |
-| Veille complète, avec vérification sur tout le guide | 3,80 à 4,40 $ |
+| Veille complète, avec vérification sur tout le guide | 2,95 à 4,45 $ |
 | Correction d'erreurs relevées, 26 corrections | 6,60 $ |
+| Recherche de ce qui manque : les pistes, puis les ajouts pour 2 à 5 pistes | 2,28 $, puis 8,70 à 12,95 $ |
+| Allègement des pages, avec Claude Fable 5.2 : le rapport, puis 30 constats traités | 6,28 $, puis 18,87 $ |
 
 Le [journal public](https://github.com/DamienBecherini/vault-watch-agent/blob/main/metrics/usage.jsonl) détaille chaque appel, avec son modèle et son coût.
+
+Ces montants sont indicatifs : c'est ce que valent les appels au tarif public de l'API. Ceux de l'auteur sont passés par l'accès API de son abonnement Claude : il a payé son abonnement, rien de plus.
 
 ## Les limites
 
 - **Des erreurs restent possibles.** Vérifiez les sources citées avant de vous appuyer sur un chiffre, et [signalez une erreur](https://github.com/DamienBecherini/ia-on-prem-vault/issues) si vous en trouvez une.
 - **Les dates sont difficiles.** Une version logicielle a une date de création, de marquage et de publication. Quand ses sources ne tranchent pas, l'agent s'abstient.
-- **L'agent corrige, il n'écrit pas de nouvelles pages.** Un nouvel outil ou un nouveau modèle lui sert de piste ; décider de l'ajouter reste un choix éditorial.
+- **L'agent n'écrit pas de nouvelles pages.** Il peut ajouter aux pages existantes ce qui leur manque, après vérification sur le web et relecture. Quand un sujet demande une page à lui, il le signale ; l'écrire reste un choix éditorial.

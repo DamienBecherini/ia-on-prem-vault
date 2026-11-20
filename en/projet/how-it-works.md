@@ -1,7 +1,7 @@
 ---
 title: "⚙️ How it works"
 description: "How this guide on self-hosted AI stays up to date: a script watches the news, an AI agent proposes sourced corrections, a human approves them before publication."
-last_modified: "2026-11-13"
+last_modified: "2026-11-20"
 ---
 
 > [!tip] In brief
@@ -13,7 +13,7 @@ This guide is written with the help of AI agents; its author reviews and approve
 
 | Who | What it does | What it does not do |
 | :-- | :-- | :-- |
-| **A script, no AI** | Records new releases, security advisories, new models and vendor news, then drops what does not matter using fixed rules | It does not judge whether a page is wrong |
+| **A collection, no AI** | Records new releases, security advisories, new models and vendor news, then drops what does not matter using fixed rules | It does not judge whether a page is wrong |
 | **An AI agent** ([[projet/vault-watch-agent\|vault-watch-agent]]) | Finds the passages that have become wrong, proposes new text and its source, checks its proposals against the whole guide, translates the changes into English | It changes no file itself and publishes nothing |
 | **A human**, the author | Starts the agent, reviews each proposal, authorizes publication | They do not copy the watch by hand |
 
@@ -21,14 +21,14 @@ An ordinary program then applies the accepted corrections. It refuses any correc
 
 ## How the projects fit together
 
-Two projects work together: [[projet/guide|the guide]] holds the pages, the editorial rules and the watch script, and [[projet/vault-watch-agent|the agent]] does the analysis. A third one, [[projet/starlight-obsidian-engine|the publishing engine]], turns the pages into a website.
+Two projects work together: [[projet/guide|the guide]] holds the pages, the editorial rules and the list of sources to watch, and [[projet/vault-watch-agent|the agent]] collects the watch, then does the analysis. A third one, [[projet/starlight-obsidian-engine|the publishing engine]], turns the pages into a website.
 
 ```mermaid
 flowchart TB
   S["Public sources<br/>releases, advisories, models"]
 
   subgraph G["The guide"]
-    W["Watch script<br/>no AI"]
+    W["Collection of the watch<br/>no AI"]
     I["GitHub issue<br/>the list to process"]
     R["Current pages<br/>and editorial rules"]
     C["Automated checks<br/>and pull request"]
@@ -59,7 +59,7 @@ The editorial rules stay in the guide and the agent loads them on every run: it 
 
 ## Timeline of an update
 
-1. **On Monday morning, every other week, the script collects** the changes of the last 15 days. It runs on its own on GitHub. In the other weeks, it only steps in if a serious vulnerability is not covered by the guide.
+1. **On Monday morning, every other week, the collection records** the changes of the last 15 days. It runs on its own on GitHub. In the other weeks, it only steps in if a serious vulnerability is not covered by the guide.
 2. **It opens a public GitHub issue** listing the items to examine, and the author is notified by email.
 3. **The author starts the agent by hand.** This is a choice, to keep an eye on the budget: the interface shows an estimate of the run's cost before it starts. This step could be automated if needed, without removing the two human approvals that follow.
 4. **The agent sorts the items**: to correct, possibly to add, or of no interest to the guide.
@@ -75,7 +75,7 @@ The editorial rules stay in the guide and the agent loads them on every run: it 
 > [!example] A real case
 > The [watch of 2 November 2026](https://github.com/DamienBecherini/ia-on-prem-vault/issues/50) listed 81 items, including 8 security advisories. After review, the corrections were merged on 8 November in [pull request 51](https://github.com/DamienBecherini/ia-on-prem-vault/pull/51), which changes 12 files in French and English.
 
-Reported errors follow the same path: they are checked against primary sources, then go through the same review and the same pull request.
+Reported errors follow the same path: they are checked against primary sources, then go through the same review and the same pull request. So do two other kinds of work: trimming the pages when they grow heavy, and looking for what the guide is missing ([[projet/vault-watch-agent|details]]).
 
 ## A cloud AI for a guide on self-hosting?
 
@@ -83,18 +83,22 @@ Yes, and it is better to say so. The agent calls Claude models through the Anthr
 
 ## What the upkeep costs
 
-Cost of the Claude API calls at list price, [measured in November 2026](https://github.com/DamienBecherini/vault-watch-agent#what-the-upkeep-costs), with Claude Opus 5.5 for the triage (medium effort), the proposals and the cross-check (high effort), and Claude Sonnet 5.5 for the translation (medium effort). Another model or effort level would give other figures:
+Cost of the Claude API calls at list price, [measured in November 2026](https://github.com/DamienBecherini/vault-watch-agent#the-reference-guide), with Claude Opus 5.5 for the triage (medium effort), the proposals and the cross-check (high effort), and Claude Sonnet 5.5 for the translation (medium effort). Another model or effort level would give other figures:
 
 | Run | Cost |
 | :-- | --: |
 | Watch with simple page excerpts | $0.90 |
-| Full watch, checked against the whole guide | $3.80 to $4.40 |
+| Full watch, checked against the whole guide | $2.95 to $4.45 |
 | Fixing reported errors, 26 corrections | $6.60 |
+| Looking for what is missing: the leads, then the additions for 2 to 5 leads | $2.28, then $8.70 to $12.95 |
+| Trimming the pages, with Claude Fable 5.2: the report, then 30 findings handled | $6.28, then $18.87 |
 
 The [public journal](https://github.com/DamienBecherini/vault-watch-agent/blob/main/metrics/usage.jsonl) lists each call, with its model and cost.
+
+These amounts are indicative: they are what the calls are worth at the API's list price. The author's calls went through the API access of his Claude subscription: he paid his subscription and nothing more.
 
 ## The limits
 
 - **Errors remain possible.** Check the cited sources before relying on a figure, and [report an error](https://github.com/DamienBecherini/ia-on-prem-vault/issues) if you find one.
 - **Dates are hard.** A software release has a creation date, a tag date and a publication date. When its sources do not settle a date, the agent declines.
-- **The agent corrects, it does not write new pages.** A new tool or model is a lead for it; deciding to add it remains an editorial choice.
+- **The agent does not write new pages.** It can add to existing pages what they are missing, after a check on the web and a review. When a subject needs a page of its own, it says so; writing it remains an editorial choice.
