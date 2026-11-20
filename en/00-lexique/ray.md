@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -28,7 +28,7 @@ De facto standard for sovereign datacenters. The only architecture that guarante
 
 ## ⚠️ Common pitfalls
 - Complex to operate: requires configured AI networking (RoCE/InfiniBand), shared storage, HPC skills.
-- Leaving a multi-node cluster without authentication: since Ray 2.59 (2 October 2026), token authentication is on by default only for local clusters; a remote or multi-node cluster stays open until Ray 2.61, unless `RAY_AUTH_MODE=token` is set on every node[^1].
+- Leaving a multi-node cluster without authentication: since Ray 2.59 (2 October 2026), token authentication is on by default only for local clusters; in Q4 2026 (Ray 2.60 included), a remote or multi-node cluster stays open until Ray 2.61 is released, unless `RAY_AUTH_MODE=token` is set on every node[^1]. Ray 2.61 will require the same token on every node and every client: generate it (`ray get-auth-token --generate`) and distribute it before the update, otherwise nodes and clients will no longer be able to connect to the cluster[^1].
 - Unnecessary and oversized for office or SMB scenarios.
 
 ## 📚 Go deeper

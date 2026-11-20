@@ -130,7 +130,7 @@ scrape_configs:
       - targets: ['host.docker.internal:2019']  # reverse proxy /metrics endpoint
 ```
 
-vLLM's `/metrics` endpoint is not protected by `--api-key`: expose it only to the Prometheus network. Minimum version: vLLM ≥ 0.33.0 (see [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]).
+vLLM's `/metrics` endpoint is not protected by `--api-key`: expose it only to the Prometheus network. Minimum version: vLLM ≥ 0.34.0 (see [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]).
 
 > [!note] Ollama vs vLLM
 > vLLM natively exposes a Prometheus-compatible `/metrics` endpoint[^1]. Ollama exposes no documented Prometheus `/metrics` as of Q4 2026[^10]: instrument at the reverse proxy level (Caddy natively exposes Prometheus metrics on its admin endpoint `:2019/metrics`; Nginx via `nginx-prometheus-exporter`) or use the `eval_count`, `eval_duration` and `prompt_eval_duration` fields of `/api/generate` and `/api/chat` responses (section 7). The community exporters cited in earlier versions of this guide are no longer available (repositories deleted as of 2026-10-09).
@@ -186,7 +186,7 @@ NVIDIA DCGM Exporter exposes detailed GPU metrics[^3]:
 | :-- | :-- | :-- |
 | `DCGM_FI_DEV_GPU_UTIL` | GPU utilization (%) | < 10% for > 5 min (waste) |
 | `DCGM_FI_DEV_MEM_COPY_UTIL` | Memory bus utilization (%) | > 90% sustained |
-| `DCGM_FI_DEV_FB_USED` | VRAM used (MiB) | > 95% of total VRAM |
+| `DCGM_FI_DEV_FB_USED` | VRAM used (MiB) | > 95% of total VRAM (except GPUs served by vLLM ≥ 0.34, which deliberately occupies almost all VRAM: monitor `vllm:kv_cache_usage_perc` instead) |
 | `DCGM_FI_DEV_GPU_TEMP` | GPU temperature (°C) | > 83°C (likely throttling) |
 | `DCGM_FI_DEV_POWER_USAGE` | Power draw (W) | > declared TDP |
 | `DCGM_FI_DEV_NVLINK_BANDWIDTH_TOTAL` | Aggregate NVLink throughput (MB/s) | — (trend on clusters) |
@@ -276,6 +276,7 @@ groups:
           description: "GPU temperature at {{ $value }}°C — likely throttling."
 
       - alert: VRAMAlmostFull
+        # On GPUs served by vLLM ≥ 0.34, which deliberately reserves almost all VRAM, this alert would fire permanently: exclude those GPUs and monitor vllm:kv_cache_usage_perc instead (VLLMKVCacheHigh alert)
         # DCGM_FI_DEV_FB_TOTAL must be added to the counters file (section 4);
         # otherwise: DCGM_FI_DEV_FB_USED / (DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE)
         expr: (DCGM_FI_DEV_FB_USED / DCGM_FI_DEV_FB_TOTAL) > 0.95
