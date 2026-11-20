@@ -10,7 +10,7 @@ tags:
   - compliance
 sidebar:
   order: 71
-last_modified: "2026-11-17"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 ---
@@ -34,7 +34,7 @@ This is the minimum contractual bar for organizations that want to use cloud LLM
 - **Frontier models**: since 9 June 2026, Anthropic has designated *Covered Models* (Claude Fable 5 and 5.1, Mythos 5 and 5.1) subject to a minimum 30-day retention on all platforms (API, Bedrock, Google Cloud, Microsoft Foundry); ZDR is unavailable for them, and a ZDR organization must enable retention on the relevant workspace, otherwise the API returns `400`[^3].
 - **Stateful endpoints**: files, batch, agents, conversations, and fine-tuning store by design; OpenAI and Mistral explicitly exclude them from ZDR[^1][^4].
 - **Experimental models**: at Mistral, Labs/Preview models are excluded from ZDR and from the training opt-out (Terms of 25 September 2026)[^4].
-- **Abuse monitoring**: without ZDR, OpenAI retains up to 30 days of logs; under ZDR, flagged image/file inputs may still be retained for review[^1]. Anthropic is preparing a variant where this data stays in the customer's cloud (*Enterprise Frontier Safeguards*, announced on 1 September 2026)[^3].
+- **Abuse monitoring**: OpenAI grants ZDR only upon approval and, without ZDR, retains up to 30 days of logs; under ZDR, flagged image/file inputs may still be retained for review[^1]. Anthropic is preparing a variant where this data stays in the customer's cloud (*Enterprise Frontier Safeguards*, announced on 1 September 2026)[^3].
 
 ## ⚠️ Important nuance: persistence ≠ transit
 

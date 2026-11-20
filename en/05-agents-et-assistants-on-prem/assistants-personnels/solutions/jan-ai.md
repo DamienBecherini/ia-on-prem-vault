@@ -3,7 +3,7 @@ title: "Jan.ai"
 description: Open-source ChatGPT alternative that runs models locally via llama.cpp, with a local OpenAI-compatible API server.
 sidebar:
   order: 4
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -23,7 +23,7 @@ Jan also exposes a local OpenAI-compatible API server on `localhost:1337`, usefu
 
 Jan is probably the simplest entry point for an individual user who wants to try local AI without understanding Docker, vLLM, or web UI configuration.
 
-It is less oriented toward "enterprise RAG" than Open WebUI or AnythingLLM, but excellent for the **sovereign personal workstation**: desktop install, GGUF models, llama.cpp engine bundled in the installer, Metal (Apple Silicon), CUDA 13 (NVIDIA Turing and newer), or Vulkan (AMD, Intel, and NVIDIA Pascal/GTX 10xx since v0.8.5 of 2026-10-08, the downloadable CUDA 11/12 backends having been removed) acceleration, local API[^5].
+It is less oriented toward "enterprise RAG" than Open WebUI or AnythingLLM, but excellent for the **sovereign personal workstation**: desktop install, GGUF models, llama.cpp engine bundled in the installer, Metal (Apple Silicon), CUDA 13 (NVIDIA Turing and newer), or Vulkan (AMD, Intel, and NVIDIA Pascal/GTX 10xx) acceleration, local API[^5].
 
 ## ✅ Strengths
 
@@ -37,7 +37,7 @@ It is less oriented toward "enterprise RAG" than Open WebUI or AnythingLLM, but 
 
 - **Limited document memory**: not primarily a RAG/knowledge base system.
 - **Optional cloud features**: user can connect OpenAI/Anthropic/Mistral/Groq, which completely changes the sovereignty verdict[^4].
-- **Local API to secure**: if listening moves from `127.0.0.1` to `0.0.0.0`, network, API key, and CORS must be managed. Since v0.8.5, Jan rejects (403) requests whose host is not localhost, a private IP, or a "Trusted Hosts" entry: declare your DNS name or your reverse proxy there[^3][^5]. Since v0.8.8 (2026-10-28), Jan also checks the origin of browser requests: a web application hosted on another machine (Open WebUI direct connection, for example) or a browser extension must be listed in "Trusted Hosts". Requests without a browser origin (SDKs, scripts, curl) are unchanged. The CORS switch, previously without effect, is now enforced and is found enabled after the update[^7].
+- **Local API to secure**: if listening moves from `127.0.0.1` to `0.0.0.0`, network, API key, and CORS must be managed. Jan rejects (403) requests whose host is not localhost, a private IP, or a "Trusted Hosts" entry: declare your DNS name or your reverse proxy there[^3][^5]. It also checks the origin of browser requests: a web application hosted on another machine (Open WebUI direct connection, for example) or a browser extension must be listed in "Trusted Hosts". Requests without a browser origin (SDKs, scripts, curl) are not affected. The CORS switch is enforced and is found enabled after the update to v0.8.8[^7].
 - **Not the best multi-user choice**: prefer Open WebUI or AnythingLLM for a team.
 
 ## 🔒 Sovereignty and privacy
@@ -61,7 +61,7 @@ Jan is ideal as:
 
 ## 📊 Project maturity
 
-Active, popular project on GitHub (about 45,000 stars, v0.8.8 as of 2026-10-28), built on Tauri and llama.cpp, the engine now being bundled in the installer. **Install at least v0.8.8**, a security update. Up to v0.8.7, a booby-trapped link in a model or MCP tool response allows one-click remote code execution (critical advisory). The application is also exposed to CSRF on the local API, path traversal outside the data folder, and command injection via the Claude Code launch[^7]. Since v0.8.5, the `jan` CLI (terminal agent) is installed separately and the executable is named `Jan-Desktop`: adapt your scripts[^5]. Distinguish Jan Desktop local from Jan Web / any cloud offerings in every client recommendation.
+Active, popular project on GitHub (about 45,000 stars, v0.8.8 as of 2026-10-28), built on Tauri and llama.cpp. **Install at least v0.8.8**, a security update. Up to v0.8.7, a booby-trapped link in a model or MCP tool response allows one-click remote code execution (critical advisory). The application is also exposed to CSRF on the local API, path traversal outside the data folder, and command injection via the Claude Code launch[^7]. The `jan` CLI (terminal agent) is installed separately and the executable is named `Jan-Desktop`: adapt your scripts[^5]. Distinguish Jan Desktop local from Jan Web / any cloud offerings in every client recommendation.
 
 ## 🔗 See also
 

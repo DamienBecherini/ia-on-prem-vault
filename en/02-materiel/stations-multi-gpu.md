@@ -3,7 +3,7 @@ title: "🧩 Multi-GPU Workstations: NVIDIA, PCIe, and VRAM"
 description: "Understand when multiple discrete GPUs truly help on-premise AI inference, and why interconnect often matters more than card count."
 sidebar:
   order: 2
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -47,7 +47,7 @@ Professional workstation cards maximize flexibility: they fit standard x86 tower
 
 The RTX 6000 Ada remains a solid workstation base with 48 GB GDDR6 ECC and PCIe Gen 4 x16 [^1]. The RTX PRO 6000 Blackwell doubles capacity to 96 GB, moves to GDDR7 ECC, advertises 1,792 GB/s memory bandwidth, and PCIe Gen 5 support [^2].
 
-In Q3 2026, NVIDIA lists the RTX PRO 6000 Blackwell at **US$16,000** on its store, double its 2025 pre-order price (under $8,000); the RTX 5090 (32 GB, 1,792 GB/s, 575 W) disappeared from first-hand retail in the US in September 2026 and trades at $5,000 and up from third-party sellers against a $1,999 MSRP [^10][^11]. These increases track memory prices: TrendForce still forecasts +10 to 15% per quarter on contract DRAM in Q4 2026 [^14]. Every price in this chapter is therefore dated and must be re-checked with each quote.
+In Q3 2026, NVIDIA lists the RTX PRO 6000 Blackwell at **US$16,000** on its store, double its 2025 pre-order price (under $8,000); the RTX 5090 (32 GB, 1,792 GB/s, 575 W) disappeared from first-hand retail in the US in September 2026 and trades at $5,000 and up from third-party sellers against a $1,999 MSRP [^10][^11]. These increases track memory prices (see [[04-blueprints/tco-comparison|💰 Comparaison TCO]]). Every price in this chapter is therefore dated and must be re-checked with each quote.
 
 These cards are very attractive for on-premise because they offer **fast local VRAM** and a mature software ecosystem. But in a standard multi-GPU workstation, inter-card traffic depends entirely on the PCIe bus.
 
@@ -246,7 +246,6 @@ At Hot Chips (2026-08-24), Intel detailed **Crescent Island**, a 350 W air-coole
 [^11]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500* (MSRP $1,999), 14 September 2026. [https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu](https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu) · NVIDIA, *GeForce RTX 5090* (32 GB GDDR7, 512-bit bus, 575 W). [https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/](https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/)
 [^12]: NVIDIA Newsroom, *NVIDIA Announces Financial Results for Second Quarter Fiscal 2027* ("Vera Rubin, now in full production"; Spectrum-6 with pluggable and co-packaged optics; Groq 3 LPX in production), 26 August 2026. [https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)
 [^13]: ServeTheHome, *Intel Crescent Island 160GB to 480GB LPDDR5X AI GPU at Hot Chips 2026* (350 W air-cooled PCIe, Xe3p, vLLM / SGLang, bandwidth not disclosed), 24 August 2026. [https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/](https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/)
-[^14]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
 [^15]: Tenstorrent, *Blackhole* — product page (p100a $999, p150a / p150b $1,399, "In stock"), captured 2026-10-10. [https://tenstorrent.com/hardware/blackhole](https://tenstorrent.com/hardware/blackhole)
 [^16]: NVIDIA, *NVIDIA AI Enterprise — End-of-Life Notices* (GPUs retired from Infra 8.0 onward: Tesla V100, RTX 4000 SFF Ada, RTX A4000, Quadro RTX; A100, H100/H200, L40/L40S, and RTX 6000 Ada still supported), re-read on 2026-10-10. [https://docs.nvidia.com/ai-enterprise/lifecycle/latest/eol-notices.html](https://docs.nvidia.com/ai-enterprise/lifecycle/latest/eol-notices.html)
 [^17]: vLLM Project, *Release v0.30.0* (opt-in FlashInfer PCIe all-reduce for multi-GPU configurations without NVLink), 22 September 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.30.0](https://github.com/vllm-project/vllm/releases/tag/v0.30.0)

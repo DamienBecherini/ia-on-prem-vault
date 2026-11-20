@@ -3,7 +3,7 @@ title: ⚔️ Unified Memory vs RAM vs VRAM
 description: In-depth comparative analysis of the three physical memory architectures for LLM inference.
 sidebar:
   order: 2
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -60,7 +60,7 @@ Popularized by Apple and reinforced on x86 by AMD Ryzen AI Max PRO 400, **unifie
 *   **Physical routing:** The central processor (CPU), graphics unit (GPU), and AI accelerator ([[00-lexique/npu|NPU]]) are integrated on the same silicon die (SoC). Memory modules (LPDDR5X-8000/8533) are soldered right next to it, on the same package.
 *   **Eliminating the copy:** On a classic PC, for the GPU to process data stored in RAM, the CPU must copy the data, send it over the PCIe bus (limited to 64 GB/s), then write it back into VRAM. **With unified memory, this copy step is eliminated.** The GPU reads directly from shared memory.
 *   **Bandwidth nuance (AMD vs Apple):** 
-    *   **Apple Silicon:** since 2026-08-25, the Mac Studio M5 Max reaches **614 GB/s** (460 GB/s with the 32-core GPU) and the M5 Ultra **1.2 TB/s**. They replace the 2025 M4 Max (546 GB/s) and M3 Ultra (819 GB/s)[^3].
+    *   **Apple Silicon:** since 2026-08-25, the Mac Studio M5 Max reaches **614 GB/s** (460 GB/s with the 32-core GPU) and the M5 Ultra **1.2 TB/s**[^3].
     *   **AMD Ryzen AI Max PRO 400:** roughly **273 GB/s** with LPDDR5X-8533 and a 256-bit bus, with x86 compatibility (Windows/Linux)[^4].
 *   **The AMD breakthrough (2026):** the PRO 400 platform scales to **192 GB** of shared memory, with up to **160 GB** allocatable to the GPU depending on OEM configuration[^4].
 *   **The physical limit:** Because memory is soldered onto the SoC to guarantee this throughput, it is strictly **impossible to add RAM** after purchase. You must size the machine for the next five years on day one.
@@ -82,7 +82,7 @@ Standard working memory on a conventional PC, installed in motherboard slots (DI
 | :-- | :-- | :-- | :-- | :-- |
 | **Memory bandwidth** | ~1,792 GB/s[^2] | 614 to 1,200 GB/s (M5 Max / M5 Ultra)[^3] | ~273 GB/s[^4] | ~80 to 100 GB/s (desktop dual-channel) |
 | **Theoretical ceiling 70B Q4 (~40 GB)** | ~44.8 tok/s | ~15.4 to 30 tok/s | ~6.8 tok/s | ~2 to 2.5 tok/s |
-| **Typical machine capacity (2026)** | 32 GB per consumer card[^1] | up to 128 GB (M5 Max) / 512 GB (M5 Ultra 36c/80c, orderable option since October 28, 2026)[^3] | up to 192 GB[^4] | 64 to 256 GB common, more possible depending on motherboard |
+| **Typical machine capacity (2026)** | 32 GB per consumer card[^1] | up to 128 GB (M5 Max) / 512 GB (M5 Ultra, see [[02-materiel/apu-and-unified-memory\|APU & Mémoire Unifiée]])[^3] | up to 192 GB[^4] | 64 to 256 GB common, more possible depending on motherboard |
 | **Hardware expandability** | high (add GPUs) | none (soldered memory) | none (soldered memory) | high (add DIMMs) |
 | **Positioning** | raw performance / multi-user | high-performance local workstation | local capacity + x86 compromise | entry-level / offline batch |
 

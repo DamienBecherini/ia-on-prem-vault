@@ -3,7 +3,7 @@ title: "🗺️ Choosing your local model"
 description: Practical guide to navigating the open-weights LLM landscape — families, sizes, specializations, and on-premise scenario mapping.
 sidebar:
   order: 4
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -62,18 +62,12 @@ The generalist reference of previous generations. Llama 3.1/3.3 models are avail
 - **Llama 3.1 8B**: good for constrained workstations or simple tasks. Visible limits on complex reasoning tasks.
 - **Llama 3.1 405B**: requires a multi-GPU cluster (Scenario D). Performance close to frontier models on general tasks.
 
-> [!note] Llama 4: MoE architecture, not suited to consumer GPUs
-> Llama 4 Scout (109B total, 17B active, 16 experts) and Llama 4 Maverick (400B total, 17B active, 128 experts) were released in April 2025[^2]. **These models require datacenter servers** (H100 minimum with int4 quantization for Scout). They do not fit Scenarios A, B, or C in this vault. See [[04-blueprints/scenario-d-datacenter|Scenario D]].
-
 ### Llama 4 (Meta) — Scenario D only
 
-Natively multimodal (text + image), MoE architecture.
+Natively multimodal (text + image), MoE architecture, released in April 2025[^2]. There is still no Llama 4 usable on a desktop machine, and Meta has not released any Llama since: its open line is now called **Muse Glimmer 30B** (Apache 2.0, text + image, ~24 GB in 4-bit)[^8].
 
 - **Llama 4 Scout (109B total / 17B active, 16 experts)**: 10M token context. Fits on a single H100 with int4 quantization. Relevant only for Scenario D (datacenter).
 - **Llama 4 Maverick (400B total / 17B active, 128 experts)**: 1M token context. Requires a full DGX host in FP8 or BF16. Performance comparable to frontier models on STEM benchmarks.
-
-> [!warning] Llama 4 ≠ replacement for Llama 3.x for SMEs
-> There is still no Llama 4 usable on a desktop machine, and Meta has not released any Llama since April 2025: its open line is now called **Muse Glimmer 30B** (Apache 2.0, text + image, ~24 GB in 4-bit)[^8]. For Scenarios A, B, and C, the Q4 2026 references are **Qwen3.8-27B**[^7] and **Muse Glimmer 30B**[^8]; Llama 3.3 70B remains a safe choice but is outclassed at equal size.
 
 ### Qwen3.8 / Qwen3 (Alibaba)
 
@@ -166,9 +160,8 @@ Public rankings (Arena, Artificial Analysis, SWE-bench Pro, HELM) are useful for
 
 What leaderboards still tell you usefully:
 
-- **Arena (formerly LMSYS Chatbot Arena)**[^4]: human preference comparison, multi-turn. Useful for conversational quality, but as of Q4 2026 no open-weights model appears in the top 15: read it to position open families against each other, not against the APIs.
 - **Hugging Face**: the Open LLM Leaderboard has been archived since 2025; use the Hub to check license, file sizes, and available quantizations, and Artificial Analysis (checking the index version) for a composite view[^5].
-- **SWE-bench Pro V2 (Scale)**[^6]: the most representative for code agents (real GitHub issues, protocol frozen since September 2026). SWE-bench Verified has been saturated since summer 2026 (scores > 96%) and no longer discriminates.
+- **SWE-bench Pro V2 (Scale)**[^6]: the most representative for code agents (real GitHub issues, protocol frozen since September 2026).
 
 **Where do open weights stand against closed models (October 2026)?** On Artificial Analysis' Intelligence Index v4.3, Claude Opus 5.5 scores 58, Claude Fable 5.1 and GPT-6 Astra 53; the best open-weights models follow at 46 (MiMo-V2.6-Pro, MIT), 45 (GLM-5.3) and 44 (Kimi K3)[^17]. On arena.ai, no open model appears in the top 15 as of 2026-10-08; the first, kimi-k3-max, ranks 16th[^4]. The gap is real, but it closes within a few quarters with each new open generation. For an on-premise reader, the question is therefore not the podium but the **level sufficient for the task**, measured on your own data: a Qwen3.8-27B that passes your golden dataset is worth more than a frontier model you can neither host nor audit.
 

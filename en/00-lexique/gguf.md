@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -26,7 +26,7 @@ Major advantages: immediate load without compilation, portability across CPU/GPU
 
 ## 💡 Why it matters for on-prem AI
 
-De facto standard for workstations, Macs, and homelabs. A large share of Hub models have a GGUF version (often community-made: unsloth, bartowski, ggml-org); on Apple Silicon, Ollama has run supported architectures via MLX rather than GGUF since 0.40 (October 2026), and vendors first publish official FP8/NVFP4 checkpoints[^2]. Essential for Scenario A (dev lab) and Scenario B (Mac Studio).
+De facto standard for workstations, Macs, and homelabs. A large share of Hub models have a GGUF version (often community-made: unsloth, bartowski, ggml-org); on Apple Silicon, [[06-mise-en-oeuvre/getting-started-with-ollama|Ollama]] runs supported architectures via MLX rather than GGUF, and vendors first publish official FP8/NVFP4 checkpoints[^2]. Essential for Scenario A (dev lab) and Scenario B (Mac Studio).
 
 ## ⚠️ Common pitfalls
 

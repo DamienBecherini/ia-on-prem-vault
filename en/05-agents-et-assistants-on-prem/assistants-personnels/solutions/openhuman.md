@@ -3,7 +3,7 @@ title: "OpenHuman"
 description: "Open-source agent harness (Rust + Tauri) with hosted memory by default, optional managed subscription and local-only Privacy mode; to configure for on-premise."
 sidebar:
   order: 1
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -21,7 +21,7 @@ However, it is not a 100% on-premise tool by default. The documentation is expli
 
 ## 💡 Why this project interests us
 
-OpenHuman was, up to its version 1, the most readable example of a "memory-first" assistant: it structured documents into summary trees and kept a human-readable Markdown equivalent. In Q4 2026, that architecture has disappeared from the product in favor of hosted memory (CortexDB)[^2].
+OpenHuman was, up to its version 1, the most readable example of a "memory-first" assistant: it structured documents into summary trees and kept a human-readable Markdown equivalent.
 
 For this vault, it served as the reference for the [[00-lexique/memory-tree|Memory Tree]] pattern up to its version 1; since memory v2 (CortexDB, 2026), it mainly illustrates two other lessons: an assistant's memory can leave the machine even when the model is local, and a "local-only" mode enforced in code is worth more than a configuration[^4][^5].
 
@@ -54,7 +54,7 @@ See the full grid: [[05-agents-et-assistants-on-prem/fondations-communes/soverei
 
 OpenHuman is relevant as:
 
-- a reminder that an assistant's memory can leave the machine even with a local model (local Memory Tree dropped in favor of CortexDB);
+- a reminder that an assistant's memory can leave the machine even with a local model;
 - a comparison page to explain the "local-first ≠ sovereign by default" trap;
 - an example of a hybrid solution not to present as strict on-prem without caveat.
 

@@ -3,7 +3,7 @@ title: "⚙️ Configure vLLM for multi-GPU production"
 description: Installation, tensor parallel configuration, multi-node deployment with Ray, and production best practices for vLLM on NVIDIA GPUs.
 sidebar:
   order: 5
-last_modified: "2026-11-17"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -204,7 +204,7 @@ vllm serve ... \
 The connectors available as of Q4 2026 are `NixlConnector`, `LMCacheConnectorV1`, `MooncakeConnector`, `OffloadingConnector` (CPU offload) and `MultiConnector`; the feature is documented as "experimental and subject to change"[^5]. The `--role` and `--num-speculative-tokens` flags do not exist in `vllm serve` (speculation is configured via `--speculative-config`)[^8].
 
 > [!note] Stability
-> Prefill/Decode disaggregation is available but still actively evolving in 2026. Test in staging before any production deployment. On the security side, use vLLM ≥ 0.33.0 with a KV connector: up to 0.30, a single `prompt_logprobs` request (or `echo` + `logprobs`) on a prefix served by NIXL, LMCache or Mooncake brought the engine down for all clients (High advisory of 9 October 2026), and the former `P2pNcclConnector`, removed in 0.24.0, let one request's KV Cache leak through the `X-Request-Id` header[^14]. On a version earlier than 0.31.0, filter `prompt_logprobs`, `logprobs` and `echo` at the reverse proxy.
+> Prefill/Decode disaggregation is available but still actively evolving in 2026. Test in staging before any production deployment. On the security side, use vLLM ≥ 0.33.0 with a KV connector (see [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]).
 
 ---
 
@@ -223,7 +223,7 @@ export VLLM_API_KEY="YOUR-TOKEN-TO-REPLACE"
 vllm serve ...
 ```
 
-Clients must send `Authorization: Bearer YOUR-TOKEN-TO-REPLACE`. Caution: `--api-key` only protects the `/v1`, `/v2`, `/inference` and `/cohere` paths — `/tokenize`, `/metrics` or `/invocations` remain reachable without a key[^8][^11]. In production, put an authenticating reverse proxy in front of *all* paths (see [[06-mise-en-oeuvre/local-inference-security|Security]]). Since vLLM 0.32.0 (18 October 2026), `--allowed-origins` defaults to `[]` instead of `["*"]` (CVE-2026-115917). A web interface that calls vLLM directly from the browser must declare its origin (`--allowed-origins '["https://chat.interne.example"]'`). Server-side clients (SDKs, curl, LiteLLM) are not affected[^15].
+Clients must send `Authorization: Bearer YOUR-TOKEN-TO-REPLACE`. Caution: `--api-key` does not cover all routes: in production, put an authenticating reverse proxy in front of *all* paths (see [[06-mise-en-oeuvre/local-inference-security|Security]]). Since vLLM 0.32.0 (18 October 2026), `--allowed-origins` defaults to `[]` instead of `["*"]` (CVE-2026-115917). A web interface that calls vLLM directly from the browser must declare its origin (`--allowed-origins '["https://chat.interne.example"]'`). Server-side clients (SDKs, curl, LiteLLM) are not affected[^15].
 
 ### Limits and timeouts
 
@@ -353,8 +353,6 @@ curl http://localhost:8000/metrics | grep vllm
 [^8]: vLLM Project, *CLI Reference — `vllm serve`* (exhaustive flag list: no `--role`, `--request-timeout`, `--calculate-kv-cache-size`; `--speculative-config`), accessed 2026-10-09 · vLLM Project, *Release v0.29.0* (addition of `--max-num-queued-reqs`), 2026-09-09. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/releases/tag/v0.29.0](https://github.com/vllm-project/vllm/releases/tag/v0.29.0)
 [^9]: vLLM Project, *Release v0.28.0* (PyPI wheel and Docker image defaulting to CUDA 13.0, `-cu129` variants), 2026-08-26 · *Release v0.33.0* (CUDA 13.0 only wheels and images, `-cu129` variants removed), 2026-11-02. [https://github.com/vllm-project/vllm/releases/tag/v0.28.0](https://github.com/vllm-project/vllm/releases/tag/v0.28.0) · [https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3](https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3)
 [^10]: vLLM Project, *GGUF* (`vllm-gguf-plugin` plugin, "highly experimental and under-optimized" support, base model tokenizer), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/gguf/](https://docs.vllm.ai/en/stable/features/quantization/gguf/)
-[^11]: vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`--api-key` limited to `/v1`, `/v2`, `/inference`, `/cohere` according to the vLLM *Security* page; `/tokenize` unauthenticated), 2026-10-06. [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
 [^12]: vLLM Project, *Release v0.24.0* (vLLM no longer sets `CUDA_VISIBLE_DEVICES`; `device_ids` argument; variable deprecated on ROCm), 2026-06-29. [https://github.com/vllm-project/vllm/releases/tag/v0.24.0](https://github.com/vllm-project/vllm/releases/tag/v0.24.0)
 [^13]: vLLM Project, *Release v0.31.0* (`quantization="fp8"` renamed `fp8_per_tensor`, former name redirected), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)
-[^14]: vLLM Project, advisories *GHSA-rhcx-5729-88vg* (cross-tenant crash via `prompt_logprobs` and KV connector, fixed 0.31.0; workaround: strip `prompt_logprobs`, `logprobs` and `echo` at the gateway) and *GHSA-vfp2-c8pq-v6h6* (SSRF via `X-Request-Id`, KV Cache leak through `P2pNcclConnector`, connector removed in 0.24.0), 2026-10-09. [https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg](https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-vfp2-c8pq-v6h6](https://github.com/vllm-project/vllm/security/advisories/GHSA-vfp2-c8pq-v6h6)
 [^15]: vLLM Project, *Release v0.32.0* ("Default CORS settings no longer allow every origin in the Python and Rust frontends; set `--allowed-origins` to permit browser origins", #61009; empty list by default; fixes CVE-2026-115917, vLLM ≤ 0.31.x), 18 October 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.32.0](https://github.com/vllm-project/vllm/releases/tag/v0.32.0) · [https://github.com/vllm-project/vllm/pull/61009](https://github.com/vllm-project/vllm/pull/61009)

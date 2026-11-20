@@ -3,7 +3,7 @@ title: "🏗️ Target architecture recommendation"
 description: Realistic path from a Cursor CLI MVP to a sovereign custodian stack based on OpenHands or Aider, Ollama/vLLM, LiteLLM, and SearXNG.
 sidebar:
   order: 6
-last_modified: "2026-11-19"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -22,7 +22,7 @@ To learn fast:
 - dedicated Git branch;
 - human validation.
 
-Cursor CLI (owned by SpaceX since August 2026[^7]) is very productive for testing the idea. Aider is closer to the sovereign target because it can call Ollama directly, but its development has been frozen since May 2026[^1].
+Cursor CLI (owned by SpaceX since August 2026[^7]) is very productive for testing the idea. Aider is closer to the sovereign target because it can call Ollama directly, but its development is frozen (see its [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|fiche]]).
 
 ## Step 2 — Controlled runner
 
@@ -40,7 +40,7 @@ Recommended stack:
 
 | Layer | Recommended choice | Role |
 | :-- | :-- | :-- |
-| Code agent | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands\|OpenHands]] (CLI/SDK) — or [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider\|Aider]], frozen since May 2026, for experiments[^1] | Modifies files and works with Git |
+| Code agent | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands\|OpenHands]] (CLI/SDK) — or [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider\|Aider]] (frozen, see fiche) for experiments | Modifies files and works with Git |
 | Local model | Ollama or vLLM + 27–30B agentic model (Qwen3.8-27B, Muse Glimmer 30B) or specialized coder | On-prem inference with sufficient reasoning |
 | Gateway | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm\|LiteLLM]] ([[00-lexique/litellm\|lexicon]]) — **monthly update mandatory** (vulnerabilities exploited in 2026, one month of support per minor line)[^4][^5] | OpenAI-compatible API, routing, logs |
 | Search | [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/searxng\|SearXNG]] | Self-hosted web search |
@@ -80,7 +80,6 @@ Key point: the agent that **acts** on files needs more reasoning than the assist
 
 ## 📚 Sources and References
 
-[^1]: Aider-AI, *aider* (GitHub repository: last commit on 2026-05-22, latest release v0.86.0 of 2025-08-09), accessed 2026-10-10. [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider)
 [^2]: OpenHands, *Introducing Agent Canvas* (self-hosted control center, scheduled or event-driven automations, LLM profiles, local/Docker/VM/Kubernetes backends, MIT license), 2026-06-16. [https://www.openhands.dev/blog/introducing-agent-canvas](https://www.openhands.dev/blog/introducing-agent-canvas)
 [^3]: OpenHands, *Use any coding agent in OpenHands with ACP* (Agent Client Protocol: Claude Code, Codex, Gemini CLI; `ACPAgent` in the SDK), 2026-06-18. [https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp](https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp)
 [^4]: BerriAI, *GHSA-7hp6-4w63-5g45* (`internal_user` → `proxy_admin` → host execution escalation, CVSS 9.9, fixed in 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30; CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822), catalog dated 2026-10-08. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45) · [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)

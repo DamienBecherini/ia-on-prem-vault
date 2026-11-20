@@ -3,7 +3,7 @@ title: "🧩 RAG & Agents: The knowledge architecture"
 description: "How to give a local LLM private memory and autonomy: from standard RAG to agentic workflows (SmolAgents, LangGraph) and the Memory Tree approach."
 sidebar:
   order: 3
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -52,14 +52,14 @@ Popularized by Microsoft research, **[[00-lexique/graphrag|GraphRAG]]** replaces
 
 ## 3. The [[00-lexique/memory-tree|Memory Tree]] approach
 
-Rather than using a heavy vector database, an alternative architecture relies on **hierarchical Markdown folders** and a local metadata store (SQLite). The idea is to give the agent a *summarized* view of available knowledge, and load detail only when needed. This pattern, which this vault calls [[00-lexique/memory-tree|Memory Tree]], was popularized by the early versions of OpenHuman; as of 2026-10-09, the project has removed its local memory tree in favor of a CortexDB engine (hosted or self-hosted)[^6], so you must implement it yourself or with another tool.
+Rather than using a heavy vector database, an alternative architecture relies on **hierarchical Markdown folders** and a local metadata store (SQLite). The idea is to give the agent a *summarized* view of available knowledge, and load detail only when needed. This pattern, which this vault calls [[00-lexique/memory-tree|Memory Tree]], was popularized by the early versions of [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]], which no longer implements it[^6]: you must therefore implement it yourself or with another tool.
 
 *   **Hierarchy:** The agent never loads a full document into memory. It uses the LLM to read the "title" and a "one-line summary" of the file tree.
 *   **Selective injection:** If it judges a file relevant, the agent calls a function to "unfold" that specific tree node and read its exact content.
 *   **Architectural advantage:** Context stays tiny (a few hundred tokens for summaries), keeping [[00-lexique/ttft|TTFT]] (time to first token) under one second and preserving hardware resources, even with a heavy dense model.
 
 > [!tip] Go further
-> This pattern is no longer implemented as such by OpenHuman (memory moved out to CortexDB since 2026 — see the [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] entry). See the comparison [[05-agents-et-assistants-on-prem/assistants-personnels/index|On-Premise Personal Assistants]] for alternatives and their degree of sovereignty.
+> See the comparison [[05-agents-et-assistants-on-prem/assistants-personnels/index|On-Premise Personal Assistants]] for alternatives and their degree of sovereignty.
 
 ---
 
@@ -75,7 +75,7 @@ Vector database choice depends on data volume, required sovereignty level, and a
 | **pgvector** | PostgreSQL extension | Vectors in existing database | Performance < native vector DBs | Existing Postgres stack |
 | **SQLite + sqlite-vec** | Local file | Zero dependencies, max sovereignty | No H-scale scalability | Solo, Memory Tree patterns |
 
-State of play in Q4 2026: Qdrant 1.19 (August 2026) stores vectors directly in 4-bit (TurboQuant) with `cold` / `cached` / `pinned` memory tiers per component; 1.20 (22 October 2026) adds the `turbo8` / `turbo16` types, BM25 scoring on the full-text index and a redirectable audit log (file, stdout or stderr), and tightens security: internal authentication between nodes is enforced by default as soon as an API key is configured, and vector names that escape the segment directory are rejected; if you stay on 1.19, move at a minimum to **1.19.2** (5 October 2026), which fixes filtered searches returning zero results and torn writes that could corrupt storage, and warns at startup if no API key is configured; Milvus 3.0 (GA on 29 July 2026) queries Parquet, Lance and Iceberg in place; **pgvector 0.8.3 to 0.8.7 fix HNSW index corruption on vacuum and IVFFlat buffer overflows — update any instance ≤ 0.8.2**[^14]. `sqlite-vss` is no longer developed; its author points to `sqlite-vec`[^12].
+State of play in Q4 2026: Qdrant, at a minimum **1.19.2** (5 October 2026), which fixes filtered searches returning zero results and torn writes that could corrupt storage, and warns at startup if no API key is configured; 1.20 (22 October 2026) enforces internal authentication between nodes by default as soon as an API key is configured and rejects vector names that escape the segment directory; **pgvector 0.8.3 to 0.8.7 fix HNSW index corruption on vacuum and IVFFlat buffer overflows — update any instance ≤ 0.8.2**[^14]. `sqlite-vss` is no longer developed; its author points to `sqlite-vec`[^12].
 
 > [!tip] Quick start with Qdrant locally
 > ```bash
