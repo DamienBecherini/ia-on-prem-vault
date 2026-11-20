@@ -3,7 +3,7 @@ title: "Open WebUI"
 description: Self-hosted web interface for Ollama and OpenAI-compatible backends, suited to local multi-user deployments.
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -60,7 +60,7 @@ Open WebUI is a good companion to the blueprints:
 
 ## 📊 Project maturity
 
-Very widely used and actively maintained project (about 154,000 GitHub stars, v0.11.4 as of 2026-09-21), with a large GitHub community and plugin ecosystem. Product maturity is good, but the attack surface follows: 88 security advisories published between June and September 2026, including about thirty of high severity (account takeover via OAuth, SSRF toward internal services, cross-user tool execution) and three exploitable without an account. Fixes ship only in current releases: an SME must follow the release train without ever staying below 0.11.4 (2026-09-21), which fixes the 15 advisories published in late September 2026, including a session token theft that can be triggered from any website as long as community sharing (on by default) stays open. It must not pin a version and must apply the official hardening guide[^4].
+Very widely used and actively maintained project (about 154,000 GitHub stars, v0.13.4 as of 2026-11-17), with a large GitHub community and plugin ecosystem. Product maturity is good, but the attack surface follows: 88 security advisories published between June and September 2026, including about thirty of high severity (account takeover via OAuth, SSRF toward internal services, cross-user tool execution) and three exploitable without an account. Fixes ship only in current releases: an SME must follow the release train without ever staying below 0.13.1 (2026-11-08). Like 0.12.4 and 0.12.5, it ships security fixes whose advisories the vendor will only publish once CVEs are assigned. The vendor recommends going straight to 0.13.4 (2026-11-17), after a database backup: 0.13.1 changes the schema, which requires updating all instances at the same time. 0.13.4 also removes Direct Connections, that is, the models and tool servers that each user added in their settings. They now go through the Tether desktop app, free for personal non-commercial use but subject to an Enterprise license in a business setting[^8]. It must not pin a version and must apply the official hardening guide[^4].
 
 ## 🔗 See also
 
@@ -79,3 +79,4 @@ Very widely used and actively maintained project (about 154,000 GitHub stars, v0
 [^5]: Open WebUI — *License* (BSD-3 up to v0.6.5; branding clause since v0.6.6 of 2025-04-19, "50 users or fewer over 30 days" exemption, not OSI-approved), accessed 2026-10-10. <https://docs.openwebui.com/license/>
 [^6]: Open WebUI — *Releases* v0.10.0 (2026-06-29: shared folders, external knowledge bases, context compaction) and v0.11.0 (2026-07-27: sub-agents, LDAP group synchronization). <https://github.com/open-webui/open-webui/releases/tag/v0.10.0> · <https://github.com/open-webui/open-webui/releases/tag/v0.11.0>
 [^7]: Open WebUI — *Dockerfile* (`SCARF_NO_ANALYTICS=true`, `DO_NOT_TRACK=true`, `ANONYMIZED_TELEMETRY=false` by default), read on 2026-10-09. <https://github.com/open-webui/open-webui/blob/main/Dockerfile>
+[^8]: Open WebUI, *Open WebUI v0.13.4: AI that does the work, not just answers* ("go straight to v0.13.4"; v0.13.1 includes security fixes whose advisories will be published once CVEs are assigned; schema change, no gradual update; Direct Connections replaced in v0.13.4 by Tether, free for personal non-commercial use, Enterprise license required in an organization), 2026-11-19 · *Open WebUI v0.12.4 and v0.12.5* (security fixes in both versions), 2026-11-04 · *Releases* (v0.13.1 of 2026-11-08, v0.13.4 of 2026-11-17). <https://openwebui.com/blog/v0-13-4-ai-that-does-the-work-not-just-answers> · <https://openwebui.com/blog/v0-12-4-and-v0-12-5-accessibility-and-shared-notes> · <https://github.com/open-webui/open-webui/releases>
