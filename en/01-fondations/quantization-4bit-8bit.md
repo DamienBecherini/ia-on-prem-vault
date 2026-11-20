@@ -3,7 +3,7 @@ title: 🗜️ Quantization (4-bit & 8-bit)
 description: Understand the mathematical physics of model compression (GGUF, AWQ, MXFP4) and the Perplexity vs VRAM trade-off.
 sidebar:
   order: 4
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -119,7 +119,7 @@ For sovereign on-premise local agent deployments:
 
 1.  **SMB standard (CPU / Mac / hybrid):** **Q4_K_S or Q4_K_M in GGUF** via llama.cpp — best documented size/quality/speed compromise for Llama 3.1-8B; step up to **Q5_0** if quality margin matters more [^4].
 2.  **Shared GPU inference (vLLM / TensorRT-LLM):** **FP8** on weights (Hopper/Blackwell/recent RTX) or **AWQ INT4** depending on the engine; FP8 cuts VRAM ~×2 with low degradation when well calibrated, without being strictly identical to BF16 [^1][^6]. Option names change fast (vLLM 0.31: `fp8` → `fp8_per_tensor`; SGLang ≥ 0.5.16: NVFP4 via FlashInfer only) and FP4 on workstation GPUs (SM120: RTX 50, RTX PRO 6000) remains partially supported in TensorRT-LLM as of Q4 2026: test your engine/GPU pairing before buying [^13][^15].
-3.  **Avoid Q2 and aggressive Q3 in production:** `Q3_K_S` and `Q2_K` noticeably degrade reasoning (GSM8K) and perplexity; reserve for extreme RAM constraints [^4][^10].
+3.  **Avoid Q2 and aggressive Q3 in production:** `Q3_K_S` and `Q2_K` noticeably degrade reasoning (GSM8K) and perplexity; reserve for extreme RAM constraints [^4][^10]. This rule applies to a model requantized after the fact. A 2-bit model shipped by the vendor and trained for that format is a different case: Nemotron 3.5 Bolt 74B-A9B (October 2026), whose experts are in IQ2_XXS via QAD distillation, and which NVIDIA considers better than smaller 4-bit models at equal memory. Judge it on your own benchmarks [^16].
 4.  **FP4 (NVFP4/MXFP4):** natively accelerated on **Blackwell** (B200, RTX 50, RTX PRO 6000, DGX Spark); since 2026 it is also a **delivery format**: Kimi K3 is trained in native MXFP4 (QAT), gpt-oss and Nemotron 3.5 Lightning are published in official MXFP4 / NVFP4 (≈ 22 GB for Lightning), Mistral Small 4 has its NVFP4 repository [^12]. When the vendor provides this checkpoint, prefer it over a community re-quantization; on pre-Blackwell GPUs, the engine falls back to a slower W4A16 path. Always validate on your business benchmarks [^8][^9].
 
 ---
@@ -141,3 +141,4 @@ For sovereign on-premise local agent deployments:
 [^13]: DeepSeek AI, *DeepSeek-V4.1-Flash* ("FP4 main KV caching", E2M1 + one E4M3 scale per 16 channels, 890 bytes per token, MIT), 2026. <https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash>; vLLM Project, *Release v0.31.0* (FlashMLA + compressed NVFP4 KV cache by default on SM100 for DeepSeek-V4.1-Flash), 5 October 2026. <https://github.com/vllm-project/vllm/releases/tag/v0.31.0>
 [^14]: AMD, *AMD Instinct MI350X GPU* — product brochure (CDNA 4: hardware support for FP6 and FP4 OCP MX formats, in addition to FP16 / FP8; the MI300X, CDNA 3, stops at FP8), consulted 2026-10-10. <https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi350x-gpu-brochure.pdf>
 [^15]: SGLang Project, *Release v0.5.16* (NVFP4 GEMM via FlashInfer only), 2026. <https://github.com/sgl-project/sglang/releases/tag/v0.5.16> · NVIDIA, *TensorRT-LLM — Releases* (1.3.0 rc26/rc27: NVFP4 W4A16 MoE not supported on SM120), captured 2026-10-09. <https://github.com/NVIDIA/TensorRT-LLM/releases>
+[^16]: NVIDIA Research, *NVIDIA Nemotron 3.5 Bolt 74B-A9B 24GB* (FC1/FC2 experts in IQ2_XXS at 2.0625 bits per element via quantization-aware distillation, Mamba layers in NVFP4, embeddings and attention in Q8_0; "better than similarly sized models that are trained from scratch and quantized to 4 bit"), 2026-10-15. <https://research.nvidia.com/labs/nemotron/Nemotron-3.5-Bolt-24GB/>
