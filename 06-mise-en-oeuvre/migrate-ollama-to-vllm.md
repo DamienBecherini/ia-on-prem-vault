@@ -247,7 +247,7 @@ Le rollback complet prend < 2 minutes si Ollama était simplement arrêté (pas 
 ## Checklist de migration
 
 ```
-□ vLLM ≥ 0.33.0 installé, trust_remote_code désactivé
+□ vLLM ≥ 0.34.0 installé, trust_remote_code désactivé
 □ Équivalent HuggingFace identifié pour chaque modèle Ollama utilisé
 □ Modèles téléchargés et chargés dans vLLM (test /health OK)
 □ --served-model-name configuré pour la compatibilité des noms

@@ -130,7 +130,7 @@ scrape_configs:
       - targets: ['host.docker.internal:2019']  # endpoint /metrics du reverse proxy
 ```
 
-Le endpoint `/metrics` de vLLM n'est pas protégé par `--api-key` : ne l'exposez qu'au réseau de Prometheus. Version minimale : vLLM ≥ 0.33.0 (voir [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]).
+Le endpoint `/metrics` de vLLM n'est pas protégé par `--api-key` : ne l'exposez qu'au réseau de Prometheus. Version minimale : vLLM ≥ 0.34.0 (voir [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]).
 
 > [!note] Ollama vs vLLM
 > vLLM expose nativement un endpoint `/metrics` compatible Prometheus[^1]. Ollama n'expose pas de `/metrics` Prometheus documenté au T4 2026[^10] : instrumentez au niveau du reverse proxy (Caddy expose nativement des métriques Prometheus sur son endpoint admin `:2019/metrics` ; Nginx via `nginx-prometheus-exporter`) ou exploitez les champs `eval_count`, `eval_duration` et `prompt_eval_duration` des réponses `/api/generate` et `/api/chat` (section 7). Les exporters communautaires cités dans les anciennes versions de ce guide ne sont plus disponibles (dépôts supprimés au 2026-10-09).
@@ -186,7 +186,7 @@ NVIDIA DCGM Exporter expose des métriques GPU détaillées[^3] :
 | :-- | :-- | :-- |
 | `DCGM_FI_DEV_GPU_UTIL` | Utilisation GPU (%) | < 10% pendant > 5 min (gaspillage) |
 | `DCGM_FI_DEV_MEM_COPY_UTIL` | Utilisation bus mémoire (%) | > 90% soutenu |
-| `DCGM_FI_DEV_FB_USED` | VRAM utilisée (MiB) | > 95% de la VRAM totale |
+| `DCGM_FI_DEV_FB_USED` | VRAM utilisée (MiB) | > 95% de la VRAM totale (sauf GPU servis par vLLM ≥ 0.34, qui occupe volontairement presque toute la VRAM : surveiller plutôt `vllm:kv_cache_usage_perc`) |
 | `DCGM_FI_DEV_GPU_TEMP` | Température GPU (°C) | > 83°C (throttling probable) |
 | `DCGM_FI_DEV_POWER_USAGE` | Consommation (W) | > TDP déclaré |
 | `DCGM_FI_DEV_NVLINK_BANDWIDTH_TOTAL` | Débit NVLink agrégé (Mo/s) | — (trend sur clusters) |
@@ -276,6 +276,7 @@ groups:
           description: "Température GPU à {{ $value }}°C — throttling probable."
 
       - alert: VRAMAlmostFull
+        # Sur les GPU servis par vLLM ≥ 0.34, qui réserve volontairement presque toute la VRAM, cette alerte se déclencherait en permanence : excluez ces GPU et surveillez plutôt vllm:kv_cache_usage_perc (alerte VLLMKVCacheHigh)
         # DCGM_FI_DEV_FB_TOTAL doit être ajouté au fichier de compteurs (section 4) ;
         # sinon : DCGM_FI_DEV_FB_USED / (DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE)
         expr: (DCGM_FI_DEV_FB_USED / DCGM_FI_DEV_FB_TOTAL) > 0.95

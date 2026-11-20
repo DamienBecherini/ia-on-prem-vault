@@ -29,7 +29,8 @@ Contraste avec vLLM : TensorRT-LLM vise le plafond de performance sur GPU NVIDIA
 Incontournable pour amortir le coût des accélérateurs professionnels en datacenter. La référence du Scénario D.
 
 ## ⚠️ Pièges fréquents
-- Confondre version stable (1.2.x) et *release candidates* 1.3.0rcN : au T4 2026, la dernière stable est la 1.2.1 (avril 2026) ; les RC apportent les nouveaux modèles et kernels mais changent d'API d'une RC à l'autre (ex. priorité CLI > YAML depuis rc18). Épinglez la version en production[^1][^2].
+- Confondre version stable et *release candidates* : au T4 2026, la dernière stable est la 1.3.0 (20 novembre 2026, publiée après 30 RC), tandis que la 1.4 est déjà en *release candidates* (1.4.0rcN) ; les RC apportent les nouveaux modèles et kernels mais changent d'API d'une RC à l'autre, et le passage 1.2.x → 1.3.0 comporte des changements cassants (ex. priorité CLI > YAML). Épinglez la version en production et relisez les notes de version avant de monter[^1][^4].
+- Depuis la 1.3, la télémétrie d'usage anonyme est activée par défaut : sur un déploiement souverain ou isolé, désactivez-la (`TRTLLM_NO_USAGE_STATS=1`, `DO_NOT_TRACK=1` ou `--no-telemetry`)[^4].
 - Pas adapté aux Mac ; sur station de travail, le support se limite au DGX Spark (bêta mono-nœud depuis la 1.2) et aux RTX PRO 6000 / RTX 50 avec des problèmes connus au T3 2026[^1][^3].
 
 ## 📚 Pour comprendre en profondeur
@@ -43,5 +44,6 @@ Incontournable pour amortir le coût des accélérateurs professionnels en datac
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
 [^1]: NVIDIA, *TensorRT-LLM Release Notes* (1.0 : PyTorch par défaut ; 1.2 : backend TensorRT et `trtllm-build` retirés ; 1.3 RC : backend MoE TRITON déprécié), consulté le 2026-10-09. <https://nvidia.github.io/TensorRT-LLM/release-notes.html>
-[^2]: PyPI, `tensorrt-llm` (historique des versions : 1.2.1 stable, 1.3.0rc29), consulté le 2026-10-09. <https://pypi.org/project/tensorrt-llm/>
+[^2]: PyPI, `tensorrt-llm` (historique des versions : 1.3.0 stable du 2026-11-20, 1.4.0rc0 → rc4), consulté le 2026-11-20. <https://pypi.org/project/tensorrt-llm/>
 [^3]: NVIDIA, *TensorRT-LLM — Releases* (notes 1.3.0rc26 / rc27 : problèmes connus SM120, modèles MoE NVFP4 non pris en charge sur RTX 50 / RTX PRO 6000), septembre 2026. <https://github.com/NVIDIA/TensorRT-LLM/releases>
+[^4]: NVIDIA, *TensorRT-LLM — Release v1.3.0* (première version stable de la ligne 1.3 après 30 RC ; télémétrie d'usage activée par défaut, désactivable par `TRTLLM_NO_USAGE_STATS=1`, `DO_NOT_TRACK=1` ou `--no-telemetry`), 20 novembre 2026. <https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v1.3.0>
