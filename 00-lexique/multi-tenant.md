@@ -45,7 +45,7 @@ Qdrant permet de scoper les recherches vectorielles via des filtres sur le *payl
 - Croire qu'une collection vectorielle par tenant suffit sans contrôler les clés d'API partagées.
 - Oublier d'isoler aussi les pipelines d'indexation : un worker qui indexe le mauvais corpus contamine toute la base.
 - Négliger les tests de non-régression sur l'isolation à chaque changement de schéma ou de requête.
-- Oublier que le moteur d'inférence partagé est aussi un point de défaillance commun : en 2026, plusieurs avis vLLM ont montré qu'une seule requête d'un tenant pouvait faire tomber le moteur pour tous, d'où une version à jour (≥ 0.33.0 en novembre 2026, voir [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]) et des quotas par tenant au gateway[^4].
+- Oublier que le moteur d'inférence partagé est aussi un point de défaillance commun : en 2026, plusieurs avis vLLM ont montré qu'une seule requête d'un tenant pouvait faire tomber le moteur pour tous, d'où une version à jour (≥ 0.34.0 au T4 2026, voir [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]) et des quotas par tenant au gateway[^4].
 
 ## 📚 Pour comprendre en profondeur
 
@@ -62,4 +62,4 @@ Qdrant permet de scoper les recherches vectorielles via des filtres sur le *payl
 [^1]: OWASP GenAI Security Project, *LLM Top 10 for LLM Applications (2025)*. <https://genai.owasp.org/llm-top-10/>
 [^2]: Crunchy Data, *Row Level Security for Tenants in Postgres*. <https://www.crunchydata.com/blog/row-level-security-for-tenants-in-postgres>
 [^3]: Qdrant, *Multitenancy*. <https://qdrant.tech/documentation/manage-data/multitenancy/>
-[^4]: vLLM, advisories *GHSA-rhcx-5729-88vg* (DoS inter-tenants via `prompt_logprobs`, corrigé 0.31.0) et *GHSA-gx7p-2j49-hfq4* (DoS non authentifié via `mm_processor_kwargs`, corrigé 0.31.0), 6–9 octobre 2026 · *GHSA-q9v9-qpjp-fc24* (arrêt du moteur sous `--skip-tokenizer-init`, corrigé 0.33.0), 2 novembre 2026. <https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg> · <https://github.com/vllm-project/vllm/security/advisories/GHSA-gx7p-2j49-hfq4> · <https://github.com/vllm-project/vllm/security/advisories/GHSA-q9v9-qpjp-fc24>
+[^4]: vLLM, advisories *GHSA-rhcx-5729-88vg* (DoS inter-tenants via `prompt_logprobs`, corrigé 0.31.0) et *GHSA-gx7p-2j49-hfq4* (DoS non authentifié via `mm_processor_kwargs`, corrigé 0.31.0), 6–9 octobre 2026 · *GHSA-q9v9-qpjp-fc24* (arrêt du moteur sous `--skip-tokenizer-init`, corrigé 0.33.0), 2 novembre 2026 · *GHSA-xgh8-qwjh-q853* (contournement du verrou des chat templates via `/v1/systemone`, corrigé 0.34.0), 18 novembre 2026. <https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg> · <https://github.com/vllm-project/vllm/security/advisories/GHSA-gx7p-2j49-hfq4> · <https://github.com/vllm-project/vllm/security/advisories/GHSA-q9v9-qpjp-fc24> · <https://github.com/vllm-project/vllm/security/advisories/GHSA-xgh8-qwjh-q853>

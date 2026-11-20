@@ -69,13 +69,13 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --port 8000 \
   --dtype bfloat16 \                    # bf16 natif sur Ampere+, plus stable que fp16
   --max-model-len 8192 \               # fenêtre de contexte max (limite le KV Cache)
-  --gpu-memory-utilization 0.92 \      # fraction de VRAM allouée à vLLM (défaut 0.92 ; 0.85-0.95)
+  --gpu-memory-utilization 1.0 \      # fraction de VRAM allouée à vLLM (défaut 1.0 depuis la 0.34 ; à omettre sur un GPU dédié)
   --max-num-seqs 256 \                 # requêtes concurrentes max en continuous batching
   --served-model-name llama-70b        # alias dans l'API (évite d'exposer le chemin HF)
 ```
 
 **Paramètre critique — `gpu-memory-utilization` :**
-vLLM réserve au démarrage la fraction indiquée de VRAM pour l'ensemble du moteur (poids, activations et KV Cache) ; le défaut documenté au T4 2026 est 0.92. Si vos prompts sont longs ou si vous avez beaucoup de requêtes concurrentes, montez à 0.95. Si des OOM apparaissent, descendez à 0.85[^2].
+vLLM réserve la fraction indiquée de VRAM pour l'ensemble du moteur (poids, activations et KV Cache). Depuis la 0.34, le cache KV extensible est actif par défaut : vLLM mesure la mémoire libre après la capture des graphes CUDA, et `gpu-memory-utilization` vaut 1.0 par défaut (0.92 auparavant). Sur un GPU dédié, ne fixez plus de valeur : une valeur explicite comme 0.92 donne désormais un cache plus petit. Fixez une valeur (0.85-0.9) seulement si d'autres processus partagent le GPU ou la mémoire (DGX Spark) ; `--no-enable-extensible-kv-cache` rétablit l'ancien dimensionnement[^2][^16].
 
 > [!warning] Dépassement de `max-model-len` → HTTP 400, pas de troncature silencieuse
 > Si un client envoie un prompt + historique qui dépasse `--max-model-len`, vLLM **rejette la requête** avec `HTTP 400 Bad Request: prompt is too long (X tokens > Y max)`. Il ne tronque **pas** le texte automatiquement.
@@ -121,8 +121,7 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
 
 # 4 GPU — modèle 70B avec marges confortables
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
-  --tensor-parallel-size 4 \
-  --gpu-memory-utilization 0.92
+  --tensor-parallel-size 4
 
 # 8 GPU — modèle 405B ou MoE massif
 vllm serve meta-llama/Llama-3.1-405B-Instruct \
@@ -204,7 +203,7 @@ vllm serve ... \
 Les connecteurs disponibles au T4 2026 sont `NixlConnector`, `LMCacheConnectorV1`, `MooncakeConnector`, `OffloadingConnector` (déport CPU) et `MultiConnector` ; la fonctionnalité est documentée comme « expérimentale et susceptible de changer »[^5]. Les flags `--role` et `--num-speculative-tokens` n'existent pas dans `vllm serve` (la spéculation se configure via `--speculative-config`)[^8].
 
 > [!note] Stabilité
-> La désagrégation Prefill/Decode est disponible mais encore en évolution active en 2026. À tester en staging avant tout déploiement production. Côté sécurité, utilisez vLLM ≥ 0.33.0 avec un connecteur KV (voir [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]).
+> La désagrégation Prefill/Decode est disponible mais encore en évolution active en 2026. À tester en staging avant tout déploiement production. Côté sécurité, utilisez vLLM ≥ 0.34.0 avec un connecteur KV (voir [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]).
 
 ---
 
@@ -253,13 +252,12 @@ En environnement multi-utilisateurs ou multi-agents, plusieurs requêtes partage
 
 ```bash
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
-  --max-model-len 8192 \
-  --gpu-memory-utilization 0.92
+  --max-model-len 8192
 # L'APC est actif par défaut ; --no-enable-prefix-caching pour le couper,
 # --prefix-caching-hash-algo xxhash pour un hachage plus rapide (sha256 par défaut)
 ```
 
-**Fonctionnement :** vLLM hache chaque bloc de KV Cache (taille `--block-size`, choisie par défaut selon le backend d'attention)[^2]. Si une nouvelle requête commence par la même séquence de blocs qu'une requête précédente encore en cache GPU, les vecteurs Key/Value sont réutilisés directement — sans recalcul du Prefill[^7].
+**Fonctionnement :** vLLM hache chaque bloc de KV Cache (taille `--block-size`, 64 tokens par défaut depuis la 0.34 au lieu de 16 ; seuls les blocs complets sont réutilisés, donc un préfixe partagé court peut ne plus profiter du cache : comparez avec `--block-size 16`)[^2]. Si une nouvelle requête commence par la même séquence de blocs qu'une requête précédente encore en cache GPU, les vecteurs Key/Value sont réutilisés directement — sans recalcul du Prefill[^7].
 
 **Impact mesuré :**
 
@@ -289,8 +287,7 @@ Environment="CUDA_VISIBLE_DEVICES=0,1,2,3"
 ExecStart=/usr/local/bin/vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --tensor-parallel-size 4 \
   --host 127.0.0.1 \
-  --port 8000 \
-  --gpu-memory-utilization 0.92
+  --port 8000
 Restart=always
 RestartSec=10
 
@@ -356,3 +353,4 @@ curl http://localhost:8000/metrics | grep vllm
 [^12]: vLLM Project, *Release v0.24.0* (vLLM ne positionne plus `CUDA_VISIBLE_DEVICES` ; argument `device_ids` ; variable dépréciée sur ROCm), 2026-06-29. <https://github.com/vllm-project/vllm/releases/tag/v0.24.0>
 [^13]: vLLM Project, *Release v0.31.0* (`quantization="fp8"` renommé `fp8_per_tensor`, ancien nom redirigé), 2026-10-05. <https://github.com/vllm-project/vllm/releases/tag/v0.31.0>
 [^15]: vLLM Project, *Release v0.32.0* (« Default CORS settings no longer allow every origin in the Python and Rust frontends; set `--allowed-origins` to permit browser origins », #61009 ; liste vide par défaut ; corrige CVE-2026-115917, vLLM ≤ 0.31.x), 18 octobre 2026. <https://github.com/vllm-project/vllm/releases/tag/v0.32.0> · <https://github.com/vllm-project/vllm/pull/61009>
+[^16]: vLLM Project, *Release v0.34.0* (« Before you upgrade » : Model Runner V1 retiré ; `--block-size` 64 par défaut au lieu de 16 ; cache KV extensible actif par défaut et `gpu_memory_utilization` à 1.0, ancien dimensionnement via `--gpu-memory-utilization 0.9` ou `--no-enable-extensible-kv-cache` ; artefacts ROCm 7.2 retirés), 16 novembre 2026. <https://github.com/vllm-project/vllm/releases/tag/v0.34.0>

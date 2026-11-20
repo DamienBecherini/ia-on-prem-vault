@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -28,7 +28,7 @@ Standard de facto pour les datacenters souverains. La seule architecture qui gar
 
 ## ⚠️ Pièges fréquents
 - Complexe à administrer : nécessite réseau IA configuré (RoCE/InfiniBand), stockage partagé, compétences HPC.
-- Laisser un cluster multi-nœuds sans authentification : depuis Ray 2.59 (2 octobre 2026), l'authentification par jeton n'est active par défaut que sur les clusters locaux ; un cluster distant ou multi-nœuds reste ouvert jusqu'à Ray 2.61, sauf si `RAY_AUTH_MODE=token` est posé sur chaque nœud[^1].
+- Laisser un cluster multi-nœuds sans authentification : depuis Ray 2.59 (2 octobre 2026), l'authentification par jeton n'est active par défaut que sur les clusters locaux ; au T4 2026 (Ray 2.60 incluse), un cluster distant ou multi-nœuds reste ouvert tant que Ray 2.61 n'est pas sortie, sauf si `RAY_AUTH_MODE=token` est posé sur chaque nœud[^1]. Ray 2.61 exigera le même jeton sur chaque nœud et chaque client : générez-le (`ray get-auth-token --generate`) et distribuez-le avant la mise à jour, sinon les nœuds et les clients ne pourront plus se connecter au cluster[^1].
 - Inutile et surdimensionné pour les scénarios bureau ou PME.
 
 ## 📚 Pour comprendre en profondeur

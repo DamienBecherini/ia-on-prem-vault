@@ -154,7 +154,7 @@ Since 2 August 2026, Article 50 of Regulation (EU) 2024/1689 (EU AI Act) has imp
 | Healthcare | HDS (Health Data Hosting) | The host must be HDS-certified. Non-certified clouds are excluded. |
 | Legal | Professional secrecy | Attorney–client exchanges cannot transit through third parties. |
 | Defense / Government | Defense secrecy, IGI 1300 | Isolated networks mandatory for certain classification levels. |
-| Finance | PSD2; NIS2 (not transposed in France as of Q4 2026 — the Commission referred the matter to the CJEU on 8 July 2026[^8]) | Data localization and auditability requirements for critical systems; anticipate NIS2 without waiting for the transposition law. |
+| Finance | PSD2; NIS2 (not transposed in France as of Q4 2026 — the Commission referred the matter to the CJEU on 8 July 2026[^8]; the "Résilience" bill, adopted by the Senate on 12 March 2025 and then, as amended, by the National Assembly on 17 November 2026, awaits the joint committee (commission mixte paritaire) before promulgation[^19]) | Data localization and auditability requirements for critical systems; anticipate NIS2 without waiting for the law to be promulgated and its implementing decrees, now close. |
 
 ---
 
@@ -257,3 +257,4 @@ The model and the entire inference stack run **at the end customer**, on their o
 [^16]: Hugging Face, model cards *deepseek-ai/DeepSeek-V4.1-Flash* (MIT license, 763B parameters in safetensors), *moonshotai/Kimi-K3* ("Kimi K3" license, 2.8T parameters including 104B active) and *zai-org/GLM-5.3* ("glm-5.3" license, 753B parameters), read on 2026-10-10. <https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash> · <https://huggingface.co/moonshotai/Kimi-K3> · <https://huggingface.co/zai-org/GLM-5.3>
 [^17]: EU AI Act Service Desk, *Article 99 — Penalties* (§ 4 (g): non-compliance with Art. 50, "whichever is higher"), read on 2026-10-09. <https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-99>
 [^18]: Aleph Alpha, *Kolibri-1* (78B MoE, 3.46B active, Apache 2.0, German and English, FP8 weights ≈ 78 GB, signatory of the EU GPAI code of practice), 2026-10-03. <https://huggingface.co/Aleph-Alpha/Kolibri-1>
+[^19]: Assemblée nationale, legislative file *Projet de loi relatif à la résilience des infrastructures critiques et au renforcement de la cybersécurité* (text amended by the Assemblée nationale on 2026-11-17, T.A. no. 366) and *Analyse du scrutin n° 9916* (first reading, 464 for, 64 against, 16 abstentions), read on 2026-11-20. <https://www.assemblee-nationale.fr/dyn/17/dossiers/DLR5L17N50731> · <https://www.assemblee-nationale.fr/dyn/17/scrutins/9916>
