@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -24,7 +24,7 @@ GGUF (successeur de GGML) regroupe tout ce dont le moteur a besoin en un seul fi
 Avantages majeurs : chargement immédiat sans compilation, portabilité entre CPU/GPU/Mac, et gestion native de l'[[00-lexique/offloading|offloading]] partiel vers la RAM si la VRAM est insuffisante.
 
 ## 💡 Pourquoi c'est important en IA on-premise
-Standard de fait pour les postes de travail, Mac et homelab. Une grande partie des modèles du Hub a une déclinaison GGUF (souvent communautaire : unsloth, bartowski, ggml-org) ; sur Apple Silicon, Ollama exécute depuis la 0.40 (octobre 2026) les architectures prises en charge via MLX plutôt que GGUF, et les éditeurs publient d'abord des checkpoints FP8/NVFP4 officiels[^2]. À connaître pour le Scénario A (labo dev) et le Scénario B (Mac Studio).
+Standard de fait pour les postes de travail, Mac et homelab. Une grande partie des modèles du Hub a une déclinaison GGUF (souvent communautaire : unsloth, bartowski, ggml-org) ; sur Apple Silicon, [[06-mise-en-oeuvre/getting-started-with-ollama|Ollama]] exécute les architectures prises en charge via MLX plutôt que GGUF, et les éditeurs publient d'abord des checkpoints FP8/NVFP4 officiels[^2]. À connaître pour le Scénario A (labo dev) et le Scénario B (Mac Studio).
 
 ## ⚠️ Pièges fréquents
 - GGUF/llama.cpp sert plusieurs utilisateurs (continuous batching activé par défaut dans `llama-server`, slots parallèles `-np`), mais sans la gestion mémoire paginée ni le parallélisme multi-GPU de vLLM/SGLang : au-delà de quelques utilisateurs simultanés sur un modèle lourd, le débit par utilisateur s'effondre plus vite qu'avec un moteur GPU de production[^1].

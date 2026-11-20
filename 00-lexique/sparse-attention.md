@@ -9,7 +9,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-11"
+last_modified: "2026-11-20"
 ---
 
 ## 📝 Définition courte
@@ -22,7 +22,7 @@ Dans l'attention classique, chaque token compare son contenu à **tous** les tok
 
 Une analogie : pour retrouver une information dans un long dossier, vous lisez la table des matières, puis vous n'ouvrez que les pages utiles.
 
-Exemple : la **DeepSeek Sparse Attention (DSA)** de DeepSeek-V3.2. Un petit module rapide, le *lightning indexer*, note la pertinence de chaque token passé, puis le modèle ne fait l'attention complète que sur les 2 048 tokens les mieux notés. DeepSeek indique que le coût de l'attention principale passe de $O(L^2)$ à $O(L \cdot k)$, $k$ étant le nombre de tokens retenus[^1].
+Exemple : la **DeepSeek Sparse Attention (DSA)** de DeepSeek-V3.2[^1], détaillée dans [[01-fondations/kv-cache-and-context|💾 KV Cache & Contexte]].
 
 ## 💡 Pourquoi c'est important en IA on-premise
 

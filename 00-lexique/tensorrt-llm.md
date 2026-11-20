@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -19,11 +19,11 @@ verified_hitl_url: "https://damien.becherini.fr"
 SDK officiel NVIDIA d'inférence LLM à architecture PyTorch native, avec kernels bas niveau (FP8/NVFP4, attention optimisée) et serveur `trtllm-serve` compatible OpenAI, pour tirer le maximum des GPU datacenter (H100, B200)[^1].
 
 ## 📖 Définition détaillée
-Depuis la version 1.0 (septembre 2025), TensorRT-LLM repose sur une architecture PyTorch native : le modèle est chargé et servi directement (`trtllm-serve`, API LLM Python), les optimisations (FP8/NVFP4, fusion d'opérations, attention paginée) étant appliquées à l'exécution. La version 1.2 (mars 2026) a retiré l'ancien backend TensorRT et ses outils de compilation (`trtllm-build`) : il n'y a plus de compilation préalable d'un « engine »[^1].
+TensorRT-LLM repose sur une architecture PyTorch native : le modèle est chargé et servi directement (`trtllm-serve`, API LLM Python), les optimisations (FP8/NVFP4, fusion d'opérations, attention paginée) étant appliquées à l'exécution. L'ancien backend TensorRT et ses outils de compilation (`trtllm-build`) ont été retirés : il n'y a plus de compilation préalable d'un « engine » (historique des versions dans [[03-stack-logicielle/inference-engines-vllm-ollama|⚙️ Moteurs d'Inférence]])[^1].
 
 Sur Blackwell datacenter (B200, B300), TensorRT-LLM supporte nativement le format **NVFP4**, divisant par deux l'empreinte [[00-lexique/vram|VRAM]] par rapport au FP8 ; sur les cartes SM120 (RTX 5090, RTX PRO 6000) le support reste partiel au T3 2026 (modèles MoE NVFP4 non pris en charge selon les notes de version)[^3].
 
-Contraste avec vLLM : TensorRT-LLM vise le plafond de performance sur GPU NVIDIA, mais son cycle de publication est moins lisible (dernière version stable 1.2.1 en avril 2026, la 1.3 restant en *release candidates* au T3 2026) et ses changements cassants entre RC sont fréquents ; la courbe d'apprentissage reste plus ardue[^1][^2].
+Contraste avec vLLM : TensorRT-LLM vise le plafond de performance sur GPU NVIDIA, mais son cycle de publication est moins lisible (voir les pièges ci-dessous) et ses changements cassants entre RC sont fréquents ; la courbe d'apprentissage reste plus ardue[^1][^2].
 
 ## 💡 Pourquoi c'est important en IA on-premise
 Incontournable pour amortir le coût des accélérateurs professionnels en datacenter. La référence du Scénario D.

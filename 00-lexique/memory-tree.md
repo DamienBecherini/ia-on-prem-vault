@@ -8,7 +8,7 @@ tags:
   - lexique
   - rag
   - agents
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -38,7 +38,7 @@ Sur une machine locale, la VRAM et la bande passante mémoire sont limitées. Un
 ## 📚 Pour comprendre en profondeur
 
 1. [[03-stack-logicielle/rag-and-agents|RAG & Agents : l'approche Memory Tree]]
-2. [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] *(a popularisé le pattern dans ses premières versions ; depuis 2026, mémoire hébergée CortexDB, sans Memory Tree local)*
+2. [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] *(a popularisé le pattern dans ses premières versions, ne l'implémente plus)*
 
 ## 🔗 Voir aussi
 

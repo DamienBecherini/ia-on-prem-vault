@@ -3,7 +3,7 @@ title: "🌐 Clustering IA : Relier les GPU avec Exo et Ray"
 description: Comment fusionner la mémoire de plusieurs machines pour l'IA locale. Comparatif entre Exo (Apple Silicon / Homelab) et Ray Serve (Datacenter).
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -32,7 +32,7 @@ En 2026, deux écoles logicielles s'affrontent pour le clustering IA : **Exo** p
 Exo fonctionne en Peer-to-Peer (P2P). Vous lancez la commande `uv run exo` sur chaque machine. Elles se découvrent automatiquement sur le réseau local et fusionnent leur mémoire disponible[^1]. Lorsqu'une requête est envoyée, Exo découpe le modèle en *pipeline* (couches successives sur des machines successives : la machine A calcule les premières couches du réseau de neurones, puis envoie le résultat à la machine B, qui calcule la suite) ou en *tensor parallel* (chaque couche répartie sur toutes les machines, via RDMA Thunderbolt 5), selon la bande passante mesurée entre nœuds[^1].
 
 ### 🚀 Cas d'usage : Le Mac Cluster
-Exo brille particulièrement sur Apple Silicon. En reliant les Mac par **Thunderbolt 5** sous **macOS 26.2 ou plus récent**, Exo active le **RDMA over Thunderbolt** (à activer une fois par `rdma_ctl enable` depuis le mode Recovery, avec le même build macOS sur chaque nœud) et obtient une bande passante suffisante pour compenser la latence inter-machines ; en Thunderbolt 4 on ne dispose que d'un lien IP, suffisant pour tester mais pas pour le parallélisme tensoriel[^1]. 
+Exo brille particulièrement sur Apple Silicon. En reliant les Mac par **Thunderbolt 5** sous **macOS 26.2 ou plus récent**, Exo active le **RDMA over Thunderbolt** (conditions d'activation dans [[02-materiel/network-roce-infiniband-thunderbolt|Réseau IA]]) et obtient une bande passante suffisante pour compenser la latence inter-machines ; en Thunderbolt 4 on ne dispose que d'un lien IP, suffisant pour tester mais pas pour le parallélisme tensoriel[^1]. 
 Exo Labs a mesuré, sur un cluster de 8 Mac mini M4 Pro 64 Go (512 Go agrégés), DeepSeek V3 671B en 4-bit à **5,4 tokens/s** (TTFT 2,9 s) ; la génération Mac mini M5 Pro (307 Go/s, Thunderbolt 5) le remplace depuis septembre 2026 sans nouveau chiffre publié[^2][^8].
 
 ### ⚠️ Les limites
@@ -99,7 +99,7 @@ curl http://localhost:52415/v1/chat/completions \
 ```
 
 > [!note] Thunderbolt vs Ethernet pour Exo
-> En Wi-Fi ou Ethernet 1 Gb, Exo fonctionne mais les performances chutent drastiquement. Pour des modèles 70B+, privilégiez **Thunderbolt 5** (80 Gb/s, 120 Gb/s asymétrique) sous macOS 26.2+ pour bénéficier du RDMA ; Thunderbolt 4 (40 Gb/s) ne fournit qu'une interface IP-over-Thunderbolt, créée automatiquement par macOS[^1][^6].
+> En Wi-Fi ou Ethernet 1 Gb, Exo fonctionne mais les performances chutent drastiquement. Pour des modèles 70B+, privilégiez **Thunderbolt 5** et son RDMA (voir plus haut) ; Thunderbolt 4 ne fournit qu'une interface IP-over-Thunderbolt, créée automatiquement par macOS[^1][^6].
 
 ---
 

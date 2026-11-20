@@ -3,7 +3,7 @@ title: ⚔️ Mémoire Unifiée vs RAM vs VRAM
 description: Analyse comparative approfondie des trois architectures physiques de mémoire pour l'inférence de LLM.
 sidebar:
   order: 2
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -60,7 +60,7 @@ Popularisée par Apple et renforcée côté x86 par AMD Ryzen AI Max PRO 400, la
 *   **Le routage physique :** Le processeur central (CPU), la puce graphique (GPU) et l'accélérateur d'IA ([[00-lexique/npu|NPU]]) sont réunis sur la même puce de silicium (SoC). Les barrettes de mémoire (LPDDR5X-8000/8533) sont soudées juste à côté, sur le même composant.
 *   **L'élimination de la copie :** Dans un PC classique, pour que la carte graphique traite une donnée stockée dans la RAM, le CPU doit copier la donnée, la faire passer par le bus PCIe (limité à 64 Go/s), puis la ré-écrire dans la VRAM. **En mémoire unifiée, cette étape de copie est éliminée.** Le GPU lit directement dans la mémoire partagée.
 *   **La nuance de bande passante (AMD vs Apple) :** 
-    *   **Apple Silicon :** depuis le 2026-08-25, le Mac Studio M5 Max monte à **614 Go/s** (460 Go/s avec le GPU 32 cœurs) et le M5 Ultra à **1,2 To/s**. Ils remplacent les M4 Max (546 Go/s) et M3 Ultra (819 Go/s) de 2025[^3].
+    *   **Apple Silicon :** depuis le 2026-08-25, le Mac Studio M5 Max monte à **614 Go/s** (460 Go/s avec le GPU 32 cœurs) et le M5 Ultra à **1,2 To/s**[^3].
     *   **AMD Ryzen AI Max PRO 400 :** environ **273 Go/s** avec LPDDR5X-8533 et bus 256-bit, avec compatibilité x86 (Windows/Linux)[^4].
 *   **La rupture AMD (2026) :** la plateforme PRO 400 monte à **192 Go** de mémoire partagée, avec jusqu'à **160 Go** allouables au GPU selon la configuration OEM[^4].
 *   **La limite physique :** La mémoire étant soudée sur le SoC pour garantir ce débit, il est strictement **impossible d'ajouter de la RAM** après l'achat. Vous devez dimensionner la machine pour les 5 prochaines années dès le premier jour.
@@ -82,7 +82,7 @@ La mémoire de travail standard d'un PC classique, branchée sur des slots de ca
 | :-- | :-- | :-- | :-- | :-- |
 | **Bande passante mémoire** | ~1 792 Go/s[^2] | 614 à 1 200 Go/s (M5 Max / M5 Ultra)[^3] | ~273 Go/s[^4] | ~80 à 100 Go/s (desktop dual-channel) |
 | **Borne théorique 70B Q4 (\~40 Go)** | ~44,8 tok/s | ~15,4 à 30 tok/s | ~6,8 tok/s | ~2 à 2,5 tok/s |
-| **Capacité machine typique (2026)** | 32 Go par carte grand public[^1] | jusqu'à 128 Go (M5 Max) / 512 Go (M5 Ultra 36c/80c, option commandable depuis le 28 octobre 2026)[^3] | jusqu'à 192 Go[^4] | 64 à 256 Go fréquents, plus possible selon carte mère |
+| **Capacité machine typique (2026)** | 32 Go par carte grand public[^1] | jusqu'à 128 Go (M5 Max) / 512 Go (M5 Ultra, voir [[02-materiel/apu-and-unified-memory\|APU & Mémoire Unifiée]])[^3] | jusqu'à 192 Go[^4] | 64 à 256 Go fréquents, plus possible selon carte mère |
 | **Évolutivité matérielle** | élevée (ajout de GPU) | nulle (mémoire soudée) | nulle (mémoire soudée) | élevée (ajout DIMM) |
 | **Positionnement** | performance brute / multi-utilisateur | station locale très performante | compromis capacité locale + x86 | entrée de gamme / batch offline |
 

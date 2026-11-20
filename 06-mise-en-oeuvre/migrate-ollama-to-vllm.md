@@ -3,7 +3,7 @@ title: "🔄 Migrer d'Ollama vers vLLM"
 description: Quand et comment passer d'Ollama à vLLM sans casser les clients existants — compatibilité API, conversion de modèles, stratégie de bascule et plan de rollback.
 sidebar:
   order: 7
-last_modified: "2026-11-17"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -59,7 +59,7 @@ response = client.chat.completions.create(
 | Fonctionnalité | Ollama | vLLM |
 | :-- | :-- | :-- |
 | Port par défaut | 11434 | 8000 |
-| Authentification | Aucune (clé ignorée) | `--api-key` (ne couvre que `/v1`, `/v2`, `/inference` et `/cohere` ; reverse proxy pour le reste)[^8] |
+| Authentification | Aucune (clé ignorée) | `--api-key` (ne couvre pas toutes les routes : reverse proxy obligatoire, voir [[06-mise-en-oeuvre/local-inference-security\|Sécurité]]) |
 | Format modèle | GGUF (natif) | HuggingFace safetensors, AWQ, GPTQ |
 | Endpoint pull modèle | `POST /api/pull` | Non supporté (pré-chargement) |
 | Endpoint generate (legacy) | `POST /api/generate` | Non supporté (utiliser `/v1/`) |
@@ -260,7 +260,7 @@ Le rollback complet prend < 2 minutes si Ollama était simplement arrêté (pas 
 □ Procédure de rollback documentée et testée
 ```
 
-La version minimale n'est pas un détail : entre août et octobre 2026, vLLM a corrigé plusieurs exécutions de code à distance et dénis de service (dont GHSA-h3rc-6mm3-gc2m, fermée en 0.31.0)[^13] ; le durcissement complet est décrit dans [[06-mise-en-oeuvre/configure-vllm-multi-gpu|Configurer vLLM multi-GPU]] et [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]].
+La version minimale n'est pas un détail : vLLM a corrigé plusieurs exécutions de code à distance et dénis de service en 2026 ; le durcissement complet est décrit dans [[06-mise-en-oeuvre/configure-vllm-multi-gpu|Configurer vLLM multi-GPU]] et [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]].
 
 ---
 
@@ -282,11 +282,9 @@ La version minimale n'est pas un détail : entre août et octobre 2026, vLLM a c
 [^5]: vLLM Project, *Quantization — GGUF* (plugin `vllm-gguf-plugin`, support « highly experimental and under-optimized », tokenizer du modèle de base recommandé), consulté le 2026-10-09. [https://docs.vllm.ai/en/stable/features/quantization/gguf/](https://docs.vllm.ai/en/stable/features/quantization/gguf/)
 [^6]: Hugging Face, *Transformers — GGUF* (`from_pretrained(gguf_file=…)`, `GgufConfig(dequantize=True)`, architectures prises en charge, export via `save_pretrained`), consulté le 2026-10-09. [https://huggingface.co/docs/transformers/gguf](https://huggingface.co/docs/transformers/gguf)
 [^7]: Ollama, *FAQ — How does Ollama handle concurrent requests?* (`OLLAMA_NUM_PARALLEL` par défaut à 1, file d'attente), consultée le 2026-10-10. [https://docs.ollama.com/faq](https://docs.ollama.com/faq)
-[^8]: vLLM Project, *CLI Reference — `vllm serve`* (`--api-key` ; la page *Security* de vLLM liste les préfixes protégés `/v1`, `/v2`, `/inference`, `/cohere`), consulté le 2026-10-10 · vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`/tokenize` non couvert par `--api-key`), 6 octobre 2026. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
 [^9]: Ollama, *Release v0.32.0* (avertissement de dépréciation pour CodeLlama, Qwen2.5(-coder), Llama 3.x, Mistral, StarCoder et DeepSeek-R1 de base), 11 juillet 2026 · Ollama, *Library* (`qwen3.5`, `qwen3.6`, `gemma4`, `qwen3-coder`), consultée le 2026-10-10. [https://github.com/ollama/ollama/releases/tag/v0.32.0](https://github.com/ollama/ollama/releases/tag/v0.32.0) · [https://ollama.com/library](https://ollama.com/library)
 [^10]: Hugging Face, *Command Line Interface (CLI)* (`hf auth login`, `hf download … --local-dir`), consulté le 2026-10-10. [https://huggingface.co/docs/huggingface_hub/guides/cli](https://huggingface.co/docs/huggingface_hub/guides/cli)
 [^11]: *ShadowPickle: Evading Machine Learning Model Scanners via Stealthy Pickle Deserialization Attacks* (arXiv:2607.17503 ; dix scanners de modèles contournés), juillet 2026. [https://arxiv.org/abs/2607.17503](https://arxiv.org/abs/2607.17503)
 [^12]: Ollama, *Release v0.40.2* (modèles « upgraded in the background the first time you run them », sauvegardes conservées, re-pull nécessaire en cas de retour < 0.40), 8 octobre 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.2](https://github.com/ollama/ollama/releases/tag/v0.40.2)
-[^13]: vLLM Project, *Release v0.31.0* (`mm_processor_kwargs` par requête refusés sauf `--trust-request-mm-kwargs`, `fp8` → `fp8_per_tensor`), 5 octobre 2026 · advisory GHSA-h3rc-6mm3-gc2m, 6 octobre 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
 [^14]: Ollama, *API — Generate embeddings* (`POST /api/embed`, champ `input` chaîne ou tableau ; aucun endpoint `/api/embeddings` documenté), consulté le 2026-10-10. [https://docs.ollama.com/api/embed](https://docs.ollama.com/api/embed)
 [^15]: Ollama, *Release v0.32.6* (« `/v1/chat/completions` streaming now matches OpenAI's wire format » ; `finish_reason: "length"` pour les réponses tronquées), 4 août 2026. [https://github.com/ollama/ollama/releases/tag/v0.32.6](https://github.com/ollama/ollama/releases/tag/v0.32.6)

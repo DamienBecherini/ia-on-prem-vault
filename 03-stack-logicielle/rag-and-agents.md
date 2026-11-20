@@ -3,7 +3,7 @@ title: "🧩 RAG & Agents : L'architecture de la connaissance"
 description: "Comment donner une mémoire privée et de l'autonomie à un LLM local : du RAG standard aux workflows agentiques (SmolAgents, LangGraph) et au Memory Tree."
 sidebar:
   order: 3
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -52,14 +52,14 @@ Popularisé par les recherches de Microsoft, le **[[00-lexique/graphrag|GraphRAG
 
 ## 3. L'approche [[00-lexique/memory-tree|Memory Tree]]
 
-Plutôt que d'utiliser une lourde base vectorielle, une architecture alternative s'appuie sur des **dossiers Markdown hiérarchiques** et une base de métadonnées locale (SQLite). L'idée est de donner à l'agent une vue *résumée* de la connaissance disponible, et de ne charger le détail que si nécessaire. Ce pattern, que ce vault appelle [[00-lexique/memory-tree|Memory Tree]], a été popularisé par les premières versions d'OpenHuman ; au 2026-10-09, le projet a retiré son arbre de mémoire local au profit d'un moteur CortexDB (hébergé ou auto-hébergé)[^6], et il faut donc l'implémenter soi-même ou avec un autre outil.
+Plutôt que d'utiliser une lourde base vectorielle, une architecture alternative s'appuie sur des **dossiers Markdown hiérarchiques** et une base de métadonnées locale (SQLite). L'idée est de donner à l'agent une vue *résumée* de la connaissance disponible, et de ne charger le détail que si nécessaire. Ce pattern, que ce vault appelle [[00-lexique/memory-tree|Memory Tree]], a été popularisé par les premières versions d'[[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]], qui ne l'implémente plus[^6] : il faut donc l'implémenter soi-même ou avec un autre outil.
 
 *   **Hiérarchie :** L'agent ne charge jamais un document entier en mémoire. Il utilise le LLM pour lire le "titre" et un "résumé d'une ligne" de l'arbre des fichiers.
 *   **Injection sélective :** S'il juge un fichier pertinent, l'agent appelle une fonction pour "déplier" ce nœud spécifique de l'arbre et lire son contenu exact.
 *   **Avantage architectural :** Le contexte reste minuscule (quelques centaines de tokens pour les résumés), ce qui maintient le [[00-lexique/ttft|TTFT]] (Temps avant le premier mot) sous la seconde et préserve les ressources matérielles, même avec un modèle dense lourd.
 
 > [!tip] Pour aller plus loin
-> Ce pattern n'est plus implémenté tel quel par OpenHuman (mémoire déportée dans CortexDB depuis 2026 — voir la fiche [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]]). Voir le comparatif [[05-agents-et-assistants-on-prem/assistants-personnels/index|Assistants Personnels On-Premise]] pour les alternatives et leur degré de souveraineté.
+> Voir le comparatif [[05-agents-et-assistants-on-prem/assistants-personnels/index|Assistants Personnels On-Premise]] pour les alternatives et leur degré de souveraineté.
 
 ---
 
@@ -75,7 +75,7 @@ Le choix de la base vectorielle dépend du volume de données, du niveau de souv
 | **pgvector** | Extension PostgreSQL | Vecteurs dans la base existante | Performances < bases natives | SI existant sous Postgres |
 | **SQLite + sqlite-vec** | Fichier local | Zéro dépendance, souveraineté max | Pas de scalabilité H | Solo, Memory Tree patterns |
 
-État au T4 2026 : Qdrant 1.19 (août 2026) stocke les vecteurs directement en 4-bit (TurboQuant) avec des paliers mémoire `cold` / `cached` / `pinned` par composant ; la 1.20 (22 octobre 2026) ajoute les types `turbo8` / `turbo16`, le scoring BM25 sur l'index plein texte et un journal d'audit redirigeable (fichier, stdout ou stderr), et durcit la sécurité : l'authentification interne entre nœuds est imposée par défaut dès qu'une clé API est configurée, et les noms de vecteurs qui sortent du répertoire de segment sont rejetés ; si vous restez en 1.19, passez au minimum en **1.19.2** (5 octobre 2026), qui corrige des recherches filtrées renvoyant zéro résultat et des écritures déchirées pouvant corrompre le stockage, et avertit au démarrage si aucune clé API n'est configurée ; Milvus 3.0 (GA le 29 juillet 2026) interroge Parquet, Lance et Iceberg en place ; **pgvector 0.8.3 à 0.8.7 corrigent une corruption d'index HNSW au vacuum et des débordements de tampon IVFFlat — mettez à jour toute instance ≤ 0.8.2**[^14]. `sqlite-vss` n'est plus développé ; son auteur renvoie vers `sqlite-vec`[^12].
+État au T4 2026 : Qdrant, au minimum **1.19.2** (5 octobre 2026), qui corrige des recherches filtrées renvoyant zéro résultat et des écritures déchirées pouvant corrompre le stockage, et avertit au démarrage si aucune clé API n'est configurée ; la 1.20 (22 octobre 2026) impose par défaut l'authentification interne entre nœuds dès qu'une clé API est configurée et rejette les noms de vecteurs qui sortent du répertoire de segment ; **pgvector 0.8.3 à 0.8.7 corrigent une corruption d'index HNSW au vacuum et des débordements de tampon IVFFlat — mettez à jour toute instance ≤ 0.8.2**[^14]. `sqlite-vss` n'est plus développé ; son auteur renvoie vers `sqlite-vec`[^12].
 
 > [!tip] Démarrage rapide avec Qdrant en local
 > ```bash
