@@ -53,7 +53,7 @@ For a Markdown vault, it can reread pages, apply fixes, create commits on a bran
 
 Aider remains the simplest candidate for a first sovereign trial, provided you accept a tool frozen since May 2026 (durable alternative: see Maturity):
 
-- `aider --model ollama_chat/<recent coder model>`: for example a Qwen3.6-35B-A3B (MoE, ~24 GB of VRAM quantized, recommended by OpenHands for agentic use as of Q2 2026) or a dense 14B (Qwen2.5-Coder-14B, from 2024) for controlled trials, 24B+ (Devstral Small 2, Qwen3-Coder-30B-A3B) for regular maintenance; since Aider no longer knows the models released after May 2026, ignore its "model warnings" after manually checking the context window[^2][^6];
+- `aider --model ollama_chat/<recent coder model>` (model choice: [[05-agents-et-assistants-on-prem/agents-custodiens/recommandation-architecture-cible|target architecture]]); since Aider no longer knows the models released after May 2026, ignore its "model warnings" after manually checking the context window[^2];
 - dedicated branch;
 - vault plan/rules in context;
 - final Markdown report.

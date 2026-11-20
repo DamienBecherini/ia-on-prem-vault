@@ -75,7 +75,7 @@ Most of these tools expose their actions through the **Model Context Protocol (M
 | **Trigger** | Human | Cron / webhook | Human or automatic |
 | **Action autonomy** | Low (responses) | High (tasks) | Variable |
 | **Memory required** | Long, personal | Short, task context | Both |
-| **LLM model** | Large (response quality) | Small OK (routing) + 14B+ coder (file editing: Qwen2.5-Coder-14B, Devstral Small 2 24B, Qwen3-Coder-30B-A3B)[^7] | Both |
+| **LLM model** | Large (response quality) | Small OK (routing) + 14B+ coder (file editing) | Both |
 | **Minimum VRAM** | 8–24 GB (7–14B model) | 12–16 GB (14B coder model minimum) | 24+ GB |
 | **Install complexity** | Low to medium | Medium to high | High |
 | **Side-effect risk** | Low | Medium (without guardrails) | High without guardrails |
