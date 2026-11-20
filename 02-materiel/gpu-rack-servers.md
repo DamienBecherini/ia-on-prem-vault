@@ -39,7 +39,7 @@ Hors NVIDIA, trois annonces de 2026 complètent le paysage rack sans le changer 
 | **VRAM** | 32–96 Go GDDR7 | 80–288 Go [[00-lexique/hbm\|HBM]] |
 | **Bande passante mémoire** | ~1,8 To/s[^6] | ~3–8 To/s |
 | **NVLink multi-GPU** | Aucun (pas de NVLink depuis Ada ; PCIe seulement)[^6] | [[00-lexique/nvswitch\|NVSwitch]] full mesh |
-| **Coût d'acquisition** | Nettement inférieur au HGX, mais l'écart se réduit avec la hausse 2026 des GPU GDDR7 (RTX PRO 6000 ~16 000 $, RTX 5090 ≥ 5 000 $, voir [[02-materiel/stations-multi-gpu\|Stations multi-GPU]]) ; un serveur 8× RTX PRO 6000 est listé ~266 k$ par un OEM en juillet 2026[^3] | TCO datacenter, support enterprise ; pas de prix catalogue public pour HGX B300 / GB300 |
+| **Coût d'acquisition** | Nettement inférieur au HGX, mais l'écart se réduit avec la hausse 2026 des GPU GDDR7 (RTX PRO 6000 ~16 000 \$, RTX 5090 ≥ 5 000 \$, voir [[02-materiel/stations-multi-gpu\|Stations multi-GPU]]) ; un serveur 8× RTX PRO 6000 est listé ~266 k\$ par un OEM en juillet 2026[^3] | TCO datacenter, support enterprise ; pas de prix catalogue public pour HGX B300 / GB300 |
 | **Meilleur pour** | Scénario B, labo charge modérée | Scénario D, SLA strict, gros modèles |
 
 > [!warning] Ne pas extrapoler les benchmarks bureau
