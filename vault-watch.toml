@@ -36,3 +36,44 @@ version_floors = { script = "scripts/audit-version-floors.mjs", file = ".agents/
 
 # [budget] max_context_tokens: not set, the model's window decides (the guide is about 430 k tokens; a 1M
 # window reads it whole). A ceiling below the guide's size would make the cross-check read it chapter by chapter.
+
+# Chapters: the pages the agent works on together (exploration of the web, check of the translations,
+# reading by chapter). A page goes to the first chapter that takes it; the pages none takes follow the
+# automatic rule. Written from the interface (« Chapters ») or by `vault-watch chapters`; editable by hand.
+[[chapter]]
+name = "Accueil et projet"
+paths = ["00-index.md", "index.mdx", "projet/"]
+explore = false
+
+[[chapter]]
+name = "Lexique"
+paths = ["00-lexique/"]
+explore = false
+
+[[chapter]]
+name = "Fondations"
+paths = ["01-fondations/"]
+
+[[chapter]]
+name = "Matériel"
+paths = ["02-materiel/"]
+
+[[chapter]]
+name = "Stack logicielle"
+paths = ["03-stack-logicielle/"]
+
+[[chapter]]
+name = "Blueprints et TCO"
+paths = ["04-blueprints/"]
+
+[[chapter]]
+name = "Agents custodiens"
+paths = ["05-agents-et-assistants-on-prem/agents-custodiens/"]
+
+[[chapter]]
+name = "Assistants personnels et souveraineté"
+paths = ["05-agents-et-assistants-on-prem/"]
+
+[[chapter]]
+name = "Mise en œuvre"
+paths = ["06-mise-en-oeuvre/"]
