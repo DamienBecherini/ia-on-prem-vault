@@ -37,7 +37,7 @@ It is less oriented toward "enterprise RAG" than Open WebUI or AnythingLLM, but 
 
 - **Limited document memory**: not primarily a RAG/knowledge base system.
 - **Optional cloud features**: user can connect OpenAI/Anthropic/Mistral/Groq, which completely changes the sovereignty verdict[^4].
-- **Local API to secure**: if listening moves from `127.0.0.1` to `0.0.0.0`, network, API key, and CORS must be managed. Jan rejects (403) requests whose host is not localhost, a private IP, or a "Trusted Hosts" entry: declare your DNS name or your reverse proxy there[^3][^5]. It also checks the origin of browser requests: a web application hosted on another machine (Open WebUI direct connection, for example) or a browser extension must be listed in "Trusted Hosts". Requests without a browser origin (SDKs, scripts, curl) are not affected. The CORS switch is enforced and is found enabled after the update to v0.8.8[^7].
+- **Local API to secure**: if listening moves from `127.0.0.1` to `0.0.0.0`, network, API key, and CORS must be managed. Jan rejects (403) requests whose host is not localhost, a private IP, or a "Trusted Hosts" entry: declare your DNS name or your reverse proxy there[^3][^5]. It also checks the origin of browser requests: a web application hosted on another machine (a chat interface that queries Jan from the browser, for example) or a browser extension must be listed in "Trusted Hosts". Requests without a browser origin (SDKs, scripts, curl) are not affected. The CORS switch is enforced and is found enabled after the update to v0.8.8[^7].
 - **Not the best multi-user choice**: prefer Open WebUI or AnythingLLM for a team.
 
 ## 🔒 Sovereignty and privacy

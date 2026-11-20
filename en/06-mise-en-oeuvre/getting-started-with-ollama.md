@@ -41,7 +41,7 @@ Verification:
 
 ```bash
 ollama --version
-# ollama version is 0.40.x (0.40.2 as of 2026-10-08)
+# ollama version is 0.40.x (0.40.16 as of 2026-11-09)
 
 # Is the service running?
 curl http://localhost:11434/
@@ -220,7 +220,7 @@ OLLAMA_HOST=0.0.0.0 ollama serve
 > Without authentication, anyone on your network can query the model. In production, place a reverse proxy (nginx, Caddy) with basic auth or a token in front of Ollama, or use [[00-lexique/litellm|LiteLLM]] as a gateway.
 
 > [!warning] Updates
-> Ollama fixes vulnerabilities without always detailing them in its release notes: 0.31.2 (July 2026) closes CVE-2026-102697 (execution of additional commands via agent mode through prompt injection, CVSS 7.8) and "hardens" GGUF creation. Keep Ollama up to date (≥ 0.31.2 at a minimum as of Q4 2026)[^7].
+> Ollama fixes vulnerabilities without always detailing them in its release notes: 0.31.2 (July 2026) closes CVE-2026-102697 (execution of additional commands via agent mode through prompt injection, CVSS 7.8) and "hardens" GGUF creation. It leaves CVE-2026-85180 open: from 0.30.0 to 0.33.2, an `ollama pull` from a booby-trapped registry follows redirects to your internal hosts (unauthenticated SSRF, CVSS 8.7). The advisory names no fixed version; redirect validation (PR #18512) arrives with 0.34.2[^8]. Keep Ollama up to date (≥ 0.34.2 at a minimum as of Q4 2026)[^7][^8].
 
 ---
 
@@ -266,3 +266,4 @@ Indicative orders of magnitude (community measurements on llama.cpp, mid-2026, n
 [^5]: Ollama, *Release v0.40.2* (models "upgraded in the background the first time you run them", backups kept, re-pull required when rolling back to < 0.40), 8 October 2026. <https://github.com/ollama/ollama/releases/tag/v0.40.2>
 [^6]: Ollama, *FAQ* ("By default, Ollama uses a context window size of 4096 tokens", `OLLAMA_CONTEXT_LENGTH`, `OLLAMA_NUM_PARALLEL` = 1, `OLLAMA_MAX_LOADED_MODELS` = 3 × GPU) and *Context length* (app defaults: 4k / 32k / 256k depending on VRAM), accessed 2026-10-10. <https://docs.ollama.com/faq> · <https://docs.ollama.com/context-length>
 [^7]: MITRE, *CVE-2026-102697* (Ollama 0.14.0 → < 0.31.2, bypass of agent-mode Bash command approval, CVSS v3.1 7.8), published 2026-09-29 · Ollama, *Release v0.31.2* ("Hardened GGUF model creation"), 6 July 2026. <https://cveawg.mitre.org/api/cve/CVE-2026-102697> · <https://github.com/ollama/ollama/releases/tag/v0.31.2>
+[^8]: VulnCheck, *Ollama 0.30.0 through 0.33.2 SSRF via Cross-Host Tensor Blob Redirect* (CVE-2026-85180, CVSS 4.0 8.7, unauthenticated, no fixed version named), 2026-09-03 · Ollama, *PR #18512 "x/transfer, server: tighten redirect handling for registry requests"* (validation of the redirect target for registry and blob downloads; commit of 2026-09-17, shipped in 0.34.2). <https://www.vulncheck.com/advisories/ollama-0.30.0-through-0.33.2-ssrf-via-cross-host-tensor-blob-redirect> · <https://github.com/ollama/ollama/pull/18512>
