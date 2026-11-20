@@ -53,6 +53,10 @@
   "seo": {
     "noindex": ["00-lexique/**", "!00-lexique/ai-glossary", "!00-lexique/lexicon-index"]
   },
+  "feedback": {
+    "email": "ia-on-prem@damien.becherini.fr",
+    "repository": "DamienBecherini/ia-on-prem-vault"
+  },
   "publish": {
     "exclude": [
       ".agents/**",
