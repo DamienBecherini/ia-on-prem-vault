@@ -70,8 +70,8 @@ Deux outils apparus en 2026 ne font pas (encore) l'objet d'une fiche : **LM Stud
 
 ## 📚 Sources
 
-[^1]: khoj-ai, *khoj* — Releases (dernière version 2.0.0-beta.28 du 2026-03-26) et historique des commits (dernier commit le 2026-08-02), consultés le 2026-10-10. [https://github.com/khoj-ai/khoj/releases](https://github.com/khoj-ai/khoj/releases) · [https://github.com/khoj-ai/khoj/commits/master](https://github.com/khoj-ai/khoj/commits/master)
-[^2]: LM Studio, *Introducing LM Studio Bionic* (agent pour modèles ouverts, modèles locaux via le runtime LM Studio, modèles cloud avec compte et facturation, engagement Zero Data Retention), 2026-07-16. [https://lmstudio.ai/blog/introducing-lm-studio-bionic](https://lmstudio.ai/blog/introducing-lm-studio-bionic)
-[^3]: khoj-ai, *pipali* (dépôt GitHub : Apache-2.0, release 0.10.0 du 2026-09-14, modèles cloud via la plateforme Pipali, intégrations MCP), consulté le 2026-10-10. [https://github.com/khoj-ai/pipali](https://github.com/khoj-ai/pipali)
-[^4]: janhq, *Jan v0.8.5* — notes de release (Mac Intel sans modèles locaux), 2026-10-08. [https://github.com/janhq/jan/releases/tag/v0.8.5](https://github.com/janhq/jan/releases/tag/v0.8.5)
-[^5]: Open WebUI — *License* (clause de marque au-delà de 50 utilisateurs sur 30 jours, non approuvée OSI) et *Security advisories* (88 avis entre le 2026-06-11 et le 2026-09-28), consultés le 2026-10-10. [https://docs.openwebui.com/license/](https://docs.openwebui.com/license/) · [https://github.com/open-webui/open-webui/security/advisories](https://github.com/open-webui/open-webui/security/advisories)
+[^1]: khoj-ai, *khoj* — Releases (dernière version 2.0.0-beta.28 du 2026-03-26) et historique des commits (dernier commit le 2026-08-02), consultés le 2026-10-10. <https://github.com/khoj-ai/khoj/releases> · <https://github.com/khoj-ai/khoj/commits/master>
+[^2]: LM Studio, *Introducing LM Studio Bionic* (agent pour modèles ouverts, modèles locaux via le runtime LM Studio, modèles cloud avec compte et facturation, engagement Zero Data Retention), 2026-07-16. <https://lmstudio.ai/blog/introducing-lm-studio-bionic>
+[^3]: khoj-ai, *pipali* (dépôt GitHub : Apache-2.0, release 0.10.0 du 2026-09-14, modèles cloud via la plateforme Pipali, intégrations MCP), consulté le 2026-10-10. <https://github.com/khoj-ai/pipali>
+[^4]: janhq, *Jan v0.8.5* — notes de release (Mac Intel sans modèles locaux), 2026-10-08. <https://github.com/janhq/jan/releases/tag/v0.8.5>
+[^5]: Open WebUI — *License* (clause de marque au-delà de 50 utilisateurs sur 30 jours, non approuvée OSI) et *Security advisories* (88 avis entre le 2026-06-11 et le 2026-09-28), consultés le 2026-10-10. <https://docs.openwebui.com/license/> · <https://github.com/open-webui/open-webui/security/advisories>

@@ -54,4 +54,4 @@ Variants covered in the vault: **Agentic RAG** (retrieve/grade/rewrite loops), [
 - [[00-lexique/context-window|Context window]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
-[^1]: Lewis et al., *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks* (NeurIPS 2020). [https://arxiv.org/abs/2005.11401](https://arxiv.org/abs/2005.11401)
+[^1]: Lewis et al., *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks* (NeurIPS 2020). <https://arxiv.org/abs/2005.11401>

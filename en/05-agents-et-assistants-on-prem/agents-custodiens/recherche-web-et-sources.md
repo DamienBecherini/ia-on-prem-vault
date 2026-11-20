@@ -72,7 +72,7 @@ SearXNG is a free meta-search engine that aggregates results from many services 
 
 ## 📚 Sources and References
 
-[^1]: Choi, Kim, Kang, Jeong, Xing, Lee, *Agent Data Injection Attacks are Realistic Threats to AI Agents* (arXiv 2607.05120: malicious data disguised as trusted data — identifiers, origin, tool-call formats; demonstrated on web agents and coding agents), 2026-07-06. [https://arxiv.org/abs/2607.05120](https://arxiv.org/abs/2607.05120)
-[^2]: SearXNG Docs, *Search API* (`json` format to enable in `search: formats:`, otherwise 403), build 2026.10.9. [https://docs.searxng.org/dev/search_api.html](https://docs.searxng.org/dev/search_api.html)
-[^3]: SearXNG Docs, *Limiter* ("The limiter requires a Valkey database"), build 2026.10.9. [https://docs.searxng.org/admin/searx.limiter.html](https://docs.searxng.org/admin/searx.limiter.html)
-[^4]: GitHub Advisory Database, *GHSA-4v28-j6q3-5m4r* (Open WebUI 0.9.6 → < 0.11.1: DNS-rebinding SSRF in the Playwright web loader, CVE-2026-87996, CVSS 3.1 7.7), 2026-08-31. [https://github.com/advisories/GHSA-4v28-j6q3-5m4r](https://github.com/advisories/GHSA-4v28-j6q3-5m4r)
+[^1]: Choi, Kim, Kang, Jeong, Xing, Lee, *Agent Data Injection Attacks are Realistic Threats to AI Agents* (arXiv 2607.05120: malicious data disguised as trusted data — identifiers, origin, tool-call formats; demonstrated on web agents and coding agents), 2026-07-06. <https://arxiv.org/abs/2607.05120>
+[^2]: SearXNG Docs, *Search API* (`json` format to enable in `search: formats:`, otherwise 403), build 2026.10.9. <https://docs.searxng.org/dev/search_api.html>
+[^3]: SearXNG Docs, *Limiter* ("The limiter requires a Valkey database"), build 2026.10.9. <https://docs.searxng.org/admin/searx.limiter.html>
+[^4]: GitHub Advisory Database, *GHSA-4v28-j6q3-5m4r* (Open WebUI 0.9.6 → < 0.11.1: DNS-rebinding SSRF in the Playwright web loader, CVE-2026-87996, CVSS 3.1 7.7), 2026-08-31. <https://github.com/advisories/GHSA-4v28-j6q3-5m4r>

@@ -44,4 +44,4 @@ L'attention sparse rend les contextes longs (100K tokens et plus) moins coûteux
 - [[00-lexique/context-window|Fenêtre de contexte]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: DeepSeek-AI, *DeepSeek-V3.2: Pushing the Frontier of Open Large Language Models* (arXiv:2512.02556, section 2.1 : lightning indexer, 2 048 tokens sélectionnés, O(L²) → O(Lk), DSA implémentée sur MLA), décembre 2025. [https://arxiv.org/abs/2512.02556](https://arxiv.org/abs/2512.02556)
+[^1]: DeepSeek-AI, *DeepSeek-V3.2: Pushing the Frontier of Open Large Language Models* (arXiv:2512.02556, section 2.1 : lightning indexer, 2 048 tokens sélectionnés, O(L²) → O(Lk), DSA implémentée sur MLA), décembre 2025. <https://arxiv.org/abs/2512.02556>

@@ -52,4 +52,4 @@ Pattern typique : petit modèle rapide pour le routage d'outils, gros modèle po
 - [[00-lexique/sglang|SGLang]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: OpenAI API — Function calling (pattern de facto repris par vLLM/Ollama). [https://developers.openai.com/api/docs/guides/function-calling](https://developers.openai.com/api/docs/guides/function-calling)
+[^1]: OpenAI API — Function calling (pattern de facto repris par vLLM/Ollama). <https://developers.openai.com/api/docs/guides/function-calling>

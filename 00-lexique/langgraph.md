@@ -48,4 +48,4 @@ En on-premise, LangGraph s'utilise souvent avec un backend [[00-lexique/vllm|vLL
 - [[00-lexique/human-in-the-loop|Human-in-the-loop]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: LangGraph — documentation officielle. [https://langchain-ai.github.io/langgraph/](https://langchain-ai.github.io/langgraph/)
+[^1]: LangGraph — documentation officielle. <https://langchain-ai.github.io/langgraph/>

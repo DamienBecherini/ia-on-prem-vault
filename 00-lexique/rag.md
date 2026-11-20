@@ -54,4 +54,4 @@ Variantes couvertes dans le vault : **Agentic RAG** (boucles retrieve/grade/rewr
 - [[00-lexique/context-window|Fenêtre de contexte]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: Lewis et al., *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks* (NeurIPS 2020). [https://arxiv.org/abs/2005.11401](https://arxiv.org/abs/2005.11401)
+[^1]: Lewis et al., *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks* (NeurIPS 2020). <https://arxiv.org/abs/2005.11401>

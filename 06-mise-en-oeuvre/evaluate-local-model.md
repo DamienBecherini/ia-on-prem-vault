@@ -289,11 +289,11 @@ flowchart LR
 
 ## Sources
 
-[^1]: Stanford CRFM, *Holistic Evaluation of Language Models (HELM)*. [https://crfm.stanford.edu/helm/](https://crfm.stanford.edu/helm/)
-[^2]: Lin, Hilton, Evans, *TruthfulQA: Measuring How Models Mimic Human Falsehoods*, 2021. [https://arxiv.org/abs/2109.07958](https://arxiv.org/abs/2109.07958)
-[^3]: Min et al., *FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation*, EMNLP 2023. [https://aclanthology.org/2023.emnlp-main.741/](https://aclanthology.org/2023.emnlp-main.741/)
-[^4]: Es et al., *RAGAS: Automated Evaluation of Retrieval Augmented Generation*, EACL 2024. [https://aclanthology.org/2024.eacl-demo.16/](https://aclanthology.org/2024.eacl-demo.16/)
-[^5]: Jimenez et al., *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?*, ICLR 2024. [https://www.swebench.com/original.html](https://www.swebench.com/original.html)
-[^6]: Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, NeurIPS 2023. [https://arxiv.org/abs/2306.05685](https://arxiv.org/abs/2306.05685)
-[^7]: Vals AI, *SWE-bench Verified* (« performance on this benchmark has saturated, we no longer run this benchmark on new model releases », top 97,0 %), mis à jour le 2026-09-01. [https://www.vals.ai/benchmarks/swebench](https://www.vals.ai/benchmarks/swebench) ; Scale AI, *SWE-Bench Pro V2* (642 tâches, 11 dépôts), 2026-09-22. [https://labs.scale.com/leaderboard/swe_bench_pro_public_v2](https://labs.scale.com/leaderboard/swe_bench_pro_public_v2) ; Aider-AI, dépôt `aider` (dernier commit le 2026-05-22), consulté le 2026-10-10. [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider)
-[^8]: Artificial Analysis, *Intelligence Index v4.3* (Terminal-Bench 4.0, AutomationBench-AA, 45 % de tâches privées), 2026-09-07. [https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3](https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3)
+[^1]: Stanford CRFM, *Holistic Evaluation of Language Models (HELM)*. <https://crfm.stanford.edu/helm/>
+[^2]: Lin, Hilton, Evans, *TruthfulQA: Measuring How Models Mimic Human Falsehoods*, 2021. <https://arxiv.org/abs/2109.07958>
+[^3]: Min et al., *FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation*, EMNLP 2023. <https://aclanthology.org/2023.emnlp-main.741/>
+[^4]: Es et al., *RAGAS: Automated Evaluation of Retrieval Augmented Generation*, EACL 2024. <https://aclanthology.org/2024.eacl-demo.16/>
+[^5]: Jimenez et al., *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?*, ICLR 2024. <https://www.swebench.com/original.html>
+[^6]: Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, NeurIPS 2023. <https://arxiv.org/abs/2306.05685>
+[^7]: Vals AI, *SWE-bench Verified* (« performance on this benchmark has saturated, we no longer run this benchmark on new model releases », top 97,0 %), mis à jour le 2026-09-01. <https://www.vals.ai/benchmarks/swebench> ; Scale AI, *SWE-Bench Pro V2* (642 tâches, 11 dépôts), 2026-09-22. <https://labs.scale.com/leaderboard/swe_bench_pro_public_v2> ; Aider-AI, dépôt `aider` (dernier commit le 2026-05-22), consulté le 2026-10-10. <https://github.com/Aider-AI/aider>
+[^8]: Artificial Analysis, *Intelligence Index v4.3* (Terminal-Bench 4.0, AutomationBench-AA, 45 % de tâches privées), 2026-09-07. <https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3>

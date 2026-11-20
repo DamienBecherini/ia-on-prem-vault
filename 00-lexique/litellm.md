@@ -48,5 +48,5 @@ Dans une cible souveraine, LiteLLM peut forcer un routage **local-only** vers Ol
 - [[00-lexique/agent-custodian|Agent custodien]]
 - [[03-stack-logicielle/inference-engines-vllm-ollama|Moteurs d'inférence]]
 
-[^1]: LiteLLM, *Version Support Policy* (quatre lignes mineures stables maintenues, fenêtre glissante d'environ un mois par ligne, en vigueur le 2026-06-29), 2026-06-20. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)
-[^2]: LiteLLM Docs, *MCP Overview* (MCP Gateway : point d'entrée unique vers les serveurs MCP, contrôle d'accès par clé et par équipe ; « Agent Gateway » A2A au menu), consulté le 2026-10-10. [https://docs.litellm.ai/docs/mcp](https://docs.litellm.ai/docs/mcp)
+[^1]: LiteLLM, *Version Support Policy* (quatre lignes mineures stables maintenues, fenêtre glissante d'environ un mois par ligne, en vigueur le 2026-06-29), 2026-06-20. <https://docs.litellm.ai/blog/version-support>
+[^2]: LiteLLM Docs, *MCP Overview* (MCP Gateway : point d'entrée unique vers les serveurs MCP, contrôle d'accès par clé et par équipe ; « Agent Gateway » A2A au menu), consulté le 2026-10-10. <https://docs.litellm.ai/docs/mcp>

@@ -45,6 +45,6 @@ Something new (model, format, optimization) often lands on CUDA first. Choosing 
 - [[00-lexique/soc|SoC]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
-[^1]: NVIDIA, *CUDA Programming Guide* ("CUDA is a parallel computing platform and programming model developed by NVIDIA… by harnessing the power of the GPU"), accessed 2026-10-11. [https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)
-[^2]: AMD, *What is ROCm?* ("ROCm is the AMD open software stack for GPU-accelerated computing"), accessed 2026-10-11. [https://rocm.docs.amd.com/en/latest/what-is-rocm.html](https://rocm.docs.amd.com/en/latest/what-is-rocm.html)
-[^3]: Apple ml-explore, *MLX* — GitHub repository ("MLX is an array framework for machine learning on Apple silicon", unified memory model), accessed 2026-10-11. [https://github.com/ml-explore/mlx](https://github.com/ml-explore/mlx)
+[^1]: NVIDIA, *CUDA Programming Guide* ("CUDA is a parallel computing platform and programming model developed by NVIDIA… by harnessing the power of the GPU"), accessed 2026-10-11. <https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html>
+[^2]: AMD, *What is ROCm?* ("ROCm is the AMD open software stack for GPU-accelerated computing"), accessed 2026-10-11. <https://rocm.docs.amd.com/en/latest/what-is-rocm.html>
+[^3]: Apple ml-explore, *MLX* — GitHub repository ("MLX is an array framework for machine learning on Apple silicon", unified memory model), accessed 2026-10-11. <https://github.com/ml-explore/mlx>

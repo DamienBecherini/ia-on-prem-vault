@@ -44,6 +44,6 @@ Locally, the best model is not necessarily the top leaderboard entry. It must al
 - [[00-lexique/ragas|RAGAS]]
 - [[03-stack-logicielle/choose-your-model|Choose your local model]] — read a leaderboard without getting it wrong
 
-[^1]: Vals AI, *SWE-bench Verified* ("performance on this benchmark has saturated, we no longer run this benchmark on new model releases", top 97.0%), updated 2026-09-01. [https://www.vals.ai/benchmarks/swebench](https://www.vals.ai/benchmarks/swebench)
-[^2]: Artificial Analysis, *Intelligence Index v4.3* (Terminal-Bench 2.1 → 4.0, AutomationBench-AA, 45% private tasks), 2026-09-07. [https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3](https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3)
-[^3]: Arena, *Text Leaderboard* (snapshot of 2026-10-08: no open-weights model in the top 15, kimi-k3-max at rank 16). [https://arena.ai/leaderboard/text](https://arena.ai/leaderboard/text)
+[^1]: Vals AI, *SWE-bench Verified* ("performance on this benchmark has saturated, we no longer run this benchmark on new model releases", top 97.0%), updated 2026-09-01. <https://www.vals.ai/benchmarks/swebench>
+[^2]: Artificial Analysis, *Intelligence Index v4.3* (Terminal-Bench 2.1 → 4.0, AutomationBench-AA, 45% private tasks), 2026-09-07. <https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3>
+[^3]: Arena, *Text Leaderboard* (snapshot of 2026-10-08: no open-weights model in the top 15, kimi-k3-max at rank 16). <https://arena.ai/leaderboard/text>

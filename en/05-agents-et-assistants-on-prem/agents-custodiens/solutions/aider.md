@@ -73,10 +73,10 @@ For a durable target, prefer a maintained, model-agnostic agent such as [[05-age
 
 ## 📚 Sources
 
-[^1]: Aider GitHub README. [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider)
-[^2]: Aider Docs, *Ollama* (`num_ctx` set by Aider, `OLLAMA_CONTEXT_LENGTH=8192` recommended), read on 2026-10-09. [https://aider.chat/docs/llms/ollama.html](https://aider.chat/docs/llms/ollama.html)
-[^3]: Aider GitHub issue #3627 — clarifications on data/code and absence of Aider server. [https://github.com/Aider-AI/aider/issues/3627](https://github.com/Aider-AI/aider/issues/3627)
-[^4]: Aider Docs, *Analytics* (opt-in offered to a random subset of users, `--analytics-disable` permanent), read on 2026-10-09. [https://aider.chat/docs/more/analytics.html](https://aider.chat/docs/more/analytics.html)
-[^5]: PyPI, *aider-chat* (last publication 0.86.2 on 2026-02-12), accessed 2026-10-09. [https://pypi.org/project/aider-chat/](https://pypi.org/project/aider-chat/)
-[^6]: OpenHands Docs, *Local LLMs* (LM Studio, Ollama, vLLM, SGLang), updated 2026-05-21. [https://docs.openhands.dev/openhands/usage/llms/local-llms](https://docs.openhands.dev/openhands/usage/llms/local-llms)
-[^7]: Block, *Goose Releases* (v1.54.0 of 2026-10-08, Apache-2.0) and Cline, *Cline Releases* (releases of 2026-10-08, Apache-2.0), accessed 2026-10-09. [https://github.com/block/goose/releases](https://github.com/block/goose/releases) · [https://github.com/cline/cline/releases](https://github.com/cline/cline/releases)
+[^1]: Aider GitHub README. <https://github.com/Aider-AI/aider>
+[^2]: Aider Docs, *Ollama* (`num_ctx` set by Aider, `OLLAMA_CONTEXT_LENGTH=8192` recommended), read on 2026-10-09. <https://aider.chat/docs/llms/ollama.html>
+[^3]: Aider GitHub issue #3627 — clarifications on data/code and absence of Aider server. <https://github.com/Aider-AI/aider/issues/3627>
+[^4]: Aider Docs, *Analytics* (opt-in offered to a random subset of users, `--analytics-disable` permanent), read on 2026-10-09. <https://aider.chat/docs/more/analytics.html>
+[^5]: PyPI, *aider-chat* (last publication 0.86.2 on 2026-02-12), accessed 2026-10-09. <https://pypi.org/project/aider-chat/>
+[^6]: OpenHands Docs, *Local LLMs* (LM Studio, Ollama, vLLM, SGLang), updated 2026-05-21. <https://docs.openhands.dev/openhands/usage/llms/local-llms>
+[^7]: Block, *Goose Releases* (v1.54.0 of 2026-10-08, Apache-2.0) and Cline, *Cline Releases* (releases of 2026-10-08, Apache-2.0), accessed 2026-10-09. <https://github.com/block/goose/releases> · <https://github.com/cline/cline/releases>

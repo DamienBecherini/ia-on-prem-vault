@@ -45,4 +45,4 @@ Sur un serveur on-premise, la VRAM disponible pour le cache limite la longueur d
 - [[00-lexique/moe|MoE]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: DeepSeek-AI, *DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model* (arXiv:2405.04434 ; KV cache compressé en vecteur latent, −93,3 % vs DeepSeek 67B, équivalent GQA à 2,25 groupes), mai 2024. [https://arxiv.org/abs/2405.04434](https://arxiv.org/abs/2405.04434)
+[^1]: DeepSeek-AI, *DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model* (arXiv:2405.04434 ; KV cache compressé en vecteur latent, −93,3 % vs DeepSeek 67B, équivalent GQA à 2,25 groupes), mai 2024. <https://arxiv.org/abs/2405.04434>

@@ -57,4 +57,4 @@ On-premise, the risk is **identical** to the cloud: data sovereignty does not im
 - [[06-mise-en-oeuvre/local-inference-security|🔐 Local inference security]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
-[^1]: OWASP GenAI Security Project, *LLM01:2025 Prompt Injection* ([genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)); kept at the top of the 2026 edition (published 2026-08-03) with a scope extended to image/audio inputs and persistent memory, LLM07 *System Prompt Leakage* becoming LLM08:2026 *Hidden Context Exposure* there. [https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
+[^1]: OWASP GenAI Security Project, *LLM01:2025 Prompt Injection* ([genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)); kept at the top of the 2026 edition (published 2026-08-03) with a scope extended to image/audio inputs and persistent memory, LLM07 *System Prompt Leakage* becoming LLM08:2026 *Hidden Context Exposure* there. <https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/>

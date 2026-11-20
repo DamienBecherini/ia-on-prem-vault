@@ -43,4 +43,4 @@ De facto standard for sovereign datacenters. The only architecture that guarante
 - [[00-lexique/roce|RoCE]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
-[^1]: Ray Project, *Release ray-2.59.0* ("token authentication by default for local clusters … Remote and multi-node clusters are unchanged"), 2026-10-02; Ray Docs, *Token authentication* ("Ray 2.61 extends the default to all clusters"), consulted on 2026-10-10. [https://github.com/ray-project/ray/releases/tag/ray-2.59.0](https://github.com/ray-project/ray/releases/tag/ray-2.59.0) · [https://docs.ray.io/en/latest/ray-security/token-auth.html](https://docs.ray.io/en/latest/ray-security/token-auth.html)
+[^1]: Ray Project, *Release ray-2.59.0* ("token authentication by default for local clusters … Remote and multi-node clusters are unchanged"), 2026-10-02; Ray Docs, *Token authentication* ("Ray 2.61 extends the default to all clusters"), consulted on 2026-10-10. <https://github.com/ray-project/ray/releases/tag/ray-2.59.0> · <https://docs.ray.io/en/latest/ray-security/token-auth.html>
