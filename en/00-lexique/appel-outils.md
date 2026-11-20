@@ -52,4 +52,4 @@ Typical pattern: a fast small model for tool routing, a large model for the fina
 - [[00-lexique/sglang|SGLang]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
-[^1]: OpenAI API — Function calling (de facto pattern adopted by vLLM/Ollama). [https://developers.openai.com/api/docs/guides/function-calling](https://developers.openai.com/api/docs/guides/function-calling)
+[^1]: OpenAI API — Function calling (de facto pattern adopted by vLLM/Ollama). <https://developers.openai.com/api/docs/guides/function-calling>

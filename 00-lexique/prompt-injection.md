@@ -57,4 +57,4 @@ En on-premise, le risque est **identique** au cloud : la souveraineté des donn�
 - [[06-mise-en-oeuvre/local-inference-security|🔐 Sécurité inférence locale]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: OWASP GenAI Security Project, *LLM01:2025 Prompt Injection* ([genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)) ; reconduit en tête de l'édition 2026 (publiée le 2026-08-03) avec un périmètre étendu aux entrées image/audio et à la mémoire persistante, LLM07 *System Prompt Leakage* y devenant LLM08:2026 *Hidden Context Exposure*. [https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
+[^1]: OWASP GenAI Security Project, *LLM01:2025 Prompt Injection* ([genai.owasp.org/llm-top-10/](https://genai.owasp.org/llm-top-10/)) ; reconduit en tête de l'édition 2026 (publiée le 2026-08-03) avec un périmètre étendu aux entrées image/audio et à la mémoire persistante, LLM07 *System Prompt Leakage* y devenant LLM08:2026 *Hidden Context Exposure*. <https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/>

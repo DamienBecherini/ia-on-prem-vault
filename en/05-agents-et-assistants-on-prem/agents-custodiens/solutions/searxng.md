@@ -65,9 +65,9 @@ Mature, active project (AGPL-3.0, about 38,000 GitHub stars in Q4 2026), widely 
 
 ## 📚 Sources
 
-[^1]: SearXNG Documentation — "Search without being tracked". [https://docs.searxng.org/](https://docs.searxng.org/)
-[^2]: SearXNG GitHub README. [https://github.com/searxng/searxng](https://github.com/searxng/searxng)
-[^3]: SearXNG Docs, *Search API* (`json` format to enable in `search: formats:`, otherwise 403), build 2026.10.9. [https://docs.searxng.org/dev/search_api.html](https://docs.searxng.org/dev/search_api.html)
-[^4]: SearXNG Docs, *How to update* ("SearXNG is a rolling release; each commit to the master branch is a release", regular updates required), build 2026.10.9. [https://docs.searxng.org/admin/update-searxng.html](https://docs.searxng.org/admin/update-searxng.html)
-[^5]: SearXNG Docs, *Limiter* ("The limiter requires a Valkey database"), build 2026.10.9. [https://docs.searxng.org/admin/searx.limiter.html](https://docs.searxng.org/admin/searx.limiter.html)
-[^6]: searxng, *searxng-docker* (repository archived on 2026-03-28, "superseded" in favor of the official documentation), accessed 2026-10-10. [https://github.com/searxng/searxng-docker](https://github.com/searxng/searxng-docker)
+[^1]: SearXNG Documentation — "Search without being tracked". <https://docs.searxng.org/>
+[^2]: SearXNG GitHub README. <https://github.com/searxng/searxng>
+[^3]: SearXNG Docs, *Search API* (`json` format to enable in `search: formats:`, otherwise 403), build 2026.10.9. <https://docs.searxng.org/dev/search_api.html>
+[^4]: SearXNG Docs, *How to update* ("SearXNG is a rolling release; each commit to the master branch is a release", regular updates required), build 2026.10.9. <https://docs.searxng.org/admin/update-searxng.html>
+[^5]: SearXNG Docs, *Limiter* ("The limiter requires a Valkey database"), build 2026.10.9. <https://docs.searxng.org/admin/searx.limiter.html>
+[^6]: searxng, *searxng-docker* (repository archived on 2026-03-28, "superseded" in favor of the official documentation), accessed 2026-10-10. <https://github.com/searxng/searxng-docker>

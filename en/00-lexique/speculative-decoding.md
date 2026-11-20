@@ -86,4 +86,4 @@ It is particularly attractive on high-capacity blueprints ([[02-materiel/apu-and
 
 ## 📚 Sources
 
-[^1]: vLLM Project, *Speculative Decoding* — official documentation (`--speculative-config` with the `method`, `model`, `num_speculative_tokens` keys; draft model, EAGLE, MTP, n-gram variants), accessed 2026-10-10. [https://docs.vllm.ai/en/stable/features/speculative_decoding/](https://docs.vllm.ai/en/stable/features/speculative_decoding/)
+[^1]: vLLM Project, *Speculative Decoding* — official documentation (`--speculative-config` with the `method`, `model`, `num_speculative_tokens` keys; draft model, EAGLE, MTP, n-gram variants), accessed 2026-10-10. <https://docs.vllm.ai/en/stable/features/speculative_decoding/>

@@ -72,8 +72,8 @@ Since 2026 the Khoj team has been publishing **Pipali** (Apache-2.0, 0.10.0 on 2
 
 ## 📚 Sources
 
-[^1]: Khoj GitHub — second brain, self-hostable, documents, agents, and automations. [https://github.com/khoj-ai/khoj](https://github.com/khoj-ai/khoj)
-[^2]: Khoj docs — Ollama integration and `OPENAI_BASE_URL`. [https://docs.khoj.dev/advanced/ollama](https://docs.khoj.dev/advanced/ollama)
-[^3]: Khoj Docker Compose — `KHOJ_TELEMETRY_DISABLE=True` and Ollama config. [https://github.com/khoj-ai/khoj/blob/master/docker-compose.yml](https://github.com/khoj-ai/khoj/blob/master/docker-compose.yml)
-[^4]: khoj-ai — *khoj* Releases (2.0.0-beta.28 of 2026-03-26), commits (last on 2026-08-02), and README (mention of Pipali); *pipali* (Apache-2.0, release 0.10.0 of 2026-09-14), accessed 2026-10-10. [https://github.com/khoj-ai/khoj/releases](https://github.com/khoj-ai/khoj/releases) · [https://github.com/khoj-ai/khoj/commits/master](https://github.com/khoj-ai/khoj/commits/master) · [https://github.com/khoj-ai/pipali](https://github.com/khoj-ai/pipali)
-[^5]: khoj-ai, *GHSA-62mm-xwmv-crhg* — "Unauthenticated path traversal in /home/ endpoint allows file read from server filesystem" (affected versions "<= latest", no fixed version listed), 2026-06-24. [https://github.com/khoj-ai/khoj/security/advisories/GHSA-62mm-xwmv-crhg](https://github.com/khoj-ai/khoj/security/advisories/GHSA-62mm-xwmv-crhg)
+[^1]: Khoj GitHub — second brain, self-hostable, documents, agents, and automations. <https://github.com/khoj-ai/khoj>
+[^2]: Khoj docs — Ollama integration and `OPENAI_BASE_URL`. <https://docs.khoj.dev/advanced/ollama>
+[^3]: Khoj Docker Compose — `KHOJ_TELEMETRY_DISABLE=True` and Ollama config. <https://github.com/khoj-ai/khoj/blob/master/docker-compose.yml>
+[^4]: khoj-ai — *khoj* Releases (2.0.0-beta.28 of 2026-03-26), commits (last on 2026-08-02), and README (mention of Pipali); *pipali* (Apache-2.0, release 0.10.0 of 2026-09-14), accessed 2026-10-10. <https://github.com/khoj-ai/khoj/releases> · <https://github.com/khoj-ai/khoj/commits/master> · <https://github.com/khoj-ai/pipali>
+[^5]: khoj-ai, *GHSA-62mm-xwmv-crhg* — "Unauthenticated path traversal in /home/ endpoint allows file read from server filesystem" (affected versions "<= latest", no fixed version listed), 2026-06-24. <https://github.com/khoj-ai/khoj/security/advisories/GHSA-62mm-xwmv-crhg>

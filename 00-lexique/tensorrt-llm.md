@@ -42,6 +42,6 @@ Incontournable pour amortir le coût des accélérateurs professionnels en datac
 - [[00-lexique/nvlink|NVLink]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: NVIDIA, *TensorRT-LLM Release Notes* (1.0 : PyTorch par défaut ; 1.2 : backend TensorRT et `trtllm-build` retirés ; 1.3 RC : backend MoE TRITON déprécié), consulté le 2026-10-09. [https://nvidia.github.io/TensorRT-LLM/release-notes.html](https://nvidia.github.io/TensorRT-LLM/release-notes.html)
-[^2]: PyPI, `tensorrt-llm` (historique des versions : 1.2.1 stable, 1.3.0rc29), consulté le 2026-10-09. [https://pypi.org/project/tensorrt-llm/](https://pypi.org/project/tensorrt-llm/)
-[^3]: NVIDIA, *TensorRT-LLM — Releases* (notes 1.3.0rc26 / rc27 : problèmes connus SM120, modèles MoE NVFP4 non pris en charge sur RTX 50 / RTX PRO 6000), septembre 2026. [https://github.com/NVIDIA/TensorRT-LLM/releases](https://github.com/NVIDIA/TensorRT-LLM/releases)
+[^1]: NVIDIA, *TensorRT-LLM Release Notes* (1.0 : PyTorch par défaut ; 1.2 : backend TensorRT et `trtllm-build` retirés ; 1.3 RC : backend MoE TRITON déprécié), consulté le 2026-10-09. <https://nvidia.github.io/TensorRT-LLM/release-notes.html>
+[^2]: PyPI, `tensorrt-llm` (historique des versions : 1.2.1 stable, 1.3.0rc29), consulté le 2026-10-09. <https://pypi.org/project/tensorrt-llm/>
+[^3]: NVIDIA, *TensorRT-LLM — Releases* (notes 1.3.0rc26 / rc27 : problèmes connus SM120, modèles MoE NVFP4 non pris en charge sur RTX 50 / RTX PRO 6000), septembre 2026. <https://github.com/NVIDIA/TensorRT-LLM/releases>

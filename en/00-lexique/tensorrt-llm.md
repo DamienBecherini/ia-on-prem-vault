@@ -42,6 +42,6 @@ Essential to amortize professional accelerators in the datacenter. The reference
 - [[00-lexique/nvlink|NVLink]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
-[^1]: NVIDIA, *TensorRT-LLM Release Notes* (1.0: PyTorch by default; 1.2: TensorRT backend and `trtllm-build` removed; 1.3 RC: TRITON MoE backend deprecated), accessed 2026-10-09. [https://nvidia.github.io/TensorRT-LLM/release-notes.html](https://nvidia.github.io/TensorRT-LLM/release-notes.html)
-[^2]: PyPI, `tensorrt-llm` (version history: 1.2.1 stable, 1.3.0rc29), accessed 2026-10-09. [https://pypi.org/project/tensorrt-llm/](https://pypi.org/project/tensorrt-llm/)
-[^3]: NVIDIA, *TensorRT-LLM — Releases* (1.3.0rc26 / rc27 notes: SM120 known issues, NVFP4 MoE models not supported on RTX 50 / RTX PRO 6000), September 2026. [https://github.com/NVIDIA/TensorRT-LLM/releases](https://github.com/NVIDIA/TensorRT-LLM/releases)
+[^1]: NVIDIA, *TensorRT-LLM Release Notes* (1.0: PyTorch by default; 1.2: TensorRT backend and `trtllm-build` removed; 1.3 RC: TRITON MoE backend deprecated), accessed 2026-10-09. <https://nvidia.github.io/TensorRT-LLM/release-notes.html>
+[^2]: PyPI, `tensorrt-llm` (version history: 1.2.1 stable, 1.3.0rc29), accessed 2026-10-09. <https://pypi.org/project/tensorrt-llm/>
+[^3]: NVIDIA, *TensorRT-LLM — Releases* (1.3.0rc26 / rc27 notes: SM120 known issues, NVFP4 MoE models not supported on RTX 50 / RTX PRO 6000), September 2026. <https://github.com/NVIDIA/TensorRT-LLM/releases>

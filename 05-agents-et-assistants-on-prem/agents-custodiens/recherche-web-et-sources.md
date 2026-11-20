@@ -72,7 +72,7 @@ SearXNG est un métamoteur libre qui agrège les résultats de nombreux services
 
 ## 📚 Sources
 
-[^1]: Choi, Kim, Kang, Jeong, Xing, Lee, *Agent Data Injection Attacks are Realistic Threats to AI Agents* (arXiv 2607.05120 : données malveillantes déguisées en données de confiance — identifiants, origine, formats d'appels d'outils ; démontré sur des agents web et des agents de code), 2026-07-06. [https://arxiv.org/abs/2607.05120](https://arxiv.org/abs/2607.05120)
-[^2]: SearXNG Docs, *Search API* (format `json` à activer dans `search: formats:`, sinon 403), build 2026.10.9. [https://docs.searxng.org/dev/search_api.html](https://docs.searxng.org/dev/search_api.html)
-[^3]: SearXNG Docs, *Limiter* (« The limiter requires a Valkey database »), build 2026.10.9. [https://docs.searxng.org/admin/searx.limiter.html](https://docs.searxng.org/admin/searx.limiter.html)
-[^4]: GitHub Advisory Database, *GHSA-4v28-j6q3-5m4r* (Open WebUI 0.9.6 → < 0.11.1 : SSRF par DNS rebinding dans le chargeur web Playwright, CVE-2026-87996, CVSS 3.1 7.7), 2026-08-31. [https://github.com/advisories/GHSA-4v28-j6q3-5m4r](https://github.com/advisories/GHSA-4v28-j6q3-5m4r)
+[^1]: Choi, Kim, Kang, Jeong, Xing, Lee, *Agent Data Injection Attacks are Realistic Threats to AI Agents* (arXiv 2607.05120 : données malveillantes déguisées en données de confiance — identifiants, origine, formats d'appels d'outils ; démontré sur des agents web et des agents de code), 2026-07-06. <https://arxiv.org/abs/2607.05120>
+[^2]: SearXNG Docs, *Search API* (format `json` à activer dans `search: formats:`, sinon 403), build 2026.10.9. <https://docs.searxng.org/dev/search_api.html>
+[^3]: SearXNG Docs, *Limiter* (« The limiter requires a Valkey database »), build 2026.10.9. <https://docs.searxng.org/admin/searx.limiter.html>
+[^4]: GitHub Advisory Database, *GHSA-4v28-j6q3-5m4r* (Open WebUI 0.9.6 → < 0.11.1 : SSRF par DNS rebinding dans le chargeur web Playwright, CVE-2026-87996, CVSS 3.1 7.7), 2026-08-31. <https://github.com/advisories/GHSA-4v28-j6q3-5m4r>

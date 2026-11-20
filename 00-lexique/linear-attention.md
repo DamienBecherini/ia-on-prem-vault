@@ -45,4 +45,4 @@ Ces modèles acceptent de très longs contextes avec bien moins de VRAM de cache
 - [[00-lexique/sparse-attention|Attention sparse]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: S. Yang, J. Kautz, A. Hatamizadeh, *Gated Delta Networks: Improving Mamba2 with Delta Rule* (arXiv:2412.06464), décembre 2024. [https://arxiv.org/abs/2412.06464](https://arxiv.org/abs/2412.06464)
+[^1]: S. Yang, J. Kautz, A. Hatamizadeh, *Gated Delta Networks: Improving Mamba2 with Delta Rule* (arXiv:2412.06464), décembre 2024. <https://arxiv.org/abs/2412.06464>

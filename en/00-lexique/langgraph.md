@@ -48,4 +48,4 @@ On-premise, LangGraph is often used with a local [[00-lexique/vllm|vLLM]] or [[0
 - [[00-lexique/human-in-the-loop|Human-in-the-loop]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
-[^1]: LangGraph — official documentation. [https://langchain-ai.github.io/langgraph/](https://langchain-ai.github.io/langgraph/)
+[^1]: LangGraph — official documentation. <https://langchain-ai.github.io/langgraph/>

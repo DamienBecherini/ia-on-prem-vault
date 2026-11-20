@@ -42,4 +42,4 @@ Elles ne s'excluent pas conceptuellement : PagedAttention adresse le débit sous
 - [[00-lexique/ttft|TTFT]]
 - [[00-lexique/ai-glossary|📖 Glossaire IA]]
 
-[^1]: LMSys, *Fast and Expressive LLM Inference with RadixAttention*, janvier 2024. [https://lmsys.org/blog/2024-01-17-sglang/](https://lmsys.org/blog/2024-01-17-sglang/)
+[^1]: LMSys, *Fast and Expressive LLM Inference with RadixAttention*, janvier 2024. <https://lmsys.org/blog/2024-01-17-sglang/>

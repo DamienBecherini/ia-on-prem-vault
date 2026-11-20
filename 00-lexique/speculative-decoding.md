@@ -86,4 +86,4 @@ Il est particulièrement attractif sur les blueprints haute capacité ([[02-mate
 
 ## 📚 Sources
 
-[^1]: vLLM Project, *Speculative Decoding* — documentation officielle (`--speculative-config` avec les clés `method`, `model`, `num_speculative_tokens` ; variantes draft model, EAGLE, MTP, n-gram), consulté le 2026-10-10. [https://docs.vllm.ai/en/stable/features/speculative_decoding/](https://docs.vllm.ai/en/stable/features/speculative_decoding/)
+[^1]: vLLM Project, *Speculative Decoding* — documentation officielle (`--speculative-config` avec les clés `method`, `model`, `num_speculative_tokens` ; variantes draft model, EAGLE, MTP, n-gram), consulté le 2026-10-10. <https://docs.vllm.ai/en/stable/features/speculative_decoding/>

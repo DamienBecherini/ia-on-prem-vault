@@ -12,6 +12,7 @@
 - On every substantive FR edit, set or update `last_modified: YYYY-MM-DD` in frontmatter (today's date). This feeds `npm run audit:i18n` for EN translation backlog.
 - Never invent sources. Performance claims must be cited with relevant context or written as cautious order-of-magnitude statements.
 - Use Obsidian wikilinks for internal references and footnotes for external sources. Inside a Markdown table, write the alias separator as `\|` (`[[path\|label]]`): a bare `|` ends the cell and breaks the link (`npm test` fails on it).
+- Write the address of a source once, between angle brackets: `<https://example.org/page>`, never `[https://example.org/page](https://example.org/page)`. Obsidian and the site show the same link for both, and the short form halves the weight of the address (the notes are a fifth of the guide). Markdown pages only: in an `.mdx` file (`index.mdx`), `<…>` is read as a tag, so keep `[text](url)` there.
 - If the user explicitly asks not to use project skills or workflows, respect that request while keeping factuality and source constraints.
 
 ## Lisibilité : lecture à trois étages

@@ -67,9 +67,9 @@ Product integrated with Cursor — a company acquired by SpaceX on 2026-08-14, w
 
 ## 📚 Sources
 
-[^1]: Cursor Docs, *CLI Overview*. [https://cursor.com/docs/cli/overview.md](https://cursor.com/docs/cli/overview.md)
-[^2]: Cursor Docs, *Headless mode*. [https://cursor.com/docs/cli/headless.md](https://cursor.com/docs/cli/headless.md)
-[^3]: Cursor Docs, *Enterprise deployment patterns*. [https://cursor.com/docs/enterprise/deployment-patterns.md](https://cursor.com/docs/enterprise/deployment-patterns.md)
-[^4]: Cursor Help, *API keys / BYOK* ("all requests are routed through Cursor's servers for final prompt building"; Zero Data Retention not applicable under BYOK), read on 2026-10-09. [https://cursor.com/help/models-and-usage/api-keys.md](https://cursor.com/help/models-and-usage/api-keys.md)
-[^5]: Cursor, *Cursor is now a part of SpaceX* (acquisition "officially" closed, process started in April; Grok 4.6 cited as the first shared model), 2026-08-14. [https://cursor.com/blog/joining-spacex](https://cursor.com/blog/joining-spacex)
-[^6]: Cursor, *Changelog* — 2026-09-02 entry "self-hosted machines" (cloud agent tool execution inside your network, team pools, hibernation), accessed 2026-10-10. [https://cursor.com/changelog](https://cursor.com/changelog)
+[^1]: Cursor Docs, *CLI Overview*. <https://cursor.com/docs/cli/overview.md>
+[^2]: Cursor Docs, *Headless mode*. <https://cursor.com/docs/cli/headless.md>
+[^3]: Cursor Docs, *Enterprise deployment patterns*. <https://cursor.com/docs/enterprise/deployment-patterns.md>
+[^4]: Cursor Help, *API keys / BYOK* ("all requests are routed through Cursor's servers for final prompt building"; Zero Data Retention not applicable under BYOK), read on 2026-10-09. <https://cursor.com/help/models-and-usage/api-keys.md>
+[^5]: Cursor, *Cursor is now a part of SpaceX* (acquisition "officially" closed, process started in April; Grok 4.6 cited as the first shared model), 2026-08-14. <https://cursor.com/blog/joining-spacex>
+[^6]: Cursor, *Changelog* — 2026-09-02 entry "self-hosted machines" (cloud agent tool execution inside your network, team pools, hibernation), accessed 2026-10-10. <https://cursor.com/changelog>

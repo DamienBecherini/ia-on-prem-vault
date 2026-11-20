@@ -42,4 +42,4 @@ They are not mutually exclusive conceptually: PagedAttention addresses throughpu
 - [[00-lexique/ttft|TTFT]]
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
-[^1]: LMSys, *Fast and Expressive LLM Inference with RadixAttention*, January 2024. [https://lmsys.org/blog/2024-01-17-sglang/](https://lmsys.org/blog/2024-01-17-sglang/)
+[^1]: LMSys, *Fast and Expressive LLM Inference with RadixAttention*, January 2024. <https://lmsys.org/blog/2024-01-17-sglang/>

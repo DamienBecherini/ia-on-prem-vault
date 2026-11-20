@@ -48,5 +48,5 @@ In a sovereign setup, LiteLLM can enforce **local-only** routing to Ollama or vL
 - [[00-lexique/agent-custodian|Custodian agent]]
 - [[03-stack-logicielle/inference-engines-vllm-ollama|Inference engines]]
 
-[^1]: LiteLLM, *Version Support Policy* (four stable minor lines maintained, rolling window of about one month per line, effective 2026-06-29), 2026-06-20. [https://docs.litellm.ai/blog/version-support](https://docs.litellm.ai/blog/version-support)
-[^2]: LiteLLM Docs, *MCP Overview* (MCP Gateway: single entry point to MCP servers, per-key and per-team access control; A2A "Agent Gateway" in the menu), accessed 2026-10-10. [https://docs.litellm.ai/docs/mcp](https://docs.litellm.ai/docs/mcp)
+[^1]: LiteLLM, *Version Support Policy* (four stable minor lines maintained, rolling window of about one month per line, effective 2026-06-29), 2026-06-20. <https://docs.litellm.ai/blog/version-support>
+[^2]: LiteLLM Docs, *MCP Overview* (MCP Gateway: single entry point to MCP servers, per-key and per-team access control; A2A "Agent Gateway" in the menu), accessed 2026-10-10. <https://docs.litellm.ai/docs/mcp>
