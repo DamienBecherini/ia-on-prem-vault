@@ -3,7 +3,7 @@ title: "Open WebUI"
 description: Interface web self-hosted pour Ollama et backends OpenAI-compatibles, adaptée aux déploiements locaux multi-utilisateurs.
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -60,7 +60,7 @@ Open WebUI est un bon compagnon des blueprints :
 
 ## 📊 Maturité du projet
 
-Projet très utilisé et activement maintenu (environ 154 000 étoiles GitHub, v0.11.4 au 2026-09-21), avec une large communauté GitHub et un écosystème de plugins. La maturité produit est bonne, mais la surface d'attaque suit : 88 avis de sécurité publiés entre juin et septembre 2026, dont une trentaine de sévérité haute (prise de contrôle de compte via OAuth, SSRF vers les services internes, exécution d'outils entre utilisateurs) et trois exploitables sans compte. Les correctifs ne sont livrés que dans les versions courantes : une PME doit suivre le train de releases sans jamais rester sous la 0.11.4 (2026-09-21), qui corrige les 15 avis publiés fin septembre 2026, dont un vol de jeton de session déclenchable depuis n'importe quel site web tant que le partage communautaire (actif par défaut) reste ouvert. Elle ne doit pas figer de version et doit appliquer le guide de durcissement officiel[^4].
+Projet très utilisé et activement maintenu (environ 154 000 étoiles GitHub, v0.13.4 au 2026-11-17), avec une large communauté GitHub et un écosystème de plugins. La maturité produit est bonne, mais la surface d'attaque suit : 88 avis de sécurité publiés entre juin et septembre 2026, dont une trentaine de sévérité haute (prise de contrôle de compte via OAuth, SSRF vers les services internes, exécution d'outils entre utilisateurs) et trois exploitables sans compte. Les correctifs ne sont livrés que dans les versions courantes : une PME doit suivre le train de releases sans jamais rester sous la 0.13.1 (2026-11-08). Comme les 0.12.4 et 0.12.5, elle embarque des correctifs de sécurité dont l'éditeur ne publiera les avis qu'à l'attribution des CVE. L'éditeur recommande de passer directement à la 0.13.4 (2026-11-17), après une sauvegarde de la base : la 0.13.1 change le schéma, ce qui impose de mettre à jour toutes les instances en même temps. La 0.13.4 supprime aussi les Direct Connections, c'est-à-dire les modèles et serveurs d'outils que chaque utilisateur ajoutait dans ses réglages. Ils passent désormais par l'application de bureau Tether, gratuite pour un usage personnel non commercial mais soumise à une licence Enterprise en entreprise[^8]. Elle ne doit pas figer de version et doit appliquer le guide de durcissement officiel[^4].
 
 ## 🔗 Voir aussi
 
@@ -79,3 +79,4 @@ Projet très utilisé et activement maintenu (environ 154 000 étoiles GitHub, v
 [^5]: Open WebUI — *License* (BSD-3 jusqu'à la v0.6.5 ; clause de marque depuis la v0.6.6 du 2025-04-19, exemption « 50 utilisateurs ou moins sur 30 jours », non approuvée OSI), consultée le 2026-10-10. <https://docs.openwebui.com/license/>
 [^6]: Open WebUI — *Releases* v0.10.0 (2026-06-29 : dossiers partagés, bases de connaissances externes, compaction du contexte) et v0.11.0 (2026-07-27 : sous-agents, synchronisation des groupes LDAP). <https://github.com/open-webui/open-webui/releases/tag/v0.10.0> · <https://github.com/open-webui/open-webui/releases/tag/v0.11.0>
 [^7]: Open WebUI — *Dockerfile* (`SCARF_NO_ANALYTICS=true`, `DO_NOT_TRACK=true`, `ANONYMIZED_TELEMETRY=false` par défaut), lu le 2026-10-09. <https://github.com/open-webui/open-webui/blob/main/Dockerfile>
+[^8]: Open WebUI, *Open WebUI v0.13.4: AI that does the work, not just answers* (« go straight to v0.13.4 » ; la v0.13.1 inclut des correctifs de sécurité dont les avis seront publiés à l'attribution des CVE ; changement de schéma, pas de mise à jour progressive ; Direct Connections remplacées en v0.13.4 par Tether, gratuit pour un usage personnel non commercial, licence Enterprise requise en organisation), 2026-11-19 · *Open WebUI v0.12.4 and v0.12.5* (correctifs de sécurité dans les deux versions), 2026-11-04 · *Releases* (v0.13.1 du 2026-11-08, v0.13.4 du 2026-11-17). <https://openwebui.com/blog/v0-13-4-ai-that-does-the-work-not-just-answers> · <https://openwebui.com/blog/v0-12-4-and-v0-12-5-accessibility-and-shared-notes> · <https://github.com/open-webui/open-webui/releases>
