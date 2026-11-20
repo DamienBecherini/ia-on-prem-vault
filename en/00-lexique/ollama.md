@@ -8,14 +8,14 @@ tags:
   - stack
 sidebar:
   order: 64
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 ---
 
 ## 📝 Short definition
 
-A distribution and CLI that runs [[00-lexique/llm|LLMs]] locally in a few commands, via **llama.cpp** (Linux, Windows, [[00-lexique/gguf|GGUF]] format) or, since version 0.40 (October 2026) on Apple Silicon, via Apple's **MLX** engine by default, with an OpenAI-compatible API server on port 11434[^1][^3].
+A distribution and CLI that runs [[00-lexique/llm|LLMs]] locally in a few commands, via **llama.cpp** (Linux, Windows, [[00-lexique/gguf|GGUF]] format) or, on Apple Silicon, via Apple's **MLX** engine by default, with an OpenAI-compatible API server on port 11434[^1].
 
 ## 📖 Detailed definition
 
@@ -32,7 +32,7 @@ Under the hood, Ollama relies on **llama.cpp** (C/C++) — aggressive [[00-lexiq
 ## ⚠️ Common pitfalls
 
 - Serving **multiple simultaneous users** in production: by default Ollama handles only one request at a time per model (`OLLAMA_NUM_PARALLEL=1`) and queues the others; raising this parallelism costs memory (∝ parallelism × context) and does not replace the continuous batching of a production engine[^2].
-- Pulling a `:cloud` model believing you stay on-prem: some library models exist only in a hosted version (`kimi-k3:cloud`, `glm-5.2:cloud`, offered by default by the `ollama` agent since 0.32) and send requests off the machine; the account offered at first launch (0.34.2) is only used for these cloud models and private repositories, local inference does not need it[^4].
+- Pulling a `:cloud` model believing you stay on-prem: some library models exist only in a hosted version (`kimi-k3:cloud`, `glm-5.2:cloud`) and send requests off the machine; the account offered at first launch is only used for these cloud models and private repositories, local inference does not need it (details by version in [[06-mise-en-oeuvre/getting-started-with-ollama|Getting started with Ollama]])[^4].
 - Confusing "downloaded model" with "model suited to the business": always validate with a golden dataset.
 - Exposing API 11434 without authentication on the internal network: see [[06-mise-en-oeuvre/local-inference-security|inference security]].
 

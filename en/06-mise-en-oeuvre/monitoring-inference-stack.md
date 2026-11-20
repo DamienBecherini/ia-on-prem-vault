@@ -3,7 +3,7 @@ title: "📊 Monitoring the inference stack"
 description: Setting up Prometheus + Grafana monitoring for a vLLM or Ollama stack — GPU metrics, KV Cache, throughput, and operational alerts.
 sidebar:
   order: 6
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -130,7 +130,7 @@ scrape_configs:
       - targets: ['host.docker.internal:2019']  # reverse proxy /metrics endpoint
 ```
 
-vLLM's `/metrics` endpoint is not protected by `--api-key`: expose it only to the Prometheus network. Versions < 0.30 were also vulnerable to a denial of service through HTTP label cardinality explosion (GHSA-5fj9-pfhr-6j48, fixed in 0.30.0)[^13].
+vLLM's `/metrics` endpoint is not protected by `--api-key`: expose it only to the Prometheus network. Minimum version: vLLM ≥ 0.33.0 (see [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]).
 
 > [!note] Ollama vs vLLM
 > vLLM natively exposes a Prometheus-compatible `/metrics` endpoint[^1]. Ollama exposes no documented Prometheus `/metrics` as of Q4 2026[^10]: instrument at the reverse proxy level (Caddy natively exposes Prometheus metrics on its admin endpoint `:2019/metrics`; Nginx via `nginx-prometheus-exporter`) or use the `eval_count`, `eval_duration` and `prompt_eval_duration` fields of `/api/generate` and `/api/chat` responses (section 7). The community exporters cited in earlier versions of this guide are no longer available (repositories deleted as of 2026-10-09).
@@ -150,6 +150,7 @@ vLLM exposes metrics on `GET /metrics`[^1]. Priority metrics to watch:
 | `rate(vllm:generation_tokens_total[1m])` | Generation throughput in tokens/s (derived from the counter; the V0 gauge `avg_generation_throughput_toks_per_s` is gone)[^1] | < threshold defined by use case |
 | `vllm:prompt_tokens_total` | Prompt tokens processed (cumulative) | — (trend) |
 | `vllm:generation_tokens_total` | Generated tokens (cumulative) | — (trend) |
+| `vllm:request_success_total` | Completed requests | — |
 
 The vLLM documentation names counters without a suffix (`vllm:generation_tokens`, `vllm:num_preemptions`); the Prometheus exposition adds `_total` to them, hence `vllm:generation_tokens_total` in the queries above[^1].
 
@@ -477,5 +478,4 @@ cp /qdrant/snapshots/my_collection/*.snapshot /mnt/backup/qdrant/
 [^10]: Ollama, *API Reference* (`/api/generate`, `/api/chat` endpoints and `eval_count` / `eval_duration` / `prompt_eval_duration` fields; no `/metrics` endpoint), accessed 2026-10-09. [https://docs.ollama.com/api](https://docs.ollama.com/api)
 [^11]: LiteLLM, *OpenTelemetry Integration* (`litellm_settings.callbacks: ["otel"]`, `OTEL_EXPORTER` / `OTEL_ENDPOINT` variables), accessed 2026-10-09 · vLLM Project, *CLI Reference — `vllm serve`* (`--otlp-traces-endpoint`, `--collect-detailed-traces all|model|worker`), accessed 2026-10-09. [https://docs.litellm.ai/docs/observability/opentelemetry_integration](https://docs.litellm.ai/docs/observability/opentelemetry_integration) · [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/)
 [^12]: Arize AI, `Arize-ai/phoenix` repository, `LICENSE` file (Elastic License 2.0) and *Release arize-phoenix-v20.0.0*, 2026-08-11. [https://github.com/Arize-ai/phoenix/blob/main/LICENSE](https://github.com/Arize-ai/phoenix/blob/main/LICENSE) · [https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.0.0](https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.0.0)
-[^13]: vLLM Project, *Release v0.30.0* (normalization of frontend HTTP label cardinality; advisory GHSA-5fj9-pfhr-6j48), 2026-09-22. [https://github.com/vllm-project/vllm/releases/tag/v0.30.0](https://github.com/vllm-project/vllm/releases/tag/v0.30.0) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-5fj9-pfhr-6j48](https://github.com/vllm-project/vllm/security/advisories/GHSA-5fj9-pfhr-6j48)
 [^14]: vLLM Project, `vllm-project/vllm` repository, `examples/observability/prometheus_grafana/` (README, `docker-compose.yaml`, `prometheus.yaml`, `grafana.json`) and `examples/observability/dashboards/grafana/` (`performance_statistics.json`, `query_statistics.json`), `main` tree accessed 2026-10-10. [https://github.com/vllm-project/vllm/tree/main/examples/observability/prometheus_grafana](https://github.com/vllm-project/vllm/tree/main/examples/observability/prometheus_grafana)

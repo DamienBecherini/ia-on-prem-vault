@@ -8,7 +8,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-11"
+last_modified: "2026-11-20"
 ---
 
 ## 📝 Short definition
@@ -21,7 +21,7 @@ In classic attention, each token compares its content with **all** previous toke
 
 An analogy: to find a piece of information in a long file, you read the table of contents, then open only the useful pages.
 
-Example: **DeepSeek Sparse Attention (DSA)** in DeepSeek-V3.2. A small, fast module, the *lightning indexer*, scores the relevance of each past token, then the model runs full attention only on the 2,048 tokens with the best scores. DeepSeek states that the cost of core attention goes from $O(L^2)$ to $O(L \cdot k)$, $k$ being the number of selected tokens[^1].
+Example: **DeepSeek Sparse Attention (DSA)** in DeepSeek-V3.2[^1], detailed in [[01-fondations/kv-cache-and-context|💾 KV Cache & Context]].
 
 ## 💡 Why it matters for on-premise AI
 

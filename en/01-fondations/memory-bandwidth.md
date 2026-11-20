@@ -3,7 +3,7 @@ title: 🏎️ Memory Bandwidth & The "Memory Wall"
 description: Mathematical and hardware analysis of the real bottleneck in local LLM inference.
 sidebar:
   order: 1
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -78,7 +78,7 @@ A dense 70B model quantized to 4-bit uses about **40 GB** of weight memory (orde
 4.  **On Nvidia RTX 5090 (dedicated GDDR7 VRAM — Blackwell):**
     *   Real bandwidth: $1{,}792 \text{ GB/s}$
     *   Calculation: $\frac{1792 \text{ GB/s}}{40 \text{ GB}} = \mathbf{44.8 \text{ tokens/s}}$ (theoretical bound).
-    *   *Bandwidth example only: in Q3 2026 the RTX 5090 sells for ≥ $5,000 and is scarce — the RTX PRO 6000 Blackwell offers the same bandwidth (1,792 GB/s) with 96 GB [^12].*
+    *   *Bandwidth example only: in Q3 2026 the RTX 5090 sells for ≥ $5,000 (see [[02-materiel/stations-multi-gpu|Stations Multi-GPU]]) — the RTX PRO 6000 Blackwell offers the same bandwidth (1,792 GB/s) with 96 GB [^12].*
 
 ---
 
@@ -96,7 +96,7 @@ Values below are order-of-magnitude guides for architecture (real performance va
 | **Apple M5 Max / M5 Ultra unified memory** | $614$ to $1{,}200 \text{ GB/s}$ | [^4] | excellent local throughput without PCIe offload |
 | **RTX 5090 VRAM (GDDR7)** | $\sim 1.79 \text{ TB/s}$ | [^5][^6] | very high throughput for fast decoding |
 
-Two dated remarks (Q4 2026). Intel is preparing a "capacity-first" inference GPU (Crescent Island, 160 GB of LPDDR5X, 350 W, expected in 2027) whose bandwidth is not published: the formula above already says it will be limited in single-request decode and relevant in batch[^8]. And RAM is no longer the cheap option in the table: contract DRAM is still rising 10–15% per quarter in Q4 2026 (TrendForce), so the "capacity vs bandwidth" trade-off is now also made in euros per GB[^9].
+Two dated remarks (Q4 2026). Intel is preparing a "capacity-first" inference GPU (Crescent Island, see [[02-materiel/stations-multi-gpu|🧩 Stations Multi-GPU]]) whose bandwidth is not published: the formula above already says it will be limited in single-request decode and relevant in batch. And RAM is no longer the cheap option in the table: DRAM is still rising every quarter (see [[04-blueprints/tco-comparison|💰 Comparaison TCO]]), so the "capacity vs bandwidth" trade-off is now also made in euros per GB.
 
 ---
 
@@ -122,8 +122,6 @@ Two dated remarks (Q4 2026). Intel is preparing a "capacity-first" inference GPU
 [^5]: NVIDIA, *GeForce RTX 5090 product page* (32 GB GDDR7, 512-bit bus, TGP 575 W). [https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/](https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/)
 [^6]: TechPowerUp, *NVIDIA GeForce RTX 5090 Specs* (memory bandwidth 1.79 TB/s), 2026. [https://www.techpowerup.com/gpu-specs/geforce-rtx-5090.c4216](https://www.techpowerup.com/gpu-specs/geforce-rtx-5090.c4216)
 [^7]: NVIDIA, *DGX Spark* — product page (Grace Blackwell GB10, 128 GB LPDDR5x, ~273 GB/s, native FP4), re-read on 2026-10-09. [https://www.nvidia.com/en-us/products/workstations/dgx-spark/](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)
-[^8]: ServeTheHome, *Intel Crescent Island 160GB to 480GB LPDDR5X AI GPU at Hot Chips 2026* (350 W air-cooled PCIe, bandwidth not disclosed), 24 August 2026. [https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/](https://www.servethehome.com/intel-crescent-island-160gb-to-480gb-lpddr5x-ai-gpu-at-hot-chips-2026/)
-[^9]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
 [^10]: Apple MLX, *Distributed Communication* ("Starting from macOS 26.2, RDMA over thunderbolt is available"; JACCL backend), consulted 2026-10-10. [https://ml-explore.github.io/mlx/build/html/usage/distributed.html](https://ml-explore.github.io/mlx/build/html/usage/distributed.html)
 [^11]: AMD, *AMD Ryzen AI Max+ PRO 495* — product page (192 GB LPDDR5X-8533, 256-bit bus), consulted 2026-10-09. [https://www.amd.com/en/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html](https://www.amd.com/en/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html) · Framework, *The 192GB Framework Desktop is open for pre-order* (pre-orders from 2026-09-30, shipping November 2026), 30 September 2026. [https://frame.work/blog/192gb-framework-desktop-open-for-pre-order](https://frame.work/blog/192gb-framework-desktop-open-for-pre-order)
 [^12]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500* (MSRP $1,999), 14 September 2026. [https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu](https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu) · NVIDIA, *RTX PRO 6000 Blackwell Workstation Edition* (96 GB GDDR7 ECC, 1,792 GB/s). [https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/](https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/)

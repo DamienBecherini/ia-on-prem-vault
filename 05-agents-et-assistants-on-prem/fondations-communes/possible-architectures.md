@@ -5,7 +5,7 @@ description: >
   Tableau comparatif, exigences matérielles et relation entre les deux pistes.
 sidebar:
   order: 3
-last_modified: "2026-11-19"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -44,7 +44,7 @@ Toutes les applications IA locales ne font pas la même chose. Avant de choisir 
 - Déclencheur : cron, webhook, événement Git, commande CLI
 - Autonomie : haute en lecture/analyse, **toujours human-in-the-loop pour les actions irréversibles**
 
-**Exemples :** OpenHands Agent Canvas (automatisations planifiées ou événementielles, self-hosted), un pipeline Cursor CLI + script systemd ; Aider reste utilisable mais n'a plus de release depuis août 2025 ni de commit depuis mai 2026[^1]
+**Exemples :** OpenHands Agent Canvas (automatisations planifiées ou événementielles, self-hosted), un pipeline Cursor CLI + script systemd ; [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider|Aider]] reste utilisable mais gelé (voir sa fiche)[^1]
 
 **Analogie :** un assistant de recherche junior qui travaille pendant la nuit, dépose ses propositions sur votre bureau le matin, et ne signe rien sans votre accord.
 
@@ -63,7 +63,7 @@ Toutes les applications IA locales ne font pas la même chose. Avant de choisir 
 
 **Avertissement :** la complexité de l'hybride est réelle. Une implémentation mal pensée peut donner à l'IA la capacité de modifier des fichiers, envoyer des emails ou passer des commandes sans garde-fous suffisants. Préférez une architecture explicite (assistant ou custodien) pour commencer.
 
-La plupart de ces outils exposent leurs actions via le **Model Context Protocol (MCP)**. Sa révision du 28 juillet 2026 rend le protocole sans état (plus de `Mcp-Session-Id`), introduit `server/discover` et déprécie Roots, Sampling, Logging et l'enregistrement dynamique OAuth (fenêtre de dépréciation d'au moins douze mois) : vérifiez que serveurs et clients MCP de votre stack suivent la même révision avant d'empiler les permissions[^3].
+La plupart de ces outils exposent leurs actions via le **Model Context Protocol (MCP)**. Sa révision du 28 juillet 2026 est détaillée dans [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] : vérifiez que serveurs et clients MCP de votre stack suivent la même révision avant d'empiler les permissions.
 
 ---
 
@@ -75,8 +75,8 @@ La plupart de ces outils exposent leurs actions via le **Model Context Protocol 
 | **Déclencheur** | Humain | Cron / webhook | Humain ou automatique |
 | **Autonomie d'action** | Basse (réponses) | Haute (tâches) | Variable |
 | **Mémoire requise** | Longue, personnelle | Courte, contexte de tâche | Les deux |
-| **Modèle LLM** | Gros (qualité réponse) | Petit OK (routage) + coder 14B+ (édition de fichiers : Qwen2.5-Coder-14B, Devstral Small 2 24B, Qwen3-Coder-30B-A3B)[^7] | Les deux |
-| **VRAM minimale** | 8–24 Go (modèle 7–14B) | 12–16 Go (modèle coder 14B minimum dès que l'agent modifie des fichiers ; un 7B ne suffit que pour le routage) | 24+ Go |
+| **Modèle LLM** | Gros (qualité réponse) | Petit OK (routage) + coder 14B+ (édition de fichiers) | Les deux |
+| **VRAM minimale** | 8–24 Go (modèle 7–14B) | 12–16 Go (modèle coder 14B minimum) | 24+ Go |
 | **Complexité d'installation** | Faible à moyenne | Moyenne à haute | Haute |
 | **Risque de side effects** | Faible | Moyen (si mauvais guardrails) | Élevé sans guardrails |
 | **Souveraineté** | Variable selon outil | Maîtrisable si stack open | Maîtrisable si bien architecturé |
@@ -124,7 +124,7 @@ Les deux pistes partagent le même moteur d'inférence, mais n'ont pas les même
 | Piste | Modèle LLM type | VRAM minimale | Commentaire |
 | :-- | :-- | :-- | :-- |
 | Assistant Personnel (qualité dialogue) | 14B–70B | 16–48 Go | La qualité des réponses compte — éviter les < 7B |
-| Agent Custodien (routage + édition) | 7B pour le seul routage, modèle coder 14B minimum pour éditer des fichiers (Qwen2.5-Coder-14B, de 2024), 24–32B recommandé (Devstral Small 2 24B, Qwen3-Coder-30B-A3B ou Qwen2.5-Coder-32B)[^7] | 12–24 Go | Le routage n'a pas besoin d'un gros modèle ; l'édition de fichiers, si |
+| Agent Custodien (routage + édition) | 7B pour le seul routage, modèle coder 14B minimum pour éditer des fichiers, 24–32B recommandé (modèles : [[05-agents-et-assistants-on-prem/agents-custodiens/recommandation-architecture-cible\|architecture cible]]) | 12–24 Go | Le routage n'a pas besoin d'un gros modèle ; l'édition de fichiers, si |
 | Hybride | 14B–70B | 24–48 Go | Compromis entre les deux |
 
 Pour le sizing détaillé, voir les [[04-blueprints/scenario-a-dev-lab|Blueprints A–D]].
@@ -147,9 +147,9 @@ Ce guide couvre la théorie des architectures. Pour passer à la pratique, voici
 
 | Outil | Point de départ |
 | :-- | :-- |
-| **Aider** | [Aider quickstart](https://aider.chat/docs/usage/tutorials.html) — agent de code local, compatible Ollama ; **projet sans release depuis août 2025 ni commit depuis mai 2026**, à n'utiliser qu'en connaissance de cause[^1] |
+| **Aider** | [Aider quickstart](https://aider.chat/docs/usage/tutorials.html) — agent de code local, compatible Ollama ; **projet gelé** (voir la [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider\|fiche Aider]]), à n'utiliser qu'en connaissance de cause |
 | **OpenHands Agent Canvas** | [Agent Canvas (README, Docker)](https://github.com/OpenHands/OpenHands) — centre de contrôle self-hosted pour conversations et automatisations d'agents de code (OpenHands, ou Claude Code / Codex / Gemini CLI via ACP) ; le SDK et l'agent vivent dans `software-agent-sdk`[^1] |
-| **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — routage unifié vers un modèle local ; **exigez une version ≥ 1.106.9 / 1.108.6 / 1.109.1 selon votre ligne** (avis du 2026-11-12 sur les proxys servant un modèle Azure, après l'avis critique du 2026-10-27 sur les proxys sous licence Enterprise) : trois failles LiteLLM figurent au catalogue KEV de la CISA en 2026 et une escalade critique (CVSS 9.9) a été corrigée le 2026-09-30[^2] |
+| **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — routage unifié vers un modèle local ; **exigez une version ≥ 1.106.9 / 1.108.6 / 1.109.1 selon votre ligne** (avis de sécurité : voir la [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm\|fiche LiteLLM]]) |
 | **SmolAgents** | [SmolAgents cookbook](https://huggingface.co/docs/smolagents/tutorials/building_good_agents) — framework agent minimaliste, HuggingFace (activité réduite depuis mai 2026)[^6] |
 | **LangGraph** | [LangGraph "local agent" tutorial](https://langchain-ai.github.io/langgraph/tutorials/introduction/) — orchestration d'agents avec graphes d'état |
 
@@ -168,9 +168,6 @@ Ce guide couvre la théorie des architectures. Pour passer à la pratique, voici
 ## 📚 Sources
 
 [^1]: Aider-AI, *aider* (dépôt GitHub : dernier commit le 2026-05-22, dernière release v0.86.0 du 2025-08-09), consulté le 2026-10-10 ; OpenHands, *Introducing Agent Canvas* (2026-06-16) et *Use any coding agent in OpenHands with ACP* (2026-06-18). [https://github.com/Aider-AI/aider](https://github.com/Aider-AI/aider) · [https://www.openhands.dev/blog/introducing-agent-canvas](https://www.openhands.dev/blog/introducing-agent-canvas) · [https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp](https://www.openhands.dev/blog/use-any-coding-agent-in-openhands-with-acp)
-[^2]: BerriAI, *GHSA-7hp6-4w63-5g45* (escalade `internal_user` → `proxy_admin` → exécution sur l'hôte, CVSS 9.9, corrigée en 1.100.4 / 1.101.3 / 1.102.2 / 1.103.1), 2026-09-30 ; BerriAI, *GHSA-w4c7-34wj-hqm8* (lecture de fichier non authentifiée sur proxy Enterprise, CVSS 10.0, corrigée en 1.103.10 / 1.104.8 / 1.105.6 / 1.106.5), 2026-10-27, [https://github.com/BerriAI/litellm/security/advisories/GHSA-w4c7-34wj-hqm8](https://github.com/BerriAI/litellm/security/advisories/GHSA-w4c7-34wj-hqm8) ; BerriAI, *GHSA-2rwg-2wh4-7c4f* (exfiltration de secrets via les paramètres Entra ID d'un modèle Azure, CVSS 7.7, corrigée en 1.106.9 / 1.108.6 / 1.109.1), 2026-11-12, [https://github.com/BerriAI/litellm/security/advisories/GHSA-2rwg-2wh4-7c4f](https://github.com/BerriAI/litellm/security/advisories/GHSA-2rwg-2wh4-7c4f) ; CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822), catalogue daté 2026-10-08. [https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45](https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45) · [https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)
-[^3]: Model Context Protocol, *Specification 2026-07-28 — Key Changes* (suppression de `Mcp-Session-Id` et du handshake `initialize`, `server/discover`, dépréciation de Roots, Sampling, Logging et de l'enregistrement dynamique OAuth, fenêtre de dépréciation de douze mois minimum). [https://modelcontextprotocol.io/specification/2026-07-28/changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog)
 [^4]: Open WebUI, *Release v0.11.0* (sous-agents, synchronisation des groupes LDAP), 2026-07-27. [https://github.com/open-webui/open-webui/releases/tag/v0.11.0](https://github.com/open-webui/open-webui/releases/tag/v0.11.0)
 [^5]: Khoj, *Self-Host* (installation Docker / pip), lu le 2026-10-10 ; khoj-ai, *khoj* — Releases (dernière version 2.0.0-beta.28 du 2026-03-26). [https://docs.khoj.dev/get-started/setup](https://docs.khoj.dev/get-started/setup) · [https://github.com/khoj-ai/khoj/releases](https://github.com/khoj-ai/khoj/releases)
 [^6]: Hugging Face, *smolagents* — Releases (dernière version v1.26.0 du 2026-05-29, dépôt non archivé), consulté le 2026-10-10. [https://github.com/huggingface/smolagents/releases](https://github.com/huggingface/smolagents/releases)
-[^7]: Qwen, *Qwen2.5-Coder-32B-Instruct* (famille 0,5 à 32B, 14B et 32B sous Apache 2.0, 2024) ; QwenLM, *Qwen3-Coder* (README : 30B-A3B, Next et 480B-A35B, aucune variante dense 14B ou 32B), consulté le 2026-11-19 ; Mistral AI, *Introducing Devstral 2 and Mistral Vibe CLI* (Devstral Small 2 : 24B, Apache 2.0), 2025-12-09. [https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct) · [https://github.com/QwenLM/Qwen3-Coder](https://github.com/QwenLM/Qwen3-Coder) · [https://mistral.ai/news/devstral-2-vibe-cli](https://mistral.ai/news/devstral-2-vibe-cli)

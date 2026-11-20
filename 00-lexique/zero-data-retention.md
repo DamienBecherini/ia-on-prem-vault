@@ -10,7 +10,7 @@ tags:
   - conformité
 sidebar:
   order: 71
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 ---
@@ -34,7 +34,7 @@ C'est le minimum contractuel pour les organisations qui souhaitent utiliser des 
 - **Modèles de frontière** : Anthropic désigne depuis le 9 juin 2026 des *Covered Models* (Claude Fable 5 et 5.1, Mythos 5 et 5.1) soumis à 30 jours de rétention minimale sur toutes les plateformes (API, Bedrock, Google Cloud, Microsoft Foundry) ; ZDR y est indisponible, et une organisation ZDR doit activer la rétention sur le workspace concerné, sinon l'API répond `400`[^3].
 - **Endpoints stateful** : fichiers, batch, agents, conversations et fine-tuning stockent par construction ; OpenAI et Mistral les excluent explicitement de ZDR[^1][^4].
 - **Modèles expérimentaux** : chez Mistral, les modèles Labs/Preview sont exclus de ZDR et de l'opt-out d'entraînement (CGV du 25 septembre 2026)[^4].
-- **Surveillance des abus** : sans ZDR, OpenAI conserve jusqu'à 30 jours de journaux ; sous ZDR, les entrées image/fichier signalées peuvent encore être retenues pour revue[^1]. Anthropic prépare une variante où ces données restent dans le cloud du client (*Enterprise Frontier Safeguards*, annoncée le 1er septembre 2026)[^3].
+- **Surveillance des abus** : OpenAI n'accorde ZDR que sur approbation et, sans ZDR, conserve jusqu'à 30 jours de journaux ; sous ZDR, les entrées image/fichier signalées peuvent encore être retenues pour revue[^1]. Anthropic prépare une variante où ces données restent dans le cloud du client (*Enterprise Frontier Safeguards*, annoncée le 1er septembre 2026)[^3].
 
 ## ⚠️ Nuance importante : persistance ≠ transit
 

@@ -3,7 +3,7 @@ title: "🏭 Scénario D : Datacenter (RoCE & Multi-GPU)"
 description: Le blueprint de l'Enterprise IA. Nœuds HGX 8-GPU, réseau RoCE/InfiniBand et Tensor Parallelism pour une production à très haute concurrence.
 sidebar:
   order: 4
-last_modified: "2026-11-17"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -65,7 +65,7 @@ Si vous déployez des puces NVIDIA Blackwell (B200), le logiciel utilisera nativ
 
 ## 📊 Monitoring recommandé
 
-Le scénario D est le seul blueprint qui justifie un monitoring outillé en production. Les éléments minimaux :
+Le scénario D est le seul blueprint qui justifie un monitoring outillé en production : métriques vLLM, stack Prometheus + Grafana, dashboards et alertes sont dans [[06-mise-en-oeuvre/monitoring-inference-stack|📊 Monitoring de la stack d'inférence]]. Compléments propres à ce blueprint :
 
 **GPU et VRAM (par nœud) :**
 
@@ -78,34 +78,6 @@ nvidia-smi --query-gpu=timestamp,name,utilization.gpu,utilization.memory,\
 memory.used,memory.free,temperature.gpu,power.draw \
 --format=csv -l 5
 ```
-
-**vLLM — métriques Prometheus natives :**
-
-vLLM expose un endpoint `/metrics` compatible Prometheus. Métriques clés (noms du moteur V1, relus dans la documentation le 2026-10-10 ; les métriques dépréciées sont masquées une version plus tard)[^10] :
-
-| Métrique vLLM | Description |
-| :-- | :-- |
-| `vllm:prompt_tokens_total` | Tokens de prompt traités |
-| `vllm:generation_tokens_total` | Tokens générés |
-| `vllm:request_success_total` | Requêtes terminées |
-| `rate(vllm:generation_tokens_total[1m])` | Débit de génération (le gauge `avg_generation_throughput` du moteur V0 n'existe plus) |
-| `vllm:kv_cache_usage_perc` | Taux d'occupation du KV Cache (ex-`gpu_cache_usage_perc`) |
-| `vllm:num_requests_running` | Requêtes en cours (continuous batching) |
-
-```bash
-# Vérifier l'endpoint métriques
-curl http://localhost:8000/metrics | grep vllm
-```
-
-**Stack recommandée :**
-
-```mermaid
-flowchart LR
-    A["nvidia-smi (GPU)"] --> B["node-exporter"] --> P["Prometheus"] --> G["Grafana"]
-    C["vLLM /metrics"] --> P
-```
-
-Les dashboards Grafana pour vLLM sont disponibles sur [grafana.com/grafana/dashboards](https://grafana.com/grafana/dashboards) (chercher "vLLM").
 
 **Réseau (RoCE/InfiniBand) :**
 
@@ -194,5 +166,4 @@ rsync -az /backup/ nas-secondary:/ia-on-prem-backup/
 [^7]: PyPI, *tensorrt-llm* (dernière version stable 1.2.1 du 2026-04-20 ; 1.3.0 en release candidates rc22 → rc29 jusqu'au 2026-09-29), relevé le 2026-10-09. [https://pypi.org/project/tensorrt-llm/](https://pypi.org/project/tensorrt-llm/) · NVIDIA, *TensorRT-LLM Release Notes* (backend TensorRT retiré en 1.2, PyTorch par défaut, `trtllm-serve`). [https://nvidia.github.io/TensorRT-LLM/release-notes.html](https://nvidia.github.io/TensorRT-LLM/release-notes.html) · vLLM Project, *Release v0.33.0* (plancher de sécurité au T4 2026 : corrige les avis du 2 novembre 2026), 2 novembre 2026. [https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3](https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3)
 [^8]: Ray Project, *Release ray-2.59.0* (Ray Serve LLM GA : routage KV-aware, désagrégation prefill/decode, vLLM figé en 0.27.0), 2 octobre 2026. [https://github.com/ray-project/ray/releases/tag/ray-2.59.0](https://github.com/ray-project/ray/releases/tag/ray-2.59.0)
 [^9]: DeepSeek AI, *DeepSeek-V4.1-Flash* (≈ 763 Go en FP8, MIT), septembre 2026. [https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash) · Moonshot AI, *Kimi K3* (poids MXFP4 natifs, ≈ 1,4–1,56 To), juillet 2026. [https://huggingface.co/moonshotai/Kimi-K3](https://huggingface.co/moonshotai/Kimi-K3)
-[^10]: vLLM, *Metrics* (liste des métriques Prometheus du moteur V1 : `vllm:prompt_tokens`, `vllm:generation_tokens`, `vllm:request_success`, `vllm:kv_cache_usage_perc`, `vllm:num_requests_running`, `vllm:time_to_first_token_seconds`… ; politique de dépréciation « masquée en X.Y+1, retirée en X.Y+2 »), consulté le 2026-10-10. [https://docs.vllm.ai/en/latest/usage/metrics/](https://docs.vllm.ai/en/latest/usage/metrics/)
 [^11]: vLLM Project, *Release v0.31.0* (`vllm preload` : démon qui conserve les poids post-quantifiés en mémoire GPU entre redémarrages du moteur, #56680, #58552), 2026-10-05. [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0)

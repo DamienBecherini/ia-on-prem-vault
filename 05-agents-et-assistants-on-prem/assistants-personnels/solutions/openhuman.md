@@ -3,7 +3,7 @@ title: "OpenHuman"
 description: "Harness d'agent open source (Rust + Tauri) à mémoire hébergée par défaut, abonnement managé optionnel et mode Privacy local-only ; à configurer en on-premise."
 sidebar:
   order: 1
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -21,7 +21,7 @@ Ce n'est cependant pas un outil 100% on-premise par défaut. La documentation es
 
 ## 💡 Pourquoi ce projet nous intéresse
 
-OpenHuman a été, jusqu'à sa version 1, l'exemple le plus lisible d'un assistant "mémoire d'abord" : il structurait les documents en arbres de résumés et gardait un équivalent Markdown lisible par l'humain. Au T4 2026, cette architecture a disparu du produit au profit d'une mémoire hébergée (CortexDB)[^2].
+OpenHuman a été, jusqu'à sa version 1, l'exemple le plus lisible d'un assistant "mémoire d'abord" : il structurait les documents en arbres de résumés et gardait un équivalent Markdown lisible par l'humain. 
 
 Pour ce vault, il a servi de référence au pattern [[00-lexique/memory-tree|Memory Tree]] jusqu'à sa version 1 ; depuis la mémoire v2 (CortexDB, 2026), il illustre surtout deux autres leçons : la mémoire d'un assistant peut quitter la machine même quand le modèle est local, et un mode « local-only » appliqué dans le code vaut mieux qu'une configuration[^4][^5].
 
@@ -54,7 +54,7 @@ Voir la grille complète : [[05-agents-et-assistants-on-prem/fondations-communes
 
 OpenHuman est pertinent comme :
 
-- rappel qu'une mémoire d'assistant peut quitter la machine même avec un modèle local (Memory Tree local abandonné au profit de CortexDB) ;
+- rappel qu'une mémoire d'assistant peut quitter la machine même avec un modèle local ;
 - fiche de comparaison pour expliquer le piège "local-first ≠ souverain par défaut" ;
 - exemple de solution hybride à ne pas présenter comme on-premise stricte sans caveat.
 

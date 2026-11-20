@@ -3,7 +3,7 @@ title: "🌐 AI Clustering: Connecting GPUs with Exo and Ray"
 description: How to merge memory across multiple machines for local AI. Comparison between Exo (Apple Silicon / homelab) and Ray Serve (datacenter).
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -32,7 +32,7 @@ In 2026, two software schools compete for AI clustering: **Exo** for desktop har
 Exo runs Peer-to-Peer (P2P). You run the `uv run exo` command on each machine. They automatically discover each other on the local network and merge their available memory[^1]. When a request is sent, Exo splits the model either in *pipeline* mode (successive layers on successive machines: machine A computes the first layers of the neural network, then sends the result to machine B, which computes the next layers) or in *tensor parallel* mode (each layer spread across all machines, via Thunderbolt 5 RDMA), depending on the bandwidth measured between nodes[^1].
 
 ### 🚀 Use case: The Mac cluster
-Exo shines particularly on Apple Silicon. By linking the Macs over **Thunderbolt 5** under **macOS 26.2 or later**, Exo enables **RDMA over Thunderbolt** (to be enabled once via `rdma_ctl enable` from Recovery mode, with the same macOS build on every node) and gets enough bandwidth to compensate for inter-machine latency; over Thunderbolt 4 you only get an IP link, enough for testing but not for tensor parallelism[^1].
+Exo shines particularly on Apple Silicon. By linking the Macs over **Thunderbolt 5** under **macOS 26.2 or later**, Exo enables **RDMA over Thunderbolt** (activation conditions in [[02-materiel/network-roce-infiniband-thunderbolt|Réseau IA]]) and gets enough bandwidth to compensate for inter-machine latency; over Thunderbolt 4 you only get an IP link, enough for testing but not for tensor parallelism[^1].
 Exo Labs measured, on a cluster of 8 Mac mini M4 Pro 64 GB (512 GB aggregated), DeepSeek V3 671B in 4-bit at **5.4 tokens/s** (TTFT 2.9 s); the Mac mini M5 Pro generation (307 GB/s, Thunderbolt 5) has replaced it since September 2026 with no new published figure[^2][^8].
 
 ### ⚠️ Limitations
@@ -99,7 +99,7 @@ curl http://localhost:52415/v1/chat/completions \
 ```
 
 > [!note] Thunderbolt vs Ethernet for Exo
-> On Wi-Fi or 1 Gb Ethernet, Exo works but performance drops drastically. For 70B+ models, prefer **Thunderbolt 5** (80 Gb/s, 120 Gb/s asymmetric) under macOS 26.2+ to benefit from RDMA; Thunderbolt 4 (40 Gb/s) only provides an IP-over-Thunderbolt interface, created automatically by macOS[^1][^6].
+> On Wi-Fi or 1 Gb Ethernet, Exo works but performance drops drastically. For 70B+ models, prefer **Thunderbolt 5** and its RDMA (see above); Thunderbolt 4 only provides an IP-over-Thunderbolt interface, created automatically by macOS[^1][^6].
 
 ---
 

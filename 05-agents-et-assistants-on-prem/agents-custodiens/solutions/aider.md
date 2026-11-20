@@ -3,7 +3,7 @@ title: "Aider"
 description: Agent de code terminal-first, open-source, model-agnostic, capable de travailler directement avec Ollama.
 sidebar:
   order: 2
-last_modified: "2026-11-19"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -35,8 +35,7 @@ Pour un vault Markdown, il peut relire des pages, appliquer des corrections, cr�
 
 - La qualité dépend fortement du modèle local : souverain ne veut pas dire compétent.
 - Les modèles locaux faibles peuvent casser le format d'édition, rater les remplacements précis ou boucler sur une correction.
-- Un modèle 7B/8B généraliste est acceptable pour des suggestions simples, mais trop fragile pour un agent custodien qui modifie réellement des fichiers.
-- Pour travailler sérieusement en local, viser au minimum un modèle **coder** de classe 14B pour petites corrections contrôlées, et plutôt 24–32B ou plus (Devstral Small 2 24B, Qwen3-Coder-30B-A3B) pour audits multi-fichiers, refactoring ou édition fiable de Markdown complexe.
+- Un 7B/8B généraliste est trop fragile pour modifier des fichiers : viser au minimum un modèle **coder** de classe 14B, plutôt 24–32B ou plus (tableau de dimensionnement dans l'[[05-agents-et-assistants-on-prem/agents-custodiens/recommandation-architecture-cible|architecture cible]]).
 - Ollama tronque silencieusement au-delà de sa fenêtre (4 096 tokens par défaut côté serveur au T4 2026) ; Aider fixe `num_ctx` lui-même, mais la doc recommande de lancer `OLLAMA_CONTEXT_LENGTH=8192 ollama serve` ou de fixer `num_ctx` dans `.aider.model.settings.yml`[^2].
 - Si un provider cloud est utilisé, le code part chez ce provider.
 - Nécessite de bien contrôler les commandes et les fichiers autorisés.
@@ -52,15 +51,12 @@ Pour un vault Markdown, il peut relire des pages, appliquer des corrections, cr�
 
 ## 🔗 Intégration possible dans ce vault
 
-Aider reste le candidat le plus simple pour un premier essai souverain, à condition d'accepter un outil gelé depuis mai 2026 ; pour une cible durable, préférer un agent maintenu et model-agnostic comme [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/openhands|OpenHands]] (CLI ou Agent Canvas, MIT) branché sur Ollama/vLLM[^6] :
+Aider reste le candidat le plus simple pour un premier essai souverain, à condition d'accepter un outil gelé depuis mai 2026 (alternative durable : voir Maturité) :
 
-- `aider --model ollama_chat/<modèle coder récent>` : par exemple un Qwen3.6-35B-A3B (MoE, ~24 Go de VRAM quantifié, recommandé par OpenHands pour l'usage agentique au T2 2026) ou un dense 14B (Qwen2.5-Coder-14B, de 2024) pour les essais contrôlés, 24B+ (Devstral Small 2, Qwen3-Coder-30B-A3B) pour la maintenance régulière ; Aider ne connaissant plus les modèles sortis après mai 2026, ignorer ses « model warnings » après vérification manuelle du contexte[^2][^6] ;
+- `aider --model ollama_chat/<modèle coder récent>` (choix du modèle : [[05-agents-et-assistants-on-prem/agents-custodiens/recommandation-architecture-cible|architecture cible]]) ; Aider ne connaissant plus les modèles sortis après mai 2026, ignorer ses « model warnings » après vérification manuelle du contexte[^2] ;
 - branche dédiée ;
 - plan/règles du vault en contexte ;
 - rapport Markdown final.
-
-> [!warning] Dimensionnement local
-> L'agent custodien qui **modifie** un dépôt a besoin d'un modèle plus robuste qu'un assistant RAG qui répond à une question. Le budget matériel doit donc être dimensionné pour un modèle de code spécialisé, pas pour un petit modèle conversationnel.
 
 ## 📊 Maturité du projet
 

@@ -3,7 +3,7 @@ title: "🗺️ Choisir son modèle local"
 description: Guide pratique pour naviguer le paysage des LLM open weights — familles, tailles, spécialisations et correspondance avec les scénarios on-premise.
 sidebar:
   order: 4
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -62,18 +62,12 @@ La référence généraliste des versions précédentes. Les modèles Llama 3.1/
 - **Llama 3.1 8B** : bon pour les postes contraints ou les tâches simples. Limite visible sur des tâches de raisonnement complexes.
 - **Llama 3.1 405B** : nécessite un cluster multi-GPU (scénario D). Performances proches des modèles frontière sur les tâches générales.
 
-> [!note] Llama 4 : architecture MoE, non adapté aux GPU consumer
-> Llama 4 Scout (109B total, 17B actifs, 16 experts) et Llama 4 Maverick (400B total, 17B actifs, 128 experts) sont sortis en avril 2025[^2]. **Ces modèles nécessitent des serveurs de datacenter** (H100 minimum avec quantification int4 pour Scout). Ils ne rentrent pas dans les scénarios A, B ou C de ce vault. Voir [[04-blueprints/scenario-d-datacenter|Scénario D]].
-
 ### Llama 4 (Meta) — scénario D uniquement
 
-Nativement multimodaux (texte + image), architecture MoE.
+Nativement multimodaux (texte + image), architecture MoE, sortis en avril 2025[^2]. Il n'existe toujours pas de Llama 4 utilisable sur une machine de bureau, et Meta n'a publié aucun Llama depuis : sa ligne ouverte s'appelle désormais **Muse Glimmer 30B** (Apache 2.0, texte + image, ~24 Go en 4-bit)[^8].
 
 - **Llama 4 Scout (109B total / 17B actifs, 16 experts)** : contexte 10M tokens. Tient sur un seul H100 avec quantification int4. Pertinent uniquement pour le scénario D (datacenter).
 - **Llama 4 Maverick (400B total / 17B actifs, 128 experts)** : contexte 1M tokens. Requiert un host DGX complet en FP8 ou BF16. Performances comparables aux modèles frontière sur les benchmarks STEM.
-
-> [!warning] Llama 4 ≠ remplacement de Llama 3.x pour les PME
-> Il n'existe toujours pas de Llama 4 utilisable sur une machine de bureau, et Meta n'a publié aucun Llama depuis avril 2025 : sa ligne ouverte s'appelle désormais **Muse Glimmer 30B** (Apache 2.0, texte + image, ~24 Go en 4-bit)[^8]. Pour les scénarios A, B et C, les références au T4 2026 sont **Qwen3.8-27B**[^7] et **Muse Glimmer 30B**[^8] ; Llama 3.3 70B reste un choix sûr mais dépassé à taille égale.
 
 ### Qwen3.8 / Qwen3 (Alibaba)
 
@@ -166,9 +160,8 @@ Les classements publics (Arena, Artificial Analysis, SWE-bench Pro, HELM) sont u
 
 Ce que les leaderboards disent quand même d'utile :
 
-- **Arena (ex-LMSYS Chatbot Arena)**[^4] : comparaison par préférence humaine, multi-tour. Utile pour la qualité conversationnelle, mais au T4 2026 aucun modèle open weights ne figure dans le top 15 : lisez-le pour situer les familles ouvertes entre elles, pas contre les API.
 - **Hugging Face** : l'Open LLM Leaderboard est archivé depuis 2025 ; servez-vous du Hub pour vérifier licence, taille des fichiers et quantifications disponibles, et d'Artificial Analysis (en vérifiant la version de l'indice) pour une vue composite[^5].
-- **SWE-bench Pro V2 (Scale)**[^6] : le plus représentatif pour les agents de code (vraies issues GitHub, protocole verrouillé depuis septembre 2026). SWE-bench Verified est saturé depuis l'été 2026 (scores > 96 %) et ne discrimine plus.
+- **SWE-bench Pro V2 (Scale)**[^6] : le plus représentatif pour les agents de code (vraies issues GitHub, protocole verrouillé depuis septembre 2026).
 
 **Où en sont les poids ouverts face aux modèles fermés (octobre 2026) ?** Sur l'Intelligence Index v4.3 d'Artificial Analysis, Claude Opus 5.5 obtient 58, Claude Fable 5.1 et GPT-6 Astra 53 ; les meilleurs modèles à poids ouverts suivent à 46 (MiMo-V2.6-Pro, MIT), 45 (GLM-5.3) et 44 (Kimi K3)[^17]. Sur arena.ai, aucun modèle ouvert ne figure dans le top 15 au 2026-10-08 ; le premier, kimi-k3-max, est 16e[^4]. L'écart est réel, mais il se comble en quelques trimestres à chaque nouvelle génération ouverte. Pour un lecteur on-premise, la question n'est donc pas le podium mais le **niveau suffisant pour la tâche**, mesuré sur vos propres données : un Qwen3.8-27B qui réussit votre golden dataset vaut mieux qu'un modèle frontière que vous ne pouvez ni héberger ni auditer.
 

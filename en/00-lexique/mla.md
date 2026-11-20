@@ -7,7 +7,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-11"
+last_modified: "2026-11-20"
 ---
 
 ## 📝 Short definition
@@ -20,7 +20,7 @@ In classic [[00-lexique/attention|attention]], each layer of the model stores, f
 
 An analogy: instead of keeping full notes on every speaker in a meeting, you keep a summary of a few lines from which you can recover the essentials.
 
-MLA was introduced by DeepSeek-V2 (May 2024). The paper reports a KV cache reduced by 93.3% compared with DeepSeek 67B, and a cache equivalent to that of a GQA with only 2.25 groups, with better results than classic attention[^1]. DeepSeek-V3 kept it[^2], and Moonshot AI's Kimi K2 uses it too[^3].
+MLA was introduced by DeepSeek-V2 (May 2024)[^1]; for the quantified gains and the models that use it (DeepSeek-V3, Kimi K2), see [[01-fondations/kv-cache-and-context|💾 KV Cache & Context]].
 
 ## 💡 Why it matters for on-premise AI
 
@@ -45,5 +45,3 @@ On an on-premise server, the VRAM available for the cache limits conversation le
 - [[00-lexique/ai-glossary|📖 AI Glossary]]
 
 [^1]: DeepSeek-AI, *DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model* (arXiv:2405.04434; KV cache compressed into a latent vector, −93.3% vs DeepSeek 67B, equivalent to GQA with 2.25 groups), May 2024. [https://arxiv.org/abs/2405.04434](https://arxiv.org/abs/2405.04434)
-[^2]: DeepSeek-AI, *DeepSeek-V3 Technical Report* (arXiv:2412.19437; MLA and DeepSeekMoE), December 2024. [https://arxiv.org/abs/2412.19437](https://arxiv.org/abs/2412.19437)
-[^3]: Moonshot AI, *Kimi-K2-Instruct* (attention mechanism "MLA"), July 2025. [https://huggingface.co/moonshotai/Kimi-K2-Instruct](https://huggingface.co/moonshotai/Kimi-K2-Instruct)

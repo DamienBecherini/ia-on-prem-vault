@@ -3,7 +3,7 @@ title: 💾 KV Cache & Context Management
 description: "Computing KV cache memory and the ways to reduce it: GQA, quantization, PagedAttention, then MLA, sparse attention and linear attention."
 sidebar:
   order: 3
-last_modified: "2026-11-08"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -67,7 +67,7 @@ Where:
 In the older MHA (Multi-Head Attention) architecture, each Query head had its own Key-Value head ($H_{kv} = H_{query}$).
 With **Grouped-Query Attention (GQA)**, several Query heads share the same Key/Value head (on Llama 3.1 70B: $64$ Query heads for $8$ KV heads, an 8:1 ratio) [^5]. This **divides KV Cache size by 8 in memory**, with generally small quality loss—close to MHA on common benchmarks, though not zero [^5].
 
-The 2026 hybrid architectures (Mamba-2 + MoE + attention in Nemotron 3.5 Lightning, sparse + linear attention in GLM-5.3-Flash) store a KV cache for only a fraction of their layers: the formula above then greatly overestimates their footprint [^16]. These new architectures are explained further down, in the section "When the model itself shrinks its memory".
+The 2026 hybrid architectures (Mamba-2 + MoE + attention in Nemotron 3.5 Lightning, sparse + linear attention in GLM-5.3-Flash) store a KV cache for only a fraction of their layers [^16]: see further down "When the model itself shrinks its memory".
 
 ---
 
@@ -92,7 +92,7 @@ Let's calculate the VRAM required for **a single request ($B=1$)** at different 
 > [!note] 300K extrapolation
 > The **300K** row is a **mathematical extrapolation** (RoPE scaling or context extended by the engine), not the model's native window. BF16 figures at 128K align with public estimates from Meta and Hugging Face (~39–42 GB) [^6].
 
-The 2026 models make the 300K row commonplace: Qwen3.8-27B and Muse Glimmer 30B have 262k / 131k native tokens, Nemotron 3.5 Lightning and DeepSeek V4.1 up to 1M. DeepSeek-V4.1-Flash even ships its KV cache **in native FP4** (E2M1 + one E4M3 scale per 16 channels, 890 bytes per token, ≈ ¼ of V4-Flash): cache compression becomes a property of the model, not just an engine setting [^15]. The section "When the model itself shrinks its memory", further down, presents the other approaches of this kind.
+The 2026 models make the 300K row commonplace: Qwen3.8-27B and Muse Glimmer 30B have 262k / 131k native tokens, Nemotron 3.5 Lightning and DeepSeek V4.1 up to 1M; DeepSeek-V4.1-Flash even ships its KV cache **in native FP4** [^15] (see further down "When the model itself shrinks its memory").
 
 ### The long-context OOM (Out Of Memory) trap
 
@@ -187,7 +187,7 @@ Z.ai's GLM-5.3-Flash, mentioned above, also combines sparse and linear attention
 
 ### 4. Low-precision cache built into the model
 
-Last approach: **write the notes smaller**. This is the KV cache quantization covered above, but chosen by the model designer and taken into account from training, instead of being tuned after the fact in the engine. DeepSeek-V4.1-Flash is the example, with its **native FP4** cache of 890 bytes per token, presented in the practical cases above [^15]. These approaches stack: the V4.1-Flash model card also describes a compressed sparse attention (*Compressed Sparse Attention 2*) [^15].
+Last approach: **write the notes smaller**. This is the KV cache quantization covered above, but chosen by the model designer and taken into account from training, instead of being tuned after the fact in the engine. DeepSeek-V4.1-Flash is the example, with its **native FP4** cache (E2M1 + one E4M3 scale per 16 channels, 890 bytes per token, ≈ ¼ of V4-Flash) [^15]. These approaches stack: the V4.1-Flash model card also describes a compressed sparse attention (*Compressed Sparse Attention 2*) [^15].
 
 ### 📊 Summary table
 
@@ -211,7 +211,7 @@ As of 11 October 2026, vLLM's official model list includes the DeepSeek-V2, Deep
 
 For any on-premise assistant deployment, KV cache management dictates your hardware strategy:
 
-1.  **Inject context, don't drown the model:** Rather than loading entire 150,000-word files into the LLM window (which would saturate dynamic VRAM), retrieve only relevant passages—via a hierarchical memory index (Markdown chunks + summaries, in the manner of the local Memory Tree that OpenHuman offered until Q2 2026 before moving to hosted memory)[^14], vector RAG, or both combined.
+1.  **Inject context, don't drown the model:** Rather than loading entire 150,000-word files into the LLM window (which would saturate dynamic VRAM), retrieve only relevant passages—via a hierarchical memory index (Markdown chunks + summaries, in the manner of the local [[00-lexique/memory-tree|Memory Tree]] that [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/openhuman|OpenHuman]] offered until Q2 2026)[^14], vector RAG, or both combined.
 2.  **Enable FP8 KV Cache, or NVFP4:** on vLLM (`--kv-cache-dtype fp8`, or `nvfp4` on Blackwell and, since vLLM 0.32 (October 2026), also on Ampere and Ada (SM8x) and on Hopper (SM90)) or LMDeploy, halve (FP8) or quarter (NVFP4) your dynamic VRAM consumption, calibrating scales when possible [^8][^12][^18].
 3.  **Watch the batch/context ratio:** On a server shared by several collaborators at once, the KV Cache multiplies by the number of active users ($B$)—size VRAM accordingly.
 

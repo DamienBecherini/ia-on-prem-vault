@@ -7,12 +7,12 @@ prices_valid_as_of: "2026-10"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
-last_modified: "2026-11-19"
+last_modified: "2026-11-20"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] En bref
-> Le cloud IA coûte peu au démarrage mais beaucoup à l'échelle. L'on-premise demande un investissement initial élevé mais son coût marginal tend vers zéro. Aux prix d'octobre 2026, le point de rentabilité d'une appliance PME (blueprint B) est d'environ 7 mois face à Claude Fable 5.1, 13 mois face à GPT-5.5, 19 mois face à Claude Opus 5.5, et n'est jamais atteint face aux offres économiques facturées sous 1 $ le million de tokens — y compris les API chinoises comme DeepSeek, dont les données sont traitées hors UE : en 2026, la souveraineté, pas le coût, est l'argument décisif de l'on-premise pour une PME.
+> Le cloud IA coûte peu au démarrage mais beaucoup à l'échelle. L'on-premise demande un investissement initial élevé mais son coût marginal tend vers zéro. Aux prix d'octobre 2026, le point de rentabilité d'une appliance PME (blueprint B) est d'environ 7 mois face à Claude Fable 5.1, 13 mois face à GPT-5.5, 19 mois face à Claude Opus 5.5, et n'est jamais atteint face aux offres économiques facturées sous 1 $ le million de tokens — y compris les API chinoises comme DeepSeek : en 2026, la souveraineté, pas le coût, est l'argument décisif de l'on-premise pour une PME.
 
 ---
 
@@ -42,7 +42,7 @@ Avant de comparer, il faut aligner les unités. L'usage d'un LLM se mesure en **
 | Mistral Large 4 (API, tarif depuis la publication des poids le 2026-10-29)[^3] | 0,70 $/M tok (0,07 $ en cache) | 2,10 $/M tok | Poids ouverts (Mistral Ecosystem Open-Weight license, MIT modifiée) |
 | Groq (openai/gpt-oss-120b)[^4] | 0,15 $/M tok | 0,60 $/M tok | Open weights, cloud (Llama 3.3 70B : tarif sur devis depuis 2026) |
 | Together AI (Llama 3.3 70B)[^5] | 1,04 $/M tok | 1,04 $/M tok | Open weights, cloud |
-| DeepSeek V4.1 Flash (API DeepSeek, modèle `deepseek-flash`, heures pleines ; relevé du 2026-10-10)[^11] | 0,30 $/M tok | 1,20 $/M tok | Open weights, cloud chinois — moitié prix en heures creuses ; **données traitées en Chine, hors UE et hors États-Unis** |
+| DeepSeek V4.1 Flash (API DeepSeek, modèle `deepseek-flash`, heures pleines ; relevé du 2026-10-10)[^11] | 0,30 $/M tok | 1,20 $/M tok | Open weights, cloud chinois — moitié prix en heures creuses ; **données traitées en Chine, hors UE et hors États-Unis** (voir [[05-agents-et-assistants-on-prem/fondations-communes/sovereignty-and-privacy\|Souveraineté & Confidentialité]]) |
 | API cloud open-weights (70B–300B MoE)[^4][^5] | ~0,15–1,40 $/M tok | ~0,30–4,40 $/M tok | Fourchette Together AI / Groq, octobre 2026 |
 
 *Note : les prix varient fréquemment. Vérifiez les tarifs actuels avant de construire un business case.*
@@ -97,26 +97,21 @@ Pour rendre la comparaison concrète, utilisons un cas typique de PME :
 | **Coût mensuel total** | **~155 €/mois** |
 
 **Équivalent cloud (22,5 M tokens d'entrée + 11,25 M de sortie par mois, tarifs du 2026-10-09 ; Fable 5.1 et DeepSeek relevés le 2026-10-10) :**
-- Haiku 5.5 ou GPT-6 Luna (0,10 / 0,50 $) : 2,25 + 5,6 = **~8 $/mois** (~7 €, offre économique)
-- DeepSeek V4.1 Flash, API DeepSeek en heures pleines (0,30 / 1,20 $) : 6,75 + 13,5 = **~20 $/mois** (~19 €, ~9 € en heures creuses — données traitées en Chine)
-- Sonnet 5.5 ou GPT-6 Sol (2 / 10 $) : 45 + 112,5 = **~158 $/mois** (~145 €, milieu de gamme)
-- GPT-5.5 (5 / 30 $) : 112,5 + 337,5 = **~450 $/mois** (~414 €, modèle frontière)
-- Claude Fable 5.1 (10 / 50 $) : 225 + 562,5 = **~787 $/mois** (~724 €, frontière +)
 
 | API choisie (tarifs du 2026-10-09, 1 $ ≈ 0,92 €) | Coût cloud/mois | Point de rentabilité |
 | :-- | :-- | :-- |
-| Économique : Haiku 5.5, GPT-6 Luna, Mistral Large 3 (0,10–0,50 $ / 0,50–1,50 $)[^1][^2][^3] | ~7 – 26 €/mois | ❌ Jamais amorti uniquement sur le coût |
-| Économique chinois : DeepSeek V4.1 Flash, API DeepSeek (0,30 / 1,20 $ en heures pleines, moitié en heures creuses)[^11] | ~9 – 19 €/mois | ❌ Jamais amorti uniquement sur le coût — et données traitées en Chine, hors UE |
+| Économique : Haiku 5.5, GPT-6 Luna, Mistral Large 3 (0,10–0,50 $ / 0,50–1,50 $)[^1][^2][^3] | ~7 – 26 €/mois (Haiku 5.5 ou GPT-6 Luna : 2,25 + 5,6 = ~8 $) | ❌ Jamais amorti uniquement sur le coût |
+| Économique chinois : DeepSeek V4.1 Flash, API DeepSeek (0,30 / 1,20 $ en heures pleines, moitié en heures creuses)[^11] | ~9 – 19 €/mois (heures pleines : 6,75 + 13,5 = ~20 $) | ❌ Jamais amorti uniquement sur le coût |
 | Cloud open-weights (Together AI Llama 3.3 70B, 1,04 $/M)[^5] | ~32 €/mois | ❌ Jamais amorti uniquement sur le coût |
-| Milieu de gamme : Sonnet 5.5, GPT-6 Sol (2 / 10 $)[^1][^2] | ~145 €/mois | ~51 mois (au-delà de l'amortissement) |
+| Milieu de gamme : Sonnet 5.5, GPT-6 Sol (2 / 10 $)[^1][^2] | ~145 €/mois (45 + 112,5 = ~158 $) | ~51 mois (au-delà de l'amortissement) |
 | Haut de gamme : Opus 5.5, GPT-5.6 Sol (4 / 20 $)[^1][^2] | ~290 €/mois | ~19 mois |
-| Frontière : GPT-5.5 (5 / 30 $)[^1] | ~414 €/mois | **~13 mois** |
-| Frontière + : Claude Fable 5.1 (10 / 50 $)[^2] | ~724 €/mois | **~7 mois** |
+| Frontière : GPT-5.5 (5 / 30 $)[^1] | ~414 €/mois (112,5 + 337,5 = ~450 $) | **~13 mois** |
+| Frontière + : Claude Fable 5.1 (10 / 50 $)[^2] | ~724 €/mois (225 + 562,5 = ~787 $) | **~7 mois** |
 
 *Point de rentabilité = 4 500 € de capital / (coût cloud mensuel − 57 €/mois de fonctionnement on-premise hors amortissement), formule de la section « Calculer votre propre TCO » : 4 500 / (724 − 57) ≈ 6,7 mois face à Fable 5.1 ; 4 500 / (414 − 57) ≈ 12,6 mois face à GPT-5.5.*
 
 > [!tip] La souveraineté change le calcul
-> Pour une PME soumise au RGPD traitant des données clients, "le cloud open-weights est moins cher" ne suffit pas — un hébergeur tiers reste un destinataire au sens RGPD, et une API opérée depuis la Chine (DeepSeek) ajoute un transfert hors UE. Face aux API économiques (Haiku 5.5, Mistral Large 3, DeepSeek, cloud open-weights), le surcoût on-premise est de l'ordre de 120 à 150 €/mois ; face aux modèles frontière (GPT-5.5, Opus 5.5, Fable 5.1), l'on-premise est déjà moins cher. Dans le premier cas, ce surcoût peut éviter des honoraires d'avocat bien plus élevés.
+> Pour une PME soumise au RGPD traitant des données clients, "le cloud open-weights est moins cher" ne suffit pas — un hébergeur tiers reste un destinataire au sens RGPD. Face aux API économiques (Haiku 5.5, Mistral Large 3, DeepSeek, cloud open-weights), le surcoût on-premise est de l'ordre de 120 à 150 €/mois ; face aux modèles frontière (GPT-5.5, Opus 5.5, Fable 5.1), l'on-premise est déjà moins cher. Dans le premier cas, ce surcoût peut éviter des honoraires d'avocat bien plus élevés.
 
 ---
 
@@ -207,7 +202,7 @@ Modèles 100B+                  Quelconque                → Blueprint C (proto
 > - **Formation et onboarding** de l'équipe sur la stack on-premise
 > - **Temps d'administration** (mises à jour, monitoring, backups) — souvent sous-estimé
 > - **Obsolescence matérielle** : les GPU de 2024-2025 peuvent ne pas supporter les modèles de 2027 optimalement
-> - **Prix de la mémoire** : DRAM contractuelle +10–15 % par trimestre au T4 2026 et hausses attendues chaque trimestre jusqu'en 2027 (TrendForce) ; DGX Spark 128 Go passé de 3 999 $ à ≈ 6 950 $, RTX PRO 6000 de moins de 8 000 $ à 16 000 $ en un an. Un devis matériel ne vaut que quelques semaines[^9][^14][^15].
+> - **Prix de la mémoire** : DRAM contractuelle +10–15 % par trimestre au T4 2026 et hausses attendues chaque trimestre jusqu'en 2027 (TrendForce) ; DGX Spark 128 Go passé de 3 999 $ à ≈ 6 950 $, RTX PRO 6000 doublée à 16 000 $ en un an (voir [[02-materiel/stations-multi-gpu|🧩 Stations Multi-GPU]]). Un devis matériel ne vaut que quelques semaines[^9][^14].
 > - **Coûts de refroidissement et d'espace** pour les blueprints C et D
 
 ---
@@ -296,4 +291,3 @@ Ces deux chiffres sont cohérents : le Mac Studio sert des modèles beaucoup plu
 [^12]: EDF, *Tarif Bleu — offre d'électricité au tarif réglementé* (option Base : 0,2001 € TTC/kWh depuis le 2026-08-01), relevé le 2026-10-09. [https://particulier.edf.fr/fr/accueil/electricite-gaz/offres-electricite/tarif-bleu.html](https://particulier.edf.fr/fr/accueil/electricite-gaz/offres-electricite/tarif-bleu.html)
 [^13]: AMD, *AAI 2026: AMD Delivers Full-Stack Compute for the Agentic AI Era* (note 8 : serveur 8× RTX PRO 6000 au prix public OEM de 265 928 $ au 2026-07-16 ; serveur MI350P estimé 327 238 $), 23 juillet 2026. [https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era](https://ir.amd.com/news-events/press-releases/detail/1294/aai-2026-amd-delivers-full-stack-compute-for-the-agentic-ai-era)
 [^14]: TrendForce, communiqué du 30 septembre 2026 (prix contractuels DRAM en hausse de 10–15 % au T4 2026, hausses attendues sur les trimestres suivants). [https://www.trendforce.com/presscenter/news/20260930-13258.html](https://www.trendforce.com/presscenter/news/20260930-13258.html)
-[^15]: Tom's Hardware, *Nvidia doubles RTX PRO 6000 Blackwell's MSRP to a staggering $16,000* (96 Go, précommandes sous 8 000 $ en 2025), août 2026. [https://www.tomshardware.com/pc-components/gpus/nvidia-doubles-rtx-pro-6000-blackwells-msrp-to-a-staggering-usd16-000-96gb-card-started-pre-orders-below-usd8-000-last-year](https://www.tomshardware.com/pc-components/gpus/nvidia-doubles-rtx-pro-6000-blackwells-msrp-to-a-staggering-usd16-000-96gb-card-started-pre-orders-below-usd8-000-last-year)

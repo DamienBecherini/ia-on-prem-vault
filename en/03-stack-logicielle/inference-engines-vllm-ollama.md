@@ -3,7 +3,7 @@ title: "⚙️ Inference Engines: vLLM, Ollama, and TensorRT-LLM"
 description: Comparison of local deployment engines. When to use GGUF and llama.cpp on Mac, and when to switch to vLLM or TensorRT-LLM in production.
 sidebar:
   order: 1
-last_modified: "2026-11-17"
+last_modified: "2026-11-20"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -21,7 +21,7 @@ In 2026, the ecosystem has become highly specialized. Engine choice dictates [[0
 
 ## 1. llama.cpp & Ollama: Kings of the workstation
 
-[Ollama](https://ollama.com/) has become the de facto standard for quickly testing models — as of Q4 2026, its GitHub repository exceeds 180,000 stars and its official Docker image is approaching 185 million cumulative pulls[^1]. Under the hood, [[00-lexique/ollama|Ollama]] has become a dual-engine runtime: **llama.cpp** (C/C++) on Linux, Windows and for most architectures, and **MLX** (Apple) which, since version 0.40 (October 2026), handles compatible models by default on Apple Silicon[^13].
+[Ollama](https://ollama.com/) has become the de facto standard for quickly testing models — as of Q4 2026, its GitHub repository exceeds 180,000 stars and its official Docker image is approaching 185 million cumulative pulls[^1]. Under the hood, [[00-lexique/ollama|Ollama]] has become a dual-engine runtime: **llama.cpp** (C/C++) on Linux, Windows and for most architectures, and **MLX** (Apple), which handles compatible models by default on Apple Silicon (see [[06-mise-en-oeuvre/getting-started-with-ollama|🚀 Démarrer avec Ollama]]).
 
 ### 🌟 Strengths
 *   **Hardware versatility:** Optimized to use unified memory on Mac Studio, handle [[00-lexique/offloading|offloading]] between RAM and GPU on modest workstations, and run on almost any CPU.
@@ -53,7 +53,7 @@ vLLM is not designed for offloading to classic CPU RAM, nor for Apple silicon. I
 
 ### 🌟 Strengths
 *   **Performance ceiling:** It often beats all other engines on datacenter GPUs (H100, B200) thanks to techniques like *Flash-Decoding*.
-*   **Native FP4:** On datacenter Blackwell (B200, B300), TensorRT-LLM natively supports NVFP4 to halve VRAM footprint compared to FP8 while maintaining datacenter-class precision; on SM120 cards (RTX 5090, RTX PRO 6000) support remains partial as of Q3 2026 (NVFP4 MoE models not supported according to the release notes)[^6].
+*   **Native FP4:** On datacenter Blackwell (B200, B300), TensorRT-LLM natively supports NVFP4 to halve VRAM footprint compared to FP8 while maintaining datacenter-class precision; on SM120 cards, support remains partial (see the limits below)[^6].
 *   **Massive parallelism:** It orchestrates execution graphs perfectly across multi-GPU nodes connected by [[00-lexique/nvlink|NVLink]].
 
 ### ⚠️ Limits
@@ -99,7 +99,7 @@ The following issues are common during first vLLM installation. They occur befor
 | `torch.cuda.is_available()` returns `False` | Mismatch between installed PyTorch version and system CUDA driver | Reinstall PyTorch with the matching CUDA variant: `pip install torch --index-url https://download.pytorch.org/whl/cu130` (vLLM targets CUDA 13.0 by default since 0.28 and exclusively since 0.33[^16]: the driver must be compatible) |
 | OOM on load — KV Cache too large | Maximum context length requested exceeds available VRAM after weight loading | Add `--max-model-len 4096` (or a lower value) to `vllm serve` startup to reduce pre-allocated KV Cache |
 | Two vLLM servers in conflict | Port 8000 already occupied by a previous instance | Add `--port 8001` for the second instance; `lsof -i :8000` / `netstat -tulpn` to identify the process occupying the port |
-| Quickly test the local API | — | Use the OpenAI Python client with `base_url="http://localhost:8000/v1/"` and `api_key="any"` (without `--api-key`, vLLM accepts any value; and even with `--api-key`, only `/v1`, `/v2`, `/inference` and `/cohere` are protected — `/tokenize` and `/metrics` remain open, hence the reverse proxy in production)[^15] |
+| Quickly test the local API | — | Use the OpenAI Python client with `base_url="http://localhost:8000/v1/"` and `api_key="any"` (without `--api-key`, vLLM accepts any value; `--api-key` does not cover all routes: a reverse proxy is mandatory in production, see [[06-mise-en-oeuvre/local-inference-security\|Security]]) |
 
 **Quick test example from Python:**
 
@@ -149,9 +149,7 @@ For an on-premise agent project deployed at customer sites, engine choice depend
 [^10]: Tenstorrent, *vLLM integration with TT-Metal* (fork tenstorrent/vllm, tt-metal, standard vLLM incompatibility), 2025. [https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md](https://github.com/tenstorrent/tt-metal/blob/main/tech_reports/LLMs/vLLM_integration.md)
 [^11]: vLLM Project, *Automatic Prefix Caching* and *Engine Arguments* (`enable_prefix_caching` on by default, block hashing, `vllm:prefix_cache_hits/queries` metrics), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching/) · [https://docs.vllm.ai/en/stable/configuration/engine_args/](https://docs.vllm.ai/en/stable/configuration/engine_args/)
 [^12]: Ollama, *FAQ — How does Ollama handle concurrent requests?* (`OLLAMA_NUM_PARALLEL`, `OLLAMA_MAX_LOADED_MODELS`, request queue), accessed 2026-10-09. [https://docs.ollama.com/faq](https://docs.ollama.com/faq)
-[^13]: Ollama, *Release v0.40.0* ("Models run on MLX on Apple Silicon by default"), October 2026. [https://github.com/ollama/ollama/releases/tag/v0.40.0](https://github.com/ollama/ollama/releases/tag/v0.40.0)
 [^14]: SGLang Project, *Release v0.5.20* (CUDA 12 dropped, CUDA 13 required; ROCm `gfx1151` image), September 18, 2026. [https://github.com/sgl-project/sglang/releases/tag/v0.5.20](https://github.com/sgl-project/sglang/releases/tag/v0.5.20)
-[^15]: vLLM Project, *CLI Reference — `vllm serve`* (`--api-key`; the vLLM *Security* page lists the protected prefixes `/v1`, `/v2`, `/inference`, `/cohere`), accessed 2026-10-09 · vLLM Project, advisory GHSA-h3rc-6mm3-gc2m (`/tokenize` not covered by `--api-key`), October 6, 2026. [https://docs.vllm.ai/en/stable/cli/serve/](https://docs.vllm.ai/en/stable/cli/serve/) · [https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m](https://github.com/vllm-project/vllm/security/advisories/GHSA-h3rc-6mm3-gc2m)
 [^16]: vLLM Project, *Release v0.28.0* (default PyPI wheel and Docker image on CUDA 13.0, `-cu129` variants), 2026-08-26 · *Release v0.31.0* (`quantization="fp8"` renamed `fp8_per_tensor`, former name redirected), 2026-10-05 · *Release v0.33.0* (CUDA 13.0 only wheels and images), 2026-11-02. [https://github.com/vllm-project/vllm/releases/tag/v0.28.0](https://github.com/vllm-project/vllm/releases/tag/v0.28.0) · [https://github.com/vllm-project/vllm/releases/tag/v0.31.0](https://github.com/vllm-project/vllm/releases/tag/v0.31.0) · [https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3](https://github.com/vllm-project/vllm/releases/tag/v0.33.0rc3)
 [^17]: NVIDIA, *TensorRT-LLM — Quick Start* (`trtllm-serve`, OpenAI-compatible API), accessed 2026-10-09 · Triton Inference Server, `tensorrtllm_backend` repository (Triton backend for TensorRT-LLM, "PyTorch Backend (LLM API)" mode), accessed 2026-10-09. [https://nvidia.github.io/TensorRT-LLM/](https://nvidia.github.io/TensorRT-LLM/) · [https://github.com/triton-inference-server/tensorrtllm_backend](https://github.com/triton-inference-server/tensorrtllm_backend)
 [^18]: vLLM Project, *Structured Outputs* (`xgrammar` / `guidance` backends, `auto` selection via `--structured-outputs-config`), accessed 2026-10-09. [https://docs.vllm.ai/en/stable/features/structured_outputs/](https://docs.vllm.ai/en/stable/features/structured_outputs/)
