@@ -95,6 +95,8 @@ Coût des appels à l'API Claude au tarif public, [mesuré en novembre 2026](htt
 
 Le [journal public](https://github.com/DamienBecherini/vault-watch-agent/blob/main/metrics/usage.jsonl) détaille chaque appel, avec son modèle et son coût.
 
+Ces montants sont indicatifs : c'est ce que valent les appels au tarif public de l'API. Ceux de l'auteur sont passés par l'accès API de son abonnement Claude : il a payé son abonnement, rien de plus.
+
 ## Les limites
 
 - **Des erreurs restent possibles.** Vérifiez les sources citées avant de vous appuyer sur un chiffre, et [signalez une erreur](https://github.com/DamienBecherini/ia-on-prem-vault/issues) si vous en trouvez une.

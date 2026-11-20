@@ -95,6 +95,8 @@ Cost of the Claude API calls at list price, [measured in November 2026](https://
 
 The [public journal](https://github.com/DamienBecherini/vault-watch-agent/blob/main/metrics/usage.jsonl) lists each call, with its model and cost.
 
+These amounts are indicative: they are what the calls are worth at the API's list price. The author's calls went through the API access of his Claude subscription: he paid his subscription and nothing more.
+
 ## The limits
 
 - **Errors remain possible.** Check the cited sources before relying on a figure, and [report an error](https://github.com/DamienBecherini/ia-on-prem-vault/issues) if you find one.
