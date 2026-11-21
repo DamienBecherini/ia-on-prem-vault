@@ -1,7 +1,7 @@
 ---
 title: "🤖 vault-watch-agent"
 description: "Overview of vault-watch-agent, the AI agent that proposes sourced corrections for this guide, waits for human review and prepares the pull request."
-last_modified: "2026-11-20"
+last_modified: "2026-11-21"
 ---
 
 > [!tip] In brief
@@ -75,3 +75,5 @@ The project is written in Python with [LangGraph](https://langchain-ai.github.io
 The French guide fits entirely in the model's context thanks to prompt caching. There is therefore no vector [[00-lexique/rag|RAG]]: at this size, reading everything costs less than building an index, and the model sees inconsistencies between pages.
 
 **GitHub repository:** [DamienBecherini/vault-watch-agent](https://github.com/DamienBecherini/vault-watch-agent), under the MIT licence.
+
+**Documentation:** [every page](https://github.com/DamienBecherini/vault-watch-agent/blob/main/docs/README.md), grouped by question, with a map: connecting a guide, a run step by step, checking the guide, the costs, choosing a model.
