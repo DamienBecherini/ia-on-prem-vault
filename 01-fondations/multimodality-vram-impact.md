@@ -80,7 +80,7 @@ Pour un LLM 7B typique en GQA (Mistral 7B, backbone de LLaVA 1.6 : 32 couches, 8
 | Image 336×336 (LLaVA 1.5, ou vue de base de LLaVA 1.6) | ~576 tokens | ~75 Mo |
 | Image 1024×1024 (LLaVA 1.6 AnyRes : 4 tuiles + vue globale) | ~2 880 tokens | ~377 Mo |
 | Image 1024×1024 (Qwen2-VL dynamique) | ~1 369 tokens | ~179 Mo (~79 Mo sur le backbone Qwen2-VL 7B : 28 couches, 4 têtes KV) |
-| PDF 10 pages converti en images | ~5 000–40 000 tokens (≈ 500 à 4 000 par page selon le modèle et la résolution ; Pixtral 12B monte à ~4 000 par page) | ~0,65–5,2 Go |
+| PDF 10 pages converti en images | ~5 000–40 000 tokens (≈ 500 à 4 000 par page selon le modèle et la résolution, le haut de la fourchette avec Pixtral 12B) | ~0,65–5,2 Go |
 
 *Source : vLLM metrics [^4]*
 
