@@ -18,6 +18,8 @@
 
 [![A page of the published guide: Mermaid diagrams, navigation, table of contents and incoming links](docs/images/site-unified-memory.png)](https://ia-on-prem.damien.becherini.fr/en/01-fondations/unified-memory-vs-ram-vs-vram/)
 
+[![The end of the same page: the dates of change and verification, the author who reviewed it, the agent, then « Give my opinion », also in the header](docs/images/site-page-end.png)](https://ia-on-prem.damien.becherini.fr/en/01-fondations/unified-memory-vs-ram-vs-vram/)
+
 ## What this repository shows
 
 - **Content:** 129 French notes, each with its English mirror under `en/`, and 26 Mermaid diagrams per language,
