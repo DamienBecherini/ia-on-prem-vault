@@ -1,7 +1,7 @@
 ---
 title: "🤖 vault-watch-agent"
 description: "Présentation de vault-watch-agent, l'agent IA qui propose des corrections sourcées pour ce guide, attend la relecture humaine et prépare la pull request."
-last_modified: "2026-11-20"
+last_modified: "2026-11-21"
 ---
 
 > [!tip] En bref
@@ -75,3 +75,5 @@ Le projet est écrit en Python avec [LangGraph](https://langchain-ai.github.io/l
 Le guide français tient entièrement dans le contexte du modèle grâce au cache de prompts. Il n'y a donc pas de [[00-lexique/rag|RAG]] vectoriel : à cette taille, tout lire coûte moins cher que construire un index, et le modèle voit les incohérences entre pages.
 
 **Dépôt GitHub :** [DamienBecherini/vault-watch-agent](https://github.com/DamienBecherini/vault-watch-agent), sous licence MIT.
+
+**Documentation :** [toutes les pages](https://github.com/DamienBecherini/vault-watch-agent/blob/main/docs/fr/README.md), rangées par question, avec une carte : brancher son guide, une veille étape par étape, vérifier le guide, les coûts, choisir un modèle.
