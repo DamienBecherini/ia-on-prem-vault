@@ -1,5 +1,6 @@
 {
   "enabledCssSnippets": [
     "footnotes"
-  ]
+  ],
+  "showRibbon": true
 }
