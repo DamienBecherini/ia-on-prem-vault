@@ -8,7 +8,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-06-04"
+last_modified: "2026-11-21"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -32,6 +32,7 @@ Central building block of standard RAG. Must be deployed locally to preserve dat
 ## ⚠️ Common pitfalls
 - Returning too many hits (e.g. top-20) bloats the prompt and saturates the model [[00-lexique/context-window|context window]].
 - Embedding quality is critical: a poor embedding model gives poor search results regardless of the database.
+- **Cross-tenant data leakage** — in a multi-user environment, a query can return documents from another tenant if no isolation filter (namespace, `tenant_id` in metadata) is applied **on every search**. ACLs at ingestion are not enough: the filter must be re-evaluated at query time. See [[06-mise-en-oeuvre/local-inference-security|LLM08 — Vector & Embedding Weaknesses]].
 
 ## 📚 Go deeper
 1. [[03-stack-logicielle/rag-and-agents|🧩 RAG & Agents]] *(full RAG pipeline and agentic alternatives)*
