@@ -3,7 +3,7 @@ title: "🖼️ Multimodality: Hardware Impact (VRAM & KV Cache)"
 description: "What images, scanned documents and audio change for your infrastructure: vision encoders, VRAM cost, interaction with the KV Cache and the affected blueprints."
 sidebar:
   order: 6
-last_modified: "2026-11-19"
+last_modified: "2026-11-21"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -11,7 +11,7 @@ verified_hitl_url: "https://damien.becherini.fr"
 ---
 
 > [!tip] In brief
-> Adding vision to an LLM adds a **visual encoder** that consumes 0.6 to 1.4 GB of VRAM in FP16 and converts each image into hundreds to thousands of tokens — the equivalent of a long document in terms of KV Cache usage. A 1024×1024 image produces from 256 visual tokens (Gemma 3) to ~2,900 (LLaVA 1.6 with AnyRes) depending on the model: it can occupy as much context space as a 200 to 2,200-word text.
+> Adding vision to an LLM adds a **visual encoder** that consumes 0.6 to 1.4 GB of VRAM in FP16 and converts each image into hundreds to thousands of tokens — the equivalent of a long document in terms of KV Cache usage. A 1024×1024 image produces from 256 visual tokens (Gemma 3) to ~4,160 (Pixtral 12B) depending on the model: it can occupy as much context space as a 200 to 3,200-word text.
 
 ---
 
@@ -44,7 +44,7 @@ The encoder and projector are additional weights loaded **on top of** the LLM ba
 | LLaVA 1.6 (Mistral 7B) | 7B | CLIP-ViT-L/14, 304M (~0.6 GB) | ~15 GB | 576 (base 336×336 view) to ~2,880 (AnyRes: 4 tiles + global view) |
 | Qwen2-VL 7B | 7B | ViT 675M (~1.35 GB) | ~16 GB | 4–16,384 (dynamic; ~1,369 for a 1024×1024 image) |
 | Qwen2-VL 72B | 72B | ViT 675M (~1.35 GB) | ~144 GB | 4–16,384 (dynamic; ~1,369 for a 1024×1024 image) |
-| Pixtral 12B (Mistral) | 12B | Vision encoder 400M (~0.8 GB) | ~26 GB | up to 1,024 |
+| Pixtral 12B (Mistral) | 12B | Vision encoder 400M (~0.8 GB) | ~26 GB | up to ~4,160 (4,096 16×16 patches for a 1024×1024 image, + 64 end-of-row tokens) |
 | Gemma 3 27B Vision | 27B | SigLIP 400M (~0.8 GB) | ~54 GB | 256 per 896×896 image (+ 256 per crop with Pan & Scan) |
 
 *Sources: LLaVA [^1] · Qwen2-VL [^2]*
@@ -80,7 +80,7 @@ For a typical 7B LLM with GQA (Mistral 7B, the LLaVA 1.6 backbone: 32 layers, 8 
 | 336×336 image (LLaVA 1.5, or LLaVA 1.6 base view) | ~576 tokens | ~75 MB |
 | 1024×1024 image (LLaVA 1.6 AnyRes: 4 tiles + global view) | ~2,880 tokens | ~377 MB |
 | 1024×1024 image (Qwen2-VL dynamic) | ~1,369 tokens | ~179 MB (~79 MB on the Qwen2-VL 7B backbone: 28 layers, 4 KV heads) |
-| 10-page PDF converted to images | ~5,000–14,000 tokens (≈ 500 to 1,400 per page depending on the model and resolution) | ~0.65–1.8 GB |
+| 10-page PDF converted to images | ~5,000–40,000 tokens (≈ 500 to 4,000 per page depending on the model and resolution, the top of the range with Pixtral 12B) | ~0.65–5.2 GB |
 
 *Source: vLLM metrics [^4]*
 
@@ -140,7 +140,7 @@ flowchart TD
 
 ## Production watchpoints
 
-1. **Context length surprises**: a "simple" request (image + short question) can consume up to ~3,000 tokens (LLaVA 1.6 with AnyRes), where the equivalent text-only question used only 50. Adjust `max_model_len` in vLLM accordingly.
+1. **Context length surprises**: a "simple" request (image + short question) can consume up to ~4,200 tokens (Pixtral 12B, 1024×1024 image), where the equivalent text-only question used only 50. Adjust `max_model_len` in vLLM accordingly.
 
 2. **Asymmetric prefill**: prefilling an image (passing all visual tokens through the transformer) is computationally denser than an equivalent text prefill in tokens. Time-to-first-token (TTFT) is higher.
 
