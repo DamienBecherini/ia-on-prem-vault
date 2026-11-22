@@ -311,7 +311,7 @@ Dans une stack RAG on-premise, la base vectorielle est une surface d'attaque : i
 Un LLM peut produire des réponses plausibles mais fausses sur des sujets factuels, réglementaires ou techniques — avec confiance et sans signal d'incertitude apparent.
 
 **Contre-mesures pour une stack on-premise :**
-- Toujours gronder avec des sources vérifiées (RAG sur documents internes) plutôt que de laisser le modèle générer librement
+- Toujours ancrer les réponses dans des sources vérifiées (RAG sur documents internes) plutôt que de laisser le modèle générer librement
 - Mettre en place une validation humaine sur les sorties à enjeu (décisions médicales, juridiques, financières)
 - Mesurer le taux d'hallucination sur votre domaine avant déploiement (voir [[06-mise-en-oeuvre/evaluate-local-model|Évaluer un modèle local]])
 

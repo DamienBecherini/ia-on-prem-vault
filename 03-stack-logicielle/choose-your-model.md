@@ -3,7 +3,7 @@ title: "🗺️ Choisir son modèle local"
 description: Guide pratique pour naviguer le paysage des LLM open weights — familles, tailles, spécialisations et correspondance avec les scénarios on-premise.
 sidebar:
   order: 4
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -79,7 +79,7 @@ La famille la plus polyvalente du paysage open weights, avec une excellente couv
 
 ### DeepSeek (DeepSeek AI)
 
-- **DeepSeek V4 / V4.1 (MIT)** : la génération courante. **V4-Flash** (284B dont 13B actifs pour la preview, 304B pour la révision 0731, 1M tokens) et **V4.1-Flash** (552B + 196B de mémoire conditionnelle, 8 à 16B actifs, KV cache FP4) remplacent V3 et R1 ; le raisonnement est intégré (effort réglable), plus de modèle « R » séparé. V4.1-Flash et V4-Pro sont de taille datacenter (nœud 8 GPU 80 Go minimum) ; V4-Flash (~300 Go en FP8, ~150–170 Go en 4-bit) tient aussi sur un cluster de bureau de 256–384 Go (scénario C)[^10].
+- **DeepSeek V4 / V4.1 (MIT)** : la génération courante. **V4-Flash** (284B dont 13B actifs pour la preview, 304B pour la révision 0731, 1M tokens) et **V4.1-Flash** (552B + 196B de mémoire conditionnelle, 8 à 16B actifs, KV cache FP4) remplacent V3 et R1 ; le raisonnement est intégré (effort réglable), plus de modèle « R » séparé. V4.1-Flash et V4-Pro sont de taille datacenter pour les servir (nœud 8 GPU 80 Go minimum ; un poste unique peut tout au plus essayer V4.1-Flash en lisant ses experts sur SSD, voir [[04-blueprints/scenario-a-dev-lab|Scénario A]]) ; V4-Flash (~300 Go en FP8, ~150–170 Go en 4-bit) tient aussi sur un cluster de bureau de 256–384 Go (scénario C)[^10].
 - **DeepSeek-R1 / V3 (2025)** : encore disponibles et bien supportés, mais dépassés à coût égal.
 
 > [!warning] MoE : ne pas confondre total et actif

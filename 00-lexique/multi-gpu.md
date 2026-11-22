@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-11-17"
+last_modified: "2026-11-22"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -22,7 +22,7 @@ Le multi-GPU sert à augmenter la capacité mémoire totale, le débit, ou les d
 
 | Topologie | Bande passante inter-GPU | Usage typique |
 | :-- | :-- | :-- |
-| PCIe x16 | ~64 Go/s (Gen5) | assemblages bureau, Exo |
+| PCIe x16 | ~64 Go/s (Gen5) | assemblages bureau |
 | NVLink (H100) | 900 Go/s | nœuds pro/datacenter |
 | NVLink 5 + NVSwitch (HGX B200) | 1 800 Go/s par GPU (~14,4 To/s agrégés sur 8 GPU) | nœuds HGX B200 |
 

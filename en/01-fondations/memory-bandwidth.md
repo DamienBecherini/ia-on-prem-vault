@@ -3,7 +3,7 @@ title: 🏎️ Memory Bandwidth & The "Memory Wall"
 description: Mathematical and hardware analysis of the real bottleneck in local LLM inference.
 sidebar:
   order: 1
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -89,6 +89,7 @@ Values below are order-of-magnitude guides for architecture (real performance va
 | Technology | Bandwidth (order of magnitude) | Source | Impact on inference |
 | :-- | :-- | :-- | :-- |
 | **10 GbE Ethernet** | $\sim 1.25 \text{ GB/s}$ | 10 Gbit/s conversion | too low to "extend" a model online without heavy penalty |
+| **PCIe 5.0 NVMe SSD** | $\sim 9.7 \text{ GB/s}$ on the SSD-LLaMA test bench (9 GiB/s sequential read), up to $\sim 14.8 \text{ GB/s}$ for the fastest drives | [^13] | useful only for reading MoE experts missing from the VRAM/RAM cache: generation at a few tokens/s, see [[00-lexique/offloading\|Offloading]] |
 | **PCIe 5.0 x16** | $\sim 64 \text{ GB/s}$ (per direction) | bus spec | becomes a bottleneck for frequent CPU↔GPU transfers |
 | **DDR5 desktop RAM** | $\sim 80$ to $100 \text{ GB/s}$ | typical dual-channel platforms | high capacity, limited throughput for large LLMs |
 | **AMD Ryzen AI Max PRO 400 unified memory** | up to $\sim 273 \text{ GB/s}$ | [^3] | interesting capacity/bandwidth trade-off on x86 |
@@ -125,3 +126,4 @@ Two dated remarks (Q4 2026). Intel is preparing a "capacity-first" inference GPU
 [^10]: Apple MLX, *Distributed Communication* ("Starting from macOS 26.2, RDMA over thunderbolt is available"; JACCL backend), consulted 2026-10-10. <https://ml-explore.github.io/mlx/build/html/usage/distributed.html>
 [^11]: AMD, *AMD Ryzen AI Max+ PRO 495* — product page (192 GB LPDDR5X-8533, 256-bit bus), consulted 2026-10-09. <https://www.amd.com/en/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html> · Framework, *The 192GB Framework Desktop is open for pre-order* (pre-orders from 2026-09-30, shipping November 2026), 30 September 2026. <https://frame.work/blog/192gb-framework-desktop-open-for-pre-order>
 [^12]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500* (MSRP $1,999), 14 September 2026. <https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu> · NVIDIA, *RTX PRO 6000 Blackwell Workstation Edition* (96 GB GDDR7 ECC, 1,792 GB/s). <https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/>
+[^13]: F. Liang et al., *SSD-LLaMA: SSD-Native Inference for Trillion-Parameter MoE at 1+ Token/s on a Consumer PC* (test bench: RTX 5090, 16–32 GB of RAM, 4 TB NVMe up to 9 GiB/s sequential read; up to 14.8 GB/s for the fastest PCIe 5.0 SSDs; Kimi-K2.7-Code, 543.6 GiB, at 1.03 tokens/s in generation with 32 GB of RAM), arXiv:2609.18110, 16 September 2026. <https://arxiv.org/abs/2609.18110>

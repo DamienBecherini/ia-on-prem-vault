@@ -311,7 +311,7 @@ In an on-premise RAG stack, the vector database is an attack surface: malicious 
 An LLM can produce plausible but false answers on factual, regulatory, or technical topics — with confidence and no apparent uncertainty signal.
 
 **Countermeasures for an on-premise stack:**
-- Always ground with verified sources (RAG on internal documents) rather than letting the model generate freely
+- Always ground answers in verified sources (RAG on internal documents) rather than letting the model generate freely
 - Implement human validation on high-stakes outputs (medical, legal, financial decisions)
 - Measure hallucination rate on your domain before deployment (see [[06-mise-en-oeuvre/evaluate-local-model|Evaluate a local model]])
 

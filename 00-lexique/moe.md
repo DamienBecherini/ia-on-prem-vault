@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -38,14 +38,14 @@ Le MoE offre donc la **qualité d'un grand modèle** avec le **coût de calcul d
 
 Les MoE de petite taille active (Qwen3-30B-A3B, Nemotron 3.5 Lightning, gpt-oss-20b[^3][^4][^6]) sont particulièrement intéressants sur les APU : ils offrent une bonne qualité de réponse avec des besoins VRAM acceptables et un bon débit de génération.
 
-Pour les MoE géants (DeepSeek V4.1 : > 750 Go en FP8 ; Kimi K3 : > 1,4 To même en 4-bit natif ; le DeepSeek V3 de 2024 pesait déjà 404 Go en Q4_K_M), il faut un nœud 8 GPU ou un cluster multi-nœuds — les scénarios C ou D[^1][^2].
+Pour les MoE géants (DeepSeek V4.1 : > 750 Go en FP8 ; Kimi K3 : > 1,4 To même en 4-bit natif ; le DeepSeek V3 de 2024 pesait déjà 404 Go en Q4_K_M), il faut, pour les servir, un nœud 8 GPU ou un cluster multi-nœuds — les scénarios C ou D ; un poste unique peut tout au plus les essayer en lisant les experts sur SSD (voir les pièges ci-dessous)[^1][^2].
 
 Attention aux licences : plusieurs MoE frontière ouverts de 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.4T-A95B) sortent sous des licences custom à lire avant tout usage commercial. La règle n'est pas absolue : des MoE de taille datacenter sortent aussi sous MIT, comme DeepSeek V4 / V4.1 (552B + 196B de mémoire Engram pour V4.1-Flash)[^1] et, depuis septembre 2026, MiMo-V2.6-Pro de Xiaomi (1,02T paramètres dont 42B actifs)[^8]. La plupart des MoE de taille petite à intermédiaire (Qwen3-30B-A3B, GLM-5.3-Flash, Nemotron 3.5) restent en Apache 2.0, MIT ou OpenMDW. Sur Ollama, `kimi-k3:cloud` ou `glm-5.2:cloud` sont des tags **hébergés**, pas des poids téléchargeables (voir [[03-stack-logicielle/choose-your-model|🗺️ Choisir son modèle]]).
 
 ## ⚠️ Pièges fréquents
 
 - Comparer un MoE "671B" à un dense "70B" en croyant que le dense est forcément plus rapide : le débit dépend des paramètres **actifs**, pas totaux.
-- Charger partiellement un MoE : si tous les experts ne tiennent pas en VRAM, le swap est catastrophique car les experts absents sont convoqués de façon non-prévisible. Exception notable : les embeddings n-gram de Qwen3.8-Flash-Next (51 B) sont conçus pour être déchargés en RAM sans ce coût, contrairement aux experts[^7].
+- Charger partiellement un MoE avec un moteur généraliste : si tous les experts ne tiennent pas en mémoire rapide, le swap (mmap, pagination de l'OS) est catastrophique car les experts absents sont convoqués de façon non-prévisible. Exception notable : les embeddings n-gram de Qwen3.8-Flash-Next (51 B) sont conçus pour être déchargés en RAM sans ce coût, contrairement aux experts[^7]. Depuis octobre 2026, des moteurs dédiés comme InferSSD (Apache-2.0) gardent un cache d'experts en VRAM et en RAM et lisent les autres sur le SSD NVMe : selon son dépôt, DeepSeek-V4.1-Flash en Q8_0 génère 7,3 tokens/s sur une RTX 5090 avec 32 Go de RAM, contre 0,87 pour llama.cpp (mesures de l'éditeur). C'est un banc d'essai pour un poste unique, pas un serveur d'équipe (limites dans [[00-lexique/offloading|Offloading]])[^9].
 - Sous-estimer la VRAM requise : tous les poids doivent être chargés même si seuls 2/64 experts sont activés par token.
 
 ## 📚 Pour comprendre en profondeur
@@ -68,3 +68,4 @@ Attention aux licences : plusieurs MoE frontière ouverts de 2026 (Kimi K3, GLM-
 [^6]: OpenAI, *gpt-oss-120b / gpt-oss-20b* (gpt-oss-20b : 21 B au total, 3,6 B actifs, MoE post-entraîné en MXFP4, tient dans 16 Go), août 2025. <https://huggingface.co/openai/gpt-oss-120b>
 [^7]: Qwen, *Qwen3.8-Flash-Next* (10 experts routés + 1 partagé sur 512 ; 51 B d'embeddings n-gram « plus faciles à décharger que les experts MoE »), août 2026. <https://huggingface.co/Qwen/Qwen3.8-Flash-Next>
 [^8]: Xiaomi, *MiMo-V2.6-Pro-MOPD* (MoE 1,02T / 42B actifs, contexte 1M, texte + image + vidéo + audio, licence MIT ; checkpoint RL du 2026-09-21, mise à jour MOPD du 2026-09-27), Hugging Face. <https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-MOPD>
+[^9]: WiCi, *InferSSD* (Apache-2.0 ; GGUF servis depuis le SSD, tranches d'experts alignées sur 4 Kio, cache d'experts RAM et VRAM ; DeepSeek-V4.1-Flash-1017 Q8_0 sur RTX 5090 + 32 Go de RAM : 164,5 tokens/s en lecture du prompt et 7,27 en génération, contre 8,06 et 0,87 pour llama.cpp ; mesures de l'éditeur, nombre d'exécutions non publié ; première version v0.1.0 du 2026-10-30), consulté le 2026-11-22. <https://github.com/wici-ai/inferssd> · <https://github.com/wici-ai/inferssd/blob/main/docs/benchmark.md>

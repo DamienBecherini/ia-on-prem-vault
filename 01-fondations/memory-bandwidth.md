@@ -3,7 +3,7 @@ title: 🏎️ La Bande Passante Mémoire & Le "Memory Wall"
 description: Analyse mathématique et matérielle du véritable goulot d'étranglement de l'inférence locale.
 sidebar:
   order: 1
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -89,6 +89,7 @@ Valeurs ci-dessous : ordres de grandeur utiles pour l'architecture (les performa
 | Technologie | Bande passante (ordre de grandeur) | Source | Impact pour l'inférence |
 | :-- | :-- | :-- | :-- |
 | **Ethernet 10 GbE** | $\sim 1,25 \text{ Go/s}$ | conversion 10 Gbit/s | trop faible pour "étendre" un modèle en ligne sans forte pénalité |
+| **SSD NVMe PCIe 5.0** | $\sim 9{,}7 \text{ Go/s}$ sur le banc de SSD-LLaMA (9 Gio/s en lecture séquentielle), jusqu'à $\sim 14{,}8 \text{ Go/s}$ pour les plus rapides | [^13] | utile seulement pour lire les experts MoE absents du cache VRAM/RAM : génération à quelques tokens/s, voir [[00-lexique/offloading\|Offloading]] |
 | **PCIe 5.0 x16** | $\sim 64 \text{ Go/s}$ (par direction) | spécification bus | devient un goulot lors des transferts fréquents CPU↔GPU |
 | **RAM DDR5 desktop** | $\sim 80$ à $100 \text{ Go/s}$ | plateformes dual-channel typiques | capacité élevée, débit limité pour grands LLM |
 | **Mémoire unifiée AMD Ryzen AI Max PRO 400** | jusqu'à $\sim 273 \text{ Go/s}$ | [^3] | compromis capacité/débit intéressant en x86 |
@@ -125,3 +126,4 @@ Deux remarques datées (T4 2026). Intel prépare un GPU d'inférence « capacit�
 [^10]: Apple MLX, *Distributed Communication* (« Starting from macOS 26.2, RDMA over thunderbolt is available » ; backend JACCL), consulté le 2026-10-10. <https://ml-explore.github.io/mlx/build/html/usage/distributed.html>
 [^11]: AMD, *AMD Ryzen AI Max+ PRO 495* — fiche produit (192 Go LPDDR5X-8533, bus 256-bit), consultée le 2026-10-09. <https://www.amd.com/en/products/processors/laptop/ryzen-pro/ai-max-pro-400-series/amd-ryzen-ai-max-plus-pro-495.html> · Framework, *The 192GB Framework Desktop is open for pre-order* (précommandes du 2026-09-30, livraisons novembre 2026), 30 septembre 2026. <https://frame.work/blog/192gb-framework-desktop-open-for-pre-order>
 [^12]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500* (MSRP 1 999 $), 14 septembre 2026. <https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu> · NVIDIA, *RTX PRO 6000 Blackwell Workstation Edition* (96 Go GDDR7 ECC, 1 792 Go/s). <https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/rtx-pro-6000/>
+[^13]: F. Liang et al., *SSD-LLaMA: SSD-Native Inference for Trillion-Parameter MoE at 1+ Token/s on a Consumer PC* (banc : RTX 5090, 16–32 Go de RAM, NVMe 4 To jusqu'à 9 Gio/s en lecture séquentielle ; jusqu'à 14,8 Go/s pour les SSD PCIe 5.0 les plus rapides ; Kimi-K2.7-Code, 543,6 Gio, à 1,03 token/s en génération avec 32 Go de RAM), arXiv:2609.18110, 16 septembre 2026. <https://arxiv.org/abs/2609.18110>

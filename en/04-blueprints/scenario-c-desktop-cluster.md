@@ -3,14 +3,14 @@ title: "🖥️ Scenario C: Desktop Cluster (Exo & Thunderbolt)"
 description: The scalability blueprint. Connect several Mac Minis or compact PCs via Thunderbolt to run massive models inaccessible on a single machine.
 sidebar:
   order: 3
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
 verified_hitl_url: "https://damien.becherini.fr"
 ---
 
-[[04-blueprints/scenario-b-sme-appliance|Scenario B]] (the Appliance) has a major flaw: its memory is fixed. If your client's needs evolve and they want to deploy a colossal [[00-lexique/moe|MoE]] model of more than 400 billion parameters (requiring more than 300 GB of memory), only a high-end unified-memory workstation can host it — the Mac Studio M5 Ultra, configurable up to 512 GB (1.2 TB/s; option from €25,079 incl. VAT, details in [[02-materiel/apu-and-unified-memory|🧠 APU & Mémoire Unifiée]]) — and none exceeds 512 GB[^2][^11].
+[[04-blueprints/scenario-b-sme-appliance|Scenario B]] (the Appliance) has a major flaw: its memory is fixed. If your client's needs evolve and they want to deploy a colossal [[00-lexique/moe|MoE]] model of more than 400 billion parameters (requiring more than 300 GB of memory), only a high-end unified-memory workstation can serve it to a team (a single GPU workstation can at best try it out by reading its experts from SSD, see [[04-blueprints/scenario-a-dev-lab|Scenario A]]) — the Mac Studio M5 Ultra, configurable up to 512 GB (1.2 TB/s; option from €25,079 incl. VAT, details in [[02-materiel/apu-and-unified-memory|🧠 APU & Mémoire Unifiée]]) — and none exceeds 512 GB[^2][^11].
 
 Before 2025, the only solution was to rent a cloud server or buy a prohibitively expensive datacenter rack. Today, software architecture allows merging several affordable small machines: the **Desktop Cluster**.
 

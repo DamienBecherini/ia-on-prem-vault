@@ -8,7 +8,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -25,7 +25,7 @@ Wired interface providing up to 80 Gb/s bidirectional between machines—used to
 
 Between Macs, Thunderbolt 4 provides a local IP network connection (IP-over-Thunderbolt); since macOS 26.2, Thunderbolt 5 adds RDMA (MLX's JACCL backend, also used by [[00-lexique/exo|Exo]]); activation conditions are covered in [[02-materiel/network-roce-infiniband-thunderbolt|AI Networking: RoCE, InfiniBand, and Thunderbolt]]. That bandwidth is enough for Exo [[00-lexique/pipeline-parallelism|Pipeline Parallelism]] on models up to 600B+.
 
-**In perspective:** a Thunderbolt 5 link at 80 Gb/s ≈ 10 GB/s—about a hundred times less than an [[00-lexique/nvlink|NVLink]] bus (1,800 GB/s). That is its fundamental limit.
+**In perspective:** a Thunderbolt 5 link at 80 Gb/s ≈ 10 GB/s—about 180 times less than an [[00-lexique/nvlink|NVLink]] bus (1,800 GB/s). That is its fundamental limit.
 
 ## 💡 Why it matters for on-prem AI
 Desktop solution to link several Mac minis into a quiet, economical cluster without investing in datacenter RoCE/InfiniBand networking.

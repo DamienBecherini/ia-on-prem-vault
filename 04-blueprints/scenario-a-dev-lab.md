@@ -3,7 +3,7 @@ title: "🛠️ Scénario A : Le Labo Dev (PC GPU ou mémoire unifiée)"
 description: Le blueprint pour s'initier à l'IA locale à moindre coût. PC RTX avec CPU offloading, ou laptop/station à mémoire unifiée pour un meilleur confort solo.
 sidebar:
   order: 1
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -72,6 +72,10 @@ Sur une machine à [[00-lexique/unified-memory|mémoire unifiée]], les poids du
 
 Pour un développeur seul, cela fait souvent la différence entre *"je peux tester un 70B quantifié pour raisonner tranquillement"* et *"je regarde les tokens arriver un par un"*.
 
+### Et un MoE plus gros que RAM + VRAM ?
+
+Depuis octobre 2026, une machine de cette classe peut aussi charger un MoE géant en lisant ses experts sur le SSD NVMe. InferSSD (Apache-2.0 ; Windows et Linux en CUDA, macOS en Metal) garde un cache d'experts en VRAM et en RAM et lit les autres sur le disque. Son dépôt annonce DeepSeek-V4.1-Flash en Q8_0 à 7,3 tokens/s en génération sur RTX 5090 + 32 Go de RAM, et 2,6 sur RTX 5060 Ti 16 Go + 8 Go de RAM. Sur MacBook Pro M5 Max 48 Go, il annonce 2,9 tokens/s : sous Metal, sans cache VRAM, les experts routés y sont calculés par le CPU pendant la génération. Ce sont des mesures de l'éditeur[^15]. C'est un moyen d'évaluer un modèle des scénarios C ou D avant d'acheter, pas de servir une équipe : la génération reste à un chiffre, le contexte est limité par la mémoire rapide, et il faut un SSD NVMe rapide avec la place du modèle (~508 Go pour ce Q8_0 ; bancs de l'éditeur sur des SSD de 2 To). Son API n'a pas d'authentification : ne la lancez jamais avec `--host 0.0.0.0` hors d'un réseau isolé (voir [[06-mise-en-oeuvre/local-inference-security|Sécurité]]). Si le modèle tient en RAM, restez sur llama.cpp ou Ollama.
+
 ---
 
 ## 📋 Le Verdict de l'Architecte
@@ -104,3 +108,4 @@ Pour un usage PME quotidien avec des modèles 70B sans subir cette lourde pénal
 [^12]: OpenAI, *gpt-oss-120b* (MoE 117B, 5,1B actifs, MXFP4, Apache 2.0 ; ≈ 60–70 Go), août 2025, relu le 2026-10-09. <https://huggingface.co/openai/gpt-oss-120b>
 [^13]: Apple Newsroom, *Apple introduces new Mac Studio with M5 Max and M5 Ultra* (M5 Max 614 Go/s, M5 Ultra 1,2 To/s), 25 août 2026. <https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/> · NVIDIA, *GeForce RTX 5090* (32 Go GDDR7, bus 512-bit). <https://www.nvidia.com/fr-fr/geforce/graphics-cards/50-series/rtx-5090/>
 [^14]: NVIDIA, *NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF* (GGUF 22 Go + mmproj 1,73 Go ; recette llama.cpp « 28GB » pour RTX/DGX Spark 64 Go ou GPU 32 Go+, contexte 65 536 tokens, cache KV q8_0 ; recette « 32GB » pour Spark 128 Go ou GPU 48 Go+ ; systèmes pris en charge : Windows, Linux), publié le 2026-10-15, consulté le 2026-11-20 ; Ollama, *nemotron-3.5-bolt* (« Apple Silicon / Metal is not currently supported » pour 74B-A9B), consulté le 2026-11-20. <https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB-GGUF> · <https://ollama.com/library/nemotron-3.5-bolt>
+[^15]: WiCi, *InferSSD* (Apache-2.0 ; DeepSeek-V4.1-Flash-1017 Q8_0, fichier ≈ 508 Go, génération : 7,27 tokens/s sur RTX 5090 + 32 Go de RAM, 2,55 sur RTX 5060 Ti 16 Go + 8 Go de RAM, 2,87 sur MacBook Pro M5 Max 48 Go, contre 0,87 / 0,24 / 0,87 pour llama.cpp ; machines de test à SSD de 2 To ; mesures de l'éditeur ; « the API has no authentication » ; sous Metal, experts routés calculés sur CPU en génération ; première version v0.1.0 du 2026-10-30), consulté le 2026-11-22. <https://github.com/wici-ai/inferssd> · <https://github.com/wici-ai/inferssd/blob/main/docs/architecture.md>
