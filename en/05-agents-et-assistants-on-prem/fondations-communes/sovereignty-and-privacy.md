@@ -5,7 +5,7 @@ description: >
   GDPR/AI Act regulatory context, and practical checklist.
 sidebar:
   order: 2
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -213,7 +213,7 @@ The AI vendor is no longer an American cloud but the **vendor itself**, hosting 
 | Applicable to public procurement | ❌ Often no | ✅ Yes with adequate qualification |
 | Infrastructure cost | €0 (usage/token) | Shared (subscription) |
 
-Since the order of 12 August 2026 (JORF of 14 August), issued for Decree No. 2026-272 of 14 April 2026 pursuant to Article 31 of the SREN law, version 3.2 of the SecNumCloud standard is the official reference: State administrations, their operators, and GIPs must host their data "of particular sensitivity" on a cloud qualified by ANSSI (or certified at an equivalent European or national level). For a vendor targeting the public sector, Tier 2 is no longer a commercial advantage but a condition of access[^9].
+Since the order of 12 August 2026 (JORF of 14 August), issued for Decree No. 2026-272 of 14 April 2026 pursuant to Article 31 of the SREN law, version 3.2 of the SecNumCloud standard is the official reference: State administrations, their operators, and GIPs must host their data "of particular sensitivity" on a cloud qualified by ANSSI (or certified at an equivalent European or national level). For a vendor targeting the public sector, Tier 2 is no longer a commercial advantage but a condition of access[^9]. Outside this regulatory scope, ANSSI already recommends favoring SecNumCloud hosting for a generative AI system deployed in a public cloud as soon as its data is sensitive, its business impact is critical, or its users are not trusted (R14 of its guide ANSSI-PA-102 of 29 April 2024, still in force in Q4 2026)[^20].
 
 European open-weights models (Mistral 3 family from Mistral AI, Kolibri from Aleph Alpha) served on dedicated GPU cover most common B2B use cases (RAG, classification, translation) while remaining within the French legal perimeter; measure it on your corpus before committing (see [[06-mise-en-oeuvre/evaluate-local-model|Evaluate a local model]])[^5]. Since 3 October 2026, Aleph Alpha's **Kolibri 1** (Germany, Apache 2.0, ~78 GB in FP8) joins this European open-weights offering; however, it targets only German and English, which restricts it to English-language or bilingual corpora for a French SME[^18].
 
@@ -258,3 +258,4 @@ The model and the entire inference stack run **at the end customer**, on their o
 [^17]: EU AI Act Service Desk, *Article 99 — Penalties* (§ 4 (g): non-compliance with Art. 50, "whichever is higher"), read on 2026-10-09. <https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-99>
 [^18]: Aleph Alpha, *Kolibri-1* (78B MoE, 3.46B active, Apache 2.0, German and English, FP8 weights ≈ 78 GB, signatory of the EU GPAI code of practice), 2026-10-03. <https://huggingface.co/Aleph-Alpha/Kolibri-1>
 [^19]: Assemblée nationale, legislative file *Projet de loi relatif à la résilience des infrastructures critiques et au renforcement de la cybersécurité* (text amended by the Assemblée nationale on 2026-11-17, T.A. no. 366) and *Analyse du scrutin n° 9916* (first reading, 464 for, 64 against, 16 abstentions), read on 2026-11-20. <https://www.assemblee-nationale.fr/dyn/17/dossiers/DLR5L17N50731> · <https://www.assemblee-nationale.fr/dyn/17/scrutins/9916>
+[^20]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102; R14 "Privilégier un hébergement SecNumCloud dans le cas d'un déploiement d'un système d'IA dans un Cloud public"), 29 April 2024; no new version on the guide's page, re-read on 2026-11-22. <https://messervices.cyber.gouv.fr/guides/recommandations-de-securite-pour-un-systeme-dia-generative> · <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>

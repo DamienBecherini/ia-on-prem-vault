@@ -3,7 +3,7 @@ title: "🔒 Sécurité de l'inférence locale"
 description: Authentification de l'API locale, isolation réseau, chiffrement, OWASP LLM Top 10 et protection contre l'injection de prompt pour une stack d'inférence on-premise.
 sidebar:
   order: 4
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -171,11 +171,15 @@ flowchart TD
 
 Le moteur d'inférence ne doit jamais être directement accessible depuis le réseau entreprise — uniquement via le gateway.
 
+L'isolation vaut aussi pour le matériel : l'ANSSI recommande de dédier les GPU au système d'IA, de ne les partager qu'entre modèles de même niveau de sensibilité et, sous virtualisation, de dédier l'hyperviseur qui y accède ou au minimum de filtrer par IOMMU l'accès des VM à leur mémoire (R16 du guide ANSSI-PA-102)[^30]. Sur un serveur de virtualisation déjà partagé, réservez donc des cartes entières en passthrough ou découpez-les en instances MIG (voir [[02-materiel/gpu-rack-servers|Serveurs rack GPU]]).
+
 ---
 
 ## 5. OWASP LLM Top 10 (v2025, correspondance 2026) — les vulnérabilités propres aux LLM
 
 Ce chapitre suit la numérotation de l'OWASP Top 10 for LLM Applications [v2025](https://genai.owasp.org/llm-top-10/) (novembre 2024), encore utilisée par la plupart des outils et grilles d'audit, et indique entre parenthèses l'identifiant de l'[édition 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) (3 août 2026), qui la remplace avec un classement révisé fondé sur des incidents réels[^12] ; les contre-mesures ne changent pas.
+
+Pour une PME ou un organisme public français, cette grille se complète du guide de l'ANSSI *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102, 29 avril 2024, toujours la version publiée au T4 2026), qui donne un cadre d'audit reconnu en France. Ses 35 recommandations demandent notamment une analyse de risque avant la phase d'entraînement (R2). Elles proscrivent l'usage automatisé d'un système d'IA pour des actions critiques sur le SI (R9) et limitent les actions automatiques d'un système qui traite des entrées non maîtrisées (R27). Elles prévoient enfin un audit de sécurité avant la mise en production (R23), que l'ANSSI suggère de confier à un prestataire d'audit qualifié PASSI[^27].
 
 > [!note] Version de référence
 > Numérotation **v2025** (LLM01:2025 → LLM10:2025, qui diffère de la v1.1 de 2023) et correspondance avec l'édition 2026[^12] :
@@ -218,6 +222,8 @@ Le modèle restitue des données sensibles présentes dans son contexte de sessi
 - Ne jamais injecter de PII (noms, numéros de contrat, données médicales) dans les prompts sans nécessité
 - Ne pas partager un même contexte de session entre utilisateurs différents
 - Effacer le KV Cache entre les sessions si votre moteur le supporte
+- Ne renvoyer au client que le texte de la réponse : la recommandation R25 de l'ANSSI (guide ANSSI-PA-102) exclut tout vecteur de scores ou autre mécanisme interne du modèle, qui facilitent l'inversion de modèle et l'inférence d'appartenance. Or vLLM, et Ollama depuis la 0.12.11, renvoient les log-probabilités des tokens à qui les demande (`logprobs`, `top_logprobs` ; chez vLLM aussi `prompt_logprobs` et `echo`), et `--max-logprobs` (20 par défaut) n'en plafonne que le nombre. Retirez ces champs au gateway, par exemple avec le hook `async_pre_call_hook` de LiteLLM, comme le conseille aussi l'avis vLLM GHSA-rhcx-5729-88vg[^31]
+- Plafonner la longueur des réponses, contre la régurgitation de données (R25) : au gateway, ou côté vLLM par `max_new_tokens` dans `--generation-config`, qui vaut alors pour tout le serveur
 
 ### LLM03:2025 — Vulnérabilités de la chaîne d'approvisionnement (LLM04:2026)
 
@@ -553,11 +559,11 @@ La traçabilité des interactions est une exigence de sécurité et de responsab
 
 **Niveau recommandé en production :**
 - Durée (TTFT, temps total)
-- Hash du prompt (pour détecter les abus sans stocker le contenu)
+- Requête de l'utilisateur, prompt réellement envoyé au modèle (après pré-traitement et ajout du contexte RAG), appels d'outils et de plugins, actions des filtres de sortie et réponse, distingués dans le journal pour pouvoir reconstituer un incident, comme le recommande l'ANSSI pour un système d'IA générative (guide ANSSI-PA-102)[^29]
 - Identifiant de session
 
-> [!warning] Ne pas logger les prompts en clair
-> Stocker les prompts complets crée un stockage de données potentiellement sensibles. Si vos prompts contiennent des données personnelles ou des secrets métier, loggez seulement un hash (SHA-256) du prompt, pas son contenu.
+> [!warning] Protéger les prompts journalisés
+> Stocker les prompts complets crée un stockage de données potentiellement sensibles. Ne remplacez pas pour autant le contenu par un simple hash : sans la requête ni la réponse, un incident ne peut pas être reconstitué. Gardez ces journaux à part des métriques, chiffrés et en accès restreint, retirez-en les secrets (clés, jetons) avant écriture, et fixez une durée de conservation limitée, adaptée à leur finalité : la CNIL recommande de six mois à un an pour les journaux de traçabilité[^28]. Un hash du prompt reste utile dans les journaux d'exploitation courants, pour repérer les requêtes répétées sans en exposer le contenu.
 
 ---
 
@@ -572,12 +578,13 @@ La traçabilité des interactions est une exigence de sécurité et de responsab
 □ TLS activé entre clients et gateway (certificat valide)
 □ Les erreurs backend (500/502) sont interceptées et retournent un message générique au client
 □ L'accès distant passe par un tunnel Zero Trust (Tailscale, WireGuard) — pas de port NAT ouvert
-□ Les logs d'inférence ne contiennent pas de données personnelles en clair
+□ Les journaux d'inférence (requête, prompt envoyé, réponse) sont chiffrés, en accès restreint, purgés des secrets et conservés pour une durée définie et limitée
 □ Le chiffrement disque est activé sur la partition des logs et des données de session
 □ Les agents tournent avec un utilisateur non-root et --cap-drop ALL
 □ Les entrées externes (fichiers, issues, web) sont isolées dans le prompt agent
 □ Une procédure de révocation de clé API existe et a été testée
 □ Les risques OWASP LLM01–LLM10:2025 (et leurs équivalents 2026) ont été évalués pour chaque composant de la stack
+□ Un audit de sécurité avant mise en production est planifié (ANSSI-PA-102, R23 ; prestataire qualifié PASSI possible)
 □ Les mises à jour du moteur d'inférence sont planifiées (CVE tracking)
 □ vLLM : --trust-request-mm-kwargs n'est pas activé devant des clients que vous ne maîtrisez pas (il rouvre des chemins d'attaque corrigés)
 □ Open WebUI : partage communautaire (actif par défaut) coupé s'il ne sert pas (ENABLE_COMMUNITY_SHARING=false)
@@ -612,6 +619,11 @@ La traçabilité des interactions est une exigence de sécurité et de responsab
 [^24]: Open WebUI, *Open WebUI v0.13.4: AI that does the work, not just answers* (« go straight to v0.13.4 » ; la v0.13.1 inclut des correctifs de sécurité, avis publiés à l'attribution des CVE ; changement de schéma, mise à jour simultanée de toutes les instances), 2026-11-19 · *Open WebUI v0.12.4 and v0.12.5* (correctifs de sécurité dans les deux versions), 2026-11-04. <https://openwebui.com/blog/v0-13-4-ai-that-does-the-work-not-just-answers> · <https://openwebui.com/blog/v0-12-4-and-v0-12-5-accessibility-and-shared-notes>
 [^25]: VulnCheck, *Ollama 0.30.0 through 0.33.2 SSRF via Cross-Host Tensor Blob Redirect* (CVE-2026-85180, CVSS 4.0 8.7, sans authentification, aucune version corrigée nommée), 2026-09-03 · Ollama, *PR #18512* (validation des redirections du registre et des blobs, livrée avec la 0.34.2) · CERT/CC, *VU#518910* (CVE-2026-5757, « a patch is not yet available », non révisée depuis le 2026-04-22, relue le 2026-11-20) · GitHub Advisory Database, *GHSA-x8qc-fggm-mpqg* (CVE-2026-7482, lecture hors limites voisine dans la quantification GGUF via `/api/create`, corrigée en 0.17.1). <https://www.vulncheck.com/advisories/ollama-0.30.0-through-0.33.2-ssrf-via-cross-host-tensor-blob-redirect> · <https://github.com/ollama/ollama/pull/18512> · <https://kb.cert.org/vuls/id/518910> · <https://github.com/advisories/GHSA-x8qc-fggm-mpqg>
 [^26]: vLLM, advisory *GHSA-xgh8-qwjh-q853* (`/v1/systemone` contourne le verrou `--trust-request-chat-template` : `chat_template_kwargs` fournis par la requête rendus sans validation, configuration par défaut, modèles Qwen3 / Qwen3.5 / LFM2-VL notamment, Moderate CVSS 6.5, versions 0.32.0rc0 → 0.33.0, corrigé 0.34.0), 18 novembre 2026 · vLLM Project, *Release v0.34.0* (section « Before you upgrade » : Model Runner V1 retiré, builds ROCm 10.0 uniquement), 16 novembre 2026. <https://github.com/vllm-project/vllm/security/advisories/GHSA-xgh8-qwjh-q853> · <https://github.com/vllm-project/vllm/releases/tag/v0.34.0>
+[^27]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102 ; 35 recommandations ; R2 « Mener une analyse de risque sur les systèmes d'IA avant la phase d'entraînement », R9 « Proscrire l'usage automatisé de systèmes d'IA pour des actions critiques sur le SI », R23 « Prévoir des audits de sécurité des systèmes d'IA avant déploiement en production », avec mention des prestataires PASSI qualifiés par l'ANSSI, R27 « Limiter les actions automatiques depuis un système d'IA traitant des entrées non-maîtrisées »), 29 avril 2024 ; aucune nouvelle version sur la page du guide, relue le 2026-11-22. <https://messervices.cyber.gouv.fr/guides/recommandations-de-securite-pour-un-systeme-dia-generative> · <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>
+[^29]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102 : journaliser au bon niveau de granularité l'ensemble des traitements du système d'IA, en particulier les entrées et sorties du modèle ; distinguer les requêtes des utilisateurs des données réellement envoyées au modèle ; protéger les requêtes journalisées qui contiennent des données sensibles), 29 avril 2024. <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>
+[^28]: CNIL, *Sécurité : Tracer les opérations* (Guide de la sécurité des données personnelles : protéger les équipements de journalisation et les informations journalisées, conserver les évènements « sur une période glissante comprise entre six mois et un an »), 14 mars 2024. <https://www.cnil.fr/fr/securite-tracer-les-acces-et-gerer-les-incidents>
+[^30]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102 ; R16 « Dédier les composants GPU au système d'IA » : pas de mutualisation avec d'autres applications métier, partage seulement entre modèles de même niveau de sensibilité, hyperviseurs dédiés ou au minimum filtrage matériel type IOMMU), 29 avril 2024. <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>
+[^31]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102, R25 « Protéger le système d'IA en filtrant les entrées et les sorties des utilisateurs » : filtres d'entrée et de sortie, réponses limitées à des chaînes de caractères sans vecteur de scores ni autre mécanisme interne du modèle, limite sur la taille des réponses en nombre de caractères), 29 avril 2024 · vLLM Project, *Engine Arguments* (`--max-logprobs`, 20 par défaut ; « If max_new_tokens is specified in generation config, then it sets a server-wide limit »), consulté le 2026-11-22 · vLLM, advisory *GHSA-rhcx-5729-88vg* (contournement : « Strip `prompt_logprobs`, `logprobs`, and `echo` from inbound requests ») · Ollama, *Release v0.12.11* (log-probabilités sur l'API native et l'API compatible OpenAI), novembre 2025 · LiteLLM, *Modify / Reject Incoming Requests* (`async_pre_call_hook`), consulté le 2026-11-22. <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf> · <https://docs.vllm.ai/en/stable/configuration/engine_args/> · <https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg> · <https://github.com/ollama/ollama/releases/tag/v0.12.11> · <https://docs.litellm.ai/docs/proxy/call_hooks>
 
 - [OWASP Top 10 for LLM Applications v2025](https://genai.owasp.org/llm-top-10/) — grille officielle LLM01–LLM10:2025
 - [OWASP GenAI LLM Top 10 — 2026 Edition](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) — édition 2026, correspondance dans la section 5

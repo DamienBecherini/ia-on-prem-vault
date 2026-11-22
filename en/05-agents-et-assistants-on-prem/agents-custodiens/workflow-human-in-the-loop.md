@@ -3,7 +3,7 @@ title: "⚙️ Workflow: End-to-end Human-in-the-loop"
 description: "Recommended execution cycle for a custodian agent: trigger, branch, diff, report, human review, merge, and publication."
 sidebar:
   order: 3
-last_modified: "2026-06-10"
+last_modified: "2026-11-22"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -37,7 +37,7 @@ A custodian agent must be autonomous in analysis but conservative in action. The
 | 4 | Staging | Deploy to preproduction | High |
 | 5 | Publish | Publish to production | Avoid without human |
 
-For this vault, the reasonable level is **2 or 3**: branch/PR, human validation, then merge.
+For this vault, the reasonable level is **2 or 3**: branch/PR, human validation, then merge. These levels apply to the vault's Markdown pages. For a code repository, ANSSI recommends prohibiting the automatic execution of AI-generated code in the development environment and its automatic commit to repositories. It also asks for this code to be reviewed by a human, including the libraries it calls, and for AI generation of the code of critical modules to be limited: cryptography, access rights management, sensitive data processing ([ANSSI-PA-102 guide](https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf), R30 and R31, April 2024). On a code repository, therefore, limit the agent to level 1 (unapplied patch, committed by a human after review) and remove these modules from its scope.
 
 ## Minimal preflight
 

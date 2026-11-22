@@ -3,7 +3,7 @@ title: "OpenHands"
 description: Software development agent platform (CLI, SDK, Docker sandbox, Agent Canvas), powerful but heavier to operate than a simple CLI.
 sidebar:
   order: 3
-last_modified: "2026-10-10"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -33,6 +33,7 @@ Since June 2026, it is also an orchestration layer: via ACP, the same Agent Canv
 - Local models must be powerful for agentic tasks[^4].
 - Larger attack surface than Aider: before v1.25.0 (6 October 2026), the local stack listened on all interfaces and exposed its session key in the home page, readable from the local network; since then, launchers bind to `127.0.0.1` by default and the Docker image no longer ships a key without explicit opt-in. Require ≥ 1.25.0 (preferably ≥ 1.26.0, see telemetry) and only publish the interface behind an authenticated proxy[^10].
 - Can be oversized for simple vault audits.
+- The agent executes the code it generates: ANSSI recommends prohibiting the automatic execution of AI-generated code in the development environment and its automatic commit to repositories (R30 of the ANSSI-PA-102 guide). Keep the Docker sandbox separate from developer workstations and secrets, and do not let the agent commit to a code repository without human review[^11].
 
 ## 🔒 Sovereignty and privacy
 
@@ -79,3 +80,4 @@ Very active project (MIT, about 90,000 stars and several releases per week in Q4
 [^8]: LM Studio, *Introducing LM Studio Bionic* (proprietary application, local models via the LM Studio runtime, paid "Secure Cloud" offering), 2026-07-16. <https://lmstudio.ai/blog/introducing-lm-studio-bionic>
 [^9]: OpenHands, *Release v1.26.0* (PR #18086: PostHog is no longer initialized under Do Not Track; before, `VITE_DO_NOT_TRACK=1` or the browser DNT did not prevent calls to `z.openhands.dev`), 2026-10-08. <https://github.com/OpenHands/OpenHands/releases/tag/v1.26.0> · <https://github.com/OpenHands/OpenHands/pull/18086>
 [^10]: OpenHands, *Release v1.25.0* (PR #17007 "keep local session keys off externally reachable listeners"; issue #16879: listening on all interfaces, session key in an unauthenticated `index.html`), 2026-10-06. <https://github.com/OpenHands/OpenHands/releases/tag/v1.25.0> · <https://github.com/OpenHands/OpenHands/pull/17007>
+[^11]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102, section 5.5, R30 "Contrôler systématiquement le code source généré par IA": prohibit the automatic execution of generated code in the development environment and its automatic commit to repositories), 2024-04-29. <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>

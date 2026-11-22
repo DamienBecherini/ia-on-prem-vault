@@ -3,7 +3,7 @@ title: "🔭 Vision : Qu'est-ce qu'un agent custodien ?"
 description: Définition, périmètre et trajectoire d'architecture d'un agent autonome chargé de maintenir un vault ou un dépôt.
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -37,7 +37,8 @@ Un agent custodien souverain ne doit pas :
 - supprimer du contenu sans justification ;
 - exécuter des commandes destructrices sans validation ;
 - ignorer les plans superseded ou archivés ;
-- inventer des sources pour "finir" une tâche.
+- inventer des sources pour "finir" une tâche ;
+- modifier les modules critiques d'un dépôt de code (cryptographie, gestion des droits d'accès, traitement de données sensibles) : l'ANSSI recommande d'y limiter le code généré par IA, et de ne jamais commiter automatiquement du code généré dans un dépôt[^7].
 
 ## ⚠️ Le risque invisible : l'Injection de Prompt Indirecte
 
@@ -99,3 +100,4 @@ Il faut donc distinguer :
 [^4]: Aider-AI, *aider* (dépôt GitHub : dernier commit le 2026-05-22, dernière release v0.86.0 du 2025-08-09) et OpenHands, *Introducing Agent Canvas* (2026-06-16), consultés le 2026-10-10. <https://github.com/Aider-AI/aider> · <https://www.openhands.dev/blog/introducing-agent-canvas>
 [^5]: CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822 LiteLLM), catalogue daté 2026-10-08 ; BerriAI, *GHSA-7hp6-4w63-5g45* (CVSS 9.9, corrigée en 1.100.4), 2026-09-30. <https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json> · <https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45>
 [^6]: Cursor Help, *API keys / BYOK* (« all requests are routed through Cursor's servers for final prompt building »), lu le 2026-10-09 ; Cursor, *Cursor is now a part of SpaceX*, 2026-08-14. <https://cursor.com/help/models-and-usage/api-keys.md> · <https://cursor.com/blog/joining-spacex>
+[^7]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102, section 5.5 : R30 « Contrôler systématiquement le code source généré par IA » — proscrire son exécution automatique dans l'environnement de développement et son commit automatique dans les dépôts, relecture humaine régulière ; R31 « Limiter la génération de code source par IA pour des modules critiques d'applications » — cryptographie, droits d'accès, données sensibles), 2024-04-29. <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>

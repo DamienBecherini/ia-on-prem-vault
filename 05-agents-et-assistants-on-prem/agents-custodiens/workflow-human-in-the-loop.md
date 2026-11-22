@@ -3,7 +3,7 @@ title: "⚙️ Workflow : Human-in-the-loop de bout en bout"
 description: "Cycle d'exécution recommandé pour un agent custodien : déclencheur, branche, diff, rapport, revue humaine, merge et publication."
 sidebar:
   order: 3
-last_modified: "2026-06-10"
+last_modified: "2026-11-22"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -37,7 +37,7 @@ Un agent custodien doit être autonome dans l'analyse, mais conservateur dans l'
 | 4 | Staging | Déployer en préproduction | Élevé |
 | 5 | Publish | Publier en production | À éviter sans humain |
 
-Pour ce vault, le niveau raisonnable est **2 ou 3** : branche/PR, validation humaine, puis merge.
+Pour ce vault, le niveau raisonnable est **2 ou 3** : branche/PR, validation humaine, puis merge. Ces niveaux valent pour les pages Markdown du vault. Pour un dépôt de code, l'ANSSI recommande de proscrire l'exécution automatique de code généré par IA dans l'environnement de développement et son commit automatique dans les dépôts. Elle demande aussi de faire relire ce code par un humain, y compris les bibliothèques qu'il appelle, et de limiter la génération par IA du code des modules critiques : cryptographie, gestion des droits d'accès, traitement de données sensibles ([guide ANSSI-PA-102](https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf), R30 et R31, avril 2024). Sur un dépôt de code, limitez donc l'agent au niveau 1 (patch non appliqué, commité par un humain après relecture) et retirez ces modules de son périmètre.
 
 ## Préflight minimal
 

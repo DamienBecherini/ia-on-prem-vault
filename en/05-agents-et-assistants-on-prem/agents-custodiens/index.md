@@ -5,7 +5,7 @@ description: >
   and wait for human validation before acting.
 sidebar:
   order: 1
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -31,7 +31,7 @@ The typical cycle is:
 5. **Human validation** — you merge, or you don't
 6. **Publication** — only if approved
 
-Autonomy levels vary: from "report only" up to "automatic commit on a feature branch" — but never automatic merge or publication to `main` without explicit agreement.
+Autonomy levels vary: from "report only" up to "automatic commit on a feature branch" — but never automatic merge or publication to `main` without explicit agreement. On a code repository, ANSSI recommends prohibiting the automatic commit of AI-generated code: the agent then sticks to an unapplied patch (see [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|Workflow]]).
 
 Human validation protects the output (merge, publication), not the input: what the agent reads and executes before review remains the weak link. OWASP now ranks "Excessive Agency" third in its Top 10 for LLM applications (2026 edition, per its 2026-09-01 announcement), the CNIL and the Conseil de l'IA et du Numérique published an exploratory note on agentic AI and personal data in July 2026, and an Ollama vulnerability (CVE-2026-102697, fixed in 0.31.2) showed that a human-approved shell command could be extended by the model. See [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|Vision]] and [[00-lexique/excessive-agency|Excessive agency]][^1][^2][^3].
 

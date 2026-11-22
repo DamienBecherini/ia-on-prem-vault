@@ -3,7 +3,7 @@ title: "🔭 Vision: What is a custodian agent?"
 description: Definition, scope, and architecture trajectory of an autonomous agent tasked with maintaining a vault or repository.
 sidebar:
   order: 2
-last_modified: "2026-10-10"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -37,7 +37,8 @@ A sovereign custodian agent must not:
 - delete content without justification;
 - run destructive commands without validation;
 - ignore superseded or archived plans;
-- invent sources to "finish" a task.
+- invent sources to "finish" a task;
+- modify the critical modules of a code repository (cryptography, access rights management, sensitive data processing): ANSSI recommends limiting AI-generated code there, and never automatically committing generated code to a repository[^7].
 
 ## ⚠️ The invisible risk: indirect prompt injection
 
@@ -99,3 +100,4 @@ Distinguish:
 [^4]: Aider-AI, *aider* (GitHub repository: last commit on 2026-05-22, latest release v0.86.0 of 2025-08-09) and OpenHands, *Introducing Agent Canvas* (2026-06-16), accessed 2026-10-10. <https://github.com/Aider-AI/aider> · <https://www.openhands.dev/blog/introducing-agent-canvas>
 [^5]: CISA, *Known Exploited Vulnerabilities Catalog* (CVE-2026-42208, CVE-2026-42271, CVE-2026-59822 LiteLLM), catalog dated 2026-10-08; BerriAI, *GHSA-7hp6-4w63-5g45* (CVSS 9.9, fixed in 1.100.4), 2026-09-30. <https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json> · <https://github.com/BerriAI/litellm/security/advisories/GHSA-7hp6-4w63-5g45>
 [^6]: Cursor Help, *API keys / BYOK* ("all requests are routed through Cursor's servers for final prompt building"), read on 2026-10-09; Cursor, *Cursor is now a part of SpaceX*, 2026-08-14. <https://cursor.com/help/models-and-usage/api-keys.md> · <https://cursor.com/blog/joining-spacex>
+[^7]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102, section 5.5: R30 "Contrôler systématiquement le code source généré par IA" — prohibit its automatic execution in the development environment and its automatic commit to repositories, regular human review; R31 "Limiter la génération de code source par IA pour des modules critiques d'applications" — cryptography, access rights, sensitive data), 2024-04-29. <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>

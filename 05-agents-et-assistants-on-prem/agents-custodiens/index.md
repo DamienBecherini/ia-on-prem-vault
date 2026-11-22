@@ -5,7 +5,7 @@ description: >
   et attendent la validation humaine avant d'agir.
 sidebar:
   order: 1
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -31,7 +31,7 @@ Le cycle type est :
 5. **Validation humaine** — vous fusionnez, ou non
 6. **Publication** — uniquement si approuvé
 
-Les niveaux d'autonomie varient : de "rapport seulement" jusqu'à "commit automatique en branche feature" — mais jamais de merge ou de publication automatique sur `main` sans accord explicite.
+Les niveaux d'autonomie varient : de "rapport seulement" jusqu'à "commit automatique en branche feature" — mais jamais de merge ou de publication automatique sur `main` sans accord explicite. Sur un dépôt de code, l'ANSSI recommande de proscrire le commit automatique de code généré par IA : l'agent s'en tient alors au patch non appliqué (voir [[05-agents-et-assistants-on-prem/agents-custodiens/workflow-human-in-the-loop|Workflow]]).
 
 La validation humaine protège la sortie (merge, publication), pas l'entrée : ce que l'agent lit et exécute avant la revue reste le maillon faible. L'OWASP place désormais l'« Excessive Agency » au 3e rang de son Top 10 pour les applications LLM (édition 2026, selon son annonce du 2026-09-01), la CNIL et le Conseil de l'IA et du Numérique ont publié en juillet 2026 une note exploratoire sur l'IA agentique et les données personnelles, et une faille Ollama (CVE-2026-102697, corrigée en 0.31.2) a montré qu'une commande shell approuvée par l'humain pouvait être prolongée par le modèle. Voir [[05-agents-et-assistants-on-prem/agents-custodiens/vision-agent-custodian|Vision]] et [[00-lexique/excessive-agency|Excessive agency]][^1][^2][^3].
 
