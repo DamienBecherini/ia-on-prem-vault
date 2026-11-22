@@ -3,7 +3,7 @@ title: "🏭 GPU rack servers"
 description: Guide to choosing 1U/2U/4U servers and HGX nodes for on-premise LLM inference — between workstation and datacenter.
 sidebar:
   order: 3
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -72,6 +72,7 @@ Beyond one node, the [[02-materiel/network-roce-infiniband-thunderbolt|RoCE or I
 - **Licenses and support**: some vendors restrict "datacenter" use of gaming cards — read EULAs before production deployment.
 - **Forgetting the application front end**: the GPU rack serves [[00-lexique/vllm|vLLM]]; the user UI remains [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|Open WebUI]] or equivalent.
 - **Underestimating system RAM**: DRAM is still rising every quarter (see [[04-blueprints/tco-comparison|💰 TCO comparison]]); nodes that offload KV cache or weights to RAM are now also priced in euros per GB.
+- **Sharing the GPU server with other applications**: ANSSI recommends dedicating GPUs to the AI system and sharing them only between models of the same sensitivity level. Under virtualization, it asks that the hypervisors accessing the GPUs be dedicated, or at the very least that VM access to the cards' memory be restricted through IOMMU hardware filtering (recommendation R16, ANSSI-PA-102 guide of April 2024)[^13]. To share one card between several partitioned models, MIG splits it into instances whose memory, cache, and faults are isolated. As of Q4 2026, this gives up to 7 instances on A100, H100, H200, B200, and B300, and 4 on RTX PRO 6000 Blackwell; L40S, RTX 6000 Ada, and RTX 5090 do not support MIG[^14]. To reserve a whole card for a VM (passthrough), you need an IOMMU-capable (VT-d) CPU and motherboard and a clean IOMMU group for the card: check this before buying[^15].
 
 ---
 
@@ -94,3 +95,6 @@ For a **datacenter**: start with the target model (405B? 70B dense? MoE?) and wo
 [^9]: NVIDIA, *NVIDIA AI Enterprise — End-of-Life Notices* (GPUs retired from Infra 8.0 onward: Tesla V100, RTX 4000 SFF Ada, RTX A4000, Quadro RTX; A100, H100/H200, L40/L40S, and RTX 6000 Ada still supported), re-read on 2026-10-10. <https://docs.nvidia.com/ai-enterprise/lifecycle/latest/eol-notices.html>
 [^10]: Tom's Hardware, *AMD denies report of MI455X delays as Nvidia VR200 systems are rumored to arrive early — company says Helios systems on target for 2H 2026*, September 2026. <https://www.tomshardware.com/tech-industry/artificial-intelligence/amd-denies-report-of-mi455x-delays-as-nvidia-vr200-systems-are-rumored-to-arrive-early-company-says-helios-systems-on-target-for-2h-2026>
 [^12]: PyPI, *tensorrt-llm* (1.3.0 stable of 2026-11-20 after release candidates rc0 → rc29; 1.4.0 in release candidates since 2026-10-13), captured 2026-11-20. <https://pypi.org/project/tensorrt-llm/> · vLLM Project, *Release v0.28.0* (CUDA 13 by default), August 2026. <https://github.com/vllm-project/vllm/releases/tag/v0.28.0> · SGLang Project, *Release v0.5.20* (CUDA 13 required), 18 September 2026. <https://github.com/sgl-project/sglang/releases/tag/v0.5.20>
+[^13]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102; R16 "Dédier les composants GPU au système d'IA": no pooling with other business applications, sharing only between models of the same sensitivity level, dedicated hypervisors or at the very least IOMMU-type hardware filtering), 29 April 2024. <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>
+[^14]: NVIDIA, *MIG User Guide* ("separate and isolated paths through the entire memory system", QoS and fault isolation, vGPU on MIG instances; supported GPUs: 7 instances on A100, H100, H200, B200, B300, 4 on RTX PRO 6000 Blackwell; L40S, RTX 6000 Ada, and RTX 5090 absent), updated 2026-11-04, accessed 2026-11-22. <https://docs.nvidia.com/datacenter/tesla/mig-user-guide/introduction.html> · <https://docs.nvidia.com/datacenter/tesla/mig-user-guide/supported-gpus.html>
+[^15]: Proxmox, *PCI Passthrough* (IOMMU / VT-d compatible CPU and motherboard, dedicated IOMMU group per device, ACS), modified 2026-01-14. <https://pve.proxmox.com/wiki/PCI_Passthrough>

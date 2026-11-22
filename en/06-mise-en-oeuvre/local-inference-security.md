@@ -3,7 +3,7 @@ title: "🔒 Local inference security"
 description: Local API authentication, network isolation, encryption, OWASP LLM Top 10, and prompt injection protection for an on-premise inference stack.
 sidebar:
   order: 4
-last_modified: "2026-11-20"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -171,11 +171,15 @@ flowchart TD
 
 The inference engine must never be directly reachable from the corporate network — only via the gateway.
 
+Isolation applies to hardware too: ANSSI recommends dedicating GPUs to the AI system, sharing them only between models of the same sensitivity level and, under virtualization, dedicating the hypervisor that accesses them or at least filtering VM access to their memory through the IOMMU (R16 of the ANSSI-PA-102 guide)[^30]. On a virtualization server that is already shared, therefore reserve whole cards in passthrough or split them into MIG instances (see [[02-materiel/gpu-rack-servers|GPU rack servers]]).
+
 ---
 
 ## 5. OWASP LLM Top 10 (v2025, 2026 mapping) — LLM-specific vulnerabilities
 
 This chapter follows the numbering of the OWASP Top 10 for LLM Applications [v2025](https://genai.owasp.org/llm-top-10/) (November 2024), still used by most tools and audit grids, and gives in parentheses the identifier of the [2026 edition](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) (3 August 2026), which replaces it with a revised ranking based on real-world incidents[^12]; the countermeasures do not change.
+
+For a French SME or public body, this grid is complemented by the ANSSI guide *Security recommendations for a generative AI system* (ANSSI-PA-102, 29 April 2024, still the published version in Q4 2026), which provides an audit framework recognized in France. Its 35 recommendations notably call for a risk analysis before the training phase (R2). They prohibit the automated use of an AI system for critical actions on the information system (R9) and limit the automatic actions of a system that processes uncontrolled inputs (R27). Finally, they provide for a security audit before production deployment (R23), which ANSSI suggests entrusting to a PASSI-qualified audit provider[^27].
 
 > [!note] Reference version
 > **v2025** numbering (LLM01:2025 → LLM10:2025, which differs from v1.1 of 2023) and mapping to the 2026 edition[^12]:
@@ -218,6 +222,8 @@ The model returns sensitive data present in its session context or memorized dur
 - Never inject PII (names, contract numbers, medical data) into prompts unless necessary
 - Do not share the same session context between different users
 - Clear KV Cache between sessions if your engine supports it
+- Return only the response text to the client: ANSSI recommendation R25 (ANSSI-PA-102 guide) excludes any score vector or other internal model mechanism, which facilitate model inversion and membership inference. Yet vLLM, and Ollama since 0.12.11, return token log-probabilities to anyone who asks for them (`logprobs`, `top_logprobs`; with vLLM also `prompt_logprobs` and `echo`), and `--max-logprobs` (20 by default) only caps their number. Strip these fields at the gateway, for example with LiteLLM's `async_pre_call_hook`, as the vLLM advisory GHSA-rhcx-5729-88vg also advises[^31]
+- Cap response length, against data regurgitation (R25): at the gateway, or on the vLLM side with `max_new_tokens` in `--generation-config`, which then applies to the whole server
 
 ### LLM03:2025 — Supply Chain Vulnerabilities (LLM04:2026)
 
@@ -553,11 +559,11 @@ Interaction traceability is a security and accountability requirement (GDPR, Art
 
 **Recommended production level:**
 - Duration (TTFT, total time)
-- Prompt hash (to detect abuse without storing content)
+- User request, prompt actually sent to the model (after preprocessing and addition of RAG context), tool and plugin calls, output filter actions and response, kept distinct in the log so an incident can be reconstructed, as ANSSI recommends for a generative AI system (ANSSI-PA-102 guide)[^29]
 - Session identifier
 
-> [!warning] Do not log prompts in cleartext
-> Storing full prompts creates storage of potentially sensitive data. If prompts contain personal data or business secrets, log only a hash (SHA-256) of the prompt, not its content.
+> [!warning] Protect logged prompts
+> Storing full prompts creates storage of potentially sensitive data. Do not, however, replace the content with a simple hash: without the request or the response, an incident cannot be reconstructed. Keep these logs separate from metrics, encrypted and under restricted access, strip secrets (keys, tokens) from them before writing, and set a limited retention period suited to their purpose: CNIL recommends six months to one year for traceability logs[^28]. A prompt hash remains useful in routine operational logs, to spot repeated requests without exposing their content.
 
 ---
 
@@ -572,12 +578,13 @@ Interaction traceability is a security and accountability requirement (GDPR, Art
 □ TLS enabled between clients and gateway (valid certificate)
 □ Backend errors (500/502) are intercepted and return a generic message to the client
 □ Remote access goes through a Zero Trust tunnel (Tailscale, WireGuard) — no open NAT port
-□ Inference logs do not contain personal data in cleartext
+□ Inference logs (request, prompt sent, response) are encrypted, under restricted access, stripped of secrets and kept for a defined, limited period
 □ Disk encryption enabled on partition for logs and session data
 □ Agents run as non-root with --cap-drop ALL
 □ External inputs (files, issues, web) are isolated in the agent prompt
 □ API key revocation procedure exists and has been tested
 □ OWASP LLM01–LLM10:2025 risks (and their 2026 equivalents) have been assessed for each stack component
+□ A security audit before production deployment is planned (ANSSI-PA-102, R23; qualified PASSI provider possible)
 □ Inference engine updates are planned (CVE tracking)
 □ vLLM: --trust-request-mm-kwargs is not enabled in front of clients you do not control (it reopens fixed attack paths)
 □ Open WebUI: community sharing (on by default) turned off if unused (ENABLE_COMMUNITY_SHARING=false)
@@ -613,6 +620,11 @@ Interaction traceability is a security and accountability requirement (GDPR, Art
 
 [^25]: VulnCheck, *Ollama 0.30.0 through 0.33.2 SSRF via Cross-Host Tensor Blob Redirect* (CVE-2026-85180, CVSS 4.0 8.7, unauthenticated, no fixed version named), 2026-09-03 · Ollama, *PR #18512* (validation of registry and blob redirects, shipped with 0.34.2) · CERT/CC, *VU#518910* (CVE-2026-5757, "a patch is not yet available", not revised since 2026-04-22, re-read on 2026-11-20) · GitHub Advisory Database, *GHSA-x8qc-fggm-mpqg* (CVE-2026-7482, neighboring out-of-bounds read in GGUF quantization via `/api/create`, fixed in 0.17.1). <https://www.vulncheck.com/advisories/ollama-0.30.0-through-0.33.2-ssrf-via-cross-host-tensor-blob-redirect> · <https://github.com/ollama/ollama/pull/18512> · <https://kb.cert.org/vuls/id/518910> · <https://github.com/advisories/GHSA-x8qc-fggm-mpqg>
 [^26]: vLLM, advisory *GHSA-xgh8-qwjh-q853* (`/v1/systemone` bypasses the `--trust-request-chat-template` lock: request-supplied `chat_template_kwargs` rendered without validation, default configuration, Qwen3 / Qwen3.5 / LFM2-VL models in particular, Moderate CVSS 6.5, versions 0.32.0rc0 → 0.33.0, fixed 0.34.0), 18 November 2026 · vLLM Project, *Release v0.34.0* ("Before you upgrade" section: Model Runner V1 removed, ROCm 10.0 builds only), 16 November 2026. <https://github.com/vllm-project/vllm/security/advisories/GHSA-xgh8-qwjh-q853> · <https://github.com/vllm-project/vllm/releases/tag/v0.34.0>
+[^27]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102; 35 recommendations; R2 "Conduct a risk analysis on AI systems before the training phase", R9 "Prohibit the automated use of AI systems for critical actions on the information system", R23 "Provide for security audits of AI systems before deployment in production", with mention of PASSI providers qualified by ANSSI, R27 "Limit automatic actions from an AI system processing uncontrolled inputs"), 29 April 2024; no new version on the guide's page, re-read on 2026-11-22. <https://messervices.cyber.gouv.fr/guides/recommandations-de-securite-pour-un-systeme-dia-generative> · <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>
+[^29]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102: log all AI system processing at the right level of granularity, in particular the model's inputs and outputs; distinguish user requests from the data actually sent to the model; protect logged requests that contain sensitive data), 29 April 2024. <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>
+[^28]: CNIL, *Sécurité : Tracer les opérations* (Personal data security guide: protect logging equipment and logged information, keep events "over a rolling period of between six months and one year"), 14 March 2024. <https://www.cnil.fr/fr/securite-tracer-les-acces-et-gerer-les-incidents>
+[^30]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102; R16 "Dedicate GPU components to the AI system": no pooling with other business applications, sharing only between models of the same sensitivity level, dedicated hypervisors or at minimum hardware filtering such as IOMMU), 29 April 2024. <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf>
+[^31]: ANSSI, *Recommandations de sécurité pour un système d'IA générative* (ANSSI-PA-102, R25 "Protect the AI system by filtering user inputs and outputs": input and output filters, responses limited to character strings without score vectors or other internal model mechanisms, limit on response size in number of characters), 29 April 2024 · vLLM Project, *Engine Arguments* (`--max-logprobs`, 20 by default; "If max_new_tokens is specified in generation config, then it sets a server-wide limit"), accessed on 2026-11-22 · vLLM, advisory *GHSA-rhcx-5729-88vg* (workaround: "Strip `prompt_logprobs`, `logprobs`, and `echo` from inbound requests") · Ollama, *Release v0.12.11* (log-probabilities on the native API and the OpenAI-compatible API), November 2025 · LiteLLM, *Modify / Reject Incoming Requests* (`async_pre_call_hook`), accessed on 2026-11-22. <https://messervices.cyber.gouv.fr/documents-guides/Recommandations_de_s%C3%A9curit%C3%A9_pour_un_syst%C3%A8me_d_IA_g%C3%A9n%C3%A9rative.pdf> · <https://docs.vllm.ai/en/stable/configuration/engine_args/> · <https://github.com/vllm-project/vllm/security/advisories/GHSA-rhcx-5729-88vg> · <https://github.com/ollama/ollama/releases/tag/v0.12.11> · <https://docs.litellm.ai/docs/proxy/call_hooks>
 
 - [OWASP Top 10 for LLM Applications v2025](https://genai.owasp.org/llm-top-10/) — official LLM01–LLM10:2025 grid
 - [OWASP GenAI LLM Top 10 — 2026 Edition](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) — 2026 edition, mapping in section 5
