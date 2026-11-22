@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-10-10"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -38,14 +38,14 @@ MoE offers **large-model quality** with **smaller-model compute cost** — but r
 
 Small active-parameter MoEs (Qwen3-30B-A3B, Nemotron 3.5 Lightning, gpt-oss-20b[^3][^4][^6]) suit APUs well: good answer quality, acceptable VRAM, good generation throughput.
 
-Giant MoEs (DeepSeek V4.1: > 750 GB in FP8; Kimi K3: > 1.4 TB even in native 4-bit; the 2024 DeepSeek V3 already weighed 404 GB in Q4_K_M) need an 8-GPU node or a multi-node cluster — Scenarios C or D[^1][^2].
+Giant MoEs (DeepSeek V4.1: > 750 GB in FP8; Kimi K3: > 1.4 TB even in native 4-bit; the 2024 DeepSeek V3 already weighed 404 GB in Q4_K_M) need, to serve them, an 8-GPU node or a multi-node cluster — Scenarios C or D; a single workstation can at most try them by reading the experts from SSD (see the pitfalls below)[^1][^2].
 
 Watch the licenses: several open frontier MoEs of 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.4T-A95B) ship under custom licenses to read before any commercial use. The rule is not absolute: datacenter-sized MoEs also ship under MIT, such as DeepSeek V4 / V4.1 (552B + 196B of Engram memory for V4.1-Flash)[^1] and, since September 2026, Xiaomi's MiMo-V2.6-Pro (1.02T parameters, 42B active)[^8]. Most small to mid-sized MoEs (Qwen3-30B-A3B, GLM-5.3-Flash, Nemotron 3.5) remain under Apache 2.0, MIT or OpenMDW. On Ollama, `kimi-k3:cloud` or `glm-5.2:cloud` are **hosted** tags, not downloadable weights (see [[03-stack-logicielle/choose-your-model|🗺️ Choose your model]]).
 
 ## ⚠️ Common pitfalls
 
 - Comparing a “671B” MoE to a “70B” dense assuming dense is always faster: throughput depends on **active** parameters, not total.
-- Partial MoE loading: if experts do not fit in VRAM, swap is catastrophic because missing experts are invoked unpredictably. Notable exception: the n-gram embeddings of Qwen3.8-Flash-Next (51 B) are designed to be offloaded to RAM without that cost, unlike the experts[^7].
+- Partial MoE loading with a general-purpose engine: if experts do not fit in fast memory, swap (mmap, OS paging) is catastrophic because missing experts are invoked unpredictably. Notable exception: the n-gram embeddings of Qwen3.8-Flash-Next (51 B) are designed to be offloaded to RAM without that cost, unlike the experts[^7]. Since October 2026, dedicated engines such as InferSSD (Apache-2.0) keep an expert cache in VRAM and RAM and read the other experts from the NVMe SSD: according to its repository, DeepSeek-V4.1-Flash in Q8_0 generates 7.3 tokens/s on an RTX 5090 with 32 GB of RAM, versus 0.87 for llama.cpp (vendor measurements). It is a test bench for a single workstation, not a team server (limits in [[00-lexique/offloading|Offloading]])[^9].
 - Underestimating VRAM: all weights must load even if only 2/64 experts activate per token.
 
 ## 📚 Go deeper
@@ -68,3 +68,4 @@ Watch the licenses: several open frontier MoEs of 2026 (Kimi K3, GLM-5.3, Qwen3.
 [^6]: OpenAI, *gpt-oss-120b / gpt-oss-20b* (gpt-oss-20b: 21 B total, 3.6 B active, MoE post-trained in MXFP4, fits in 16 GB), August 2025. <https://huggingface.co/openai/gpt-oss-120b>
 [^7]: Qwen, *Qwen3.8-Flash-Next* (10 routed experts + 1 shared of 512; 51 B of n-gram embeddings "easier to offload than MoE experts"), August 2026. <https://huggingface.co/Qwen/Qwen3.8-Flash-Next>
 [^8]: Xiaomi, *MiMo-V2.6-Pro-MOPD* (1.02T / 42B-active MoE, 1M context, text + image + video + audio, MIT license; RL checkpoint of 2026-09-21, MOPD update of 2026-09-27), Hugging Face. <https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-MOPD>
+[^9]: WiCi, *InferSSD* (Apache-2.0; GGUF served from SSD, expert slices aligned on 4 KiB, RAM and VRAM expert cache; DeepSeek-V4.1-Flash-1017 Q8_0 on RTX 5090 + 32 GB of RAM: 164.5 tokens/s in prompt reading and 7.27 in generation, versus 8.06 and 0.87 for llama.cpp; vendor measurements, number of runs not published; first release v0.1.0 of 2026-10-30), accessed 2026-11-22. <https://github.com/wici-ai/inferssd> · <https://github.com/wici-ai/inferssd/blob/main/docs/benchmark.md>

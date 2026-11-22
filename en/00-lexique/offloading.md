@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - stack
-last_modified: "2026-11-17"
+last_modified: "2026-11-22"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -40,7 +40,7 @@ Offloading is at the heart of **Scenario A (Dev Lab)**: a machine under €3,500
 ## ⚠️ Common pitfalls
 
 - Offloading and **concurrency do not mix well**: with 5 simultaneous users, each request rereads the layers left in RAM, which are already bounded by DDR5 bandwidth, collapsing global throughput.
-- Offloading to SSD (instead of RAM) is possible but ~10× slower — reserve it for initial loading, not real-time inference.
+- Offloading to SSD (instead of RAM) is possible but ~10× slower: for a dense model, reserve it for initial loading, not real-time inference. Since Q4 2026, MoEs are an exception: dedicated engines such as InferSSD (Apache-2.0, first release on 30 October 2026) read from NVMe only the routed experts missing from the VRAM/RAM cache, in aligned 4 KiB blocks. This lets a single workstation run an MoE larger than RAM + VRAM: according to the vendor's repository, DeepSeek-V4.1-Flash generates ~7 tokens/s on an RTX 5090 with 32 GB of RAM[^1]. Throughput stays in the single digits and publications measure one request at a time. The KV cache takes fast memory away from the expert cache, and energy per token can increase by up to ~12×[^2]. It is therefore a test bench, not a team server; if the model fits in RAM, stay on llama.cpp.
 - Assuming more RAM always compensates: capacity lets you load the model, but throughput remains bounded by RAM bandwidth (~80–100 GB/s with dual-channel DDR5), not by its size.
 
 ## 📚 Go deeper
@@ -54,3 +54,6 @@ Offloading is at the heart of **Scenario A (Dev Lab)**: a machine under €3,500
 - [[00-lexique/ram|RAM]]
 - [[00-lexique/vram|VRAM]]
 - [[00-lexique/memory-bandwidth|Memory bandwidth]]
+
+[^1]: WiCi, *InferSSD* (Apache-2.0; expert slices aligned on 4 KiB, RAM and VRAM expert cache; DeepSeek-V4.1-Flash-1017 Q8_0 on RTX 5090 + 32 GB of RAM: 7.27 tokens/s in generation versus 0.87 for llama.cpp, vendor measurements; first release v0.1.0 of 2026-10-30), accessed 2026-11-22. <https://github.com/wici-ai/inferssd>; F. Liang et al., *SSD-LLaMA: SSD-Native Inference for Trillion-Parameter MoE at 1+ Token/s on a Consumer PC* (RTX 5090, 16–32 GB of RAM, 4 TB NVMe; Kimi-K2.7-Code at 1.03 tokens/s; batch 1 only), arXiv:2609.18110, 16 September 2026. <https://arxiv.org/abs/2609.18110>; sybil-solutions, *dsv41-flash-offload* ("Every extra GiB of KV is a GiB less for the expert cache, which lowers decode speed"), accessed 2026-11-22. <https://github.com/sybil-solutions/dsv41-flash-offload>
+[^2]: K. Kyung, S. Yun, J. H. Ahn, *SSD Offloading for LLM Mixture-of-Experts Weights Considered Harmful in Energy Efficiency* (energy per token up to ~12× the HBM baseline), IEEE CAL, 2025. <https://arxiv.org/abs/2508.06978>
