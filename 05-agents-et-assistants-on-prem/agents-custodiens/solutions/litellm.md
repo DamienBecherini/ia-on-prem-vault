@@ -3,7 +3,7 @@ title: "LiteLLM"
 description: Gateway OpenAI-compatible pour router agents et applications vers Ollama, vLLM, cloud providers ou modèles internes.
 sidebar:
   order: 4
-last_modified: "2026-11-17"
+last_modified: "2026-11-22"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -42,7 +42,7 @@ Cela évite de réécrire l'agent à chaque changement de modèle.
 - **Données :** transitent par le proxy ; destination selon backend.
 - **Modèle :** local si backend Ollama/vLLM local ; cloud si provider cloud.
 - **Mémoire :** pas une mémoire applicative, sauf logs/observabilité.
-- **Télémétrie/logging :** configurable ; désactiver message logging pour données sensibles[^3].
+- **Télémétrie/logging :** configurable ; désactiver la journalisation des messages vers des outils d'observabilité tiers pour les données sensibles[^3], et garder le contenu des requêtes dans des journaux locaux chiffrés, en accès restreint (voir [[06-mise-en-oeuvre/local-inference-security|Sécurité de l'inférence locale]]).
 - **Mode 100% offline :** oui avec backends locaux.
 - **Verdict :** ✅ souverain si configuré local-only ; ⚠️ sinon.
 
