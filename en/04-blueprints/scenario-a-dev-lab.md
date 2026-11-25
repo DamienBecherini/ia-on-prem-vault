@@ -3,7 +3,7 @@ title: "🛠️ Scenario A: Dev Lab (GPU PC or unified memory)"
 description: Blueprint to get started with local AI at low cost. RTX PC with CPU offloading, or laptop/station with unified memory for better solo comfort.
 sidebar:
   order: 1
-last_modified: "2026-11-22"
+last_modified: "2026-11-25"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -97,7 +97,6 @@ For daily SME use with 70B models without suffering this heavy transfer penalty,
 
 [^1]: ggml-org, *llama.cpp — llama-server README* (`-ngl` / `--n-gpu-layers` option: number of layers placed in VRAM, the rest computed on CPU), re-read on 2026-10-10. <https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md>
 [^2]: Ollama Documentation, *FAQ — GPU layer offloading and partial CPU inference* (Performance penalty during RAM offloading), 2026. <https://docs.ollama.com/faq>
-[^3]: Tom's Hardware, *Nvidia's RTX 5090 vanishes from online retail in the US — third-party sellers now demand as much as $9,500* (MSRP $1,999), 14 September 2026. <https://www.tomshardware.com/pc-components/gpus/nvidias-rtx-5090-vanishes-from-online-retail-in-the-us-third-party-sellers-now-demand-as-much-as-usd9-500-for-nvidias-fastest-gpu>
 [^4]: TrendForce, press release of 30 September 2026 (contract DRAM prices up 10–15% in Q4 2026). <https://www.trendforce.com/presscenter/news/20260930-13258.html>
 [^5]: Qwen, *Qwen3.8-27B* (dense, Apache 2.0, 262k context, vision and tools; BF16 ≈ 56 GB, Q4 via Ollama ≈ 18 GB), August 2026. <https://huggingface.co/Qwen/Qwen3.8-27B> · Ollama, *qwen3.8*. <https://ollama.com/library/qwen3.8>
 [^6]: NVIDIA, *Nemotron-3.5-Lightning-30B-A3B* (BF16 / NVFP4 ≈ 22 GB / GGUF, OpenMDW 1.1 license), August 2026. <https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16>

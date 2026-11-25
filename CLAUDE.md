@@ -31,7 +31,7 @@ Canonical skills live in `.agents/skills/<name>/SKILL.md`; `.claude/skills/<name
 ## Commands
 
 ```bash
-npm test                          # CI gate: frontmatter, mermaid, agent-leaks, table wikilinks, version floors, i18n strict
+npm test                          # CI gate: frontmatter, mermaid, agent-leaks, table wikilinks, footnotes, version floors, i18n strict
 npm run audit:freshness:due       # pages due for review + watchlist claims past "Recheck by"
 npm run audit:sources             # inventory + HTTP probe of every cited URL (network)
 vault-watch collect --days 8               # what changed in the last 8 days (vault-watch-agent, no model)

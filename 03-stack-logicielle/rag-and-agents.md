@@ -3,7 +3,7 @@ title: "🧩 RAG & Agents : L'architecture de la connaissance"
 description: "Comment donner une mémoire privée et de l'autonomie à un LLM local : du RAG standard aux workflows agentiques (SmolAgents, LangGraph) et au Memory Tree."
 sidebar:
   order: 3
-last_modified: "2026-11-20"
+last_modified: "2026-11-25"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -217,10 +217,12 @@ ollama pull embeddinggemma-2        # 740M multimodal (texte + image), ~1,3 Go
 # (ne jamais mélanger deux modèles d'embedding dans une même collection)
 
 # Test rapide — endpoint /api/embed (champ "input", chaîne ou tableau pour le batch) ;
-# l'ancien /api/embeddings (champ "prompt") n'est plus documenté[^17]
+# l'ancien /api/embeddings (champ "prompt") n'est plus documenté
 curl http://localhost:11434/api/embed \
   -d '{"model": "embeddinggemma-2:270m", "input": "La bande passante mémoire limite l'\''inférence."}'
 ```
+
+L'endpoint documenté par Ollama est `/api/embed` ; l'ancien `/api/embeddings` (champ `prompt`) n'est plus documenté[^17].
 
 ---
 

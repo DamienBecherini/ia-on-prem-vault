@@ -22,6 +22,7 @@ flowchart LR
   VA --> T2[mermaid]
   VA --> T3[agent-leaks]
   VA --> T5[table-wikilinks]
+  VA --> T7[footnotes]
   VA --> T6[version-floors]
   VA --> T4[i18n strict]
   LA --> ENG[starlight-obsidian-engine]
@@ -48,6 +49,7 @@ npm run audit:frontmatter # title, description, last_modified
 npm run audit:mermaid     # lightweight Mermaid syntax checks
 npm run audit:agent-leaks # agent-only headings in FR notes
 npm run audit:table-wikilinks # wikilink aliases that would break a table
+npm run audit:footnotes   # footnotes never called, called without a definition, defined twice
 npm run audit:version-floors  # version-floors.json matches the minimums in the guide
 npm run audit:i18n:strict # FR/EN parity via last_modified
 npm run audit:ascii       # ASCII diagram warnings (non-blocking)
@@ -140,6 +142,13 @@ Fails when the visible text of a built page contains `[[`, outside code. It need
 
 Fails when a table row holds a wikilink written `[[path|label]]`: the pipe ends the cell and the link shows as raw
 text. Inside a table, write `[[path\|label]]`, which Obsidian and the site both accept. Code blocks are ignored.
+
+### `audit:footnotes`
+
+Fails when a page (FR or EN) defines a footnote no sentence calls, calls a footnote it does not define, or defines
+one twice. A call inside a code block or inline code does not count: Markdown shows it as text, so cite the source in
+the sentence before or after the block. Added on 2026-11-25, after a compaction left two notes of the security page
+with nothing calling them; `vault-watch-agent` removes a note with its last citation since then.
 
 ### `audit:version-floors`
 

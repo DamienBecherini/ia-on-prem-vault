@@ -99,10 +99,12 @@ vllm serve TheBloke/Llama-2-70B-GPTQ \
   --dtype float16
 
 # FP8 en ligne, sans checkpoint pré-quantifié (Ada Lovelace / Hopper / Blackwell)
-# vLLM ≥ 0.31 : la méthode s'appelle fp8_per_tensor ; l'ancien nom "fp8" redirige[^13]
+# vLLM ≥ 0.31 : la méthode s'appelle fp8_per_tensor ; l'ancien nom "fp8" redirige
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
   --quantization fp8_per_tensor
 ```
+
+Depuis vLLM 0.31, la quantification FP8 en ligne s'appelle `fp8_per_tensor` ; l'ancien nom `fp8` est redirigé vers elle[^13].
 
 > [!warning] GGUF : expérimental seulement
 > vLLM peut charger un GGUF via le plugin `vllm-gguf-plugin` (ex. `vllm serve unsloth/Qwen3-0.6B-GGUF:Q4_K_M --tokenizer Qwen/Qwen3-0.6B`), mais le projet qualifie ce support de « hautement expérimental et peu optimisé »[^10]. En production, utilisez des poids HuggingFace natifs (safetensors) ou des quantifications AWQ/GPTQ/FP8. Pour convertir un modèle, voir [[06-mise-en-oeuvre/migrate-ollama-to-vllm|Migration Ollama → vLLM]].
