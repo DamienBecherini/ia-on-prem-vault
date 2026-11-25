@@ -3,7 +3,7 @@ title: "🏭 Scénario D : Datacenter (RoCE & Multi-GPU)"
 description: Le blueprint de l'Enterprise IA. Nœuds HGX 8-GPU, réseau RoCE/InfiniBand et Tensor Parallelism pour une production à très haute concurrence.
 sidebar:
   order: 4
-last_modified: "2026-11-20"
+last_modified: "2026-11-25"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -38,7 +38,7 @@ Dans un nœud HGX, l'incroyable vitesse du NVLink permet d'utiliser le **[[00-le
 *   **Résultat :** Les 8 cartes agissent comme un seul GPU géant. La latence de génération s'effondre, et les [[00-lexique/tokens-per-second|tokens/s]] explosent, même sur un modèle massif.
 
 ### Formats Extrêmes (FP4)
-Si vous déployez des puces NVIDIA Blackwell (B200), le logiciel utilisera nativement la quantification **FP4** ou **FP8**. Cela permet de faire tenir des modèles gigantesques dans un seul nœud de 8 GPU — DeepSeek V4.1 Flash ou GLM-5.3 (~760 Go en FP8) dans 8× H200, Kimi K3 (~1,5 To en MXFP4) dans 8× B300 ou 16× H200[^9] — évitant ainsi de devoir traverser le réseau RoCE pour chaque calcul[^3].
+Si vous déployez des puces NVIDIA Blackwell (B200), le logiciel utilisera nativement la quantification **FP4** ou **FP8**. Cela permet de faire tenir des modèles gigantesques dans un seul nœud de 8 GPU — DeepSeek V4.1 Flash ou GLM-5.3 (~760 Go en FP8) dans 8× H200, Kimi K3 (~1,5 To en MXFP4) dans 8× B300 ou 16× H200[^9], Mistral Large 4 (~610 Go en NVFP4 officiel) dans 8× B200, mais ~1,06 To en FP8, soit 8× B300 ou deux nœuds 8× H200 en TP16[^12] — évitant ainsi de devoir traverser le réseau RoCE pour chaque calcul[^3].
 
 ---
 
@@ -167,3 +167,4 @@ rsync -az /backup/ nas-secondary:/ia-on-prem-backup/
 [^8]: Ray Project, *Release ray-2.59.0* (Ray Serve LLM GA : routage KV-aware, désagrégation prefill/decode, vLLM figé en 0.27.0), 2 octobre 2026. <https://github.com/ray-project/ray/releases/tag/ray-2.59.0>
 [^9]: DeepSeek AI, *DeepSeek-V4.1-Flash* (≈ 763 Go en FP8, MIT), septembre 2026. <https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash> · Moonshot AI, *Kimi K3* (poids MXFP4 natifs, ≈ 1,4–1,56 To), juillet 2026. <https://huggingface.co/moonshotai/Kimi-K3>
 [^11]: vLLM Project, *Release v0.31.0* (`vllm preload` : démon qui conserve les poids post-quantifiés en mémoire GPU entre redémarrages du moteur, #56680, #58552), 2026-10-05. <https://github.com/vllm-project/vllm/releases/tag/v0.31.0>
+[^12]: vLLM Recipes, *mistralai/Mistral-Large-4-1T-A52B* (vLLM ≥ 0.34.0 ; NVFP4 ≈ 610 Go validé sur GB300 et 8× B200 ; FP8 ≈ 1,06 To validé sur GB300, 8× B300 et 2 × 8 H200 en TP16 ou PP2 × TP8, « FP8 needs ~128 GiB of weights per GPU on 8 GPUs » ; MI350X : experts MXFP4 au chargement, deux répliques TP4 par nœud de 8 GPU, NVFP4, DCP / PCP et NIXL P/D non pris en charge sur ROCm), consulté le 2026-11-25. <https://recipes.vllm.ai/mistralai/Mistral-Large-4-1T-A52B> · vLLM Project, *Release v0.34.0* (#64534), 2026-11-16. <https://github.com/vllm-project/vllm/releases/tag/v0.34.0>

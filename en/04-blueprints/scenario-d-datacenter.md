@@ -3,7 +3,7 @@ title: "🏭 Scenario D: Datacenter (RoCE & Multi-GPU)"
 description: The Enterprise AI blueprint. HGX 8-GPU nodes, RoCE/InfiniBand network, and Tensor Parallelism for very high-concurrency production.
 sidebar:
   order: 4
-last_modified: "2026-11-20"
+last_modified: "2026-11-25"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -38,7 +38,7 @@ In an HGX node, the incredible speed of NVLink enables **[[00-lexique/tensor-par
 *   **Result:** The 8 cards act as one giant GPU. Generation latency collapses, and [[00-lexique/tokens-per-second|tokens/s]] explode, even on a massive model.
 
 ### Extreme Formats (FP4)
-If you deploy NVIDIA Blackwell (B200) chips, the software will natively use **FP4** or **FP8** quantization. This lets gigantic models fit in a single 8-GPU node — DeepSeek V4.1 Flash or GLM-5.3 (~760 GB in FP8) in 8× H200, Kimi K3 (~1.5 TB in MXFP4) in 8× B300 or 16× H200[^9] — avoiding having to cross the RoCE network for every computation[^3].
+If you deploy NVIDIA Blackwell (B200) chips, the software will natively use **FP4** or **FP8** quantization. This lets gigantic models fit in a single 8-GPU node — DeepSeek V4.1 Flash or GLM-5.3 (~760 GB in FP8) in 8× H200, Kimi K3 (~1.5 TB in MXFP4) in 8× B300 or 16× H200[^9], Mistral Large 4 (~610 GB in official NVFP4) in 8× B200, but ~1.06 TB in FP8, i.e. 8× B300 or two 8× H200 nodes in TP16[^12] — avoiding having to cross the RoCE network for every computation[^3].
 
 ---
 
@@ -167,3 +167,4 @@ rsync -az /backup/ nas-secondary:/ia-on-prem-backup/
 [^8]: Ray Project, *Release ray-2.59.0* (Ray Serve LLM GA: KV-aware routing, prefill/decode disaggregation, vLLM pinned at 0.27.0), 2 October 2026. <https://github.com/ray-project/ray/releases/tag/ray-2.59.0>
 [^9]: DeepSeek AI, *DeepSeek-V4.1-Flash* (≈ 763 GB in FP8, MIT), September 2026. <https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash> · Moonshot AI, *Kimi K3* (native MXFP4 weights, ≈ 1.4–1.56 TB), July 2026. <https://huggingface.co/moonshotai/Kimi-K3>
 [^11]: vLLM Project, *Release v0.31.0* (`vllm preload`: daemon that keeps post-quantization weights in GPU memory across engine restarts, #56680, #58552), 2026-10-05. <https://github.com/vllm-project/vllm/releases/tag/v0.31.0>
+[^12]: vLLM Recipes, *mistralai/Mistral-Large-4-1T-A52B* (vLLM ≥ 0.34.0; NVFP4 ≈ 610 GB validated on GB300 and 8× B200; FP8 ≈ 1.06 TB validated on GB300, 8× B300 and 2 × 8 H200 in TP16 or PP2 × TP8, "FP8 needs ~128 GiB of weights per GPU on 8 GPUs"; MI350X: MXFP4 experts at load time, two TP4 replicas per 8-GPU node, NVFP4, DCP / PCP and NIXL P/D not supported on ROCm), accessed 2026-11-25. <https://recipes.vllm.ai/mistralai/Mistral-Large-4-1T-A52B> · vLLM Project, *Release v0.34.0* (#64534), 2026-11-16. <https://github.com/vllm-project/vllm/releases/tag/v0.34.0>

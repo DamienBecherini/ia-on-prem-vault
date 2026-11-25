@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - fondations
-last_modified: "2026-11-22"
+last_modified: "2026-11-25"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -31,6 +31,7 @@ Exemples concrets (état au T4 2026) :
 | Qwen3-30B-A3B (MoE, Apache 2.0) | ~30 B | ~3 B actifs (8 experts sur 128) | ~18 Go en Q4[^3] |
 | Nemotron 3.5 Lightning 30B-A3B (hybride Mamba-2 + MoE, OpenMDW) | ~30 B | ~3 B actifs | ~22 Go en NVFP4 officiel[^4] |
 | GLM-5.3-Flash (MoE, MIT) | 320 B | 18 B actifs | ~320 Go en FP8 (nœud 8 GPU)[^5] |
+| Mistral Large 4 (MoE, MIT modifiée) | ~1 000 B | 52 B (4 experts routés sur 128 + 1 partagé) | ~610 Go en NVFP4 officiel, ~1,06 To en FP8 (nœud 8 GPU Blackwell)[^10] |
 
 Le MoE offre donc la **qualité d'un grand modèle** avec le **coût de calcul d'un modèle plus petit** — mais exige de charger **tous les experts en VRAM** même si la plupart sont inactifs.
 
@@ -69,3 +70,4 @@ Attention aux licences : plusieurs MoE frontière ouverts de 2026 (Kimi K3, GLM-
 [^7]: Qwen, *Qwen3.8-Flash-Next* (10 experts routés + 1 partagé sur 512 ; 51 B d'embeddings n-gram « plus faciles à décharger que les experts MoE »), août 2026. <https://huggingface.co/Qwen/Qwen3.8-Flash-Next>
 [^8]: Xiaomi, *MiMo-V2.6-Pro-MOPD* (MoE 1,02T / 42B actifs, contexte 1M, texte + image + vidéo + audio, licence MIT ; checkpoint RL du 2026-09-21, mise à jour MOPD du 2026-09-27), Hugging Face. <https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-MOPD>
 [^9]: WiCi, *InferSSD* (Apache-2.0 ; GGUF servis depuis le SSD, tranches d'experts alignées sur 4 Kio, cache d'experts RAM et VRAM ; DeepSeek-V4.1-Flash-1017 Q8_0 sur RTX 5090 + 32 Go de RAM : 164,5 tokens/s en lecture du prompt et 7,27 en génération, contre 8,06 et 0,87 pour llama.cpp ; mesures de l'éditeur, nombre d'exécutions non publié ; première version v0.1.0 du 2026-10-30), consulté le 2026-11-22. <https://github.com/wici-ai/inferssd> · <https://github.com/wici-ai/inferssd/blob/main/docs/benchmark.md>
+[^10]: Mistral AI, *Mistral-Large-4-1T-A52B* (~1T au total, 49 B actifs, 52 B avec embeddings et couche de sortie ; 128 experts routés dont 4 actifs + 1 partagé ; Mistral Ecosystem Open-Weight License), octobre 2026. <https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B> · vLLM Recipes, *mistralai/Mistral-Large-4-1T-A52B* (NVFP4 ≈ 610 Go, FP8 ≈ 1,06 To), consulté le 2026-11-25. <https://recipes.vllm.ai/mistralai/Mistral-Large-4-1T-A52B>

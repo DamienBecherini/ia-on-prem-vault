@@ -3,7 +3,7 @@ title: "⚙️ Configure vLLM for multi-GPU production"
 description: Installation, tensor parallel configuration, multi-node deployment with Ray, and production best practices for vLLM on NVIDIA GPUs.
 sidebar:
   order: 5
-last_modified: "2026-11-20"
+last_modified: "2026-11-25"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -75,7 +75,7 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
 ```
 
 **Critical parameter — `gpu-memory-utilization`:**
-vLLM reserves the indicated fraction of VRAM for the whole engine (weights, activations and KV Cache). Since 0.34, the extensible KV cache is enabled by default: vLLM measures free memory after CUDA graph capture, and `gpu-memory-utilization` defaults to 1.0 (previously 0.92). On a dedicated GPU, no longer set a value: an explicit value such as 0.92 now yields a smaller cache. Set a value (0.85-0.9) only if other processes share the GPU or memory (DGX Spark); `--no-enable-extensible-kv-cache` restores the previous sizing[^2][^16].
+vLLM reserves the indicated fraction of VRAM for the whole engine (weights, activations and KV Cache). Since 0.34, the extensible KV cache is enabled by default: vLLM measures free memory after CUDA graph capture, and `gpu-memory-utilization` defaults to 1.0 (previously 0.92). On a dedicated GPU, no longer set a value: an explicit value such as 0.92 now yields a smaller cache. The trade-off announced in the 0.34 release notes: under high concurrency, this larger cache increases throughput and reduces TTFT, but per-output-token latency (TPOT) can rise by 6 to 18% on some models (H200, concurrency 128). If your SLA covers generation speed, compare `vllm:inter_token_latency_seconds` before and after the upgrade. If the increase is confirmed, go back to `--gpu-memory-utilization 0.9` or pass `--no-enable-extensible-kv-cache`[^16]. Set a value (0.85-0.9) only if other processes share the GPU or memory (DGX Spark); `--no-enable-extensible-kv-cache` restores the previous sizing[^2][^16].
 
 > [!warning] Exceeding `max-model-len` → HTTP 400, not silent truncation
 > If a client sends a prompt + history that exceeds `--max-model-len`, vLLM **rejects the request** with `HTTP 400 Bad Request: prompt is too long (X tokens > Y max)`. It does **not** truncate text automatically.
@@ -353,4 +353,4 @@ curl http://localhost:8000/metrics | grep vllm
 [^12]: vLLM Project, *Release v0.24.0* (vLLM no longer sets `CUDA_VISIBLE_DEVICES`; `device_ids` argument; variable deprecated on ROCm), 2026-06-29. <https://github.com/vllm-project/vllm/releases/tag/v0.24.0>
 [^13]: vLLM Project, *Release v0.31.0* (`quantization="fp8"` renamed `fp8_per_tensor`, former name redirected), 2026-10-05. <https://github.com/vllm-project/vllm/releases/tag/v0.31.0>
 [^15]: vLLM Project, *Release v0.32.0* ("Default CORS settings no longer allow every origin in the Python and Rust frontends; set `--allowed-origins` to permit browser origins", #61009; empty list by default; fixes CVE-2026-115917, vLLM ≤ 0.31.x), 18 October 2026. <https://github.com/vllm-project/vllm/releases/tag/v0.32.0> · <https://github.com/vllm-project/vllm/pull/61009>
-[^16]: vLLM Project, *Release v0.34.0* ("Before you upgrade": Model Runner V1 removed; `--block-size` 64 by default instead of 16; extensible KV cache enabled by default and `gpu_memory_utilization` at 1.0, previous sizing via `--gpu-memory-utilization 0.9` or `--no-enable-extensible-kv-cache`; ROCm 7.2 artifacts removed), 16 November 2026. <https://github.com/vllm-project/vllm/releases/tag/v0.34.0>
+[^16]: vLLM Project, *Release v0.34.0* ("Before you upgrade": Model Runner V1 removed; `--block-size` 64 by default instead of 16; extensible KV cache enabled by default and `gpu_memory_utilization` at 1.0, previous sizing via `--gpu-memory-utilization 0.9` or `--no-enable-extensible-kv-cache`; "Trade-off": TPOT +6–18% on some H200 models at concurrency 128; ROCm 7.2 artifacts removed), 16 November 2026 · PR #56492 *[Core] Extensible KV cache* (at an explicit 0.92, cache 1–4% smaller than before). <https://github.com/vllm-project/vllm/releases/tag/v0.34.0> · <https://github.com/vllm-project/vllm/pull/56492>
