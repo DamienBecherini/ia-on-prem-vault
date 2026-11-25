@@ -28,7 +28,7 @@ For **large LLMs** (7B+), NPUs are usually unused by current inference engines f
 
 | NPU | SoC | TOPS (INT8) | Used for LLM? |
 | :-- | :-- | :-- | :-- |
-| Apple Neural Engine | M5 Max / M5 Ultra (16 / 32 cores) | not published by Apple[^1] | No: Ollama (MLX) computes on the Metal GPU and, on macOS 26.2+, on its Neural Accelerators[^1] |
+| Apple Neural Engine | M5 Max / M5 Ultra (16 / 32 cores) | not published by Apple[^1] | No: Ollama (MLX) runs its computations on the Metal GPU and, on macOS 26.2+, on its Neural Accelerators[^1] |
 | AMD XDNA 2 | Gorgon Halo | ~50 TOPS | No (ROCm/Vulkan → iGPU) |
 | Qualcomm Hexagon | Snapdragon X Elite | ~45 TOPS | Partially (Copilot+ on Windows) |
 
