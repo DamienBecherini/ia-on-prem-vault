@@ -28,7 +28,7 @@ Pour les **grands LLM** (7B+), le NPU est généralement inutilisé par les mote
 
 | NPU | SoC | TOPS (INT8) | Utilisé pour LLM ? |
 | :-- | :-- | :-- | :-- |
-| Apple Neural Engine | M5 Max / M5 Ultra (16 / 32 cœurs) | non publié par Apple[^1] | Non : Ollama (MLX) calcule sur le GPU Metal et, sous macOS 26.2+, sur ses Neural Accelerators ; seul Core ML exploite le Neural Engine, jusqu'à 3 fois plus vite que le GPU[^1] |
+| Apple Neural Engine | M5 Max / M5 Ultra (16 / 32 cœurs) | non publié par Apple[^1] | Non : Ollama (MLX) calcule sur le GPU Metal et, sous macOS 26.2+, sur ses Neural Accelerators[^1] |
 | AMD XDNA 2 | Gorgon Halo | ~50 TOPS | Non (ROCm/Vulkan → iGPU) |
 | Qualcomm Hexagon | Snapdragon X Elite | ~45 TOPS | Partiellement (Copilot+ sur Windows) |
 
