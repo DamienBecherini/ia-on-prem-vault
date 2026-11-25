@@ -5,7 +5,7 @@ description: >
   Comparison table, hardware requirements, and relationship between the two tracks.
 sidebar:
   order: 3
-last_modified: "2026-11-20"
+last_modified: "2026-11-25"
 last_verified: "2026-10-10"
 verified_by: "Fable 5.1"
 verified_hitl: "Damien BECHERINI"
@@ -149,7 +149,7 @@ This guide covers architecture theory. To move to practice, here are the recomme
 | :-- | :-- |
 | **Aider** | [Aider quickstart](https://aider.chat/docs/usage/tutorials.html) — local coding agent, Ollama-compatible; **frozen project** (see the [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/aider\|Aider page]]), to be used only with full awareness |
 | **OpenHands Agent Canvas** | [Agent Canvas (README, Docker)](https://github.com/OpenHands/OpenHands) — self-hosted control center for conversations and automations of coding agents (OpenHands, or Claude Code / Codex / Gemini CLI via ACP); the SDK and the agent live in `software-agent-sdk`[^1] |
-| **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — unified routing to a local model; **require version ≥ 1.106.9 / 1.108.6 / 1.109.1 depending on your line** (security advisory: see the [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm\|LiteLLM page]]) |
+| **LiteLLM + Ollama** | [LiteLLM proxy quickstart](https://docs.litellm.ai/docs/proxy/quick_start) — unified routing to a local model; **require version ≥ 1.106.12 / 1.108.13 / 1.109.3 / 1.110.2 depending on your line** (security advisory: see the [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm\|LiteLLM page]]) |
 | **SmolAgents** | [SmolAgents cookbook](https://huggingface.co/docs/smolagents/tutorials/building_good_agents) — minimal agent framework, HuggingFace (reduced activity since May 2026)[^6] |
 | **LangGraph** | [LangGraph "local agent" tutorial](https://langchain-ai.github.io/langgraph/tutorials/introduction/) — agent orchestration with state graphs |
 
