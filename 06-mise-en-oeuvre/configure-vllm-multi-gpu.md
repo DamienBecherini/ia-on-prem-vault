@@ -3,7 +3,7 @@ title: "⚙️ Configurer vLLM en production multi-GPU"
 description: Installation, configuration tensor parallel, déploiement multi-nœuds avec Ray, et bonnes pratiques de production pour vLLM sur GPU NVIDIA.
 sidebar:
   order: 5
-last_modified: "2026-11-20"
+last_modified: "2026-11-25"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -75,7 +75,7 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
 ```
 
 **Paramètre critique — `gpu-memory-utilization` :**
-vLLM réserve la fraction indiquée de VRAM pour l'ensemble du moteur (poids, activations et KV Cache). Depuis la 0.34, le cache KV extensible est actif par défaut : vLLM mesure la mémoire libre après la capture des graphes CUDA, et `gpu-memory-utilization` vaut 1.0 par défaut (0.92 auparavant). Sur un GPU dédié, ne fixez plus de valeur : une valeur explicite comme 0.92 donne désormais un cache plus petit. Fixez une valeur (0.85-0.9) seulement si d'autres processus partagent le GPU ou la mémoire (DGX Spark) ; `--no-enable-extensible-kv-cache` rétablit l'ancien dimensionnement[^2][^16].
+vLLM réserve la fraction indiquée de VRAM pour l'ensemble du moteur (poids, activations et KV Cache). Depuis la 0.34, le cache KV extensible est actif par défaut : vLLM mesure la mémoire libre après la capture des graphes CUDA, et `gpu-memory-utilization` vaut 1.0 par défaut (0.92 auparavant). Sur un GPU dédié, ne fixez plus de valeur : une valeur explicite comme 0.92 donne désormais un cache plus petit. Contrepartie annoncée par les notes de version de la 0.34 : sous forte concurrence, ce cache plus grand augmente le débit et réduit le TTFT, mais la latence par token généré (TPOT) peut monter de 6 à 18 % sur certains modèles (H200, concurrence 128). Si votre SLA porte sur la vitesse de génération, comparez `vllm:inter_token_latency_seconds` avant et après la mise à jour. Si la hausse se confirme, revenez à `--gpu-memory-utilization 0.9` ou passez `--no-enable-extensible-kv-cache`[^16]. Fixez une valeur (0.85-0.9) seulement si d'autres processus partagent le GPU ou la mémoire (DGX Spark) ; `--no-enable-extensible-kv-cache` rétablit l'ancien dimensionnement[^2][^16].
 
 > [!warning] Dépassement de `max-model-len` → HTTP 400, pas de troncature silencieuse
 > Si un client envoie un prompt + historique qui dépasse `--max-model-len`, vLLM **rejette la requête** avec `HTTP 400 Bad Request: prompt is too long (X tokens > Y max)`. Il ne tronque **pas** le texte automatiquement.
@@ -353,4 +353,4 @@ curl http://localhost:8000/metrics | grep vllm
 [^12]: vLLM Project, *Release v0.24.0* (vLLM ne positionne plus `CUDA_VISIBLE_DEVICES` ; argument `device_ids` ; variable dépréciée sur ROCm), 2026-06-29. <https://github.com/vllm-project/vllm/releases/tag/v0.24.0>
 [^13]: vLLM Project, *Release v0.31.0* (`quantization="fp8"` renommé `fp8_per_tensor`, ancien nom redirigé), 2026-10-05. <https://github.com/vllm-project/vllm/releases/tag/v0.31.0>
 [^15]: vLLM Project, *Release v0.32.0* (« Default CORS settings no longer allow every origin in the Python and Rust frontends; set `--allowed-origins` to permit browser origins », #61009 ; liste vide par défaut ; corrige CVE-2026-115917, vLLM ≤ 0.31.x), 18 octobre 2026. <https://github.com/vllm-project/vllm/releases/tag/v0.32.0> · <https://github.com/vllm-project/vllm/pull/61009>
-[^16]: vLLM Project, *Release v0.34.0* (« Before you upgrade » : Model Runner V1 retiré ; `--block-size` 64 par défaut au lieu de 16 ; cache KV extensible actif par défaut et `gpu_memory_utilization` à 1.0, ancien dimensionnement via `--gpu-memory-utilization 0.9` ou `--no-enable-extensible-kv-cache` ; artefacts ROCm 7.2 retirés), 16 novembre 2026. <https://github.com/vllm-project/vllm/releases/tag/v0.34.0>
+[^16]: vLLM Project, *Release v0.34.0* (« Before you upgrade » : Model Runner V1 retiré ; `--block-size` 64 par défaut au lieu de 16 ; cache KV extensible actif par défaut et `gpu_memory_utilization` à 1.0, ancien dimensionnement via `--gpu-memory-utilization 0.9` ou `--no-enable-extensible-kv-cache` ; « Trade-off » : TPOT +6–18 % sur certains modèles H200 à concurrence 128 ; artefacts ROCm 7.2 retirés), 16 novembre 2026 · PR #56492 *[Core] Extensible KV cache* (à 0.92 explicite, cache 1–4 % plus petit qu'avant). <https://github.com/vllm-project/vllm/releases/tag/v0.34.0> · <https://github.com/vllm-project/vllm/pull/56492>
