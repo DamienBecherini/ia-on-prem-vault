@@ -6,7 +6,7 @@ aliases:
 tags:
   - lexique
   - materiel
-last_modified: "2026-06-04"
+last_modified: "2026-11-25"
 last_verified: "2026-06-05"
 verified_by: "Sonnet 4.6"
 verified_hitl: "Damien BECHERINI"
@@ -28,7 +28,7 @@ For **large LLMs** (7B+), NPUs are usually unused by current inference engines f
 
 | NPU | SoC | TOPS (INT8) | Used for LLM? |
 | :-- | :-- | :-- | :-- |
-| Apple Neural Engine | M4 Max | ~38 TOPS | No (Ollama/MLX → Metal GPU) |
+| Apple Neural Engine | M5 Max / M5 Ultra (16 / 32 cores) | not published by Apple[^1] | No: Ollama and MLX compute on the Metal GPU; MLX, on macOS 26.2+, also on its Neural Accelerators[^1] |
 | AMD XDNA 2 | Gorgon Halo | ~50 TOPS | No (ROCm/Vulkan → iGPU) |
 | Qualcomm Hexagon | Snapdragon X Elite | ~45 TOPS | Partially (Copilot+ on Windows) |
 
@@ -51,3 +51,5 @@ The NPU matters for **edge and embedded** tasks: local transcription, data filte
 - [[00-lexique/apu|APU]]
 - [[00-lexique/unified-memory|Unified memory]]
 - [[00-lexique/tokens-per-second|Tokens per second]]
+
+[^1]: Apple Newsroom, *Apple unleashes M5, the next big leap in AI performance for Apple silicon* (“faster” 16-core Neural Engine, a Neural Accelerator in each GPU core, programmable through Metal 4's Tensor APIs; no TOPS figure), October 15, 2025 · Apple Support, *Mac Studio (M5 Max or M5 Ultra) — Tech Specs* (16-core Neural Engine on M5 Max, 32-core on M5 Ultra, Neural Accelerators in the GPU), accessed 2026-11-25 · Apple Machine Learning Research, *Exploring LLMs with MLX and the Neural Accelerators in the M5 GPU* (MLX uses the GPU's Neural Accelerators through TensorOps and Metal Performance Primitives; macOS 26.2 or later required), November 19, 2025. <https://www.apple.com/newsroom/2025/10/apple-unleashes-m5-the-next-big-leap-in-ai-performance-for-apple-silicon/> · <https://support.apple.com/en-us/128107> · <https://machinelearning.apple.com/research/exploring-llms-mlx-m5>
