@@ -3,7 +3,7 @@ title: "🏢 Scenario B: SME Appliance (Unified Memory)"
 description: The ideal blueprint for SMEs. How to serve a team of 10 to 50 people with a 70B model using a Mac Studio or AMD APU.
 sidebar:
   order: 2
-last_modified: "2026-11-20"
+last_modified: "2026-11-25"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -92,7 +92,7 @@ To overcome this fixed capacity constraint while staying on affordable desktop h
 1. Start a temporary instance (another Mac, sovereign cloud VM) with Ollama
 2. Restore the vector database from the latest snapshot
 3. Restore the SQLite history
-4. Point clients (Open WebUI, LiteLLM) to the new IP — on up-to-date versions: LiteLLM ≥ 1.106.9 / 1.108.6 / 1.109.1 depending on its line (see the [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|fiche LiteLLM]]), and Open WebUI tracked release by release (see its [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|fiche]]); never pin a version
+4. Point clients (Open WebUI, LiteLLM) to the new IP — on up-to-date versions: LiteLLM ≥ 1.106.12 / 1.108.13 / 1.109.3 / 1.110.2 depending on its line (see the [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|fiche LiteLLM]]), and Open WebUI tracked release by release (see its [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|fiche]]); never pin a version
 
 **Indicative RTO for Blueprint B: < 45 minutes** with an up-to-date daily backup.
 
