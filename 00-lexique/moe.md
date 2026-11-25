@@ -26,7 +26,7 @@ Exemples concrets (état au T4 2026) :
 | Modèle | Paramètres totaux | Paramètres actifs/token | VRAM requise (Q4) |
 | :-- | :-- | :-- | :-- |
 | Llama 3.1 70B (dense) | 70 B | 70 B | ~40 Go |
-| DeepSeek-V4.1-Flash (MoE, MIT) | 552 B + 196 B de mémoire Engram | 8 B (prefill) / 16 B (decode) | ~750 Go en FP8 (nœud 8 GPU)[^1] |
+| DeepSeek-V4.1-Flash (MoE, MIT) | 552 B + 196 B de mémoire Engram | 8 B (prefill) / 16 B (decode), 6 experts sur 384 | ~510 Go en checkpoint natif (experts MXFP4, reste en FP8) ; 4× H200 ou 2× B200 en déportant les tables Engram (≈ 183 GiB) en RAM hôte[^1] |
 | Kimi K3 (MoE, licence custom) | 2 800 B | 104 B (16 experts sur 896) | ~1,4 To en MXFP4 natif[^2] |
 | Qwen3-30B-A3B (MoE, Apache 2.0) | ~30 B | ~3 B actifs (8 experts sur 128) | ~18 Go en Q4[^3] |
 | Nemotron 3.5 Lightning 30B-A3B (hybride Mamba-2 + MoE, OpenMDW) | ~30 B | ~3 B actifs | ~22 Go en NVFP4 officiel[^4] |
@@ -39,7 +39,7 @@ Le MoE offre donc la **qualité d'un grand modèle** avec le **coût de calcul d
 
 Les MoE de petite taille active (Qwen3-30B-A3B, Nemotron 3.5 Lightning, gpt-oss-20b[^3][^4][^6]) sont particulièrement intéressants sur les APU : ils offrent une bonne qualité de réponse avec des besoins VRAM acceptables et un bon débit de génération.
 
-Pour les MoE géants (DeepSeek V4.1 : > 750 Go en FP8 ; Kimi K3 : > 1,4 To même en 4-bit natif ; le DeepSeek V3 de 2024 pesait déjà 404 Go en Q4_K_M), il faut, pour les servir, un nœud 8 GPU ou un cluster multi-nœuds — les scénarios C ou D ; un poste unique peut tout au plus les essayer en lisant les experts sur SSD (voir les pièges ci-dessous)[^1][^2].
+Pour les MoE géants (DeepSeek V4.1-Flash : ~510 Go en checkpoint natif FP4/FP8, ≈ 614 Go avec la marge recommandée par vLLM ; Kimi K3 : > 1,4 To même en 4-bit natif ; le DeepSeek V3 de 2024 pesait déjà 404 Go en Q4_K_M), il faut, pour les servir, un nœud GPU datacenter (4 à 8 GPU) ou un cluster multi-nœuds — les scénarios C ou D ; un poste unique peut tout au plus les essayer en lisant les experts sur SSD (voir les pièges ci-dessous)[^1][^2].
 
 Attention aux licences : plusieurs MoE frontière ouverts de 2026 (Kimi K3, GLM-5.3, Qwen3.8-2.4T-A95B) sortent sous des licences custom à lire avant tout usage commercial. La règle n'est pas absolue : des MoE de taille datacenter sortent aussi sous MIT, comme DeepSeek V4 / V4.1 (552B + 196B de mémoire Engram pour V4.1-Flash)[^1] et, depuis septembre 2026, MiMo-V2.6-Pro de Xiaomi (1,02T paramètres dont 42B actifs)[^8]. La plupart des MoE de taille petite à intermédiaire (Qwen3-30B-A3B, GLM-5.3-Flash, Nemotron 3.5) restent en Apache 2.0, MIT ou OpenMDW. Sur Ollama, `kimi-k3:cloud` ou `glm-5.2:cloud` sont des tags **hébergés**, pas des poids téléchargeables (voir [[03-stack-logicielle/choose-your-model|🗺️ Choisir son modèle]]).
 
@@ -61,7 +61,7 @@ Attention aux licences : plusieurs MoE frontière ouverts de 2026 (Kimi K3, GLM-
 - [[00-lexique/tokens-per-second|Tokens par seconde]]
 - [[00-lexique/vram|VRAM]]
 
-[^1]: DeepSeek AI, *DeepSeek-V4.1-Flash* (MIT ; 552 B + 196 B de mémoire conditionnelle Engram, 8 B actifs en prefill / 16 B en decode, KV cache FP4), 2026. <https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash> ; unsloth, *DeepSeek-V3-GGUF* (Q4_K_M ≈ 404 Go), janvier 2025. <https://huggingface.co/unsloth/DeepSeek-V3-GGUF>
+[^1]: DeepSeek AI, *DeepSeek-V4.1-Flash* (MIT ; 552 B + 196 B de mémoire conditionnelle Engram, 8 B actifs en prefill / 16 B en decode, 1 expert partagé + 384 routés dont 6 actifs, KV cache FP4 ; `config.json` : `expert_dtype` fp4, reste en FP8 ; `model.safetensors.index.json` : 510 286 023 000 octets), 2026-09-09. <https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash> ; vLLM, *DeepSeek-V4.1-Flash — serving recipe* (checkpoint ≈ 511 Go / 476 GiB, experts MXFP4, tables Engram FP8 ≈ 183 GiB, minimum 614 Go avec marge ; TP4 sur H200 et TP2 sur Blackwell avec tables Engram en RAM hôte), consulté le 2026-11-25. <https://recipes.vllm.ai/deepseek-ai/DeepSeek-V4.1-Flash.md> ; unsloth, *DeepSeek-V3-GGUF* (Q4_K_M ≈ 404 Go), janvier 2025. <https://huggingface.co/unsloth/DeepSeek-V3-GGUF>
 [^2]: Moonshot AI, *Kimi K3* (2,8 T de paramètres, 104 B actifs, 16 experts routés sur 896 + 2 partagés, MXFP4 natif par QAT, Kimi K3 License), juillet 2026. <https://huggingface.co/moonshotai/Kimi-K3>
 [^3]: Qwen, *Qwen3-30B-A3B* (30,5 B au total, 3,3 B activés, 8 experts sur 128, Apache 2.0), 2025. <https://huggingface.co/Qwen/Qwen3-30B-A3B>
 [^4]: NVIDIA, *NVIDIA-Nemotron-3.5-Lightning-30B-A3B* (hybride Mamba-2 + MoE + attention, 30 B / 3 B actifs, OpenMDW 1.1 ; checkpoint NVFP4 ≈ 21,6 Go recommandé pour le déploiement), août 2026. <https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16> · <https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4>
