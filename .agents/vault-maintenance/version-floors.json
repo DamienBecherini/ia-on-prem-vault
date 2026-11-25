@@ -1,9 +1,9 @@
 {
   "$comment": "Minimum versions the vault recommends (callout 'Planchers de version' in 06-mise-en-oeuvre/local-inference-security.md, or the tool's own page when the callout does not list it, such as Jan). Keyed by the advisory feed id of feeds.json. When the vault gives one minimum per release line, use the lowest. The collector (vault-watch-agent) marks an advisory as covered when the floor is outside its vulnerable range or already fixed on its own line, so it never reaches the agent. Update this file in the same PR as the page.",
-  "updated": "2026-11-20",
+  "updated": "2026-11-25",
   "floors": {
     "adv-vllm": "0.34.0",
-    "adv-litellm": "1.106.9",
+    "adv-litellm": "1.106.12",
     "adv-ollama": "0.34.2",
     "adv-open-webui": "0.13.1",
     "adv-jan": "0.8.8"

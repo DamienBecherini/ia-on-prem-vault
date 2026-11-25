@@ -3,7 +3,7 @@ title: "🏢 Scénario B : L'Appliance PME (Mémoire Unifiée)"
 description: Le blueprint idéal pour les PME. Comment servir une équipe de 10 à 50 personnes avec un modèle 70B en utilisant un Mac Studio ou un APU AMD.
 sidebar:
   order: 2
-last_modified: "2026-11-20"
+last_modified: "2026-11-25"
 last_verified: "2026-10-10"
 verified_by: "Opus 5.5"
 verified_hitl: "Damien BECHERINI"
@@ -92,7 +92,7 @@ Pour dépasser cette contrainte de capacité fixe et rester sur du matériel de 
 1. Démarrer une instance temporaire (autre Mac, VM cloud souverain) avec Ollama
 2. Restaurer la base vectorielle depuis le dernier snapshot
 3. Restaurer l'historique SQLite
-4. Pointer les clients (Open WebUI, LiteLLM) vers la nouvelle IP — en versions à jour : LiteLLM ≥ 1.106.9 / 1.108.6 / 1.109.1 selon sa ligne (voir la [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|fiche LiteLLM]]), et Open WebUI suivi au fil des releases (voir sa [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|fiche]]) ; ne jamais figer une version
+4. Pointer les clients (Open WebUI, LiteLLM) vers la nouvelle IP — en versions à jour : LiteLLM ≥ 1.106.12 / 1.108.13 / 1.109.3 / 1.110.2 selon sa ligne (voir la [[05-agents-et-assistants-on-prem/agents-custodiens/solutions/litellm|fiche LiteLLM]]), et Open WebUI suivi au fil des releases (voir sa [[05-agents-et-assistants-on-prem/assistants-personnels/solutions/open-webui|fiche]]) ; ne jamais figer une version
 
 **RTO indicatif Blueprint B : < 45 minutes** avec une sauvegarde quotidienne à jour.
 
