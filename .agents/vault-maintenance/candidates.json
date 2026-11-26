@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "candidates": [
+    {
+      "id": "qwen3",
+      "name": "Qwen3",
+      "kind": "model",
+      "state": "lead",
+      "reason": "",
+      "recheck": "",
+      "first_seen": "2026-11-26",
+      "last_seen": "2026-11-26",
+      "sources": [
+        {
+          "url": "https://github.com/QwenLM/Qwen3",
+          "seen": "2026-11-26",
+          "origin": "hand"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-11-26",
+          "state": "lead",
+          "note": "seen: hand"
+        }
+      ],
+      "facts": [
+        {
+          "url": "https://github.com/QwenLM/Qwen3",
+          "read": "2026-11-26 20:53",
+          "source": "github",
+          "repo": "QwenLM/Qwen3",
+          "stars": 27773,
+          "description": "Qwen3 is the large language model series developed by Qwen team, Alibaba Cloud.",
+          "created": "2024-02-05",
+          "pushed": "2026-01-09",
+          "contributors": 46
+        }
+      ]
+    }
+  ]
+}
