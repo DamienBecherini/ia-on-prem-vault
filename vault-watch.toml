@@ -25,6 +25,7 @@ feeds = ".agents/vault-maintenance/feeds.json"      # read by `vault-watch colle
 seen = ".agents/vault-maintenance/watch-seen.md"     # items already triaged: their URLs are dropped
 candidate_readers = ["huggingface", "github"]      # where candidates are read, no model (vault-watch-agent 1.7.0)
 candidates = ".agents/vault-maintenance/candidates.json"
+source_tiers = ".agents/vault-maintenance/source-tiers.md"  # candidates scored by their publishers' tiers (vault-watch-agent 1.8.0)
 
 [rules]                                            # optional: the agent ships defaults
 brief = ".agents/skills/vault-watch/brief.md"
@@ -34,6 +35,7 @@ translation_policy = ".agents/skills/vault-translate-content/references/translat
 audits = "node scripts/run-audits.mjs"
 claims_due = "node scripts/audit-freshness.mjs --due-only --json={out}"
 sources = "node scripts/audit-sources.mjs --concurrency=8 --timeout=15000 --json={out}"
+sources_weekly = "freshness-report/sources.json"     # the weekly report of freshness.yml, crossed with the probe (1.8.0)
 version_floors = { script = "scripts/audit-version-floors.mjs", file = ".agents/vault-maintenance/version-floors.json" }
 
 # [budget] max_context_tokens: not set, the model's window decides (the guide is about 430 k tokens; a 1M
