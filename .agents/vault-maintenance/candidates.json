@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "candidates": [
+    {
+      "id": "qwen3",
+      "name": "Qwen3",
+      "kind": "model",
+      "state": "lead",
+      "reason": "",
+      "recheck": "",
+      "first_seen": "2026-11-26",
+      "last_seen": "2026-11-26",
+      "sources": [
+        {
+          "url": "https://github.com/QwenLM/Qwen3",
+          "seen": "2026-11-26",
+          "origin": "hand"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-11-26",
+          "state": "lead",
+          "note": "seen: hand"
+        },
+        {
+          "date": "2026-11-26",
+          "state": "lead",
+          "note": "judged with the guide (verif-2026-11-26-205644): dismiss"
+        }
+      ],
+      "facts": [
+        {
+          "url": "https://github.com/QwenLM/Qwen3",
+          "read": "2026-11-26 20:53",
+          "source": "github",
+          "repo": "QwenLM/Qwen3",
+          "stars": 27773,
+          "description": "Qwen3 is the large language model series developed by Qwen team, Alibaba Cloud.",
+          "created": "2024-02-05",
+          "pushed": "2026-01-09",
+          "contributors": 46
+        }
+      ],
+      "judgement": {
+        "date": "2026-11-26",
+        "check": "verif-2026-11-26-205644",
+        "verdict": "dismiss",
+        "why": "Dismiss: the Qwen3 family is already covered across the guide (Qwen3-30B-A3B in choose-your-model and the MoE lexicon, Qwen3-Next in kv-cache-and-context), and the guide's current recommendations already point to the newer Qwen3.8 line; the QwenLM/Qwen3 repo (last pushed 2026-01-09) is an older series repo and changes no choice of model, hardware or tool for the reader.",
+        "pages": [
+          "03-stack-logicielle/choose-your-model.md",
+          "00-lexique/moe.md"
+        ],
+        "matters": "Ce signal ne change aucune décision du lecteur. Le choix du modèle selon la VRAM et la tâche, la lecture des licences et le choix du moteur d'inférence sont déjà traités pour Qwen3 et pour son successeur Qwen3.8. Le dépôt est une ancienne vitrine de la série, sans modèle, mesure ni licence nouveaux."
+      }
+    }
+  ]
+}
