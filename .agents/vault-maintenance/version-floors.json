@@ -1,11 +1,25 @@
 {
-  "$comment": "Minimum versions the vault recommends (callout 'Planchers de version' in 06-mise-en-oeuvre/local-inference-security.md, or the tool's own page when the callout does not list it, such as Jan). Keyed by the advisory feed id of feeds.json. When the vault gives one minimum per release line, use the lowest. The collector (vault-watch-agent) marks an advisory as covered when the floor is outside its vulnerable range or already fixed on its own line, so it never reaches the agent. Update this file in the same PR as the page.",
-  "updated": "2026-11-25",
+  "$comment": "Minimum versions the vault recommends (callout 'Planchers de version' in 06-mise-en-oeuvre/local-inference-security.md, or the tool's own page when the callout does not list it, such as Jan). Keyed by the advisory feed id of feeds.json. When the vault gives one minimum per release line, use the lowest. The collector (vault-watch-agent) marks an advisory as covered when the floor is outside its vulnerable range or already fixed on its own line, so it never reaches the agent. Update this file in the same PR as the page. 'answered' lists the advisories the vault answers another way than a floor (a workaround, a setting), with the page that says it: the collector drops them, « Check the sources » lists them; remove one when the vault changes its answer.",
+  "updated": "2026-11-26",
   "floors": {
     "adv-vllm": "0.34.0",
     "adv-litellm": "1.106.12",
     "adv-ollama": "0.34.2",
     "adv-open-webui": "0.13.1",
     "adv-jan": "0.8.8"
+  },
+  "answered": {
+    "GHSA-2364-6whj-g7vx": {
+      "page": "06-mise-en-oeuvre/local-inference-security.md",
+      "why": "LiteLLM 1.106 line: fixed only from 1.108.0; general_settings.enforce_fallback_model_access: true and GET /spend/tags, GET /global/activity/cache_hits blocked at the reverse proxy (callout 'Planchers de version'). Remove when the guide drops the 1.106 line (floor 1.108.13)."
+    },
+    "GHSA-fjxr-j47c-4x2x": {
+      "page": "06-mise-en-oeuvre/local-inference-security.md",
+      "why": "LiteLLM 1.106 line: fixed only from 1.108.0; general_settings.enforce_fallback_model_access: true and GET /spend/tags, GET /global/activity/cache_hits blocked at the reverse proxy (callout 'Planchers de version'). Remove when the guide drops the 1.106 line (floor 1.108.13)."
+    },
+    "GHSA-wpm4-hgr2-xjwr": {
+      "page": "06-mise-en-oeuvre/local-inference-security.md",
+      "why": "LiteLLM 1.106 line: fixed only from 1.108.0; general_settings.enforce_fallback_model_access: true and GET /spend/tags, GET /global/activity/cache_hits blocked at the reverse proxy (callout 'Planchers de version'). Remove when the guide drops the 1.106 line (floor 1.108.13)."
+    }
   }
 }
