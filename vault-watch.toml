@@ -23,6 +23,7 @@ label = "veille"
 artifact = "weekly-watch"
 feeds = ".agents/vault-maintenance/feeds.json"      # read by `vault-watch collect` (the weekly workflow and by hand)
 seen = ".agents/vault-maintenance/watch-seen.md"     # items already triaged: their URLs are dropped
+candidate_readers = ["huggingface", "github"]      # where candidates are read, no model (vault-watch-agent 1.7.0)
 
 [rules]                                            # optional: the agent ships defaults
 brief = ".agents/skills/vault-watch/brief.md"
