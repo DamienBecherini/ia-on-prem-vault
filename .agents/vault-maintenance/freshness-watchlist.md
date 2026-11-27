@@ -70,7 +70,7 @@ Rows normalised on 2026-10-09 (PR `fix/refresh-2026-10-critical`): every row has
 ## Maintenance rules
 
 - One row per claim, not per page. A page with a pricing table gets one row per price that matters to the reader's decision, not per cell.
-- Quote the claim as written in the page so `grep` finds it. If the wording changes, update the row.
+- Quote the claim as written in the page so `grep` finds it. If the wording changes, update the row. `npm run audit:watchlist-quotes` lists the rows whose quote their page no longer has.
 - `Checked` and `Status` are set only after an actual web check (fetch or search), never by inference.
 - When a claim is corrected in the page, set `Status: current`, update **Value in page**, **Source** and **Source date**, and bump the page's `last_modified`.
 - Rows for deleted sentences are removed, not kept as history. The git log is the history.
