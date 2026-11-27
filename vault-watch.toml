@@ -37,6 +37,8 @@ claims_due = "node scripts/audit-freshness.mjs --due-only --json={out}"
 sources = "node scripts/audit-sources.mjs --concurrency=8 --timeout=15000 --json={out}"
 sources_weekly = "freshness-report/sources.json"     # the weekly report of freshness.yml, crossed with the probe (1.8.0)
 version_floors = { script = "scripts/audit-version-floors.mjs", file = ".agents/vault-maintenance/version-floors.json" }
+# The watchlist rows the corrections make drift are requoted or removed, committed with them (1.9.0)
+watchlist_quotes = { script = "scripts/audit-watchlist-quotes.mjs", folder = ".agents/vault-maintenance/watchlist" }
 
 # [budget] max_context_tokens: not set, the model's window decides (the guide is about 430 k tokens; a 1M
 # window reads it whole). A ceiling below the guide's size would make the cross-check read it chapter by chapter.
