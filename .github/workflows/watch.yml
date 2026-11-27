@@ -60,7 +60,7 @@ jobs:
   watch:
     name: Collect ecosystem changes
     needs: cadence
-    uses: DamienBecherini/vault-watch-agent/.github/workflows/collect.yml@v1.7.2
+    uses: DamienBecherini/vault-watch-agent/.github/workflows/collect.yml@v1.8.1
     with:
       days: ${{ fromJSON(needs.cadence.outputs.days) }}
       urgent_only: ${{ needs.cadence.outputs.urgent_only == 'true' }}
