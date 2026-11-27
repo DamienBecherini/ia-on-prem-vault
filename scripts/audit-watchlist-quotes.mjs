@@ -18,6 +18,7 @@
  *   node scripts/audit-watchlist-quotes.mjs                 # Markdown report, exit 0
  *   node scripts/audit-watchlist-quotes.mjs --json=out.json # also a JSON report
  *   node scripts/audit-watchlist-quotes.mjs --strict        # exit 1 when a row drifts
+ *   node scripts/audit-watchlist-quotes.mjs --write=in.json # rewrite the rows it names (vault-watch-agent)
  *
  * npm script: audit:watchlist-quotes (warn-only, not in `npm test`)
  */
@@ -29,6 +30,8 @@ const args = process.argv.slice(2);
 const STRICT = args.includes("--strict");
 const jsonArg = args.find((a) => a.startsWith("--json="));
 const OUT_JSON = jsonArg ? jsonArg.slice("--json=".length) : null;
+const writeArg = args.find((a) => a.startsWith("--write="));
+const IN_WRITE = writeArg ? writeArg.slice("--write=".length) : null;
 
 const WATCHLIST_DIR = ".agents/vault-maintenance/watchlist";
 const MIN_FRAGMENT = 12;
@@ -72,6 +75,56 @@ function cellsOf(line) {
     .map((c) => c.split("\u0000").join("\\|").trim());
 }
 
+/** A cell as written in the table: a literal pipe escaped, no line break. */
+function asCell(text) {
+  return String(text).replace(/\r?\n/g, " ").replace(/(?<!\\)\|/g, "\\|").trim();
+}
+
+/**
+ * Rewrite the rows `updates` names: { updates: [{ file, line, claim, new_claim?, new_value?, note?, remove? }] }.
+ * `claim` is the Claim cell as read (the row must still hold it); `new_claim` replaces it, `new_value` replaces
+ * « Value in page », `note` is appended to Note; `remove` deletes the row (its sentence is gone). Checked, Status
+ * and Recheck by are left as they are: they move only after a web check. Prints { written, removed, refused }.
+ */
+function writeUpdates(path) {
+  const { updates = [] } = JSON.parse(readFileSync(path, "utf8"));
+  const byFile = new Map();
+  for (const u of updates) byFile.set(u.file, [...(byFile.get(u.file) ?? []), u]);
+  const done = { written: 0, removed: 0, refused: [] };
+  for (const [file, list] of byFile) {
+    const abs = join(VAULT_ROOT, file);
+    if (!file.startsWith(`${WATCHLIST_DIR}/`) || !existsSync(abs)) {
+      done.refused.push(...list.map((u) => ({ file, line: u.line, why: "not a watchlist file" })));
+      continue;
+    }
+    const raw = readFileSync(abs, "utf8");
+    const eol = raw.includes("\r\n") ? "\r\n" : "\n";
+    const lines = raw.split(/\r?\n/);
+    for (const u of [...list].sort((a, b) => b.line - a.line)) {
+      const cells = lines[u.line - 1]?.startsWith("| `") ? cellsOf(lines[u.line - 1]) : [];
+      if (cells.length < 10 || cells[1] !== u.claim) {
+        done.refused.push({ file, line: u.line, why: "the row no longer holds this claim" });
+        continue;
+      }
+      if (u.remove) {
+        lines.splice(u.line - 1, 1);
+        done.removed += 1;
+        continue;
+      }
+      if (u.new_claim) cells[1] = asCell(u.new_claim);
+      if (u.new_value) cells[3] = asCell(u.new_value);
+      if (u.note) cells[8] = cells[8] ? `${cells[8]} ; ${asCell(u.note)}` : asCell(u.note);
+      lines[u.line - 1] = `| ${cells.join(" | ")} |`;
+      done.written += 1;
+    }
+    writeFileSync(abs, lines.join(eol), "utf8");
+  }
+  console.log(JSON.stringify(done));
+  process.exit(done.refused.length ? 1 : 0);
+}
+
+if (IN_WRITE) writeUpdates(IN_WRITE);
+
 const pages = new Map();
 function pageText(rel) {
   if (!pages.has(rel)) {
@@ -99,7 +152,7 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith(".md")).sort()) {
       unquoted += 1;
       return;
     }
-    const base = { file: `${WATCHLIST_DIR}/${file}`, line: i + 1, page, claim: cells[1],
+    const base = { file: `${WATCHLIST_DIR}/${file}`, line: i + 1, page, claim: cells[1], value: cells[3],
       status: cells[7], recheck_by: cells[9] ?? "" };
     const text = pageText(page);
     if (text === null) {
