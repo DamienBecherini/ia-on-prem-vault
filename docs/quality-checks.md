@@ -247,6 +247,22 @@ Not part of `npm test`: the result depends on the calendar, not on the PR. It ru
 
 ---
 
+### `audit:watchlist-quotes`
+
+**Scope:** the rows of `.agents/vault-maintenance/watchlist/*.md`.
+
+Lists the rows whose quoted claim is no longer in their page: the page was corrected, trimmed or reworded and the row was not. Such a row sends the old wording to every re-check of the due claims (on 2026-11-26, four claims were reported as outdated when their pages were already current) and no longer lets `grep` find its sentence. The quote is the text between the first « and the last » of the Claim cell, cut at every « … » and at inner guillemets; each fragment of 12 characters or more must be in the page. Page and quote are compared without emphasis, code marks, link targets, footnote calls, blockquote marks or escaped pipes, spaces folded.
+
+| Mode | Behaviour |
+| :-- | :-- |
+| `audit:watchlist-quotes` | Markdown report, exit `0` |
+| `--json=path` | also write a JSON report (row, page, missing fragments, « Recheck by »), for vault-watch-agent |
+| `--strict` | exit `1` when a row drifts |
+
+Not part of `npm test` yet: on 2026-11-27 it lists 173 of 765 rows, to clear first. A drifted row is fixed by quoting the page as it reads today, or removed when its sentence is gone; **Checked** and **Status** move only after a web check (`freshness-watchlist.md`).
+
+---
+
 ### `audit:readability`
 
 **Scope:** FR published notes (no `en/`, no README / CLAUDE, no generated lexicon index).
@@ -351,3 +367,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | 2026-11-09 | `audit:version-floors` in `npm test`: `version-floors.json` must match the minimums stated in the guide |
 | 2026-11-10 | `link-audit` job fails when the committed lexicon indexes (FR, EN) are out of date |
 | 2026-11-19 | The weekly watch is collected by vault-watch-agent (`vault-watch collect`, its reusable workflow): `scripts/watch-feeds.mjs` and `watch:feeds` retired after both gave the same watch on the 84 sources; first watched page (Lambda GPU prices) |
+| 2026-11-27 | `audit:watchlist-quotes`: watchlist rows whose quote is no longer in their page, warn-only, with a JSON report for vault-watch-agent |

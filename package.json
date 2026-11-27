@@ -23,6 +23,7 @@
     "audit:freshness": "node scripts/audit-freshness.mjs",
     "audit:freshness:due": "node scripts/audit-freshness.mjs --due-only",
     "audit:freshness:strict": "node scripts/audit-freshness.mjs --strict",
+    "audit:watchlist-quotes": "node scripts/audit-watchlist-quotes.mjs",
     "audit:readability": "node scripts/audit-readability.mjs",
     "backfill:dates": "node scripts/backfill-last-modified.mjs",
     "backfill:dates:write": "node scripts/backfill-last-modified.mjs --write",
