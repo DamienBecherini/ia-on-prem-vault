@@ -256,8 +256,9 @@ Lists the rows whose quoted claim is no longer in their page: the page was corre
 | Mode | Behaviour |
 | :-- | :-- |
 | `audit:watchlist-quotes` | Markdown report, exit `0` |
-| `--json=path` | also write a JSON report (row, page, missing fragments, « Recheck by »), for vault-watch-agent |
+| `--json=path` | also write a JSON report (row, page, claim, value, missing fragments, « Recheck by »), for vault-watch-agent |
 | `--strict` | exit `1` when a row drifts |
+| `--write=path` | rewrite the rows a JSON file names (`{"updates": [{file, line, claim, new_claim?, new_value?, note?, remove?}]}`): the new quote and value, a note appended, or the row removed when its sentence is gone. **Checked**, **Status** and **Recheck by** are left as they are. A row that no longer holds `claim` is refused (exit `1`). vault-watch-agent calls it after its edits, for the rows they made drift |
 
 Not part of `npm test` yet: on 2026-11-27 it lists 173 of 765 rows, to clear first. A drifted row is fixed by quoting the page as it reads today, or removed when its sentence is gone; **Checked** and **Status** move only after a web check (`freshness-watchlist.md`).
 
@@ -368,3 +369,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | 2026-11-10 | `link-audit` job fails when the committed lexicon indexes (FR, EN) are out of date |
 | 2026-11-19 | The weekly watch is collected by vault-watch-agent (`vault-watch collect`, its reusable workflow): `scripts/watch-feeds.mjs` and `watch:feeds` retired after both gave the same watch on the 84 sources; first watched page (Lambda GPU prices) |
 | 2026-11-27 | `audit:watchlist-quotes`: watchlist rows whose quote is no longer in their page, warn-only, with a JSON report for vault-watch-agent |
+| 2026-11-27 | `audit:watchlist-quotes --write`: rewrites the rows vault-watch-agent names (quote, value, note, or the row removed) |
