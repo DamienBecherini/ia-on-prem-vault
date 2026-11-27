@@ -24,6 +24,7 @@ const AUDITS = [
   { name: "footnotes", script: "audit-footnotes.mjs" },
   { name: "version-floors", script: "audit-version-floors.mjs" },
   { name: "i18n-strict", script: "audit-i18n.mjs", args: ["--stale-days=0"] },
+  { name: "watchlist-quotes", script: "audit-watchlist-quotes.mjs", args: ["--strict"] },
 ];
 
 /** @type {Array<{ name: string, status: number | null }>} */

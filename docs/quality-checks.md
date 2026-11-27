@@ -25,6 +25,7 @@ flowchart LR
   VA --> T7[footnotes]
   VA --> T6[version-floors]
   VA --> T4[i18n strict]
+  VA --> T8[watchlist quotes]
   LA --> ENG[starlight-obsidian-engine]
   ENG --> LINKS[audit:links]
   ENG --> RENDER[built pages: no raw wikilink]
@@ -52,6 +53,7 @@ npm run audit:table-wikilinks # wikilink aliases that would break a table
 npm run audit:footnotes   # footnotes never called, called without a definition, defined twice
 npm run audit:version-floors  # version-floors.json matches the minimums in the guide
 npm run audit:i18n:strict # FR/EN parity via last_modified
+npm run audit:watchlist-quotes # watchlist rows quote their pages as they read today (strict in npm test)
 npm run audit:ascii       # ASCII diagram warnings (non-blocking)
 npm run audit:ascii:strict
 npm run audit:readability # readability, deterministic part /40 (warn-only)
@@ -251,16 +253,17 @@ Not part of `npm test`: the result depends on the calendar, not on the PR. It ru
 
 **Scope:** the rows of `.agents/vault-maintenance/watchlist/*.md`.
 
-Lists the rows whose quoted claim is no longer in their page: the page was corrected, trimmed or reworded and the row was not. Such a row sends the old wording to every re-check of the due claims (on 2026-11-26, four claims were reported as outdated when their pages were already current) and no longer lets `grep` find its sentence. The quote is the text between the first « and the last » of the Claim cell, cut at every « … » and at inner guillemets; each fragment of 12 characters or more must be in the page. Page and quote are compared without emphasis, code marks, link targets, footnote calls, blockquote marks or escaped pipes, spaces folded.
+Lists the rows whose quoted claim is no longer in their page: the page was corrected, trimmed or reworded and the row was not. Such a row sends the old wording to every re-check of the due claims (on 2026-11-26, four claims were reported as outdated when their pages were already current) and no longer lets `grep` find its sentence. The quote is each « … » passage of the Claim cell at the outer level (the page's own guillemets kept inside, the cell's words between two passages left out), cut at every « … »; each fragment of 12 characters or more must be in the page. Page and quote are compared as a reader reads them: without emphasis, code marks, link targets, footnote calls, blockquote marks or escaped pipes, inline math as text (`$\sim 273 \text{ Go/s}$` reads `~273 Go/s`), a command continued with `\` on one line, spaces folded.
 
 | Mode | Behaviour |
 | :-- | :-- |
 | `audit:watchlist-quotes` | Markdown report, exit `0` |
+| `npm test` | runs it with `--strict` |
 | `--json=path` | also write a JSON report (row, page, claim, value, missing fragments, « Recheck by »), for vault-watch-agent |
 | `--strict` | exit `1` when a row drifts |
 | `--write=path` | rewrite the rows a JSON file names (`{"updates": [{file, line, claim, new_claim?, new_value?, note?, remove?}]}`): the new quote and value, a note appended, or the row removed when its sentence is gone. **Checked**, **Status** and **Recheck by** are left as they are. A row that no longer holds `claim` is refused (exit `1`). vault-watch-agent calls it after its edits, for the rows they made drift |
 
-Not part of `npm test` yet: on 2026-11-27 it lists 173 of 765 rows, to clear first. A drifted row is fixed by quoting the page as it reads today, or removed when its sentence is gone; **Checked** and **Status** move only after a web check (`freshness-watchlist.md`).
+In `npm test` (strict) since 2026-11-27, once the 157 rows that drifted were requoted (145) or removed (12, their sentence gone from the page's text). A page edit that changes a quoted sentence fails the check until its row follows: quote the page as it reads today, or remove the row when its sentence is gone; **Checked** and **Status** move only after a web check (`freshness-watchlist.md`). vault-watch-agent (1.9.0 and later) does it for its own corrections.
 
 ---
 
@@ -370,3 +373,4 @@ Agents answer: *"Is this content still accurate and well written?"*
 | 2026-11-19 | The weekly watch is collected by vault-watch-agent (`vault-watch collect`, its reusable workflow): `scripts/watch-feeds.mjs` and `watch:feeds` retired after both gave the same watch on the 84 sources; first watched page (Lambda GPU prices) |
 | 2026-11-27 | `audit:watchlist-quotes`: watchlist rows whose quote is no longer in their page, warn-only, with a JSON report for vault-watch-agent |
 | 2026-11-27 | `audit:watchlist-quotes --write`: rewrites the rows vault-watch-agent names (quote, value, note, or the row removed) |
+| 2026-11-27 | `audit:watchlist-quotes` in `npm test` (strict) after the 157 drifting rows were requoted or removed; quotes read passage by passage, inline math and continued commands read as text |
