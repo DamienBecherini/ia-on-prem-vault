@@ -8,11 +8,15 @@
  * outdated when their pages were already current) and no longer lets `grep` find
  * the sentence it tracks.
  *
- * A claim is the text between the first « and the last » of the Claim cell. It is
- * cut at every « … » (or "...") and at inner guillemets (« a » / « b » joins two
- * passages), and each fragment of 12 characters or more must be found in the page. Page and fragments are compared without emphasis, code marks,
- * links (their text is kept), footnote calls, blockquote marks, escaped pipes and
- * with every run of spaces as one.
+ * A claim is each « … » passage of the Claim cell at the outer level (`quoteOf`): the
+ * guillemets the page itself uses stay inside, the cell's own words between two
+ * passages are left out, a last « left open is ignored. Each passage is cut at every
+ * … (or "..."), and each fragment of 12 characters or more must be found in the page.
+ * Page and fragments are compared as a reader reads them (`normalise`): without
+ * emphasis, code marks, links (their text is kept), footnote calls, blockquote marks
+ * and escaped pipes; inline math read as text (`$\sim 273 \text{ Go/s}$` → ~273 Go/s),
+ * an escaped dollar as a dollar, a shell command continued with `\` as one line; every
+ * run of spaces as one.
  *
  * Usage:
  *   node scripts/audit-watchlist-quotes.mjs                 # Markdown report, exit 0
@@ -20,7 +24,8 @@
  *   node scripts/audit-watchlist-quotes.mjs --strict        # exit 1 when a row drifts
  *   node scripts/audit-watchlist-quotes.mjs --write=in.json # rewrite the rows it names (vault-watch-agent)
  *
- * npm script: audit:watchlist-quotes (warn-only, not in `npm test`)
+ * npm script: audit:watchlist-quotes (report only); `npm test` runs it with --strict
+ * (scripts/run-audits.mjs)
  */
 import { readFileSync, readdirSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
